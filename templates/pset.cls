@@ -4,8 +4,38 @@
 \usepackage[portrait, margin=0.5in, includefoot]{geometry}
 
 % -----------------------------------------------
+%                  Options 
+% -----------------------------------------------
+
+\usepackage{ifthen}
+\newboolean{expanded}
+\setboolean{expanded}{false}
+\DeclareOption{expanded}{
+    \setboolean{expanded}{true}
+}
+\ProcessOptions\relax
+
+% -----------------------------------------------
 %                   Title
 % -----------------------------------------------
+
+\usepackage{titling}
+
+\let\oldmaketitle\maketitle
+\renewcommand{\maketitle}{
+    \ifthenelse{\boolean{expanded}}
+    {
+        \renewcommand\maketitlehooka{\null\mbox{}\vfill}
+        \renewcommand\maketitlehookd{\vfill\null}
+
+        \begin{titlingpage}
+            \oldmaketitle
+        \end{titlingpage}
+    }
+    {
+        \oldmaketitle
+    }
+}
 
 \makeatletter
 \def \title #1 {%
@@ -82,13 +112,17 @@
     }
 }
 
-\newtheoremstyle{problem}{}{}{}{}{\theoremtitle\color{bluebord}}{}{ }{}
-\theoremstyle{problem}
+\newtheoremstyle{oldproblem}{}{}{}{}{\theoremtitle\color{bluebord}}{}{ }{}
+\theoremstyle{oldproblem}
 \newtheorem{innerproblem}{Problem}
-\newenvironment{problem}[1]
+\newenvironment{oldproblem}[1]
   {\renewcommand\theinnerproblem{#1.}\innerproblem}
   {\endinnerproblem}
-\createcolortheorem{problem}{blueback}{bluebord}
+\createcolortheorem{oldproblem}{blueback}{bluebord}
+
+\newenvironment{problem}[1]{
+    \ifthenelse{\boolean{expanded}}{\newpage}{}
+    \begin{oldproblem}{#1}}{\end{oldproblem}}
 
 \newtheoremstyle{example}{}{}{}{}{\theoremtitle\color{greenbord}}{}{ }{}
 \theoremstyle{example}
@@ -106,7 +140,7 @@
   {\endinnerdefinition}
 \createcolortheorem{definition}{greenback}{greenback}
 
-\theoremstyle{problem}
+\theoremstyle{oldproblem}
 \newtheorem{innerpart}{}
 \newenvironment{partthm}[1]
   {\renewcommand\theinnerpart{#1.}\innerpart}
