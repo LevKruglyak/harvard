@@ -21,7 +21,7 @@ plt.ylabel('height (mm)')
 plt.ylim(bottom=0, top=600)
 plt.plot(x, y)
 
-plt.savefig("2a.pdf", bbox_inches='tight')
+plt.savefig("build/2a.pdf", bbox_inches='tight')
 print("generated figure 2a")
 
 # ----------------------------------------------
@@ -37,7 +37,7 @@ y = np.exp(-(x1 - 2)**2 - (x2 - 1)**2)
 fig = plt.figure(figsize=(6,6))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(x1, x2, y, cmap='viridis')
-plt.savefig("2b.pdf", bbox_inches='tight')
+plt.savefig("build/2b.pdf", bbox_inches='tight')
 print("generated figure 2b")
 
 # ----------------------------------------------
@@ -55,7 +55,7 @@ plt.hist2d(x, y, bins=20, cmap='viridis')
 plt.colorbar()
 plt.xlabel('$S$')
 plt.ylabel('$W$')
-plt.savefig("3a.pdf", bbox_inches='tight')
+plt.savefig("build/3a.pdf", bbox_inches='tight')
 print("generated figure 3a")
 
 # ----------------------------------------------
@@ -76,5 +76,5 @@ plt.grid(visible=True)
 plt.xlabel('$W$')
 plt.ylabel('pdf')
 plt.legend()
-plt.savefig("3b.pdf", bbox_inches='tight')
+plt.savefig("build/3b.pdf", bbox_inches='tight')
 print("generated figure 3b")
