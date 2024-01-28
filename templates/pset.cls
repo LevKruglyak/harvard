@@ -30,6 +30,7 @@
 
         \begin{titlingpage}
             \oldmaketitle
+            \collaborators
         \end{titlingpage}
     }
     {

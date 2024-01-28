@@ -5,6 +5,7 @@
 \due{January 26, 2024}
 
 \input{../cs181.sty}
+\collaborator{AJ LaMotta}
 
 \begin{document}
 \maketitle
@@ -113,7 +114,7 @@ $$y = - 3x^2 + 72x + 70.$$
   \[
     -6x+72 = 0 \quad\implies \quad x = 12.
   \]
-  Since the second derivative is $y''=-3$, by the second derivative test this is a concave function and 
+  Since the second derivative is $y''=-6$, by the second derivative test this is a concave function and 
   thus the optimal water quantity is 12 oz. Plugging this back in, we see that the plant will grow to a height of 502 mm.
 
   \begin{part}{c}
@@ -197,7 +198,7 @@ For this problem, you may find the \texttt{multivariate\_normal} module from \te
   Similarly, we can expand the variance as 
   \[
     \begin{aligned}
-      \mathrm{Var}(T) &= \mathrm{Var}(60)+0.6\mathrm{Var}(W) + 0.2\mathrm{Var}(S)+\mathrm{Var}(\epsilon) = 0 + 0.6\cdot 1.5 + 0.2\cdot 1.5 + 5 = 6.2.
+      \mathrm{Var}(T) &= \mathrm{Var}(60)+0.6^2\cdot \mathrm{Var}(W) + 0.2^2\cdot \mathrm{Var}(S)+\mathrm{Var}(\epsilon) = 0 + 0.6^2\cdot 1.5 + 0.2^2\cdot 1.5 + 5 = 5.84.
     \end{aligned}
   \]
 
