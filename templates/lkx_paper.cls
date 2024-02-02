@@ -1,4 +1,4 @@
-\ProvidesClass{paper}[Paper class]
+\ProvidesClass{lkx_paper}[Paper class]
 
 \LoadClass[11pt,letterpaper]{article}
 \usepackage[letterpaper, portrait, margin=1.25in, includefoot]{geometry}
@@ -8,23 +8,6 @@
 \providecommand{\Z}{\mathbb{Z}}
 \providecommand{\RP}{\mathbb{RP}}
 \providecommand{\Hom}{\mathrm{Hom}}
-
-\newcommand\defn[1]{\textbf{#1}}
-\newcommand\todo[1]{{\color{red}\textbf{#1}}}
-
-% -----------------------------------------------
-%              Environments
-% -----------------------------------------------
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}[subsection]
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{remark}[definition]{Remark}
-\newtheorem{proposition}[definition]{Proposition}
-\newtheorem{claim}[definition]{Claim}
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{example}[definition]{Example}
-\newtheorem{corollary}[definition]{Corollary}
 
 % -----------------------------------------------
 %              Box environment
@@ -47,6 +30,23 @@
 \usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb} % Standard ams libraries
 \usepackage{mathrsfs} % Fancy script capitals
 \usepackage{bm} % Bold math
+
+% -----------------------------------------------
+%              Environments
+% -----------------------------------------------
+
+\newcommand\defn[1]{\textbf{#1}}
+\newcommand\todo[1]{{\color{red}\textbf{#1}}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{claim}[definition]{Claim}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{example}[definition]{Example}
+\newtheorem{corollary}[definition]{Corollary}
 
 % -----------------------------------------------
 %              Basic math/formatting stuff

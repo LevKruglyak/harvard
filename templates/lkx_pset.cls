@@ -1,4 +1,4 @@
-\ProvidesClass{pset}[9/16/23 v0.1 Problem Set Class]
+\ProvidesClass{lkx_pset}[9/16/23 v0.1 Problem Set Class]
 
 \LoadClass[11pt,letterpaper]{article}
 \usepackage[portrait, margin=0.5in, includefoot]{geometry}
