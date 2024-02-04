@@ -39,7 +39,7 @@
 \newcommand\todo[1]{{\color{red}\textbf{#1}}}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}[subsection]
+\newtheorem{definition}{Definition}%[subsection]
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{remark}[definition]{Remark}
 \newtheorem{proposition}[definition]{Proposition}
