@@ -35,6 +35,7 @@
     }
     {
         \oldmaketitle
+        \collaborators
     }
 }
 
