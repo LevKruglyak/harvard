@@ -6,6 +6,8 @@
 
 \input{../cs181.sty}
 
+\collaborator{AJ LaMotta}
+
 \begin{document}
 \maketitle
 
@@ -23,7 +25,9 @@
     places on earth have different temperatures: what does the
     temperature in the temperature column correspond to?
   \end{part}
-        
+
+  Reading the source, we can see that several corrections were made. For example, temperatures were corrected for sea-water isotropic composition and for ice sheet elevation. Also, temperatures are not recorded on an absolute scale but as a change in temperature from a rolling average of previous changes. 
+
   \begin{part}{b}
     Even before doing any formal regressions, we see that there is
     some periodicity in the data: there are years that are warmer, and
@@ -32,13 +36,16 @@
     reasonable to use this pattern as evidence that the earth will
     cool down again?  Why or why not, or to what extent?
   \end{part}
-
+  
+  While there does appear to be some peridocity, using the dataset to predict anything too far into the future would be tricky, since temperature variation is an incredibly complex system with lots of factors. For example, volcanic erruptions or human CO2 emissions could alter the temperature on small timeframes, breaking any pattern deduced by the regression.
 
   \begin{part}{c}
     In the problems below, we will focus on interpolating
     temperatures for years not provided in the training set.  What
     kind of application would such a regression be useful for?
   \end{part}
+
+  The main application would be predicting future temperature variations, or making estimates of temperature variations so long ago that measuring directly would be infeasible.
 \end{parts}
 
 \begin{problem}{2}[Optimizing a Kernel]
@@ -68,28 +75,69 @@ should be.
 \begin{parts}
   \begin{part}{a}
     Let's first take a look at the behavior of the fitted model for different values of $\tau$. Implement the \texttt{kernel\_regressor} function in the notebook, and plot your model for years in the range $800,000$ BC to $400,000$ BC at $1000$ year intervals for the following three values of $\tau$: $1, 50, 2500$. 
-    Since we're working in terms of thousands of years, this means you should plot $(x, f_\tau(x))$ for $x = 400, 401, \dots, 800$. \textbf{The plotting has been set up} for you in the notebook already. \textbf{In no more than 5 sentences}, describe how the fits change with $\tau$.
+    Since we're working in terms of thousands of years, this means you should plot $(x, f_\tau(x))$ for $x = 400, 401, \dots, 800$. Describe how the fits change with $\tau$.
   \end{part}
+
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[]{build/2a.pdf}
+  \end{figure}\noindent
+  As we can see, as $\tau$ decreases, the curve fits the training data points closer and closer. As $\tau$ increases, the curve generalizes more, is smoother, and shows the general trends of the data.
 
   \begin{part}{b} 
     Now, we will evaluate the quality of each model \emph{quantitatively} by computing the error on some test set $\mathcal{D}_\texttt{test} = \{(x'_m, y'_m)\}_{m = 1} ^M$.  Write down the expression for MSE of $f_\tau$ over the test set as a function of the training set and test set. Your answer may include $\{(x'_m, y'_m)\}_{m = 1} ^M$, $\{(x_n, y_n)\}_{n = 1} ^N$, and $K_\tau$, but not $f_\tau$.
   \end{part}
 
+  Using the mean squared error formula and the definition for our estimator, we can write
+  \[
+    \mathrm{MSE} = \frac{1}{M} \sum_{1\leq m \leq M} \left(y'_m - f_\tau(x'_m)\right)^2 
+    = \frac{1}{M}\sum_{1\leq m \leq M} \left(y'_m - \frac{\sum_{n=1}^N K_\tau(x_n, x'_m)y_n}{\sum_{n=1}^N K_\tau(x_n, x'_m)}\right)^2.
+  \]
+
   \begin{part}{c}
     Suppose we used the training set as our test set, that is, we evaluated the expression above with $\mathcal{D}_\texttt{test} = \mathcal{D}_\texttt{train}$, and chose the value of $\tau$ which gave the smallest loss.  What value of $\tau$ would be picked?  Why is setting $\mathcal{D}_\texttt{test} = \mathcal{D}_\texttt{train}$ a bad idea?
   \end{part}
 
+  Suppose we set $\mathcal{D}_{\texttt{test}}=\mathcal{D}_{\texttt{train}}$, then the expression for $\mathrm{MSE}$ is 
+  \[
+    \mathrm{MSE} = \frac{1}{N}\sum_{1\leq m \leq N} \left(y_m - \frac{\sum^N_{n=1} K_\tau(x_n, x'_m)y_n}{\sum^N_{n=1} K_\tau(x_n, x'_m)}\right).
+  \]
+  Notice that as $\tau \to 0$, we have the convergence $K_\tau(x, x^*)\to \mathbb{I}_{\{x\}}(x^*)$ of the kernel function to an indicator variable. This means that $f_\tau(x^*)$ converges to the step function
+  \[
+    \widetilde{f}_\tau(x^*) = y_{i(x^*)}\quad\textrm{where}\quad i(x^*)=\mathrm{argmin}_{1\leq n \leq N} |x^* - x_n|.
+  \]
+  In particular, for any $(x,y)\in \mathcal{D}_\texttt{test}$ we have $\widetilde{f}_\tau(x)=y$. In other words, the estimator is perfect on the ``test'' dataset in the limit as $\tau \to 0$. The optimal $\tau$ then must be extremely small. (A value of $\tau=0$ is impossible, unless the expressions in the definition of the estimator are replaced with their limit as $\tau = 0$.)
+
+  This is clearly not very useful -- our model has completely overfit the data and became a $k$-means clustering estimator with $k=1$, losing the beneficial features of the kernel estimator.
+
   % \emph{Hint: consider what value of $\tau$ would be optimal, for $\tau$ ranging in $(0, \infty)$. We can consider $f_\tau(x^*)$ as a weighted average of the training responses, where the weights are proportional to the distance to $x^*$, and the distance is computed via the kernel. What happens to $K_\tau(x, x')$ as $\tau$ becomes very small, when $x = x'$? What about when $x \neq x'$?}
 
   \begin{part}{d}
-    Let us compute the MSE on the provided test set (that is, not the training set). Write Python code to compute the MSE with respect to the same lengthscales as in Part 1. Which model yields the lowest test set MSE? 
+    Let us compute the MSE on the provided test set (that is, not the training set). Write Python code to compute the MSE with respect to the same lengthscales as in (a). Which model yields the lowest test set MSE? 
   \end{part}
+
+  Calculating the MSE for the data we plotted in (a), we obtain the following data:
+  \begin{center}
+    \renewcommand*{\arraystretch}{1.2}
+    \begin{tabular}{|c|c|} 
+     \hline
+     $\tau$ & $\textrm{MSE}$ \\ 
+     \hline
+     1 & 1.947\\
+     50 & 1.858\\
+     2500 & 8.334\\
+     \hline
+    \end{tabular}
+  \end{center}
+  We can see that the model with $\tau = 50$ yields the lowest error. This makes sense if we look at the graph in (a) -- when $\tau$ is very low, the model overfits to the points in the training data set and might deviate too much from the points in the test data set.
 
   \begin{part}{e}
     Describe the time and space complexity of kernelized regression with respect to the size of the training set $N$. 
     How, if at all, does the size of the model---everything that needs to be stored to make predictions---change with the size of the training set $N$? 
     How, if at all, do the number of computations required to make a prediction for some input $x^*$ change with the size of the training set $N$?
   \end{part}
+
+  There are a variety of optimizations we could make to improve space and time complexity, however for the purposes of this problem let's assume no optimizations were made. For storage, we need to store the entire training dataset, or $2N$ numbers. This means storage complexity is $O(N)$. Similarly, assuming the kernel is constant time to evaluate, the time complexity to perform an estimation is $O(N)$. Thus, both factors scale linearly with the size of the training set.
 \end{parts}
 
 \begin{problem}{3}[Kernels and kNN]
@@ -113,13 +161,36 @@ should be.
     interpolate similarly?
   \end{part}
 
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[]{build/3a.pdf}
+  \end{figure}\noindent
+
+  The behavior of the $k$-means clustering estimator is quite similar to the behavior of the kernel estimator, however the kernel estimator is smoother. The observations about increasing/decreasing $\tau$ in the kernel estimator correspond to increasing/decreasing $k$.
+
   \begin{part}{b}
     Compute the MSE on the test set for each value of $k$.  Which solution has the lowest MSE?  
   \end{part}
 
+  Doing the same calculations as before, we see that the best model has $k=1$. 
+  \begin{center}
+    \renewcommand*{\arraystretch}{1.2}
+    \begin{tabular}{|c|c|} 
+     \hline
+     $k$ & $\textrm{MSE}$ \\ 
+     \hline
+     1 & 1.741\\
+     3 & 3.891\\
+     56 & 9.529\\
+     \hline
+    \end{tabular}
+  \end{center}
+
   \begin{part}{c}
     As in Problem 1, describe the space and time complexity of kNN.  How does what is stored to compute predictions change with the size of the training set $N$?  How does the computation needed to compute the prediction for a new input depend on the size of the training set $N$? (For the latter, justify based off of your implementation.)
   \end{part}
+
+  As before, the space complexity is $O(N)$ since we need to store all of the training data. The time complexity is also $O(N)$ since finding the $k$-nearest neighbors requires searching all points in the dataset and finding the $k$ smallest elements. We could also account for the space and time complexity of storing and sorting the $k$ smallest elements, however this is independent of $N$ assuming $k$ is. In particular, note that we don't have to sort the entire array of $N$ data points to get the $k$ smallest elements -- rather we can keep some data structure of size complexity $O(k)$ and insert values into it with time complexity $O(k)$ for each iteration through the training data set.
 \end{parts}
 
 \begin{problem}{4}[Modeling Climate Change 800,000 Years Ago]
@@ -130,45 +201,57 @@ model, we will introduce basis functions.
 
 \begin{parts}
   \begin{part}{a}
-    We will first implement the four basis regressions below. (The first basis has been implemented for you in the notebook as an example.) Note that we introduce an addition transform $f$ (already into the provided notebook) to address concerns about numerical instabilities.
-    \begin{enumerate}
+    We will first implement the four basis regressions below. Note that we introduce an addition transform $f$ to address concerns about numerical instabilities.
+    \begin{enumerate}[(a)]
       \item $\phi_j(x)= f(x)^j$ for $j=1,\ldots, 9$. $f(x) = \frac{x}{1.81 \cdot 10^{2}}.$
-      \item $\phi_j(x) = \exp\left\{-\cfrac{(f(x)-\mu_j)^2}{5}\right\}$ for $\mu_j=\frac{j + 7}{8}$ with $j=1,\ldots, 9$. $f(x) = \frac{x}{4.00 \cdot 10^{2}}.$
+      \item $\phi_j(x) = \exp\left\{-(f(x)-\mu_j)^2/5\right\}$ for $\mu_j=\frac{j + 7}{8}$ with $j=1,\ldots, 9$. $f(x) = \frac{x}{4.00 \cdot 10^{2}}.$
       \item $\phi_j(x) =  \cos(f(x) / j)$ for $j=1, \ldots, 9$. $f(x) = \frac{x}{1.81}$.
-      \item $\phi_j(x) = \cos(f(x) / j)$ for $j=1, \ldots, 49$. $f(x) = \frac{x}{1.81 \cdot 10^{-1}}$. \footnote{For the trigonometric bases (c) and (d), the periodic nature of
-    cosine requires us to transform the data such that the 
-    lengthscale is within the periods of each element of our basis.}
+      \item $\phi_j(x) = \cos(f(x) / j)$ for $j=1, \ldots, 49$. $f(x) = \frac{x}{1.81 \cdot 10^{-1}}$. 
     \end{enumerate}
-
-    {\footnotesize * Note: Please make sure to add a bias term for
-    all your basis functions above in your implementation of the 
-    \verb|make_basis|.}
-
-    Let $$ \mathbf{\phi}(\mathbf{X}) = 
-    \begin{bmatrix} 
-    \mathbf{\phi}(x_1) \\
-    \mathbf{\phi}(x_2) \\
-    \vdots \\
-    \mathbf{\phi}(x_N) \\
-    \end{bmatrix} \in \mathbb{R}^{N\times D}.$$
-    You will complete the \verb|make_basis| function which must return $\phi(\mathbf{X})$ for each part (a) - (d). You do NOT need to submit this code in your \LaTeX writeup.
 
     For each basis create a plot of your code graphing the least squares regression line trained on your training data against a scatter plot of the training data. Boilerplate plotting code is provided in the notebook.
   \end{part}
+
+  Using the standard equations for linear regression with basis functions, we get the following graphs:
+  \begin{figure}[ht]
+    \centering
+    \includegraphics[]{build/4a.pdf}
+  \end{figure}\noindent
 
   \begin{part}{b}
     Now we have trained each of our basis regressions.  For each basis
     regression, compute the MSE on the test set.  Discuss: do any of the
     bases seem to overfit?  Underfit?  Why?
   \end{part}
+  Computing the MSE (for both training and testing data) gives us the following table:
+
+  \begin{center}
+    \renewcommand*{\arraystretch}{1.2}
+    \begin{tabular}{|c|c|c|} 
+     \hline
+     basis function & $\textrm{MSE}_\textrm{test}$ & $\textrm{MSE}_\textrm{train}$\\ 
+     \hline
+     (a) & 7.956 & 4.825 \\
+     (b) & 8.708 & 5.530\\
+     (c) & 5.967 & 2.879\\
+     (d) & 58.912 & 0.643\\
+     \hline
+    \end{tabular}
+  \end{center}
+
+  As we can confirm from the plots in the previous part, the basis function (c) has the lowest error on the testing data. Looking at the training MSE as well, we see that (d) overfits the most by far, whereas (a) and (b) underfit. (c) lies at a perfect balance between both metrics.
 
   \begin{part}{c}
     Briefly describe what purpose the transforms $f$ serve: why are they helpful?
   \end{part}
 
+  Basis functions allow us to introduce nonlinearity into the model, which allows for the modelling of a much more diverse set of problems. Unlike simple linear regression in one dimension, basis functions allow us to introduce significantly more dimensionaltiy to our modelling problem, which allows for a closer fit in many cases.
+
   \begin{part}{d}
     As in Problems 1 and 2, describe the space and time complexity of linear regression.  How does what is stored to compute predictions change with the size of the training set $N$?  How does the computation needed to compute the prediction for a new input depend on the size of the training set $N$?  How do these complexities compare to those of the kNN and kernelized regressor?
   \end{part}
+
+  For a linear regression with basis functions, both the storage and time complexity are $O(1)$, since we only need to store the constant size weight matrix, unlike the previous two estimators which required us to store the whole dataset. This makes linear regression much more efficient, however it might not be as accurate for dataset with exceptionally complex features.
 
   \begin{part}{e}
     Briefly compare and contrast the different regressors: kNN,
@@ -178,14 +261,7 @@ model, we will introduce basis functions.
     regression functions?
   \end{part}
 
-% Note:
-% Recall that we are using a 
-% different set of inputs $\mathbf{X}$ for each basis (a)-(d). 
-% Although it may seem as though this prevents us from being able 
-% to directly compare the MSE since we are using different data, 
-% each transformation can be considered as being a part of our model. 
-% Contrast this with transformations (such as standardization) that cause the variance of the target $\mathbf{y}$ to be different; in these cases the
-% MSE can no longer be directly compared.
+  I think as with many such problems, it depends on the dataset. If the dataset follows a simple linear or polynomial, or even periodic distribution, linear regression will be able to very efficiently extrapolate a pattern, and generalize it quite well. This would also take up much less space that the other two regressors, and be more efficient in calculation. On the other hand, if we have some very unpredictable dataset such as a stock valuation history, a kNN or kernelized regression might perform better at capturing the fine details. Between those two, if the input points are not evenly distributed, then kernelized regression might perform worse due to the kernel not picking up nearby points, whereas kNN would simply select the $k$ nearest points. In most scenarios, it's good to try out different regressors and compare them using MSE or other metrics to select the best one.
 \end{parts}
 
 \begin{problem}{5}[Deriving Linear Regression]
@@ -200,7 +276,7 @@ model, we will introduce basis functions.
   Let us assume that our data are tuples of scalars $(x,y)$ that are
   described by some joint distribution $p(x,y)$. We will consider the process of fitting these data from this distribution with the best linear model
   possible, that is a linear model of the form $\hat{y} = wx$ that
-  minimizes the expected squared loss $E_{x,y}[ ( y - \hat{y} )^2
+  minimizes the expected squared loss $\E_{x,y}[ ( y - \widehat{y} )^2
   ]$.
 \end{problem}
   
@@ -209,29 +285,63 @@ model, we will introduce basis functions.
     Derive an expression for the optimal $w$, that is, the $w$
     that minimizes the expected squared loss above.  You should leave
     your answer in terms of moments of the distribution, e.g. terms
-    like $E_x[x]$, $E_x[x^2]$, $E_y[y]$, $E_y[y^2]$, $E_{x,y}[xy]$
+    like $\E_x[x]$, $\E_x[x^2]$, $\E_y[y]$, $\E_y[y^2]$, $\E_{x,y}[xy]$
     etc.
   \end{part}
 
+  Let's first expand the loss function:
+  \[
+    \begin{aligned}
+      \E(\mathcal{L}) = \E_{x,y}[(y-\widehat{y})^2] = \E_{x,y}[(y-wx)^2] 
+      &= \E_{x,y}[y^2-2wxy+2w^2x^2]\\
+      &= \E_{y}[y^2]-2w\E_{x,y}[xy]+2w^2\E_x[x^2]
+    \end{aligned}
+  \]
+  Next, to minimise this loss we can take the derivative with respect to the weights and set it to zero:
+  \[
+    \begin{aligned}
+      \partial_w \E(\mathcal{L}) = -2\E_{x,y}[xy]+2w\E_x[x^2] =0\quad
+                                                              \implies \quad w^* = \frac{\E_{x,y}[xy]}{\E_x[x^2]}.
+    \end{aligned}
+  \]
+  This an the expression for the optimal weights.
+
   \begin{part}{b}
-    Provide unbiased and consistent formulas to estimate $E_{x, y}[yx]$
-   and $E_x[x^2]$ given observed data $\{(x_n,y_n)\}_{n=1}^N$.
+    Provide unbiased and consistent formulas to estimate $\E_{x, y}[xy]$
+   and $\E_x[x^2]$ given observed data $\{(x_n,y_n)\}_{n=1}^N$.
   \end{part}
 
-  \begin{part}{c} In general, moment terms like $E_{x, y}[yx]$, $E_{x, y}[x^2]$,
-    $E_{x, y}[yx^3]$, $E_{x, y}[\frac{x}{y}]$, etc. can easily be
+  These formulas can be given by the standard unbiased/consistent estimators for moments:
+  \[
+    \E_{x,y}[xy] = \frac{1}{N}\sum^N_{i=1} x_i y_i,\quad\textrm{and}\quad\E_x[x^2]=\frac{1}{N}\sum^N_{i=1} x_i^2.
+  \]
+
+  \begin{part}{c} In general, moment terms like $\E_{x, y}[yx]$, $\E_{x, y}[x^2]$,
+    $\E_{x, y}[yx^3]$, $\E_{x, y}[\frac{x}{y}]$, etc. can easily be
     estimated from the data (like you did above).  If you substitute in
     these empirical moments, how does your expression for the optimal
     $w^*$ in this problem compare with the optimal $w^*$ that we see in
     Section 2.6 of the cs181-textbook?
   \end{part}
 
+  Using the formulas for the empirical moments, we see that
+  \[
+    w^* = \frac{\E_{x,y}[xy]}{\E_x[x^2]} = \frac{(1/N)\cdot\sum_{1\leq i \leq N} x_iy_i}{(1/N)\cdot \sum_{1\leq i \leq N} x_i^2} = \frac{\sum_{1\leq i \leq N} x_iy_i}{\sum_{1\leq i \leq N} x_i^2}.
+  \]
+  Recall from the textbook that the optimal weights had the expression
+  \[
+    w^* = (\mathbf{X}^\intercal \mathbf{X})^{-1}\mathbf{X}^\intercal \mathbf{y}.
+  \]
+  However, note that $\mathbf{X}^\intercal \mathbf{y} = \sum_{1\leq i \leq N} x_i y_i$ and $\mathbf{X}^\intercal\cdot \mathbf{X} = \sum_{1\leq i\leq N} x_i^2$, so the two expressions for $w^*$ are equivalent.
+
   \begin{part}{d}
     Many common probabilistic linear regression models assume that
-    variables x and y are jointly Gaussian.  Did any of your above
+    variables $x$ and $y$ are jointly Gaussian.  Did any of your above
     derivations rely on the assumption that x and y are jointly
     Gaussian?  Why or why not?
   \end{part}
+
+  We made no such assumptions in the problem, all we assumed was that $x$ and $y$ are random variables which have second moments.
 \end{parts}
 
 \end{document}

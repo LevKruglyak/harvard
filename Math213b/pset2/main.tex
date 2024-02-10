@@ -23,13 +23,14 @@
   \]
   is the total ramification of $f$. 
 
-  Now let $f : X \to \CP^1$ be the given map. We know that this map has three critical values $y_1, y_2, y_3$, and we can assume without loss of generality that $y_3=\infty$. Recall that, by construction, the monodromy action is a map 
+  Now let $f : X \to \CP^1$ be the given map. We know that this map has three critical values $y_1, y_2, y_3$. Recall that, by construction, the monodromy action is a map 
   \[
     m : \pi_1(\CP^1\setminus \{y_1, y_2, y_3\}) \to \mathrm{Fi}_{22} \subset S_d
   \]
-  Since we normalized $y_3=\infty$, this first group is just $\pi_1(\C\setminus \{y_1, y_2\})\cong F_2$, i.e. the free group on two letters $a$ and $b$.
-
-  \todo{finish this problem}
+  Then given any $y\in \{y_1, y_2, y_3\}$, the number of preimages of $y$ is the number of cycles of $m([y])$ and the order of each preimage is the length of the cycle. This means that above $y_1$ there are $1408$ critical points, each of order $2$. Similarly, above $y_2$ there are $270$ critical points of order $13$, and above $y_3$ there are $319$ critical points of order $11$. Since $f$ is unramified away from $y_1, y_2, y_3$, we have total ramification
+  \[
+  R_f = 1408\cdot (2-1) + 270\cdot (13-1)+319\cdot (11-1) = 3190.\] 
+  Applying the Riemann-Hurwitz formula, we get \[2g_X - 2 = d(2g_{\CP^1}-2)+R_f\quad \implies g_X = 410.\]
 \end{solution}
 
 \begin{problem}{2}
@@ -47,9 +48,20 @@
   \]
   This expression is only defined since $\Sigma$ is symmetric -- the fiber $f^{-1}(w)$ does not come with any canonical ordering. We would like to show that this function is meromorphic. Recall that the restriction of $f$ to $D\setminus \{0\}$ is a holomorphic covering map, i.e. every point $p\in D\setminus \{0\}$ has an open neighborhood $\mathcal{U}$ such that
   \[
-    f^{-1}(\mathcal{U}) = \bigsqcup_{k}\, \mathcal{U}_k, \quad \textrm{and}\quad \restr{f}{\mathcal{U}_k} : \mathcal{U}_K \to \mathcal{U}\quad\textrm{is a biholomorphism.}
+    f^{-1}(\mathcal{U}) = \bigsqcup_{j}\, \mathcal{U}_j, \quad \textrm{and}\quad \restr{f}{\mathcal{U}_j} : \mathcal{U}_j \to \mathcal{U}\quad\textrm{is a biholomorphism.}
   \]
+  In particular, if we (arbitrarily) pick some branch, say $j=1$, it follows that $\mathcal{U}_j = \zeta^j_k\cdot \mathcal{U}_1$ for $j>1$ where $\zeta_k$ is a primitive $k$-th root of unity. If we let $f^{-1}$ be the inverse of the biholomorphism $\restr{f}{\mathcal{U}_1}$. This allows us to construct a map
+  \[
+    g : \mathcal{U} \to \mathcal{U}_1\times\cdots\times\mathcal{U}_k\quad\textrm{which sends}\quad z \mapsto (\zeta_k^0\cdot f^{-1}(z), \zeta_k^1\cdot f^{-1}(z), \ldots, \zeta_k^{k-1}\cdot f^{-1}(z)).
+  \]
+  In particular, this map is holomorphic in each component since it sends $z$ to some permuted tuple of its preimage under $f$. Let's now compose with $\xi$ in each component to get a function $\xi\circ g : \mathcal{U}\to (\C\cup\{\infty\})^k$ which is holomorphic in each component. Finally, composing with $\Sigma$ gives us a holomorphic map $\Sigma \circ\xi\circ g : \mathcal{U} \to \C$, since each symmetric function only consists of addition and multiplication.
+  Furthermore, the fact that $\Sigma$ is symmetric removes our arbitrary branch choice, so it's clear that $\Sigma \circ \xi \circ g = \restr{s_\Sigma}{\mathcal{U}}$. Thus, $s_\Sigma$ is holomorphic on $D\setminus \{0\}$.
 
+  It remains to extend $s_\Sigma$ to be meromorphic at $z=0$. Since $\xi$ is meromorphic at $z=0$, there is some nonnegative integer $n$ with $\varphi(z) = f(z)^n\xi(z)=z^{nk}\xi(z)$ a holomorphic function on $D$ with $\varphi(0)=0$. Now assuming that $\Sigma$ is homogeneous as a polynomial, near $0$ we have 
+  \[
+    w^{\deg(\Sigma)\cdot n} s_\Sigma(w) = \Sigma\circ \varphi\circ g(w).
+  \]
+  Here the right hand side is holomorphic, so it is bounded around $z=0$. By the Riemann removable singularity theorem, this means that $w^{\deg(\Sigma)\cdot n}s_\Sigma(w)$ can be extended holomorphically on the whole disk. This in turn shows that $s_\Sigma(w)$ is meromorphic. Note that this result holds when $\Sigma$ is non-homogeneous, since a sum of meromophic functions is meromorphic.
 \end{solution}
 
 \begin{problem}{3}
@@ -60,11 +72,31 @@
   where each $a_i$ is a meromorphic function on $X$ that is pulled back along $f$ from the target space $Y$.
 \end{problem}
 
+\begin{solution}
+  Let $S$ be the set of critical points of $f$. Then away from any critical values $v\in f(S)$, we have for every $p\not\in f(S)$ an open neighborhood $p\in \mathcal{U} \subset Y$ such that
+  \[
+    f^{-1}(\mathcal{U})=\bigsqcup_j\, \mathcal{U}_j, \quad \textrm{and}\quad \restr{f}{\mathcal{U}_j} : \mathcal{U}_j \to \mathcal{U}\quad\textrm{is a biholomorphism.}
+  \]
+  Let's set $f_j^{-1} = \restr{f}{\mathcal{U}_j}$ to be the branches of $f$. Then we can consider the function
+  \[
+    F(T) = \prod_{0\leq j< d} (T-\xi\circ f_j^{-1}(w)) = \sum_{0\leq j \leq d} (-1)^{j}\Sigma_j\circ \zeta(f_0^{-1}(T), \ldots, f_d^{-1}(T)) T^{d-j}
+  \]
+  where $\Sigma_j$ is the elementary symmetric function of degree $j$. Let's call the coefficient of $T^j$ in this expansion $a_j$; these are meromorphic functions on $Y$. Note that nowhere in the definition of these coordinates did the ordering of the branches come up, since the symmetric functions are invariant under any permutations.
+  Similarly, our initial choice of point $p\in Y$ and neighborhood $\mathcal{U}$ makes no difference in the final expression for $a_j$, which is defined purely in the global function $f$. Thus, $a_j$ are meromorphic functions on $Y\setminus f(S)$, and clearly $F(\zeta)=0$. At a critical value $y\in f(S)$, a similar argument to the previous problem shows that $y^n a_j(y)$ is holomorphic for sufficiently large $n$.
+\end{solution}
+
 \begin{problem}{4}
   Suppose that, in the context of the previous problem, the function $\xi$ takes $d$ distinct finite values at the points $f^{-1}(y)$ for at least one point $y\in Y$. Show that the polynomial $T^d + a_1 T^{d-1}+\cdots +a_d\in \mathcal{M}_Y[T]$ is irreducible, where $\mathcal{M}_Y$ is the field of meromorphic function on $Y$.
 \end{problem}
 
 \begin{solution}
+  Let's assume $y\in Y$ is one point as in the problem statement, i.e. the values $\xi(x_1),\ldots, \xi(x_d)$ are finite and distinct. In particular, $\xi$ is holomorphic and non-critical at these values.
+  Now, pulling back by $f$ gives a map $\mathcal{M}_f : \mathcal{M}_Y \to \mathcal{M}_X$, or equivalently a field extension $\mathcal{M}_X/\mathcal{M}_Y$. By the previous problem, we know that $\xi$ satisfies some relation
+  \[
+    \xi^d + a_1\xi^{d-1}+\cdots+a_d=\xi^d + \mathcal{M}_f(Q_1)\cdot  \xi^{d-1} + \mathcal{M}_f(Q_2)\cdot \xi^{d-2}+ \cdots + \mathcal{M}_f(Q_d) = 0.
+  \]
+  (In particular recall that the coefficients of this polynomial were pullbacks by $f$ of maps in $\mathcal{M}_Y$. This means that $\xi$ is algebraic over $\mathcal{M}_Y$. Let $P(T)\in \mathcal{M}_Y[T]$ now be the minimal polynomial of $\xi$, say of degree $n \leq d$ with coefficients $\mathcal{M}_f(P_j)\in \mathcal{M}_Y[T]$. If all these coefficients are holomorphic at $y$, then $P(T)$ has $d$ distinct roots, namely $\xi(x_i)$. This implies that $d=n$ and hence irreducibility of $T^d + a_1T^{d-1} + \cdots + a_d$. If any of the coefficients are not holomorphic at $y$, we can perturb $y$ by some arbitrarily small distance, keeping the values at preimages distinct but avoiding singularities. (Poles of meromorphic functions are isolated) In any case, irreducibility follows since the minimal polynomial is irreducible.
+
   \begin{part}{(Optional)}
     Under these circumstances, show that $\mathcal{M}_X$ is a field extension of $\mathcal{M}_Y$ of degree $d$. Use the theorem of the primitive element.
   \end{part}
@@ -81,33 +113,35 @@
 
   Recall that we have the relations:
   \[
-    dx = \frac{1}{2}(dz+d\overline{z}),\quad dy = \frac{1}{2}(dz - d\overline{z}).
+    dx = \frac{dz+d\overline{z}}{2},\quad dy = \frac{dz - d\overline{z}}{2i}.
   \]
   Expanding the given $1$-form using the relations, we get
   \[
-    y\,dx + x\,dy = \frac{y}{2}(dz+d\overline{z}) + \frac{x}{2}(dz - d\overline{z}) = \frac{y+x}{2}\,dz + \frac{y-x}{2}\,d\overline{z}.
+    y\,dx + x\,dy = y\cdot\frac{dz+d\overline{z}}{2} + x\cdot\frac{dz-d\overline{z}}{2i}
+    =y\cdot \frac{dz+d\overline{z}}{2} - ix\cdot\frac{dz-d\overline{z}}{2} = -\frac{iz}{2}\,dz +\frac{i\overline{z}}{2}\,d\overline{z}
   \]
-  Thus, the $(1,0)$ part is a holomorphic $1$-form $(y+x)/2\,dz$, and the $(0,1)$ part is $(y-x)/2\,dz$.
+  Thus, the $(1,0)$ part is a holomorphic $1$-form $-iz/2\,dz$, and the $(0,1)$ part is $-iz/2\,dz$.
 
   \begin{part}{b}
     Let $r$ be the radial distance function on $\C$. Let $\theta$ be the ``argument'' function (in as much it is defined). Calculate $\overline{\partial} r^2, \partial\overline{\partial} r^2, \overline{\partial}\log(r^2)$, $\partial\overline{\partial} \log(r^2)$ and $\overline{\partial}\theta$. Express the answers first in terms of $dz$ and/or $d\overline{z}$, then in terms of $dx$ and $dy$.
   \end{part}
 
+  Using the fact that $r^2 = |z|=z\overline{z}$ and standard properties of differential operators.
   \begin{center}
     \renewcommand*{\arraystretch}{1.2}
     \begin{tabular}{|c|c|c|} 
      \hline
-     \textrm{form} & $dz/d\overline{z}$ & $dx/dy$ \\ 
+     \textrm{form} & $dz,d\overline{z}$ & $dx,dy$ \\ 
      \hline
-     $\overline{\partial} r^2$ & cell5 & cell6 \\ 
-     $\partial\overline{\partial} r^2$ & cell8 & cell9 \\ 
-     $\overline{\partial} \log(r^2)$ & cell8 & cell9 \\ 
-     $\partial \overline{\partial} \log(r^2)$ & cell8 & cell9 \\ 
-     $\overline{\partial} \theta$ & cell8 & cell9 \\ 
+     $\overline{\partial} r^2$ & $z\,dz$ & $(x+iy)\,dx + (y-ix)\,dy$\\ 
+     $\partial\overline{\partial} r^2$ & $dz\wedge d\overline{z}$ & $-2i\,dx\wedge dy$\\ 
+     $\overline{\partial} \log(r^2)$ & $d\overline{z}/z$ & $((x+iy)\,dx + (y-ix)\,dy)/(x^2+y^2)$\\ 
+     $\partial \overline{\partial} \log(r^2)$ & $0$ & $0$\\ 
+     $\overline{\partial} \theta$ & $-d\overline{z}/2i\overline{z}$ & $((-y+ix)\,dx+(x+iy)\,dy)/2(x^2+y^2)$\\ 
      \hline
     \end{tabular}
   \end{center}
+  For the last computation we use the identity $2i\theta = \log(z/\overline{z})$ for a suitable branch of $\log$ as the definition of $\theta$.
 
-  \todo{finish this}
 \end{parts}
 \end{document}
