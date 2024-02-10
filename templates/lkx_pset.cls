@@ -11,7 +11,7 @@
 \newboolean{expanded}
 \setboolean{expanded}{false}
 \DeclareOption{expanded}{
-    \setboolean{expanded}{true}
+	\setboolean{expanded}{true}
 }
 \ProcessOptions\relax
 
@@ -23,34 +23,34 @@
 
 \let\oldmaketitle\maketitle
 \renewcommand{\maketitle}{
-    \ifthenelse{\boolean{expanded}}
-    {
-        \renewcommand\maketitlehooka{\null\mbox{}\vfill}
-        \renewcommand\maketitlehookd{\vfill\null}
+	\ifthenelse{\boolean{expanded}}
+	{
+		\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+		\renewcommand\maketitlehookd{\vfill\null}
 
-        \begin{titlingpage}
-            \oldmaketitle
-            \collaborators
-        \end{titlingpage}
-    }
-    {
-        \oldmaketitle
-        \collaborators
-    }
+		\begin{titlingpage}
+			\oldmaketitle
+			\collaborators
+		\end{titlingpage}
+	}
+	{
+		\oldmaketitle
+		\collaborators
+	}
 }
 
 \makeatletter
 \def \title #1 {%
-    \def\@title{\textbf{#1}}%
+	\def\@title{\textbf{#1}}%
 }%
 \def \due #1 {
-    \def\@date{\textbf{Due:} #1}%}
+	\def\@date{\textbf{Due:} #1}%}
 }
 \makeatother
 
 \makeatletter
 \def \author #1 {%
-    \def\@author{#1}
+	\def\@author{#1}
 }%
 \makeatother
 
@@ -65,20 +65,20 @@
 \newcommand\collablist{}
 
 \newcommand\collaborator[1]{%
-    \iftoggle{firstcollaborator}
-    {%
-        \def\collablist{#1}
-        \togglefalse{firstcollaborator}%
-    }
-    {%
-        \gappto\collablist{, #1}
-    }
+	\iftoggle{firstcollaborator}
+	{%
+		\def\collablist{#1}
+		\togglefalse{firstcollaborator}%
+	}
+	{%
+		\gappto\collablist{, #1}
+	}
 }
 
 \newcommand\collaborators{%
-    \ifboolexpr{ test {\ifdefempty{\collablist}} }
-    {}
-    {\begin{center}{Collaborators: \textit{\collablist}}\end{center}\medskip}
+	\ifboolexpr{ test {\ifdefempty{\collablist}} }
+	{}
+	{\begin{center}{Collaborators: \textit{\collablist}}\end{center}\medskip}
 }
 
 % -----------------------------------------------
@@ -107,53 +107,60 @@
 \def \theoremtitle{\fontfamily{phv}\bfseries}
 
 \newcommand{\createcolortheorem}[3]{
-    \tcolorboxenvironment{#1}{
-        colback=#2, colframe=#3,
-        enhanced jigsaw, sharp corners,
-        leftrule=1pt, rightrule=1pt, toprule=1pt, bottomrule=1pt
-    }
+	\tcolorboxenvironment{#1}{
+		colback=#2, colframe=#3,
+		enhanced jigsaw, sharp corners,
+		leftrule=1pt, rightrule=1pt, toprule=1pt, bottomrule=1pt
+		% before=\par\medskip\noindent,parbox=false
+	}
 }
 
 \newtheoremstyle{oldproblem}{}{}{}{}{\theoremtitle\color{bluebord}}{}{ }{}
 \theoremstyle{oldproblem}
 \newtheorem{innerproblem}{Problem}
 \newenvironment{oldproblem}[1]
-  {\renewcommand\theinnerproblem{#1.}\innerproblem}
-  {\endinnerproblem}
+{\renewcommand\theinnerproblem{#1.}\innerproblem}
+{\endinnerproblem}
 \createcolortheorem{oldproblem}{blueback}{bluebord}
 
 \newenvironment{problem}[1]{
-    \ifthenelse{\boolean{expanded}}{\newpage}{}
-    \begin{oldproblem}{#1}}{\end{oldproblem}}
+	\ifthenelse{\boolean{expanded}}{\newpage}{}
+	\begin{oldproblem}{#1}}{\end{oldproblem}}
 
 \newtheoremstyle{example}{}{}{}{}{\theoremtitle\color{greenbord}}{}{ }{}
 \theoremstyle{example}
 \newtheorem{innerexample}{Example.}
 \newenvironment{example}
-  {\renewcommand\theinnerexample{}\innerexample}
-  {\endinnerexample}
+{\renewcommand\theinnerexample{}\innerexample}
+{\endinnerexample}
 \createcolortheorem{example}{greenback}{greenback}
 
 \newtheoremstyle{definition}{}{}{}{}{\theoremtitle\color{greenbord}}{}{ }{}
 \theoremstyle{definition}
 \newtheorem{innerdefinition}{Definition.}
 \newenvironment{definition}
-  {\renewcommand\theinnerdefinition{}\innerdefinition}
-  {\endinnerdefinition}
+{\renewcommand\theinnerdefinition{}\innerdefinition}
+{\endinnerdefinition}
 \createcolortheorem{definition}{greenback}{greenback}
 
-\theoremstyle{oldproblem}
+\usepackage{xstring}
+\newtheoremstyle{oldpart}{}{}{}{}{\theoremtitle\color{bluebord}}{}{0.0001pt}{}
+\theoremstyle{oldpart}
 \newtheorem{innerpart}{}
 \newenvironment{partthm}[1]
-  {\renewcommand\theinnerpart{#1.}\innerpart}
-  {\endinnerpart}
+{
+	\ifthenelse{\equal{#1}{}}
+	{\renewcommand\theinnerpart{\hspace{0em}}}
+	{\renewcommand\theinnerpart{#1. }}
+	\innerpart
+}{\endinnerpart}
 \createcolortheorem{partthm}{blueback}{blueback}
 
-\renewenvironment{part}[1]{
-    \item\leavevmode\vspace{-1.5em}
-    \begin{partthm}{#1}
-}{
-    \end{partthm}
+\renewenvironment{part}[1][]
+{
+	\item\leavevmode\vspace{-1.5em} \begin{partthm}{#1}
+		}{
+	\end{partthm}
 }
 
 % -----------------------------------------------
@@ -176,27 +183,27 @@
 \newtheorem{emptyinnertheorem}{Theorem.}
 
 \NewDocumentEnvironment{claim}{g}
-  {\IfNoValueTF{#1}
-     {\renewcommand\theemptyinnerclaim{}\emptyinnerclaim}
-     {\renewcommand\theinnerclaim{#1.}\innerclaim}
-  }
-  {\endinnerclaim}
+{\IfNoValueTF{#1}
+	{\renewcommand\theemptyinnerclaim{}\emptyinnerclaim}
+	{\renewcommand\theinnerclaim{#1.}\innerclaim}
+}
+{\endinnerclaim}
 \createcolortheorem{claim}{orangeback}{orangeback}
 
 \NewDocumentEnvironment{theorem}{g}
-  {\IfNoValueTF{#1}
-     {\renewcommand\theemptyinnertheorem{}\emptyinnertheorem}
-     {\renewcommand\theinnertheorem{#1.}\innertheorem}
-  }
-  {\endinnertheorem}
+{\IfNoValueTF{#1}
+	{\renewcommand\theemptyinnertheorem{}\emptyinnertheorem}
+	{\renewcommand\theinnertheorem{#1.}\innertheorem}
+}
+{\endinnertheorem}
 \createcolortheorem{theorem}{orangeback}{orangeback}
 
 \renewenvironment{proof}{{\theoremtitle\color{orangebord} Proof. }}{\qed}
 \tcolorboxenvironment{proof} {
-    before skip=0pt,
-    colframe=white, colback=white,
-    enhanced jigsaw, sharp corners, breakable,
-    leftrule=0pt, rightrule=0pt, toprule=0pt, bottomrule=0pt
+	before skip=0pt,
+	colframe=white, colback=white,
+	enhanced jigsaw, sharp corners, breakable,
+	leftrule=0pt, rightrule=0pt, toprule=0pt, bottomrule=0pt
 }
 
 % -----------------------------------------------
@@ -204,31 +211,31 @@
 % -----------------------------------------------
 
 \newenvironment{changemargins}{%
-    \begin{list}{}{%
-        \setlength{\itemsep}{0em}
-        \setlength{\topsep}{0em}%
-        \setlength{\leftmargin}{1em}%
-        \setlength{\rightmargin}{1em}%
-        \setlength{\listparindent}{\parindent}%
-        \setlength{\itemindent}{\parindent}%
-        \setlength{\parsep}{\parskip}%
-    }%
-}{
-    \end{list}
-    {\medskip}
+\begin{list}{}{%
+		\setlength{\itemsep}{0em}
+		\setlength{\topsep}{0em}%
+		\setlength{\leftmargin}{1em}%
+		\setlength{\rightmargin}{1em}%
+		\setlength{\listparindent}{\parindent}%
+		\setlength{\itemindent}{\parindent}%
+		\setlength{\parsep}{\parskip}%
+	}%
+	}{
+\end{list}
+{\medskip}
 }
 
 \newenvironment{solution}{
-    \begin{changemargins}
-    \item
-}{
-    \end{changemargins}
+	\begin{changemargins}
+		\item
+		}{
+	\end{changemargins}
 }
 
 \newenvironment{parts}{
-    \begin{changemargins}
-}{
-    \end{changemargins}
+	\begin{changemargins}
+		}{
+	\end{changemargins}
 }
 
 % -----------------------------------------------
@@ -238,10 +245,10 @@
 \usepackage{collectbox}
 \makeatletter
 \newcommand{\boxsurround}{%
-    \collectbox{%
-        \setlength{\fboxsep}{1em}%
-        \fbox{\BOXCONTENT}%
-    }%
+	\collectbox{%
+		\setlength{\fboxsep}{1em}%
+		\fbox{\BOXCONTENT}%
+	}%
 }
 \makeatother
 
@@ -310,17 +317,17 @@
 
 % Restriction
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
-  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
-  #1 % the function
-  \vphantom{\big|} % pretend it's a little taller at normal size
-  \right|_{#2} % this is the delimiter
+\left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+#1 % the function
+\vphantom{\big|} % pretend it's a little taller at normal size
+\right|_{#2} % this is the delimiter
 }}
 
 \newcommand\defint[3]{{% we make the whole thing an ordinary symbol
-  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
-  #1 % the function
-  \vphantom{\big|} % pretend it's a little taller at normal size
-  \right|^{#3}_{#2} % this is the delimiter
+\left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+#1 % the function
+\vphantom{\big|} % pretend it's a little taller at normal size
+\right|^{#3}_{#2} % this is the delimiter
 }}
 
 
@@ -357,12 +364,12 @@
 
 % A TikZ style for curved arrows of a fixed height, due to AndréC.
 \tikzset{curve/.style={settings={#1},to path={(\tikztostart)
-    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
-    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
-    .. (\tikztotarget)\tikztonodes}},
-    settings/.code={\tikzset{quiver/.cd,#1}
-        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
-    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+					.. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+					and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+					.. (\tikztotarget)\tikztonodes}},
+	settings/.code={\tikzset{quiver/.cd,#1}
+			\def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+	quiver/.cd,pos/.initial=0.35,height/.initial=0}
 
 % TikZ arrowhead/tail styles.
 \tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
