@@ -190,7 +190,9 @@ nearest-neighbors.  Recall that kNN uses a predictor of the form
 		As in Problem 1, describe the space and time complexity of kNN.  How does what is stored to compute predictions change with the size of the training set $N$?  How does the computation needed to compute the prediction for a new input depend on the size of the training set $N$? (For the latter, justify based off of your implementation.)
 	\end{part}
 
-	As before, the space complexity is $O(N)$ since we need to store all of the training data. The time complexity is also $O(N)$ since finding the $k$-nearest neighbors requires searching all points in the dataset and finding the $k$ smallest elements. We could also account for the space and time complexity of storing and sorting the $k$ smallest elements, however this is independent of $N$ assuming $k$ is. In particular, note that we don't have to sort the entire array of $N$ data points to get the $k$ smallest elements -- rather we can keep some data structure of size complexity $O(k)$ and insert values into it with time complexity $O(k)$ for each iteration through the training data set.
+	As before, the space complexity is $O(N)$ since we need to store all of the training data. In the given implementation, the time complexity is $O(N\log N)$ since we have to sort the entire array of distances, however this is far from optimal.
+
+	In fact, the time complexity could also be made to be $O(N)$ since finding the $k$-nearest neighbors requires searching all points in the dataset and finding the $k$ smallest elements. We could also account for the space and time complexity of storing and sorting the $k$ smallest elements, however this is independent of $N$ assuming $k$ is. In particular, we don't have to sort the entire array of $N$ data points to get the $k$ smallest elements -- rather we can keep some data structure of size complexity $O(k)$ and insert values into it with time complexity $O(k)$ for each iteration through the training data set.
 \end{parts}
 
 \begin{problem}{4}[Modeling Climate Change 800,000 Years Ago]
