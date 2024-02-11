@@ -1,4 +1,4 @@
-\documentclass{lkx_pset}
+\documentclass[expanded]{lkx_pset}
 
 \title{Math 213b Problem Set 2}
 \author{Lev Kruglyak}
@@ -19,6 +19,21 @@ with $\CP^{1}$ in such a way that the quotient map $f: \CP^{1}\to
 	\CP^{1}/G \cong \CP^{1}$ is holomorphic, and find the critical points
 and critical values of $f$.
 \end{problem}
+
+\begin{solution}
+	First, note that $G$ is isomorphic to the Klein $4$-group $\Z/2\times \Z/2$.
+	Consider the function $f : \CP^1 \to \CP^1$ given by:
+	\[
+		f(z) = z^2 + \frac{1}{z^2}.
+	\]
+	Here we can set $f(0)=\infty$ and $f(\infty)=0$ by the Riemann removable singularity theorem. This map is clearly holomorphic as a map between Riemann surfaces. Notice that this map is invariant under the action of $G$, i.e. $f(-z)=f(z)$ and $f(1/z)=f(z)$. Furthermore, since this map has degree $4$, whenever $f(z_1)=f(z_2)$ there must be some $g\in G$ with $z_1 = g\cdot z_2$. This means that $f$ factors uniquely through the quotient, i.e. $f = \varphi \circ \widetilde{f}$ where $\widetilde{f} : \CP^1 \to \CP^1/G$ is the quotient map and $\varphi : \CP^1/G \cong \CP^1$ is a biholomorphism.
+
+	Now let's find the critical points of $f$. The derivative of $f$ is $f'(z) = 2z-2z^{-3}$, and solving $f'(z)=0$ gives us $z^4=1$, so the critical points are the $4$th roots of unity. The critical values are then
+	\[
+		f(\zeta_4^k) = \zeta_4^{2k} + \zeta_4^{-2k} = \frac{\zeta_4^{4k}+1}{\zeta_4^{2k}} = \frac{2}{\zeta_4^{2k}} = \pm 2\quad\textrm{where}\quad \zeta_4=\exp(\pi i/2).
+	\]
+	To summarize, the critical points are $\pm 1, \pm i$ and the critical values are $\pm 2$.
+\end{solution}
 
 \begin{problem}{2}
 In class, we will prove the
@@ -46,6 +61,9 @@ whenever there is a map function $f:X\to \CP^{1}$ of degree $d$.
 More generally, $\mathcal{M}_{X}$ is an algebraic extension of
 $\mathcal{M}_{Y}$ whenever there is a map $X\to Y$ of degree $d$.
 \end{problem}
+
+\begin{solution}
+\end{solution}
 
 \begin{problem}{4}
 Let $S\subset \R^{3}$ be a smooth surface in Euclidean 3-space.
@@ -78,7 +96,7 @@ vectors of equal length in $\R^{3}$. The coordinates of the inverse map $U\to
 	\end{part}
 \end{parts}
 
-\begin{problem}{3}
+\begin{problem}{5}
 Let $C\subset \C^{2}$ be the Riemann surface defined by the
 equation $w^{2}=z(z+4)(z-2)$ (a non-compact Riemann surface).
 Sketch this locus in the real plane (i.e. for $(z,w) \in \R^{2}$).
@@ -95,5 +113,8 @@ Find the coordinates of the other zero.
 % \emph{Hint.} Thinking about the tangent line to the curve at
 % $(-1,3)$ will help.
 \end{problem}
+
+\begin{solution}
+\end{solution}
 
 \end{document}

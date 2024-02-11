@@ -156,7 +156,7 @@
 }{\endinnerpart}
 \createcolortheorem{partthm}{blueback}{blueback}
 
-\renewenvironment{part}[1][]
+\renewenvironment{part}[1]
 {
 	\item\leavevmode\vspace{-1.5em} \begin{partthm}{#1}
 		}{
