@@ -9,22 +9,170 @@
 \begin{document}
 \maketitle
 
-\section*{Distributions and Foliations}
+\section{Local and Global Solutions to PDEs}
 
 Throughout, let $M$ be a smooth manifold of fixed dimension $n$.
+Our goal is to understand how vector fields or distributions on $M$, arising naturally from the theory of PDEs on $M$ admit local or global solutions, i.e. flows and integral manifolds.
+
+\subsection{Grassmannian and Steifel Manifolds}
+
+Let $V$ be a vector space of dimension $n$.
 
 \begin{definition}
-  A \defn{distribution} on $M$ is a subbundle $E\subset TM$ of the tangent bundle of $M$. We'll denote the set of all distributions of rank $k$ on $M$ by $\mathscr{D}^k(M)$.
+	The \defn{(non-compact) Steifel manifold} is
+	\[
+		\St_k(V) = \{ \ell : \R^k \to V \textrm{ is a linear embedding}\} \subset \Hom(\R^k, V),
+	\]
+	with subspace topology from its inclusion into $\Hom(\R^k, V)$.
 \end{definition}
+
+\begin{proposition}
+	$\St_k(V)$ is a smooth manifold of dimension $nk$.
+\end{proposition}
+\begin{proof}
+	We claim that $\St_k(V)$ is actually an open subset of $\Hom(\R^k, V)$. Notice that for a map $\ell\in \Hom(\R^k, V)$ to be a linear embedding, it's sufficient for $\{\ell(e_1), \ldots, \ell(e_k)\}$ to be linearly independent for some basis $\{e_1,\ldots, e_k\}$ of $\R^k$. This is an open condition in the topology of $\Hom(\R^k, V)$ -- if we wrote $\ell$ out in matrix form, the columns being linearly independent is a condition involving a polynomial of the matrix coefficients being nonzero. Thus, $\St_k(V)$ is a smooth manifold of dimension $\dim\Hom(\R^k, V) = nk$.
+\end{proof}
+
+As a subspace of $\Hom(\R^k, V)$, the manifold $\St_k(V)$ carries a right action by $\GL(\R^k)$, given by precomposition. This action is smooth, free, and transitive.
 
 \begin{definition}
-  A submanifold $N\subset M$ is said to be an \defn{integral manifold} to a distribution $E\in \mathscr{D}^k(M)$ if for every $p\in N$, we have $T_p N = E_p$, both considered as subset of $T_p M$.
+	The \defn{Grassmannian manifold} $\Gr_k(V)$ of $k$-planes in $V$ is defined as the quotient
+	\[
+		\Gr_k(V) = \St_k(V) / \GL(\R^k)
+	\]
 \end{definition}
 
-In general, we want to investigate some existence conditions for integral manifolds associated to a foliation, we begin with the simplest case; flat Euclidean space.
+\begin{proposition}
+	$\Gr_k(V)$ is a smooth manifold of dimension $nk-k^2$.
+\end{proposition}
 
-\subsection*{Integral Manifolds on $\E^k$}
+\begin{proof}
+	\todo{quotient of a smooth manifold by a Lie group which acts smoothly, freely, properly, quotient manifold theorem}
+\end{proof}
 
-Suppose first that $E$ is a rank one distribution on $\E^k$.
+\todo{fiber bundle $\St \to \Gr$}
+
+\subsection{Bundle Constructions}
+
+Throughout, let $E$ be a vector bundle over $M$ of rank $m$.
+
+\begin{definition}
+	The \defn{associated Stiefel bundle} of $E$ has total space
+	\[
+		\St_k(E) = \{ (p, \ell) : p\in M, \ell : \R^k \to E_p \textrm{ is a linear embedding}\} \subset \Hom(M\times \R^k, E),
+	\]
+	with natural projection onto the base space $M$.
+\end{definition}
+
+This is not a vector bundle; rather each fiber is diffeomorphic to $\St_k(\R^m)$, the (non-compact) Steifel manifold of $k$-frames on Euclidean $m$-space. The topology on $\St_k(E)$ is the subspace topology under the natural inclusion into $\Hom(M\times \R^k, E)$.
+
+\todo{smooth structure on $\St_k(E)$}
+
+\todo{how does $GL(\R^k)$ act on $\St_k(E)$}
+
+\begin{definition}
+	The \defn{associated Grassmannian bundle} of $E$ has total space
+	\[
+		\Gr_k(E) = \{(p, V) : p\in M, V\in \Gr_k(E_p) \}
+	\]
+	with natural projection onto the base space $M$.
+\end{definition}
+
+\todo{smooth structure on $\Gr_k(E)$}
+
+\begin{proposition}
+	\todo{local trivializations of $E$ give local trivializations of Gr(E) and St(E)}
+\end{proposition}
+
+To give this total space a topology, we use the quotient topology given by the surjective map:
+\[
+	\begin{array}{rcl}
+		\beta_k(E) : \St_k(E) & \xrightarrow{\phantom{---}} & \Gr_k(E)        \\
+		(p,\ell)              & \xmapsto{\phantom{---}}     & (p, \ell(\R^k))
+	\end{array}
+\]
+
+This quotient also gives us the map
+\[
+	\gamma_k(E) : \Gamma(\St_k(E)) \longto \Gamma(\Gr_k(E))
+\]
+which acts as post-composition by $\beta_{k}(E)$. This map need not be surjective in general; \todo{mobius bundle example}.
+
+\begin{proposition}
+	Suppose $M=\R^n$ and $E=M\times \R^m$. Then $\gamma_k(E)$ is surjective.
+\end{proposition}
+
+\begin{proof}
+\end{proof}
+
+\begin{proposition}[Local Section Lifting]
+	Let $\mathcal{U}\subset M$ be an open subset on which $E$ admits a local trivialization, i.e. some diffeomorphism $\varphi$ which commutes the diagram
+	\[\begin{tikzcd}
+			{\mathcal{U}\times\R^n} && {E\mathcal{U}} \\
+			& {\mathcal{U}}
+			\arrow["\varphi", from=1-1, to=1-3]
+			\arrow[from=1-1, to=2-2]
+			\arrow[from=1-3, to=2-2]
+		\end{tikzcd}\]
+	Then the map $\gamma_k(E|_\mathcal{U})$ is surjective.
+	% \[
+	% 	\gamma_{E|_\mathcal{U}} :\quad\Gamma(\St_k({E}|_{\mathcal{U}})) \longto \Gamma(\Gr_k(E|_\mathcal{U}))
+	% \]
+	is surjective.
+	% \[
+	% 	\ell_\mathcal{U} :\quad \Gamma(\Gr_k(E\mathcal{U})) \longto \Gamma(\St_k(E\mathcal{U}))
+	% \]
+	% which is an inverse to $\Gamma(\beta_E)$ on $\Gamma(\St_k(E\mathcal{U}))$.
+\end{proposition}
+
+\begin{proof}
+	\todo{finish}
+\end{proof}
+
+\subsection{Distributions}
+
+\begin{definition}
+	A \defn{distribution} on $M$ is a subbundle $E\subset TM$ of the tangent bundle of $M$. We'll denote the set of all distributions of rank $k$ on $M$ by $\mathscr{D}_k(M)$.
+\end{definition}
+
+\begin{proposition}
+	There are a bijective correspondences:
+	\[
+		\begin{aligned}
+			\mathscr{D}_k(M) & \longisom \Gamma(\Gr_k(TM)), \\
+			F_k(TM)          & \longisom \Gamma(\St_k(TM)), \\
+		\end{aligned}
+	\]
+	where $F_k(TM)$ is the $k$-frame bundle of $TM$.
+\end{proposition}
+
+\begin{proof}
+	\todo{finish}
+\end{proof}
+% \begin{corollary}
+% 	There is a surjective map
+% 	\[
+% 		\Gamma(\St_k(TM)) \longsurj \Gamma(\Gr_k(TM)).
+% 	\]
+% 	In other words, every $k$-distribution arises from a $k$-frame.
+% \end{corollary}
+%
+% \subsection{Vector Fields}
+%
+% For simplicity, let's begin with the case $k=1$. For some vector space $V$, the Steifel manifold $\St_1(V)$ consists of linear embeddings $\R \to V$. By looking at the image of $1$ under an embedding, we see that we can identify this Steifel manifold with $V\setminus \{0\}$.
+%
+% \begin{proposition}
+% 	There is a surjective map
+% 	\[
+% 		\X^*(M) \longsurj \mathscr{D}_1(M).
+% 	\]
+% 	In particular, every rank $1$ distribution arises from a non-vanishing vector field.
+% \end{proposition}
+
+\subsection{Integral Manifolds}
+
+\begin{definition}
+	A submanifold $N\subset M$ is said to be an \defn{integral manifold} to a distribution $E\in \mathscr{D}_k(M)$ if for every $p\in N$, we have $T_p N = E_p$, where both are considered as subset of $T_p M$.
+\end{definition}
 
 \end{document}

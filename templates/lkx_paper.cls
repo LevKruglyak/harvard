@@ -16,10 +16,10 @@
 \usepackage{collectbox}
 \makeatletter
 \newcommand{\boxsurround}{%
-    \collectbox{%
-        \setlength{\fboxsep}{1em}%
-        \fbox{\BOXCONTENT}%
-    }%
+	\collectbox{%
+		\setlength{\fboxsep}{1em}%
+		\fbox{\BOXCONTENT}%
+	}%
 }
 \makeatother
 
@@ -39,7 +39,7 @@
 \newcommand\todo[1]{{\color{red}\textbf{#1}}}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}%[subsection]
+\newtheorem{definition}{Definition}[subsection]
 \newtheorem{theorem}[definition]{Theorem}
 \newtheorem{remark}[definition]{Remark}
 \newtheorem{proposition}[definition]{Proposition}
@@ -105,17 +105,17 @@
 
 % Restriction
 \newcommand\restr[2]{{% we make the whole thing an ordinary symbol
-  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
-  #1 % the function
-  \vphantom{\big|} % pretend it's a little taller at normal size
-  \right|_{#2} % this is the delimiter
+\left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+#1 % the function
+\vphantom{\big|} % pretend it's a little taller at normal size
+\right|_{#2} % this is the delimiter
 }}
 
 \newcommand\defint[3]{{% we make the whole thing an ordinary symbol
-  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
-  #1 % the function
-  \vphantom{\big|} % pretend it's a little taller at normal size
-  \right|^{#3}_{#2} % this is the delimiter
+\left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+#1 % the function
+\vphantom{\big|} % pretend it's a little taller at normal size
+\right|^{#3}_{#2} % this is the delimiter
 }}
 
 
@@ -152,12 +152,12 @@
 
 % A TikZ style for curved arrows of a fixed height, due to AndréC.
 \tikzset{curve/.style={settings={#1},to path={(\tikztostart)
-    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
-    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
-    .. (\tikztotarget)\tikztonodes}},
-    settings/.code={\tikzset{quiver/.cd,#1}
-        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
-    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+					.. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+					and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+					.. (\tikztotarget)\tikztonodes}},
+	settings/.code={\tikzset{quiver/.cd,#1}
+			\def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+	quiver/.cd,pos/.initial=0.35,height/.initial=0}
 
 % TikZ arrowhead/tail styles.
 \tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
