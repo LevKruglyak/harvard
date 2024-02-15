@@ -1,0 +1,154 @@
+\documentclass[expanded]{lkx_pset}
+
+\title{Math 213b Problem Set 3}
+\author{Lev Kruglyak}
+\due{February 21, 2024}
+
+\input{../math213b.sty}
+
+\collaborator{AJ LaMotta}
+% \collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+We saw  in class that a compact Riemann surface of
+genus 2 always admits a map $f$ of degree $2$ to the Riemann sphere.
+Associated to any map proper holomorphic map of degree $2$ is the
+\emph{covering involution} $\tau: X\to X$. This is the map which
+interchanges the points in each pair $f^{-1}(y)=\{x, x'\}$ and fixes those
+points where $f$ is branched (i.e. the points where $x=x'$).
+
+% \emph{Hint.} In class we saw that at least one degree-2 map exists
+% $f_{1}: X \to \CP^{1}$, by a construction involving the holomorphic
+% differentials, and this told us something about the how the points
+% pair up in pairs $\{x,x'\}$. Show by contradiction that there cannot
+% be another $f_{2}$ with a different covering involution.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Show that if $X$ has genus $2$, then any two holomorphic degree-2 maps $f_{1}$,
+		$f_{2}$ from $X$ to the Riemann sphere are equivalent in the sense
+		that they have the give rise to the same involution. (This implies
+		that they differ only by a reparametrization of the target sphere.)
+	\end{part}
+\end{parts}
+
+\begin{problem}{2}
+On a compact Riemann surface  $X$ of genus $g$, a point $p\in X$ is a
+\emph{Weierstrass point} if there exists a meromorphic function on
+$X$ with a pole at $p$ of order at most $g$ and no other poles.
+(Recall from class that a meromorphic function with a pole of order
+at most $g+1$ exists no matter what point $p$ is chosen.)
+
+% \emph{Remark.} On every surface of genus at least $2$, it is known
+% that Weierstrass points exist. The number of Weierstrass points is
+% less than or equal to $g(g^{2}-1)$, and this inequality is always an
+% equality in
+% the case of genus $2$. For genus $3$, this upper bound is $24$, and
+% this number is related to the maximal number of points of inflexion
+% on a quartic curve in the plane.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Show that every genus-2 surface has exactly $6$ Weierstrass points.
+	\end{part}
+\end{parts}
+
+\begin{problem}{3}
+On a Riemann surface $X$, define an operator $\mathord{*} :
+	\Omega^{1}_{X}(\C) \to \Omega^{1}_{X}(\C)$ by setting $\mathord{*}= -i$ on
+the summand $\Omega^{1,0}\subset \Omega^{1}_{X}(\C)$ and $\mathord{*}=i$ on
+the summand $\Omega^{0,1}$. (This operator is a special case of
+the ``Hodge star''.)
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Show that $\mathord{*} dx = dy$ and
+		$\mathord{*} dy = -dx$ in a local holomorphic chart where $z=x+iy$
+		is a local holomorphic coordinate.
+	\end{part}
+
+	\begin{part}{}
+		A 1-form is called closed if $d\alpha=0$ and co-closed if $d \mathord{*} \alpha =0$. Similarly a form is co-exact if $*\alpha= df$. You can reinterpret a result from the class on Wednesday,
+		February 14, as saying that $H^{1}(X;\C)$ is isomorphic to the
+		space of 1-forms $\alpha$ that are both closed and co-closed, if $X$ is
+		compact. Verify this reinterpretation by showing that $\alpha$ is closed and
+		co-closed if and only if its $(0,1)$ and $(1,0)$ parts satisfy $\partial \alpha^{0,1}=0$ and
+		$\bar\partial \alpha^{1,0}=0$.
+	\end{part}
+
+	\begin{part}{}
+
+		On $X = \C\setminus \{0\}$, which of the following $1$-forms $\alpha$
+		are closed? Which are co-closed? Which are exact?
+		Which are co-exact?
+
+		\begin{enumerate}
+			\item $\alpha=x\, dx + y \, dy$.
+			\item $\alpha=x\, dx - y \, dy$.
+			\item $\alpha=y\, dx + x \, dy$.
+			\item $\alpha=y\, dx - x \, dy$.
+			\item $(1/r)\,dr$ where $r$ is the radial distance function.
+		\end{enumerate}
+	\end{part}
+\end{parts}
+
+\begin{problem}{4}
+Let $f$ be a smooth compactly-supported function on $\R^{2}$. The
+\emph{Dirichlet norm}, $\|f\|_{D}$, can be defined in this context by
+\[
+	\|f\|_{D}^{2} = \int_{\R^{2}} |df|^{2} \, dxdy.
+\]
+Suppose that $f$ can be written as a function of the radial
+distance $r$:
+\[
+	f = \beta(r),
+\]
+for some smooth function $\beta$.
+\end{problem}
+
+\begin{parts}
+
+	\begin{part}{}
+		Show that
+		\[
+			\|f\|_{D}^{2} = 2\pi \int_{0}^{\infty} r \beta'(r)^{2}\, dr.
+		\]
+	\end{part}
+
+	\begin{part}{}
+		Using this formula, and by taking suitable functions $\beta$
+		(perhaps by thinking first about the functions $\log\log(1/r)$),
+		show that there exists a sequence of functions $\{f_{n}\}$ on
+		$\R^{2}$ such
+		that:
+		\begin{itemize}
+			\item $f_{n}$ is supported in the unit disk for all $n$;
+			\item $\|f_{n}\|_{D} = 1$ for all $n$;
+			\item $|f_{n}(0)| \to \infty$ as $n\to\infty$.
+		\end{itemize}
+		% (Don't expect a completely explicit answer.)
+	\end{part}
+
+	\begin{part}{}
+		Deduce that a sequence of smooth functions $g_{n}$ which are supported in
+		the unit disk and which are a Cauchy sequence in the Dirichlet
+		norm, meaning
+		\[
+			\| g_{n} - g_{m} \|_{D} \to 0, \; \text{as $n,m\to\infty$},
+		\]
+		need not be uniformly convergent.
+	\end{part}
+
+	% \emph{Remark.} It is not hard to modify an example like this to
+	% arrange also that $\int g_{n} = 0$ for all $n$: just put two
+	% smaller disjoint disks inside the unit disk and consider an
+	% example where $g_{n}$ is supported in the two disks.
+\end{parts}
+
+\end{document}
