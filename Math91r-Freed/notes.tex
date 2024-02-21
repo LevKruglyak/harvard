@@ -99,34 +99,20 @@ This quotient also gives us the map
 which acts as post-composition by $\beta_{k}(E)$. This map need not be surjective in general; \todo{mobius bundle example}.
 
 \begin{proposition}
-	Suppose $M=\R^n$ and $E=M\times \R^m$. Then $\gamma_k(E)$ is surjective.
+	Suppose $M$ is contractible and $E=M\times \R^m$. Then $\gamma_k(E)$ is surjective.
 \end{proposition}
 
 \begin{proof}
+	\todo{this proof}
 \end{proof}
 
 \begin{proposition}[Local Section Lifting]
-	Let $\mathcal{U}\subset M$ be an open subset on which $E$ admits a local trivialization, i.e. some diffeomorphism $\varphi$ which commutes the diagram
-	\[\begin{tikzcd}
-			{\mathcal{U}\times\R^n} && {E\mathcal{U}} \\
-			& {\mathcal{U}}
-			\arrow["\varphi", from=1-1, to=1-3]
-			\arrow[from=1-1, to=2-2]
-			\arrow[from=1-3, to=2-2]
-		\end{tikzcd}\]
-	Then the map $\gamma_k(E|_\mathcal{U})$ is surjective.
-	% \[
-	% 	\gamma_{E|_\mathcal{U}} :\quad\Gamma(\St_k({E}|_{\mathcal{U}})) \longto \Gamma(\Gr_k(E|_\mathcal{U}))
-	% \]
-	is surjective.
-	% \[
-	% 	\ell_\mathcal{U} :\quad \Gamma(\Gr_k(E\mathcal{U})) \longto \Gamma(\St_k(E\mathcal{U}))
-	% \]
-	% which is an inverse to $\Gamma(\beta_E)$ on $\Gamma(\St_k(E\mathcal{U}))$.
+	\label{local_section_lifting}
+	For any $p\in M$, there is some open neighborhood $\mathcal{U}\subset M$ of $p$ such that the map $\gamma_k(E|_\mathcal{U})$ is surjective.
 \end{proposition}
 
 \begin{proof}
-	\todo{finish}
+	\todo{proof}
 \end{proof}
 
 \subsection{Distributions}
@@ -140,39 +126,68 @@ which acts as post-composition by $\beta_{k}(E)$. This map need not be surjectiv
 	\[
 		\begin{aligned}
 			\mathscr{D}_k(M) & \longisom \Gamma(\Gr_k(TM)), \\
-			F_k(TM)          & \longisom \Gamma(\St_k(TM)), \\
+			\mathscr{F}_k(M) & \longisom \Gamma(\St_k(TM)), \\
 		\end{aligned}
 	\]
-	where $F_k(TM)$ is the $k$-frame bundle of $TM$.
+	where $\mathscr{F}_k(M)$ is the $k$-frame bundle of $TM$.
 \end{proposition}
 
 \begin{proof}
 	\todo{finish}
 \end{proof}
-% \begin{corollary}
-% 	There is a surjective map
-% 	\[
-% 		\Gamma(\St_k(TM)) \longsurj \Gamma(\Gr_k(TM)).
-% 	\]
-% 	In other words, every $k$-distribution arises from a $k$-frame.
-% \end{corollary}
-%
-% \subsection{Vector Fields}
-%
-% For simplicity, let's begin with the case $k=1$. For some vector space $V$, the Steifel manifold $\St_1(V)$ consists of linear embeddings $\R \to V$. By looking at the image of $1$ under an embedding, we see that we can identify this Steifel manifold with $V\setminus \{0\}$.
-%
-% \begin{proposition}
-% 	There is a surjective map
-% 	\[
-% 		\X^*(M) \longsurj \mathscr{D}_1(M).
-% 	\]
-% 	In particular, every rank $1$ distribution arises from a non-vanishing vector field.
-% \end{proposition}
+
+Thus, we have a map
+\[
+	\gamma : \mathscr{F}_k(M) \longto \mathscr{D}_k(M)
+\]
+which sends a $k$-frame to it's spanning distribution.
+
+\begin{definition}
+	A \defn{global basis} for a distribution $E\in \mathscr{D}_k(M)$ is a $k$-frame $\sigma\in \mathscr{F}_k(M)$ with $\gamma(\sigma)=E$. A \defn{local basis} for $E$ on some open $\mathcal{U}\subset M$ is $k$-frame $\sigma\in \mathscr{F}_k(\mathcal{U})$ with $\gamma(\sigma)=E|_\mathcal{U}$.
+\end{definition}
+
+Note that global bases need not exist for a distribution.
+
+\begin{example}
+	\todo{Torus example}
+\end{example}
+
+\begin{proposition}
+	For any distribution $E\in \mathscr{D}_k(M)$ and point $p\in M$, there exists some open neighborhood $\mathcal{U}\subset M$ of $p$ on which there exists a local basis for $E$.
+\end{proposition}
+
+\begin{proof}
+	Apply Proposition~\ref{local_section_lifting} to $E$, this gives us a section of $\St_k(E|_\mathcal{U})$, which naturally embeds as a section of $\St_k(T\mathcal{U})$, and can then be canonically identified with $\mathcal{F}_k(\mathcal{U})$.
+\end{proof}
 
 \subsection{Integral Manifolds}
 
 \begin{definition}
-	A submanifold $N\subset M$ is said to be an \defn{integral manifold} to a distribution $E\in \mathscr{D}_k(M)$ if for every $p\in N$, we have $T_p N = E_p$, where both are considered as subset of $T_p M$.
+	A submanifold $N\subset M$ is said to be an \defn{integral manifold} to a distribution $E\in \mathscr{D}_k(M)$ if for every $p\in N$, we have $T_p N = E_p$, where both are considered as subset of $T_p M$. A connected integral manifold is \defn{maximal} if it is not properly contained in any other connected integral manifold.
 \end{definition}
+
+\begin{definition}
+	A distribution $E \in \mathscr{D}_k(M)$ is \defn{integrable} at a point $p\in M$ if there exists an integral manifold $N$ to $E$ which contains $p$.
+\end{definition}
+
+The condition of complete integrability is entirely separate from the condition of having a global basis.
+
+\begin{example}[Global basis but not integrable]
+	On $M= \A^3_{\langle x,y,z\rangle}$ consider the lineraly independent vector fields
+	\[
+		\begin{aligned}
+			X & = \frac{\partial}{\partial x} + z\frac{\partial}{\partial y}, \\
+			Z & = \frac{\partial}{\partial z},
+		\end{aligned}
+	\]
+	and let $E=\langle X, Z \rangle$ be the distribution spanned by $X$ and $Z$. Then $X$ and $Z$ form a global basis for $E$, but $E$ is not integrable at any point.
+	\todo{why}
+\end{example}
+
+\begin{example}[Completely integrable, but no global basis]
+	\todo{Torus example}
+\end{example}
+
+% Locally however,
 
 \end{document}

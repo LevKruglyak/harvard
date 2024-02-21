@@ -1,0 +1,62 @@
+\documentclass[expanded]{lkx_pset}
+
+\title{CS181 Problem Set 2}
+\author{Lev Kruglyak}
+\due{February 23, 2024}
+
+\input{../cs181.sty}
+
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}{Exploring Bias-Variance and Uncertainty}
+In this problem, we will explore the bias and variance of a few
+different model classes when it comes to logistic regression and
+investigate two sources of predictive uncertainty in a synthetic
+(made-up) scenario.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		We are using a powerful telescope in the northern hemisphere to gather
+		measurements of some planet of interest. At certain times however, our
+		telescope is unable to detect the planet due to its positioning around
+		its star.  The data in \verb|data/planet-obs.csv| records the
+		observation time in the ``Time" column and whether the planet was
+		detected in the ``Observed" column (with the value 1 representing that
+		it was observed).  These observations were taken over a dark, clear
+		week, which is representative of the region.  Since telescope time is
+		expensive, we would like to build a model to help us schedule and find
+		times when we are likely to detect the planet.
+	\end{part}
+
+	\begin{part}{a}
+		Split the data into 10 mini-datasets of size $N = 30$ (i.e. dataset 1 consists of the first 30 observations, dataset 2 consists of the next 30, etc. This has already been done for you).
+		Consider the three bases $\boldsymbol\phi_1(t) = [1, t]$, $\boldsymbol\phi_2(t) = [1, t, t^2]$, and $\boldsymbol\phi_3(t) = [1, t, t^2, t^3, t^4, t^5]$. For each of these bases, fit a logistic regression model using sigmoid($\boldw^\top \boldsymbol\phi(t)$) to each dataset by using gradient descent to
+		minimize the negative log-likelihood.  This means you will be
+		running gradient descent 10 times for each basis, once for each
+		dataset.
+
+		Use the given starting values of $\boldw$ and a learning rate of $\eta=0.001$, take 10,000 update
+		steps for each gradient descent run, and make sure to average the
+		gradient over the data points at each step. These parameters,
+		while not perfect, will ensure your code runs reasonably quickly.
+	\end{part}
+\end{parts}
+
+
+% \begin{enumerate}
+% 	\item 
+%
+% 	\item After consulting with a domain expert, we find that the probability of observing the planet is periodic as the planet revolves around its star---we are more likely to observe the planet when it is in front of its star than when it is behind it. In fact, the expert determines that observation follows the generating process $y \sim \text{Bern}(f(t))$, where $f(t) = 0.4 \times \cos(1.1t + 1) + 0.5$ for $t \in [0, 6]$ and $y \in \{0,1\}$. Note that we, the modelers, do not usually see the true data distribution. Knowledge of the true $f(t)$ is only exposed in this problem to allow for verification of the true bias.
+%
+% 	      Use the given code to plot the true process versus your learned models. Include your plots in your solution PDF.
+%
+% 	      \textbf{In no more than 5 sentences}, explain how bias and variance reflected in the 3 types of curves on the graphs.  How do the fits of the individual and mean prediction functions change?  Keeping in mind that none of the model classes match the true generating process exactly, discuss the extent to which each of the bases approximates the true process.
+% \end{enumerate}
+% \begin{parts}
+% \end{parts}
+
+\end{document}

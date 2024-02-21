@@ -48,6 +48,9 @@
 \newtheorem{example}[definition]{Example}
 \newtheorem{corollary}[definition]{Corollary}
 
+% Hyperref must be loaded after the environments are defined
+\usepackage{hyperref}
+
 % -----------------------------------------------
 %              Basic math/formatting stuff
 % -----------------------------------------------
