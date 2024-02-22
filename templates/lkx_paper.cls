@@ -28,8 +28,9 @@
 % -----------------------------------------------
 
 \usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb} % Standard ams libraries
-\usepackage{mathrsfs} % Fancy script capitals
 \usepackage{bm} % Bold math
+\usepackage{mathrsfs}
+\usepackage{cancel}
 
 % -----------------------------------------------
 %              Environments

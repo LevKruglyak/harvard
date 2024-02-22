@@ -1,0 +1,129 @@
+\documentclass{lkx_paper}
+
+\title{\textbf{Riemann Surfaces}}
+\date{}
+\author{Lev Kruglyak}
+
+\input{../math213b.sty}
+
+\begin{document}
+\maketitle
+
+\section{Differential Forms}
+
+\todo{prior stuff}
+
+\subsection{Dirichlet Norm}
+
+\begin{definition}
+	Let $X$ be a Riemann surface and $f\in \Omega^0(X; \R)$. We define the  \defn{Dirichlet norm} of $f$ as:
+	\[
+		\|f\|_D^2 = 2i\int_X \dd f\wedge \ddc f.
+	\]
+\end{definition}
+
+This is a \emph{semi-definite} norm, since $\|f\|_D = 0$ implies that $f$ is (locally) constant. We can, of course, work in the modulo space of smooth functions up to equivalence up to locally constant functions and obtain a definite norm on this space instead.
+
+\begin{definition}
+	The Dirichlet norm then induces the \defn{Dirichlet (semi-definite) inner product} on $\Omega^0(X; \R)$, given by:
+	\[
+		\langle f, g\rangle_D = i\int_X \dd f \wedge \ddc g + \dd g\wedge \ddc f.
+	\]
+\end{definition}
+
+If $X$ is a compact Riemann surface, we can integrate by parts:
+\[
+	\begin{aligned}
+		\int \dd f \wedge \ddc g & = \int df\wedge \ddc g - \cancel{\,\int \ddc f\wedge \ddc g\,} \\
+		                         & = -\int f\wedge d\ddc g =
+	\end{aligned}
+\]
+\todo{finish this derivation}
+
+\begin{proposition}
+	If $X$ is a compact Riemann surface, then for any $f,g$ we have
+	\[
+		\langle f, g\rangle_D = 2i\int_X \dd f \wedge \ddc g.
+	\]
+	Alternatively, we could write
+	\[
+		\langle f, g\rangle_D = \int_X f\cdot \Delta g = \int_X g\cdot \Delta f
+	\]
+	where $\Delta : \Omega^0(X) \to \Omega^2(X)$ is the Laplace operator, given by $\Delta = 2i\,\ddc\dd$.
+\end{proposition}
+
+\subsection{Lebesgue Norm}
+
+\begin{definition}
+	Given an \emph{area form} $\omega\in\Omega^2(X; \R)$, we define the \defn{Lebesgue norm} ($L^2$), given on $f\in \Omega^0(X; \R)$ by
+	\[
+		\|f\|^2_{L^2} = \int_X |f|^2\,\omega.
+	\]
+\end{definition}
+
+This is in some sense less canonical than the Dirichlet norm since it requires the additional data of an area form.
+
+\begin{proposition}[Poincar\'e Inequality]
+	Given a compact Riemann surface $X$ with area form $\omega$, then there exists a constant $C>0$ such that
+	\[
+		\|f\|_{L^2} \leq C\cdot \|f\|_D
+	\]
+	for all $f\in \Omega^0(X; \R)$ with $\int_X f\,\omega = 0$.
+\end{proposition}
+
+We'll begin by proving the special case when $X=S^2\subset \R^3$ is the unit sphere, equipped with standard area form $\omega$. In this standard area form, we have
+\[
+	\begin{aligned}
+		\Delta f & = 2i\,\ddc\dd f       \\
+		         & = \bbDelta f\, \omega
+	\end{aligned}
+\]
+This operator $\bbDelta :\Omega^0(X) \to \Omega^0(X)$ is called the \emph{spherical Laplacian}.
+
+\begin{lemma}
+	$\bbDelta$ admits an \emph{complete orthonormal} system of eigenfunctions $v_0, v_1,\ldots$ with eigenvalues $0=\lambda_0 < \lambda_1\leq \lambda_2\leq \cdots$, i.e. the $v_i$ are pairwise orthonormal in the Lebesgue norm, and their span is dense.
+\end{lemma}
+
+\begin{proof}
+	To find the eigenfunctions of $\bbDelta$ on $S^2$, look for polynomials $F(x_1, x_2, x_3)$ on $\R^3$ which are harmonic, i.e. $\Delta_{\R^3} F = 0$, and restrict them to the sphere.
+\end{proof}
+
+\begin{proof}[Proof of the Poincar\'e Inequality for the Sphere]
+	Given some $f \in \Omega^0(X)$, we can expand:
+	\[
+		f = \sum^\infty_{i=1} a_i v_i\quad\implies\quad \bbDelta f = \sum^\infty_{i=1} \lambda_i a_i v_i
+	\]
+	by convergence of partial sums in the $L^2$ metric. Note that the assumption about $\int_X f\, \omega$ is what allows us to ignore the eigenfunction $v_0$ in the expansion. (This requires more details about the construction of the eigenfunctions) In particular, we have
+	\[
+		\|f\|^2_{L^2} = \int_X |f|^2\,\omega =  \sum^\infty_{i=1}|a_i|^2\quad\textrm{and}\quad \|f\|^2_D = \int_X \Delta f\, \omega = \sum^\infty_{i=1} \lambda_i|a_i|^2.
+	\]
+	Therefore, since $\lambda_1$ is minimal among the eigenvalues, we have
+	\[
+		\|f\|^2_{L^2} \leq \frac{1}{\lambda_1}\cdot \|f\|^2_D
+	\]
+	so a constant for the Poincar\'e inequality is $C = \lambda_1^{-1/2}.$
+\end{proof}
+
+This type of proof works any time we can understand the eigenvalues of the Laplacian operator on a compact Riemann surface -- for $S^2$ it follows from spherical harmonics.
+
+More generally, let's consider what happens on a flat disk $D^2\subset \R^2$. In this case, we could prove that there is always a constant $C>0$ such that for all $f$, there is some $\overline{f}\in \R$ such that
+\[
+	\|f-\overline{f}\|_{L^2} \leq C\cdot \|f\|_D.
+\]
+Easier to work with is the case of the disk $S_+ \subset S^2$, i.e. the upper hemisphere of the unit sphere. This disk is biholomorphic to the flat disk by stereographic projection, and the volume form $\omega_{D^2}$ changes by a bounded factor from $\omega_{S^2}$, i.e.
+\[
+	c_0\cdot \omega_{S_+} \leq \omega_{D^2}\leq c_1\cdot \omega_{S_+},
+\]
+for constants $c_0, c_1>0$.
+
+\begin{proof}[Proof of the Poincar\'e Inequality for the Disk]
+	Let $f \in \Omega^0(S_+; \R)$, which satisfies $\int_{S_+} f\,\omega = 0$. We can form a continuous (but not necessarily smooth) function $F \in \Omega^0(S^2; \R)$ by reflection over the equator, and it's clear that the condition $\int_{S^2} F\,\omega=0$ is still satisfied.
+
+	Although $F$ need not be smooth at the equator, it can be approximated by a family of smooth maps $F_n$, which converge to $F$ in both Dirichlet and Lebesgue norms. Hand-waving, this involves smoothing out equator singularities using successively smaller neighborhoods of the equator. Finally, note that
+	\[
+		\|F\|_D = \int_{S^2} |dF|^2\cdot \omega = 2\int_{S^+} |df|^2\,\omega = 2\cdot \|f\|_D
+	\]
+	and similarly for the Lebesgue norm, so we can conclude by applying the Poincar\'e Inequality for the sphere.
+\end{proof}
+
+\end{document}

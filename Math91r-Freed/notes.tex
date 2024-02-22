@@ -170,9 +170,23 @@ Note that global bases need not exist for a distribution.
 	A distribution $E \in \mathscr{D}_k(M)$ is \defn{integrable} at a point $p\in M$ if there exists an integral manifold $N$ to $E$ which contains $p$.
 \end{definition}
 
-The condition of complete integrability is entirely separate from the condition of having a global basis.
+\begin{proposition}
+	Every rank one distribution is integrable.
+\end{proposition}
 
-\begin{example}[Global basis but not integrable]
+\begin{proof}
+
+\end{proof}
+
+\begin{proposition}[Construction Property]
+	Let $E\in \mathscr{D}_k(M)$ be a rank $k$ distribution which is integrable at $p\in M$, with integral manifold $N\subset M$. Suppose that for some rank $k'< k$ subdistribution $E'\subset E$ is also integrable at $p\in M$ with integral manifold $N'\subset M$. Then $N'\cap N \cap\, \mathcal{U}$ is a $k'$-dimensional submanifold of $\mathcal{U}$ for some suitably open neighborhood of $p$ in $M$.
+\end{proposition}
+
+% \begin{corollary}
+% 	Let $
+% \end{corollary}
+
+\begin{example}[Distribution that isn't integrable]
 	On $M= \A^3_{\langle x,y,z\rangle}$ consider the lineraly independent vector fields
 	\[
 		\begin{aligned}
@@ -180,14 +194,9 @@ The condition of complete integrability is entirely separate from the condition 
 			Z & = \frac{\partial}{\partial z},
 		\end{aligned}
 	\]
-	and let $E=\langle X, Z \rangle$ be the distribution spanned by $X$ and $Z$. Then $X$ and $Z$ form a global basis for $E$, but $E$ is not integrable at any point.
-	\todo{why}
-\end{example}
+	and let $E=\langle X, Z \rangle$ be the distribution spanned by $X$ and $Z$. Then $X$ and $Z$ form a global basis for $E$, so $E$ is trivializable, yet $E$ is not integrable at any point.
 
-\begin{example}[Completely integrable, but no global basis]
-	\todo{Torus example}
+	\todo{why?}
 \end{example}
-
-% Locally however,
 
 \end{document}
