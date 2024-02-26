@@ -150,7 +150,7 @@
 \newenvironment{partthm}[1]
 {
 	\ifthenelse{\equal{#1}{}}
-	{\renewcommand\theinnerpart{\hspace{0em}}}
+	{\renewcommand\theinnerpart{}}
 	{\renewcommand\theinnerpart{#1. }}
 	\innerpart
 }{\endinnerpart}

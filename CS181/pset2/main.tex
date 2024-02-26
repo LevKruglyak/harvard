@@ -7,11 +7,12 @@
 \input{../cs181.sty}
 
 \collaborator{AJ LaMotta}
+\collaborator{Leonardo Kaplan}
 
 \begin{document}
 \maketitle
 
-\begin{problem}{1}{Exploring Bias-Variance and Uncertainty}
+\begin{problem}{1}[Exploring Bias-Variance and Uncertainty]
 In this problem, we will explore the bias and variance of a few
 different model classes when it comes to logistic regression and
 investigate two sources of predictive uncertainty in a synthetic
@@ -23,40 +24,360 @@ investigate two sources of predictive uncertainty in a synthetic
 		We are using a powerful telescope in the northern hemisphere to gather
 		measurements of some planet of interest. At certain times however, our
 		telescope is unable to detect the planet due to its positioning around
-		its star.  The data in \verb|data/planet-obs.csv| records the
-		observation time in the ``Time" column and whether the planet was
-		detected in the ``Observed" column (with the value 1 representing that
+		its star.  The data in {\verb|data/planet-obs.csv|} records the
+		observation time in the ``Time'' column and whether the planet was
+		detected in the ``Observed'' column (with the value 1 representing that
 		it was observed).  These observations were taken over a dark, clear
 		week, which is representative of the region.  Since telescope time is
 		expensive, we would like to build a model to help us schedule and find
 		times when we are likely to detect the planet.
 	\end{part}
 
-	\begin{part}{a}
+	\begin{part}{1}
 		Split the data into 10 mini-datasets of size $N = 30$ (i.e. dataset 1 consists of the first 30 observations, dataset 2 consists of the next 30, etc. This has already been done for you).
-		Consider the three bases $\boldsymbol\phi_1(t) = [1, t]$, $\boldsymbol\phi_2(t) = [1, t, t^2]$, and $\boldsymbol\phi_3(t) = [1, t, t^2, t^3, t^4, t^5]$. For each of these bases, fit a logistic regression model using sigmoid($\boldw^\top \boldsymbol\phi(t)$) to each dataset by using gradient descent to
-		minimize the negative log-likelihood.  This means you will be
+		Consider the three bases
+		\[\bm{\phi}_1(t) = [1, t],\quad \bm{\phi}_2(t) = [1, t, t^2], \quad\textrm{and}\quad \bm{\phi}_3(t) = [1, t, t^2, t^3, t^4, t^5].\]
+		For each of these bases, fit a logistic regression model using $\textrm{sigmoid}(\bm{w}^\intercal \bm{\phi}(t))$ to each dataset by using gradient descent to minimize the negative log-likelihood.  This means you will be
 		running gradient descent 10 times for each basis, once for each
 		dataset.
+	\end{part}
 
-		Use the given starting values of $\boldw$ and a learning rate of $\eta=0.001$, take 10,000 update
+	See \verb|problem1.py|, it passes all of the tests except for $\bm{\phi}_3$, which fails due to numeric instability issues that have given inconsistent results due to the tester implementation. This doesn't seem to be a problem when running the tests on a different machine.
+
+	\pagebreak
+	\begin{part}{}
+		Use the given starting values of $\bm{w}$ and a learning rate of $\eta=0.001$, take 10,000 update
 		steps for each gradient descent run, and make sure to average the
 		gradient over the data points at each step. These parameters,
 		while not perfect, will ensure your code runs reasonably quickly.
 	\end{part}
+
+	\begin{part}{2}
+		After consulting with a domain expert, we find that the probability of observing the planet is periodic as the planet revolves around its star---we are more likely to observe the planet when it is in front of its star than when it is behind it. In fact, the expert determines that observation follows the generating process \[y \sim \text{Bern}(f(t)), \quad\textrm{where}\quad f(t) = 0.4 \times \cos(1.1t + 1) + 0.5\quad\textrm{for} \quad t \in [0, 6], y \in \{0,1\}.\] Note that we, the modelers, do not usually see the true data distribution. Knowledge of the true $f(t)$ is only exposed in this problem to allow for verification of the true bias.
+		Use the given code to plot the true process versus your learned models. Include your plots in your solution PDF.
+	\end{part}
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[]{build/1b-basis1.pdf}
+		\includegraphics[]{build/1b-basis2.pdf}
+		\includegraphics[]{build/1b-basis3.pdf}
+	\end{figure}\noindent
+	% \begin{figure}[ht]
+	% 	\centering
+	% 	\includegraphics[]{build/1b-basis3.pdf}
+	% \end{figure}\noindent
+
+	\begin{part}{}
+		\textbf{In no more than 5 sentences}, explain how bias and variance reflected in the 3 types of curves on the graphs.  How do the fits of the individual and mean prediction functions change?  Keeping in mind that none of the model classes match the true generating process exactly, discuss the extent to which each of the bases approximates the true process.
+	\end{part}
+
+	The first basis produces low variance since the models are fairly similar, but high bias since the mean of models is far off. On the other hand, the third basis produces high variance since the models are quite different, and low bias since the mean of models is very close to the ground truth model. Meanwhile, the second basis produces a middle ground between the two extreme models. Intuitively this fits since the first model underfits due to a smaller basis and the third model overfits due to a larger basis.
+
+	\begin{part}{3}
+		If we were to increase the size of each dataset drawn from $N = 30$ to a larger number, how would the bias and variance change for each basis? Why might this be the case? You may experiment with generating your own data that follows the true process and plotting the results, but this is \textbf{not} necessary. \textbf{Your response should not be longer than 5 sentences}.
+	\end{part}
+
+	This would have negligible change on the bias, since the main limiting factors for bias are the basis functions. We would however, get a lower variance especially in the second and third basis, since the training data sets would be more similar on average and thus produce more similar models.
+
+	\begin{part}{4}
+		Consider the test point $t = 0.1$. Using your models trained on basis $\bm\phi_3$, report the predicted probability of observation of the \textit{first} model (the model trained on the first 30 data points). How can we interpret this probability as a measure of uncertainty? Then, compute the variance of the classification probability over your 10 models at the same point $t = 0.1$. How does this measurement capture another source of uncertainty, and how does this differ from the uncertainty represented by the classification probability? Repeat this process (reporting the first model's classification probability and the variance over the 10 models) for the point $t = 3.2$.
+	\end{part}
+
+	The first model gives an output of $0.52$ for $t=0.1$, which means that it predicts the output being either $0$ or $1$ with around a $50\%$ confidence. The variance of the estimates of the other models is $0.0034$, which means that the confidence among all the other models trained on this data is very similar. So in this case, most of the models are about $50\%$ certain that the output is either $0$ or $1$.
+
+	In the case when $t=3.2$, the first model outputs $1.00$, which means that it predicts that the output is $1$ with $100\%$ certainty (up to rounding). The variance among other models $0.25$, which means that the confidence of the first model should not be trusted to make a prediction, since other models predict $0.0$ with $100\%$ certainty (up to rounding).
+	Put simply, individual models have their own confidence in their prediction, but the variance among these confidences shows the consensus confidence in all of their predictions.
+
+	\begin{part}{}
+		Compare the uncertainties and their sources at times $t=0.1$ and $t=3.2$.
+	\end{part}
+
+	The model's are individually uncertain at $t=0.1$, but collectively certain in their uncertainty. This makes sense, since near $t=0.1$ there is a fairly even distribution of $0$ and $1$ values, so any good model should be uncertain here.
+	At $t=3.2$ however, there is a large gap in the data where there is a sharp transition from $0$ to $1$. Thus, each model is certain that there is a sharp jump somewhere, but collectively they are uncertain about where it is. Their high confidence in this case is a consequence of the basis functions and overfitting.
+
+	\begin{part}{5}
+		We now need to make some decisions about when to request time on
+		the telescope.  The justifications of your decisions will be sent to
+		your funding agency, which will determine whether you will be
+		allocated funds to use the telescope for your project.
+	\end{part}
+	\begin{parts}
+		\begin{part}{}To identify the ideal time, which model(s) would you use and why?\end{part}
+
+		In a real world scenario where we didn't know the ground truth model, I would probably choose the second basis. The first one has very low variance, but clearly underfits. The third model has a very high variance and very sharp features, making each individual model very confident. That being said, given the ground truth model, it's clear that the mean of learned models for the third basis has lowest bias. However, a priori it doesn't seem obvious to use the third models given their high variance.
+
+		\begin{part}{}
+			What time would you request, and why?
+		\end{part}
+
+		The best times to request would be between $5$ and $6$, since these predicting for these times have a high confidence and low variance among the models in for the second and third bases. Thus, we can be sure that the answers we're getting are accurate to ground truth.
+
+		\begin{part}{}
+			Your funding agency suggests using a different telescope in a
+			humid area near the equator. Can you still use your model to
+			determine when the planet is likely to be visible?  Why? Are there
+			adaptations that may be necessary?
+		\end{part}
+
+		The model would need to be retrained or at least checked for effectiveness in this new environment, since the humidity would likely cause clouds to obscure stars. That being said, the model might be more effective than expected because the clouds might be less frequent, or other effects are more significant and widespread so the model was able to learn them. It's hard to say without testing and domain expertise.
+
+		\begin{part}{}
+			You seek out a team that has used the alternative telescope
+			for observing this planet, and they provide you their observation
+			file \verb|data/planet-obs-alternate.csv|.
+			Compare the observations from your telescope to theirs.  What
+			seems to be happening?  What might be an appropriate model for
+			this? Your funding agency asks you to refit your models on these
+			new data.  Do you think this is a reasonable ask, and if so, how
+			will it help you make better decisions about when to request
+			viewing time?  If not, why do you think the additional modeling
+			will not help? You do \emph{not} need to do any modeling for this
+			question!
+		\end{part}
+
+		After investigation, the alternative data seems significantly more evenly distributed, so the ground truth for this data might be more complicated. This means that the third basis could capture more of these detailed, and would thus be useful.
+
+		\begin{part}{}
+			The team who shared the data tells you that the effect you're
+			seeing is due to the weather around the telescope.  Weather
+			forecasts for the area are usually accurate a few days in
+			advance. Does that affect your strategy for requesting time?  If
+			so, how?  If not, why not?
+		\end{part}
+
+		Recording the current weather patterns as an extra column of data would be helpful for the model to capture more information. To make future predictions, the weather forecast could be included as an additional data point for more accurate predictions. Generally, adding too many inputs can introduce a lot of noise and might degrade regression performance, so as usual there should be a comparison before and after to see if this would be a positive change or not.
+	\end{parts}
+\end{parts}
+
+\begin{problem}{2}[Maximum likelihood in classification]
+Consider now a generative $K$-class model.  We adopt class prior
+$p(\bm{y}= C_k; \bm{\pi}) = \pi_k$ for all $k \in \{1, \ldots, K\}$
+(where $\pi_k$ is a parameter of the prior).
+Let  $p(\bm{x}|\bm{y}=C_k)$ denote
+the class-conditional density of features $\bm{x}$ (in this
+case for class $C_k$). Consider the data set $D = \{(\bm{x}_i,
+	\bm{y}_i)\}_{i=1}^n$ where as above $\bm{y}_i \in \{C_k\}_{k=1}^K$ is
+encoded as a one-hot target vector and the data are independent.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{1}
+		Write out the log-likelihood of the data set, $\ln p(D; \bm{\pi})$.
+	\end{part}
+
+	Since the data are independent, the likelihood function is
+	\[
+		p(D; \bm{\pi}) = \prod_{i=1}^N p(\bm{x}_i, \bm{y}_i; \bm{\pi}) = \prod_{i=1}^N p(\bm{x}_i\, |\, \bm{y}_i)\cdot {p(\bm{y}_i; \bm{\pi})} = \prod^N_{i=1} p(\bm{x}_i\,|\,\bm{y}_i)\cdot {\bm{y}_i^\intercal\bm{\pi}}.
+	\]
+	Here we express $p(\bm{y}; \bm{\pi})=y^\intercal\bm{\pi}$ by the one-hot target encoding. Then, the log-likelihood is
+	\[
+		\ln p(D; \bm{\pi}) = \sum^N_{i=1}\ln(\bm{y}_i^\intercal \bm{\pi}) +\ln p(\bm{x}_i\,|\,\bm{y}_i).
+	\]
+
+	\begin{part}{2}
+		Since the prior forms a distribution, it has the constraint that
+		$\sum_k\pi_k - 1 = 0$. Give the
+		expression for the maximum-likelihood estimator for the prior
+		class-membership probabilities, i.e.
+		$\widehat \pi_k.$
+		Make sure to write out the intermediary equation you need
+		to solve to obtain this estimator. Briefly state why your final answer is intuitive.
+	\end{part}
+
+	Since we would like to maximize the log-likelihood subject to the above constraint, we can consider the Lagrangian function
+	\[
+		\mathcal{L}(\bm{\pi}, \lambda) = \lambda\left(\sum^K_{k=1} \pi_k - 1\right)
+		+\sum^N_{i=1}\ln(\bm{y}_i^\intercal \bm{\pi}) +\ln p(\bm{x}_i\,|\,\bm{y}_i)
+	\]
+	To find the optimal $\widehat \pi_k$ which minimizes the log-likelihood, we need the following conditions to hold:
+	\[
+		\frac{\partial \mathcal{L}(\bm{\pi}, \lambda)}{\partial \bm{\pi}} = 0 \quad\textrm{and}\quad \frac{\partial \mathcal{L}(\bm{\pi}, \lambda)}{\partial \lambda} = 0.
+	\]
+	Expanding these derivatives using standard rules of matrix calculus, we get
+	\[
+		\frac{\partial \mathcal{L}(\bm{\pi}, \lambda)}{\partial \bm{\pi}} = \lambda + \sum_{i=1}^N \frac{1}{\bm{y}_i^\intercal \bm{\pi}}\cdot \bm{y_i}^\intercal\quad \textrm{and}\quad \frac{\partial \mathcal{L}(\bm{\pi}, \lambda)}{\partial \lambda} = \left(\sum^K_{k=1} \pi_k - 1\right),
+	\]
+	where in the first derivative we consider $\lambda$ as a vector with every entry set to $\lambda$.
+	Let $Y_k = \{1 \leq i \leq N : \bm{y}_i = C_k\}$ be the set of indices of data points in each class.
+	Recall that $\bm{y}_i$ is a one-hot encoded target vector, so $\bm{y}_i$ only has one non-zero entry. This means that for a given $k\in \{1,\ldots, K\}$, we have
+	\[
+		-\lambda = \sum_{i=1}^N\frac{\bm{y}_{i,k}}{\bm{y}_i^\intercal \widehat{\pi}} = \frac{|Y_k|}{\widehat\pi_k} \quad\implies \quad \widehat{\pi}_k = -\lambda\cdot |Y_k|.
+	\]
+	With the added condition that $\widehat{\pi}_1+\cdots+\widehat{\pi}_K=1$, we notice that
+	\[
+		1=\widehat{\pi}_1+\cdots + \widehat{\pi}_K = -\lambda \cdot \left(|Y_1| + \cdots + |Y_K|\right) = -\lambda \cdot N.
+	\]
+	Thus, we can conclude that $\lambda = -1/N$ so $
+		\widehat{\pi}_k = |Y_k|/N$.
+	Intuitively, this makes a lot of sense, since $\widehat{\pi}_k$ is the empirical probability that $\bm{y}$ belongs to class $C_k$.
+
+	\begin{part}{}
+		For the remaining questions, let the
+		class-conditional probabilities be Gaussian distributions with
+		the same covariance matrix
+		$$p(\bm{x} | \bm{y}= C_k) = \mathcal{N}(\bm{x}\,|\, \bm{\mu}_k, \bm{\Sigma}), \text{\ for\ }k \in \{1,\ldots, K\}$$
+		and different means $\bm{\mu}_k$ for each class.
+	\end{part}
+
+	\begin{part}{3}
+		Derive the gradient of the log-likelihood with respect to vector $\bm{\mu}_k$.
+		Write the expression in matrix form as a function of the variables defined
+		throughout this exercise. Simplify as much as possible for full credit.
+	\end{part}
+
+	Using slightly different notation, we can now write the likelihood function as
+	\[
+		p(D; \bm{\mu}, \bm{\Sigma}) = \prod_{i=1}^N \bm{y}_i^\intercal \widehat{\pi}\cdot p(\bm{x}_i \,|\, \bm{y}_i) =
+		\prod_{k=1}^K \prod_{i\in Y_k} \widehat{\pi}_k\cdot \mathcal{N}(\bm{x}_i\,|\,\bm{\mu}_k, \bm{\Sigma})
+	\]
+	The log-likelihood is then
+	\[
+		\begin{aligned}
+			\ln p(D; \bm{\mu}, \bm{\Sigma})
+			 & = \sum_{k=1}^K\sum_{i\in Y_k} \ln(\widehat{\pi}_k) + \ln \mathcal{N}(\bm{x}_i \,|\, \bm{\mu}_{k}, \bm{\Sigma}) \\
+			 & = \sum_{k=1}^K\sum_{i\in Y_k}
+			\ln(\widehat{\pi}_k) + \ln (2\pi)^{-K/2}
+			|\bm{\Sigma}|^{-1/2}
+			\exp\left(-\frac{1}{2}\left(\bm{x}_i - \bm{\mu}_{k}\right)^\intercal
+			\bm{\Sigma}^{-1} \left(\bm{x}_i - \bm{\mu}_{k}\right)\right)
+			\\
+			 & = \sum_{k=1}^K \sum_{i\in Y_k}
+			\ln(\widehat{\pi}_k) -
+			\frac{1}{2}\left(K \ln (2\pi) +
+			\ln |\bm{\Sigma}| +
+			\left(\bm{x}_i - \bm{\mu}_{k}\right)^\intercal
+			\bm{\Sigma}^{-1}
+			\left(\bm{x}_i - \bm{\mu}_{k}\right)\right)                                                                       \\
+		\end{aligned}
+	\]
+	Now to expanding the gradient of the log-likelihood, we get
+	\[
+		\nabla_{\bm\mu_k} \ln p(D; \bm{\mu}, \bm\Sigma) = -\frac{1}{2}\sum_{i\in Y_k} \bm\Sigma^{-1}(\bm{x}_i - \bm{\mu}_k).
+	\]
+
+	\begin{part}{4}
+		Derive the maximum-likelihood estimator $\widehat{\mu}_k$ for vector $\bm{\mu}_k$. Briefly state why your final answer is intuitive.
+	\end{part}
+
+	Setting the gradient to zero, we see that
+	\[
+		\sum_{i\in Y_k} \bm\Sigma^{-1} \bm{x}_i = |Y_k|\cdot \bm\Sigma^{-1}\widehat{\mu}_k.
+	\]
+	Multiplying both sides by $\bm\Sigma$, we get
+	\[
+		\widehat{\mu}_k = \frac{1}{|Y_k|}\sum_{i\in Y_k} \bm{x}_i.
+	\]
+	In other words, $\widehat{\mu}_k$ is the empirical mean of the $\bm{x}_i$ in the class $C_k$.
+
+	\begin{part}{5}
+		Derive the gradient for the log-likelihood with respect to the
+		covariance matrix $\bm{\Sigma}$ (i.e., looking
+		to find an MLE for the covariance).
+		Since you are differentiating with respect to a
+		\emph{matrix}, the resulting expression should be a matrix!
+	\end{part}
+
+	Expanding the gradient using standard matrix calculus identities, we get
+	\[
+		\begin{aligned}
+			\nabla_{\bm{\Sigma}} \ln p(D; \bm{\mu}, \bm{\Sigma})
+			 & = \nabla_{\bm\Sigma} \left(-\frac{N}{2}\ln|\bm\Sigma|\right) + \nabla_{\bm\Sigma} -\frac{1}{2}\left(\sum_{k=1}^K \sum_{i\in Y_k} (\bm{x}_i-\bm{\mu}_k)^\intercal \bm{\Sigma}^{-1}(\bm{x}_i - \bm{\mu}_i)\right) \\
+			 & = -\frac{N}{2}\bm\Sigma^{-\intercal} + \frac{1}{2}\sum^K_{k=1}\sum_{i\in Y_k}\bm\Sigma^{-\intercal}(\bm{x}_i-\bm{\mu}_k)(\bm{x}_i-\bm{\mu}_k)^\intercal\bm\Sigma^{-\intercal}                                   \\
+			 & = -\frac{N}{2}\bm\Sigma^{-1} + \frac{1}{2}\sum^K_{k=1}\sum_{i\in Y_k}\bm\Sigma^{-1}(\bm{x}_i-\bm{\mu}_k)(\bm{x}_i-\bm{\mu}_k)^\intercal\bm\Sigma^{-1}                                                           \\
+		\end{aligned}
+	\]
+	Here, this last replacement of $\bm{\Sigma}^{-\intercal}$ by $\bm{\Sigma}^{-1}$ follows because the covariance matrix is symmetric.
+
+	\begin{part}{6}
+		Derive the maximum likelihood estimator $\widehat{\Sigma}$ of the covariance matrix.
+	\end{part}
+	Setting the gradient derived in the last problem to zero, and multiplying both sides by $\widehat{\Sigma}$, once on the right and once on the left, we get the expression
+	\[
+		\widehat{\Sigma} = \frac{1}{N}\sum^K_{k=1}\sum_{i\in Y_k} (\bm{x}_i - \bm{\mu}_k)
+		(\bm{x}_i - \bm{\mu}_k)^\intercal.
+	\]
+	This is exactly the empirical covariance matrix of the various $\bm{x}_i$.
 \end{parts}
 
 
-% \begin{enumerate}
-% 	\item 
-%
-% 	\item After consulting with a domain expert, we find that the probability of observing the planet is periodic as the planet revolves around its star---we are more likely to observe the planet when it is in front of its star than when it is behind it. In fact, the expert determines that observation follows the generating process $y \sim \text{Bern}(f(t))$, where $f(t) = 0.4 \times \cos(1.1t + 1) + 0.5$ for $t \in [0, 6]$ and $y \in \{0,1\}$. Note that we, the modelers, do not usually see the true data distribution. Knowledge of the true $f(t)$ is only exposed in this problem to allow for verification of the true bias.
-%
-% 	      Use the given code to plot the true process versus your learned models. Include your plots in your solution PDF.
-%
-% 	      \textbf{In no more than 5 sentences}, explain how bias and variance reflected in the 3 types of curves on the graphs.  How do the fits of the individual and mean prediction functions change?  Keeping in mind that none of the model classes match the true generating process exactly, discuss the extent to which each of the bases approximates the true process.
-% \end{enumerate}
-% \begin{parts}
-% \end{parts}
+\begin{problem}{3}[Classifying Stars]
+In this problem, you will code up three different classifiers to classify different types of stars. The file \verb|data/hr.csv| contains data on magnitude and temperature. Please implement the following classifiers in the \verb|SoftmaxRegression| and \verb|KNNClassifier| classes:
+
+\begin{enumerate}[label=\alph*)]
+
+	\item \textbf{A generative classifier with Gaussian class-conditional
+		      densities with a \textit{shared covariance} matrix} across all classes.
+	      Feel free to re-use your Problem 2 results.
+
+	\item \textbf{Another generative classifier with Gaussian class-conditional densities , but now
+		      with a \textit{separate covariance} matrix} learned for each class. (Note:
+	      The staff implementation can switch between the two Gaussian generative classifiers with just a
+	      few lines of code.)
+
+	\item \textbf{A multi-class logistic regression classifier} using the softmax activation function. In your implementation of gradient descent, \textbf{make sure to include a bias term and use L2 regularization} with regularization parameter $\lambda = 0.001$. Limit the number of iterations of gradient descent to 200,000, and set the learning rate to be $\eta = 0.001$.
+
+	\item \textbf{Another multi-class logistic regression classifier} with feature map $\phi(\bm{x}) = [\ln (x_1 + 10), x_2^2]^\intercal$, where $x_1$ and $x_2$ represent the values for magnitude and temperature, respectively.
+
+	\item \textbf{A kNN classifier} in which you classify based on the $k = 1$ and $k = 5$ nearest neighbors and the following distance function: $$\textrm{dist}(\textrm{star}_1, \textrm{star}_2) = (\textrm{mag}_1 - \textrm{mag}_2)^2/9 + (\textrm{temp}_1 - \textrm{temp}_2)^2$$
+	      where nearest neighbors are those with the smallest distances from a given point.
+
+	      Note 1: When there are more than two labels, no label may have the
+	      majority of neighbors.  Use the label that has the most votes among
+	      the neighbors as the choice of label.
+
+	      Note 2: The grid of points for which you are making predictions
+	      should be interpreted as our test space.  Thus, it is not necessary
+	      to make a test point that happens to be on top of a training point
+	      ignore itself when selecting neighbors.
+\end{enumerate}
+\end{problem}
+
+\begin{parts}
+	\begin{part}{1}
+		Plot the decision boundaries generated by each classifier for the dataset. Include them in your PDF. Identify the similarities and differences among the classifiers. What explains the differences---in particular, which aspects or properties of each model dictate the shape of its decision boundary?
+	\end{part}
+
+	The simplest of the classifiers is kNN, here classification just corresponds to distance to the nearest points. An interesting feature that appears is in the $k=5$ case, where a high density of points of one type next to a lower density of points of another type lead to some mistakes due to the classifier ``smearing out'' a lot of the data boundaries. The softmax regression function decision boundaries look the most simple, since they use simple linear and quadratic basis functions. For the Gaussian generative model performs pretty well, and is accurate for both shared and separate covariances. The seperate covariance model fits perfectly, but it looks a bit unusual, so maybe the assumptions about data being distributed according to the Gaussian distribution is unfounded for this particular data set.
+
+	\begin{figure}[ht]
+		\centering
+		\includegraphics[]{build/3a-knn1_result.pdf}
+		\includegraphics[]{build/3a-knn5_result.pdf}
+		\includegraphics[]{build/3a-basis_softmax_result.pdf}
+		\includegraphics[]{build/3a-softmax_regression_result.pdf}
+		\includegraphics[]{build/3a-gaussian_shared_covariance.pdf}
+		\includegraphics[]{build/3a-gaussian_separate_covariance.pdf}
+	\end{figure}\noindent
+
+	\pagebreak
+	\begin{part}{2}
+		Consider a star with Magnitude 3 and Temperature -2. To which class does each classifier assign this star? Report the classification probabilities of this star for each model. Interpret how each model makes its classification decision. What are the pros and cons of each interpretation? What else should we, the modelers, be aware of when making predictions on a test point ``far" from our training data? \textbf{Your response should no be longer than 5 sentences.}
+	\end{part}
+
+	All models predict the star to be a dwarf, which lines up with intuition. The classification probabilities can be organized into a table as follows
+
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+			\hline
+			Model                               & Dwarf                 & Giant & Supergiant \\
+			\hline
+			\verb|knn1|                         & 1                     & 0     & 0          \\
+			\hline
+			\verb|knn5|                         & 5                     & 0     & 0          \\
+			\hline
+			\verb|basis_softmax_regression|     & 1.00                  & 0.00  & 0.00       \\
+			\hline
+			\verb|softmax_regression|           & 1.00                  & 0.00  & 0.00       \\
+			\hline
+			\verb|gaussian_shared_covariance|   & $2.26\times 10^{-8}$  & 0.00  & 0.00       \\
+			\hline
+			\verb|gaussian_separate_covariance| & $1.56\times 10^{-57}$ & 0.00  & 0.00       \\
+			\hline
+		\end{tabular}
+	\end{center}
+
+	The generative models tend to choose between extremely small probabilities, the kNN models are simple integers which count how many of the neighbors are in the respective class, and the softmax models provide probability ranges in a reasonable range. This indicates that for generative models we need to be extremely careful with numerical instability, which is less important for the other estimators. Generally, predictions far from the training data should be treated with a grain of salt, but as usual this depends on the type and source of the data we are processing.
+\end{parts}
 
 \end{document}
