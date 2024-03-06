@@ -49,6 +49,15 @@
 \newtheorem{example}[definition]{Example}
 \newtheorem{corollary}[definition]{Corollary}
 
+\newtheorem*{definition*}{Definition}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{claim*}{Claim}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{example*}{Example}
+\newtheorem*{corollary*}{Corollary}
+
 % Hyperref must be loaded after the environments are defined
 \usepackage{hyperref}
 

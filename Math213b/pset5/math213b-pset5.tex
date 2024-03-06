@@ -1,0 +1,160 @@
+\documentclass[expanded]{lkx_pset}
+
+\title{Math 213b Problem Set 5}
+\author{Lev Kruglyak}
+\due{February 28, 2024}
+
+\input{../math213b.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let $\Lambda\subset \R^2\subset \C$ be a lattice and let $X = \R^2/\Lambda$ be the resulting compact Riemann surface of genus $1$. From $\R^2$ it obtains a standard area form $dx \wedge dy$ and we therefore have a Laplacian
+\[
+	\bbDelta : \Omega^0(X) \longto \Omega^0(X).
+\]
+Let $\Lambda^*\subset \R^2$ be the dual lattice: this is the set $\{\mu\in \R^2 : \mu\cdot \lambda \in \Z, \forall \lambda\in \Lambda\}$. For $\mu\in \Lambda^*$, show that the function given by
+\[
+	\definefunction{e_\mu}{X}{\C}{z}{e^{2\pi i \mu \cdot z}}
+\]
+is an eigenfunction of the Laplacian (with complex coefficients) and find the eigenvalue.
+\end{problem}
+
+\begin{solution}
+	Let's say $\mu = (\mu_1, \mu_2)$, and $z=(x,y)$ in the standard coordinate system on $\C$ which descends to coordinates on $X$. Computing the Lagrangian in these coordinates we get
+	\[
+		\begin{aligned}
+			\Delta e_\mu(z)
+			 & = \Delta e^{2\pi i(\mu_1 x + \mu_2 y)}
+			= -(\partial^2/\partial x^2 + \partial^2/\partial y^2)\, e^{2\pi i(\mu_1 x + \mu_2 y)} \\
+			 & = 4\pi^2(\mu_1^2+\mu_2^2)\, e^{2\pi i(\mu_1 x + \mu_2 y)}                           \\
+			 & = 4\pi^2|\mu|^2 \cdot e_\mu.
+		\end{aligned}
+	\]
+	Let's label these eigenvalues $\lambda_\mu = 4\pi^2|\mu|^2$. Since the space of functions $\Omega^0(X; \C)$ is equivalent to the space of $\Lambda$-periodic smooth functions on $\C$. The Fourier coefficients are then exactly the functions $e_\mu$, so the $\C$-algebra $\C[e_\mu]$ is dense in $\Omega^0(X)$ with the $L^1$ norm.
+
+	\begin{part}{}
+		Find a description of the smallest non-zero eigenvalue of the Laplacian in terms of the geometry of the dual lattice $\Lambda^*$.
+	\end{part}
+
+	Since the eigenvalue $\lambda_\mu$ monotonically increases with the magnitude of $\mu$, the smallest eigenvalue corresponds to the eigenfunction $e_{\mu_\textrm{min}}$ where $\mu_{\textrm{min}}$ is the shortest length vector in $\Lambda^*$. One way to interpret this eigenvalue geometrically is as the circumference of the smallest circle centered at the origin which goes through at least one point of $\Lambda^*$.
+
+	\begin{part}{}
+		Show that this quantity is equal to $4\pi^2\ell^2/A^2$ where $\ell$ is the length of the shortest non-zero vector in $\Lambda$ and $A$ is the total area of $X$.
+	\end{part}
+
+	Recall that for a lattice $\Lambda$, we have $\det(\Lambda^*) = 1/\det(\Lambda)$. This means that $|\mu_{\textrm{min}}|=\ell/A$, where $A=\det(\Lambda)$ is the area of the lattice (equivalently the area of $X$). In particular,
+	\[
+		\lambda_{\textrm{min}} = 4\pi^2 |\mu_{\textrm{min}}|^2 = \frac{4\pi^2\ell^2}{A^2}.
+	\]
+\end{solution}
+
+\begin{problem}{2}
+Suppose $u$ satisfies the equation $\bbDelta u + u^2 = 0$ in the unit disk $D = \{x\in \R^2 : |x|<1\}$ and that $u$ is continuous on the closed disk. Show that $u(0)\leq 100$.
+
+% Start by finding a positive function g on the open disk with
+% Lap(g)+g^2 >= 0, g(0) <= 100, g(x) \to infty as |x| -> 1
+% The constant 100 is not the best possible
+\end{problem}
+
+\begin{solution}
+	For some constant $C$, (say $C=100$) consider the function:
+	\[
+		\definefunction{g}{D}{\R}{r}{C(1-r^2)^{-2}}
+		\quad\textrm{where}\quad r = \sqrt{x^2+y^2}.
+	\]
+	Clearly, $g$ is a smooth positive function on $[0,1)$, and it's clear that $g(0)=C$. Additionally, $\lim_{r\to 1} g(r) = \infty$. Computing the Laplacian of $g$, we see that
+	\[
+		\begin{aligned}
+			\Delta g = -\left(\frac{\partial^2}{\partial x^2}+\frac{\partial^2}{\partial y^2}\right)g = -\frac{4C(4r^2+2)}{(1-r^2)^4}.
+		\end{aligned}
+	\]
+	Now by setting $r=1$, we can produce a bound
+	\[
+		\Delta g + g^2 = -\frac{4C(4r^2+2)}{(1-r^2)^4} + \frac{C^2}{(1-r^2)^4}\geq \frac{C^2-24C}{(1-r^2)^4} \geq 0,
+	\]
+	since $C>24$. Now suppose for the sake of contradiction that $u$ is a function satisfying the conditions of the problem with $u(0)>100$. Now subtracting $g$, we get
+	\[
+		\Delta u + u^2 - (\Delta g + g^2) \leq 0\quad\implies\quad \Delta(u-g)\leq -u^2+g^2.
+	\]
+	Evaluating at $0$, we get $\Delta(u-g)(0)\leq -u(0)^2+g(0)^2 < -C^2 + C^2 = 0$. Now let $U=\{x\in D : \Delta(u-g)(x)<0\}=\Delta(u-g)^{-1}((-\infty,0))\cap D$. This is an open subset by continuity, and $u-g$ is subharmonic on $U$. In particular, $u-g$ attains its maximum on $\partial U$. Let's say the minimum point is some $p\in D$. Then it follows from maximality that $p\in U$, so $p\in U\cap \partial U$, which is an empty set. This is a contradiction, and so $u(0)\leq C$.
+\end{solution}
+
+\begin{problem}{3}
+Let $\mu$ be a complex number with $|\mu|>1$ and let $\langle\mu \rangle\cong \Z$ be the subgroup of the multiplicative group $\C^* = \C \setminus \{0\}$ which $\mu$ generates. Show that the quotient $X = \C^*/\langle \mu\rangle$ is a Riemann surface of genus $1$. Find $\tau$ in the upper half-plane so that $X$ is isomorphic to $\C/\Lambda_\tau$ where $\Lambda_\tau\subset \C$ is the lattice generated by $1$ and $\tau$.
+\end{problem}
+
+\begin{solution}
+	Letting $\Z$ act on $\C$ by translation in the real direction, we have a biholomorphism $\C /\Z \to \C^*$ which sends $z\mapsto e^{2\pi i z}$. This map has inverse $f^{-1}(z)=\log(z)/2\pi i$, so let's set
+	\[
+		\tau = -\frac{\log(\mu)}{2\pi i},
+	\]
+	where we add the minus sign to force $\tau\in \mathbb{H}$. Observe that we have biholomorphisms
+	\[
+		\C/\Lambda_\tau =\C/\Z\oplus \tau\Z \cong (\C/\Z)/\langle\tau \rangle.
+	\]
+	Here, $\tau^k$ acts on $\C/\Z\cong \C^*$ by sending $[z]$ to $[z-k\tau]$. Let's call this projection $\pi_1 : \C/\Z \to \C/\Lambda_\tau$. We also have the projection $\pi_2 : \C^* \to X$, where $\tau^k$ acts on $\C^*$ by multiplication. Since these two actions commute with the biholomorphism $f$, (by definition of $\tau$) we get a commutative diagram:
+	\[
+		\begin{tikzcd}
+			{\C^*} & X \\
+			{\C/\Z} & {\C/\Lambda_\tau}
+			\arrow["f", from=2-1, to=1-1]
+			\arrow["{\widetilde{f}}", from=2-2, to=1-2]
+			\arrow["{\pi_2}", from=1-1, to=1-2]
+			\arrow["{\pi_1}", from=2-1, to=2-2]
+		\end{tikzcd}
+	\]
+	Since $\pi_1$ and $\pi_2$ are local biholomorphisms and $f$ is a biholomorphism, it follows that $\widetilde{f}$ is a biholomorphism as well. This exhibits $X$ as isomorphic to a complex torus, which is a Riemann surface of genus $1$.
+
+	% By the quotient manifold/Riemann surface theorem, $X = \C^*/\langle\mu \rangle$ is a Riemann surface since the action of $\langle\mu\rangle$ is smooth, free, and proper. Let
+	% \[
+	% 	\tau  = - \frac{\log(\mu)}{2\pi i}\in \mathbb{H}.
+	% \]
+	% We would like to exhibit a biholomorphism $\C/\Lambda_\tau \to X$.
+\end{solution}
+
+\begin{problem}{4}
+Let $X$ be a compact connected Riemann surface of genus $g$. Recall from class that given any point $p\in X$, there exists a non-constant meromorphic function $h$ with a pole of order at most $g+1$ at $p$, and no other poles. Using this function $h$ as a tool, prove that an automorphism $f : X \to X$, other than the identity, has at most $2g+2$ fixed points.
+\end{problem}
+
+\begin{solution}
+	Since $f$ is not the identity map, let $p\in X$ be a point which is not a fixed point of $f$ and let $h$ be a non-constant meromorphic function on $X$ with pole of order at most $g+1$ on $f(p)$. Then, the map $\varphi = h(f)-h$ is a meromorphic function on $X$ with two poles of order at most $g+1$, i.e. at $p$ and $f(p)$. So $\varphi$ has at most $2g+2$ poles. Since $\varphi$ is a meromorphic function on a compact connected Riemann surface, the number of zeroes is equal to the number of poles. (counted with multiplicity) However any fixed point of $f$ is a zero of $\varphi$, so we have achieved our upper bound of $2g+2$ fixed points.
+\end{solution}
+
+\begin{problem}{5}[Weyl's lemma in dimension $1$]
+For a smooth function $f(t)$ defined on an open interval $I\subset \R$, define $\Delta f = -f_{tt}$. If $f$ is merely an integrable function (not smooth), we say that $\Delta f = \phi$ in the \defn{weak sense}, for a smooth function $\phi$, if
+\[
+	\int_I f(t)\,\Delta g(t)\,dt = \int_I \phi(t)g(t)\,dt
+\]
+for all smooth functions $g$ supported in intervals $[a,b]\subset I$. Show that if $\Delta f = \phi$ in the weak sense, with $\phi$ smooth, then $f$ is smooth and $-f_{tt}=\phi$. You may assume that $f$ is at least continuous if you want to avoid convergence questions involving Lebesgue integrable functions.
+\end{problem}
+
+\begin{solution}
+	Let's begin by proving the theorem in the homogeneous case, i.e. $\Delta f = 0$.
+	In particular, we have
+	\[
+		\int_I f(t)\,\Delta g(t)\,dt = 0\quad\textrm{for all}\quad C^\infty_{\textrm{compact}}(I).
+	\]
+	As in class, let $M\in C^\infty_{\textrm{compact}}(I)$ be some smooth radially symmetric mollifier, and consider the family
+	\[
+		M_\varepsilon(x) = \varepsilon^{-1}M(x/\varepsilon) \in C^\infty_{\textrm{compact}}((-\varepsilon, \varepsilon))
+	\]
+	for any $0<\varepsilon < 1$. We then take the convolution $f_\varepsilon(x) = (f * M_\varepsilon)(x)$.
+	Since $f$ is continuous and the mollifier is smooth, the convolution $f_\varepsilon$ will be smooth as well. Furthermore, the Laplacian can be expressed as
+	\[
+		\Delta f_\varepsilon(x) = \Delta (f * M_\varepsilon)(x) = \int_{-\varepsilon}^\varepsilon f(t)\,\Delta M_\varepsilon(x-t)\,dt.
+	\]
+	However $\Delta M_\varepsilon(x-t)$ is one test function, so we can apply the assumption to see that the integral vanishes, so in particular $f_\varepsilon$ is a smooth harmonic function.
+
+	Next, we can prove the non-homogeneous case, i.e. $\Delta f = \phi$. Let $\psi(t)$ be the smooth function
+	\[
+		\psi(t) = -\int_{I\cap (-\infty, t)} \int_{I\cap (-\infty, s)} \phi(u)\,du\,ds.
+	\]
+	This function clearly satisfies $\Delta \psi = -\psi_{tt} = \phi$. Then, $\Delta(f-\psi)=0$ in the weak sense, so by our earlier result, $f-\psi$ must be a smooth harmonic function. Then $f = (f-\psi)+\psi$, so $f$ must be a smooth harmonic function as well. The claim that $-f_{tt}=\phi$ then follows immediately.
+\end{solution}
+
+\end{document}

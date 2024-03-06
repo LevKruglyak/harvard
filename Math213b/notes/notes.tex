@@ -9,14 +9,14 @@
 \begin{document}
 \maketitle
 
-\section{Differential Forms}
+\section{Fundamental Theorem}
 
 \todo{prior stuff}
 
 \subsection{Dirichlet Norm}
 
 \begin{definition}
-	Let $X$ be a Riemann surface and $f\in \Omega^0(X; \R)$. We define the  \defn{Dirichlet norm} of $f$ as:
+	Let $X$ be a Riemann surface and $f\in \Omega^0(X)$. We define the  \defn{Dirichlet norm} of $f$ as:
 	\[
 		\|f\|_D^2 = 2i\int_X \dd f\wedge \ddc f.
 	\]
@@ -25,7 +25,7 @@
 This is a \emph{semi-definite} norm, since $\|f\|_D = 0$ implies that $f$ is (locally) constant. We can, of course, work in the modulo space of smooth functions up to equivalence up to locally constant functions and obtain a definite norm on this space instead.
 
 \begin{definition}
-	The Dirichlet norm then induces the \defn{Dirichlet (semi-definite) inner product} on $\Omega^0(X; \R)$, given by:
+	The Dirichlet norm then induces the \defn{Dirichlet (semi-definite) inner product} on $\Omega^0(X)$, given by:
 	\[
 		\langle f, g\rangle_D = i\int_X \dd f \wedge \ddc g + \dd g\wedge \ddc f.
 	\]
@@ -55,7 +55,7 @@ If $X$ is a compact Riemann surface, we can integrate by parts:
 \subsection{Lebesgue Norm}
 
 \begin{definition}
-	Given an \emph{area form} $\omega\in\Omega^2(X; \R)$, we define the \defn{Lebesgue norm} ($L^2$), given on $f\in \Omega^0(X; \R)$ by
+	Given an \emph{area form} $\omega\in\Omega^2(X)$, we define the \defn{Lebesgue norm} ($L^2$), given on $f\in \Omega^0(X)$ by
 	\[
 		\|f\|^2_{L^2} = \int_X |f|^2\,\omega.
 	\]
@@ -63,13 +63,15 @@ If $X$ is a compact Riemann surface, we can integrate by parts:
 
 This is in some sense less canonical than the Dirichlet norm since it requires the additional data of an area form.
 
-\begin{proposition}[Poincar\'e Inequality]
+\subsection{Poincar\'e Inequality}
+
+\begin{theorem}[Poincar\'e Inequality]
 	Given a compact Riemann surface $X$ with area form $\omega$, then there exists a constant $C>0$ such that
 	\[
 		\|f\|_{L^2} \leq C\cdot \|f\|_D
 	\]
-	for all $f\in \Omega^0(X; \R)$ with $\int_X f\,\omega = 0$.
-\end{proposition}
+	for all $f\in \Omega^0(X)$ with $\int_X f\,\omega = 0$.
+\end{theorem}
 
 We'll begin by proving the special case when $X=S^2\subset \R^3$ is the unit sphere, equipped with standard area form $\omega$. In this standard area form, we have
 \[
@@ -106,7 +108,7 @@ This operator $\bbDelta :\Omega^0(X) \to \Omega^0(X)$ is called the \emph{spheri
 
 This type of proof works any time we can understand the eigenvalues of the Laplacian operator on a compact Riemann surface -- for $S^2$ it follows from spherical harmonics.
 
-More generally, let's consider what happens on a flat disk $D^2\subset \R^2$. In this case, we could prove that there is always a constant $C>0$ such that for all $f$, there is some $\overline{f}\in \R$ such that
+More generally, let's consider what happens on a disk $D^2$. In this case, we could prove that there is always a constant $C>0$ such that for all $f$, there is some $\overline{f}\in \R$ such that
 \[
 	\|f-\overline{f}\|_{L^2} \leq C\cdot \|f\|_D.
 \]
@@ -114,10 +116,10 @@ Easier to work with is the case of the disk $S_+ \subset S^2$, i.e. the upper he
 \[
 	c_0\cdot \omega_{S_+} \leq \omega_{D^2}\leq c_1\cdot \omega_{S_+},
 \]
-for constants $c_0, c_1>0$.
+for constants $c_0, c_1>0$. Generally, for a disk with any area form, we can find a similar transformation, so it suffices to prove the inequality for the hemisphere disk.
 
 \begin{proof}[Proof of the Poincar\'e Inequality for the Disk]
-	Let $f \in \Omega^0(S_+; \R)$, which satisfies $\int_{S_+} f\,\omega = 0$. We can form a continuous (but not necessarily smooth) function $F \in \Omega^0(S^2; \R)$ by reflection over the equator, and it's clear that the condition $\int_{S^2} F\,\omega=0$ is still satisfied.
+	Let $f \in \Omega^0(S_+)$, which satisfies $\int_{S_+} f\,\omega = 0$. We can form a continuous (but not necessarily smooth) function $F \in \Omega^0(S^2)$ by reflection over the equator, and it's clear that the condition $\int_{S^2} F\,\omega=0$ is still satisfied.
 
 	Although $F$ need not be smooth at the equator, it can be approximated by a family of smooth maps $F_n$, which converge to $F$ in both Dirichlet and Lebesgue norms. Hand-waving, this involves smoothing out equator singularities using successively smaller neighborhoods of the equator. Finally, note that
 	\[
@@ -125,5 +127,336 @@ for constants $c_0, c_1>0$.
 	\]
 	and similarly for the Lebesgue norm, so we can conclude by applying the Poincar\'e Inequality for the sphere.
 \end{proof}
+
+Finally, we have enough machinery to prove the full Poincar\'e Inequality.
+
+\begin{proof}{Proof of Poincar\'e Inequality}
+	Let $X$ be a compact connected Riemann surface, and cover $X$ by a finite set of closed disks $B_1,\ldots, B_k$. Assume for the sake of contradiction that there is a family of functions $f_n \in \Omega^0(X)$ satisfying
+	\[
+		\int_X f_n \,\omega = 0, \quad \|f_n\|_{L^2}=1,\quad\textrm{and}\quad \lim_{n\to \infty}\|f_n\|_D \to 0.
+	\]
+	Let $a_i(f_n)$ be the average value of $f_n$ on $B_i$, so
+	\[
+		\int_{B_i} \left(f_n - a_i(f_n)\right)\,\omega = 0.
+	\]
+	But by the Poincar\'e Inequality for the disk $B_i$, we know that
+	\[
+		\begin{aligned}
+			\int_{B_i} \left|( f_n - a_i(f_n)\right|^2\, \omega
+			\quad & \leq\quad C_i^2 \|\restr{f_n}{B_i}\|^2_D \\
+			\quad & \leq\quad C_i^2 \|f_n\|_D^2 \longto 0.
+		\end{aligned}
+	\]
+	The $a_i(f_n)$ are bounded, so we can pass to a subsequence with $a_i(f_n) \to \overline{a_i}$ as $n\to \infty$,
+	i.e. $f_n-\overline{a_i}$ is a sequence converging to zero in the $L^2$ norm on $B_i$. Then we have the property that
+	\[
+		\lim_{n\to \infty}\int_{B_i}\| f_n - \overline{a_i}\|^2\,\omega = 0,
+	\]
+	Note that each $B_i$ might have different constant $\overline{a_i}$, however if any two balls overlap, they have the same constant $\overline{a_i}$. Thus, there must be a global constant $\overline{a_1}$ since the manifold is connected, and $f_n \to \overline{a_1}$ almost everywhere in the $L^2$ norm. But $\overline{a_1}$ must be $0$ since $\int_X f_n\,\omega = 0$.
+
+	Now, integrating over the whole of $X$, we get
+	\[
+		\int_X |f_n|^2\,\omega \leq \sum^k_{i=1} \int_{B_i} |f_n|^2\,\omega = \int_{B_i} |f_n-\overline{a_i}|\,\omega \longto 0.
+	\]
+	This contradicts the assumption that $\|f_n\|_{L^2} = 1$.
+\end{proof}
+
+\subsection{Poisson Equation}
+
+Let $X$ be a compact connected Riemann surface, and let $\rho\in \Omega^2(X)$ be an area form which satisfies $\int_X \rho = 0$.
+
+\begin{definition}
+	The \defn{Poisson equation} states that
+	\[
+		\Delta \varphi = \rho
+	\]
+	for some $\varphi\in \Omega^0(X)$.
+\end{definition}
+
+\begin{theorem}[Fundamental Theorem]
+	There is a solution to $\Delta \varphi = \rho$, unique up to addition of a constant.
+\end{theorem}
+
+Let $\mathcal{H} = \Omega^0(X) / \R$ be the quotient space of smooth functions by the addition of constant terms. Consider the operator:
+\[
+	\mathcal{L} : \mathcal{H} \to \R\quad\textrm{given by}\quad \mathcal{L}(\varphi) = \|\varphi\|^2_D - 2\int_X \varphi\, \rho.
+\]
+This operator is well-defined, i.e. $\mathcal{L}(\varphi) = \mathcal{L}(\varphi + c)$ because $\int_X \rho = 0$.
+
+This operator is motivated by the observation that if $\mathcal{L}$ achieves its infimum at $\varphi\in \mathcal{H}$, then $\Delta \varphi = \rho$. To see why, notice that for all $\psi \in \mathcal{H}$,
+\[
+	\begin{aligned}
+		0 & = \restr{\frac{d}{dt}}{t=0} \mathcal{L}(\varphi + t\psi)                                                                                \\
+		  & = \restr{\frac{d}{dt}}{t=0} \left(\left\langle \varphi + t\psi, \varphi + t\psi\right\rangle_D - 2\int_X (\varphi + t\psi)\,\rho\right) \\
+		  & = 2\left\langle \varphi, \psi\right\rangle_D - 2\int_X \psi\,\rho
+		= 2\int_X \psi\, \Delta \varphi - 2\int_X \psi\,\rho                                                                                        \\
+		  & = 2\int_X \psi\, (\Delta \varphi -\rho)
+	\end{aligned}
+\]
+
+\begin{lemma}
+	$\mathcal{L}$ is bounded below.
+\end{lemma}
+
+\begin{proof}
+	Writing $\rho = R\cdot \omega$ for some $R\in \Omega^0(X)$, we can write
+	\[
+		\begin{aligned}
+			\mathcal{L}(\varphi) = \|\varphi\|_D - 2\int_X \varphi\, \rho = \|\varphi\|_D - 2\int_X (\varphi\cdot R)\, \omega.
+		\end{aligned}
+	\]
+	Letting $\varphi_1 = \varphi - \textrm{avg}(\varphi)$ be another representative of the equivalence class of $\varphi\in \mathcal{H}$, we get the inequality
+	\[
+		\begin{aligned}
+			\|\varphi\|_D - 2\int_X (\varphi_1\cdot R)\, \omega
+			 & \geq \|\varphi\|_D^2 - 2\left(\int \varphi_2^2\, \omega\right)^{1/2}\left(\int R^2\,\omega\right)^{1/2}
+			=\|\varphi\|_D^2 - 2\|\varphi_1\|_{L^2} \cdot \|R\|_{L^2}                                                  \\
+			 & \geq \|\varphi\|_D^2 - 2C\|\varphi_1\|_D\|R\|_{L^2}
+			= \|\varphi_D^2\|- 2C_1\|\varphi\|_D                                                                       \\
+			 & = \left(\|\varphi\|_D - C_1\right)^2 - C_1^2                                                            \\
+			 & \geq -C_1^2                                                                                             \\
+		\end{aligned}
+	\]
+	by applying the Cauchy-Schwartz and Poincar\'e inequalities.
+\end{proof}
+
+Given the existence of this lower bound, let's set \[I=\inf_{\varphi\in\mathcal{H}} \mathcal{L}(\varphi)\] and choose a sequence $\varphi_i\in\mathcal{H}$ with $\mathcal{L}(\varphi_i)\to I$ as $i\to \infty$.
+
+\begin{lemma}
+	$\varphi_i$ are a Cauchy sequence in the Dirichlet norm.
+\end{lemma}
+
+\begin{proof}
+	Let $\varepsilon > 0$ be given. Choose an $i_0$ so that $I \leq \mathcal{L}(\varphi_i) \leq I +\epsilon$ for all $i\geq i_0$.
+	Now for any $i, j \geq i_0$, consider the function
+	\[
+		F(t) = \mathcal{L}(\varphi_i + t(\varphi_j - \varphi_i))
+	\]
+	for $t\in [0,1]$. This is shaped quadratically, i.e. $F(t) = At^2+Bt+C$ with $A = \|\varphi_j-\varphi_i\|^2_D$. But $F(t)\geq I$ for $t\in [0,1]$ since $F(0), F(1)\leq I +\epsilon$. This bound can be used to get
+	\[
+		\begin{aligned}
+			\|\varphi_j - \varphi_i\|^2 = A & = 2\left( F(0) - 2F(1/2) + F(1)\right)                  \\
+			                                & \leq 2\left((I+\varepsilon)-2I + (I+\varepsilon)\right) \\
+			                                & \leq 4\varepsilon.
+		\end{aligned}
+	\]
+	Since $\|\varphi_i - \varphi_j\|_D\leq 2\sqrt{\varepsilon}$, we are done.
+\end{proof}
+
+Just because $\varphi_i$ is a Cauchy sequence doesn't mean that it converges, since $\mathcal{H}$ is not necessarily a complete metric space. We can however form the \emph{completion}, which we denote $\widehat{\mathcal{H}}$. In this space, we can define
+\[
+	\int_X \varphi\,\rho = \lim_{i\to \infty}\int_X \varphi_i\,\rho \quad\textrm{for any}\quad \varphi \in \widehat{\mathcal{H}},
+\]
+so there is an extension $\mathcal{L} : \widehat{\mathcal{H}} \to \R$. In fact, the inner product also extends to the completion, so $\widehat{\mathcal{H}}$ is a \emph{Hilbert space}.
+Hehere, there is some $\varphi\in \widehat{\mathcal{H}}$ which is tautologically the limit of the Cauchy sequence $\varphi_i$.
+
+Generally, the convergence of some sequence $f_i\to f$ in the Dirichlet norm means that after adjusting constraints so that $\int_X f_i\,\omega=0$, the sequence $\{f_i\}$ is Cauchy in the $L^2$ norm as well, by the Poincar\'e. In our case, by Lebesgue, there is some measurable function
+\[
+	\Phi : X \to \R \quad\textrm{with}\quad \int_X |\Phi|^2\,\omega < \infty
+\]
+and a subsequence $\varphi_i \to \Phi$ almost everywhere with $\int_X |\Phi - \varphi_i|^2\,\omega \to 0$.
+
+Now, since
+\[
+	2\left\langle \varphi, \psi\right\rangle_D - 2\int_X \psi\,\rho = 0\quad\textrm{for any}\quad \psi\in \mathcal{H},
+\]
+we can write
+\[
+	\lim_{i\to \infty}\left(\left\langle \varphi_i, \psi\right\rangle_D - \int_X \psi\,\rho\right) =
+	\lim_{i\to \infty}\left(\int_X \varphi_i \,\Delta \psi - \int_X \psi\,\rho\right) = 0.
+\]
+In the $L^2$ norm, we get convergence $\varphi_i \to \Phi$, and applying Cauchy-Schwartz to first order terms gives us
+\[
+	\int_X \Phi\,\Delta \psi - \int_X \psi\,\rho = 0\quad\textrm{for all}\quad \psi\in \mathcal{H}.
+\]
+So we have a Lebesgue integrable solution, but we need a smooth solution.
+% If $\Phi$ were smooth, integration by parts allows us to rewrite
+% \[
+% 	\int_X \Phi\,\Delta \psi - \int_X \psi\,\rho = \int_X \Delta \Phi\, \psi - \int\rho\,\psi = 0\quad\implies\quad \Delta \Phi = \rho.
+% \]
+% Ignoring smoothness, a $\Phi$ is called a \defn{weak solution} to $\Delta \Phi = \rho$.
+
+In general, for a \emph{smooth} $f$ on a bounded open set $\Omega\subset \R^2$, we have
+\[
+	\Delta f - v = 0\quad\iff\quad \int_{\Omega} (\Delta f - v)\,\psi = 0 \quad\textrm{for all}\quad\psi\in \Omega^0_{\textrm{compact}}(\Omega),
+\]
+simply by integration by parts, i.e.
+\[
+	\int_\Omega (\Delta f - v)\,\psi = \int_{\Omega} f\,\Delta\psi - \int v\,\psi = 0.
+\]
+This last expression now makes sense for integrable functions, so we might call such an $f$ a \defn{weak solution}.
+
+\begin{lemma}[Weyl's Lemma]
+	If $f$ is a weak solution, then $f$ is almost everywhere equal to a smooth $f_1$ which is a strong solution.
+\end{lemma}
+
+\begin{proof}
+	Let $\varphi_1$ be a smooth, non-negative function on $\R^2$ with integral $1$ which is supported in $|z|<1$ and is a function of radius only. Given such a function, we get an entire family $\varphi_t$ given by
+	\[
+		\varphi_t(z) = t^{-2}\varphi_1(z/t),\quad\textrm{for}\quad t < 1.
+	\]
+	Clearly, $\int_{\R^2} \varphi_t(z)\,dz = 1$, and $\varphi_t$ is supported in $r<t$. Consider the convolution
+	\[
+		(\varphi_t * f)(z) = \int_{\R^2} f(w)\varphi_t(z-w)\,d\mu_w.
+	\]
+	We can now deduce a few properties:
+	\[
+		\begin{aligned}
+			(1) & \quad\lim_{t\to 0}\phantom{}^{L^1} \varphi_t * f = f,\quad\textrm{i.e.}\quad \int_{R^2}|\varphi_t * f - f|\,d\mu \to 0, \\
+			(2) & \quad \varphi_t * f\quad \textrm{is smooth,}                                                                            \\
+			(3) & \quad \varphi_s * f = \varphi_t * f\quad\textrm{on}\quad \Omega^{(t)}\subset \Omega \quad\textrm{for}\quad s\leq t
+		\end{aligned}
+	\]
+	\todo{finish this proof, generalizing involving homogeneous case}
+\end{proof}
+
+\section{Riemann-Roch Theorem}
+
+Recall that on a surface $X$ of genus $g$, at some $p\in X$, there exists a non-constant meromorphic function $f$ with poles of multiplicity $\leq g+1$ at $p$. The proof of this fact depended on the fact that $\dim H^{0,1}(X)=g$
+
+\subsection{Divisors}
+
+Instead of saying ``$f$ is meromorphic with poles at $p,q$ of multiplicity $\leq a,b$ respectively, and vanishing with multiplicity $\geq c,d$ at $r,s$ respectively''', we would like to use the language of \emph{divisors}.
+Recall that
+\[\ord_p(f) = \begin{cases}
+		-k & p\textrm{ is a pole of multiplicity }k, \\
+		k  & p\textrm{ is a zero of multiplicity }k, \\
+		0  & p\textrm{ otherwise},
+	\end{cases}\quad \implies \quad f(z) = \sum^\infty_{j=\ord_p(f)} a_j z^j\]
+with $a_{\ord_p(f)}\neq 0$.
+
+\begin{definition}
+	The \defn{divisor group} of a surface $X$ is the free abelian group
+	\[
+		\Div(X) = \bigoplus_{p\in X}p\cdot \Z.
+	\]
+	We say that $D\in \Div(X)$ is \defn{non-negative}, or $D\geq 0$ if all of its coefficients are $\geq 0$.
+\end{definition}
+
+\begin{definition}
+	For a divisor $D=\sum_{p\in X} m_p\cdot p$, we say that the \defn{degree} of $X$ is the sum of coefficients $\deg(D)=\sum_{p\in X} m_p$. Given two divisors $D,D'\in \Div(X)$, we say that $D\geq D'$ if $\deg(D)\geq \deg(D')$.
+\end{definition}
+
+\begin{definition}
+	For $f$ a non-zero meromorphic function, the \defn{divisor} of $f$ is
+	\[
+		\div(f) = \sum_{p\in X}\ord_p(f)\,p\in \Div(X)
+	\]
+	These are called \defn{principal divisors}, and form a subgroup of $\Div(X)$.
+\end{definition}
+So rephrasing our earlier expression, we could now say that $\div(f)+D\geq 0$ where $D = ap + bq - cr - ds$.
+\begin{definition}
+	Let $X$ be a connected compact surface. For $D\in \Div(X)$, let
+	\[
+		\mathcal{L}(D) = \{ f\in \mathcal{M}_X : \div(f) + D \geq 0\quad\textrm{or}\quad f = 0\}.
+	\]
+	With the addition of $f=0$, this becomes a vector space. Let $\ell(D)=\dim \mathcal{L}(D)$.
+\end{definition}
+
+\begin{example}
+	For example, if $X$ is a compact surface of genus $g$ and $D = (g+1)p$, then we've seen that $\ell(D)\geq 2$.
+\end{example}
+
+\begin{example}
+	When $g=2$ and $D=-q$ for some $q\in X$, we have $\ell(D)=0$.
+\end{example}
+
+\begin{example}
+	On $X=\CP^1$, any divisor of the form $D = p-q$ is principal by the function $f=(z-a)/(z-b)$. Thus, every divisor is principal.
+\end{example}
+
+\begin{definition}
+	Let $\alpha$ be a meromorphic $(1,0)$-form. Then we say
+	\[
+		\div(\alpha)= \sum_{p\in X} \ord_p(\alpha)\,p.
+	\]
+	Here, $\ord_p(\alpha) = \ord_p(a)$ when $\alpha = a(z)\,dz$.
+\end{definition}
+\begin{lemma}
+	For any meromorphic $(1,0)$-form $\alpha$, we have $\deg\div(\alpha) = 2g-2$.
+\end{lemma}
+
+\begin{definition}
+	A \defn{canonical divisor} on $X$ is the divisor of a meromorphic $(1,0)$-form.
+\end{definition}
+
+\begin{lemma}
+	Any two canonical divisors differ by a principal divisor.
+\end{lemma}
+
+\subsection{Riemann-Roch}
+
+\begin{theorem}[Riemann-Roch]
+	Let $X$ be a compact connected surface of genus $g$, $D\in \Div(X)$, and $K$ some canonical divisor. Then,
+	\[
+		\ell(D) - \ell(K-D) = \deg(D)-(g-1).
+	\]
+\end{theorem}
+
+How can we interpret this result?
+\begin{itemize}
+	\item $\ell(D) = \dim\mathcal{L}(D)$.
+	\item For $\ell(K-D)$, consider the space
+	      \[
+		      \Omega(E) = \{\alpha \textrm{ is a meromorphic }(1,0)\textrm{-form}\, :\,\div(\alpha) + E \geq 0, \textrm{ or } \alpha = 0\}.
+	      \]
+	      Then,
+\end{itemize}
+\todo{idk what the fuck is going on}
+
+\begin{example}
+	When $X$ has genus $2$, and $D=2p$, we get
+	\[
+		\dim \mathcal{L}(2p)-\dim\Omega(-2p) = 1.
+	\]
+	Equivalently,
+	\[
+		\begin{aligned}
+			\exists\, f\in \mathcal{M}_X\textrm{ with double pole at }p
+			\quad & \implies\quad \dim\mathcal{L}(2p)=2                                       \\
+			\quad & \implies\quad \dim\Omega(-2p)=1                                           \\
+			\quad & \implies \quad \exists\, (1,0)\textrm{-form with at least double 0 at }p.
+		\end{aligned}
+	\]
+\end{example}
+
+Recall the cohomology groups
+\[
+	\begin{aligned}
+		H^{0,1}(X) \quad\quad\quad & \Omega^{0,1}(X)/\textrm{Im}(\overline{\partial}) \\
+		H^{1,0}(X) \quad\quad\quad & \textrm{holomorphic }(1,0)\textrm{-forms}
+	\end{aligned}
+\]
+\begin{lemma}
+	There is a well-defined, non-degenerate bilinear form
+	\[
+		\definefunction{\langle\cdot,\cdot \rangle}{H^{0,1}(X)\times H^{1,0}(X)}{\C}{([\beta], [\alpha])}{\int_X \beta\wedge \alpha}
+	\]
+\end{lemma}
+
+\begin{proof}
+	To check that it is well defined, note that if $[\beta]=[\beta + \overline{\partial}\varphi]$, then
+	\[
+		\int_X(\beta +\overline{\partial}\varphi)\wedge \alpha = \int_X \beta\wedge \alpha + \int_X \overline{\partial}\varphi \wedge \alpha.
+	\]
+	However, by Stoke's theorem, $\int_X \overline{\partial}\varphi \wedge \alpha = -\int \varphi \wedge \overline{\partial}\alpha=0$ since $\alpha$ is holomorphic, and so the term is zero as well.
+
+	To check non-degeneracy , given some $\alpha$, set $\beta = \overline{\alpha}$. Then we have
+	\[
+		\int_X \overline{\alpha}\wedge \alpha = 2i\,\|\alpha\|^2_{L^2},
+	\]
+	which is non-zero if $\alpha\neq 0$.
+\end{proof}
+
+\begin{corollary}
+	For $\beta\in \Omega^{0,1}(X),$ the is a smooth function $\varphi\in C^\infty(X; \C)=\Omega^{0,0}(X)$ with $\overline{\partial}\varphi = \beta$ if and only if for all $\alpha\in H^{1,0}(X)$, we have $\int_X \beta\wedge \alpha = 0$.
+\end{corollary}
+
+\begin{theorem}
+	Given $m$ principal parts $P_i=a_{-k,i}z^{-k}+\cdots + a_{-1,i} z^i$, and points $p_i$, there exists a function $f$ with principal part $P_i$ at $p_i$ if and only if for all $\alpha\in H^{1,0}(X)$, we have
+	\[
+		\sum^m_{i=1} \Res_{p_i}(P_i\cdot \alpha)=0
+	\]
+\end{theorem}
 
 \end{document}

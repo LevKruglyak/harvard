@@ -1,10 +1,13 @@
 \usepackage{extpfeil}
+\usepackage{graphicx}
 
 \providecommand{\E}{\mathbb{E}}
 \providecommand{\A}{\mathbb{A}}
+\providecommand{\D}{\mathfrak{D}}
 \providecommand{\Gr}{\mathrm{Gr}}
 \providecommand{\St}{\mathrm{St}}
 \providecommand{\GL}{\mathrm{GL}}
+\providecommand{\eps}{\varepsilon}
 \providecommand{\X}{\mathfrak{X}}
 \providecommand{\id}{\mathrm{id}}
 \renewcommand{\span}{\mathrm{span}}
@@ -12,3 +15,11 @@
 \providecommand{\longto}{\;\xrightarrow{\phantom{xxx}}\;}
 \providecommand{\longisom}{\;\xrightarrow{\phantom{xx}\sim\phantom{xx}}\;}
 \providecommand{\longsurj}{\;\xtwoheadrightarrow{\phantom{xxx}}\;}
+\providecommand{\qtq}[1]{\quad\textrm{#1}\quad}
+
+\providecommand{\definefunction}[5]{
+	\begin{array}{rcl}
+		#1 : #2 & \xrightarrow{\phantom{---}} & #3 \\
+		#4      & \xmapsto{\phantom{---}}     & #5
+	\end{array}
+}

@@ -12,3 +12,19 @@
 
 \usepackage{bbm}
 \newcommand{\bbDelta}{\bm{\Delta}}
+
+\providecommand{\longto}{\;\xrightarrow{\phantom{xxx}}\;}
+\providecommand{\longisom}{\;\xrightarrow{\phantom{xx}\sim\phantom{xx}}\;}
+\providecommand{\longsurj}{\;\xtwoheadrightarrow{\phantom{xxx}}\;}
+
+\providecommand{\definefunction}[5]{
+	\begin{array}{rcl}
+		#1 : #2 & \xrightarrow{\phantom{---}} & #3 \\
+		#4      & \xmapsto{\phantom{---}}     & #5
+	\end{array}
+}
+
+\providecommand{\ord}{\mathrm{ord}}
+\providecommand{\Div}{\mathrm{Div}}
+\renewcommand{\div}{\mathrm{div}}
+\providecommand{\Res}{\mathrm{Res}}

@@ -115,6 +115,39 @@ which acts as post-composition by $\beta_{k}(E)$. This map need not be surjectiv
 	\todo{proof}
 \end{proof}
 
+\subsection{Vector Fields and Flows}
+
+\begin{definition}
+	A \defn{(smooth) vector field} on $M$ is a (smooth) section of the tangent bundle. The space of vector fields on $M$ is denoted by $\X(M)$.
+\end{definition}
+
+\begin{definition}
+	Let $\xi\in \X(M)$ be a vector field. An \defn{integral curve} to $\xi$ is some curve $C : (-\eps, \eps) \to M$ such that for any $-\eps < t < \eps$, we have
+	\[
+		dC_t(1) = \xi(C(t)).
+	\]
+\end{definition}
+
+\begin{proposition}[Existence and Uniqueness of Integral Curves]
+	Let $\xi\in \X(M)$ be a non-vanishing vector field. Then for every point $p\in M$:
+	\begin{itemize}
+		\item There is an integral curve $C$ that passes through $p$.
+		\item If $C, C'$ are integral curves through $p$, there exists some $\eps>0$ such that $C(t)=C'(t)$ for all $-\eps < t < \eps$.
+	\end{itemize}
+\end{proposition}
+
+\begin{proof}
+	Since this is a local question, it suffices to restrict $M$ to some chart $\mathcal{U}$ on which we have coordinates $x_1, \ldots, x_n$. Using this chart, we can write
+	\[
+		\xi(p) = \sum f_i(p)\,\frac{\partial}{\partial x_i} = f(p)\cdot \nabla
+	\]
+	for some smooth, non-vanishing function $f : \mathcal{U} \to \R^n$. Locally, any integral curve $C$ must satisfy the initial value problem
+	\[
+		\frac{\partial C_i(t)}{\partial t} = f_i(C_1(t) \ldots, C_n(t)),\quad\textrm{with}\quad C(0) = p.
+	\]
+	By the fundamental theorem of autonomous ODEs, there \emph{exists }
+\end{proof}
+
 \subsection{Distributions}
 
 \begin{definition}
@@ -198,5 +231,20 @@ Note that global bases need not exist for a distribution.
 
 	\todo{why?}
 \end{example}
+
+\section{Miscellaneous Results}
+
+\begin{theorem}[Fundamental Theorem for Autonomous ODEs]
+	Let $U\subset \R^n$ be open, and $f : U \to \R^n$ be a smooth function. Consider the system of ODEs for a function $\gamma : \R \to \R^n$:
+	\[
+		\frac{\partial \gamma_i(t)}{\partial t} = f_i(\gamma_1(t), \ldots, \gamma_n(t)),\quad\textrm{with}\quad \gamma(0)=x
+	\]
+	for some $x\in U$. The following is true:
+	\begin{enumerate}
+		\item (Existence) For any $x\in U$, there is some $\eps > 0$ and curve $\gamma_x : (-\eps, \eps) \to \R^n$
+		\item (Uniqueness)
+		\item (Smoothness)
+	\end{enumerate}
+\end{theorem}
 
 \end{document}
