@@ -1,0 +1,196 @@
+\documentclass[expanded]{lkx_pset}
+
+\title{Math 213b Problem Set 6}
+\author{Lev Kruglyak}
+\due{March 8, 2024}
+
+\input{../math213b.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Complete the proof of the Weyl Lemma from class by doing the following. Let $g : \R^2 \to \R$ be a smooth function. Suppose that
+\begin{enumerate}[(a)]
+	\item $g$ is compactly supported.
+	\item $g$ has integral zero on $\R^2$.
+	\item $g$ is a radial function.
+	\item $g$ is constant on some small disk $r\leq \varepsilon$.
+\end{enumerate}
+Show directly That the equation $\Delta f = g$ admits a solution $f$ that is compactly supported on $\R^2$. % expression for f involving repeated integrals.
+\end{problem}
+
+\begin{solution}
+	Since $f$ is a radial function, it factors as a composition
+	\[
+		f(x,y) = F\left(\sqrt{x^2+y^2}\right)=f(r)
+	\]
+	for some function $F : \R_{\geq 0} \to \R$.
+
+	Next, by ordinary calculus, we see that
+	\[
+		\begin{aligned}
+			\frac{\partial r}{\partial x} & = x(x^2+y^2)^{-1/2}\quad\implies\quad\frac{\partial^2 r}{\partial x^2} = y^2(x^2+y^2)^{-3/2}, \\
+			\frac{\partial r}{\partial y} & = y(x^2+y^2)^{-1/2}\quad\implies\quad\frac{\partial^2 r}{\partial y^2} = x^2(x^2+y^2)^{-3/2},
+		\end{aligned}
+	\]
+	and so applying the chain rule, we see that
+	\[
+		\begin{aligned}
+			\frac{\partial F(r)}{\partial x^2} & = F'(r)y^2(x^2+y^2)^{-3/2}+F''(x)x^2(x^2+y^2)^{-1}, \\
+			\frac{\partial F(r)}{\partial y^2} & = F'(r)x^2(x^2+y^2)^{-3/2}+F''(x)y^2(x^2+y^2)^{-1}.
+		\end{aligned}
+	\]
+	Putting everything together, we get the expression
+	\[
+		\Delta F(r) = -\left(\frac{\partial^2F(r)}{\partial x^2} + \frac{\partial^2 F(r)}{\partial y^2}\right) = -F'(r)/r - F''(r).
+	\]
+
+	Similarly, we get a function $G : \R_{\geq 0} \to \R$ since $g$ is radially symmetric. Since $g$ is compactly supported, it follows that $G(r)=0$ for all $r\geq R$ for some diameter $R>0$. Since $g$ has integral zero, we have
+	\[
+		\int_{\R^2} g(x,y)\,dx\wedge dy = \int_{B(0, R)} g(x,y)\,dx\wedge dy = \int_0^\infty r G(r)\,dr = \int_0^R rG(r)\,dr = 0
+	\]
+	Motivated by this, consider the functions
+	\[
+		F(t) = -\int_0^t \frac{1}{s}\int_0^s rg(r)\,dr\wedge ds + \int_0^R\frac{1}{s}\int_0^s rg(r)\,dr\wedge ds,\quad\textrm{and}\quad f(x,y)=F(\sqrt{x^2+y^2}).
+	\]
+	By the previously mentioned properties of $g$, it follows that these integrals converge. Evaluating the derivative of the first map, we see that when $t\geq R$, we have
+	\[
+		F'(t) = -\frac{1}{t}\int_0^t rg(r)\,dr = -\frac{1}{t}\left(\int_0^R rg(r)\,dr + \int_R^t rg(r)\,dr\right)=0.
+	\]
+	This means that $F'(t)$ is constant on $[R,\infty)$, and since $F(R) = 0$, $F(t)$ must be zero on $[R,\infty)$. In particular, this means that $f$ is supported on $B(0,R)$, so it is compactly supported. Next, we can compute the second derivatives
+	\[
+		F''(t) = \frac{1}{t^2}\int_0^t rG(r)\,dr - \frac{1}{t}tG(t) = \frac{1}{t^2}\int_0^t rG(r)\,dr - G(t).
+	\]
+	Applying our formula for the Laplacian of a radially symmetric function, we get
+	\[
+		\Delta f(x,y) = \Delta F(t) = -F'(t)/t - F''(t) = \frac{1}{t^2}\int_0^t rG(r)\,dr - \frac{1}{t^2}\int_0^t rG(r)\,dr + G(t) = G(t) = g(x,y).
+	\]
+	Thus, $f$ is our desired function.
+\end{solution}
+
+\begin{problem}{2}[Rellich Lemma]
+If $\{f_n\}$ is a sequence of smooth functions on $S^2$ such that
+\begin{enumerate}[(a)]
+	\item the sequence of integrals $\int_{S^2} f_n \,dA$ is bounded, and
+	\item the sequence of Dirichlet norms $\|f_n\|_D$ is bounded,
+\end{enumerate}
+then there is a sequence $\{f_{n'}\}$ which is Cauchy in the $L^2$ norm. Here $dA$ is the standard are area form on the sphere.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Prove the Rellich lemma using the existence of the standard complete orthonormal system of eigenfunctions of $Delta$ on $S^2$.
+	\end{part}
+
+	Let $\{e_i\}_{i=0}^\infty$ be a complete orthonormal system, i.e. we have
+	\[
+		\lim_{k\to \infty}\left\|f - \sum_{0\leq i\leq k} \langle f, e_i\rangle\, e_i\right\|_{L^2}=0\quad\implies\quad f = \sum_{0\leq i<\infty} \langle f, e_i\rangle\, e_i.
+	\]
+	By asumption that Dirichlet norms are bounded, we have some uniform constant $C>0$ such that
+	\[
+		\|f_n\|^2_D = \langle f_n, \Delta f_n \rangle = \sum^\infty_{i=1}\lambda_i \langle f_n, e_i\rangle^2 < C,
+	\]
+	where as in class, we can drop the $i=1$ eigenvalue from the norm expressions. If we let $f^{(N)}_n$ be the partial sum, we get a bound
+	\[
+		\begin{aligned}
+			\|f_n - f_n^{(N)}\|_{L^2} = \sum_{N+1\leq i < \infty} \langle f_n, e_i\rangle^2
+			 & \leq \frac{1}{\lambda_{N+1}}\sum_{N+1\leq i < \infty}\lambda_i \langle f_n, e_i\rangle^2 \\
+			 & = \frac{1}{\lambda_{N+1}}\|f_n\|_D^2 \leq \frac{C}{\lambda_{N+1}}.
+		\end{aligned}
+	\]
+	By this bound and the Poincar\'e inequality, we know that the sequence of norms $\|f_n\|_{L^2}$ is bounded. Since $\|f_n^{(N)}\|_{L^2}\leq \|f_n\|_{L^2}$, for any fixed $N>0$ the sequence of functions $\{f_n^{(N)}\}$ is a bounded sequence in a finite-dimensional Euclidean space. The Bolzano-Weierstrass theorem then implies that there is some convergent subsequence in the $L^2$ norm. So for each $N>0$ we have some convergent subsequence of partial sums and so by a standard diagonalization argument in analysis we can choose some Cauchy subsequence of the full sums.
+\end{parts}
+
+\begin{problem}{3}
+For any compact Riemannian manifold $X$, one can define the (geometers') Laplacian $\Delta$ and it has a complete orthonormal system of eigenfunctions as in the case of $S^2$. Let $N(\lambda)$ be the number of eigenvalues that are less than or equal to $\lambda$. The Weyl law states that the asymptotics of $N(\lambda)$ as $\lambda \to \infty$ are given by
+\[
+	N(\lambda)\sim (2\pi)^{-n}\omega_n \mathrm{Vol}(X)\lambda^{n/2},
+\]
+where $n$ is the dimension on $X$ and $\omega_n$ is the volume of the unit ball in $\R^n$.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		Verify the Weyl law when $X$ is $\R/(v\Z)$, i.e. a standard circle of length $v>0$.
+	\end{part}
+
+	First, let's solve the eigenfunction problem of $\Delta$ on $\R/(v\Z)$. Let's consider real functions $f$ which are $v$-periodic, satisfying the differential equation
+	\[
+		-\frac{\partial^2 f(x)}{\partial x^2} = \lambda f.
+	\]
+	This is a classic wave equation, with general solution
+	\[
+		f(x) = A_1 \cos(\lambda^{1/2} t + \phi_1) + A_2 \sin(\lambda^{1/2} t + \phi_2),
+	\]
+	where of course, $\lambda^{1/2}$ must be an integer multiple of $2\pi /v$ for this to be a well-defined function on $\R/(v\Z)$. We can set both phase offsets $\phi_1,\phi_2$ to be zero, and find appropriate amplitudes $A_1, A_2$ so that the $\sin$ and $\cos$ terms form an orthonormal basis. The general form for an eigenvalue is thus
+	\[
+		\lambda_n = \frac{4\pi^2 n^2}{v^2},\quad\textrm{for}\quad n\in \Z_{\geq 0}.
+	\]
+	Then, since the number of perfect squares up to a given $x$ is $\floor{x^{1/2}}$, we get the formula
+	\[
+		N(\lambda) \sim \frac{v}{\pi}\lambda^{1/2}.
+	\]
+	This fits with Weyl's law, since $n=1$, $\omega_1=2$, and $\textrm{Vol}(X)=v$.
+
+	\begin{part}{b}
+		Use the Weyl law (and the results on the handout on spherical harmonics) to compute the volume (i.e. surface area) of the unit sphere $S^2\subset \R^3$. You may assume the known formula for the area of the unit disk.
+	\end{part}
+
+	From the results in the spherical harmonics handout, the eigenvalues of $\Delta$ are
+	\[
+		\lambda_n = n(n+1)\quad\textrm{and}\quad n\in \Z_{\geq 0}.
+	\]
+	Taking the inverse of this expression and solving for the asymptotic of $N(\lambda)$, we see that
+	\[
+		1=\lim_{\lambda\to\infty} \frac{N(\lambda)}{\lambda} = (2\pi)^{-2}\textrm{Vol}(S^2)\quad\implies\quad \textrm{Vol}(S^2) = 4\pi.
+	\]
+\end{parts}
+
+\begin{problem}{4}
+Let $F(z,w)$ be a polynomial or analytic function of two variables whose zero locus $X\subset \C^2$ is a Riemann surface, by virtue of the fact that at least one partial derivative of $F$ is non-zero at each point of $X$. Let $G(z,w)=\partial F/\partial w$, and consider the expression $\alpha = G(z,w)^{-1}\,dz$.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		Show how the restriction of $\alpha$ to $X$ defines a holomorphic differential (despite the fact that $G(z,w)$ may vanish at certain points).
+	\end{part}
+
+	Consider the function $H(z,w)=\partial F/\partial z$, then $dF = H\,dz+G\,dw$. Since $F$ is analytic/polynomial, we have $\partial F/\partial \overline{z}=\partial F/\partial \overline{w}=0$, and so $G$ and $H$ are holomorphic function. Now we can split $X$ as an open cover $\{U,V\}$ by open subsets
+	\[
+		U = \{(z,w)\in X : G(z,w)\neq 0\}\quad\textrm{and}\quad V = \{(z,w)\in X : H(z,w)\neq 0\}.
+	\]
+	By construction, we can then see that $\alpha|_{U} = G^{-1}\,dz$ and $\alpha|_{V}=-H^{-1}\,dw$, which agree on the overlap $U\cap V$ so they glue back together to form the holomorphic differential $\alpha$ on $X$.
+
+	\begin{part}{b}
+		Show that this holomorphic differential is nowhere zero on $X$. For this and the previous part, it may be helpful to use the following fact. If $F_1$ and $F_2$ are two analytic functions on a patch $\Omega\subset \C^2$, and if their zero sets are the same smooth curve $Y$, and if they each have a non-zero partial derivative along $Y$, then $F_1=HF_2$ for some nowhere-zero holomorphic function $H$.
+	\end{part}
+
+	This follows immediately from the hint, since $dz$ is nonzero at any point in the surface $X$.
+
+	\begin{part}{c}
+		Consider the case that $F$ is the polynomial
+		\[
+			F(z,w)=w^d-z^d - 1.
+		\]
+		Show that $X$ can be completed to a compact Riemann surface $\widehat{X}$ and that the map to the $z$ coordinate extends to a ramified covering $f : \widehat{X} \to \C\cup \{\infty\}$ in such a way that $f$ is actually unramified over $\infty$.
+	\end{part}
+
+	First of all, recall that any Riemann surface $X$ defined as a vanishing set of a polynomial $F$ can be completed to a compact Riemann surface $\widehat{X}$ defined as a vanishing set of a polynomial $\widehat{F}$, which in this case is
+	\[
+		\widehat{F}(z,w,t) = w^d - z^d -t^d.
+	\]
+	Generally, this polynomial is the homogenization of the original defining polynomial. The partial derivatives of this polynomial are
+	\[
+		\frac{\partial \widehat{F}}{\partial z} = - dz^{d-1},\quad\frac{\partial \widehat{F}}{\partial w} = dw^{d-1},\quad\textrm{and}\quad \frac{\partial \widehat{F}}{\partial t} = -dt^{d-1}.
+	\]
+	Next, the map to $\CP^1$ can be given in projective coordinates by sending $[w:z:t]\mapsto [z:t]$, and this is clearly a ramified covering which is unramified over $\infty$.
+
+	\begin{part}{d}
+		Show that $\alpha$, as defined above extends to a holomorphic differential on $\widehat{X}$ which vanishes to order $d-3$ at each of the $d$ points of $\widehat{X}$ lying over $\infty$. Hence determine the genus of $\widehat{X}$ without directly applying the Riemann Hurwitz formula.
+	\end{part}
+\end{parts}
+\end{document}

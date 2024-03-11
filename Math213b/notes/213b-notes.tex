@@ -384,7 +384,20 @@ So rephrasing our earlier expression, we could now say that $\div(f)+D\geq 0$ wh
 	Any two canonical divisors differ by a principal divisor.
 \end{lemma}
 
-\subsection{Riemann-Roch}
+\subsection{Residue Theorem}
+
+\begin{theorem}
+	If $X$ is a compact connected Riemann surface, and $\alpha$ is a meromorphic $(1,0)$-form on $X$ with poles $p_1,\ldots, p_n$, then
+	\[
+		\sum^m_{j=1}\Res_{p_i}(\alpha)=0.
+	\]
+\end{theorem}
+
+\begin{proof}
+	Cut out the poles $p_i$, and use Stokes' theorem, since the integral along the boundary is the sum of the residues.
+\end{proof}
+
+\subsection{Riemann-Roch Theorem}
 
 \begin{theorem}[Riemann-Roch]
 	Let $X$ be a compact connected surface of genus $g$, $D\in \Div(X)$, and $K$ some canonical divisor. Then,
