@@ -1,0 +1,48 @@
+\documentclass{lkx_paper}
+
+\title{\textbf{Discussion Topics for March 18th}}
+\date{}
+\author{Lev Kruglyak and AJ LaMotta}
+
+\input{notes.sty}
+
+\begin{document}
+\maketitle
+
+\subsection*{1. General Theory of Vector Fields}
+
+\begin{theorem*}
+	There is a bijective correspondence:
+	\[
+		\Gamma(TM) \qiffq \Der(C^\infty(M)).
+	\]
+	We refer to either object as a \defn{vector field}, and use $\X(M)$ to refer to the set of vector fields.
+\end{theorem*}
+\begin{proof}
+	To begin, suppose $X\in \Gamma(TM)$ is a section of the tangent bundle. We can define an action of $X$ on $C^\infty(M)$ by setting
+	\[
+		X(f) = df\circ X.
+	\]
+\end{proof}
+
+\begin{definition*}
+	The \defn{commutator} of two vector fields $X,Y\in \X(M)$ is
+	\[
+		[X,Y] = X\circ Y - Y\circ X,
+	\]
+	considering them as derivations.
+\end{definition*}
+
+In local coordinates, we can write $X=X^i\partial_i$ and $Y=Y^j\partial_j$.
+
+\subsection*{2. Vector Fields and Flows}
+
+\begin{theorem*}
+	Let $\varphi_X^t, \varphi_Y^t$ be local flows associated to vector fields $X,Y\in \X(M)$ in some neighborhood. Then the flows commute if and only if the vector fields commute.
+\end{theorem*}
+
+\begin{proof}
+
+\end{proof}
+
+\end{document}

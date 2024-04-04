@@ -1,0 +1,251 @@
+\documentclass{lkx_paper}
+
+\title{\textbf{Integral Manifolds}}
+\date{}
+\author{Lev Kruglyak}
+
+\input{notes.sty}
+
+\begin{document}
+\maketitle
+
+\subsection*{Vector Fields and Flows}
+
+\begin{proposition*}
+	There is a $C^\infty(M)$-linear isomorphism
+	\[
+		\X(M) \qiffq \Der(C^\infty(M)),
+	\]
+	where $\X(M)=\Gamma(TM)$ is the set of vector fields.
+\end{proposition*}
+
+\begin{proof}
+	In the forward direction, suppose $X\in \X(M)$ is a vector field. Let's define the derivation $D_X\in \Der(C^\infty(M))$ as the directional derivative
+	\[
+		D_X f(p) = \nabla_{X(p)} f(p) \qiffq D_X f = df\circ X
+	\]
+	for any $f\in C^\infty(M)$. Note that if $f,g\in C^\infty(M)$, by properties of the differential $d$, we get
+	\[
+		\begin{aligned}
+			D_X (f g) = d(f g)\circ X = d(f\wedge g) \circ X
+			 & = (df\wedge g + f\wedge dg)\circ X \\
+			 & = g df \circ X + f dg\circ X       \\
+			 & = g D_X f + f D_X g.
+		\end{aligned}
+	\]
+	This is exactly the Liebniz rule, so $D_X$ is indeed a derivation, and
+	\[
+		D_- : \X(M) \longto \Der(C^\infty(M))
+	\]
+	is a $C^\infty(M)$-linear map.
+
+	In the reverse direction, let $D : C^\infty(M) \to C^\infty(M)$ be a derivation. Working in some local chart $U\subset M$ with coordinates $x^i : U \to \R$, let's consider the vector field
+	\[
+		\X_{D}|_U = D x^i  \frac{\partial}{\partial x^i}\in \X(U),
+	\]
+	where $\partial/\partial x^i \in \X(U)$ are vector fields satisfying
+	\[dx^j \circ (\partial / \partial x^i) = \begin{cases}0 & i\neq j,\\ 1 & i = j.\end{cases}\]
+	Equivalently, $\{\partial/\partial x^i\}$ is a local trivialization of $TM$ on $U$. By construction, it's clear that $\X_{-}|_U : \Der(C^\infty(U)) \to \X(U)$ is a $C^\infty(M)$-linear map. Picking some partition of unity $\{\psi_i\}_{i\in I}$ defined on a cover of open charts $\{U_i\}_{i\in I}$, we can define a global vector field.
+	\[
+		\X_D = \sum_{i\in I}\psi_i\, \X_{D}|_{U_i}
+	\]
+	This construction thus gives us a $C^\infty(M)$-linear map
+	\[
+		\X_- : \Der(C^\infty(M)) \to \X(M).
+	\]
+
+	We claim that $D_{\X_D}$ and $\X_{D_X} = X$ for any derivation $D\in \Der(C^\infty(M))$ and vector field $X\in \X(M)$. First, note that for any smooth function $f\in C^\infty(M)$ we have
+	\[
+		D_{\X_D} f = df\circ \sum_{i\in I} \psi_i\,\X_{D}|_{U_i} = \sum_{i\in I} \psi_i\,df\circ \X_{D}|_{U_i}.
+	\]
+	It suffices to show that $df\circ \X_{D}|_U = D|_{C^\infty(U)}$ for each open chart $U$. Working in the local coordinate system $x^i$ of this chart, note that
+	\[
+		df\circ \X_{D}|_U = J_f  \left(Dx^i \frac{\partial}{\partial x^i}\right) = \frac{\partial f}{\partial x^i} Dx^i
+	\]
+	where $J_f$ is the $n\times 1$ Jacobian matrix of $f$.
+	\begin{changemargins}
+		\begin{lemma*}
+			For any $f\in C^\infty(\R^n)$ and $D\in \Der(C^\infty(\R^n))$ we have
+			\[
+				Df = \frac{\partial f}{\partial x^i}  D x^i.
+			\]
+		\end{lemma*}
+		\begin{proof}
+			For any point $p\in \R^n$, we can write
+			\[
+				f = f(p) + \sum_{1\leq i \leq n}(x^i-x^i(p)) R_{p,i}\qtq{where} R_{p,i}(p) = \frac{\partial f}{\partial x^i}(p)
+			\]
+			These functions $R_{p}$ can be obtained from the multivariate Taylor theorem by factoring out $(x-p)$ from the sum of linear and higher order terms when expanding at $x=p$.
+			Applying the derivation, we get
+			\[
+				D f = \sum_{1\leq i \leq n}(x^i-x^i(p))  D R_p + R_p Dx^i.
+			\]
+			Now since this holds for any $p\in \R^n$ and derivations commute with limits,
+			\[
+				\begin{aligned}
+					D f(p) & = \lim_{x\to p} \sum_{1\leq i \leq n} (x^i-x^i(p)) D R_p + R_p  Dx^i         \\
+					       & = R_p(p)  Dx^i = \sum_{1\leq i \leq n}\frac{\partial f}{\partial x_i} D x^i.
+				\end{aligned}
+			\]
+			This is the exact expression we were after.
+		\end{proof}
+	\end{changemargins}
+
+	Consequently, such an expression should hold true on $U$ given suitable coordinate functions. Combining this with our previous expression for $df\circ X_{D}|_U$, it follows that $D_{\X_D} f = df\circ \X_{D} = Df$ so $D_{\X_D} = D$.
+
+	In the reverse direction, suppose that $X$ is a vector field. As before, it suffices to show equality $\X_{D_X}|_U = X|_U$ on open charts $U$. Writing \[ X|_U = X^i \frac{\partial}{\partial x^i} \qtq{for} X^i\in C^\infty(U), \]
+	note that by definition of the vector field $\partial/\partial x^i$, we get
+	\[
+		\begin{aligned}
+			\X_{D_X}|_U  = D_X x^i  \frac{\partial}{\partial x^i}
+			 & = \left(dx^i\circ X\right) \frac{\partial}{\partial x^i}                                               \\
+			 & = \left(dx^i\circ \left(X^j  \frac{\partial}{\partial x^j}\right)\right) \frac{\partial}{\partial x^i} \\
+			 & = X^i  \frac{\partial}{\partial x^i} = X|_U.
+		\end{aligned}
+	\]
+	This completes the proof.
+\end{proof}
+
+\begin{definition*}
+	Recall that the commutator is a $\R$-linear operator
+	\[[-, -] : \Der(C^\infty(M))\otimes \Der(C^\infty(M)) \longto \Der(C^\infty(M)).\]
+	By the preceding correspondence, we define the \defn{commutator of vector fields} as the unique $\R$-linear operator \[[-,-] : \X(M)\otimes \X(M) \longto \X(M)\qtq{such that} D_{[X,Y]} = [D_X, D_Y] \]
+	for all vector fields $X, Y\in \X(M)$.
+\end{definition*}
+
+\begin{proposition*}
+	In local coordinates, the commutator of $X$ and $Y$ is
+	\[
+		[X,Y]|_U = \left(X^j\frac{\partial Y^i}{\partial x^j} - Y^j\frac{\partial X^i}{\partial x^j}\right) \frac{\partial}{\partial x^i}
+	\]
+\end{proposition*}
+
+\begin{proof}
+	We claim that both sides act the same as derivations on $C^\infty(M)$. Let $f \in \C^\infty(M)$ be a smooth function. Observe that
+	\[
+		\begin{aligned}
+			D_{[X,Y]}f = D_X\circ D_Y f - D_Y\circ D_X f
+			 & = d(df\circ Y)\circ X - d(df\circ X)\circ Y                           \\
+			 & = X^i\frac{\partial Y^j}{\partial x^i}\frac{\partial f}{\partial x^j}
+			- Y^j\frac{\partial X^i}{\partial x^j} \frac{\partial f}{\partial x^i}.
+		\end{aligned}
+	\]
+	This is exactly the action of the right hand side on $f$ as a derivation.
+\end{proof}
+
+\begin{theorem*}
+	Let $X,Y\in \X(M)$ be vector fields. Then,
+	\[
+		[X,Y]=0 \qiffq \theta_X^u\circ \theta_Y^v = \theta_Y^v \circ \theta_X^u
+	\]
+	for any local flows $\theta_X, \theta_Y$ associated to $X$ and $Y$ respectively.
+\end{theorem*}
+
+\begin{proof}
+	Let's begin with the reverse direction, i.e. suppose $\theta^u_X \circ \theta^v_Y = \theta^v_Y \circ \theta^u_X$ for some flows in a neighborhood of $p\in M$. In local coordinates, we can
+	differentiate the flows with respect to $u$ and $v$, we get
+	\[
+		\begin{aligned}
+			\frac{\partial}{\partial v}\frac{\partial}{\partial u}\restr{\theta^u_X\circ \theta^v_Y}{u,v=0}
+			 & = \frac{\partial}{\partial v} \restr{\left(X \circ \theta_Y^v\right)}{v=0} = dX\circ Y =
+			Y^j  \frac{\partial X^i}{\partial x^j} \frac{\partial}{\partial x^i}.
+		\end{aligned}
+	\]
+	In the other direction, we have
+	\[
+		\begin{aligned}
+			\frac{\partial}{\partial v}\frac{\partial}{\partial u}\restr{\theta^v_Y\circ \theta^u_X}{u,v=0}
+			 & = \frac{\partial}{\partial v}\restr{\left(d\theta_Y^v \circ X\right)}{v=0}
+			 & = dY\circ X = X^j\frac{\partial Y^i}{\partial x^j}\frac{\partial}{\partial x^i}
+			% & = \frac{\partial}{\partial v}\restr{\left(\frac{\partial \theta^v_{Y,i}}{\partial x^j}  X^j \frac{\partial}{\partial x^j}\right)}{v=0}
+			% = Y^i \frac{\partial X^j}{\partial x^i}\frac{\partial}{\partial x^j}.
+		\end{aligned}
+	\]
+	Since both sides are equal, it follows that
+	\[
+		0 = \left(X^j\frac{\partial Y^i}{\partial x^j} - Y^j\frac{\partial X^i}{\partial x^j}\right)\frac{\partial}{\partial x^i}=[X,Y]|_U.
+	\]
+	In particular, wherever the flows commute, the vector fields commute, so $[X,Y]=0$ if the flows commute globally.
+
+	In the reverse direction, suppose $[X,Y]=0$. For any $p\in M$ and $v$ small enough, consider the curve
+	\[
+		\gamma(u) = \theta_Y^v \circ \theta_X^u\circ \theta^{-v}_Y(p).
+	\]
+	If we can show that $\gamma$ is an an integral curve to $Y$, then by the uniqueness theorem we would have
+	\[
+		\theta^u_X(p) = \gamma(u) = \theta_Y^v\circ \theta^u_X\circ \theta^{-v}(p) \quad\implies\quad \theta^u_X\circ \theta^v_Y(p)= \theta^v_Y\circ \theta^u_X(p)
+	\]
+	which would complete the proof. The condition for $\gamma$ being an integral curve can be expanded as
+	\[
+		\begin{aligned}
+			\frac{\partial \gamma}{\partial u} = X\circ \gamma
+			 & \quad\Longleftarrow\quad d\theta^v_Y \circ X\circ \theta^u_X\circ \theta^{-v}_Y(p) = X\circ \theta^v_Y\circ \theta^u_X \circ \theta^{-v}_Y(p) \\
+			 & \textrm{or more generally}\vphantom{\frac{1}{1}}\ldots                                                                                        \\
+			 & \quad\Longleftarrow\quad d\theta^v_Y\circ X = X\circ \theta^v_Y                                                                               \\
+			 & \quad\Longleftarrow\quad d\theta^v_Y\circ X\circ \theta^{-v}_Y = X.
+		\end{aligned}
+	\]
+
+	\begin{changemargins}
+		\begin{lemma*}
+			We can express the commutator as
+			\[
+				\frac{\partial}{\partial v} \restr{\left(d\theta^v_Y \circ X \circ \theta_Y^{-v}\right)}{v=0} = [X,Y].
+			\]
+		\end{lemma*}
+		\begin{proof}
+			Differentiating the term $d\theta^v_Y \circ X \circ \theta^{-v}_Y$ with respect to $v$ in some chart $U$, we get
+			\[
+				\begin{aligned}
+					\frac{\partial}{\partial v} \restr{\left(d\theta^v_Y \circ X \circ \theta^{-v}_Y\right)}{v=0}
+					 & = \frac{\partial}{\partial v}\restr{\left(\frac{\partial \theta_{Y,i}^v}{\partial x^i}X^i\circ \theta^{-v}_{Y}\right)}{v=0}                \\
+					 & = \frac{\partial \theta^0_{Y,j}}{\partial x^i}\frac{\partial}{\partial v}\restr{\left(X^i\circ \theta^{-v}_{Y}\right)}{v=0}
+					+ \frac{\partial}{\partial v}\restr{\left(\frac{\partial \theta^v_{Y, j}}{\partial x^i}\right)}{v=0}X^i\circ \theta^{-0}_Y                    \\
+					 & = -Y^j\frac{\partial X^i}{\partial x^j}\frac{\partial}{\partial x^j} + \frac{\partial Y^j}{\partial x^i} X^i \frac{\partial}{\partial x^i} \\
+					 & = [X,Y]|_U.
+				\end{aligned}
+			\]
+			Since this works in any chart $U$ and $d\theta^v_Y \circ X \circ \theta^{-v}_Y$ is defined globally, the result holds true globally as well.
+		\end{proof}
+	\end{changemargins}
+
+	In our case, the commutator is zero so the derivative of $d\theta^v_Y \circ X \circ \theta^{-v}_Y$ is zero for $v$ in some open subset of the line. Thus, it must be constant in $v$ so equal to its value at $v=0$. At $v=0$, this is exactly $X$, so we get
+	\[
+		d\theta^v_Y \circ X \circ \theta^{-v}_Y = X.
+	\]
+	By our earlier argument, this completes the proof.
+\end{proof}
+
+\subsection*{Distributions and Integral Manifolds}
+
+\begin{theorem*}
+	Let $E$ be a rank $k$ distribution on $M$ and suppose any two vector fields $X,Y\in \Gamma(E)$ commute, i.e. $[X,Y]=0$. Then $E$ is integrable at every point.
+\end{theorem*}
+
+\begin{proof}
+	At any point $p\in M$, choose a local frame $X_1,\ldots, X_k\in \Gamma(E)$ of the distribution and consider the parametrization
+	\[
+		\definefunction{\varphi}{(-\eps, \eps)^k}{M}{u}{\theta_{X_1}^{u_1}\circ \cdots \circ \theta_{X_k}^{u_k}(p)}
+	\]
+	for some $\eps>0$. Then we claim that the image of $\varphi$ is an integral manifold of $E$ passing through $p$.
+
+	\todo{finish writing this proof}
+\end{proof}
+
+\begin{proposition*}
+	Suppose $E$ is a rank $k$ distribution on $M$, and $N\subset M$ is a submanifold integral to $E$. If $X,Y\in \Gamma(TN)$ are integral vector fields, then so is their commutator, i.e. $[X,Y]\in \Gamma(TN)$.
+\end{proposition*}
+
+\begin{proof}
+	Recall that the commutator can be expressed as
+	\[
+		[X,Y]=\frac{\partial}{\partial v}\restr{\left(d\theta^v_Y \circ X \circ \theta^{-v}_Y\right)}{v=0}=\lim_{v\to 0}\frac{d\theta^v_Y \circ X \circ \theta^{-v}_Y - X}{v}.
+	\]
+	Since $N$ is an integral manifold, $\theta^v_Y$ restricts to a flow on $N$. This means that $d\theta^v_Y$ also restricts to a linear isomorphism
+	\[
+		(d\theta^v_Y)_p : T_p N \to T_{\theta^v_Y(p)} N \implies (d\theta^v_Y)_p : E_p \to E_{\theta^v_Y(p)}.
+	\]
+	This means that $d\theta^v_Y$ preserves $E$, and since $X\circ \theta^{-v}_Y(p)\in E$, we know that $d\theta^v_Y\circ X \circ \theta^{-v}_Y(p)\in E_p$ for all $v$. This means that the numerator in the limit must always be in $E_p$, and so the limit must live in $E_p$ as well. This proves that $[X,Y]\in \Gamma(E)$.
+\end{proof}
+
+\end{document}

@@ -36,6 +36,22 @@
 %              Environments
 % -----------------------------------------------
 
+\newenvironment{changemargins}{%
+\begin{list}{}{%
+		\setlength{\itemsep}{0em}
+		\setlength{\topsep}{0em}%
+		\setlength{\leftmargin}{1em}%
+		\setlength{\rightmargin}{1em}%
+		\setlength{\listparindent}{\parindent}%
+		\setlength{\itemindent}{\parindent}%
+		\setlength{\parsep}{\parskip}%
+	}%
+	\item\leavevmode\vspace{-1.5em}
+	      }{
+\end{list}
+{\medskip}
+}
+
 \newcommand\defn[1]{\textbf{#1}}
 \newcommand\todo[1]{{\color{red}\textbf{#1}}}
 

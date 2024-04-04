@@ -1,0 +1,141 @@
+\documentclass[expanded]{lkx_pset}
+
+\title{Math 213b Problem Set 7}
+\author{Lev Kruglyak}
+\due{March 27, 2024}
+
+\input{../math213b.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		Suppose $X$ is a compact, connected Riemann surface of genus $g$ and $D$ is a divisor of degree $0$ with $\ell(D)>0$. Show that $D$ is a principal divisor and $\ell(D)=1$.
+	\end{part}
+
+	By the assumption $\ell(D)>0$, we know that $\mathcal{L}(D)$ is a nonzero vector space so there must be some nonzero meromorphic function $f$ on $X$ with $\div(f)+D\geq 0$. However we know that
+	\[
+		\deg(\div(f) + D) = \deg(\div(f)) + \deg(D) = 0
+	\]
+	Since $\div(f)+D$ is an effective divisor of degree $0$, it follows that $\div(f)+D = 0$ so $D=-\div(f)=\div(1/f)$. This means that $D$ is also a principal divisor, so $\mathcal{L}(D)=\C$ and $\ell(D)=1$.
+
+	\begin{part}{b}
+		Suppose $X$ is a compact, connected Riemann surface of genus $g$ and $D$ is a divisor of degree $2g-2$ with $\ell(D)\geq g$. Show that $D$ is a canonical divisor and $\ell(D)=g$.
+	\end{part}
+	For any canonical divisor $K$, the Riemann-Roch theorem states that
+	\[
+		\begin{aligned}
+			\ell(D) = \ell(K-D)+ \deg(D) - g +1.
+		\end{aligned}
+	\]
+	Since $\ell(D)\geq g$, we have
+	\[
+		\ell(K-D) = \ell(D) - \deg(D)+ g- 1 \geq g - (2g-2)+g-1=1.
+	\]
+	Lastly, note that since $K$ is a canonical divisor, $\deg(K)=2g-2$ so
+	\[
+		\deg(K-D)=\deg(K)-\deg(D) = (2g-2)-(2g-2)=0.
+	\]
+	Since $K-D$ satisfies both conditions of the previous part, it must be a principal divisor and so $\ell(K-D)=1$. Let's say $K-D=\div(f)$ for some nonzero meromorphic function $f$. Since $K$ is a canonical divisor, there is some nonzero meromorphic $1$-form $\alpha$ such that $K=\div(\alpha)$. Putting this together, we see that
+	\[
+		D = \div(\alpha)-\div(f) = \div(\alpha)+\div(1/f)=\div(\alpha/f).
+	\]
+	Since $\alpha/f$ is a nonzero meromorphic $1$-form, $D$ is a canonical divisor. Applying the Riemann-Roch theorem for a second time, we see that
+	\[
+		\ell(D) = \ell(K-D) + \deg(D) -  g + 1 = 1 + (2g-2)-g + 1= g.
+	\]
+	This completes the proof.
+\end{parts}
+
+\begin{problem}{2}
+Suppose $X$ is a compact, connected Riemann surface of genus $g$ and that $g\geq 2$. Let $K$ be a canonical divisor.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		What is $\ell(2K)$ when $g\geq 2$?
+	\end{part}
+	Since $\deg(2K)=2\deg(K)=4g-4$, and $4g-4\geq 2g-1$, we know that $\ell(K-2K)$. Applying the Riemann-Roch theorem, we see that
+	\[
+		\ell(2K) = \deg(2K) - g  + 1 = 4g-4 - g + 1 = 3g-3.
+	\]
+
+	\begin{part}{}
+		What is $\ell(2K)$ when $g = 0$?
+	\end{part}
+
+	Here $\deg(2K)=-4<0$, so we know that $\ell(2K)=0$.
+
+	\begin{part}{}
+		What is $\ell(2K)$ when $g = 1$?
+	\end{part}
+
+	In this case, $\deg(K)=0$ so by the Riemann-Roch theorem we get
+	\[
+		\ell(K) = \ell(0) - \deg(0)+g-1=1
+	\]
+	By the previous problem, we can conclude that $K$ is a principal divisor, say with $K=\div(f)$. Then $2K = \div(f^2)$ is a principal divisor as well so $\ell(2K)=1$.
+\end{parts}
+
+\begin{problem}{3}
+For a compact Riemann surface $X$ and a divisor $D$ with $\mathcal{L}(D)\neq 0$, we showed how to use a basis $\{f_0,\ldots, f_n\}$ of $\mathcal{L}(D)$ to define a map $\psi_D : X \to \CP^n$. Let $X$ be the Riemann sphere $\C\cup \{\infty\}$, let $q$ be the point at infinity and let $D=3q$. Choose a basis with $f_0=1$ and consider the map $\psi_D$.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Write $W_0\subset \CP^n$ as usual for the locus $Z_0\neq 0$ in homogenous coordinates. Let $X_0 = \psi_D^{-1}(W_0)$. What subset of $X$ is this? Write down the map $\psi_D : X_0 \to W_0$ in the simplest way you can.
+	\end{part}
+
+	First, we claim that the set $\{1, z, z^2, z^3\}$ forms a basis for $\mathcal{L}(D)$. Clearly, the functions are linearly independent over $\C$. Note that $X$ has genus $0$ so by the Riemann-Roch theorem, we have
+	\[
+		\ell(D) = \ell(K-D) + \deg(D) - g + 1 = 4,
+	\]
+	since $\ell(K-D) = 0$ because $\deg(D) = 2g-1 < 2g-2$. This means that $\{1,z,z^2,z^3\}$ in fact span.
+	Now in this basis, the map $\psi_D$ is given in projective coordinates by
+	\[
+		\psi_D(z)= \begin{cases}
+			[1:z:z^2:z^3]            & z\in \C,      \\
+			[z^{-3}:z^{-2}:z^{-1}:1] & z\in X-\{0\}.
+		\end{cases}
+	\]
+	This means that $\psi_D$ maps $q$ to $[0:0:0:1]$ and all other points map in $W_0$ in homogeneous coordinates. It follows that $X_0=\C$ and that $\psi_D$ This means that
+	\[
+		\psi_D : z \mapsto [1:z:z^2:z^3].
+	\]
+\end{parts}
+
+\begin{problem}{4}
+Let $X$ be a compact, connected Riemann surface of genus $5$. Suppose that $X$ is not hyperelliptic, so that the canonical map $\phi : X \to \CP^4$ is an embedding. Let $C$ be the image of $X$ in $\CP^4$. Using a dimension-count similar to our discussion of genus-$3$ surfaces in class, show that $C$ lies on three linearly-independent quadratic hypersurfaces.
+\end{problem}
+
+\begin{solution}
+	Since $H^{1,0}(X)$ has dimension $5$, so let $\omega_1,\ldots, \omega_5$ be a basis of $1$-forms. The canonical embedding $\phi : X \to \CP^4$ is then given by
+	\[
+		\phi(x) = [\omega_1(x) : \cdots : \omega_5(x)].
+	\]
+	Now let $s_i = \omega_i/\omega_1$, and let $K=\div(\omega_1)$. Clearly, these $s_i$ have no common zeroes, so there is some subset of $U\subset X$ such that for each $x\in U$, we have
+	\[
+		\phi(x) = [s_1(x) : \cdots : s_5(x)]
+	\]
+	and $X-U$ is the union of poles of $s_i$. Then $\phi(X-U)= C-\phi(U)$ is isolated as well, since poles are isolated and a finite union of isolated points is isolated.
+
+	Next, let $Q$ be the vector space of quadrics with $5$ variables, i.e.
+	\[
+		Q = \left\{ F : F(Z_1, \ldots, Z_5) = \sum_{0\leq i \leq j\leq 4} a_{ij} Z_i, Z_j\right\}.
+	\]
+	Then we can construct a linear substitution map \[\definefunction{\Theta}{Q}{\mathcal{L}(2K)}{F}{F(s_1,\ldots, s_5)}\]
+	Since there are $15$ terms of the form $Z_iZ_j$, $\dim Q = 15$ so by the second problem we get $\dim\mathcal{L}(2K)=12$. Thus,
+	\[
+		\textrm{ker}\, \Theta = \dim Q - \textrm{rank}\, \Theta \geq \dim Q - \ell(2K) = 3.
+	\]
+	This means that there are three linearly independent quadrics which vanish identically on $\phi(U)$, but this means that they must also vanish on $C-\phi(U)$. This means that $C$ lies on the $3$ linearly independent quadric hypersurfaces defined by the zero locus of the three linearly independent quadrics.
+\end{solution}
+
+\end{document}
