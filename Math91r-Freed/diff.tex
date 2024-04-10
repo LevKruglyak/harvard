@@ -1,0 +1,103 @@
+\documentclass{lkx_paper}
+
+\title{\textbf{Differential Operators on Manifolds}}
+\date{}
+\author{Lev Kruglyak}
+
+\input{notes.sty}
+
+\providecommand{\Diff}{\mathrm{Diff}}
+
+\begin{document}
+\maketitle
+
+\subsection*{Commutative Algebra}
+
+\begin{definition*}
+	Let $A$ be a commutative, unital algebra over a ring $R$. Let's define the \defn{differential operators of order at most $k$} inductively in the following manner. When $k=0$, we set
+	\[
+		\Diff^0_R(A) = \Hom_A(A,A) = \{ \widehat{a} : a\in A\}
+	\]
+	where $\widehat{a}$ is the $A$-linear map sending $x\to a\cdot x$. When $k>0$, we set
+	\[
+		\Diff^k_R(A) = \{
+		D\in \Hom_R(A, A) : [D, \widehat{a}]\in \Diff^{k-1}_R(A),\textrm{ for all }a\in A
+		\}.
+	\]
+	Finally, we define the \defn{differential operators on $A$ over $R$} as the union
+	\[
+		\Diff_R(A) = \bigcup_{k\geq 0} \Diff^k_R(A) \subset \Hom_R(A, A).
+	\]
+\end{definition*}
+
+\begin{proposition*}
+	Composition of functions gives us $R$-bilinear maps
+	\[
+		\circ : \Diff^p_R(A)\times \Diff^q_R(A) \longto \Diff^{p+q}_R(A),
+	\]
+	so $\Diff_R(A)$ carries the structure of a graded, non-commutative, unital algebra over $R$.
+\end{proposition*}
+
+\begin{proposition*}
+	We have an isomorphism $\Diff^1_R(A) \cong A\oplus \Der_R(A)$.
+\end{proposition*}
+
+\begin{proof}
+	Let $D\in \Diff^1_R(A)$. We know that $[D, \widehat{a}] = \widehat{f(a)}$ for some element $f_D(a)\in A$ associated to each $a\in A$. Note now that
+	\[
+		[D,\widehat{a}](1) = D(a\cdot 1) - a\cdot D(1) = f_D(a)\cdot 1 \qiq f_D(a) = D(a)-a\cdot D(1).
+	\]
+	For any $a,b\in A$, we thus get
+	\[
+		\begin{aligned}
+			[D, \widehat{a}](b) = D(ab) - a\cdot D(b) & = f_D(a)\cdot b = D(a)\cdot b-a\cdot D(1)\cdot b \\
+			D(ab)                                     & = a\cdot D(b) + D(a)\cdot b - ab\cdot D(1)
+		\end{aligned}
+	\]
+	This holds true for any differential operator of order at most $1$, so let's now consider $D'=D - \widehat{D(1)}$. Since $D'(1)=0$, it follows that
+	\[
+		D'(ab) = a\cdot D'(b) + D'(a)\cdot b.
+	\]
+	This is exactly the Leibniz rule, so $D'$ is a derivation, and $D$ can be expressed as the sum $D = D' + \widehat{D(1)}$ where $D'\in \Der_R(A)$ and $D(1)\in A$.
+\end{proof}
+
+\subsection*{Differential Geometry}
+
+\begin{proposition*}
+	On a manifold $M$, we have an isomorphism
+	\[
+		D_- : \X(M) \longto \Der_\R C^\infty(M)
+	\]
+\end{proposition*}
+
+\begin{definition*}
+	Let $T^{p,q}M$ be the \defn{tensor bundle} of $M$, i.e.
+	\[
+		T^{p,q}M = \underbrace{TM\otimes\cdots\otimes TM}_{p\textrm{ times}}\otimes \underbrace{T^*M\otimes \cdots \otimes T^* M}_{q\textrm{ times}},
+	\]
+	and let $\T^{p,q}M = \Gamma(T^{p,q} M)$ be the vector space of \defn{tensor fields}.
+
+
+	% Let $\widehat{T}^k M = TM^{\otimes k}$ and $\widehat{\X}^k(M) = \Gamma(\widehat{T}^k M)$, where $\widehat{T}^0 M = M\times \R$ is the trivial bundle so that $\widehat{\X}^0(M)=C^\infty(M)$. Let's define the \defn{multitangent bundle} as the Whitney sum bundle
+	% \[
+	% 	\widehat{T} M = \bigoplus_{k\geq 0} \widehat{T}^k M.
+	% \]
+	% Equivalently this is the tensor algebra bundle of the tangent bundle. A \defn{multivector field} is a section of this bundle, and we denote the algebra of multivector fields as $\widehat{\X}(M) = \Gamma(\widehat{T}M)$.
+\end{definition*}
+
+There is a linear map
+\[
+	D^k_- : \T^{k, 0}(M) \longto \Diff_\R^k C^\infty(M),
+\]
+which sends some $(k,0)$-tensor field $X=X_1\otimes \cdots \otimes X_k$ to the $\R$-linear map
+\[
+	\definefunction{D^k_X}{C^\infty(M)}{C^\infty(M)}{f}{D_{X_1}\circ \cdots\circ D_{X_k}(f)}
+\]
+We claim that $D_X^k$ is in fact in $\Diff^k_{\R} C^\infty(M)$. We'll proceed by induction. For $k=1$.
+
+%
+% \begin{proof}
+%   Let's begin by constructing surjective linear maps
+% \end{proof}
+
+\end{document}
