@@ -176,7 +176,7 @@ In this problem we will explore expectation-maximization for a Categorical-Gamma
 		\[
 			\alpha\sum^N_{n=1} \frac{\boldq_{n,k}}{\beta_k} - \sum^N_{n=1} \boldq_{n,k} x_n=0\quad\implies \quad \widehat{\beta_k} = \frac{\alpha \sum^N_{n=1}\boldq_{n,k}}{\sum^N_{n=1}\boldq_{n,k} x_n}.
 		\]
-		This optimal $\beta_k$ expression also makes intuitive sense since it reflects the average rate of decay or spread of the distribution for a given component $k$, where we normalize by how much each point contributes to that component.
+		This optimal $\widehat{\beta_k}$ expression also makes intuitive sense since it is inversely proportional to the expected value of $x$ given $z = \boldC_k$. Thus, $\beta_k$ represents rate of decay or spread of the distribution for a given component $k$, and we normalize by how much each point contributes to that component.
 	\end{parts}
 
 	\begin{part}{5}
@@ -188,7 +188,7 @@ In this problem we will explore expectation-maximization for a Categorical-Gamma
 		your derivations above to estimate the parameters of the model?
 	\end{part}
 
-	\todo{finish this.}
+	For the classification problem, we want to find parameters minimizing the negative (complete) log-likelihood, and this is now a tractable problem since we know $\boldz_n$. We can thus perform the same computations for $\widehat{\theta_k}$ and $\widehat{\beta_k}$, where we replace $\boldq_{n}$ with $\boldz_n$, since $\boldq_n$ were only estimates for the true $\boldz_n$.
 \end{solution}
 
 \begin{problem}{2}[Expectation-Maximization for Gamma Mixture Models: Coding]
@@ -286,7 +286,8 @@ understand what is going on to improve their processes.
 		vs. those who do not.  Is this mixture modeling approach appropriate
 		for this task?  Why or why not?
 	\end{part}
-	\todo{this part}
+
+	Yes, using a mixture model would be a great choice for this analysis, for a few reasons. First of all, we have no prior labels or understanding of the types of recovery mode, and the mixture model has successfully identified that there are in fact three different recovery distributions, and can separate these different recovery modes. This clear demarcation is especially useful for an unlabelled dataset such as the one we are given.
 
 	\begin{part}{7} The physician-scientists develop a way of identifying someone's
 		cluster based on a blood test -- it seems that some patients in the
@@ -297,7 +298,7 @@ understand what is going on to improve their processes.
 		Is this plan sound?  May there be some issues?
 	\end{part}
 
-	\todo{this part}
+	Using any learned model to allocate resources has understandable ethical concerns due to the severity of miscalculation, however with research and testing this might work. This blood test might be used in conjunction in the model to first of all verify its accuracy against the mixture model, and figure out the tolerances for error. Then the hospital could allocate beds more liberally than needed to avoid overcrowding. Overall, if its accuracy were demonstrated, the blood test might be a better indicator of recovery time than the mixture model, since the blood test might uncover the actual latent variables driving recovery time.
 \end{parts}
 
 \begin{problem}{3}[PCA]
