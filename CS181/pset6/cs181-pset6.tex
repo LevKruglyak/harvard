@@ -1,0 +1,59 @@
+\documentclass[expanded]{lkx_pset}
+
+\title{CS181 Problem Set 6}
+\author{Lev Kruglyak}
+\due{April 26, 2024}
+
+\input{../cs181.sty}
+\input{common.sty}
+
+% \collaborator{Artemas Radik}
+\collaborator{AJ LaMotta}
+\collaborator{Leonardo Kaplan}
+\collaborator{GPT-4 (for debugging help)}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}[Hidden Markov Models]
+In this problem, you will be working with one-dimensional Kalman filters, which are \textit{continuous-state} Hidden Markov Models. Let $z_0, z_1, \cdots , z_T$ be the hidden states of the system and $x_0, x_1, \cdots, x_T$ be the observations produced. Then, state transitions and emissions of observations work as follows:
+\begin{eqnarray*}
+	z_{t+1} &= z_{t} + \epsilon_{t} \\
+	x_{t} & = z_{t} + \gamma_{t}
+\end{eqnarray*}
+where $\epsilon_t \sim N(0,\sigeps^2)$ and $\gamma_t \sim N(0,\siggam^2)$. The value of the first hidden state follows the distribution $z_0 \sim N(\muzp,\sigzp^2)$.
+\end{problem}
+\begin{parts}
+	\begin{part}{1} Draw the graphical model corresponding to the one-dimensional Kalman filter.
+	\end{part}
+	\begin{part}{2} In this part we will walk through the derivation of the conditional distribution of $z_t|(x_0, \cdots, x_{t})$.
+	\end{part}
+	\begin{parts}
+		\begin{part}{a} How does the quantity $p(z_t| x_0, \cdots, x_{t})$ relate to $\alpha_t(z_t)$ and $\beta_t(z_t)$ from the forward-backward algorithm for HMMs?  What is the operation we are performing called?
+		\end{part}
+		\begin{part}{b} The above quantity $p(z_t|x_0, \cdots, x_t)$ is the PDF for a Normal distribution with mean $\mu_t$ and variance $\sigma_t^2$. We start our derivation of $\mu_t$ and $\sigma_t^2$ by writing:
+			\begin{align*}
+				p(z_t|x_0, \cdots, x_t) \propto p(x_t|z_t)p(z_t|x_0, \cdots x_{t-1})
+			\end{align*}
+			What is $p(x_t|z_t)$ equal to?
+		\end{part}
+		\begin{part}{c} Suppose we are given the mean and variance of the conditional distribution $z_{t-1}|(x_0, \cdots, x_{t-1})$ as $\mu_{t-1}$, $\sigma^2_{t-1}$. What is $p(z_t|x_0, \cdots x_{t-1})$ equal to?
+		\end{part}
+
+		\textbf{Hint 1}: Start by marginalizing out over $z_{t-1}$.
+
+		\textbf{Hint 2}: You may cite the fact that
+		\[\int N(y-x ; \mu_a, \sigma^2_a)N(x ; \mu_b, \sigma^2_b)dx = N(y ; (\mu_a + \mu_b), (\sigma^2_a + \sigma^2_b))\]
+		\begin{part}{d} Combine your answers from parts (b) and (c) to get a final expression for $p(z_t|x_0, \cdots, x_t)$. Report the mean $\mu_t$ and variance $\sigma_t^2$ of this Normal.
+		\end{part}
+
+		\textbf{Hint 1}: Rewrite $N(x_t; z_t, \siggam^2)$ as $N(z_t; x_t, \siggam^2)$.
+
+		\textbf{Hint 2}: You may cite the fact that
+		\[N(x; \mu_a, \sigma^2_a)N(x; \mu_b, \sigma^2_b) = N\left(x; \frac{\sigma^2_b}{\sigma^2_a+\sigma^2_b}\mu_a + \frac{\sigma^2_a}{\sigma^2_a+\sigma^2_b}\mu_b, \ \left(\frac{1}{\sigma^2_a} + \frac{1}{\sigma^2_b}\right)^{-1}\right)\]
+	\end{parts}
+	\begin{part}{3}Interpret $\mu_t$ in terms of how it combines observations from the past with the current observation.
+	\end{part}
+\end{parts}
+
+\end{document}
