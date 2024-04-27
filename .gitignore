@@ -3,4 +3,6 @@ pgf/
 __pycache__/
 *.log
 
+*/penv/*
+
 .DS_Store
