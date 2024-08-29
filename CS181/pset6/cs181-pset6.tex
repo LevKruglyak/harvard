@@ -116,6 +116,200 @@ where $\epsilon_t \sim N(0,\sigeps^2)$ and $\gamma_t \sim N(0,\siggam^2)$. The v
 	Note that $\mu_t$, our prediction for the current sample, is a weighted average of $x_t$, our current observation, and $\mu_{t-1}$, which is our prediction from the previous samples. The weights in this weighted sum are not just constant, but depend on $\sigma_{t-1}^2$ which represents the uncertainty in the previous predictions.
 \end{parts}
 
+\begin{problem}{2}[Policy and Value Iteration]
+You have a robot that you wish to collect two parts in an environment
+and bring them to a goal location.  There are also parts of the
+environment that you wish the robot avoid to reduce wear on the floor.
+Eventually, you settle on the following way to model the environment
+as a Gridworld.  The ``states'' in Gridworld are represented by
+locations in a two-dimensional space.  Here we show each state and its
+reward:
+\end{problem}
+
+\begin{solution}
+	\begin{center}
+		\includegraphics[width=3in]{images/gridworld.png}
+	\end{center}
+
+	The set of actions is \{N, S, E, W\}, which corresponds to moving north (up), south (down), east (right), and west (left) on the grid. Taking an action in Gridworld does not always succeed with probability
+	$1$; instead the agent has probability $0.1$ of ``slipping'' into a
+	state on either side, but not backwards.  For example, if the agent tries to move right from START, it succeeds with probability 0.8, but the agent may end up moving up or down with probability 0.1 each. Also, the agent cannot move off the edge of the grid, so moving left from START will keep the agent in the same state with probability 0.8, but also may slip up or down with probability 0.1 each. Lastly, the agent has no chance of slipping off the grid - so moving up from START results in a 0.9 chance of success with a 0.1 chance of moving right.
+
+	Also, the agent does not receive the reward of a state immediately upon entry, but instead only after it takes an action at that state. For example, if the agent moves right four times (deterministically, with no chance of slipping) the rewards would be +0, +0, -50, +0, and the agent would reside in the +50 state. Regardless of what action the agent takes here, the next reward would be +50.
+
+	In this problem, you will first implement policy and value iteration in this setting and discuss the policies that you find.  Next, you will interrogate whether this approach to modeling the original problem was appropriate.
+
+	Your job is to implement the following three methods in file \texttt{homework6.ipynb}. Please use the provided helper functions \texttt{get\_reward} and \texttt{get\_transition\_prob} to implement your solution.
+
+	Note that we are doing infinite-horizon planning to maximize the expected reward of the traveling agent. For parts 1-3, set discount factor $\gamma = 0.7$.
+
+	\newpage
+	\begin{part}{1a}
+		Implement function \texttt{policy\_evaluation}.  Your
+		solution should learn value function $V$, either using a closed-form expression or iteratively using
+		convergence tolerance $\texttt{theta = 0.0001}$ (i.e., if
+		$V^{(t)}$ represents $V$ on the $t$-th iteration of your policy
+		evaluation procedure, then if $|V^{(t + 1)}[s] - V^{(t)}[s]|
+			\leq \theta$ for all $s$, then terminate and return $V^{(t + 1)}$.)
+	\end{part}
+
+	Using the closed form expression for $V$, we get the following code:
+	\begin{minted}{python}
+	def policy_evaluation(pi, gamma):
+    	R = np.array([get_reward(i) for i in range(num_states)]).reshape(-1, 1)
+    	T = np.array([
+    		  [get_transition_prob(i, pi[i], j) 
+    		  for j in range(num_states)] for i in range(num_states)
+    	  ])
+
+    	return (np.linalg.inv(np.eye(num_states) - gamma * T) @ R).flatten()
+  \end{minted}
+
+	\begin{part}{1b}
+		Implement function \texttt{update\_policy\_iteration} to update the policy \texttt{pi} given a value function \texttt{V} using \textbf{one step} of policy iteration.
+	\end{part}
+
+	The code is:
+	\begin{minted}{python}
+	def update_policy_iteration(V, gamma):
+    	pi_new = np.zeros(num_states)
+
+    	for s in range(num_states):
+        	T = np.array([
+        	  [get_transition_prob(s, i, j) for j in range(num_states)] 
+        	  for i in range(4)
+        	])
+        	Q = get_reward(s) + gamma * (T @ V)
+        	pi_new[s] = np.argmax(Q)
+
+    	return pi_new
+	\end{minted}
+
+	\newpage
+	\begin{part}{1c}
+		Set \texttt{max\_iter = 4}, \texttt{print\_every = 1} to show the learned value function and the associated policy for the first 4 policy iterations. Do not modify the plotting code. Please fit all 4 plots onto one page of your writeup.
+	\end{part}
+
+	\begin{center}
+		\includegraphics[scale=0.5]{figures/1c-1.png}
+		\includegraphics[scale=0.5]{figures/1c-2.png}
+		\includegraphics[scale=0.5]{figures/1c-3.png}
+		\includegraphics[scale=0.5]{figures/1c-4.png}
+	\end{center}
+
+	\begin{part}{1d} Set \texttt{ct = 0.01} and increase \texttt{max\_iter} such that the algorithm converges. Include a plot of the final learned value function and policy. How many iterations does it take to converge? Now try \texttt{ct = 0.001} and \texttt{ct = 0.0001}. How does this affect the number of iterations until convergence?
+	\end{part}
+
+	It takes $5$ iterations to converge for $\texttt{ct = 0.01}$, and here is the final learned value function:
+	\begin{center}
+		\includegraphics[scale=0.5]{figures/1d.png}
+	\end{center}
+	For $\texttt{ct = 0.001}$ and $\texttt{ct = 0.0001}$ we get the same results -- $5$ iterations to converge.
+
+	\begin{part}{2a} Implement function
+		\texttt{update\_value\_iteration}, which performs \textbf{one step} of value iteration to update \texttt{V}, \texttt{pi}.
+	\end{part}
+
+	Here is the code:
+	\begin{minted}{python}
+	def update_value_iteration(V, pi, gamma):
+    	V_new = np.zeros(num_states)
+    	pi_new = np.zeros(num_states)
+    	
+    	T = [np.array([[get_transition_prob(s, i, j) for j in
+        	range(num_states)] for i in range(4)]) for s in
+        	range(num_states)]
+
+    	for s in range(num_states):
+        	Q = get_reward(s) + gamma * (T[s] @ V)
+        	V_new[s] = np.max(Q)
+
+    	for s in range(num_states):
+        	Q = get_reward(s) + gamma * (T[s] @ V_new)
+        	pi_new[s] = np.argmax(Q)
+
+    	return V_new, pi_new
+	\end{minted}
+
+	\begin{part}{2b} Set \texttt{max\_iter = 4}, \texttt{print\_every = 1} to show the learned value function and the associated policy for the first 4 value iterations. Do not modify the plotting code. Please fit all 4 plots onto one page of your writeup.
+	\end{part}
+
+	\begin{center}
+		\includegraphics[scale=0.5]{figures/2b-1.png}
+		\includegraphics[scale=0.5]{figures/2b-2.png}
+		\includegraphics[scale=0.5]{figures/2b-3.png}
+		\includegraphics[scale=0.5]{figures/2b-4.png}
+	\end{center}
+
+	\begin{part}{2c} Set \texttt{ct = 0.01} and increase \texttt{max\_iter} such that the algorithm converges. Include a plot of the final learned value function and policy. How many iterations does it take to converge? Now try \texttt{ct = 0.001} and \texttt{ct = 0.0001}. How does this affect the number of iterations until convergence?
+	\end{part}
+
+	It takes $25$ iterations to converge for $\texttt{ct = 0.01}$, and here is the final learned value function:
+	\begin{center}
+		\includegraphics[scale=0.5]{figures/1d.png}
+	\end{center}
+	For $\texttt{ct = 0.001}$ and $\texttt{ct = 0.0001}$ it takes $31$ and $38$ iterations to converge respectively.
+
+	\begin{part}{3} Compare and contrast the number of iterations, time per iteration, and overall runtime between policy iteration and value iteration. What do you notice?
+	\end{part}
+
+	Policy iteration converged in far fewer iterations that value iteration, but took a comparable amount of time, meaning that a single policy iteration takes a longer. It's difficult to get an exact, reliable benchmark for this in Python since they both take a bit less than a second to run.
+
+	\begin{part}{4} Plot the learned policy with each of $\gamma \in (0.6,0.7,0.8,0.9)$. Include all 4 plots in your writeup. Describe what you see and provide explanations for the differences in the observed policies. Also discuss the effect of gamma on the runtime for both policy and value iteration.
+	\end{part}
+
+	Ordered from left to right in terms of increasing $\gamma$, we get the following plots:
+	\begin{center}
+		\includegraphics[scale=0.5]{figures/4-1.png}
+		\includegraphics[scale=0.5]{figures/4-2.png}
+		\includegraphics[scale=0.5]{figures/4-3.png}
+		\includegraphics[scale=0.5]{figures/4-4.png}
+	\end{center}
+	First of all, it's clear that as $\gamma$ increased, the learned value for each grid cell increase. This is a direct consequence of the formula for updating value -- with a higher $\gamma$, there is an increased reward for future actions. Secondly, and more importantly, increasing $\gamma$ seems to lead to the optimal policy ignoring negative rewards, and instead making a beeline straight for the biggest reward. This can be seen explicitly: For $\gamma=0.6$, the worst valued cells are the ones with the lowest reward, however for $\gamma=0.9$ the worst valued cells are the ones which are farthest from the maximal reward.
+
+	\begin{part}{5} Now suppose that the game ends at any state with a positive reward, i.e. it immediately transitions you to a new state with zero reward that you cannot transition away from. What do you expect the optimal policy to look like, as a function of gamma? Numerical answers are not required, intuition is sufficient.
+	\end{part}
+
+	When $\gamma$ is low, future rewards will be heavily discounted so the agent will try to reach a positive reward as quickly as possible while dodging any negative rewards along the way. If there is a nearby positive reward, it might prioritize getting to it as soon as possible, even ending the game here, instead of trying to manouver around negative rewards and getting to a larger positive reward further away.
+
+	When $\gamma$ is high, the agent places similar value on immediate and distant future rewards, so the agent will try reach the distant reward, potentially sacrificing some points to get there. It will be more avoidant of the negative reward and try to get to the farther away bigger rewards. In between the extremes, there is a tradeoff based on the $\gamma$ factor.
+
+	\begin{part}{}
+		Now you will interrogate your solution in terms of its applicability
+		for the intended task of picking up two objects and bringing them to a
+		goal location.
+	\end{part}
+
+	\begin{part}{6} In this problem, we came up with a model for the problem,
+		solved it, and then we had a policy to use on the real robot.  An
+		alternative could have been to use RL on the robot to identify a
+		policy that achieved your objective.  What is the value of the
+		approach we took?  What are some limitations (in general)?
+	\end{part}
+
+	The advantage of our modelling approach is that we only have to do a single pass of value or policy iteration until convergence, then we have an optimal policy. With a reinforcement learning approach, especially in an unknown search space, there aren't such convergence guarantees. A big limitation of this approach would be if the environment was too complex to be modelled, or changing with time. In this event, reinforcement learning would be advantageous. Another limitation is that the agent never directly interact with the true environment, so there is no guarantee that it would work effectively once the assumptions of the model would be removed.
+
+
+	\begin{part}{7} Do any of the policies learned actually accomplish the task
+		that you desired?  What modeling shortcuts were made that result
+		in some policies matching your true objective and some not?
+	\end{part}
+
+	Some of the learned policies accomplish the goal, especially the one learned by policy iteration. In value iteration, the optimal policy gets stuck at the first part. This represents a modelling failure -- in the real task, the robot  \emph{must} pick up both parts and arrive at the end afterwards, however in our model these are just optional rewards for it to achieve.
+
+
+	\begin{part}{8} Describe at least three modeling choices that were made in
+		turning your original goal into this abstract problem, and
+		potential implications of those choices.
+	\end{part}
+
+	\begin{itemize}
+		\item \textbf{Optional Rewards} - we discussed this in the previous problem, but the nature of optional rewards means the robot does not have to accomplish all of the tasks it's supposed to in order to receive the optimal reward. In the real world, accomplishing all of the tasks is a prerequisite for completion.
+		\item \textbf{Unordered Rewards} - we also want the robot to visit certain spots in a precise order, but the model does not reflect this, instead rewards can be achieved in any order. This could lead the robot to first go to the drop off and then pick up the parts.
+		\item \textbf{Discrete Space} - we discretized space, which means that the robot might have an overly simplistic understanding of the layout of the real world. This might lead to collisions or faulty movement.
+	\end{itemize}
+\end{solution}
+
 \begin{problem}{3}[Reinforcement Learning]
 In 2013, the mobile game \emph{Flappy Bird} took the world by storm. You'll be developing a Q-learning agent to play a similar game, \emph{Swingy Monkey}.  In this game, you control a monkey that is trying to swing on vines and avoid tree trunks.  You can either make him jump to a new vine, or have him swing down on the vine he's currently holding.  You get points for successfully passing tree trunks without hitting them, falling off the bottom of the screen, or jumping off the top.  There are some sources of randomness: the monkey's jumps are sometimes higher than others, the gaps in the trees vary vertically, the gravity varies from game to game, and the distances between the trees are different.  You can play the game directly by pushing a key on the keyboard to make the monkey jump.  However, your objective is to build an agent that \emph{learns} to play on its own.
 \end{problem}
