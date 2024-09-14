@@ -1,0 +1,22 @@
+\usepackage{siunitx}
+\usepackage{mdframed}
+
+\mdfdefinestyle{answer}{%
+	linecolor=black,
+	outerlinewidth=2pt,
+	%roundcorner=20pt,
+	innertopmargin=4pt,
+	innerbottommargin=4pt,
+	innerrightmargin=4pt,
+	innerleftmargin=4pt,
+	leftmargin = 4pt,
+	rightmargin = 4pt
+	%backgroundcolor=gray!50!white}
+}
+
+\newenvironment{answerbox}{
+	\begin{mdframed}[style=answer,nobreak=true,userdefinedwidth=30em]}{\end{mdframed}}
+
+\providecommand{\mpssi}[1]{\qty[per-mode = symbol]{#1}{\m\per\s}}
+\providecommand{\ssi}[1]{\qty[per-mode = symbol]{#1}{\s}}
+\providecommand{\msi}[1]{\qty[per-mode = symbol]{#1}{\m}}

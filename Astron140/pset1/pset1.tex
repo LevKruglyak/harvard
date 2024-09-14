@@ -1,0 +1,372 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 1}
+\author{Lev Kruglyak}
+\due{September 15, 2024}
+
+\input{../astron140.sty}
+%
+% \collaborator{AJ LaMotta}
+% \collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+Let's first provide some formal definitions for the concepts we are studying.
+\begin{definition}
+	A \defn{Galilean vector space} $V$ is a $4$-dimensional real vector space equipped with:
+	\begin{enumerate}
+		\item A $3$-dimensional subspace $V_{\textrm{space}}\subset V$ equipped with an inner product.
+		\item An orientation and inner product on $V_{\textrm{time}} = V/V_{\textrm{space}}$.
+	\end{enumerate}
+	A \defn{Galilean spacetime} is an affine space over a Galilean vector space. The model Galilean vector space is $\R^4$, with $\R^4_{\textrm{space}}$ the span of $x^1,x^2,x^3$, and standard inner product. We orient the quotient space $\R^4_{\textrm{time}}$ in the direction of the coordinate function $x^0$. A \defn{Galilean frame} for a Galilean spacetime $A$ over $V$ is an invertible map $T : \R^4 \to A$ which preserves the space subspace, the orientation of the time subspace, and is an isometry when restricted to both subspaces. A \defn{Galilean transformation} between two frames $T_1$ and $T_2$ is an invertible map $\Lambda : A \to A$ which preserves the space/time subspaces, the orientation of time, and is an isometry on both, and satisfies $\Lambda \circ T_1 = T_2$.
+\end{definition}
+
+A common Galilean transformation we use in this class describes a coordinate transformation between two frames with relative velocity $v$ in the $x$-axis. This transformation has matrix form:
+	\[
+		\Lambda_G =
+		\begin{pmatrix}
+			1  & 0 & 0 & 0 \\
+			-v & 1 & 0 & 0 \\
+			0  & 0 & 1 & 0 \\
+			0  & 0 & 0 & 1
+		\end{pmatrix}
+	\]
+The involved bases in this matrix are the ones induced on $A$ by the two involved frames. We'll check that this is indeed a Galilean transformation in Problem~5.
+
+\begin{definition}
+	A \defn{Lorentzian vector space} $V$ is a $4$-dimensional real vector space with a non-degenerate symmetric bilinear form $g$ of signature $(3,1)$. The model Lorentzian vector space is denoted $\R^{1,3}_L$ and is $\R^4$ equipped with the bilinear form
+	\[
+		g(x^i, x^j) = \begin{cases} 0 & i \neq j, \\ 1 & i = j \neq 0, \\ -1 & i = j = 0.\end{cases}
+	\]
+	where $x^i$ is the canonical basis for $\R^4$. A \defn{Minkwoski spacetime} is an affine space over a Lorentzian vector space.
+	A \defn{Lorentz frame} for a Minkowski spacetime $A$ is an invertible isometry $T : \R^{1,3}_L \to A$. (Here we treat $\R^{1,3}_L$ as an affine space over itself.)
+	Given Lorentz frames $T_1$ and $T_2$, a \defn{Lorentz transformation} between them is an invertible isometry $\Lambda : A \to A$ which satisfies $\Lambda \circ T_1 = T_2$.
+\end{definition}
+
+A common Lorentz transformation we use in this class describes a coordinate transformation between two frames with relative velocity $v < 1$ in the $x$-axis. This transformation has matrix form:
+\[
+	\Lambda_{L} =
+	\begin{pmatrix}
+		\gamma   & -v\gamma & 0 & 0 \\
+		-v\gamma & \gamma   & 0 & 0 \\
+		0        & 0        & 1 & 0 \\
+		0        & 0        & 0 & 1
+	\end{pmatrix}\quad\textrm{where}\quad \gamma = \frac{1}{\sqrt{1-v^2}}.
+\]
+The involved bases in this matrix are the ones induced on $A$ by the two involved frames. We'll check that this is indeed a Lorentz transformation in Problem~5.
+
+\begin{definition}
+	A vector $v\in V$ in a Lorentzian vector space is \defn{timelike} if $\langle v, v\rangle < 0$ and \defn{spacelike} if $\langle v, v\rangle > 0$.
+	For any Minkowski spacetime $A$ over $V$, we say two points (or events) $a$ and $b$ are \defn{timelike separated} if $b - a$ is timelike, and \defn{spacelike separated} if $b-a$ is spacelike.
+\end{definition}
+
+\begin{definition}
+	If $T : \R^{1,3}_L \to A$ is a Lorentz frame, we say that two events $a,b\in A$ \defn{occur at the same point} if $\pi_{\textrm{space}}(T^{-1}(a)) = \pi_{\textrm{space}}(T^{-1}(b))$ where $\pi_{\textrm{space}} : \R^{1,3}_L \to \R^3$ is projection onto the space subspace. Similarly, we say that two events $a,b\in A$ \defn{occur simultaneously} if $\pi_{\textrm{time}}(T^{-1}(a)) = \pi_{\textrm{time}}(T^{-1}(b))$, where $\pi_{\textrm{time}} : \R^{1,3}_L\to \R$ is projection onto the time subspace.
+\end{definition}
+
+\begin{problem}{1}
+Let us consider two frames $T$ and $T'$ with coordinates $t,x,y,z$ and $t',x',y',z'$ respectively. Suppose the frame $T'$ is moving with a velocity $v$ in the positive $x$-direction.
+Consider the events $e_1 = (0,0,0,0)$ and $e_2 = (\Delta t, 0, 0, 0)$ in frame $T$. What are these events in the frame $T'$?
+\end{problem}
+
+\begin{solution}
+	Applying the Lorentz transformation to these events, we get:
+	\[
+		\begin{pmatrix}
+			\gamma   & -v\gamma & 0 & 0 \\
+			-v\gamma & \gamma   & 0 & 0 \\
+			0        & 0        & 1 & 0 \\
+			0        & 0        & 0 & 1
+		\end{pmatrix}\begin{pmatrix}0\\0\\0\\0\end{pmatrix}
+		= \begin{pmatrix}0\\0\\0\\0\end{pmatrix}\quad\textrm{and}\quad
+		\begin{pmatrix}
+			\gamma   & -v\gamma & 0 & 0 \\
+			-v\gamma & \gamma   & 0 & 0 \\
+			0        & 0        & 1 & 0 \\
+			0        & 0        & 0 & 1
+		\end{pmatrix}\begin{pmatrix}\Delta t\\0\\0\\0\end{pmatrix}
+		= \begin{pmatrix}\gamma \Delta t\\0\\0\\0\end{pmatrix}
+	\]
+	In other words, the time between the two events $e_1$ and $e_2$ in the frame $T'$ has increased by a factor of $\gamma$, i.e. we have $\Delta t' = \gamma \Delta t$.
+\end{solution}
+
+\begin{problem}{2}
+Now consider a ruler of length $L'$ in the frame $T'$. The events of the right end of the ruler passing the origin and left end passing the origin are $e'_1 = (0,0,0,0)$ and $e'_2 = (L'/v, 0, 0, 0)$ respectively. What is the length of the ruler in the frame $T$?
+\end{problem}
+
+\begin{solution}
+	Applying the Lorentz transformation, (with velocity $-v$ since we're going from $T'$ to $T$) we get:
+	\[
+		\begin{pmatrix}
+			\gamma  & v\gamma & 0 & 0 \\
+			v\gamma & \gamma  & 0 & 0 \\
+			0       & 0       & 1 & 0 \\
+			0       & 0       & 0 & 1
+		\end{pmatrix}\begin{pmatrix}0\\0\\0\\0\end{pmatrix}
+		= \begin{pmatrix}0\\0\\0\\0\end{pmatrix}\quad\textrm{and}\quad
+		\begin{pmatrix}
+			\gamma  & v\gamma & 0 & 0 \\
+			v\gamma & \gamma  & 0 & 0 \\
+			0       & 0       & 1 & 0 \\
+			0       & 0       & 0 & 1
+		\end{pmatrix}\begin{pmatrix}L'/v\\0\\0\\0\end{pmatrix}
+		= \begin{pmatrix}\gamma L' / v\\0\\0\\0\end{pmatrix}
+	\]
+	This means that the length of the ruler in the frame $T$ is $L = \gamma L'$. In other words, the length of the ruler in the frame $T'$ decreases by a factor of $\gamma$ compared to the length of the ruler in the frame $T$, i.e. we have $L = L'/\gamma$.
+\end{solution}
+
+\begin{problem}{3}
+Two spaceships traveling in opposite directions pass one another at a relative speed of $\mpssi{1.0e8}$. The clock on one spaceship records a time duration of $\ssi{9.0e-8}$ for it to pass from the front end to the tail end of the other ship. What is the length of the second ship as measured in its own rest frame?
+\end{problem}
+
+\begin{solution}
+	The Lorentz factor $\gamma$ for a Lorentz transformation between the rest frames of the two spaceships is
+	\[
+		\gamma = \frac{1}{\sqrt{1-(v/c)^2}} = \frac{1}{\sqrt{1- ((\mpssi{1.0e8})/(\mpssi{3.0e8}))^2}} = \frac{1}{\sqrt{1-1/9}} = \frac{3\sqrt{8}}{8} \approx 1.0607.
+	\]
+	Let $\Delta L$ be the length of the second spacecraft in the reference frame of the first spacecraft, and let $\Delta L'$ be the length of the second spacecraft in its own rest frame. We have the relation $\gamma \Delta L = \Delta L'$.
+	\[
+		\Delta L' = \gamma\cdot \Delta L = \gamma\cdot v\cdot \Delta t = \gamma\cdot (\mpssi{1.0e8})\cdot (\ssi{9.0e-8}) \approx \msi{9.546}.
+	\]
+	So the length of the second ship is approximately $\msi{9.546}$ in its own reference frame.
+\end{solution}
+
+\begin{problem}{4}
+Show the relativistic velocity composition law
+\[
+	u' = \frac{u - v}{1-uv}.
+\]
+Also show that if the relative velocity between the two frames is much less than $c$, this composition law reduces to the one from the Galilean transformation.
+\end{problem}
+
+\begin{solution}
+	Suppose we are in a reference frame $T_2$ moving at velocity $v$ with respect to some other reference frame $T_1$, and a third reference frame $T_3$ is moving at velocity $u'$ with respect to $T_2$ in the same direction. We want to determine the velocity of $T_3$ with respect to $T_1$ -- let's call this velocity $u$. Letting $\gamma$ be the Lorentz factor for the transformation between $T_1$ and $T_2$, and letting $\psi$ be the Lorentz factor for the transformation between $T_2$ and $T_3$, the Lorentz transformation for $T_1$ to $T_3$ is
+	\[
+		\begin{pmatrix}
+			\gamma   & -v\gamma & 0 & 0 \\
+			-v\gamma & \gamma   & 0 & 0 \\
+			0        & 0        & 1 & 0 \\
+			0        & 0        & 0 & 1
+		\end{pmatrix}\cdot
+		\begin{pmatrix}
+			\psi    & -u'\psi & 0 & 0 \\
+			-u'\psi & \psi    & 0 & 0 \\
+			0       & 0       & 1 & 0 \\
+			0       & 0       & 0 & 1
+		\end{pmatrix} =
+		\begin{pmatrix}
+			\gamma\psi(1+u'v) & -(u'+v)\gamma\psi & 0 & 0 \\
+			-(u'+v)\gamma\psi & \gamma\psi(1+u'v) & 0 & 0 \\
+			0                 & 0                 & 1 & 0 \\
+			0                 & 0                 & 0 & 1
+		\end{pmatrix}
+	\]
+	This means that the Lorentz factor for $T_1$ to $T_3$ is $\gamma\psi (1+u'v)$ or in other words, $u$ satisfies
+	\[
+		\begin{aligned}
+			\frac{1}{\sqrt{1-u^2}} = \gamma\psi(1+u'v) = \frac{(1+u'v)}{\sqrt{(1-(u')^2)(1-v^2)}}.
+		\end{aligned}
+	\]
+	Simplifying, we get:
+	\[
+		\begin{aligned}
+			\frac{1}{1-u^2} & = \frac{(1+u'v)^2}{(1-(u')^2)(1-v^2)}                                          \\
+			1-u^2           & = \frac{(1-(u')^2)(1-v^2)}{(1+u'v)^2}                                          \\
+			u^2             & = \frac{(1+u'v)^2 - (1-(u')^2)(1-v^2)}{(1+u'v)^2} = \frac{(u'+v)^2}{(1+u'v)^2} \\
+			u               & = \frac{u'+v}{1+u'v}.
+		\end{aligned}
+	\]
+	Solving for $u'$, we get the relativistic velocity composition law from the statement of the problem:
+	\[
+		u' = \frac{u-v}{1-uv}.
+	\]
+	When the speeds involved are much less than $1$, the bottom factor $1-uv$ is very close to $1$ since $uv$ is extremely small. Thus, the composition law approaches $u' = u-v$, which is exactly the Galilean composition law.
+\end{solution}
+
+\begin{problem}{5}
+Show that under the Galilean transformation, the invariant intervals are $\Delta t$ and $\Delta r^2 =\Delta x^2+ \Delta y^2 + \Delta z^2$, but under the Lorentz transformation, the invariant interval is $\Delta s^2 = -\Delta t^2 + \Delta x^2 + \Delta y^2 + \Delta z^2$.
+\end{problem}
+
+\begin{solution}
+	We'll prove this in a slightly more general language using our definitions in the beginning of the problem set.
+	\begin{claim}
+		Let $A$ be a Galilean spacetime and suppose $T_1$, $T_2$ are frames with relative velocity $v$ in the $x$-direction. The transformation
+	\end{claim}
+
+	\begin{proof}
+	Recall that the Galilean transformation matrix (to a reference frame moving at velocity $v$ in the $x$-direction) is given by:
+	\[
+		\Lambda_G =
+		\begin{pmatrix}
+			1  & 0 & 0 & 0 \\
+			-v & 1 & 0 & 0 \\
+			0  & 0 & 1 & 0 \\
+			0  & 0 & 0 & 1
+		\end{pmatrix}
+	\]
+	Then $\Lambda_G$ preserves the orientation and metric of time since $(\Lambda_G)^0_0=1$, (equivalently, it fixes $\Delta t$) and is an isometry on $\R^3=\textrm{span}\{x^1, x^2,x^3\}\subset \R^4$ since the bottom 
+	\end{proof}
+
+	\begin{claim}
+		Let $A$ be a Minkowski spacetime and suppose $T_1$, $T_2$ are frames with relative velocity $v < 1$ in the $x$-direction. The transformation $\Lambda_{L}$ is, by definition, the coordinate transformation between these two frames. We claim that $\Lambda_{L}$ is also an isometry of $A$ which makes it a Lorentz transformation.
+	\end{claim}
+
+	\begin{proof}
+		We want to show that $g(a,b) = g(\Lambda_{L}a, \Lambda_{L} b)$ for all $a,b\in A$. Letting $\eta$ denote the matrix corresponding to the bilinear form $g$, this is equivalent to checking that $\eta = \Lambda_{L}^\intercal \cdot \eta\cdot \Lambda_L$. Expanding the involved matrices, we get:
+		\[
+			\begin{aligned}
+				\Lambda_L^\intercal\cdot \eta \cdot \Lambda_L
+				 & =
+				\begin{pmatrix}
+					\gamma   & -v\gamma & 0 & 0 \\
+					-v\gamma & \gamma   & 0 & 0 \\
+					0        & 0        & 1 & 0 \\
+					0        & 0        & 0 & 1
+				\end{pmatrix}
+				\cdot
+				\begin{pmatrix}
+					-1 & 0 & 0 & 0 \\
+					0  & 1 & 0 & 0 \\
+					0  & 0 & 1 & 0 \\
+					0  & 0 & 0 & 1
+				\end{pmatrix}
+				\cdot
+				\begin{pmatrix}
+					\gamma   & -v\gamma & 0 & 0 \\
+					-v\gamma & \gamma   & 0 & 0 \\
+					0        & 0        & 1 & 0 \\
+					0        & 0        & 0 & 1
+				\end{pmatrix} \\
+				 & =
+				\begin{pmatrix}
+					(v^2-1)\gamma^2 & 0               & 0 & 0 \\
+					0               & (1-v^2)\gamma^2 & 0 & 0 \\
+					0               & 0               & 1 & 0 \\
+					0               & 0               & 0 & 1
+				\end{pmatrix}
+				=
+				\begin{pmatrix}
+					-1 & 0 & 0 & 0 \\
+					0  & 1 & 0 & 0 \\
+					0  & 0 & 1 & 0 \\
+					0  & 0 & 0 & 1
+				\end{pmatrix} = \eta.
+			\end{aligned}
+		\]
+		This proves that $\Lambda_L$ is in fact an isometry (or, equivalently, it preserves $ds^2$) and hence a Lorentz transformation.
+	\end{proof}
+\end{solution}
+
+\begin{problem}{6}
+Show that if two events are timelike separated, i.e. $\Delta s^2 < 0$, there is a Lorentz frame in which they occur at the same point. Show that if two events are spacelike separated, i.e. $\Delta s^2 > 0$, then there is a Lorentz frame in which they are simultaneous.
+\end{problem}
+
+\begin{parts}
+	Throughout this problem, let $A$ be an affine Minkowski spacetime.
+	\begin{claim}{1}
+		If two events $a,b\in A$ are timelike separated, then there is a Lorentz frame in which they occur at the same point.
+	\end{claim}
+	\begin{proof}
+		First, let $T : \R^{1,3}_L \to A$ be any frame with $T(0) = a$ and $\pi_{\textrm{space}}(T^{-1}(b-a))$ lying entirely in the $x$-component. (Pick any frame with $T(0)=a$ and rotate in the space subspace until $b-a$ only has a positive spatial $x$-component.) Since $b-a$ is timelike, $T^{-1}(b-a)=T^{-1}(b)-T^{-1}(a)$ must also be timelike since $T$ is an isometry. Let $\Delta t, \Delta x$ be the components of this vector, i.e.
+		\[
+			T^{-1}(b-a) = (\Delta t, \Delta x, 0, 0).
+		\]
+		Since this is a timelike vector, we have the inequality
+		\[
+			-\Delta t^2 + \Delta x^2 < 0 \quad\implies\quad \Delta x^2 < \Delta t^2.
+		\]
+		In particular, this means that the relative velocity $v= \Delta x / \Delta t$ is less than $1$, (this is where we use the assumption that the events are timelike separated) so we can apply the Lorentz transformation $\Lambda_L$ with $\gamma = 1/\sqrt{1-v^2}$. Let's call the transformed frame $T' = \Lambda_L \circ T$. In the coordinates of this frame, we have
+		\[
+			(T')^{-1}(b-a) =
+			\begin{pmatrix}
+				\gamma   & -v\gamma & 0 & 0 \\
+				-v\gamma & \gamma   & 0 & 0 \\
+				0        & 0        & 1 & 0 \\
+				0        & 0        & 0 & 1
+			\end{pmatrix}\begin{pmatrix}\Delta t\\\Delta x\\0\\0\end{pmatrix}
+			=\begin{pmatrix}\sqrt{\Delta t^2 - \Delta x^2}\\ 0\\0\\0\end{pmatrix}
+		\]
+		In particular, this implies that $\pi_{\textrm{space}}((T')^{-1}(b)) = \pi_{\textrm{space}}((T')^{-1}(a))$ so the in the frame of $T'$, the events occur at the same point, separated by a duration of
+		\[\Delta t' = \sqrt{\Delta t^2 - \Delta x^2}\]
+		where $\Delta t$ and $\Delta x$ are measured in the frame of $T$.
+	\end{proof}
+
+	\begin{claim}{2}
+		If two events $a,b\in A$ are spacelike separated, then there is a Lorentz frame in which they occur simultaneously.
+	\end{claim}
+	\begin{proof}
+		Let's take the same setup as in the previous proof. The only difference in this case is that $T^{-1}(b-a)$ is a spacelike vector, so we have the inequality
+		\[
+			-\Delta t^2 + \Delta x^2 > 0 \quad\implies\quad \Delta x^2 > \Delta t^2.
+		\]
+		Thus, the ``velocity'' $v = \Delta t/\Delta x$ is less than $1$, so we can apply the Lorentz transformation $\Lambda_L$. The transformed frame $T' = \Lambda_L \circ T$ then has
+		\[
+			(T')^{-1}(b-a) =
+			\begin{pmatrix}
+				\gamma   & -v\gamma & 0 & 0 \\
+				-v\gamma & \gamma   & 0 & 0 \\
+				0        & 0        & 1 & 0 \\
+				0        & 0        & 0 & 1
+			\end{pmatrix}\begin{pmatrix}\Delta t\\\Delta x\\0\\0\end{pmatrix}
+			=\begin{pmatrix}0\\ \sqrt{\Delta x^2 - \Delta t^2}\\0\\0\end{pmatrix}
+		\]
+		This implies that $\pi_{\textrm{time}}((T')^{-1}(b)) = \pi_{\textrm{time}}((T')^{-1}(a))$ so in the frame of $T'$, the events occur simultaneously, separated by a distance of \[\Delta x' = \sqrt{\Delta x^2 - \Delta t^2}\]
+		where $\Delta t$ and $\Delta x$ are measured in the frame of $T$.
+	\end{proof}
+\end{parts}
+
+\begin{problem}{7}[Twin Paradox]
+Alice decides to make an interstellar trip while her twin sister Barbara stays at
+Earth (assuming Earth is a good inertial frame). Assume that the Alice's spaceship has a constant
+velocity $v$ relative to Barbara. She reaches her destination which is at a distance $D$ away from the
+Earth according to Barbara. As soon as Alice reaches the destination, she immediately turns around
+the spaceship and travels back to Earth with the same velocity.
+Naively thinking, since either of them is moving relative to the other throughout the trip, according
+to Alice, Barbara’s biological clock slows down; and according to Barbara, Alice’s biological clock
+slows down as well. When they are reunited, naively each one thinks that the other is younger.
+But this cannot happen because there can only be one answer. (e.g. when they meet, they can just
+compare their clocks.)
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Explain \emph{qualitatively} in simple words what is wrong in the above thinking.
+	\end{part}
+
+	The main problem with the above thinking is that Alice's frame is not always inertial. In particular, Alice must turn her spaceship around, which means she accelerates and violates the assumption that acceleration is zero. 
+
+	\begin{part}{}
+		Show \emph{quantitatively}, from both Alice’s point of view and Barbara’s point of view, that, at the reunion
+		when they can compare their notes, the two views agree with each other on the conclusion about
+		the ages of both persons. Who is the younger one?
+	\end{part}
+
+	Let $B$ be Barbara's reference frame, let $A_+$ and $A_-$ be Alice's reference frames as she is moving away from and towards Barbara respectively. Let's assume the velocity for $A_+$ relative to $B$ is in the positive $x$-direction and negative $x$-direction for $A_-$ relative to $B$. If Alice ends up traveling for a distance of $D$ at velocity $v$, then a duration of $2D/v$ will have elapsed for Barbara. Let's call this duration $2t_B$. Let's see how much time elapsed for Alice.
+
+	Alice will turn around at an event $T_B = (t_B, x_B, 0, 0)$ in Barbara's reference frame. In the $A_+$ frame, this is 
+	\[
+		T_{A_+} = \begin{pmatrix}
+				\gamma   & -v\gamma & 0 & 0 \\
+				-v\gamma & \gamma   & 0 & 0 \\
+				0        & 0        & 1 & 0 \\
+				0        & 0        & 0 & 1
+				\end{pmatrix}\begin{pmatrix} t_B\\x_B\\0\\0\end{pmatrix} = \begin{pmatrix}\gamma (t_B - v x_B)\\  \gamma (x_B - v t_B)\\0\\0\end{pmatrix}
+	\]
+	Once Alice turns her ship around and goes back to Barbara's reference frame, 
+	\[
+		T_{A_-} = \begin{pmatrix}
+				\gamma   & v\gamma & 0 & 0 \\
+				v\gamma & \gamma   & 0 & 0 \\
+				0        & 0        & 1 & 0 \\
+				0        & 0        & 0 & 1
+				\end{pmatrix}\begin{pmatrix} t_B\\x_B\\0\\0\end{pmatrix} = \begin{pmatrix}\gamma (t_B + v x_B)\\  \gamma (x_B + v t_B)\\0\\0\end{pmatrix}
+	\]
+	These two events $T_{A_+}$ and $T_{A_-}$ must have the same coordinates at the turnaround time since the reference frames are the same. Taking the difference of these two events at that instant, we get:
+	\[
+		t_0 = t_{A_+} - t_{A_-} \quad\textrm{and}\quad x_0 = x_{A_-} - x_{A_-}.
+	\]
+	We get $t_0 = 2\gamma v x_B$ and $x_0=2\gamma v t_B$. At that instant, $t_B= D/v$ and $x_B = D$, so $t_0 = 2\gamma vD$ and $x_0 = 2\gamma D$. This makes Barbara older in her reference frame. On the other hand, in Alice's reference frame, we get her age as $2D/v\gamma$, so she is younger. So the twins agree.
+\end{parts}
+
+\end{document}

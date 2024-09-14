@@ -6,3 +6,22 @@ __pycache__/
 */penv/*
 
 .DS_Store
+
+*.aux
+*.bcf
+*.bcf*
+*.fls
+*.idx
+*.ilg
+*.ind
+*.log
+*.out
+*.xml
+*.gz
+*.toc
+*.bbl*
+*.blg
+*.synctex(busy)
+*.fdb_latexmk
+thesis.pdf
+.python-version

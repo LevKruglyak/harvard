@@ -104,7 +104,7 @@
 \usepackage{xparse}
 \usepackage[most]{tcolorbox}
 
-\def \theoremtitle{\fontfamily{phv}\bfseries}
+\def \theoremtitle{\bfseries}
 
 \newcommand{\createcolortheorem}[3]{
 	\tcolorboxenvironment{#1}{
@@ -167,7 +167,7 @@
 %        Utilities
 % -----------------------------------------------
 
-\newcommand\defn[1]{\textbf{#1}}
+\newcommand\defn[1]{\textbf{\textsl{#1}}}
 \newcommand\todo[1]{{\color{red}\textbf{#1}}}
 
 % -----------------------------------------------
