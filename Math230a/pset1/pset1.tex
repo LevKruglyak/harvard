@@ -1,0 +1,221 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 1}
+\author{Lev Kruglyak}
+\due{September 11, 2024}
+
+\input{../math230a.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Leonardo Kaplan}
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{2}
+  Let $A$, $B$ be affine spaces over vector spaces $V$, $W$, respectively, and let $f : A \to B$ be a function. Do not assume finite dimensionality.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Proof or counterexample: $f$ is affine if and only if for all $p_0, p_1\in A$ and $\lambda^0, \lambda^1\in \R$ with $\lambda^0 + \lambda^1=1$, we have $f(\lambda^ip_i) = \lambda^i f(p_i)$.
+  \end{part}
+
+  The forward direction follows because affine maps preserve affine combinations. In the converse direction, suppose $f$ preserves lines. For any $p\in A$, let $\widetilde{f}_p : V \to W$ be the map $\widetilde{f}_p(v) = f(p+v)-f(p)$. For a fixed $p\in A$, $v_0, v_1\in V$, and $p_0 = p+v_0$ and $q_i = p_0 + 2v_i$, note that
+  \[
+    \begin{aligned}
+      \widetilde{f}_p(\lambda v_0) =  f(p+\lambda (p_0 - p) + (1-\lambda)(p-p)) - f(p) = f(\lambda p_0 + (1-\lambda) p) - f(p) = \lambda \widetilde{f}_p(v_0).
+    \end{aligned}
+  \]
+  For addition, note that
+  \[
+    \widetilde{f}_p(v_0 + v_1) = f(p+((q_1- p)+(q_2-p))/2)  - f(p) = \widetilde{f}_p(2v_0) + \widetilde{f}_p(2v_1) = \widetilde{f}_p(v_1)+\widetilde{f}_p(v_1).
+  \]
+  So $\widetilde{f}_p$ is linear. This means that $df$ is constant and so $f$ is affine.
+
+  \begin{part}{b}
+    Suppose that for every finite subset $S\subset A$ the \emph{center of mass} of $f(S)$ is the image of the center of mass of $S$. Does it follow that $f$ is affine?
+  \end{part}
+  
+  Assuming the axiom of choice -- no. First, let's define the notion of center of mass. For some finite set of points $S\subset A$, let's choose a frame $F : A \to V$ and define the center of mass $C_S$ as:
+  \[
+    \op{Avg}(S) = F^{-1}\left(\frac{1}{|S|}\sum_{s\in S} F(s)\right).
+  \]
+  This definition can be checked to be independent of the choice of frame $F$. Let's pick some $\Q$-basis $\mathcal{H}$ on $\R$, and any function $f  : \mathcal{H} \to \R$ which is not a restriction of an affine map. Then the extension $f : \R \to \R$ is $\Q$-linear, and thus preserves centers of mass. However, by assumption $f$ is not affine.
+
+  Note that any $\Q$-linear function $f : \R^n \to \R^m$ (assuming some $\Q$-basis on $\R$) preserves centers of mass, but there are infinitely many such functions which are not affine.
+
+  \begin{part}{c}
+    Define what it means for $f$ to be affine quadratic.
+  \end{part}
+
+  \begin{part}{d}
+    Define precisely an equivalence relation on quadratic functions $\A^2 \to \R$ by, roughly, considering two to be equivalent if they are related by a ``change of coordinates''. How many equivalence classes are there? For each equivalence class of quadratics $q : \A^2 \to \R$ describe the shape of $q^{-1}(0)$.
+  \end{part}
+\end{parts}
+
+\begin{problem}{5}
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Let $V$ be a vector space. For $\xi\in V$, let $\iota_\xi : V^* \to \R$ be the linear map which evaluates a functional $\alpha\in V^*$ on the vector $\xi$. Prove that there is a unique extension
+    \[
+      \iota_\xi : {\wedge}^\bullet V^* \longto \wedge^\bullet V^*
+    \]
+    of degree $-1$ which satisfies the derivation formula
+    \[
+      \iota_\xi(\omega_1 \wedge \omega_2) = \iota_\xi \omega_1 \wedge \omega_2 + (-1)^k \omega_1\wedge \iota_\xi\omega_2\quad\textrm{where}\quad |\omega_1|=k.
+    \]
+  \end{part}
+
+  \begin{part}{b}
+    Verify $[d,\iota_\xi] = \mathcal{L}_\xi$.
+  \end{part}
+
+  \begin{part}{c}
+    Show $[d,\mathcal{L}_\xi]=0$.
+  \end{part}
+
+  Since mixed partials of a smooth function commute, $d$ should commute with $d/dt|_{t=0}$ so we get
+  \[
+    \begin{aligned}
+      d\mathcal{L}_\xi\omega = d\left(\restr{\frac{d}{dt}}{t=0} \varphi_t^*\omega\right) = \restr{\frac{d}{dt}}{t=0} d\varphi^*_t \omega = \restr{\frac{d}{dt}}{t=0} \varphi^*_t d\omega = \mathcal{L}_\xi d\omega,
+    \end{aligned}
+  \]
+  where the second to last equality follows by naturality of $d$. Thus, $[d,\mathcal{L}_\omega]=0$.
+
+  \begin{part}{d}
+    Recall that $[d, d]=0$. What is $[\iota_{\xi_1}, \iota_{\xi_2}]$?
+  \end{part}
+
+  \begin{part}{e}
+    Check $[\mathcal{L}_{\xi_1}, \mathcal{L}_{\xi_2}] = \mathcal{L}_{[\xi_1, x_2]}$.
+  \end{part}
+
+  \begin{part}{f}
+    Compute the remaining commutator $[\mathcal{L}_{\xi_1}, \iota_{\xi_2}] = \iota_{[\xi_1,\xi_2]}$.
+  \end{part}
+
+  \begin{part}{g}
+    Let $\alpha$ be $1$-form. Expand $d\alpha(\xi_1, \xi_2) = \iota_{\xi_1}\iota_{\xi_2}\,d\alpha$ using the above formulas. The only differentiation in the final answer should be directional derivatives of functions and Lie brackets of vector fields. Try the next case: $d\beta$ for a $2$-form $\beta$.
+  \end{part}
+\end{parts}
+
+\begin{problem}{6}
+Symmetry types and geometric structures.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		For a vector space $V$ and symmetry type $\O_n\subset \GL_n$, prove that the data $(\scB, \theta)$ is equivalent to a choice of positive definite inner product on $V$.
+	\end{part}
+
+	Suppose that $V$ is given a positive definite inner product $\langle -, -\rangle$. Let's define $\scB_{\O_n}(V)$ as
+	\[
+		\scB_{\O_n}(V) = \left\{ b : \scB(V) \,:\, \langle b(u), b(v)\rangle = \langle u, v\rangle_{\R^n}, \textrm{ for all } u,v\in \R^n\right\},
+	\]
+	i.e. the set of orthonormal bases for $V$. This is clearly a right $\O_n$-torsor. We can define a map
+	\[
+		\definefunction{\theta}{\scB_{\O_n}(V)\times_{\O_n} \GL_n}{\scB(V)}{(b,g)}{b\cdot g.}
+	\]
+	A simple check shows that $\theta$ is a map of $\GL_n$-torsors, and is well-defined because for any $h\in \O_n$, the equivalent pairs $(b,g) \sim (bh, h^{-1}g)$ both give the same output of $b\cdot g = b\cdot hh^{-1}g$. Surjectivity follows since for any basis $b\in \scB(V)$ and (arbitrary) choice of orthonormal basis $q$, we have $\theta(q, g)=b$ for some change of basis transformation $g$ satisfying $q\cdot g = b$. Injectivity follows since if $b\cdot g = b'\cdot g'$ for orthonormal bases $b,b'$, we have $b'=b\cdot h$ and $g'=h^{-1}\cdot g$ for a change of basis transformation $h$, which shows that $(b,g)\sim (b',g')$.
+
+	In the other direction, let's assume we are given an $\O_n$-torsor $\scB$, and isomorphism of right $\GL_n$-torsors
+	\[
+		\theta : \scB \times_{\O_n} \GL_n \longto \scB(V).
+	\]
+	Given this data, we can recover the set of orthonormal bases of $V$ as
+	\[
+		\scB_{\O_n}(V) = \theta( \scB \times \{I_n\}) \subset \scB(V),
+	\]
+	where we canonically identify $\scB\times \{I_n\}$ with its image in the quotient $\scB \times_{\O_n} \GL_n$. This is isomorphic to $\scB$ as a right $\O_n$-torsor. For any two vectors $u,v\in V$, we can then define their inner product as
+	\[
+		\langle u, v\rangle = \langle b^{-1}(u), b^{-1}(v) \rangle_{\R^n}
+	\]
+	for some choice $b\in \scB_{\O_n}(V)$. Since there is a simply transitive action of $\O_n$ on $\scB_{\O_n}(V)$, any choice of $b$ would have given the same inner product.
+
+	\begin{part}{b}
+		What is the symmetry type of a complex structure on a $2n$-dimensional vector space.
+	\end{part}
+
+	We claim the symmetry type is $\GL_n\C$, embedded in $\GL_{2n}\R$ by the canonical map which respects the identification of $\C^n$ with $\R^{2n}$. 
+	The proof that a $\GL_n\C$-structure on some vector space $V$ is equivalent to a complex structure on $V$ follows as in the first part of the problem.
+
+	\begin{part}{c}
+		What is the symmetry type of an $n$-dimensional vector space equipped with a codimension one subspace? What about the same for vector spaces equipped with an inner product?
+	\end{part}
+
+	Consider the matrix groups given by
+	\[
+		\GL_{n}^{n-1} = \{ g \in \GL_n : g(\R^{n-1}) = \R^{n-1}\}\qtq{and}
+		\O_{n}^{n-1} = \{ g \in \O_n : g(\R^{n-1}) = \R^{n-1}\},
+	\]
+	i.e. matrices which preserve $\R^{n-1}\subset \R^n$. These are the symmetry types of an $n$-dimensional vector equipped with a codimension one subspace and an $n$-dimensional inner product space equipped with a codimension one subspace respectively.
+	The proof that a $\GL_n^{n-1}$-structure on some vector space $V$ is equivalent to a codimension one subspace follows as in the first part of the problem.
+
+	\begin{part}{d}
+		Consider the following two $2$-dimensional symmetry types:
+		\[
+			\SO_2\times \mu_2 \to \GL_2 \qtq{} \Spin_2 \to \GL_2
+		\]
+		Describe as best you can the geometry of a $2$-dimensional affine space equipped with each geometric structure.
+	\end{part}
+
+	In the first case, the affine extension diagram takes the form:
+	\[\begin{tikzcd}
+			1 & {\R^2} & {(\SO_2\times\mu_2)\times_{\GL_2}\Aff_2} & {\SO_2\times\mu_2} & 1 \\
+			1 & {\R^2} & {\Aff_2} & {\GL_2} & 1
+			\arrow[from=1-1, to=1-2]
+			\arrow[dashed, from=1-2, to=1-3]
+			\arrow[no head, from=1-2, to=2-2]
+			\arrow[dashed, from=1-3, to=1-4]
+			\arrow["{\widetilde{\lambda_2}}", dashed, from=1-3, to=2-3]
+			\arrow[from=1-4, to=1-5]
+			\arrow["{\lambda_2}", from=1-4, to=2-4]
+			\arrow[from=2-1, to=2-2]
+			\arrow[from=2-2, to=2-3]
+			\arrow["{p}", from=2-3, to=2-4]
+			\arrow[from=2-4, to=2-5]
+		\end{tikzcd}\]
+  Notice that the affine group extension of $\SO_2\times \mu_2$ admits the following canonical isomorphism 
+  \[
+    \begin{aligned}
+      (\SO_2\times\mu_2)\times_{\GL_2} \Aff_2 
+      &=\{ ((g,s), a) : g\in \SO_2, s\in \mu_2, a\in \Aff_2, \textrm{where } p(a)=g \}\subset (\SO_2\times \mu_2)\times \Aff_2\\
+      &\cong\{ (s,(g, a)) : g\in \SO_2, s\in \mu_2, a\in \Aff_2, \textrm{where } p(a)=g \} \subset \mu_2\times(\SO_2\times \Aff_2)\\
+      &=\Aff^{\SO}_2 \times\mu_2,
+    \end{aligned}
+  \]
+  where $\Aff^{\SO}_2$ is the group of affine oriented isometries. We claim that $(\Aff^{\SO}_2\times \mu_2)$-structure on a $2$-dimensional affine space $A$ is equivalent to a principal $\mu_2$-bundle $A\times\mu_2 \to A$ with the $\Aff^{\SO}_2\times \mu_2$ action given by letting $\Aff^{\SO}_2$ act in the natural way and letting $\mu_2$ act as the group of deck transformations on the bundle. Geometrically, this data looks like assigning a coin to every point in an oriented affine space, with an independent symmetry which flips the coins.
+
+  The second case is more complicated. Here we have the extension:
+	\[\begin{tikzcd}
+			1 & {\R^2} & {\Spin_2\times_{\GL_2}\Aff_2} & {\Spin_2} & 1 \\
+			1 & {\R^2} & {\Aff_2} & {\GL_2} & 1
+			\arrow[from=1-1, to=1-2]
+			\arrow[dashed, from=1-2, to=1-3]
+			\arrow[no head, from=1-2, to=2-2]
+			\arrow[dashed, from=1-3, to=1-4]
+			\arrow["{\widetilde{\lambda_2}}", dashed, from=1-3, to=2-3]
+			\arrow[from=1-4, to=1-5]
+			\arrow["{\lambda_2}", from=1-4, to=2-4]
+			\arrow[from=2-1, to=2-2]
+			\arrow[from=2-2, to=2-3]
+			\arrow["{p}", from=2-3, to=2-4]
+			\arrow[from=2-4, to=2-5]
+		\end{tikzcd}\]
+		Let's denote the group $\Spin_2\times_{\GL_2}\Aff_2$ by $\Aff_2^{\Spin}$. Then there is a double cover map
+		\[
+        \definefunction{\widetilde{\pi}}{\Aff_2^{\Spin}}{\Aff_2^{\SO}}{(g, a)}{(\pi(g),a)}
+		\]
+		where $\pi : \Spin_2 \to \SO_2$ is the standard double cover. Recall that an $\Aff_2^{\SO}$-structure on a $2$-dimensional affine space $A$ consists of an inner product and choice of orientation for the underlying vector space $V$. This data gives us a principal $\SO_2$-bundle on $A$ -- namely associating the right $\SO_2$-torsor $\scB_{\SO}(V)$ of orthonormal oriented bases to every point $p\in A$. Let's call this bundle $\scB_{\SO}(A)$.
+
+    In the $\Spin$ case, an $\Aff^{\Spin}_2$-structure consists of an inner product and choice of orientation as in the $\SO_2$ case, and a principal $\Spin_2$-bundle on $A$ which we can denote $\scB_{\Spin}(A)$. Letting $\scB_{\SO}(A)$ be the associated principal $\SO_2$-bundle, we also want a double cover map $\Pi : \scB_{\Spin}(A) \to \scB_{\SO}(A)$ which respects the double cover $\pi : \Spin_2 \to \SO_2$ in the sense that $\Pi(g\cdot a)=\pi(g)\cdot\Pi(a)$. Geometrically, this data looks like a circle associated to every point. As we rotate the tangent space, the circle rotates at half speed. Thus, it takes two full rotations of the tangent space to restore the system to its original space.
+\end{parts}
+
+\end{document}
