@@ -295,9 +295,9 @@
 \providecommand{\leq}{\leqslant}
 
 % We want skips between paragraphs, but also keep indents
-\edef\restoreparindent{\parindent=\the\parindent\relax}
-\usepackage{parskip}
-\restoreparindent
+% \edef\restoreparindent{\parindent=\the\parindent\relax}
+% \usepackage{parskip}
+% \restoreparindent
 
 % Lists
 \usepackage[shortlabels]{enumitem}

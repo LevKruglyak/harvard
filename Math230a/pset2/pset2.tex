@@ -1,0 +1,240 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 2}
+\author{Lev Kruglyak}
+\due{September 18, 2024}
+
+\input{../math230a.sty}
+
+\collaborator{AJ LaMotta}
+% \collaborator{Leonardo Kaplan}
+% \collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let $V$ be a finite dimensional real vector space and $B : V\times V \to \R$ a non-degenerate bilinear form. Define:
+\[
+	\begin{aligned}
+		\Aut_B(V) = \{ B\in \Aut(V) : B(P\xi_1, P\xi_2)= B(\xi_1, \xi_2) \qtq{for all} \xi_1, \xi_2\in V\}, \\
+		\End_B(V) = \{ A\in \End(V) : B(A\xi_1, \xi_2)+ B(\xi_1, A\xi_2)=0 \qtq{for all} \xi_1, \xi_2\in V\}.
+	\end{aligned}
+\]
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Prove that $\Aut_B(V)$ is a Lie group with Lie algebra $\End_B(V)$.
+	\end{part}
+
+	\begin{part}{(b)}
+		Let $V= \R^n$ for some $n\in \Z^{>0}$. Suppose $B$ is the standard symmetric inner product. Identify $\Aut_B(\R^n)$ with the group $\O_n$ of orthogonal matrices.
+	\end{part}
+
+	\begin{part}{(b)}
+		Let $V= \R^{2m}$ for some $m\in \Z^{>0}$. Suppose $B$ is a non-degenerate skew-symmetric form: For the standard basis $e_1,\ldots, e_{2m}$ of $\R^{2m}$, set
+		\[
+			B(e_i, e_j) = \begin{cases} 1 & 0<j-i\leq m,\\ -1& 0<i-j\leq m,\\ 0&\textrm{otherwise}.\end{cases}
+		\]
+		Identify the group $\Aut_{B}(\R^{2m})$ explicitly in terms of block $2\times 2$ matrices in which the blocks have size $m\times m$. This is the \emph{symplectic group} $\Sp_2$.
+	\end{part}
+
+\end{parts}
+
+\begin{problem}{2}
+\end{problem}
+
+\begin{problem}{5}
+Let $G$ be a Lie group.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Let $V$ be a finite dimensional real vector space. Define a real line $|\Det V|$ such that an ordered $n$-tuple $\xi_1,\ldots, \xi_n\in V$ defines an element $|\xi_1\wedge\cdots\wedge \xi_n|\in |\Det V|$ which transforms by the absolute value of the determinant of a change of basis matrix. Identify $|\Det V^*|$ as a certain space of functions $V^n \to \R$. Show that positive functions determine an orientation of $|\Det V^*|$. Interpret a positive function as a notion of volume for $n$-dimensional parallelepipeds in $V$. Does this induce a notion of volume for lower dimensional parallelipipeds? Identify positive elements as translationally invariant positive measures on $V$. Construct such a positive element from an inner product on $V$.
+	\end{part}
+
+	There is a natural right action of $\Aut(V)$ on $V^n$ which acts on each component independently. Let's define the line by:
+	\[
+		|\Det V| = \left\{
+		\epsilon : \scB(V) \to \R : \epsilon(b\cdot g) = \frac{\epsilon(b)}{|\det(g)|} \qtq{for all} b\in V^n, g\in \Aut(V)
+		\right\}.
+	\]
+	First of all, it's clear that this space is closed under addition and scalar multiplication, so it is a real vector space. To see that it's a one dimensional space, consider the map $\textrm{ev}_1 : |\Det V|$.
+
+	\begin{part}{(b)}
+		Apply to the tangent bundle of a smooth manifold. Define the notion of a smooth positive measure on a smooth manifold. Do they always exist?
+	\end{part}
+
+	\begin{part}{(c)}
+		The real line $|\Det \mathfrak{g}^*|$ consists of left-invariant measures on $G$. Define an action of $G$ on this line. Compute the action in case $G$ is compact. Compute it for $G = \GL_n$ and $G= \SL_n$.
+	\end{part}
+
+	\begin{part}{(d)}
+		A \emph{Haar measure} on $G$ is a bi-invariant positive smooth measure on $G$. Prove that a Haar measure exists if $G$ is compact. Normalize it so the total volume of $G$ is $1$.
+	\end{part}
+
+	\begin{part}{(e)}
+		Write a formula for the Haar measure on the circle group $\T\subset \C$; the formula should be in terms of $\lambda\in \T$. What about on the multiplicative group $\R^\times$. What about on the additive group $\R$? What about on the orthogonal group $\O_2$?
+	\end{part}
+\end{parts}
+
+\begin{problem}{6}
+Suppose $G$ is a connected compact Lie group.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Let $\Omega^\bullet_{\textrm{linv}}(G) \subset \Omega^\bullet(G)$ denote the vector subspace of left-invariant differential forms. Show that $\Omega^\bullet_{\textrm{linv}}(G)$ is in fact a sub-differential graded algebra, i.e. it is closed under multiplication and the differential $d$.
+	\end{part}
+
+	\begin{part}{(b)}
+		Construct an isomorphism
+		\[
+			\alt^\bullet\mathfrak{g}^* \longto \Omega^\bullet_{\textrm{linv}}(G).
+		\]
+		Transfer the differential on $\Omega^\bullet_{\textrm{linv}}(G)$ to $\alt^\bullet \mathfrak{g}^*$ and write a formula for it. In this way you obtain a differential graded complex defined directly from the Lie algebra $\mathfrak{g}$. Observe that this definition of \emph{any} Lie algebra.
+	\end{part}
+
+	Firstly, recall that there is a natural ``extension by left-translation'' injective map $\mathfrak{g}^* \to \mathfrak{X}^*(G)$ where $\mathfrak{X}^*(G) = \Gamma(T^*G)$ is the space of covector fields.
+	More precisely, given some $\omega \in \mathfrak{g}^*$, the corresponding covector field $\xi$ on $G$ is defined by:
+	\[
+		\widetilde{\omega}(\xi) = \omega\circ dL_{g^{-1}}(\xi)\quad\textrm{ for }\quad \xi\in T_g G.
+	\]
+	Such a covector field is exactly a differential $1$-form, so we've exhibited a map $\mathfrak{g}^* \to \Omega^1(G)$. The form $\widetilde{\omega}$ is left-invariant because for any $h\in G$, we have
+	\[
+		(L_h^* \widetilde{\omega})(\xi) = \omega\circ dL_{(hg)^{-1}}\circ dL_{h}(\xi) = \omega\circ dL_{g^{-1}}(\xi)=\widetilde{\omega}(\xi) \quad\textrm{for all}\quad \xi\in T_g G.
+	\]
+	This means that we actually have a linear map $\mathfrak{g}^* \to \Omega^1_{\textrm{linv}}(G)$.
+	Since the inverse is given by $\omega = \widetilde{\omega}_e$, we have an isomorphism. There is also an isomorphism $\R \to \Omega^0_{\textrm{linv}}(G)$ which sends a constant to the constant function on $G$. This is an isomorphism since the only left-invariant functions are the constant functions. This pair of isomorphisms uniquely extends to a graded algebra isomorphism $\alt^\bullet \mathfrak{g}^* \to \Omega^\bullet_{\textrm{linv}}(G)$.
+
+	To express the differential $d$ as a coboundary map in $\alt^\bullet\mathfrak{g}^*$, first note that $df=0$ for any $0$-form $f\in \Omega^0_{\textrm{linv}}(G)$ since left-invariant $0$-forms are constant. To derive an expression for $1$-forms, let $\omega\in \mathfrak{g}^*$ be a covector. Given vector fields $\xi_1, \xi_2\in \mathfrak{X}(G)$, a corollary of Cartan's formula tells us that:
+	\[
+		d\widetilde{\omega}(\xi_1,\xi_2) = \xi_1(\widetilde{\omega}(\xi_2)) - \xi_2(\widetilde{\omega}(\xi_1)) - \widetilde{\omega}([\xi_1, \xi_2]) = - \widetilde{\omega}([\xi_1,\xi_2]).
+	\]
+	\todo{Here the terms $\xi_1(\widetilde{\omega}(\xi_2))$ and $\xi_2(\widetilde{\omega}(\xi_1))$ vanish since $\widetilde{\omega}$ is left-invariant.} Let $\{\xi_i\}$ be a basis for $\mathfrak{g}$ and define structure coefficients $c^k_{i,j}$ by $[\xi_i,\xi_j] = c^k_{i,j} \xi_k$. Let $\{\theta^i\}$ be the corresponding dual basis for $\mathfrak{g}^*$. Note that:
+	\[
+		d\theta^k(\xi_i, \xi_j) = -\widetilde{\theta^k}([\xi_i, \xi_j]) = -\widetilde{\theta^k}(c^q_{i,j} \xi_q) = - c_{i,j}^q \widetilde{\theta^k}(\xi_q) = - c_{i,j}^k,
+	\]
+	where the last equality follows since $\theta^k(\xi_q)=\delta_q^k$. Writing this this form in terms of $\alt^\bullet \mathfrak{g}^*$, we get the expression
+	\[
+		d\theta^k = -c^k_{i,j}\theta^i\wedge \theta^j.
+	\]
+	Along with the observation that $df=0$ for any $0$-form $f$, using the Leibniz rule this coboundary operator extends over the entire graded algebra so that the isomorphism $\alt^\bullet \mathfrak{g}^* \to \Omega^\bullet_{\textrm{linv}}(G)$ is an isomorphism of
+
+	\begin{part}{(c)}
+		Prove that the inclusion in (a) induces an isomorphism on cohomology. A map of cochain complexes with this property is called a \emph{quasi-isomorphism}.
+	\end{part}
+
+	To show that inclusion (we'll call it $\iota$) is a quasi-isomorphism, we'll prove that $\Omega^\bullet_{\textrm{linv}}(G)$ is a deformation retract of $\Omega^\bullet(G)$. To do this, we'll have to construct two operators, or cochain maps:
+	\[
+		A : \Omega^\bullet(G) \to \Omega^\bullet_{\textrm{linv}}(G)\qtq{and} H : \Omega^\bullet(G) \to \Omega^{\bullet-1}(G).
+	\]
+	Here, $A$ is a cochain map satisfying $A \circ \iota = \textrm{id}$ and $A\circ (\iota\circ A) = A$, and $H$ is a linear map satisfying $dH + Hd = A - 1$. Put together, these maps would prove that $\iota$ induces an isomorphism on cohomology.
+	\[\begin{tikzcd}
+			\cdots & {\Omega^{k-1}_{\textrm{linv}}(G)} & {\Omega^k_{\textrm{linv}}(G)} & {\Omega^{k+1}_{\textrm{linv}}(G)} & \cdots \\
+			\cdots & {\Omega^{k-1}(G)} & {\Omega^{k}(G)} & {\Omega^{k+1}(G)} & \cdots
+			\arrow[from=1-1, to=1-2]
+			\arrow["d", from=1-2, to=1-3]
+			\arrow["\iota", shift left, hook, from=1-2, to=2-2]
+			\arrow["d", from=1-3, to=1-4]
+			\arrow["\iota", shift left, hook, from=1-3, to=2-3]
+			\arrow[from=1-4, to=1-5]
+			\arrow["\iota", shift left, hook, from=1-4, to=2-4]
+			\arrow[from=2-1, to=2-2]
+			\arrow["A", shift left, from=2-2, to=1-2]
+			\arrow["d", shift left, from=2-2, to=2-3]
+			\arrow["A", shift left, from=2-3, to=1-3]
+			\arrow["H", shift left, dashed, from=2-3, to=2-2]
+			\arrow["d", shift left, from=2-3, to=2-4]
+			\arrow["A", shift left, from=2-4, to=1-4]
+			\arrow["H", shift left, dashed, from=2-4, to=2-3]
+			\arrow[from=2-4, to=2-5]
+		\end{tikzcd}\]
+
+	Using the assumption that $G$ is compact, let $\mu$ be a left-invariant Haar measure on $G$. Since $G$ is compact, we scale $\mu$ by a factor of $1/\mu(G)$ so that $\mu(G)=1$.
+	First, let's use this measure to construct $A$. A succinct form for $A$ is:
+	\[
+		A = \int_G L^*_h\,d\mu(h)\quad\implies\quad A(\omega)_g(\xi_1, \ldots, \xi_k) = \int_G (L^*_h \omega)_g ( \xi_1, \ldots, \xi_k)\,d\mu(h)
+	\]
+	for all $g\in G$, $\omega\in \Omega^k(G)$, and $\xi_1,\ldots, \xi_k\in T_g G$.
+	Clearly, if $\omega$ is already left-invariant, then $A(\omega) = \omega$ since $L^*h\omega = \omega$. For any $g'\in G$, we can act on $A$ to get:
+	\[
+		L_{g'}^* A  = \int_G L^*_{hg'} \,d\mu(h) = A(\omega)
+	\]
+	since the transformation $h \mapsto hg'$ is a bijection and left multiplication preserves the measure $\mu$. This shows that $A\circ \iota$ is the identity on $\Omega^\bullet_{\textrm{linv}}(G)$ as well as $A\circ (\iota\circ A)=A$. $A$ is a cochain map because differentials commute with integration, i.e. we have
+	\[
+		A\circ d = \int_G L_h^* \circ d\,d\mu(h) = \int_G d\circ L_h^*\,d\mu(h) = d\circ A.
+	\]
+	This proves $A$ is a retract the cochain complexes. To show that $A$ is a deformation retract, we must construct the cochain homotopy operator $H : \Omega^\bullet(G) \to \Omega^{\bullet-1}(G)$ which satisfies $dH + Hd=A-1$. For any vector $\xi \in \mathfrak{g}$, define the operator
+	\[
+		H_\xi = \int_0^1 L^*_{\exp(t\xi)} \iota_{R_\xi} \,d\mu(h).
+	\]
+	where $R_\xi$ is the right-invariant vector field generated by $\xi$. Computing $dH_\xi + H_\xi d$, we get:
+	\[
+		\begin{aligned}
+			dH_\xi + H_\xi d & = d\int_0^1 L_{\exp(t\xi)}^*\iota_{R_\xi}\,d\mu(t) + \int_0^1 L_{\exp(t\xi)}^*\iota_{R_\xi} d\,d\mu(t) \\
+			                 & = \int_0^1 L_{\exp(t\xi)}^*(d\iota_{R_\xi} + \iota_{R_\xi} d)\,d\mu(t)                                 \\
+			                 & = \int_0^1 L_{\exp(t\xi)}^* \mathcal{L}_{R_\xi}\,d\mu(t)\\
+			                 & = \int_0^1 L_{\exp(t\xi)}^* \restr{\frac{d}{ds}}{s=0} L^*_{\exp(s\xi)} \,d\mu(t)\\
+			                 & = \int_0^1 \restr{\frac{d}{ds}}{s=t} L^*_{\exp(s\xi)} \,d\mu(t)\\
+			                 &= L^*_{\exp(\xi)} - 1.
+		\end{aligned}
+	\]
+	Now, let $\{U_\alpha\}$ be a locally finite open cover of $G$ such that there are diffeomorphisms $\log_\alpha : U_\alpha \to V_\alpha \subset \mathfrak{g}$ with $\exp(\log_\alpha(g))=g$ for all $g\in U_\alpha$. Let $\{\psi_\alpha\}$ be a partition of unity subordinate to this open cover. 
+
+	Consider the operator:
+	\[
+    H = \sum_{\alpha} \int_{U_\alpha} \psi_\alpha(h)\cdot H_{\log_\alpha(h)} \,d\mu(h).
+	\]
+	Using our previous expression for $dH_\xi + H_\xi d$, we get:
+	\[
+    \begin{aligned}
+      dH + Hd 
+      &= \sum_\alpha \int_{U_\alpha} \psi_\alpha(h) \cdot (dH_{\log_\alpha(h)} + H_{\log_\alpha(h)}d)\,d\mu(h)\\
+      &= \sum_\alpha \int_{U_\alpha} \psi_\alpha(h) \cdot (L^*_h - 1)\,d\mu(h)\\
+      &= \int_G L^*_h\,d\mu(h) - 1\\
+      &= A - 1.
+    \end{aligned}
+	\]
+	This completes the proof.
+
+
+	% Let $\HH_\textrm{linv}^\bullet(G)$ be the cohomology of $\Omega^\bullet_{\textrm{linv}}(G)$ and let $\Hdr^\bullet(G)$ be the de Rham cohomology. First, let's construct a left-invariant $k$-form $\omega_{\textrm{linv}}$ from a $k$-form $\omega$. 
+	% \[
+	% 	(\omega_{\textrm{linv}})_g = \frac{1}{\mu(G)}\int_G (L_h^*\omega)_g\,d\mu(h).
+	% \]
+	%
+	% Let's call this map $(-)_{\textrm{linv}} : \Omega^\bullet(G) \to \Omega^\bullet_{\textrm{linv}}(G)$. 
+	%
+	% Since the group is compact, and hence has finite measure under $\mu$, the integral preserves limits, and so we get
+	% \[
+	% 	((d\omega)_{\textrm{linv}})_g = \frac{1}{\mu(G)}\int_G (L^*_h d\omega)_g \,d\mu(h) =
+	% 	\frac{1}{\mu(G)}\int_G (dL^*_h \omega)_g \,d\mu(h) =  (d\omega_{\textrm{linv}})_g,
+	% \]
+	% or in other words $(d\omega)_{\textrm{linv}} = d\omega_{\textrm{linv}}$. 
+	%
+	% This has a few consequences -- for instance, we've concluded that $(-)_{\textrm{linv}}$ sends de Rham cycles to left-invariant cycles, and sends a cohomology class $[\omega]\in \Hdr^\bullet(G)$ to some well-defined cohomology class $[\omega_{\textrm{linv}}] \in \HH_{\textrm{linv}}^\bullet(G)$. Let's call this map $\Phi : \Hdr^\bullet(G) \to \HH_{\textrm{linv}}^\bullet(G)$.
+	%
+	% The map $\Phi$ is injective because if $\omega_{\textrm{linv}}=d\alpha$.
+	%
+	%
+	% Next, the difference $\omega - \omega_{\textrm{linv}}$ can be expressed as the integral:
+	% \[
+	% 	(\omega - \omega_{\textrm{linv}})_g = \frac{1}{\mu(G)}\int_G (\omega - L^*_h\omega)_g \,d\mu(h)
+	% \]
+	%
+	% This
+
+	\begin{part}{(d)}
+		Use the inverse map $g \mapsto g^{-1}$ to show that the differential of a \emph{bi-invariant} differential form vanishes. Show that the de Rham cohomology of $G$ is isomorphic to the algebra of bi-invariant forms.
+	\end{part}
+
+	\begin{part}{(e)}
+		Use these ideas to compute $\Hdr^\bullet(\SU_2)$.
+	\end{part}
+\end{parts}
+
+\end{document}
