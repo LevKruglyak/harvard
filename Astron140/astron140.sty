@@ -1,6 +1,11 @@
 \usepackage{siunitx}
 \usepackage{mdframed}
 
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+
 \mdfdefinestyle{answer}{%
 	linecolor=black,
 	outerlinewidth=2pt,
@@ -20,3 +25,19 @@
 \providecommand{\mpssi}[1]{\qty[per-mode = symbol]{#1}{\m\per\s}}
 \providecommand{\ssi}[1]{\qty[per-mode = symbol]{#1}{\s}}
 \providecommand{\msi}[1]{\qty[per-mode = symbol]{#1}{\m}}
+
+\renewcommand{\O}{\mathrm{O}}
+\providecommand{\Aff}{\mathrm{Aff}}
+\providecommand{\SO}{\mathrm{SO}}
+
+\providecommand{\Frame}{\mathrm{Fr}}
+
+\providecommand{\A}{\mathbb{A}}
+
+\providecommand{\definefunction}[5]{
+	\begin{array}{rcl}
+		#1 : #2 & \xrightarrow{\phantom{---}} & #3 \\
+		#4      & \xmapsto{\phantom{---}}     & #5
+	\end{array}
+}
+

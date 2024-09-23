@@ -10,42 +10,101 @@
 \input{../math230a.sty}
 
 \collaborator{AJ LaMotta}
-% \collaborator{Leonardo Kaplan}
-% \collaborator{Ignasi Vicente}
+\collaborator{Leonardo Kaplan}
+\collaborator{Ignasi Vicente}
 
 \begin{document}
 \maketitle
 
-\begin{problem}{1}
-Let $V$ be a finite dimensional real vector space and $B : V\times V \to \R$ a non-degenerate bilinear form. Define:
-\[
-	\begin{aligned}
-		\Aut_B(V) = \{ B\in \Aut(V) : B(P\xi_1, P\xi_2)= B(\xi_1, \xi_2) \qtq{for all} \xi_1, \xi_2\in V\}, \\
-		\End_B(V) = \{ A\in \End(V) : B(A\xi_1, \xi_2)+ B(\xi_1, A\xi_2)=0 \qtq{for all} \xi_1, \xi_2\in V\}.
-	\end{aligned}
-\]
+% \begin{problem}{1}
+% Let $V$ be a finite dimensional real vector space and $B : V\times V \to \R$ a non-degenerate bilinear form. Define:
+% \[
+% 	\begin{aligned}
+% 		\Aut_B(V) = \{ B\in \Aut(V) : B(P\xi_1, P\xi_2)= B(\xi_1, \xi_2) \qtq{for all} \xi_1, \xi_2\in V\}, \\
+% 		\End_B(V) = \{ A\in \End(V) : B(A\xi_1, \xi_2)+ B(\xi_1, A\xi_2)=0 \qtq{for all} \xi_1, \xi_2\in V\}.
+% 	\end{aligned}
+% \]
+% \end{problem}
+% \begin{parts}
+% 	\begin{part}{(a)}
+% 		Prove that $\Aut_B(V)$ is a Lie group with Lie algebra $\End_B(V)$.
+% 	\end{part}
+%
+% 	\begin{part}{(b)}
+% 		Let $V= \R^n$ for some $n\in \Z^{>0}$. Suppose $B$ is the standard symmetric inner product. Identify $\Aut_B(\R^n)$ with the group $\O_n$ of orthogonal matrices.
+% 	\end{part}
+%
+% 	\begin{part}{(b)}
+% 		Let $V= \R^{2m}$ for some $m\in \Z^{>0}$. Suppose $B$ is a non-degenerate skew-symmetric form: For the standard basis $e_1,\ldots, e_{2m}$ of $\R^{2m}$, set
+% 		\[
+% 			B(e_i, e_j) = \begin{cases} 1 & 0<j-i\leq m,\\ -1& 0<i-j\leq m,\\ 0&\textrm{otherwise}.\end{cases}
+% 		\]
+% 		Identify the group $\Aut_{B}(\R^{2m})$ explicitly in terms of block $2\times 2$ matrices in which the blocks have size $m\times m$. This is the \emph{symplectic group} $\Sp_2$.
+% 	\end{part}
+%
+% \end{parts}
+
+\begin{problem}{4}
+	For each of the following Lie groups $G$, answer the questions: If $G$ abelian? Is $G$ compact? Is $G$ connected? Is $G$ simply connected? What is the Lie algebra of $G$?
 \end{problem}
+
 \begin{parts}
-	\begin{part}{(a)}
-		Prove that $\Aut_B(V)$ is a Lie group with Lie algebra $\End_B(V)$.
+	\begin{part}{}
+		A finite dimensional real vector space $V$.
 	\end{part}
 
-	\begin{part}{(b)}
-		Let $V= \R^n$ for some $n\in \Z^{>0}$. Suppose $B$ is the standard symmetric inner product. Identify $\Aut_B(\R^n)$ with the group $\O_n$ of orthogonal matrices.
+	This is an abelian, non-compact, connected, simply connected Lie group.  Since it's abelian, it's Lie bracket vanishes and the Lie algebra can be canonically identified with the trivial Lie algebra $V$ itself.
+
+	\begin{part}{}
+		$\mathbb{T} = \{\lambda \in \C : |\lambda| = 1\}$.
 	\end{part}
 
-	\begin{part}{(b)}
-		Let $V= \R^{2m}$ for some $m\in \Z^{>0}$. Suppose $B$ is a non-degenerate skew-symmetric form: For the standard basis $e_1,\ldots, e_{2m}$ of $\R^{2m}$, set
-		\[
-			B(e_i, e_j) = \begin{cases} 1 & 0<j-i\leq m,\\ -1& 0<i-j\leq m,\\ 0&\textrm{otherwise}.\end{cases}
-		\]
-		Identify the group $\Aut_{B}(\R^{2m})$ explicitly in terms of block $2\times 2$ matrices in which the blocks have size $m\times m$. This is the \emph{symplectic group} $\Sp_2$.
+	This is an abelian, compact, connected, not simply connected Lie group. Since it is abelian, it's Lie bracket vanishes and the Lie algebra is the trivial Lie algebra $\R$.
+
+	\begin{part}{}
+		$\SU_2$.
 	\end{part}
 
+	This is a non-abelian, compact, connected, simply connected Lie group. This is evident if we view $\SU_2$ as
+	\[
+		\SU_2 = \left\{ \begin{pmatrix}\alpha & -\overline{\beta}\\ \beta & \overline{\alpha}\end{pmatrix} : \alpha,\beta\in \C,\qtq{and} |\alpha|^2 + |\beta|^2=1\right\},
+	\]
+	which gives us the homeomorphism $\SU_2 \to S^3\subset \C^2$ which sends a matrix to $(\alpha,\beta)$. 
+	We know the Lie algebra $\mathfrak{su}_2$ must be $3$-dimensional, and indeed we have generators of $\SU_2$ given by the matrices
+	\[
+		X = \begin{pmatrix}0&i\\i&0\end{pmatrix},\quad Y = \begin{pmatrix}0&1\\-1&0\end{pmatrix},\quad Z = \begin{pmatrix}i&0\\0&-i\end{pmatrix}.
+	\]
+	Equipped with the commutator relations $[X,Y]=2Z$, $[Y,Z]=2X$, and $[Z,X]=Y$, these give us generators for $\mathfrak{su}_2$ as a Lie algebra.
+
+	\begin{part}{}
+		$\SL_2$.
+	\end{part}
+
+	This is a non-abelian, non-compact, connected, and not simply connected Lie group. Its Lie algebra is the space of traceless $2\times 2$ matrices, which is three dimensional, with basis $E,F,H$ and commutator relations
+	\[
+		[E, F] = H,\quad [H,F]=-2F,\qtq{and} [H,E]=2E.
+	\]
+
+	\begin{part}{}
+		$\GL_n$.
+	\end{part}
+
+	For $n=1$, we know that $\GL_1\cong \R^\times$, so it is abelian, non-compact, non-connected, and simply connected. More generally, when $n\geq 2$, $\GL_n$ is non-abelian, non-compact, non-connected, and not simply connected Lie group. In any case $\GL_n$ is not compact or connected because it's image under $\det$ is $\R^\times$, which is not connected or compact. It's not simply connected because there is a deformation retraction of $\GL^+_n$ onto $\SO_n$, and $\SO_n$ fits into the fiber bundle
+	\[
+		\SO_{n-1} \longto \SO_n \longto S^{n-1}.
+	\]
+	The long exact sequence on homotopy shows that $\pi_1(\SO_n)\cong \pi_1(\SO_3)$ when $n\geq 3$, but $\SO_3\cong \RP^3$, which is not simply connected. In the case that $n=2$, we know that $\SO_2\simeq S^1$. In either case, $\SO_n$ is not simply connected and so neither is $\GL^+_n$, which shows that $\GL_n$ isn't simply connected either.
+
+	We showed in class that the Lie algebra of $\GL_n$ is $\mathfrak{gl}_n$ -- the space of $n\times n$ matrices with Lie bracket given by the commutator of matrices.
+
+	\begin{part}{}
+		$\O_n$.
+	\end{part}
+
+	For $n=1$, we know that $O_1\cong \Z_2$, so it is abelian, compact, non-connected, and simply connected. More generally, when $n\geq 2$, $\O_n$ is non-abelian, compact, non-connected, and not simply connected. The simple connectedness follows the same argument as for $\GL_n$, only now we don't have to perform a deformation retract since $\O_n^+=\SO_n$ directly.
+
+	Under the identification of $\mathfrak{gl}_n$ with $M_n(\R)$, Lie algebra $\mathfrak{so}_n$ is the space of $n\times n$ skew-symmetric matrices with Lie bracket given by the commutator of matrices and determinant $1$.
 \end{parts}
-
-\begin{problem}{2}
-\end{problem}
 
 \begin{problem}{5}
 Let $G$ be a Lie group.
@@ -56,17 +115,33 @@ Let $G$ be a Lie group.
 		Let $V$ be a finite dimensional real vector space. Define a real line $|\Det V|$ such that an ordered $n$-tuple $\xi_1,\ldots, \xi_n\in V$ defines an element $|\xi_1\wedge\cdots\wedge \xi_n|\in |\Det V|$ which transforms by the absolute value of the determinant of a change of basis matrix. Identify $|\Det V^*|$ as a certain space of functions $V^n \to \R$. Show that positive functions determine an orientation of $|\Det V^*|$. Interpret a positive function as a notion of volume for $n$-dimensional parallelepipeds in $V$. Does this induce a notion of volume for lower dimensional parallelipipeds? Identify positive elements as translationally invariant positive measures on $V$. Construct such a positive element from an inner product on $V$.
 	\end{part}
 
-	There is a natural right action of $\Aut(V)$ on $V^n$ which acts on each component independently. Let's define the line by:
+	Let's first define the real line $\Det V = \alt^n V$. Any linearly independent tuple $\{v_i\}$ gives an identification of this space with $\R$, since $v_1\wedge\cdots\wedge v_n$ spans $\alt^n V$. We can then quotient by the antipodal relation to get a half-line, and gluing together two copies of these half lines by zero give us $|\Det V|$, i.e.
 	\[
-		|\Det V| = \left\{
-		\epsilon : \scB(V) \to \R : \epsilon(b\cdot g) = \frac{\epsilon(b)}{|\det(g)|} \qtq{for all} b\in V^n, g\in \Aut(V)
+		|\Det V| = \Det^+ V \cup \Det^- V / 0_+ \sim 0_-.
+	\]
+	The orientation on this line is given by $\Det^+ V$ -- this is an ``arbitrary'' part of our construction. Clearly, any tuple of elements $\{v_i\}$ can be sent to a non-negative element $|v_1\wedge \cdots \wedge v_n|$ in the positive half line.
+
+	Now if we want to work with $|\Det V^*|$, recall that $\alt^n V^*$ can be canonically identified with the space of alternating bilinear forms $\textrm{Alt}_n(V) \subset \textrm{Fun}(V^n, \R)$. We can then identify $\Det^+ V^*$ with the image of $\textrm{Alt}_n(V)$ after post-composition with the absolute value map, and $\Det^- V^*$ after post-composition with the negative absolute value map. This gives us another way to write $|\Det V^*|$, namely:
+	\[
+		|\Det V^*| = \left\{
+		\omega \in (V^n)^* : \omega(b\cdot g) = \frac{\epsilon(b)}{|\det(g)|} \qtq{for all} b\in V^n, g\in \End(V) 
 		\right\}.
 	\]
-	First of all, it's clear that this space is closed under addition and scalar multiplication, so it is a real vector space. To see that it's a one dimensional space, consider the map $\textrm{ev}_1 : |\Det V|$.
+	The volume of a parallelipiped spanned by $v_1,\ldots, v_n$ can then be measured by a positive element of $\omega \in |\Det V^*|$ as $\omega(v_1,\ldots,v_n)$. For degenerate parallelipipeds, it's clear that the volume under $\omega$ is $0$, so the measure induced on lower dimensional parallelipipeds is trivial. Any parallelipiped in $V$ can then be translated back to the origin in a concistent manner, and it's volume taken. Extending in a standard measure theoretic way, we obtain a translationally invariant measure over $V$ corresponding to a positive element $\omega\in |\Det V^*|$.
+
+
+	% There is a simply transitive right action of $\GL_n$ on $\scB(V)$ by precomposition. Let's define the line by:
+	% \[
+	% \]
+	% First of all, it's clear that this space is closed under addition and scalar multiplication, so it is a real vector space. To see that it's a one dimensional space, let's pick a tuple $b\in \scB(V)$ and consider the evaluation map $\textrm{ev}_b : |\Det V| \to \R$. Clearly this map is linear and surjective, and injective because the action of $\GL_n$ on $\scB(V)$ is simply transitive and knowing $\omega(b)$ allows us to compute $\omega(b\cdot g)$ for all $g\in \GL_n$.
+	%
+	% For $|\Det V^*|$, note that
 
 	\begin{part}{(b)}
 		Apply to the tangent bundle of a smooth manifold. Define the notion of a smooth positive measure on a smooth manifold. Do they always exist?
 	\end{part}
+
+	On a smooth manifold $M$, we can construct a line bundle $|\Det TM^*|$. A positive section of this line bundle is a smooth positive measure (or in most texts, a density.) They always exist because the determinant line bundle is oriented, and all oriented line bundles are trivial.
 
 	\begin{part}{(c)}
 		The real line $|\Det \mathfrak{g}^*|$ consists of left-invariant measures on $G$. Define an action of $G$ on this line. Compute the action in case $G$ is compact. Compute it for $G = \GL_n$ and $G= \SL_n$.
@@ -90,6 +165,15 @@ Suppose $G$ is a connected compact Lie group.
 		Let $\Omega^\bullet_{\textrm{linv}}(G) \subset \Omega^\bullet(G)$ denote the vector subspace of left-invariant differential forms. Show that $\Omega^\bullet_{\textrm{linv}}(G)$ is in fact a sub-differential graded algebra, i.e. it is closed under multiplication and the differential $d$.
 	\end{part}
 
+	It's clear that the wedge product of two left-invariant differential forms is left-invariant since $g$ acts as
+	\[
+		L_g^* (\omega\wedge \eta) = (L_g^*\omega)\wedge(L_g^*\eta).
+	\]
+	Similarly, a left-invariant form is still left-invariant after an exterior derivative since
+	\[
+		L_g^* (d\omega) = d(L_g^*\omega).
+	\]
+
 	\begin{part}{(b)}
 		Construct an isomorphism
 		\[
@@ -99,30 +183,30 @@ Suppose $G$ is a connected compact Lie group.
 	\end{part}
 
 	Firstly, recall that there is a natural ``extension by left-translation'' injective map $\mathfrak{g}^* \to \mathfrak{X}^*(G)$ where $\mathfrak{X}^*(G) = \Gamma(T^*G)$ is the space of covector fields.
-	More precisely, given some $\omega \in \mathfrak{g}^*$, the corresponding covector field $\xi$ on $G$ is defined by:
+	More precisely, given some $\omega \in \mathfrak{g}^*$, there is a corresponding covector field $L_\omega$ on $G$ is defined by:
 	\[
-		\widetilde{\omega}(\xi) = \omega\circ dL_{g^{-1}}(\xi)\quad\textrm{ for }\quad \xi\in T_g G.
+		L_\omega(\xi) = \omega\circ L_{g^{-1}}^*(\xi)\quad\textrm{ for }\quad \xi\in T_g G.
 	\]
-	Such a covector field is exactly a differential $1$-form, so we've exhibited a map $\mathfrak{g}^* \to \Omega^1(G)$. The form $\widetilde{\omega}$ is left-invariant because for any $h\in G$, we have
+	Such a covector field is exactly a differential $1$-form, so we've exhibited a map $\mathfrak{g}^* \to \Omega^1(G)$. The form $L_{\omega}$ is left-invariant because for any $h\in G$, we have
 	\[
-		(L_h^* \widetilde{\omega})(\xi) = \omega\circ dL_{(hg)^{-1}}\circ dL_{h}(\xi) = \omega\circ dL_{g^{-1}}(\xi)=\widetilde{\omega}(\xi) \quad\textrm{for all}\quad \xi\in T_g G.
+		(L_h^* L_{\omega})(\xi) = \omega\circ dL_{(hg)^{-1}}\circ dL_{h}(\xi) = \omega\circ dL_{g^{-1}}(\xi)=L_{\omega}(\xi) \quad\textrm{for all}\quad \xi\in T_g G.
 	\]
 	This means that we actually have a linear map $\mathfrak{g}^* \to \Omega^1_{\textrm{linv}}(G)$.
-	Since the inverse is given by $\omega = \widetilde{\omega}_e$, we have an isomorphism. There is also an isomorphism $\R \to \Omega^0_{\textrm{linv}}(G)$ which sends a constant to the constant function on $G$. This is an isomorphism since the only left-invariant functions are the constant functions. This pair of isomorphisms uniquely extends to a graded algebra isomorphism $\alt^\bullet \mathfrak{g}^* \to \Omega^\bullet_{\textrm{linv}}(G)$.
+	Since the inverse is given by $\omega = (L_{\omega})_e$, we have an isomorphism. There is also an isomorphism $\R \to \Omega^0_{\textrm{linv}}(G)$ which sends a real number to its constant function on $G$. This is an isomorphism since the only left-invariant functions are the constant functions. This pair of isomorphisms uniquely extends to a graded algebra isomorphism $\alt^\bullet \mathfrak{g}^* \to \Omega^\bullet_{\textrm{linv}}(G)$.
 
 	To express the differential $d$ as a coboundary map in $\alt^\bullet\mathfrak{g}^*$, first note that $df=0$ for any $0$-form $f\in \Omega^0_{\textrm{linv}}(G)$ since left-invariant $0$-forms are constant. To derive an expression for $1$-forms, let $\omega\in \mathfrak{g}^*$ be a covector. Given vector fields $\xi_1, \xi_2\in \mathfrak{X}(G)$, a corollary of Cartan's formula tells us that:
 	\[
-		d\widetilde{\omega}(\xi_1,\xi_2) = \xi_1(\widetilde{\omega}(\xi_2)) - \xi_2(\widetilde{\omega}(\xi_1)) - \widetilde{\omega}([\xi_1, \xi_2]) = - \widetilde{\omega}([\xi_1,\xi_2]).
+		dL_{\omega}(\xi_1,\xi_2) = \xi_1(L_{\omega}(\xi_2)) - \xi_2(L_{\omega}(\xi_1)) - L_{\omega}([\xi_1, \xi_2]) = - L_{\omega}([\xi_1,\xi_2]).
 	\]
-	\todo{Here the terms $\xi_1(\widetilde{\omega}(\xi_2))$ and $\xi_2(\widetilde{\omega}(\xi_1))$ vanish since $\widetilde{\omega}$ is left-invariant.} Let $\{\xi_i\}$ be a basis for $\mathfrak{g}$ and define structure coefficients $c^k_{i,j}$ by $[\xi_i,\xi_j] = c^k_{i,j} \xi_k$. Let $\{\theta^i\}$ be the corresponding dual basis for $\mathfrak{g}^*$. Note that:
+	{Here the terms $\xi_1(L_{\omega}(\xi_2))$ and $\xi_2(L_{\omega}(\xi_1))$ vanish since $L_{\omega}$ is left-invariant.} Let $\{\xi_i\}$ be a basis for $\mathfrak{g}$ and define structure coefficients $c^k_{i,j}$ by $[\xi_i,\xi_j] = c^k_{i,j} \xi_k$. Let $\{\theta^i\}$ be the corresponding dual basis for $\mathfrak{g}^*$. Note that:
 	\[
 		d\theta^k(\xi_i, \xi_j) = -\widetilde{\theta^k}([\xi_i, \xi_j]) = -\widetilde{\theta^k}(c^q_{i,j} \xi_q) = - c_{i,j}^q \widetilde{\theta^k}(\xi_q) = - c_{i,j}^k,
 	\]
 	where the last equality follows since $\theta^k(\xi_q)=\delta_q^k$. Writing this this form in terms of $\alt^\bullet \mathfrak{g}^*$, we get the expression
 	\[
-		d\theta^k = -c^k_{i,j}\theta^i\wedge \theta^j.
+		d\theta^k = -\frac{1}{2}c^k_{i,j}\theta^i\wedge \theta^j
 	\]
-	Along with the observation that $df=0$ for any $0$-form $f$, using the Leibniz rule this coboundary operator extends over the entire graded algebra so that the isomorphism $\alt^\bullet \mathfrak{g}^* \to \Omega^\bullet_{\textrm{linv}}(G)$ is an isomorphism of
+	where the $1/2$ factor accounts for repeat terms. Along with the observation that $df=0$ for any $0$-form $f$, using the Leibniz rule this coboundary operator extends over the entire graded algebra so that the isomorphism $\alt^\bullet \mathfrak{g}^* \to \Omega^\bullet_{\textrm{linv}}(G)$ is an isomorphism of
 
 	\begin{part}{(c)}
 		Prove that the inclusion in (a) induces an isomorphism on cohomology. A map of cochain complexes with this property is called a \emph{quasi-isomorphism}.
@@ -170,20 +254,21 @@ Suppose $G$ is a connected compact Lie group.
 	\]
 	This proves $A$ is a retract the cochain complexes. To show that $A$ is a deformation retract, we must construct the cochain homotopy operator $H : \Omega^\bullet(G) \to \Omega^{\bullet-1}(G)$ which satisfies $dH + Hd=A-1$. For any vector $\xi \in \mathfrak{g}$, define the operator
 	\[
-		H_\xi = \int_0^1 L^*_{\exp(t\xi)} \iota_{R_\xi} \,d\mu(h).
+		H_\xi = \int_0^1 L^*_{\overline{\exp}(t\xi)} \iota_{R_\xi} \,d\mu(h).
 	\]
-	where $R_\xi$ is the right-invariant vector field generated by $\xi$. Computing $dH_\xi + H_\xi d$, we get:
+	where $R_\xi$ is the right-invariant vector field generated by $\xi$, and $\overline{\exp}$ is the right exponential map. Computing $dH_\xi + H_\xi d$, we get:
 	\[
 		\begin{aligned}
-			dH_\xi + H_\xi d & = d\int_0^1 L_{\exp(t\xi)}^*\iota_{R_\xi}\,d\mu(t) + \int_0^1 L_{\exp(t\xi)}^*\iota_{R_\xi} d\,d\mu(t) \\
-			                 & = \int_0^1 L_{\exp(t\xi)}^*(d\iota_{R_\xi} + \iota_{R_\xi} d)\,d\mu(t)                                 \\
-			                 & = \int_0^1 L_{\exp(t\xi)}^* \mathcal{L}_{R_\xi}\,d\mu(t)\\
-			                 & = \int_0^1 L_{\exp(t\xi)}^* \restr{\frac{d}{ds}}{s=0} L^*_{\exp(s\xi)} \,d\mu(t)\\
-			                 & = \int_0^1 \restr{\frac{d}{ds}}{s=t} L^*_{\exp(s\xi)} \,d\mu(t)\\
-			                 &= L^*_{\exp(\xi)} - 1.
+			dH_\xi + H_\xi d & = d\int_0^1 L_{\overline{\exp}(t\xi)}^*\iota_{R_\xi}\,d\mu(t) + \int_0^1 L_{\overline{\exp}(t\xi)}^*\iota_{R_\xi} d\,d\mu(t) \\
+			                 & = \int_0^1 L_{\overline{\exp}(t\xi)}^*(d\iota_{R_\xi} + \iota_{R_\xi} d)\,d\mu(t)                                 \\
+			                 & = \int_0^1 L_{\overline{\exp}(t\xi)}^* \mathcal{L}_{R_\xi}\,d\mu(t)\\
+			                 & = \int_0^1 L_{\overline{\exp}(t\xi)}^* \restr{\frac{d}{ds}}{s=0} L^*_{\overline{\exp}(s\xi)} \,d\mu(t)\\
+			                 & = \int_0^1 \restr{\frac{d}{ds}}{s=0} L^*_{\overline{\exp}((s+t)\xi)} \,d\mu(t)\\
+			                 & = \int_0^1 \restr{\frac{d}{ds}}{s=t} L^*_{\overline{\exp}(s\xi)} \,d\mu(t)\\
+			                 &= L^*_{\overline{\exp}(\xi)} - 1.
 		\end{aligned}
 	\]
-	Now, let $\{U_\alpha\}$ be a locally finite open cover of $G$ such that there are diffeomorphisms $\log_\alpha : U_\alpha \to V_\alpha \subset \mathfrak{g}$ with $\exp(\log_\alpha(g))=g$ for all $g\in U_\alpha$. Let $\{\psi_\alpha\}$ be a partition of unity subordinate to this open cover. 
+	Now, let $\{U_\alpha\}$ be a locally finite open cover of $G$ such that there are diffeomorphisms $\log_\alpha : U_\alpha \to V_\alpha \subset \mathfrak{g}$ with $\overline{\exp}(\log_\alpha(g))=g$ for all $g\in U_\alpha$. Let $\{\psi_\alpha\}$ be a partition of unity subordinate to this open cover. 
 
 	Consider the operator:
 	\[
@@ -201,40 +286,44 @@ Suppose $G$ is a connected compact Lie group.
 	\]
 	This completes the proof.
 
-
-	% Let $\HH_\textrm{linv}^\bullet(G)$ be the cohomology of $\Omega^\bullet_{\textrm{linv}}(G)$ and let $\Hdr^\bullet(G)$ be the de Rham cohomology. First, let's construct a left-invariant $k$-form $\omega_{\textrm{linv}}$ from a $k$-form $\omega$. 
-	% \[
-	% 	(\omega_{\textrm{linv}})_g = \frac{1}{\mu(G)}\int_G (L_h^*\omega)_g\,d\mu(h).
-	% \]
-	%
-	% Let's call this map $(-)_{\textrm{linv}} : \Omega^\bullet(G) \to \Omega^\bullet_{\textrm{linv}}(G)$. 
-	%
-	% Since the group is compact, and hence has finite measure under $\mu$, the integral preserves limits, and so we get
-	% \[
-	% 	((d\omega)_{\textrm{linv}})_g = \frac{1}{\mu(G)}\int_G (L^*_h d\omega)_g \,d\mu(h) =
-	% 	\frac{1}{\mu(G)}\int_G (dL^*_h \omega)_g \,d\mu(h) =  (d\omega_{\textrm{linv}})_g,
-	% \]
-	% or in other words $(d\omega)_{\textrm{linv}} = d\omega_{\textrm{linv}}$. 
-	%
-	% This has a few consequences -- for instance, we've concluded that $(-)_{\textrm{linv}}$ sends de Rham cycles to left-invariant cycles, and sends a cohomology class $[\omega]\in \Hdr^\bullet(G)$ to some well-defined cohomology class $[\omega_{\textrm{linv}}] \in \HH_{\textrm{linv}}^\bullet(G)$. Let's call this map $\Phi : \Hdr^\bullet(G) \to \HH_{\textrm{linv}}^\bullet(G)$.
-	%
-	% The map $\Phi$ is injective because if $\omega_{\textrm{linv}}=d\alpha$.
-	%
-	%
-	% Next, the difference $\omega - \omega_{\textrm{linv}}$ can be expressed as the integral:
-	% \[
-	% 	(\omega - \omega_{\textrm{linv}})_g = \frac{1}{\mu(G)}\int_G (\omega - L^*_h\omega)_g \,d\mu(h)
-	% \]
-	%
-	% This
-
 	\begin{part}{(d)}
 		Use the inverse map $g \mapsto g^{-1}$ to show that the differential of a \emph{bi-invariant} differential form vanishes. Show that the de Rham cohomology of $G$ is isomorphic to the algebra of bi-invariant forms.
 	\end{part}
 
+	\todo{I was not able to come up with a proof that the differential of a bi-invariant differential form vanishes.}
+
+	Now, we could repeat the proof of (c) but with all parity flipped (left instead of right). This would show us that $\Omega^\bullet_{\textrm{binv}} \subset \Omega^\bullet_{\textrm{linv}} \subset \Omega^\bullet$ is a quasi-isomorphism, and since the differential of any bi-invariant differential form is zero, it follows that
+	\[
+		\Omega^\bullet_{\textrm{binv}}(G) \cong \Hdr^\bullet(G),
+	\]
+	since all image groups in the cohomology quotient are trivial.
+
 	\begin{part}{(e)}
 		Use these ideas to compute $\Hdr^\bullet(\SU_2)$.
 	\end{part}
+	Recall that $\SU_2$ is the Lie group of $2\times 2$ unitary complex matrices with determinant $1$, i.e.
+	\[
+		\SU_2 = \left\{ \begin{pmatrix}\alpha & -\overline{\beta}\\ \beta & \overline{\alpha}\end{pmatrix} : \alpha,\beta\in \C,\qtq{and} |\alpha|^2 + |\beta|^2=1\right\}.
+	\]
+	There is a basis of $\su_2$ by elements $X,Y,Z$ satisfying the commutator relations
+	\[
+		[X,Y]=2Z,\quad [Y,Z]=2X,\qtq{and}[Z,X]=2Y.
+	\]
+	This means that our defining relations for the differential $d$ on $\alt^\bullet \mathfrak{g}^*$ are
+	\[
+		dZ = -2 X\wedge Y,\quad dX = -2 Y\wedge Z,\qtq{and} dY = -2 Z\wedge X.
+	\]
+	Letting $d^k : \alt^k \mathfrak{g}^* \to \alt^{k+1} \mathfrak{g}^*$ be the differential map and applying the Leibniz rule to the above relations, we can now compute the kernels and images of the differential map and obtain the cohomology: 
+	\[
+		\begin{aligned}
+			&\textrm{im}(d^{-1}) = 0 &\quad\quad \textrm{ker}(d^0) = \R &\quad\quad \implies\quad\quad \Hdr^0(\SU_2) = \R, \\
+			&\textrm{im}(d^{0}) = 0 &\quad\quad \textrm{ker}(d^1) = 0 &\quad\quad \implies\quad\quad \Hdr^1(\SU_2) = 0, \\
+			&\textrm{im}(d^{1}) = \alt^2\mathfrak{g}^* &\quad\quad \textrm{ker}(d^2) = \alt^2\mathfrak{g}^* &\quad\quad \implies\quad\quad \Hdr^2(\SU_2) = 0, \\
+			&\textrm{im}(d^{2}) = 0 &\quad\quad \textrm{ker}(d^3) = \alt^3 \mathfrak{g}^* &\quad\quad \implies\quad\quad \Hdr^3(\SU_2) = \R. \\
+		\end{aligned}
+	\]
+	If we want to include multiplicative structure, we see that $\Hdr^\bullet(\SU_2) \cong \R[x]/(x^2)$ with $|x|=3$.
+	This makes sense, since $\SU_2\simeq S^3$, and there are exactly the homology groups of the $3$-sphere.
 \end{parts}
 
 \end{document}

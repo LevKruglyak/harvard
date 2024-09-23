@@ -1,0 +1,255 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 3}
+\author{Lev Kruglyak}
+\due{September 25, 2024}
+
+\input{../math230a.sty}
+
+% \collaborator{AJ LaMotta}
+% \collaborator{Leonardo Kaplan}
+% \collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Distributions of rank $2$ on $3$-manifolds.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		Let $M$ be a $3$-manifold and $\alpha$ a non-zero $1$-form. Prove that the $2$-dimensional distribution determined by $\alpha$ is integrable if and only if $\alpha\wedge d\alpha = 0$.
+	\end{part}
+
+	Suppose $\alpha$ is a nowhere zero $1$-form on $M$. We can consider this a section $\alpha\in\Gamma(T^*M)$. Since $\alpha$ is nowhere zero, the kernel bundle $\ker\alpha$ is a $2$-dimensional subbundle of $TM$. Let's call this distribution $E_\alpha$. Clearly, a vector field $\xi\in \Gamma(TM)$ belongs to $E_\alpha$ if and only if $\alpha(\xi) = 0$. The distribution is integrable if and only if for all vector fields $\xi_1,\xi_2$ belonging to $E_\alpha$, their commutator $[\xi_1,\xi_2]$ also belongs to $E_\alpha$. This means that we can we must show that:
+	\[
+		\left\{\alpha\wedge d\alpha = 0\right\}  \quad\iff\quad \left\{
+		\alpha([\xi_1, \xi_2]) =0
+		\quad\textrm{whenever}\quad\alpha(\xi_1) = \alpha(\xi_2)=0\right\}.
+	\]
+	By the standard commutator relations between $d,\iota,\mathcal{L}$, for any vector fields $\xi_1$, $\xi_2$ belonging to $E_\alpha$, we have
+	\[
+		\begin{aligned}
+			\alpha([\xi_1, \xi_2])
+			 & = \iota_{[\xi_1, \xi_2]}\alpha                                                    \\
+			 & = \mathcal{L}_{\xi_1}\iota_{\xi_2}\alpha + \iota_{\xi_2}\mathcal{L}_{\xi_1}\alpha \\
+			 & = \iota_{\xi_2}\mathcal{L}_{\xi_1}\alpha                                          \\
+			 & = \iota_{\xi_2}(d\iota_{\xi_1} + \iota_{\xi_1} d)\alpha                           \\
+			 & = \iota_{\xi_2}d\iota_{\xi_1}\alpha + \iota_{\xi_1} d\alpha                       \\
+			 & = \iota_{\xi_2}\iota_{\xi_1} d\alpha                                              \\
+			 & = d\alpha(\xi_2, \xi_1)
+		\end{aligned}
+	\]
+	Next, suppose $\xi_1,\xi_2,\xi_3$ are any vector fields, not necessarily in $E_\alpha$. Then, we have
+	\[
+		\begin{aligned}
+			(\alpha\wedge d\alpha)(\xi_1, \xi_2, \xi_3)
+			 & =\iota_{\xi_1}\iota_{\xi_2}\iota_{\xi_3} (\alpha\wedge d\alpha)                                                                                                                           \\
+			 & =\iota_{\xi_1}\iota_{\xi_2} ( \iota_{\xi_3} \alpha\wedge d\alpha - \alpha\wedge \iota_{\xi_3} d\alpha)                                                                                    \\
+			 & = \iota_{\xi_1}(-\iota_{\xi_3}\alpha \wedge \iota_{\xi_2}d\alpha - \iota_{\xi_2}\alpha\wedge \iota_{\xi_3} d\alpha + \alpha\wedge \iota_{\xi_2}\iota_{\xi_3}d\alpha)                      \\
+			 & =\iota_{\xi_3}\alpha\wedge \iota_{\xi_1}\iota_{\xi_2} d\alpha + \iota_{\xi_2}\alpha\wedge \iota_{\xi_1}\iota_{\xi_3}d\alpha + \iota_{\xi_1}\alpha\wedge \iota_{\xi_2}\iota_{\xi_3}d\alpha \\
+			 & = \alpha(\xi_3)\cdot d\alpha(\xi_1, \xi_2) + \alpha(\xi_2)\cdot d\alpha(\xi_1, \xi_3) + \alpha(\xi_1)\cdot d\alpha(\xi_2, \xi_3).
+		\end{aligned}
+	\]
+	Here, we make use of the identity $\iota_{\xi}(\alpha\wedge \beta) = \iota_{\xi}\alpha\wedge \beta + (-1)^{|\alpha|}\alpha\wedge \iota_{\xi}\beta$, and cancel terms such as $\iota_{\xi_i}\iota_{\xi_j} \alpha$ and $\iota_{\xi_i}\iota_{\xi_j}\iota_{\xi_k}d\alpha$ since all negative degree forms are zero. With the two identities we derived, we can now get our result.
+
+	First, suppose that $\alpha\wedge d\alpha=0$. Whenever we have vector fields $\xi_1, \xi_2$ belonging to $E_\alpha$, and a vector field $\eta$ not necessarily belonging to $E_\alpha$, note that
+	\[
+		\begin{aligned}
+			0 = (\alpha\wedge d\alpha)(\xi_1, \xi_2, \eta)
+			 & = \alpha(\eta)\cdot d\alpha(\xi_1, \xi_2) + \alpha(\xi_2)\cdot d\alpha(\xi_1, \eta) + \alpha(\xi_1)\cdot d\alpha(\xi_2, \eta) \\
+			 & = \alpha(\eta)\cdot \alpha([\xi_2, \xi_1]).
+		\end{aligned}
+	\]
+	Since $\alpha$ is nonzero, we can find some vector field $\eta$ such that $\alpha(\eta)$ is nonzero. This means that $\alpha([\xi_2,\xi_1])=0$, and so the distribution is integrable.
+
+	In the converse direction, suppose that for any vector fields $\xi_1,\xi_2$ belonging to $E_\alpha$, we have $\alpha([\xi_1,\xi_2])=0$. Let $U$ be an open set on which we can find such fields $\xi_1, \xi_2 \in \Gamma(E_\alpha; U)$ which are also linearly independent. Finally, suppose that there is a third field $\eta \in \Gamma(TM; U)$, which is linearly independent to $\xi_1, \xi_2$ so that these fields span the tangent bundle $TM$ restricted to $U$. On $U$, we have
+	\[
+		(\alpha\wedge d\alpha)(\xi_1, \xi_2,\eta) = \alpha(\eta)\cdot \alpha([\xi_2, \xi_1]) = 0.
+	\]
+	However, these fields formed a local frame the tangent bundle, so it follows that $\alpha\wedge d\alpha$ vanishes on $U$. Since our choice of $U$ was arbitrary, we can do this over the entire manifold to show that $\alpha\wedge d\alpha$ vanishes globally.
+
+	\begin{part}{b}
+		The Hopf fibration $\pi : S^3 \to S^2$ may be constructed by identifying $S^3$ as the unit sphere in $\C^2$ and $S^2$ as $\CP^1$; then the map is a restriction of the canonical projection $(\C^2)^\times \to \CP^1$. The kernel $E' = \ker d\pi$ is an (integrable) one-dimensional distribution on $S^3$. Let $E\subset TS^3$ be the $2$-dimensional distribution given by the orthogonal complement of $E'$ with respect to the standard round metric. Is $E$ integrable? Find a nonzero $1$-form $\alpha$ which generates the ideal $\mathcal{I}(E)$ associated to $E$. Compute $d\alpha$ and $\alpha\wedge d\alpha$.
+	\end{part}
+
+	We can consider $S^3$ as the subset of $\C^2$ given by points $(z_1, z_2)$ with $|z_1|^2 + |z_2|^2=1$. Choosing coordinates:
+	\[
+		\begin{cases} z_1 = \cos(\theta)\cdot e^{i(\phi + \psi)} \\ z_2 = \sin(\theta)\cdot e^{i(\phi - \psi)} \end{cases} \qtq{where} (\theta,\phi,\psi)\in [0,\pi/2]\times[0,\pi]^2.
+	\]
+	In these coordinates, the Hopf fibration becomes $\pi(\theta,\phi,\psi) \to (\theta,\phi)$ where we use the standard spherical coordinate system on $S^2$. 
+
+	Next, let's see what form the round metric takes on $S^3$ using the coordinate system we provided. Recall that the round metric on $S^3$ is the pullback of the Euclidean metric on $\R^4$ from the canonical embedding $\C^2\to \R^4$. Expanding our coordinate system in $\R^4$, and
+	% Letting $x,y,z,h$ be the standard coordinates on $\R^4$, we see that
+	% \[
+	%     \begin{cases}
+	%       x = \cos(\theta)\cdot \cos(\phi+\psi)\\
+	%       y = \cos(\theta)\cdot \sin(\phi +\psi)\\
+	%       z = \sin(\theta)\cdot \cos(\phi - \psi)\\
+	%       h = \sin(\theta)\cdot \sin(\phi - \psi)
+	%     \end{cases}\quad\implies\quad
+	%     \begin{cases}
+	%       dx = -\cos(\theta)\sin(\phi+\psi)(d\phi + d\psi)-\sin(\theta) \cos(\phi+\psi) \,d\theta\\
+	%       dy = \cos(\theta)\cos(\phi+\psi)(d\phi + d\psi)-\sin(\theta) \sin(\phi+\psi) \,d\theta\\
+	%       dz = -\sin(\theta)\sin(\phi+\psi)(d\phi + d\psi)+\cos(\theta) \cos(\phi+\psi) \,d\theta\\
+	%       dh = \sin(\theta)\cos(\phi+\psi)(d\phi + d\psi)+\cos(\theta) \sin(\phi+\psi) \,d\theta\\
+	%     \end{cases}
+	% \]
+	using standard trigonometric identities, up to scaling, the metric $g$ on $S^3$ has matrix form
+	\[
+		g = 
+		\begin{pmatrix} 1 & 0             & 0             \\
+                0 & 1             & 2\cos(\theta) \\
+                0 & 2\cos(\theta) & 1\end{pmatrix}\quad\iff\quad
+		g = d\theta^2 + d\phi^2+ 2\cos\theta \,d\phi\, d\psi + d\psi^2.
+	\]
+
+  Now suppose at a point $(\theta,\phi,\psi)\in S^3$, the tangent vector $v\in T_{(\theta,\phi,\psi)} S^3$ is in the kernel of $d\pi$. This means that $v$ must have no $\partial/\partial \phi$ or $\partial /\partial \psi$ components. The space of vectors $v=(x,y,z)$ in the complement of this kernel must then satisfy, for every $t\in \R$,
+  \[
+    \begin{pmatrix}0 \\ 0 \\ t\end{pmatrix}^\intercal
+		\begin{pmatrix} 1 & 0             & 0             \\
+                0 & 1             & 2\cos(\theta) \\
+                0 & 2\cos(\theta) & 1\end{pmatrix}\begin{pmatrix}x\\y\\z\end{pmatrix} = 0\quad\implies\quad (2\cos\theta) y + z = 0.
+  \]
+  In other words, $E$ is spanned by the vector fields
+  \[
+    \xi_1= \frac{\partial}{\partial \theta}
+    \quad\textrm{ and }\quad
+    \xi_2 = \frac{\partial}{\partial \psi} + 2\cos(\theta)\frac{\partial}{\partial \phi}.
+  \]
+  This distribution is thus \textbf{not integrable}, since a simple calculation shows that the commutator of these vector fields is $[\xi_1, \xi_2] = -2\sin(\theta)\partial / \partial \phi$, which does not belong to $E$. 
+
+  Next, we need to find a 1-form $\alpha$ which generated the ideal associated to the distribution. Since we have vector fields which already span $E$, it's clear that the $1$-form $\alpha = 2\cos(\theta)\,d\psi - d\phi$ vanishes on $E$, and clearly must be a generator for $\mathcal{I}(E)$ since it has minimal degree. Computing $d\alpha$ and $\alpha\wedge d\alpha$, we get
+  \[
+    d\alpha = -2\sin(\theta)\,d\theta\wedge d\psi \quad\implies\quad \alpha\wedge d\alpha = (2\cos(\theta)d\psi - d\phi) \wedge (-2\sin(\theta) d\theta \wedge d\psi) = 2\sin(\theta)d\phi\wedge d\theta\wedge d\psi
+  \]
+  Since $\alpha\wedge d\alpha$ is non-zero, this agrees with the previous part of the problem.
+\end{parts}
+
+\begin{problem}{2}
+Suppose $M$ is a smooth manifold and $E\subset TM$ is a distribution. Define:
+\[
+	\mathcal{I}(E) = \left\{ \omega \in \Omega^\bullet(M) : \omega|_E = 0\right\}.
+\]
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		Prove that $\mathcal{I}(E)\subset \Omega^\bullet_M$ is an ideal.
+	\end{part}
+
+	Clearly $\mathcal{I}(E)$ is additively closed. For any $\omega,\eta \in \Omega^\bullet(M)$ with $\omega\in \mathcal{I}(E)$ and $\xi_i\in \Gamma(E)$, recall that
+	\[
+		(\omega\wedge \eta)(\xi_1,\ldots,\xi_n) = \sum_{\sigma\in \mathfrak{S}_n} \textrm{sgn}(\sigma)\cdot \omega(\xi_{\sigma(1)},\ldots, x_{\sigma(k)})\cdot \eta(x_{\sigma(k+1)}, \ldots, x_{\sigma(n)}),
+	\]
+	where $|\omega|=k$ and $n=|\omega|+|\eta|$.
+
+	Clearly, every term in this sum will vanish since $\omega|_E=0$ and all vector fields belong to $E$.
+
+	\begin{part}{b}
+		Prove that if $E$ has corank $r$ -- that is, if $\dim E_x + r =\dim_x M$ for all $x\in M$ -- then $E$ is locally generated by $r$ independent $1$-forms.
+	\end{part}
+
+	It suffices to consider connected manifolds when the dimension is constant, since the result is local anyways.
+
+	\begin{part}{c}
+		Prove that $\mathcal{I}(E)$ is closed under $d$ if and only if $E$ is integrable.
+	\end{part}
+
+	For any $k$-form $\omega\in \Omega^\bullet(M)$ and vector fields $\xi_1,\ldots,\xi_{k+1}\in \Gamma(TM)$, we have
+	\[
+		\begin{aligned}
+			d\omega(\xi_1,\ldots,\xi_{k+1}) & = \sum_{1\leq i \leq k+1} (-1)^{i+1} \xi_i\omega(\xi_1,\ldots,\widehat{\xi_i},\ldots, \xi_{k+1})                                               \\
+			                                & \quad+ \sum_{1\leq i<j\leq k+1} (-1)^{i+j+1}\omega([\xi_i, \xi_j], \xi_1, \ldots, \widehat{\xi_i},\ldots, \widehat{\xi_j}, \ldots, \xi_{k+1}),
+		\end{aligned}
+	\]
+	where $\widehat{\xi_i}$ denotes omission of the $i$-th entry. This identity can be proved inductively using the standard commutator relations between $\iota, d,$ and $\mathcal{L}$.
+
+	Now, recall that $E$ is integrable if and only if for any vector fields $\xi_1,\xi_2\in \Gamma(E)$ belonging to $E$, their commutator $[\xi_1, \xi_2]$ belongs to $E$ as well. Supposing $E$ is integrable and that $\omega$ vanishes on $E$, it's clear that $d\omega$ vanishes on $E$ since all the vector fields in the terms of the sum are in $E$, and $\omega$ vanishes on vector fields in $E$. Conversely, if $\omega\in \mathcal{I}(E)$ and $d\omega$ vanishes, then we know that for all vector fields $\xi_1, \xi_2\in \Gamma(E)$ and $\xi_3,\ldots, \xi_{k+1}\in \Gamma(TM)$ we have
+	\[
+		\textcolor{red}{
+			\begin{aligned}
+				0=d\omega(\xi_1,\ldots,\xi_{k+1})
+				 & = \sum_{1\leq i \leq k+1} (-1)^{i+1} \xi_i\omega(\xi_1,\ldots,\widehat{\xi_i},\ldots, \xi_{k+1})                                              \\
+				 & \quad+ \sum_{0\leq i<j\leq k+1} (-1)^{i+j+1}\omega([\xi_i, \xi_j], \xi_1, \ldots, \widehat{\xi_i},\ldots, \widehat{\xi_j}, \ldots, \xi_{k+1}) \\
+				 & =\omega([\xi_1, \xi_2], \xi_3,\ldots, \xi_{k+1})
+			\end{aligned}
+		}
+	\]
+
+	\begin{part}{d}
+		Consider the distribution $E$ on $\mathbb{A}^3_{x,y,z}$ spanned by the vector fields $\partial/\partial x$ and $x\partial/\partial y + \partial/\partial z$. Show that $E$ is not integrable. Show that any point $(x,y,z)\in \mathbb{A}$ may be joined to the origin by a piecewise smooth curve whose tangent line belongs to $E$.
+
+	\end{part}
+\end{parts}
+
+\begin{problem}{3}
+Example or proof of nonexistence: A codimension 1 foliation on the sphere $S^4$.
+\end{problem}
+
+\begin{solution}
+\end{solution}
+
+\begin{problem}{4}
+The Frobenius tensor.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{a}
+		Let $P,Q: \mathbb{A}^2 \to \R$ be smooth functions. Define the $2$-dimensional distribution $E$ on $\mathbb{A}^2_{x,y}\times \R_z$ with
+		\[
+			E_{(x,y,z)} = \textrm{span}\left\{\frac{\partial}{\partial x} + P \frac{\partial}{\partial z}, \frac{\partial}{\partial y} + Q \frac{\partial}{\partial z}\right\}.
+		\]
+		Compute the Frobenius tensor of $E$.
+	\end{part}
+
+	\begin{part}{b}
+		Suppose $X$ is a manifold and $G$ a Lie group. Let $\{\theta^i\}$ be a basis of left-invariant $1$-forms on $G$ and suppose
+		\[
+			d\theta^i + \frac{1}{2}c^i_{jk} \theta^j\wedge \theta^k = 0
+		\]
+		for constants $c^i_{jk}$. Let $\{\theta^i_X\}$ be $1$-forms on $X$. Consider the ideal of differential forms on $X\times G$ generated by $\pi_G^*\theta^i - \pi^*_1 \theta^i_X$, where $\pi_X : X \times G \to X$ and $\pi_G : X\times G \to G$ are projections. Prove that this ideal is closed under $d$ if and only if
+		\[
+			d\theta^i_X + \frac{1}{2}c^i_{jk} \theta^j_X \wedge \theta^k_X = 0.
+		\]
+	\end{part}
+
+	\begin{part}{c}
+		Compute the Frobenius tensor of the distribution in (b) defined as the simultaneous kernel of the $1$-forms $\pi_G^*\theta^i - \pi_X^*\theta^i_X$.
+	\end{part}
+\end{parts}
+
+% \begin{problem}{5}
+%   This is a collection of exercises on the Maurer-Cartan form.
+% \end{problem}
+%
+% \begin{parts}
+%   \begin{part}{a}
+%     Let $G$ be a Lie group with Maurer-Cartan form $\theta$. Compute $R_g^*\theta$ for $g \in G$. Do this first for a matrix group, where you can write $\theta = g^{-1}dg$ for $g : G \to M_n(\R)$ the natural matrix-valued function on a matrix group.
+%   \end{part}
+%
+%   \begin{part}{b}
+%     Let $G$ be a Lie group and suppose $T$ is a \emph{right} $G$-torsor. Show that the Maurer-Cartan form on $G$ transports to a canonical element of $\Omega^1(T; \mathfrak{g})$. Can you give a prose definition of this Maurer-Cartan $1$-form on the torsor? What is the Maurer-Cartan equation? What is the pullback of the Maurer-Cartan $1$-form by an element of $G$ acting on $T$?
+%   \end{part}
+%
+%   \begin{part}{c}
+%     Let $V$ be an $n$-dimensional real vector space and $\scB(V)$ the right $\GL_n$-torsor of bases. Let $\Theta^i_j$ be the Maurer-Cartan forms in the standard basis of the Lie algebra of $\GL_n$. Suppose $b(t)$ is a smooth curve in $\scB(V)$. Write the basis $b(t)$ as $\{e_1(t),\ldots, e_n(t)\}$ and the dual basis as $\{e^1(t),\ldots, e^n(t)\}$. Prove that
+%     \[
+%       \Theta^i_j(\dot{b}) = \langle e^i(0), \dot{e}_j(0)\rangle.
+%     \]
+%     Heuristically then, $\Theta^i_j$ measures the instantaneous motion of $e_j$ in the direction of $e_i$, where `direction' is determined by the entire basis $e_1,\ldots, e_n$. This interpretation is important!
+%   \end{part}
+%
+%   \begin{part}{d}
+%     Let $A$ be an $n$-dimensional real affine space and $\scB(A)$ the right $\Aff_n$-torsor of bases of the underlying vector space at all points of $A$. Let $\theta^i$, $\Theta^i_j$ be the Maurer-Cartan forms in the standard basis of the Lie algebra of $\Aff_n$. (Define this basis: the single index is for infinitesimal translations, and the double index for infinitesimal linear transformations, as in (c).) Suppose $b(t)$ is a smooth curve in $\scB(A)$ which projects to the curve $x(t)$ in $A$, and write the underlying basis of $V$ as in (c). Prove that
+%     \[
+%
+%     \]
+%   \end{part}
+% \end{parts}
+
+\end{document}

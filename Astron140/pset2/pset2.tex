@@ -1,0 +1,166 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 2}
+\author{Lev Kruglyak}
+\due{September 23, 2024}
+
+\input{../astron140.sty}
+%
+% \collaborator{AJ LaMotta}
+% \collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+As before, let's begin with some rigorous definitions.
+\begin{definition}
+	The \defn{Lorentz group} $\O_{1,3}$ is the Lie group of isometries of $\R^{1,3}$, equipped with the standard Minkowski metric, i.e.
+	\[
+		\O_{1,3} = \{
+		T \in \End(\R^{1,3}) : \langle T(v), T(w) \rangle = \langle v,w\rangle\quad\forall v,w\in \R^{1,3}
+		\}
+	\]
+	The subgroup of isometries that preserve spatial orientation is denoted $\SO_{1,3}$, and the subgroup of isometries that preserve temporal orientation (these are usually called \defn{orthochronous transformations}) is denoted $\O^+_{1,3}$. The subgroup of isometries that preserve both is denoted $\SO_{1,3}^+$, and this is the connected component of the identity.
+\end{definition}
+
+\begin{definition}
+	The \defn{affine Lorentz group} is the semidirect product
+	\[
+		\Aff(\O_{1,3}) = \O_{1,3}\rtimes \R^{1,3}.
+	\]
+	There is a projection map $\pi : \Aff(\O_{1,3}) \to \O_{1,3}$ which forgets translation.
+	Similarly, we get groups $\Aff(\SO_{1,3})$ and $\Aff(\SO_{1,3}^+)$, as well as projection maps.
+\end{definition}
+
+
+Recall that a Lorentz frame on a Minkowski spacetime $M$ is an affine isometry $\A^{1,3} \to M$. We'll denote the set of all Lorentz frames on $M$ as $\Frame(M)$. There is an action of the group $O_{1,3}$ on $\Frame(M)$ by precomposition -- namely given a frame $\mathcal{O} : \A^{1,3} \to M$ and an affine Lorentz transformation $g\in \Aff(\O_{1,3})$, we get a frame $\mathcal{O}\cdot g = \mathcal{O}\circ g$. This group action is simply transitive, and so $\Frame(M)$ has the structure of a right $\Aff(\O_{1,3})$-torsor.
+
+\begin{definition}
+	Let $V$ be a vector space and $\rho : \O_{1,3} \to \End(V)$ be a group representation. A \defn{Lorentz quantity} is a map $\nu : \Frame(M) \to V$ such that
+	\[
+		\nu(b\cdot g) = \rho(\pi(g))\cdot \nu(b) \quad\textrm{for all}\quad g\in \Aff(\O_{1,3}),\quad b\in \Frame(M).
+	\]
+\end{definition}
+For example, if we let $V=\R$ and let $\rho$ be the trivial representation, we get the notion of a \defn{Lorentz scalar}. This is a scalar constant which is the same in all Lorentz frames -- for instance the speed of light. If we let $V=\R^{1,3}$ and let $\rho$ be the standard action of $\O_{1,3}$ on $\R^{1,3}$, we get the notion of a \defn{Lorentz $\mathbf{\textsl{4}}$-vector}.
+\pagebreak
+
+\begin{problem}{1}
+Show that the scalar product of two Lorentz $4$-vectors is a Lorentz scalar.
+\end{problem}
+\begin{solution}
+	Let $M$ be a Minkowski spacetime and let $\nu_1, \nu_2$ be Lorentz $4$-vectors. This means that they are functions $\Frame(M) \to \R^{1,3}$ which are equivariant with respect to the standard representation of the Lorentz group $\O_{1,3}$ on $\R^{1,3}$. There is a function
+	\[
+		\definefunction{\langle \nu_1, \nu_2 \rangle}{\Frame(M)}{\R}{b}{\langle \nu_1(b), \nu_2(b)\rangle}
+	\]
+	where $\langle\cdot, \cdot\rangle$ is the inner product given by the Minkowski metric on $\R^{1,3}$.
+
+	To check that this function is a Lorentz scalar, let $g\in \Aff(\O_{1,3})$ be an affine Lorentz transformation and suppose $b \in \Frame(M)$ is a Lorentz frame. Then,
+	\[
+		\langle\nu_1,\nu_2\rangle(b\cdot g) = \langle \nu_1(b\cdot g), \nu_2(b\cdot g)\rangle = \langle \pi(g)\cdot \nu_1(b), \pi(g)\cdot \nu_2(b)\rangle = \langle \nu_1(b), \nu_2(b)\rangle.
+	\]
+	This last equality follows because $\pi(g)\in \O_{1,3}$ is an isometry of the Minkowski metric on $\R^{1,3}$.
+\end{solution}
+
+\begin{problem}{2}
+  A frame $\mathcal{O}'$ moves with speed $v$ in the $x$-direction relative to a frame $\mathcal{O}$. In the $\O$-frame, there is a photon with frequency $f$ that moves at an angle $\theta$ with respect to the $x$-axis of the $\mathcal{O}$-frame. Show that its frequency $f'$ measured in the $\mathcal{O}'$-frame is
+\[
+	\frac{f'}{f} = \frac{1-v\cos\theta}{\sqrt{1-v^2}}
+\]
+Show that even when the motion of the photon is perpendicular to the $x$-axis of the $\O$-frame (i.e. $\theta=\pi/2$), there is a frequency shift (called transverse Doppler shift). At what angle $\theta$ does the photon have to move so that there is no Doppler shift between $\mathcal{O}$ and $\mathcal{O}'$?
+\end{problem}
+\begin{solution}
+	Since the photon has frequency $f$ in $\mathcal{O}$, it has energy $E=hf$ and $4$-momentum
+	\[
+		P = \begin{pmatrix}E\\E\cos\theta\\E\sin\theta\\0\end{pmatrix} =
+		\begin{pmatrix}hf\\hf\cos\theta\\hf\sin\theta\\0\end{pmatrix}.
+	\]
+	By definition, $P$ is a Lorentz $4$-vector so it transform in the expected way after the Lorentz transformation. Applying the transformation, we get,
+	\[
+		P' = \begin{pmatrix}hf'\\ hf'\cos(\theta)\\ hf'\sin\theta\\0\end{pmatrix} = \begin{pmatrix}\gamma & -\gamma v & 0 & 0\\ - \gamma v & \gamma & 0 & 0 \\ 0 & 0 & 1 &0 \\ 0&0&0&1\end{pmatrix}
+		\begin{pmatrix}hf\\hf\cos\theta\\hf\sin\theta\\0\end{pmatrix} =
+		\begin{pmatrix}hf\gamma ( 1-v\cos\theta) \\
+			hf\gamma(\cos\theta - v)  \\ hf\sin \theta\\0
+		\end{pmatrix}.
+	\]
+	This means that we have
+	\[
+		\begin{aligned}
+			\frac{f'}{f} = \gamma(1-v\cos\theta) = \frac{1-v\cos\theta}{\sqrt{1-v^2}}.
+		\end{aligned}
+	\]
+	When $\theta = \pi/2$, we still get a Doppler shift of $1/\sqrt{1-v^2}$, which will not be equal to $1$ unless the relative velocity $v$ is zero. In general, the Doppler shift will disappear if
+	\[
+		\begin{aligned}
+			\frac{1-v\cos\theta}{\sqrt{1-v^2}} = 1\quad\implies\quad 1-v\cos\theta
+			= \sqrt{1-v^2}           \quad\implies\quad
+			\theta = \arccos\left(\frac{1-\sqrt{1-v^2}}{v}\right).
+		\end{aligned}
+	\]
+	This angle is defined for all $v<1$, and goes from $\pi/2$ to $0$ as $v$ goes from $0$ to $1$.
+\end{solution}
+
+\begin{problem}{3}
+Prove that the conservation of $4$-momentum forbids a reaction in which an electron and positron annihilate and produce a single photon. Prove that the production of two photons is allowed.
+\end{problem}
+\begin{solution}
+	Let $m_e$ be the mass of an electron, or equivalently the mass of a positron. At the point of annihilation, the electron has $4$-momentum $(m_e, 0)$ and the positron has $4$-momentum $(m_e, 0)$. The total $4$-momentum of the system is then $(2m_e, 0)$.
+
+	Suppose a single photon $\gamma$ was emitted. Its $4$-momentum takes the form $(E_\gamma, p_\gamma)$ where $E_\gamma$ is the energy of the photon and $p_\gamma$ is the $3$-momentum of the photon. However, by conservation of $4$-momentum, we have $E_\gamma=2m_e$ and $p_\gamma=0$. This is impossible, since $E_\gamma = |p_\gamma|$ which implies that $2m_e=0$ and contradicts the fact that electrons have mass.
+
+	If instead two photons $\gamma, \gamma'$ were emitted, conservation of $4$-momentum gives
+	\[
+		p_\gamma + p_{\gamma'} = 0,\quad E_\gamma = |p_\gamma|,\quad\textrm{and}\quad E_{\gamma} = |p_\gamma|.
+	\]
+	Solving, we get $p_\gamma = -p_{\gamma'}$ and $E_\gamma=E_{\gamma'}=m_e$. There is no contradiction here -- two photons are produced at the point of annihilation with equal energies and opposite momenta.
+\end{solution}
+
+\begin{problem}{4}
+Calculate the energy required to accelerate a particle of rest mass $m_0\neq 0$ from speed $v$ to speed $v+\delta v$ ($\delta v \ll v$), to first order in $\delta v$. Show that if would take an infinite amount of energy to accelerate the particle to the speed of light.
+\end{problem}
+\begin{solution}
+  Recall that the total initial energy of the particle is $E = \gamma m_0$, where $\gamma=1/\sqrt{1-v^2}$. Taking the derivative with respect to $v$, we get:
+  \[
+    \frac{d E}{d v} = m_0\frac{d}{dv}\frac{1}{\sqrt{1-v^2}} = \frac{v}{(\sqrt{1-v^2})^3} = m_0v\gamma^3.
+  \]
+  Thus, for a small change $\delta v$ in velocity, the energy changes as
+  \[
+    \Delta E = m_0 v\gamma^3 \delta v + O(\delta v^2).
+  \]
+  As the particle's velocity $v$ approaches $1$, $\gamma$ goes to infinity, and if the particle is massive, so does $\Delta E$. This means that it would take an infinite amount of energy to accelerate a massive particle to the speed of light.
+\end{solution}
+
+\begin{problem}{5}
+Write the equation of motion for Newton's theory of gravitation in terms of the gravitational potential $\Phi(x)$. What is the distinctive feature of this equation of motion (as opposed to that for other forces)?
+\end{problem}
+\begin{solution}
+	A particle traveling with trajectory $\gamma : \R \to \R^3$ under the influence of a gravitational potential $\Phi$ satisfies the differential equation:
+	\[
+		\frac{\partial^2 \gamma(t)}{\partial t^2} = -\nabla \Phi(\gamma(t)).
+	\]
+	This is distinctive from other equations of motion in that there is no dependence on the mass of the particle at all -- the mass terms in the Newton's Second Law and Newton's Law of Gravitation cancel each other. Of course, this assumes that gravitational mass and inertial mass are equivalent. Another name for this law is the ``weak equivalence principle''.
+
+\end{solution}
+
+\begin{problem}{6}
+Give the simplest experimental evidence for the ratio between the intertial and gravitational mass being a universal constant (i.e. independent of the material composition of the object).
+\end{problem}
+\begin{solution}
+	A very simple experiment to show that the ratio between intertial and gravitational mass is a universal constant is to drop two spherical objects of similar size but different mass from a tall place. (The similar size requirement reduces the interference of air resistance with this experiment) If the objects hit the ground at the same time, this shows that the acceleration due to gravity on both of them is independent of the mass of the object. In particular, this implies that the ratio of the objects' inertial mass in Newton's Second Law and gravitational mass Newton's Law of Gravitation are the same. Repeating this experiment for different material types gives further experimental evidence of this as a universal law.
+\end{solution}
+
+\begin{problem}{7}
+State Einstein's equivalence principle. Use this equivalence principle to explain the observation that a helium balloon leans forwardly in an accelerating vehicle. Give an example of your own of the equivalence principle.
+\end{problem}
+\begin{solution}
+	Einstein's equivalence principle states that:
+	\begin{enumerate}
+		\item \emph{Inertial mass is equivalent to gravitational mass.}
+		\item \emph{The laws of physics in a free-falling reference frame are equivalent to those in an inertial reference frame.}
+		\item \emph{The laws of physics in a frame experiencing a gravitational potential $\Phi$ are the same as those in a frame accelerating in the direction of $-\nabla\Phi$.}
+	\end{enumerate}
+	This means that a balloon in an accelerating car behaves the same way as a balloon in a stationary frame on the surface of earth. Since in such a frame, a balloon floats upwards, the balloon must float forwards in the car (in the same direction as the acceleration of the car).
+
+	For another example, the equivalence principle provides an explanation for how a zero-gravity jet works. To simulate the effects of zero-gravity, a plane might fly to a high point and essentially enter a free fall. For a passenger in the plane, their rest frame is equivalent to an inertial frame deep in space with no gravitational potential. The passenger can thus float around the plane by pushing off the walls, and experiences no gravity.
+\end{solution}
+
+\end{document}
