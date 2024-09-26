@@ -9,9 +9,9 @@
 
 \input{../math230a.sty}
 
-% \collaborator{AJ LaMotta}
-% \collaborator{Leonardo Kaplan}
-% \collaborator{Ignasi Vicente}
+\collaborator{AJ LaMotta}
+\collaborator{Leonardo Kaplan}
+\collaborator{Ignasi Vicente}
 
 \begin{document}
 \maketitle
@@ -81,7 +81,7 @@ Distributions of rank $2$ on $3$-manifolds.
 	\[
 		\begin{cases} z_1 = \cos(\theta)\cdot e^{i(\phi + \psi)} \\ z_2 = \sin(\theta)\cdot e^{i(\phi - \psi)} \end{cases} \qtq{where} (\theta,\phi,\psi)\in [0,\pi/2]\times[0,\pi]^2.
 	\]
-	In these coordinates, the Hopf fibration becomes $\pi(\theta,\phi,\psi) \to (\theta,\phi)$ where we use the standard spherical coordinate system on $S^2$. 
+	In these coordinates, the Hopf fibration becomes $\pi(\theta,\phi,\psi) = (\theta,\phi)$ where we use the standard spherical coordinate system on $S^2$.
 
 	Next, let's see what form the round metric takes on $S^3$ using the coordinate system we provided. Recall that the round metric on $S^3$ is the pullback of the Euclidean metric on $\R^4$ from the canonical embedding $\C^2\to \R^4$. Expanding our coordinate system in $\R^4$, and
 	% Letting $x,y,z,h$ be the standard coordinates on $\R^4$, we see that
@@ -101,33 +101,33 @@ Distributions of rank $2$ on $3$-manifolds.
 	% \]
 	using standard trigonometric identities, up to scaling, the metric $g$ on $S^3$ has matrix form
 	\[
-		g = 
-		\begin{pmatrix} 1 & 0             & 0             \\
-                0 & 1             & 2\cos(\theta) \\
-                0 & 2\cos(\theta) & 1\end{pmatrix}\quad\iff\quad
-		g = d\theta^2 + d\phi^2+ 2\cos\theta \,d\phi\, d\psi + d\psi^2.
+		g =
+		\begin{pmatrix} 1 & 0              & 0              \\
+                0 & 1              & -\cos(2\theta) \\
+                0 & -\cos(2\theta) & 1\end{pmatrix}\quad\iff\quad
+		g = d\theta^2 + d\phi^2- 2\cos (2\theta) \,d\phi\, d\psi + d\psi^2.
 	\]
 
-  Now suppose at a point $(\theta,\phi,\psi)\in S^3$, the tangent vector $v\in T_{(\theta,\phi,\psi)} S^3$ is in the kernel of $d\pi$. This means that $v$ must have no $\partial/\partial \phi$ or $\partial /\partial \psi$ components. The space of vectors $v=(x,y,z)$ in the complement of this kernel must then satisfy, for every $t\in \R$,
-  \[
-    \begin{pmatrix}0 \\ 0 \\ t\end{pmatrix}^\intercal
-		\begin{pmatrix} 1 & 0             & 0             \\
-                0 & 1             & 2\cos(\theta) \\
-                0 & 2\cos(\theta) & 1\end{pmatrix}\begin{pmatrix}x\\y\\z\end{pmatrix} = 0\quad\implies\quad (2\cos\theta) y + z = 0.
-  \]
-  In other words, $E$ is spanned by the vector fields
-  \[
-    \xi_1= \frac{\partial}{\partial \theta}
-    \quad\textrm{ and }\quad
-    \xi_2 = \frac{\partial}{\partial \psi} + 2\cos(\theta)\frac{\partial}{\partial \phi}.
-  \]
-  This distribution is thus \textbf{not integrable}, since a simple calculation shows that the commutator of these vector fields is $[\xi_1, \xi_2] = -2\sin(\theta)\partial / \partial \phi$, which does not belong to $E$. 
+	Now suppose at a point $(\theta,\phi,\psi)\in S^3$, the tangent vector $v\in T_{(\theta,\phi,\psi)} S^3$ is in the kernel of $d\pi$. This means that $v$ must have no $\partial/\partial \phi$ or $\partial /\partial \psi$ components. The space of vectors $v=(x,y,z)$ in the complement of this kernel must then satisfy, for every $t\in \R$,
+	\[
+		\begin{pmatrix}0 \\ 0 \\ t\end{pmatrix}^\intercal
+		\begin{pmatrix} 1 & 0              & 0              \\
+                0 & 1              & -\cos(2\theta) \\
+                0 & -\cos(2\theta) & 1\end{pmatrix}\begin{pmatrix}x\\y\\z\end{pmatrix} = 0\quad\implies\quad -\cos (2\theta) y + z = 0.
+	\]
+	In other words, $E$ is spanned by the vector fields
+	\[
+		\xi_1= \frac{\partial}{\partial \theta}
+		\quad\textrm{ and }\quad
+		\xi_2 = \frac{\partial}{\partial \psi} - \cos(2\theta)\frac{\partial}{\partial \phi}.
+	\]
+	This distribution is thus \textbf{not integrable}, since a simple calculation shows that the commutator of these vector fields is $[\xi_1, \xi_2] = 2\sin(2\theta)\partial / \partial \phi$, which does not belong to $E$.
 
-  Next, we need to find a 1-form $\alpha$ which generated the ideal associated to the distribution. Since we have vector fields which already span $E$, it's clear that the $1$-form $\alpha = 2\cos(\theta)\,d\psi - d\phi$ vanishes on $E$, and clearly must be a generator for $\mathcal{I}(E)$ since it has minimal degree. Computing $d\alpha$ and $\alpha\wedge d\alpha$, we get
-  \[
-    d\alpha = -2\sin(\theta)\,d\theta\wedge d\psi \quad\implies\quad \alpha\wedge d\alpha = (2\cos(\theta)d\psi - d\phi) \wedge (-2\sin(\theta) d\theta \wedge d\psi) = 2\sin(\theta)d\phi\wedge d\theta\wedge d\psi
-  \]
-  Since $\alpha\wedge d\alpha$ is non-zero, this agrees with the previous part of the problem.
+	Next, we need to find a 1-form $\alpha$ which generated the ideal associated to the distribution. Since we have vector fields which already span $E$, it's clear that the $1$-form $\alpha = \cos(2\theta)\,d\psi + d\phi$ vanishes on $E$, and clearly must be a generator for $\mathcal{I}(E)$ since it has minimal degree. Computing $d\alpha$ and $\alpha\wedge d\alpha$, we get
+	\[
+		d\alpha = -2\sin(2\theta)\,d\theta\wedge d\psi \quad\implies\quad \alpha\wedge d\alpha = (2\cos(2\theta)d\psi - d\phi) \wedge (-2\sin(2\theta) d\theta \wedge d\psi) = 2\sin(2\theta)d\phi\wedge d\theta\wedge d\psi
+	\]
+	Since $\alpha\wedge d\alpha$ is non-zero, this agrees with the previous part of the problem.
 \end{parts}
 
 \begin{problem}{2}
@@ -154,7 +154,11 @@ Suppose $M$ is a smooth manifold and $E\subset TM$ is a distribution. Define:
 		Prove that if $E$ has corank $r$ -- that is, if $\dim E_x + r =\dim_x M$ for all $x\in M$ -- then $E$ is locally generated by $r$ independent $1$-forms.
 	\end{part}
 
-	It suffices to consider connected manifolds when the dimension is constant, since the result is local anyways.
+	It suffices to consider connected manifolds when the dimension is a fixed $n$, since the result is local anyways. Let's work in some chart $U$ with a local frame $\xi_1, \ldots, \xi_{n-r}, \eta_1,\ldots \eta_r$, and $\xi_1,\ldots,\xi_{n-r}$ a local frame for $E$. Let the dual coframe be $\xi^1,\ldots, \xi^{n-r},\ldots, \eta^1,\ldots, \eta^r$, and consider the distribution
+	\[
+		V = \bigcap_{1\leq i \leq r}\ker \eta^i.
+	\]
+	At any point $p\in U$, the $n-r$ linearly independent vectors $(\xi_1)_p,\ldots,(\xi_{n-r})_p$ lie in $V_p$ and $(\eta_1)_p,\ldots,(\eta_r)_p$ don't. Since these vectors form a basis for $T_p M$, it follows that $V_p=E_p$ and so the distribution $E$ is generated on $U$ by the independent $1$-forms $\eta^1\,ldots,\eta^r$.
 
 	\begin{part}{c}
 		Prove that $\mathcal{I}(E)$ is closed under $d$ if and only if $E$ is integrable.
@@ -169,22 +173,30 @@ Suppose $M$ is a smooth manifold and $E\subset TM$ is a distribution. Define:
 	\]
 	where $\widehat{\xi_i}$ denotes omission of the $i$-th entry. This identity can be proved inductively using the standard commutator relations between $\iota, d,$ and $\mathcal{L}$.
 
-	Now, recall that $E$ is integrable if and only if for any vector fields $\xi_1,\xi_2\in \Gamma(E)$ belonging to $E$, their commutator $[\xi_1, \xi_2]$ belongs to $E$ as well. Supposing $E$ is integrable and that $\omega$ vanishes on $E$, it's clear that $d\omega$ vanishes on $E$ since all the vector fields in the terms of the sum are in $E$, and $\omega$ vanishes on vector fields in $E$. Conversely, if $\omega\in \mathcal{I}(E)$ and $d\omega$ vanishes, then we know that for all vector fields $\xi_1, \xi_2\in \Gamma(E)$ and $\xi_3,\ldots, \xi_{k+1}\in \Gamma(TM)$ we have
+	Now, recall that $E$ is integrable if and only if for any vector fields $\xi_1,\xi_2\in \Gamma(E)$ belonging to $E$, their commutator $[\xi_1, \xi_2]$ belongs to $E$ as well. Supposing $E$ is integrable and that $\omega$ vanishes on $E$, it's clear that $d\omega$ vanishes on $E$ since all the vector fields in the terms of the sum are in $E$, and $\omega$ vanishes on vector fields in $E$.
+
+
+	Conversely, suppose that $\mathcal{I}(E)$ is closed under $d$. For any forms $\xi,\eta\in \Gamma(E)$, we can locally find 1-forms $\alpha_1,\ldots,\alpha_r$ which locally generate $E$. These forms can be extended to $\Gamma(E^*)$. Then $\alpha_i\in \mathcal{I}(E)$ and hence $d\alpha_i\in \mathcal{I}(E)$ by assumption. However,
 	\[
-		\textcolor{red}{
-			\begin{aligned}
-				0=d\omega(\xi_1,\ldots,\xi_{k+1})
-				 & = \sum_{1\leq i \leq k+1} (-1)^{i+1} \xi_i\omega(\xi_1,\ldots,\widehat{\xi_i},\ldots, \xi_{k+1})                                              \\
-				 & \quad+ \sum_{0\leq i<j\leq k+1} (-1)^{i+j+1}\omega([\xi_i, \xi_j], \xi_1, \ldots, \widehat{\xi_i},\ldots, \widehat{\xi_j}, \ldots, \xi_{k+1}) \\
-				 & =\omega([\xi_1, \xi_2], \xi_3,\ldots, \xi_{k+1})
-			\end{aligned}
-		}
+		\alpha_i([\xi, \eta]) = \eta \alpha_i(\xi) - \xi\alpha_i(\eta) - d\alpha_i(\xi,\eta).
 	\]
+	All the terms on the right hand side must vanish by assumption, and so $\alpha_i([\xi,\eta])=0$ for all $i$. From this it's immediately implied that $[\xi,\eta]\in \Gamma(E)$ locally. We can do this across the entire manifold so $E$ is integrable.
 
 	\begin{part}{d}
 		Consider the distribution $E$ on $\mathbb{A}^3_{x,y,z}$ spanned by the vector fields $\partial/\partial x$ and $x\partial/\partial y + \partial/\partial z$. Show that $E$ is not integrable. Show that any point $(x,y,z)\in \mathbb{A}$ may be joined to the origin by a piecewise smooth curve whose tangent line belongs to $E$.
-
 	\end{part}
+
+	Letting $\xi=\pps{x}$ and $\eta = x\pps{y} + \pps{z}$, we can compute the commutator $[\xi, \eta]$ as
+	\[
+		[\xi,\zeta] = \left[\pp{}{x}, x\pp{}{y} + \pp{}{z}\right] = \pp{}{y}.
+	\]
+	This proves that $E$ cannot integrable since this commutator can clearly not be expressed as a linear combination of $\xi$ and $\eta$.
+
+	Next, let's show that any point in $\mathbb{A}^3$ can be joined to the origin by a piecewise smooth curve whose tangent lines form a subbundle of $E$. The flows associated to the vector fields $\xi$ and $\eta$ are
+	\[
+		\varphi_t(x,y,z)= ( x+t, y, z)\qtq{and}\psi_t(x,y,z) = (x,xt+y, t+z).
+	\]
+	Thus, the piecewise smooth integral curve is given by travelling along $\xi$ for time $y/z-x$ and then travelling along $\eta$ for time $-y/z$. If $z=0$, we can follow $\xi$ for time $-x$ and then $\psi$ for time $1$. Then, we repeat the procedure for the nonzero $z$ case.
 \end{parts}
 
 \begin{problem}{3}
@@ -192,6 +204,7 @@ Example or proof of nonexistence: A codimension 1 foliation on the sphere $S^4$.
 \end{problem}
 
 \begin{solution}
+	Suppose for the sake of contradiction that exists a foliation $\mathcal{F}$ of codimension $1$ on $S^4$. Let $E_\mathcal{F}$ be the associated distribution of codimension $1$. Using the standard metric on $S^4$, the orthogonal complement $E_\mathcal{F}^\perp$ gives us a line field on $S^4$. However, $\chi(S^4)=2$, so it cannot admit a line field. This is a contradiction, so a codimension 1 foliation does not exist.
 \end{solution}
 
 \begin{problem}{4}
@@ -207,20 +220,109 @@ The Frobenius tensor.
 		Compute the Frobenius tensor of $E$.
 	\end{part}
 
+	Since $E$ is spanned by the vector fields
+	\[
+		\xi_1 = \pp{}{x} + P\pp{}{z},\qtq{and} \xi_2 = \pp{}{y}+Q\pp{}{z}
+	\]
+	it suffices to compute their commutator in order to determine the Frobenius tensor. This computation yields
+	\[
+		\begin{aligned}
+			\phi_E(\xi_1, \xi_2)=
+			 & = \left[\pp{}{x} + P\pp{}{z}, \pp{}{y}+Q\pp{}{z} \right]\mod E \\
+			 & = \left(\pp{Q}{x} - \pp{P}{y}\right)\pp{}{z} \mod E.
+		\end{aligned}
+	\]
+	Thus, if vector fields $\eta_1, \eta_2$ in $E$ have coefficients $\eta_1 = \alpha \xi_1 + \beta \xi_2$ and $\eta_2 = \gamma \xi_1 + \kappa \xi_2$, then
+	\[
+		\phi_E(\eta_1, \eta_2) = (\alpha\kappa - \beta\gamma)\left(\pp{Q}{x} - \pp{P}{y}\right)\pp{}{z} \mod E.
+	\]
+
 	\begin{part}{b}
 		Suppose $X$ is a manifold and $G$ a Lie group. Let $\{\theta^i\}$ be a basis of left-invariant $1$-forms on $G$ and suppose
 		\[
 			d\theta^i + \frac{1}{2}c^i_{jk} \theta^j\wedge \theta^k = 0
 		\]
-		for constants $c^i_{jk}$. Let $\{\theta^i_X\}$ be $1$-forms on $X$. Consider the ideal of differential forms on $X\times G$ generated by $\pi_G^*\theta^i - \pi^*_1 \theta^i_X$, where $\pi_X : X \times G \to X$ and $\pi_G : X\times G \to G$ are projections. Prove that this ideal is closed under $d$ if and only if
+		for constants $c^i_{jk}$. Let $\{\theta^i_X\}$ be $1$-forms on $X$. Consider the ideal of differential forms on $X\times G$ generated by $\pi_G^*\theta^i - \pi^*_X \theta^i_X$, where $\pi_X : X \times G \to X$ and $\pi_G : X\times G \to G$ are projections. Prove that this ideal is closed under $d$ if and only if
 		\[
 			d\theta^i_X + \frac{1}{2}c^i_{jk} \theta^j_X \wedge \theta^k_X = 0.
 		\]
 	\end{part}
 
+	Let $\mathcal{I}$ denote the ideal. To simplify notation, let $x^i = \theta^i_X$ and $X^i=\pi_X^* \theta^i_X$. Similarly, let $g^i = \theta^i$ and $G^i = \pi_G^*\theta^i$.
+	Writing the given relation in this form, we can obtain expressions
+	\[
+		dg^i + \frac{1}{2}c^i_{j k} g^j\wedge g^k = 0\quad\implies\quad dG^i + \frac{1}{2}c^i_{j k} G^j\wedge G^k,
+	\]
+	by the naturality of $d$ and $\wedge$.
+	Expanding the differential of a generator, we get
+	\[
+		\begin{aligned}
+			d(G^i - X^i)
+			 & = dG^i - dX^i                                 \\
+			 & = -\frac{1}{2}c^i_{j k} G^j \wedge G^k - dX^i \\
+		\end{aligned}
+	\]
+	Now assume that the have the identity $dx^i + (c^i_{j k} /2)\,x^j \wedge x^k = 0$. Then by naturality of $d$ and $\wedge$ we have the identity $dX^i + (c^i_{j k} / 2)\,X^j \wedge X^k=0$. Then expanding the differential of a generator, we have
+	\[
+		\begin{aligned}
+			d(G^i - X^i)
+			 & = dG^i - dX^i                                                                  \\
+			 & = -\frac{1}{2}c^i_{j k}G^j \wedge G^k + \frac{1}{2}c^i_{j k} X^j \wedge X^k    \\
+			 & = -\frac{1}{2}c^i_{j k}\left( G^j\wedge G^k + X^j \wedge X^k\right)            \\
+			 & = -\frac{1}{2}c^i_{j k}\left( (G^j-X^j)\wedge G^k - (G^k-X^k)\wedge G^j\right)
+		\end{aligned}
+	\]
+	This is a sum of elements of the ideal, so the ideal is closed under $d$.
+
+	Next, let's suppose that the ideal is closed under $d$. We know that:
+	\[
+		\begin{aligned}
+			 & d(G^i-X^i) = dX^i + \frac{1}{2}c^i_{j k} G^j\wedge G^k\in \mathcal{I}      & \quad\quad \textrm{subtracting }\frac{1}{2}c^i_{j k} (G^j - X^j)\wedge G^k - \frac{1}{2}c^i_{j k} X^j\wedge (G^k - X^k) \\
+			 & \quad\implies dX^i + \frac{1}{2} c^i_{j k} X^j \wedge X^k \in \mathcal{I}.
+		\end{aligned}
+	\]
+	We would like to show that $dx^i+(c^i_{j k} / 2) x^j\wedge x^k=0$, and so far, we've shown that its pullback under $\pi_X$ is in $\mathcal{I}$. Let's let $\omega = dx^i+(c^i_{j k} / 2) x^j\wedge x^k$. Using the generators of $\mathcal{I}$, we can find some $1$-forms $\alpha^q\in \Omega^{1}(X\times G)$ such that:
+	\[
+		\pi_X^*\omega = \sum_q(G^q - X^q)\wedge \alpha^q.
+	\]
+	Let's write $\alpha^q = a_{k,q}\,G^k + b_{k,q}\,\beta^{k,q}$ for some forms $\beta^{k,q}\in \Omega^{1,0}(X\times G)$ and $0$-forms $a_{k,q},b_{k,q}$ -- we can do this because $g^i$ form a basis for $\Omega^1(G)$ and hence $G^i$ form a basis for $\Omega^{0,1}(X\times G)$. Then we have
+	\[
+		\begin{aligned}
+			\pi_X^*\omega = dX^i + \frac{1}{2}c^i_{j k} X^j\wedge X^k
+			 & = \sum_{q,k} (G^q - X^q)\wedge \alpha^q                                                                                          \\
+			 & = \sum_{q,k} (G^q - X^q)\wedge a_{k,q} G^q  + (G^q-X^q)\wedge b_{k,q} \beta^{k,q}                                                \\
+			 & = \sum_{q,k} G^q\wedge a_{k,q} G^q + (G^q\wedge b_{k,q} \beta^{k,q} - X^q\wedge a_{k,q} G^{k,q}) - X^q\wedge b_{k,q} \beta^{k,q}
+		\end{aligned}
+	\]
+	Since the original form $\pi^*_X\omega$ is in $\Omega^{2,0}(X\times G) \subset \Omega^2(X\times G)$, the terms involving $G^q$ must vanish, so in particular $a_{k,q}=0$ and consequently $b_{k,q}=0$. However, this means that $\pi_X^*\omega=0$, which also means that $\omega=0$. Thus,
+	\[
+		\omega = d\theta_X^i + \frac{1}{2}c^i_{j k} \theta^j_X \wedge \theta^k_X = 0.
+	\]
+
+
 	\begin{part}{c}
 		Compute the Frobenius tensor of the distribution in (b) defined as the simultaneous kernel of the $1$-forms $\pi_G^*\theta^i - \pi_X^*\theta^i_X$.
 	\end{part}
+
+	\textcolor{red}{
+		Let $E$ be the distribution on $X\times G$ defined as the intersection
+		\[
+			E = \mathop{\bigcap}_i \ker (G^i - X^i).
+		\]
+		The Frobenius tensor is defined as the bilinear map
+		\[
+			\definefunction{\phi_E}{\Gamma(E)\times \Gamma(E)}{\Gamma(T(X\times G)/E)}{(\xi, \eta)}{[\xi,\eta]\mod E.}
+		\]
+		Suppose $\xi$ is a vector field in $E$, which equivalently means that it is a vector field on $X\times G$ with $g^i(\xi_G)=x^i(\xi_X)$, where $\xi_G$ and $\xi_X$ are the projections of $\xi$ to $G$ and $X$ respectively. For any two vector fields $\xi$ and $\eta$ in $E$, we have relations
+		\[
+			\begin{aligned}
+				dg^i(\xi_G,\eta_G) + \frac{1}{2}c^i_{j k} g^j(\xi_G)\wedge g^k(\eta_G)
+				                                                                                                                 & = 0 \\
+				\xi_G g^i(\eta_G) - \eta_G g^i(\xi_G) - g^i([\xi_G, \eta_G]) + \frac{1}{2}c^i_{j k} g^j(\xi_G)\wedge g^k(\eta_G) & = 0
+			\end{aligned}
+		\]
+		Unsure how to finish this...
+	}
 \end{parts}
 
 % \begin{problem}{5}
