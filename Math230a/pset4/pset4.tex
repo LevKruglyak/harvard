@@ -1,0 +1,168 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 4}
+\author{Lev Kruglyak}
+\due{October 2, 2024}
+
+\input{../math230a.sty}
+
+% \collaborator{AJ LaMotta}
+% \collaborator{Leonardo Kaplan}
+% \collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let $X$ be a smooth manifold and $f : Y \to X$ be an injective immersion. Suppose $Z$ is a smooth manifold, $g: Z \to X$ is a smooth map, and assume that $g$ factors through $f$: there exists a map of sets $h : Z \to Y$ such that $g = f\circ h$. Prove that $h$ is smooth iff $h$ is continuous.
+\end{problem}
+
+\begin{solution}
+	Clearly $h$ is continuous if it is smooth, so assume that it is continuous. To prove smoothness of $h$, it suffices to work locally, so lets pick neighborhoods $U\subset Y$ and $V\subset X$ with charts (require them to be diffeomorphisms) $\varphi_U : U \to \R^n$, $\varphi_V : V \to \R^m$ such that $\widetilde{f} = \varphi_V\circ f\circ\varphi_Y^{-1}$ is the canonical inclusion of $\R^n \to \R^m$. Shrinking $U$ and $V$ if we need to, we can further find a neighborhood $W\subset h^{-1}(U)$ on $Z$ with chart $\varphi_W : W \to \R^k$. Letting $\widetilde{g} = \varphi_W^{-1}\circ g \circ \varphi_V$ and $\widetilde{h} = \varphi_W^{-1}\circ h\circ \varphi_U$ be the corresponding maps on charts, we have $\widetilde{g} = \widetilde{f}\circ \widetilde{h}$. However, note that $\widetilde{h} = \pi_{\R^n}\circ \widetilde{g}$ where $\pi_{\R^n}$ is the projection $\R^m\to \R^n$. Since $\widetilde{h}$ is a composition of smooth functions, it must be smooth and so $h$ is smooth globally.
+\end{solution}
+
+\begin{problem}{2}
+Let $\HH$ denote the division algebra of quaternions, and let $G$ be the subset of quaternions of unit norm.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Prove that $G$ is a Lie group.
+	\end{part}
+
+	By considering $G$ as the set of points in $\R^4_{(x,y,z,w)}$ with $x^2+y^2+z^2+w^2=1$, we can see that $G\cong S^3$, and so is clearly a manifold.
+
+	\begin{part}{(b)}
+		If $H\subset G$ is a finite subgroup, show that the quotient map $p : G \to G/H$ is a covering map.
+	\end{part}
+
+	To prove that $p$ is a covering map, we must show that each point $x\in G/H$ has an open neighborhood $U\subset G/H$ with a homeomorphism $\varphi : \pi^{-1}(U) \to U\times H$. Let $x\in G/H$ be some point in the base space. Then, $\pi^{-1}(x)\cong H$, and since $H$ is a finite subgroup of $G$, it must have the discrete topology. Let's pick some disjoint open neighborhoods $\{U_{x'}\}_{x'\in \pi^{-1}(x)}$ of the points in $\pi^{-1}(x)$, and let $U = \bigcap_{x'\in \pi^{-1}(x)} \pi(U_{x'})$. Then we clearly have a homeomorphism $\pi^{-1}(U) \to U\times H$ since there are $|H|$ distinct components of $\pi^{-1}(U)$ that are homeomorphic to $U$.
+
+	\begin{part}{(c)}
+		Identify the Lie algebra $\gfr$ with the set of imaginary quaternions $\HH_\Im$. Identify the map
+		\[
+			\lkxfunc{\varphi}{G}{\Aut(\HH_\Im)}{g}{g\mapsto gqg^{-1}}
+		\]
+		with the adjoint representation of $G$. Show that $\varphi$ maps onto the group $\SO_3$ of rotations in $\R^3$ and the kernel of $\varphi$ is cyclic of order two.
+	\end{part}
+
+	By the identification of $G$ as the sphere $S^3\to \R^4$, since $e=(1,0,0,0)$ we see that the Lie algebra $\gfr=T_eS^3=T_{(1,0,0,0)}S^3$ can be identified with the orthogonal complement to the line $R_x\subset \R^4$. Under this identification, this is exactly the set of imaginary quaternions $\HH_\Im$.
+
+	\begin{part}{(d)}
+		Construct an isomorphism of $G$ with the Lie group $\SU_2$ of $2\times 2$ unitary matrices of unit determinant.
+	\end{part}
+
+	Recall that $\SU_2$ can be identified as the set of matrices with:
+	\[
+		\SU_2 = \left\{ \begin{pmatrix}\alpha & -\overline{\beta}\\ \beta & \overline{\alpha}\end{pmatrix} : \alpha,\beta\in \C,\qtq{and} |\alpha|^2 + |\beta|^2=1\right\}
+	\]
+	Under the inclusion $\C^2 \to \R^4$, this clearly cuts out the unit sphere, and a simple check reveals that $(1, 0)$, $(i,0)$, $(0,1)$, and $(0,i)$ satisfy the same relations as $1,i,j,k$ under the matrix multiplication rules. This shows that $\SU_2\cong G$.
+
+	\begin{part}{(e)}
+		A $3\times 3$ real matrix always has a fixed line, and if the matrix is orthogonal, there is a fixed line that is \emph{pointwise} fixed: the eigenvalue is $1$. (Prove this) Except for the identity matrix $I$, this line is unique. Show that the map \[\lkxfunc{f}{\SO_3 \setminus \{I\}}{\RP^2}\] so defined is a surjective submersion. What is the inverse image of a point? Is $f$ a fiber bundle?
+	\end{part}
+
+	For a given real matrix $A$, it's eigenvalues $\lambda$ are given as roots of the polynomial $\det(\lambda I-A)=0$. In this case, this will be a real cubic polynomial and so it must have a single real root or three real roots. If $A$ is orthogonal with determinant $1$, the only case in which it can have three real roots is if they're all $\pm 1$, with an even number of $-1$ entries. So either the matrix is the identity, or it has a unique $1$-eigenspace on which it is pointwise fixed. In the case when it has only a single real eigenvalue, it must be $1$ since the projection onto the complement of the eigenline must be an orthogonal transformation as well, and so must have determinant one. In order for the determinant of the whole matrix to have determinant one, the eigenvalue must be $1$ as well.
+
+	So we have a map of sets: \[\lkxfunc{f}{\SO_3\setminus\{I\}}{\RP^2.}\]
+	The inverse image of any point can be identified with $\SO_2\cong S^1$ so $f$ can be considered a circle bundle over $\RP^2$. This is exactly the unit circle bundle $S\RP^2$ over $\RP^2$.
+
+	\begin{part}{(f)}
+		Do the conjugacy classes of $\SO_3$ form a foliation? Identify the diffeomorphism types of the conjugacy classes.
+	\end{part}
+
+	\begin{part}{(g)}
+		If $\overline{H} \subset \SO_3$ is a finite subgroup, then $H\subset \varphi^{-1}(\overline{H})$ is a finite subgroup of $G$ twice the order of $\overline{H}$. Let $P\subset \R^3$ be a finite set of $n$ vectors whose ``tips'' lie on a regular polygon in $\R^2\subset \R^3$. What is the finite subgroup of rotations which preserve $P$? What is its lift to $G$?
+	\end{part}
+
+	\begin{part}{(h)}
+		More interesting is to let $I$ be the set of $12$ vectors whose tips lie at the vertices of a regular icosahedron. In this case the quotient space $G/H$ is called the \emph{Poincar\'e sphere}. Can you compute the order of $H$?
+	\end{part}
+\end{parts}
+
+\begin{problem}{3}
+Let $\omega\in \Omega^1(\R; \gfr)$ be a $1$-form on the real line and suppose that $G$ is a Lie group.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Prove that locally about any $t\in \R$ there exists a map into $G$ such that the pullback of the Maurer-Cartan form equals $\omega$. Write the first order differential equation this map satisfies.
+	\end{part}
+
+	Let's pick some basis $\xi_1,\ldots, \xi_n$ for $\gfr$ and write $\omega = \omega^i\xi_i$ for some real valued one-forms $\omega^i$. Letting $\theta^i$ be the dual basis to $\xi_i$ on $\gfr^*$, recall that the Maurer-Cartan form can be written as $\theta = \theta^i\xi_i$. Then if we let $f= f^i$ in local coordinates given by the $\xi_i$, the pullback ODE we want to solve is exactly 
+	\[
+    \frac{\partial f^i(t)}{\partial t} = \omega^i(t).
+	\]
+	By the fundamental theorem of ODEs, this has a local solution about any $t\in \R$.
+
+	\begin{part}{(b)}
+		Do global solutions always exist?
+	\end{part}
+
+	We proved that for the general case $f : X \to G$, there is a global solution if $d\omega + (1/2)[\omega\wedge \omega]=0$. However in our case, $\omega$ is a $1$-form on $\R$, so $d\omega = 0$ since there are no nonzero $2$-forms on $\R$, and by a similar argument $[\omega\wedge \omega]=0$. So the conditions for the theorem are satisfied and a global solution must exist.
+
+	\begin{part}{(c)}
+		Construct an integrable distribution on $\R\times G$ that is transverse to the ``vertical'' fibers $\{t\}\times G$ and such that the leaves of the resulting foliation of $\R\times G$ do \emph{not} project surjectively onto $\R$.
+	\end{part}
+\end{parts}
+
+\begin{problem}{4}
+Let $G$ be a Lie group with Maurer-Cartan form $\theta$, and suppose $P$ is a right $G$-torsor.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Compute the pullback of $\theta$ under multiplication $m : G \times G \to G$ and under inversion $i : G \to G$.
+	\end{part}
+
+	The multiplication map $m : G\times G \to G$ send a pair $(g,h)\mapsto gh$. Thus, the differential $dm$ has the form
+	\[
+		dm_{(g,h)}(v,w) = (L_g)_* w + (R_g)_* v.
+	\]
+	Since the Maurer-Cartan form at $gh\in G$ is given by $\theta_{gh} = (L_{(gh)^{-1}})_*$, the pullback is given by
+	\[
+		(m^*\theta)_{(g,h)}(v,w) = \theta_{gh}((L_g)_* (w)+ (R_h)_* (v)) = \theta_{gh}((L_g)_* (w)) + \theta_{gh}((R_h)_* (v)) = \theta_h(w) + \textrm{Ad}_{h^{-1}}(\theta_g(v)).
+	\]
+	More succinctly, we can write
+	\[
+		{(m^*\theta)}_{(g,h)} = \textrm{Ad}_{h^{-1}} \pi_1^*\theta + \pi_2^*\theta
+	\]
+	for projection maps $\pi_1,\pi_2 : G\times G\to G$.
+
+	Next, for the inversion map, consider the map $\textrm{id}\times i : G \to G\times G$ which sends $g\mapsto (g,g^{-1})$. The composition $m\circ (\textrm{id}\times i)$ is the constant map $g\mapsto e$, so its differential must be zero. Thus,
+	\[
+		\begin{aligned}
+			(\textrm{id}\times i)^*m^* \theta
+			= (\textrm{id}\times i)^*(\textrm{Ad}_{g}\pi_1^*\theta + \pi_2^*\theta)
+			 & =0  \\
+			\textrm{Ad}_{g}\theta + i^*\theta
+			 & = 0 \\
+			i^*\theta &= -\textrm{Ad}_{g}\theta.
+		\end{aligned}
+	\]
+
+	\begin{part}{(b)}
+	  Let $X$ be a smooth manifold, and suppose that $f_1, f_2: X \to G$ are smooth maps with $f_1^*\theta=f_2^*\theta$, and $X$ is connected. Prove that there exists a $g\in G$ such that $f_2 = L_g\circ f_1$.
+	\end{part}
+
+	Consider the function $F = f_2f_1^{-1} : X \to G$. Note that
+	\[
+    \begin{aligned}
+      F^*\theta = (m\circ (i\times \textrm{id})\circ (f_1\times f_2))^*\theta
+      &=(f_1\times f_2)^* (i\times \textrm{id})^* (\textrm{Ad}_{h^{-1}}\pi_1^*\theta + \pi_2^*\theta)\\
+      &=(f_1\times f_2)^* (\textrm{Ad}_{g}\pi_2^*\theta - \textrm{Ad}_{g}\pi_1^*\theta)\\
+      &=\textrm{Ad}_{f_1}(f_2^*\theta - f_1^*\theta)\\
+      &=0.
+    \end{aligned}
+	\]
+	Thus, $dF=0$, and $F$ is locally constant, hence constant since $X$ is connected.
+
+	\begin{part}{(c)}
+	  Suppose $\xi\in \gfr$ is a parallel (left-invariant) vector field. Compute $(R_g)_* \xi$. Is it parallel?
+	\end{part}
+\end{parts}
+
+\end{document}

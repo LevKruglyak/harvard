@@ -1,0 +1,135 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 3}
+\author{Lev Kruglyak}
+\due{September 30, 2024}
+
+\input{../astron140.sty}
+%
+% \collaborator{AJ LaMotta}
+% \collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+The acceleration of a test body under the gravitation of the Earth depends on the body’s distance to the center of the Earth. An astronaut in a (free-falling) spaceship releases two balls at the same time, both of which are initially static relative to the spaceship. The distances of the two balls to the center of the Earth differ by $d$ (namely, one is closer to the Earth). What is the distance between the two balls after a small period of time $\delta t$? Does it remain as $d$? If not, the astronaut will be able to detect the presence of the gravity by doing this experiment. Does this violate the equivalence principle?
+\end{problem}
+
+\begin{solution}
+  At larger scales, the Earth's gravitational field is not completely uniform, so the ball which is closer to the Earth experiences \emph{slightly} more acceleration due to gravity and so the distance between the balls will be \emph{slightly} increased after some duration $\delta t$. If $\delta t$ is very small and $r$ is the distance of the closer object to the Earth, we get approximately:
+  \[
+    \delta d \propto \left(\frac{1}{r^2} - \frac{1}{(r+d)^2}\right)\delta t^2
+  \]
+  since the displacement due to gravity is proportional to $(1/r^2)\delta t^2$. Since we can assume that $d \ll r$, this change in distance between the objects is essentially imperceptible, but yet it exists.
+
+  This is an example of why the equivalence principle is an \emph{infinitesimal} statement. Mathematically, it's only true for ``infinitesimal quantities''. (There's a way to state this formally.) In practice, what the equivalence principle says is that the equivalence holds for small enough regions of spacetime, and only approximately holds as the size increases.
+\end{solution}
+
+\begin{problem}{2}
+Consider a lab with a width of $\msi{50}$. How much is the distance that a light ray bends toward the ground, after it travels across the lab? Review the lecture, re-derive the formula on your own using the equivalence principle, and then compute the answer numerically.
+\end{problem}
+
+\begin{solution}
+	Recall that the equivalence principle states that a stationary frame subject to a downward gravitational potential is equivalent to a frame without any gravitational potential accelerating upwards with the same acceleration.
+
+	Let $L$ be the length of the lab in meters.  Let's assume that the gravitational potential is uniform on the time/distance scales we're considering, so let $a_g$ be the acceleration due to gravity in $\mpsssi{}$ (or equivalently, the acceleration of the lab in the upwards direction). The time taken for the light ray to cross the lab is $\Delta t = L/c$. For an external stationary observer, the lab would have moved upwards a distance of:
+	\[
+    \Delta x = \frac{1}{2}a_g \Delta t^2 = \frac{a_G L^2}{2c^2}.
+	\]
+	Since the external stationary observer observes light traveling in a straight line, they would record the beam of light hitting the other side of the lab $\Delta x$ lower than it started.
+	Using $a_g = \mpsssi{9.81}$, $c=\mpssi{3.00e8}$ and $L=\msi{50.00}$, we get the displacement of light to be
+	\[\Delta x = \frac{(\mpsssi{9.81}) \times (\msi{50.00})^2}{2\times (\mpssi{3.00e8})} = \msi{1.36e-13}.\]
+\end{solution}
+
+\begin{problem}{3}
+As introduced in the lecture, in the Pound-Rebka-Snider experiment, gamma rays with very precise energy (through the Mossbauer effect) are emitted from a crystal at the bottom of an elevator shaft in the Harvard Physics building. The height of the shaft is \msi{22.5}. What is the fractional redshift of the photons after they reach the top of the shaft? Before you plug numbers into the formula, please first derive the redshift formula using the first principle approach starting from the equivalence principle, using a thought experiment.
+
+\quad Due to redshift, the photons cannot be resonantly absorbed by the detector made with the same crystal placed at the top of the shaft. To measure the redshift, we can slowly move the detector towards the emitter. What is the prediction for this moving velocity in order for the photons to be
+absorbed by the detector?
+\end{problem}
+
+\begin{solution}
+  First let's use the equivalence principle to derive the gravitational redshift formula. Let $H$ be the height of the elevator shaft in meters. The change of gravitational potential energy of the photon is $\Delta E = m a_gH$, where $m$ is the effective mass of the photon, i.e. $m=hf/c^2$ and $a_g$ acceleration due to gravity at the emitter. (At these distances, $ma_g H$ is a good enough to be used in an approximation for change in gravitational potential) Letting $f_1$ be the initial frequency and $f_2$ be the final frequency, we get
+  \[
+    mgH = \left(\frac{hf_1}{c^2}\right)a_g H = \Delta E = hf_1 - hf_2 \quad\implies \frac{f_2 - f_1}{f_1} = -\frac{a_g H}{c^2}.
+  \]
+	Using $a_g = \mpsssi{9.81}$, $c=\mpssi{3.00e8}$ and $H=\msi{22.5}$, we get the fractional gravitational redshift to be
+  \[
+    \frac{f_2 - f_1}{f_1} = -\frac{(\mpsssi{9.81})\times (\msi{22.5})}{(\mpssi{3.00e8})^2}= -2.45\times 10^{-15}.
+  \]
+
+  Next, let's calculate the required velocity of the detector to cancel out the gravitational redshift. Since the speed of the detector is far less than the speed of light, we can use the Newtonian Doppler effect. Let the required velocity of the detector be $v$. Then, we have
+  \[
+    \frac{f_2 - f_1}{f_1} = -\frac{v}{c}\quad\implies\quad \frac{v}{c}=\frac{a_g H}{c^2}\quad\implies\quad v = \frac{a_g H}{c}.
+  \]
+  Plugging in our constants, we get a speed of:
+  \[
+    v = \frac{(\mpsssi{9.81})\times (\msi{22.5})}{\mpssi{3.00e8}}= \mpssi{7.35e-7}.
+  \]
+  This speed is less than a nanometer per second. Of course, we made several approximations here, and if we wanted to conduct this experiment at a larger scale we would need to refine our calculations.
+\end{solution}
+
+\begin{problem}{4}
+The GPS consists of a constellation of 24 satellites, each in a 12-hour orbit about the Earth in a total of six orbital planes. Each satellite carries accurate atomic clocks that keep proper time on a satellite to an accuracy of a few parts in $10^13$ over a few weeks. In order to measure distances to the ground objects in accuracies of a few meters, different clocks should also be calibrated with each other very accurately, in order of nanoseconds. (Check this statement using the speed of light.)
+
+\quad On the other hand, we have learned that the satellite and ground clocks run at different rates due to relativistic effects. In this exercise, we investigate whether these relativistic effects can be neglected or should be taken into account, in order to achieve the nanosecond accuracy mentioned above.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		To investigate these corrections, we first need to calculate the speed $v_s$ and distance $r_s$ of a satellite, given that the satellite orbit period is $12$ hours. Using Newtonian physics is sufficient for this part.
+	\end{part}
+
+	Let $T=\ssi{43200}$ be the orbital period of 12 hours, let $G=\Gsi{6.67430e-11}$ be the gravitational constant, and let $M_e = \kgsi{5.9722e24}$ be the mass of the Earth. We'll first use Kepler's third law to get $r_s$:
+	\[
+    T^2 = \frac{4\pi^2 r_s^3}{GM_e}\quad\implies\quad r_s=\sqrt[3]{\frac{(\Gsi{6.67e-11})\times (\kgsi{5.97e24})\times (\ssi{43200})^2}{4\pi^2}} = \msi{2.66e7}.
+	\]
+	To calculate the orbital velocity, we can use the formula for orbital speed to get
+	\[
+    v_s = \frac{2\pi r_s}{T} = \frac{2\pi\times (\msi{2.66e7})}{\ssi{43200}} = \mpssi{3868.8}.
+	\]
+
+	\begin{part}{(b)}
+		Because the satellite clock is moving in high velocity relative to the ground clock, there is a special relativistic time dilation effect. Denoting the time measured in the satellite as $t_s$ and at the Earth as $t_e$, calculate the fractional change $t_e / t_s - 1$ due to this SR time dilation effect.
+	\end{part}
+
+	Recall that for a frame $\mathcal{O}'$ moving with velocity $v_s$ relative to a frame $\mathcal{O}$, there is the time dilation relation $\Delta t = \gamma \Delta t'$ where:
+	\[
+    \gamma = \frac{1}{\sqrt{1 - (v_0/c)^2}} = \frac{1}{\sqrt{1 - (\mpssi{3868.8})^2 / (\mpssi{3.00e8})^2}} = 1 + \unitsi{8.32e-11}.
+	\]
+	This means that the fractional change is:
+	\[
+    \frac{t_e}{t_s} - 1 = {\gamma} - 1 = \unitsi{8.32e-11}.
+	\]
+
+	\begin{part}{(c)}
+		Because the satellite and ground clock are at different potential, there is also the GR time dilation effect. Calculate the factional change (defined above) due to this GR effect. Be careful about the sign of the correction. Do these two effects change the satellite time in the same direction? Which effect wins, and what is the net effect?
+	\end{part}
+  Using the change in gravitational potential between the Earth and the satellite, we can get the fractional change in time as:
+  \[
+    \begin{aligned}
+      \frac{t_e}{t_s} - 1= -\frac{\Delta \Phi}{c^2} 
+      &= -\frac{GM_e}{c^2}\left(\frac{1}{R_e} - \frac{1}{r_s}\right) \\
+      &= -\frac{(\Gsi{6.67e-11})\times(\kgsi{5.97e24})}{(\mpssi{3.00e8})^2}\left(\frac{1}{(\msi{6.37e6})} - \frac{1}{(\msi{2.66e7})}\right)\\
+      &= \unitsi{-5.29e-10}.
+    \end{aligned}
+  \]
+  This effect works in the opposite direction to the special relativistic time dilation. Adding them together, we get the net effect of
+  \[
+    \frac{t_e}{t_s} - 1 = (\unitsi{8.32e-11}) - (\unitsi{5.29e-10}) = -\unitsi{4.46e-10}
+  \]
+  so the general relativistic effect wins in this case.
+
+	\begin{part}{(d)}
+		Calculate the difference (in terms of time) between the satellite and ground clock accumulated in one minute. Does the above difference (i.e. error) introduced by relativistic effects need to be taken into account and constantly calibrated?
+	\end{part}
+
+	Calculating the difference, we get
+	\[
+    \frac{(\ssi{60})}{t_s} - 1 = -\unitsi{4.46e-10} \quad\implies\quad \ssi{60} - t_s = -\ssi{2.68e-8}.
+	\]
+	In other words, the satellite clock is behind by around $26$ nanoseconds after one minute elapses on Earth. This is a non-negligible discrepancy, and needs to be accounted for.
+\end{parts}
+
+\end{document}

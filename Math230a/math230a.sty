@@ -2,6 +2,8 @@
 \renewcommand{\GL}{\operatorname{GL}}
 \providecommand{\Det}{\operatorname{Det}}
 \providecommand{\T}{\mathbb{T}}
+\providecommand{\HH}{\mathbb{H}}
+\providecommand{\gfr}{\mathfrak{g}}
 \providecommand{\SO}{\operatorname{SO}}
 \providecommand{\SU}{\operatorname{SU}}
 \providecommand{\su}{\mathfrak{su}}
@@ -34,3 +36,49 @@
 
 \providecommand{\pp}[2]{\frac{\partial #1}{\partial #2}}
 \providecommand{\pps}[1]{\partial/\partial #1}
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\lkxto}{ O{} }{%
+	\mathrel{\;\xrightarrow{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxmapsto}{ O{} }{%
+	\mathrel{\;\xmapsto{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxisom}{ O{} }{%
+	\mathrel{\;\xrightarrow{\hphantom{xx}#1\sim\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxsurj}{ O{} }{%
+	\mathrel{\;\xtwoheadrightarrow{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+
+\NewDocumentCommand{\lkxfunc}{ O{->} m m m g g }{
+	\begin{array}{rcl}
+		\IfNoValueTF {#5} {
+			\tl_if_blank:nTF {#2}{}{#2 :}
+			#3
+			\str_case:nn {#1}
+			{
+				{->} {\lkxto}
+					{~>} {\lkxisom}
+					{->>} {\lkxsurj}
+			}
+			#4
+		} {
+			\tl_if_blank:nTF {#2}{}{#2 \;:\;}
+			#3
+		   &
+			\str_case:nn {#1}
+			{
+				{->} {\lkxto}
+					{~>} {\lkxisom}
+					{->>} {\lkxsurj}
+			}
+		   & #4
+		\\
+		#5 & \lkxmapsto & #6
+		}
+	\end{array}
+}
+
+\ExplSyntaxOff
