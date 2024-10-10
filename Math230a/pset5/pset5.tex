@@ -1,0 +1,159 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 5}
+\author{Lev Kruglyak}
+\due{October 9, 2024}
+
+\input{../math230a.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let $n$ be a positive integer, $V$ be an $n$-dimensional vector space, $A$ an affine space over $V$, and $U\subset A$ an open subset.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Let $n=2$. Suppose $\theta^1,\theta^2\in \Omega^1(U)$ are $1$-forms so that for each $p\in U$ the values $\theta^1_p, \theta^2_p$ form a basis of $V^*$. Prove that there exists a unique $\Theta\in \Omega^1(U)$ such that
+		\[
+			\begin{aligned}
+				d\theta^1 + \Theta \wedge \theta^2 & = 0, \\
+				d\theta^2 - \Theta \wedge \theta^1 & = 0.
+			\end{aligned}
+		\]
+	\end{part}
+
+	Suppose first that there were two such forms, $\Theta, \Theta'$ satisfying the equations. Let $\delta = \Theta - \Theta'$. By taking the differences of the two equations for $\Theta$ and $\Theta'$, we would get
+	\[
+		\delta\wedge \theta^2 = 0\quad\textrm{and}\quad\delta\wedge\theta^1 = 0.
+	\]
+	However since $\theta^1,\theta^2$ form a basis, we can write $\delta = f\theta^1+g\theta^2$ for some functions $f,g\in \Omega^0(U)$. However $0=\delta\wedge \theta^2=f\theta^1\wedge \theta^2$ and $0=\delta\wedge \theta^1=-g\theta^1\wedge \theta^2$ so $f=g=0$ and hence $\delta=0$. This proves uniqueness.
+
+	To prove existence, let's express a hypothetical solution $\Theta$ as $\Theta = f\theta^1+g\theta^2$. Then the conditions for it to be a solution are
+	\[
+		\begin{aligned}
+			d\theta^1 & = -f \theta^1\wedge \theta^2 \\
+			d\theta^2 & = -g \theta^1\wedge \theta^2 \\
+		\end{aligned}
+	\]
+	However, since $\theta^1,\theta^2$ form a basis, $\theta^1\wedge \theta^2$ is a generator for $\Omega^2(U)$. So functions $-f$ and $-g$ exist by virtue of $d\theta^1$ and $d\theta^2$ being $2$-forms.
+
+	\begin{part}{(b)}
+		Repeat for arbitrary $n$. Hence $\theta^1,\ldots, \theta^n$ is a moving coframe on $U$ and we seek unique $1$-forms $\Theta^i_j\in \Omega^1(U)$ such that for all $1\leq i,j\leq n$ we have
+		\[
+			\begin{aligned}
+				d\theta^i + \Theta^i_j \wedge \theta^j & = 0, \\
+				\Theta^i_j+\Theta^j_i                  & = 0.
+			\end{aligned}
+		\]
+	\end{part}
+
+	As before, let's begin by proving uniqueness. Suppose $\Theta^i_j$ and $\overline{\Theta}^i_j$ are two sets of $1$-forms which satisfy the equations. Letting $\delta^i_j = \Theta^i_j - \overline{\Theta}^i_j$, note that as before we get
+	\[ \delta^i_j\wedge \theta^j = 0\quad\textrm{and}\quad \delta^i_j+\delta^j_i=0.\]
+	If we write $\delta^i_j = \alpha_{j,k}^i\theta^k$ for some $\alpha^i_{j,k}\in \Omega^0(U)$, then by the first equation we get $0=\delta^i_j \wedge\theta^j = \alpha^i_{j,k}\theta^k\wedge \theta^j$ which means that $\alpha_{j,k}^i=-\alpha_{k,j}^i=0$ for all $k\neq j$. This implies that $\delta^i_j = \alpha^i_{j,j}\theta^j$. However, by the second equation, we can derive that $\alpha_{j,j}^i=0$ and so $\delta_j^i=0$. Thus, $\Theta^i_j$ are unique.
+
+	\pagebreak
+	To show existence, let's write $\Theta^i_j = \alpha^i_{j,k}\theta^k$ for functions $\alpha^i_{j,k}\in \Omega^0(U)$. Plugging this into the required equations, we get
+	\[
+		d\theta^i = -\alpha_{j,k}^i\theta^k \wedge \theta^j\quad\textrm{and}\quad
+		\alpha^i_{j,k}\theta^k =
+		-\alpha^j_{i,k}\theta^k.
+	\]
+	Note that $\theta^k\wedge \theta^j$ form a basis of $\Omega^2(U)$ for $k<j$. Thus, we can let $\alpha^i_{j,k}$ be the coefficient of $\theta^j\wedge \theta^k$ in $d\theta^i$ for $k<j$, and extend for $k\geq j$ by setting $\alpha^i_{j,j}=0$ and $\alpha^i_{j,k}=-\alpha^i_{k,j}$. This clearly satisfies the equations so $\Theta=\alpha_{j,k}^i\theta^k$ is a solution.
+\end{parts}
+
+\begin{problem}{2}
+Let $X$ be a smooth manifold and $\Theta\in \Omega^1(X)$ a nowhere vanishing $1$-form. Let $H\in TX$ be the kernel of $\Theta$, which is a codimension one distribution on $X$. Use $\Theta$ to construct a trivialization of the quotient bundle $TX/H\to X$. Compute the Frobenius tensor of $H$ in terms of $\Theta$.
+\end{problem}
+
+At any point $p\in X$, note that $H_p = \ker \Theta_p$ so $\Theta$ induces an isomorphism $\overline{\Theta}_p : T_p X / H_p \to \R$. This is continuous, across $p\in X$, and so we get a diffeomorphism $\overline{\Theta}\times \pi : TX/H \to \R\times X$ where $\pi : TX/H \to X$ is the bundle map. This is exactly a trivialization of $TX/H$.
+
+Now recall that the Frobenius tensor of $H$ is a bilinear map
+\[
+	\definefunction{\phi_H}{\Gamma(H)\times \Gamma(H)}{\Gamma(TX/H)}{(\xi, \eta)}{[\xi,\eta]\mod H.}
+\]
+If we associate $TX/H$ with $\R\times X$ by our trivialization, the Frobenius tensor becomes
+\[
+	\phi_H(\xi,\eta) = \Theta([\xi,\eta]).
+\]
+
+\begin{problem}{3}
+Let $I\subset \R$ be an interval and suppose $(x,y) : I \to \A^2_{x,y}$ is an immersion into the standard Euclidean plane. Compute the curvature of this immersion as a function of $t\in I$.
+\end{problem}
+
+Let's first come up with an adapted frame $e_1,e_2$ and corresponding forms $e^1,e^2$ in $x,y$ coordinates. Picking a canonical coorientation of the curve, we can choose
+\[
+	e_1 = \frac{1}{v}\left(\dot{x}\pp{}{x} + \dot{y}\pp{}{y}\right)\qtq{and}e_2 =
+	\frac{1}{v}\left(
+	-\dot{y}\pp{}{x} + \dot{x}\pp{}{y}\right)
+\]
+where $v=\sqrt{\dot{x}^2+\dot{y}^2}$. By solving the system of equations $\langle \theta^i, e_j\rangle = \delta^i_j$, we get the forms
+\[
+  e^1 = \frac{1}{v}\left(\dot{x}\,dx + \dot{y}\,dy\right)
+  \qtq{and}
+  e^2 = \frac{1}{v}\left(-\dot{y}\,dx + \dot{x}\,dy\right).
+\]
+To get the form $\Theta^2_1$, we use the form $\Theta^2_1=\langle e^2, \dot{e}_1\rangle$. Using standard differentiation, we get
+\[
+  \begin{aligned}
+    \langle e^2,\dot{e}_1\rangle 
+    &= v^{-3}(-\dot{y}(\ddot{x}v-\dot{x}\dot{v}) + \dot{x}(\ddot{y}v-\dot{y}\dot{v}))\,dt\\
+    &= v^{-2}(\dot{x}\ddot{y}-\dot{y}\ddot{x}).
+  \end{aligned}
+\]
+This means that $\Theta^2_1 = v^{-3}(\dot{x}\ddot{y}-\dot{y}\ddot{x}) \theta^1$ so the curvature is
+\[
+    \kappa(t) = \frac{\dot{x}\ddot{y} - \dot{y}\ddot{x}}{(\dot{x}^2+\dot{y}^2)^{3/2}}.
+\]
+
+\pagebreak
+\begin{problem}{4}
+  Compute the curvature of the following curves in the Euclidean plane $\A^2_{x,y}$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{(a)}
+    The parabola $y=kx^2$ for $k\in \R$.
+  \end{part}
+
+  Using the previous formula, we get
+  \[
+    \kappa(t) = \frac{2k}{(1+4k^2t^2)^{3/2}}.
+  \]
+  Thus if $k=0$ the curvature is zero which makes sense. Also, curvature is maximized at $t=0$ which makes sense since that's the tightest curving point on the parabola.
+
+  \begin{part}{(b)}
+    The ellipse $x^2/a^2 + y^2/b^2=1$, $a,b\in \R^{>0}$.
+  \end{part}
+
+  We can parametrize the ellipse as $x(t) = a\cos(t)$ and $y(t)=b\sin(t)$. We then can compute
+  \[
+    \dot{x}(t) = -a\sin(t),\quad\ddot{x}(t) = -a\cos(t), \quad\dot{y}(t)=b\cos(t),\quad\ddot{y}(t)=-b\sin(t).
+  \]
+  Plugging this into the curvature formula and simplifying gives us
+  \[
+    \kappa(t) = \frac{ab}{(a^2\sin^2(t) + b^2\cos^2(t))^{3/2}}.
+  \]
+
+  \begin{part}{(c)}
+    The cycloid that is the image of $(t-\sin(t), 1-\cos(t))$.
+  \end{part}
+
+  Computing derivatives, we get:
+  \[
+    \dot{x}(t) = 1-\cos(t),\quad\ddot{x}(t)=\sin(t),\quad\dot{y}(t)=\sin(t),\quad\ddot{y}(t)=\cos(t).
+  \]
+  Using the curvature formula and simplifying gives us
+  \[
+    \kappa(t) = \frac{\cos(t)-1}{(2(1-\cos(t)))^{3/2}}.
+  \]
+\end{parts}
+
+\end{document}

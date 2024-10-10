@@ -1,0 +1,323 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 4}
+\author{Lev Kruglyak}
+\due{October 9, 2024}
+
+\input{../astron140.sty}
+%
+% \collaborator{AJ LaMotta}
+% \collaborator{Jarell Cheong}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+In vector decomposition into components along basis vectors, the completeness condition $e_\mu\otimes e^\mu=1$ ensures that all vectors (not just a subset of vectors) can be decomposed using these basis vectors. In this exercise, let us rigorously prove the above statement in general.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Prove that given an arbitrary vector $A$ and the basis vectors $e_\mu$ (and the inverse basis vectors $e^\mu$), the components of $A$ along the basis vectors $e_\mu$, denoted as $A^\mu$, are given $A^\mu = A\cdot e^\mu$.
+	\end{part}
+
+	By the definition of the dot product operation in a vector space, we have:
+	\[
+		A\cdot e^\mu = (A^\mu e_\mu)\cdot (e^\nu) = A^\mu (e_\mu\cdot e^\nu) = A^\mu \delta^\nu_\mu = A^\mu.
+	\]
+
+	\begin{part}{(b)}
+		Prove that after getting the components along the basis vectors $e_\mu$, the vector $A^\mu e_\mu$ equals to $A$ if the completeness condition is satisfied. Namely, these basis vectors are complete and no others are needed.
+	\end{part}
+
+	Next, by the completeness condition we can write
+	\[
+		A = (e_\mu\otimes e^\mu) A = e_\mu(e^\mu\cdot A) = e_\mu(A\cdot e^\mu) = e_\mu A^\mu = A^\mu e_\mu.
+	\]
+
+	\begin{part}{(c)}
+		To improve your understanding, look at the following counterexample. For example, in the 3D Cartesian coordinates, if only $e_x$ and $e_y$ are given, check that these two basis alone do not satisfy the 3D completeness condition. As a consequence, convince yourself that the two basis vectors given above are not enough to decompose an arbitrary 3D vector. This can be done only after $e_z$ is introduced.
+	\end{part}
+
+  The vectors $e_x, e_y$ alone do not satisfy the completeness conditions since
+  \[
+    (e_x\otimes e^x + e_y\otimes e^y) e_z = e_x(e^x\cdot e_z) + e_y(e^y\cdot e_z) =  0.
+  \]
+  However if we introduce $e_z$, we get
+  \[
+    (e_x\otimes e^x + e_y\otimes e^y + e_z \otimes e^z) e_z = e_x(e^x\cdot e_z) + e_y(e^y\cdot e_z) + e_z(e^z\cdot e_z)=  e_z.
+  \]
+\end{parts}
+
+\begin{problem}{2}
+This is a simple explicit example on basis and inverse-basis vectors. The basis vectors for a 2D space are given explicitly by
+\[
+	e_1 = a\begin{pmatrix}1\\0\end{pmatrix}
+	\quad\textrm{and}\quad
+	e_2 = b\begin{pmatrix}\cos\theta\\\sin\theta\end{pmatrix}
+\]
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Find the inverse basis vectors $\{e^i\}$ so that $e_i \cdot e^j = \delta^j_i$.
+	\end{part}
+
+	The inverse vectors must satisfy
+	\[
+		e_1\cdot e^1 = 1, \quad e_1\cdot e^2 = 0, \quad e_2\cdot e^1 = 0,\quad e_2\cdot e^2 = 1.
+	\]
+	Letting $e^1=(x^1, y^1)$ and $e^2 = (x^2,y^2)$, we get a system of equations
+	\[
+		\begin{cases}
+			a x^1 = 1,                               \\
+			a x^2 = 0,                               \\
+			(b\cos\theta)x^1 + (b\sin\theta)y^1 = 0, \\
+			(b\cos\theta)x^2 + (b\sin\theta)y^2 = 1, \\
+		\end{cases}
+		\quad\implies\quad
+		e^1 = \begin{pmatrix}x^1\\ y^1\end{pmatrix} = \frac{1}{a}\begin{pmatrix} 1\\ -\cot\theta\end{pmatrix},
+		\quad
+		e^2 = \begin{pmatrix}x^2\\ y^2\end{pmatrix} = \frac{1}{b}\begin{pmatrix} 0\\ \csc\theta\end{pmatrix}.
+	\]
+
+	\begin{part}{(b)}
+		Write out the metric matrices $g_{ij}$ and $g^{ij}$ and check their inverse relationship:
+		\[
+			g_{ij}g^{j k} = \delta^k_i.
+		\]
+	\end{part}
+
+	Using the identities $g_{ij} = e_i\cdot e_j$ and $g^{ij} = e^i\cdot e^j$, we get the matrices
+	\[
+		g_{ij} =
+		\begin{pmatrix}a^2 & ab\cos\theta \\ ab\cos\theta & b^2\end{pmatrix}
+		\quad\textrm{and}\quad
+		g^{ij} =
+		\begin{pmatrix} \csc^2\theta / a^2         & -\cot\theta\csc\theta / ab \\
+                -\cot\theta\csc\theta / ab & \csc^2\theta / b^2
+		\end{pmatrix}.
+	\]
+	Multiplying these matrices, we get
+	\[
+		\begin{aligned}
+			\begin{pmatrix}a^2 & ab\cos\theta \\ ab\cos\theta & b^2\end{pmatrix}
+			 & \begin{pmatrix} \csc^2\theta / a^2         & -\cot\theta\csc\theta / ab \\
+                -\cot\theta\csc\theta / ab & \csc^2\theta / b^2
+			   \end{pmatrix} \\
+			 & =
+			\begin{pmatrix}
+				\csc^2\theta-\cos\theta\cot\theta\csc\theta        & (a/b)(-\cot\theta\csc\theta + \csc^2\theta\cos\theta) \\
+				(b/a)(\cos\theta\csc^2\theta-\cot\theta\csc\theta) & -\cos\theta\cot\theta\csc\theta + \csc^2\theta
+			\end{pmatrix}
+			= \begin{pmatrix}1&0\\0&1\end{pmatrix}.
+		\end{aligned}
+	\]
+
+	\begin{part}{(c)}
+		Show that the completeness condition $e_i\otimes e^i = I$ is satisfied.
+	\end{part}
+
+	Computing the sum $e_1\otimes e^1 + e_2\otimes e^2 = I$, we get
+	\[
+		\begin{aligned}
+			e_1\otimes e^1 + e_2\otimes e^2 =
+			\begin{pmatrix} a\\0\end{pmatrix}\otimes \frac{1}{a}\begin{pmatrix}1\\ -\cot\theta\end{pmatrix} + &
+			\begin{pmatrix} b\cos\theta\\ b\sin \theta\end{pmatrix}\otimes \frac{1}{b}\begin{pmatrix}0\\ \csc\theta\end{pmatrix}                    \\
+			                                                                                                  & =\begin{pmatrix}
+				                                                                                                     1 & -\cot\theta \\0&0
+			                                                                                                     \end{pmatrix} +\begin{pmatrix}
+				                                                                                                                    0 & \cot\theta \\0&1
+			                                                                                                                    \end{pmatrix}
+			= \begin{pmatrix}1&0\\0&1\end{pmatrix}.
+		\end{aligned}
+	\]
+\end{parts}
+
+\begin{problem}{3}
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Show that $\Lambda^\mu_{\mu'}\Lambda^{\nu'}_{\mu} = \delta_{\mu'}^{\nu'}$.
+	\end{part}
+
+	For any $4$-vectors $A$ and $B$, recall that $A_\mu B^\mu$ is a scalar. Since scalars don't transform under coordinate transformations:
+	\[
+    A_{\mu'}B^{\mu'} = \Lambda^\mu_{\mu'} A_\mu \Lambda_\nu^{\mu'} B^\nu = (\Lambda^\mu_{\mu'}\Lambda^{\mu'}_{\nu}) A_\mu B^\nu = A_{\mu}B^{\mu}.
+	\]
+	This immediately implies that $\Lambda^\mu_{\mu'}\Lambda^{\nu'}_\mu = \delta^{\nu'}_{\mu'}$.
+
+	\begin{part}{(b)}
+		Show $T^\mu_{\mu \rho}$ transforms as a $(0,1)$-tensor.
+	\end{part}
+
+	For a general tensor of rank $(p,q)$, the transformation rule is given by
+	\[
+		T_{\mu_1'\mu_2'\ldots \mu_p'}^{\nu_1'\nu_2'\ldots \nu_q'} =
+		\Lambda_{\nu_1'}^{\nu_1}\Lambda_{\nu_2'}^{\nu_2}\cdots \Lambda_{\nu_q}^{\nu_q'}
+		\Lambda_{\mu_1}^{\mu_1'}\Lambda_{\mu_2}^{\mu_2'}\cdots \Lambda_{\mu_p}^{\mu_p'} T^{\nu_1\nu_2\ldots \nu_q}_{\mu_1\mu_2\ldots\mu_p}.
+	\]
+	This means that for the tensor $T^\mu_{\mu\rho}$, we have the transformation law
+	\[
+		\begin{aligned}
+			T_{\mu'\rho'}^{\mu'} = \Lambda^\mu_{\mu'}\Lambda_{\mu}^{\mu'}\Lambda_{\rho}^{\rho'} T_{\mu\rho}^{\mu} = \delta^{\mu'}_{\mu'}\Lambda^{\mu}_{\mu\rho} = \Lambda^{\rho'}_{\rho}\Lambda^{\mu}_{\mu\rho}.
+		\end{aligned}
+	\]
+	This is a $(0,1)$ transformation law, so $T^\mu_{\mu\rho}$ transforms as a $(0,1)$-tensor.
+
+	\begin{part}{(c)}
+		Show that in Minkowski spacetime, $\partial_\mu$ transforms as a covariant vector and the D'Alembertian $\square = \partial^\mu\partial_\mu$ is a scalar.
+	\end{part}
+
+	By the chain rule, for any vector $A$ we have the transformation law:
+	\[
+		\partial_{\nu'}A^\lambda e_\lambda = \frac{\partial x^{\mu}}{\partial x^{\nu'}}\partial_{\mu} A^\mu e_\lambda\quad\implies\quad
+		\partial_{\nu'} = \frac{\partial x^\mu}{\partial x^{\nu'}}\partial_{\mu}.
+	\]
+	This requires the assumption that spacetime is flat, i.e. $\partial_{\nu}e_\mu=\delta_{\nu\mu}$ otherwise $\partial_\mu$ has higher order terms in the transformation law.
+
+	For the D'Alembertian operator, note that
+	\[
+		\begin{aligned}
+			\square' = \partial^{\mu'}\partial_{\mu'} = g^{\mu'\nu'}\partial_{\mu'}\partial_{\nu'}
+			 & = \left(\frac{\partial x^{\mu'}}{\partial x^\mu}\frac{\partial x^{\nu'}}{\partial x^\nu} g^{\mu\nu}\right)
+			\left(\frac{\partial x^\sigma}{\partial x^{\mu'}}\partial_{\sigma} \right)
+			\left(\frac{\partial x^\rho}{\partial x^{\nu'}}\partial_{\rho} \right)                                        \\
+			 & = \delta^\sigma_\mu\delta^\rho_\nu g^{\mu\nu}\partial_\sigma\partial_\rho                                  \\
+			 & = g^{\mu\nu}\partial_\mu\partial_\nu = \partial^\mu\partial_\nu = \square.
+		\end{aligned}
+	\]
+	Since there is no transformation, the operator transforms as a constant.
+\end{parts}
+
+\begin{problem}{4}
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Show that Maxwell's equations can be written in the following tensor form:
+		\[
+			\partial_\mu F^{\mu\nu} = -j^\nu,\quad\partial_\mu \widetilde{F}^{\mu\nu}=0.
+		\]
+		Why doe the form explicitly show that the Maxwell equations are Lorentz invariant?
+	\end{part}
+
+	Recall that the Maxwell equations (up to some scaling to get rid of constants) can be written in the form
+	\[
+		\begin{aligned}
+			\nabla \cdot \mathbf{E} = \rho, \quad & \quad \nabla \times \mathbf{E} = -\frac{\partial \mathbf{B}}{\partial t},           \\
+			\nabla \cdot \mathbf{B} = 0, \quad    & \quad \nabla \times \mathbf{B} = \mathbf{J}+\frac{\partial \mathbf{E}}{\partial t}. \\
+		\end{aligned}
+	\]
+	Expanding these equations into components, we get the system of eight equations
+	\[
+		\begin{aligned}
+			-\pp{B_x}{t} = \pp{E_z}{y} -\pp{E_y}{z},
+			\quad & \quad \pp{E_x}{t} +  J_x = \pp{B_z}{y} -\pp{B_y}{z}, \\
+			-\pp{B_y}{t} = \pp{E_x}{z} -\pp{E_z}{x},
+			\quad & \quad \pp{E_y}{t} +  J_y = \pp{B_x}{z} -\pp{B_z}{x}, \\
+			-\pp{B_z}{t} = \pp{E_y}{x} -\pp{E_x}{y},
+			\quad & \quad \pp{E_z}{t} +  J_z = \pp{B_y}{x} -\pp{B_x}{y}, \\
+		\end{aligned}
+	\]\[
+		\begin{aligned}
+			\pp{E_x}{x}+\pp{E_y}{y}+\pp{E_z}{z}= \rho,\quad\quad
+			\pp{B_x}{x}+\pp{B_y}{y}+\pp{B_z}{z}= 0.
+		\end{aligned}
+	\]
+	Let's define the $4$-vector $j^\mu$ by
+	\[
+		j^\mu = \left(\rho, \pp{\mathbf{E}}{t} + \mathbf{J}\right).
+	\]
+	Similarly, we define the electromagnetic field strength tensor by
+	\[
+		F^{\mu\nu} = \begin{pmatrix}
+			0    & E_x  & E_y  & E_z  \\
+			-E_x & 0    & B_z & -B_y  \\
+			-E_y & -B_z  & 0    & B_x \\
+			-E_z & B_y & -B_x  & 0    \\
+		\end{pmatrix}
+		\quad\implies\quad
+		\begin{aligned}
+			\partial_\mu F^{\mu 0} & = -\pp{E_x}{x}-\pp{E_y}{y}-\pp{E_z}{z} = -\rho \\
+			\partial_\mu F^{\mu 1} & = -\pp{E_x}{t}-\pp{B_y}{z}+\pp{B_z}{y}= -J_x    \\
+			\partial_\mu F^{\mu 2} & = -\pp{E_y}{t}+\pp{B_z}{x}-\pp{B_x}{z}= -J_y    \\
+			\partial_\mu F^{\mu 3} & = -\pp{E_z}{t}-\pp{B_y}{x}+\pp{B_x}{y}= -J_z    \\
+		\end{aligned}
+	\]
+	Therefore, if we set $j^\nu = (\rho, \mathbf{J})$, we get the equation $\partial_\mu F^{\mu\nu} = -j^\nu$. To get the other half of the equations, we can construct the dual electromagnetic field strength tensor as
+	\[
+		\widetilde{F}^{\mu\nu} = \begin{pmatrix}
+			0    & B_x  & B_y  & B_z  \\
+			-B_x & 0    & -E_z & E_y  \\
+			-B_y & E_z  & 0    & -E_x \\
+			-B_z & -E_y & E_x  & 0    \\
+		\end{pmatrix}
+		\quad\implies\quad
+		\begin{aligned}
+			\partial_\mu \widetilde{F}^{\mu 0} & = -\pp{B_x}{x}-\pp{B_y}{y}-\pp{B_z}{z} = 0 \\
+			\partial_\mu \widetilde{F}^{\mu 1}             & = -\pp{B_x}{t}-\pp{E_y}{z}+\pp{E_z}{y}= 0    \\
+			\partial_\mu \widetilde{F}^{\mu 2}             & = -\pp{B_y}{t}+\pp{E_z}{x}-\pp{E_x}{z}= 0    \\
+			\partial_\mu \widetilde{F}^{\mu 3}             & = -\pp{B_z}{t}-\pp{E_y}{x}+\pp{E_x}{y}= 0    \\
+		\end{aligned}
+	\]
+	This gives the equation $\partial_\mu \widetilde{F}^{\mu\nu}=0$, so Maxwell's equations can be written concisely as
+	\[
+    \partial_\mu F^{\mu\nu} = -j^\nu\quad\textrm{and}\quad \partial_\mu \widetilde{F}^{\mu\nu} =0.
+	\]
+	We can also express $\widetilde{F}^{\mu\nu}$ as: \[\widetilde{F}^{\mu\nu}=-\frac{1}{2}\varepsilon_{\mu\nu\rho\lambda} F^{\rho\lambda}\]
+	where $\epsilon_{\mu\nu\rho\lambda}=1$ is antisymmetric.
+
+	Since all sides of this tensor equation are tensors, they are manifestly Lorentz invariant since they transform covariantly under the Lorentz transformation.
+
+	\begin{part}{(b)}
+		From the first of Maxwell's equations show that the electromagnetic current $4$-vector is divergenceless:
+		\[
+			\partial_\mu j^\mu = 0.
+		\]
+		Demonstrate in terms of $j^\mu$'s components that this is just the electric charge conservation law.
+	\end{part}
+	Note that
+  \[
+    \partial_\mu j^\mu = -\partial_\mu \partial_\nu F^{\nu\mu}.
+  \]
+  In other words, $\partial_\mu j^\mu$ is the contraction of a symmetric tensor $\partial_\mu\partial_\nu$ and an antisymmetric tensor $F^{\nu\mu}$. Thus, by swapping indices we get
+  \[ 
+    \partial_\mu j^\mu = -\partial_{\mu}\partial_\nu j^{\nu\mu} = \partial_\nu\partial_\mu j^{\mu\nu} = - \partial_\mu j^\mu.
+  \]
+  Thus, $\partial_\mu j^\mu=0$. In components, this gives us equations
+  \[
+  \begin{aligned}
+    \partial_\mu j^\mu = \pp{\rho}{t} + \pp{\nabla\cdot \mathbf{E}}{t} + \nabla \cdot\mathbf{J} = \pp{\rho}{t} + \nabla\cdot \mathbf{J} = 0,
+  \end{aligned}
+  \]
+  since $\nabla\cdot \mathbf{E}$ is constant. This is exactly the charge conservation law.
+\end{parts}
+
+\begin{problem}{5}
+Demonstrate the energy-momentum conservation law:
+\[
+	\partial_\mu T^{\mu\nu} = 0.
+\]
+\end{problem}
+\begin{solution}
+	Recall that in Minkowski spacetime, the energy-momentum tensor is given by
+	\[
+		T^{\mu\nu} = \frac{\Delta p^\mu}{\Delta s^\nu}\quad\textrm{where}\quad \Delta s^\mu = \{ \Delta x^1 \Delta x^2 \Delta x^3,\; \Delta t \Delta x^2 \Delta x^3,\; \Delta t \Delta x^3 \Delta x^1,\; \Delta t \Delta x^1 \Delta x^2\}.
+	\]
+	Now let's work in some infinitesimal volume $V$. The net change of momentum $\Delta p^\mu$ in this volume is due to flux of momentum across its boundary surfaces. For each pair of faces perpendicular to the $x^\nu$ axis, the net momentum flux is
+	\[
+    \Delta p^\mu_\nu = T^{\mu\nu} (x^\nu)\Delta s^\nu - T^{\mu\nu}(x^\nu + \Delta x^\nu) \Delta s^\nu.
+	\]
+	However, using a Taylor approximation, ($V$ is supposed to be infinitesimal) we get
+	\[
+    T^{\mu\nu}(x^\nu + \Delta x^\nu) - T^{\mu\nu}(x^\nu) \approx \partial_\nu T^{\mu\nu}\Delta x^\nu.
+	\]
+	This means that overall we have
+	\[
+    \Delta p^\mu = -\sum_\nu \partial_\nu T^{\mu\nu} \Delta x^\nu \Delta s^\nu = -(\partial_\nu T^{\mu\nu}) \Delta V,
+	\]
+	since $\Delta x^\nu \Delta s^\nu$ is exactly the volume element. The conservation of relativistic $4$-momentum states that $\Delta p^\mu=0$ and so $\partial_\nu T^{\mu\nu}=0$.
+\end{solution}
+
+\end{document}
+
