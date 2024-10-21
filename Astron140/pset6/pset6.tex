@@ -19,6 +19,12 @@
   \end{part}
 \end{parts}
 
+\begin{problem}{2}
+  Use Mathematica to check the above calculations.
+\end{problem}
+\begin{solution}
+\end{solution}
+
 \begin{problem}{3}
   Express the gravitational potential $\Phi$ at the surface of the Earth in terms of the mass $M$ and radius $R$ of the Earth. Use this and the result from the geodesic equation derived in lecture to express the metric component $g_{00} = -1 + h_{00}$ in terms of $M$ and $R$. Estimate the numerical value of $h_{00}$ and show how small it is compared to the leading term $-1$.
 \end{problem}
@@ -185,5 +191,21 @@
 \begin{problem}{7}
   Use the Mathematica code to reproduce the Ricci tensor of the most general, static, spherically symmetric spacetime metric.
 \end{problem}
+
+\begin{solution}
+  Using the Schwarzchild metric
+  \[
+    g_{\mu\nu} = 
+\left(
+\begin{array}{cccc}
+ \frac{2 M}{r}-1 & 0 & 0 & 0 \\
+ 0 & \left(1-\frac{2 M}{r}\right)^{-1} & 0 & 0 \\
+ 0 & 0 & r^2 & 0 \\
+ 0 & 0 & 0 & r^2 \sin ^2(\theta) \\
+\end{array}
+\right),
+\]
+Mathematica gives us the Ricci tensor $R^{\mu\nu}=0$ and $R=0$, proving that this is a solution for the vacuum Einstein equations.
+\end{solution}
 
 \end{document}

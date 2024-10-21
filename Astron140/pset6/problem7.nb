@@ -1,0 +1,96 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Wolfram 14.1' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       154,          7]
+NotebookDataLength[      3005,         86]
+NotebookOptionsPosition[      2255,         66]
+NotebookOutlinePosition[      2647,         82]
+CellTagsIndexPosition[      2604,         79]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell[TextData[StyleBox["General Statically Spherically Symmetric Spacetime \
+Metric", "Section"]], "Text",
+ CellChangeTimes->{{3.938473186621129*^9, 
+  3.938473203544346*^9}},ExpressionUUID->"b25b86b3-6fe0-4663-b68a-\
+7099ddfa5751"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"SetDirectory", "[", 
+   RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.93847348938828*^9, 3.938473495210343*^9}},
+ CellLabel->"In[40]:=",ExpressionUUID->"6f371844-05b3-49d9-b92d-cc3373e18ab3"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "NotebookDirectory", "nosv", 
+   "\"The notebook \\!\\(\\*TemplateBox[Association[RuleDelayed[\\\"obj\\\", \
+NotebookObject[\\\"047294a7-c54b-4bce-ae11-14167f8352fe\\\", \
+\\\"0e75d555-636e-4ade-bd62-a32d746ee3ae\\\"]], Rule[\\\"label\\\", \
+\\\"\\\\\\\"Untitled-2\\\\\\\"\\\"]], \\\"NotebookObjectUUIDsUnsaved\\\"]\\) \
+is not saved.\"", 2, 40, 1, 20089710627727389856, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.9384734976059113`*^9},
+ CellLabel->
+  "During evaluation of \
+In[40]:=",ExpressionUUID->"377d9e4f-9a6a-4630-bfb9-2d2cca6dbc4b"],
+
+Cell[BoxData[
+ TemplateBox[{
+  "SetDirectory", "badfile", 
+   "\"The specified argument, \\!\\(\\*RowBox[{\\\"$Failed\\\"}]\\), should \
+be a valid string or File.\"", 2, 40, 2, 20089710627727389856, "Local"},
+  "MessageTemplate"]], "Message", "MSG",
+ CellChangeTimes->{3.938473497637093*^9},
+ CellLabel->
+  "During evaluation of \
+In[40]:=",ExpressionUUID->"83ca4373-5fb2-46c0-9bce-4f94edd50c19"]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.9384732645057907`*^9, 
+  3.938473264508288*^9}},ExpressionUUID->"39728f4e-1cb6-4704-b0d2-\
+5d7dcb87cd24"]
+},
+WindowSize->{864, 1051},
+WindowMargins->{{0, Automatic}, {Automatic, 0}},
+FrontEndVersion->"14.1 for Mac OS X ARM (64-bit) (July 16, 2024)",
+StyleDefinitions->"Default.nb",
+ExpressionUUID->"047294a7-c54b-4bce-ae11-14167f8352fe"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[554, 20, 232, 4, 50, "Text",ExpressionUUID->"b25b86b3-6fe0-4663-b68a-7099ddfa5751"],
+Cell[CellGroupData[{
+Cell[811, 28, 267, 5, 29, "Input",ExpressionUUID->"6f371844-05b3-49d9-b92d-cc3373e18ab3"],
+Cell[1081, 35, 601, 12, 31, "Message",ExpressionUUID->"377d9e4f-9a6a-4630-bfb9-2d2cca6dbc4b"],
+Cell[1685, 49, 397, 9, 26, "Message",ExpressionUUID->"83ca4373-5fb2-46c0-9bce-4f94edd50c19"]
+}, Open  ]],
+Cell[2097, 61, 154, 3, 29, "Input",ExpressionUUID->"39728f4e-1cb6-4704-b0d2-5d7dcb87cd24"]
+}
+]
+*)
+
+(* End of internal cache information *)
+
