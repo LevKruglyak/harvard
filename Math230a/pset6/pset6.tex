@@ -1,0 +1,94 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 6}
+\author{Lev Kruglyak}
+\due{October 16, 2024}
+
+\input{../math230a.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Let $A$ be a $3$-dimensional Euclidean space and $\Sigma \subset A$ a cooriented surface. A point $p\in \Sigma$ is \emph{umbilic} if the second fundamental form at $p$ is a multiple of the metric at $p$. Suppose $e_1,e_2,e_3$ is a moving frame on an open subset of $\Sigma$ and $\theta^1,\theta^2,\Theta^2_1, \Theta^3_1, \Theta^3_2$ the induced $1$-forms from $\scB_\O(A)$. Express the umbilic condition in terms of these forms.
+\end{problem}
+
+\begin{solution}
+  A point $p\in \Sigma$ is umbilic if and only if for all $\xi,\eta\in T_p\Sigma$ we have
+  \[
+    -\langle D_\xi \nu, \eta \rangle_p = \lambda\langle \xi, \eta \rangle_p
+  \]
+  for some constant $\lambda\in \R$. If we plug in the basis vectors $e_i$, this amounts to the condition
+  \[
+    \langle D_{e_i}\nu, e_j\rangle_p = -\lambda\delta_{ij}.
+  \]
+  Rewriting this in terms of the $\Theta$ forms, we get
+  \[
+    (\Theta^3_1)_p(e_1) = (\Theta^3_2)_p(e_2),\quad (\Theta^3_1)_p(e_2)=0,\quad\textrm{and}\quad (\Theta^3_2)_p(e_1)=0.
+  \]
+  In particular, we have $h_{ij}=\lambda \delta_{ij}$.
+
+  \begin{part}{}
+    Suppose now that \emph{every} point of $\Sigma$ is umbilic. Then there is a function $\lambda : \Sigma \to \R$ such that the second fundamental form is $\lambda$ times the first fundamental form. Prove that $\lambda$ is locally constant.
+  \end{part}
+
+  This follows from the Codazzi-Mainardi equations.
+\end{solution}
+
+\begin{problem}{2}
+Let $M$ be a smooth manifold of dimension $n$.
+\end{problem}
+
+\begin{solution}
+	Before getting started with the constructions, let's consider the product tangent bundle $T(M^{\times n})=TM^{\times n}$, and the diagonal $\Delta_M \subset M^{\times n}$. This diagonal is of course a submanifold of $M^{\times n}$ canonically diffeomorphic to $M$ by a map
+  \[
+    \lkxfunc{\delta}{M}{\Delta_M\subset M^{\times n}}{x}{(x,\ldots, x).}
+  \]
+	We can also take the restriction of the tangent bundle to this submanifold, let's denote this $\overline{T}\Delta_M \subset TM^{\times n}$. At this point, the pullback bundle $\delta_* \overline{T}\Delta_M$ is the fiber bundle of ordered $n$-tuples of tangent vectors of $M$. Let's denote this canonical bundle $\overline{\scB}(M)$.
+
+	\begin{part}{(a)}
+		Construct the principal $\GL_n$-bundle of frames $\scB(M) \to M$.
+	\end{part}
+
+	% A frame at a point $x\in M$ of a manifold is a basis of the tangent space $T_x M$, or equivalently a linear isomorphism $\R^n \to T_x M$. The space of all frames is a right $\GL_n$-torsor, since any basis can be transformed to another by a change of coordinate matrix. We want a principal bundle over $M$ whose fiber at each point can be canonically identified with this $\GL_n$-torsor.
+
+
+  % \todo{introduce determinant map.}
+	Now, $TM^{\times n}$ is a $2n^2$-manifold, and can thus be embedded into some affine space $\A^k$ for $k$ large enough -- let's call this embedding $\iota : TM^{\times n} \to \A^k$. By composing the diagonal map with the zero section and the embedding, we get an embedding $\iota_0 : M \to \A^k$, where $\iota_0 = \iota\circ s_0\circ \delta$. These embeddings then give us a smooth map
+	\[
+    \lkxfunc{\det}{\overline{T}\Delta_M}{\R}{(x; v_1,\ldots, v_n)}{\det(\iota(v_1)-\iota_0(x),\ldots, \iota(v_n)-\iota_0(x)).}
+	\]
+	Note that $\det^{-1}(\R^\times)$ is an open subset of $\overline{T}\Delta_M$ and so must be a manifold. Let's finally define the total space frame bundle to be
+	\[
+    \scB(M) = \delta_* \textrm{det}^{-1}(\R^\times) = \left\{ (x; v_1,\ldots, v_n)\in \overline{\scB}(M) : \textrm{span}\{v_1,\ldots, v_n\} = T_xM\right\}
+	\]
+
+	\begin{part}{(b)}
+		Construct the principal $\O_n$-bundle of orthonormal frames $\scB_\O(M) \to M$ given a Riemannian metric.
+	\end{part}
+
+	A Riemannian metric gives us an inner product on each tangent space. Let's consider the set
+	\[
+    \scB_\O(M) = \left\{ (x; v_1,\ldots, v_n) \in \scB(M) : \langle v_i, v_j\rangle = \delta_{ij} \right\}.
+	\]
+	This set of equations has no singularities and so forms a manifold. It's clear that the fibers are diffeomorphic to $\O_n$, and we have local trivializations by embedding in affine space as before.
+\end{solution}
+
+\begin{problem}{3}
+  Does there exist an example of a Riemannian $2$-manifold $\Sigma$ and an embedded oriented circle $C\subset \Sigma$ such that parallel transport around $C$ is a reflection (rather than a rotation)?
+  If so, what does this say about the lift of $C$ to the orientation double cover, which is identified with $\scB_\O(\Sigma)/\SO_2 \to \Sigma$? Does there exist an example in which $\Sigma$ is a submanifold of a Euclidean $3$-space?
+\end{problem}
+
+\begin{solution}
+  Consider the M\"obius strip $M$, viewed as a nontrivial line bundle $\pi$ over $S^1$. Picking any orientation of $S^1$ and including it into $M$ by the zero section gives us an oriented subcircle $C\subset M$. Since $M$ is a line bundle, note that the tangent space of  the M\"obius strip at any point $p\in M$ is given by $T_p M = T_{\pi(p)} S^1\oplus M_{\pi(p)}$. The parallel transport of any vector in $T_{\pi(p)}S^1$ around $C$ is just given by the parallel transport in $S^1$, and parallel transports of vectors in $M_{\pi(p)}$ are given by locally constant sections of $M$. It's clear that a frame $(v_1,v_2)$ with $v_1$ a vector in the former space and $v_2$ a vector in the latter space is sent to $(v_1, -v_2)$ after a full parallel transport around $C$. This is a reflection, not a rotation.
+
+  This implies that the orientation double cover is connected, since any frame can be reflected by a parallel transport. In particular, it implies that the lift of $C$ to $\scB_\O(\Sigma)/\SO_2$ can be identified with the double cover $S^1\to S^1$. We see that any surface satisfying the condition must be nonorientable. If we let surfaces be non-compact, then our example of the M\"obius bundle works. Otherwise, if we require compact closed manifolds, the smallest example can be embedded in Euclidean $4$-space.
+\end{solution}
+
+\end{document}

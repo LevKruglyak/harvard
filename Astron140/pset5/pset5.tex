@@ -1,0 +1,413 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 6}
+\author{Lev Kruglyak}
+\due{October 15, 2024}
+
+\input{../astron140.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Prove the local flatness theorem stated in the lecture.
+\end{problem}
+
+\begin{solution}
+	Let $M$ be a Lorentzian $n$-manifold with metric $g$, and let $p\in M$ be a point.
+	The local flatness theorem states that there is a coordinate chart $x^{\mu}$ at $p$ such that
+	\[
+		g_{\mu\nu}(x) = \eta_{\mu\nu} + O(x^2)
+	\]
+	where $\eta_{\mu\nu}$ is the standard Minkowski metric.
+
+	To construct such a chart, let's start with any local coordinates $x^{\mu}$ about $p\in M$ such that $p$ corresponds to the origin. Then, by Taylor expanding the metric we get
+	\[
+		g_{\mu\nu}(x) = g_{\mu\nu}(0) + \frac{\partial g_{\mu\nu}(0)}{\partial x^{\lambda}} x^{\lambda} + \frac{1}{2}\frac{\partial^2 g_{\mu\nu}(0)}{\partial x^{\lambda} \partial x^{\sigma}} x^{\lambda} x^{\sigma} + O(x^3).
+	\]
+	Now let's see what happens under a change of coordinates to some other coordinate chart $y^{\mu}$. By the tensor transformation law, we have
+	\[
+		g'_{\alpha\beta}(y) = \pp{x^{\mu}}{y^\alpha}\pp{x^\nu}{y^\beta} g_{\mu\nu}(x).
+	\]
+	For brevity, let $\Omega^\mu_\alpha = \partial x^\mu / \partial y^{\alpha}|_{y=0}$, $\Omega^\mu_{\alpha\beta} = \partial^2 x^{\mu} / \partial y^{\alpha}\partial y^{\beta}|_{y=0}$, and so on for higher order derivatives. By Taylor's theorem, we can then write
+	\[
+		\frac{\partial x^\mu}{\partial y^\alpha} = \Omega^\mu_{\alpha} + \Omega^\mu_{\alpha\beta}y^\beta + O(y^2).
+	\]
+	We can then rewrite the tensor transformation law for the metric as
+	\[
+		g'_{\alpha\beta}(y) = (\Omega^\mu_{\alpha} + \Omega^\mu_{\alpha\gamma}y^\gamma)(\Omega^\nu_\beta + \Omega^\nu_{\beta\delta}y^\delta)\left(g_{\mu\nu}(0) + \frac{\partial g_{\mu\nu}(0)}{\partial x^{\lambda}}x^\lambda(y) + \frac{1}{2}\frac{\partial^2 g_{\mu\nu}(0)}{\partial x^{\lambda} \partial x^{\sigma}} x^\lambda(y)x^{\sigma}(y) \right) + O(y^3).
+	\]
+
+	Let's go through these terms degree by degree. In the zero degree case, we have the system of equations
+	\[
+		\Omega^\mu_\alpha\Omega^\nu_\beta g_{\mu\nu}(0) = \eta_{\mu\nu}.
+	\]
+	Since the metrics ar
+	e symmetric, there are $n(n+1)/2$ independent equations, with $n^2$ free variables. (the $\Omega^\mu_\alpha$ terms) We know that $n^2 \geq n(n+1)/2$, so we can find solutions $\Omega^\mu_\alpha$.
+
+	Next, in the linear case, we have the system of equations
+	\[
+		\left(\Omega^\mu_{\alpha\gamma}y^\gamma + \Omega^\nu_{\beta\delta} y^\delta\right) g_{\mu\nu}(0) + \left(
+		\Omega^\mu_\alpha + \Omega^\nu_\beta
+		\right) \pp{g_{\mu\nu}(0)}{x^\lambda} x^\lambda(y)
+		= 0.
+	\]
+	Since we've already solved for $\Omega^\mu_\alpha$, the only independent variables in these equations are $\Omega^\mu_{\alpha\beta}$. Note that there are $n\times n(n+1)/2= n^2(n+1)/2$ independent equations (by symmetry of the metric tensor) and we have $n\times n(n+1)/2 = n^2(n+1)/2$ variables (since $\Omega^\mu_{\alpha\beta} = \Omega^\mu_{\beta\alpha}$). Thus, we can solve for $\Omega^\mu_{\alpha\beta}$ as well.
+
+	These two observations alone are enough to prove the local flatness theorem -- and the number of degrees of freedom in dimension $n=4$ is $n(n+1)/2 - n^2=6$, which is exactly the dimension of the Lie group of Lorentz transformations. This makes sense, since Lorentz transformations leave the metric invariant in the flat spacetime.
+
+	We can go a step further to show that the quadratic terms cannot be eliminated by coordinate transformations alone. If we try to solve
+	\[
+		\left(\Omega^\mu_{\alpha\gamma\kappa}y^{\kappa}y^{\gamma} + \Omega^\nu_{\beta\delta\epsilon}y^{\epsilon}y^{\delta}\right)g_{\mu\nu}(0) + \left(\Omega^\mu_{\alpha\gamma}y^\gamma + \Omega^\nu_{\beta\delta}y^{\delta}\right)\pp{g_{\mu\nu}(0)}{x^\lambda} x^\lambda(y) + \left(\Omega^\mu_\alpha + \Omega^nu_\beta\right)\frac{1}{2}\frac{\partial^2 g_{\mu\nu}(0)}{\partial x^{\lambda} \partial x^{\sigma}} x^\lambda(y)x^{\sigma}(y) = 0,
+	\]
+	we see that there are $(n(n+1)/2)^2 = n^2(n+1)^2/4$ equations, but $n^2(n+1)(n+2)/6$ parameters. The number of equations is higher than the number of parameters, so these equations cannot be solved in general. Furthermore, in the dimension $n=4$ case, the number of additional equations is
+	\[
+		\frac{n^2(n+1)^2}{4} - \frac{n^2(n+1)(n+2)}{6} = 100 - 80 = 20.
+	\]
+	Thus, the second order curvature of a Lorentzian $4$-manifold can be entirely expressed in 20 equations. This comes up later in the problem set.
+
+	\begin{part}{}Explain the physical significance of this theorem.
+	\end{part}
+
+	Under the physical interpretation of gravity as the curvature of a Lorentzian manifold, what this theorem states is that gravity can be transformed away by a coordinate transformation in a small enough region (technically infinitesimally) around a point. This is Einstein's happiest thought -- the idea that a free falling frame experiences the same laws of physics as an inertial frame under no gravitational potential.
+\end{solution}
+
+\begin{problem}{2}
+Covariant derivatives and Christoffel symbols.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Following the lecture notes, show that $\nabla_\mu A_\nu = e_\nu\cdot \partial_\mu A$ is a tensor.
+	\end{part}
+
+	Let's write $A = A_\nu e^\nu$. Then, note that
+	\[
+		\begin{aligned}
+			\nabla_{\nu'} A_{\mu'} =  e_{\nu'}\cdot (\partial_{\mu'} A)
+			 & = e_{\nu'}\cdot \frac{\partial x^{\mu}}{\partial x^{\mu'}}\partial_\mu A                                             \\
+			 & = \pp{x^\mu}{x^{\mu'}}\pp{x^\nu}{x^{\nu'}}e_{\nu}\cdot A = \pp{x^\mu}{x^{\mu'}}\pp{x^\nu}{x^{\nu'}}\nabla_\nu A^\mu.
+		\end{aligned}
+	\]
+	This is exactly the required tensor transformation law.
+
+	\begin{part}{}
+		Recall that we defined the Christoffel symbol $\Gamma^\lambda_{\mu\nu}$ through the basis vectors $e_\mu$ and the inverse basis vectors using $\nabla_\mu A^\nu = e^\nu \cdot \partial_\mu A$. Show that according to this definition,
+		\[ \nabla_\mu A_\nu = \partial_\mu A_\nu - \Gamma^\lambda_{\mu\nu}A_\lambda.\]
+	\end{part}
+
+	Next, let's expand the definition to get
+	\[
+		\begin{aligned}
+			\nabla_{\mu} A_{\nu}
+			&= e_\nu\cdot \partial_\mu (A_\lambda e^\lambda)\\
+			&= e_\nu\cdot e^\lambda(\partial_\mu A_\lambda) + A_\lambda e_\nu \cdot (\partial_\mu e^\lambda)\\
+			&= \delta^\lambda_\nu (\partial_\mu A_\lambda) + A_\lambda e_\nu\cdot (\partial_\mu e^\lambda)\\
+			&= \partial_\mu A_\nu - A_\lambda e^\nu\cdot (\partial_\mu e_\lambda) = \partial_\mu A_\nu - \Gamma^\lambda_{\mu\nu} A_\lambda.
+		\end{aligned}
+	\]
+	Here, the equality $e_\nu\cdot (\partial_\mu e^\lambda) = -e^\nu\cdot (\partial_\mu e_\lambda)$ follows from the Leibniz rule.
+\end{parts}
+
+\begin{problem}{3}
+In lecture, we showed $[\nabla_\mu, \nabla_\nu]\phi = 0$, where $\phi$ is a scalar. Using this relation, show that the Christoffel symbol satisfies the so-called ``torsion-free'' condition: $\Gamma^\lambda_{\mu\nu} = \Gamma^\lambda_{\nu\mu}$.
+\end{problem}
+
+\begin{solution}
+	By expanding the commutator, we get that it is equal to
+	\[
+		\begin{aligned}
+			[\nabla_\mu, \nabla_\nu]\phi = (\nabla_\mu\nabla_\nu - \nabla_\nu\nabla_\mu)\phi
+			 & = \partial_\mu\partial_\nu \phi - \Gamma^\lambda_{\mu\nu}\partial_\lambda\phi - \partial_\nu\partial_\mu\phi - \Gamma^\lambda_{\nu\mu}\partial_\lambda \phi \\
+			 & = (\Gamma^\lambda_{\nu\mu} - \Gamma^\lambda_{\mu\nu})\partial_\lambda \phi.
+		\end{aligned}
+	\]
+\end{solution}
+Since this commutator is zero, it immediately follows that $\Gamma^\lambda_{\nu\mu} = \Gamma^\lambda_{\mu\nu}$.
+
+\begin{problem}{4}
+Show that the covariant derivative defined above satisfies the following properties:
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Linearity: $\nabla_\mu (\mathbf{T} + \mathbf{S}) = \nabla_\mu \mathbf{T} + \nabla_\mu\mathbf{S}$.
+	\end{part}
+	Linearity follows by definition:
+	\[
+		\nabla_\mu (\mathbf{T} + \mathbf{S})^\nu = \partial_\mu (\mathbf{T} +\mathbf{S})^\nu +\Gamma^\lambda_{\mu\nu} (\mathbf{T}+\mathbf{S})^\lambda =
+		\partial_\mu\mathbf{T}^\nu + \Gamma^\nu_{\mu\lambda}\mathbf{T}^\lambda +
+		\partial_\mu\mathbf{S}^\nu + \Gamma^\nu_{\mu\lambda}\mathbf{S}^\lambda
+		= \nabla_\mu \mathbf{T}^\nu + \nabla_\mu\mathbf{S}^\nu.
+	\]
+
+	\begin{part}{(b)}
+		Leibniz rule: $\nabla_\mu (\mathbf{T}\mathbf{S}) = (\nabla_\mu \mathbf{T})\mathbf{S} + \mathbf{T}(\nabla_\mu\mathbf{S})$.
+	\end{part}
+	The Leibniz rule follows from the Leibniz rule for $\partial_\mu$:
+	\[
+		\begin{aligned}
+			\nabla_\mu \mathbf{T}^\nu\mathbf{S}^\sigma
+			 & =
+			\partial_\mu(\mathbf{T}^\nu\mathbf{S}^\sigma) +
+			\Gamma^\nu_{\mu\lambda} \mathbf{T}^\lambda\mathbf{S}^\sigma
+			+\Gamma^\sigma_{\mu\lambda} \mathbf{T}^\nu\mathbf{S}^\lambda                                     \\
+			 & =
+			\partial_\mu\mathbf{T}^\nu\mathbf{S}^\sigma + \mathbf{T}^\nu\partial_\mu\mathbf{S}^\sigma+
+			\Gamma^\nu_{\mu\lambda} \mathbf{T}^\lambda\mathbf{S}^\sigma
+			+\Gamma^\sigma_{\mu\lambda} \mathbf{T}^\nu\mathbf{S}^\lambda                                     \\
+			 & = (\nabla_\mu \mathbf{T}^\nu)\mathbf{S}^\sigma + \mathbf{T}^\nu(\nabla_\mu\mathbf{S}^\sigma).
+		\end{aligned}
+	\]
+
+	\begin{part}{(c)}
+		Commutes with contractions: $\nabla_\mu \delta_\nu^\lambda = 0$.
+	\end{part}
+
+	For a $(1,1)$-tensor, the covariant derivative has the form
+	\[
+		\nabla_\mu T^\lambda_\nu = \partial_\mu T^\lambda_\nu + \Gamma^\lambda_{\mu\sigma} T^\sigma_\nu - \Gamma^\sigma_{\mu\nu} T^\lambda_\sigma.
+	\]
+	Since the delta is constant, the derivative vanishes and we are left with
+	\[
+		\nabla_\mu \delta^\lambda_\nu = \Gamma^\lambda_{\mu\sigma} \delta^\sigma_\nu - \Gamma^\sigma_{\mu\nu}\delta^\lambda_\sigma = \Gamma^\lambda_{\mu\nu} - \Gamma^\lambda_{\mu\nu} = 0.
+	\]
+
+	\begin{part}{(d)}
+		If $\nabla_\rho g_{\mu\nu}=0$, then $\nabla_\rho g^{\mu\nu}=0$.
+	\end{part}
+	Recall that $g_{\mu\lambda}g^{\lambda\nu}=\delta_\mu^\nu$. Taking the covariant derivative of both sides and using the Leibniz rule and the contraction commutation rule, we get
+	\[
+		(\nabla_\rho g_{\mu\lambda})g^{\lambda\nu} + g_{\mu\lambda}(\nabla_\rho g^{\lambda\nu}) = 0.
+	\]
+	Since $\nabla_\rho g_{\mu\lambda}=0$, this simplifies to $g_{\mu\lambda}(\nabla_\rho g^{\lambda\nu})=0$. Multiplying both sides by the tensor $g^{\lambda\mu}$ then gives us the desired $\nabla_\rho g^{\lambda\nu}=0$ since $g^{\lambda\mu}g_{\mu\lambda}=1$.
+\end{parts}
+
+\begin{problem}{5}
+We'll do some computations on a 2-dimensional sphere of radius $R$. Use the ``cylindrical coordinate system'', $\{\rho,\phi\}$. Here, $\phi$ is the azimuthal angle and $\rho=R\sin \theta$ is the perpendicular distance to the $z$-axis.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Show that the infinitesimal distance between the two points, that are separated by $d\rho$ and $d\phi$ is
+		\[
+			ds^2 = \frac{R^2\,d\rho^2}{R^2-\rho^2} + \rho^2\,d\phi^2.
+		\]
+		This specifies the metric.
+	\end{part}
+
+	If we embed the sphere by $\iota : S^2 \to \A^3_{(x,y,z)}$, the inclusion map takes the form
+	\[
+		\iota(\rho, \phi) = \left(\rho\cos \phi, \rho\sin \phi, \sqrt{R^2 - \rho^2}\right).
+	\]
+	The metric on $S^2$ is then the pullback by $\iota$ of the canonical metric $dx^2+dy^2+dz^2$ on $\A^3$. Computing the differentials $dx,dy,dz$, we get
+	\[
+		\begin{aligned}
+			dx & = \cos\phi\,d\rho-\rho\sin\phi\,d\phi,    \\
+			dy & = \sin\phi\,d\rho + \rho\cos\phi\,d\phi,  \\
+			dz & = \frac{-\rho}{\sqrt{R^2-\rho^2}}\,d\rho.
+		\end{aligned}
+	\]
+	Using this, the pullback of the metric becomes
+	\[
+		\begin{aligned}
+			ds^2 = \iota_*(dx^2+dy^2+dz^2)
+			 & = (\cos\phi\,d\rho - \rho \sin\phi\,d\phi)^2 + (\sin\phi\,d\rho + \rho\cos\phi\,d\phi)^2 + \rho^2/(R^2-\rho^2)\,d\rho^2 \\
+			 & = d\rho^2 + \rho^2\,d\phi^2 + \rho^2/(R^2-\rho^2)\,d\rho^2                                                              \\
+			 & = \frac{R^2\,d\rho^2}{R^2-\rho^2} + \rho^2\,d\phi^2.
+		\end{aligned}
+	\]
+	This is the desired metric.
+
+	\begin{part}{(b)}
+		Write down all components of the metric, work out the inverse metric, and use them to compute all components of the Christoffel symbols.
+	\end{part}
+
+	Since there are no cross terms, the metric is diagonal so the metric and inverse metric have the form
+	\[
+		g_{ij} = \begin{pmatrix}\frac{R^2}{R^2-\rho^2}&0\\ 0 &\rho^2\end{pmatrix}
+		\quad\textrm{and}\quad
+		g^{ij} = \begin{pmatrix}\frac{R^2-\rho^2}{R^2}&0\\ 0 &\frac{1}{\rho^2}\end{pmatrix}
+	\]
+	The Christoffel symbols are given in terms of the metric by
+	\[
+		\Gamma^i_{j k} = \frac{1}{2} g^{im}(\partial_j g_{km} + \partial_k g_{jm} - \partial_m g_{j k}).
+	\]
+	Computing the derivatives of the metric, we have
+	\[
+		\partial_\rho g_{\rho\rho} = \frac{2R^2\rho}{(R^2-\rho^2)^2},\quad\partial_\phi g_{\rho\rho}=0,\quad \partial_\rho g_{\phi\phi} = 2\rho, \quad \partial_\phi g_{\phi\phi} = 0.
+	\]
+	Plugging these into the formula for the Christoffel symbol, we get the symbols
+	\[
+		\Gamma^\rho_{\rho\rho} = \frac{\rho}{R^2-\rho^2},\quad \Gamma^\rho_{\phi\phi} = -\rho\left(\frac{R^2-\rho^2}{R^2}\right),\quad \Gamma^\phi_{\rho\phi} = \Gamma^\phi_{\phi\rho}=\frac{1}{\rho}.
+	\]
+
+	\begin{part}{(c)}
+		Write down the geodesic equations. Show that the geodesic on the surface is a great circle.
+	\end{part}
+
+	In general, the geodesic equation is
+	\[
+		\frac{d^2x^\mu}{d\lambda^2} + \Gamma^\mu_{\nu\rho} \frac{dx^\nu}{d\lambda}\frac{dx^\rho}{d\lambda} = 0.
+	\]
+	In our case, this gives the system of equations
+	\[
+		\ddot{x}^\rho + \frac{\rho}{R^2-\rho^2}(\dot{x}^\rho)^2 - \rho\left(\frac{R^2-\rho^2}{R^2}\right)(\dot{x}^\phi)^2 = 0,\quad \ddot{x}^\phi + \left(\frac{2}{\rho}\right)\dot{x}^\phi\dot{x}^\rho = 0.
+	\]
+	Let's show that the longitude lines are geodesics. Such a line would have $\dot{x}^\phi=0$, so the geodesic equations become:
+	\[
+		\ddot{x}^\rho + \frac{\rho}{R^2-\rho^2}(\dot{x}^\rho)^2=0
+	\]
+	Let $x^\rho(s) = R\sin(f(s))$ for any linear function $f(s)$ with slope $m$. Then
+	\[
+		\dot{x}^\rho = mR\cos(f(s))\quad\textrm{and}\quad \ddot{x}^\rho = -m^2R\sin(f(s)).
+	\]
+	Plugging this into the differential equation, we get
+	\[
+		-m^2R\sin(f(s)) + \frac{R\sin(f(s))}{R^2(1-\sin^2(f(s)))}m^2R^2\cos^2(f(s))=0.
+	\]
+	Thus, the longitude lines satisfy the geodesic equations. Since the metric is invariant under rotations of the sphere, this means that all geodesics are great circles.
+
+	\begin{part}{(d)}
+		Maybe a naive creature living on the surface of the sphere (which is now not at the north pole)
+		thinks that, if he starts with a velocity that initially points to the direction in which the latitude
+		remains unchanged, the straightest path should follow the path that has constant latitude. Show
+		that this path does not satisfy the geodesic equations
+	\end{part}
+
+	For any $0<\rho < R$, consider the curve $x(s) = (\rho, s)$. This is a latitude line as described in the problem which is not the equator. The derivatives of this curve are
+	\[
+		\dot{x}^\rho = 0, \quad\ddot{x}^\rho =0,\quad \dot{x}^\phi = 1,\quad\ddot{x}^\phi = 0.
+	\]
+	Plugging these into the geodesic equation, the first one gives us
+	\[
+		-\rho\left(\frac{R^2-\rho^2}{R^2}\right) = 0.
+	\]
+	This means that either $\rho = 0$ or $\rho = R$, both of which were unallowed by assumption. Thus, this path is not a geodesic.
+\end{parts}
+
+\begin{problem}{6}
+Show that
+\[
+	[\nabla_\alpha,\nabla_\beta]A^\mu = R^\mu_{\lambda\alpha\beta}A^\lambda,
+\]
+with the Riemann tensor defined in the lecture.
+\end{problem}
+
+\begin{solution}
+	Recall that the Riemann tensor is defined as
+	\[
+		R^\mu_{\lambda\alpha\beta} = \partial_\alpha\Gamma^\mu_{\beta\lambda} - \partial_\beta\Gamma^\mu_{\alpha\lambda} + \Gamma^\mu_{\alpha\sigma}\Gamma^\sigma_{\beta\lambda} - \Gamma^{\mu}_{\beta\sigma}\Gamma^{\sigma}_{\alpha\lambda}.
+	\]
+	On the other hand, the commutator can be expressed as
+	\[
+		\begin{aligned}
+			[\nabla_\alpha, \nabla_\beta] A^\mu = (\nabla_\alpha\nabla_\beta - \nabla_\beta\nabla_\alpha) A^\mu.
+			%  & = (\nabla_\alpha\nabla_\beta - \nabla_\beta\nabla_\alpha) A^\mu                                                                                                               \\
+			%  & = \nabla_\alpha (\partial_\beta A^\mu + \Gamma^\mu_{\beta\lambda}A^\lambda)
+			% - \nabla_\beta (\partial_\alpha A^\mu + \Gamma^\mu_{\alpha\lambda}A^\lambda)                                                                                                     \\
+			%  & = \nabla_\alpha\partial_\beta A^\mu + \Gamma^\mu_{\beta\lambda}\nabla_\alpha A^\lambda - \nabla_\beta\partial_\alpha A^\mu - \Gamma^\mu_{\alpha\lambda}\nabla_\beta A^\lambda\\
+			%  &= \nabla_\alpha\partial_\beta A^\mu + \Gamma^\mu_{\beta\lambda} (\partial_\alpha A^\lambda + \Gamma^\lambda_{\alpha \sigma}A^\sigma)
+			%  - \nabla_\beta\partial_\alpha A^\mu - \Gamma^\mu_{\alpha\lambda} (\partial_\beta A^\lambda + \Gamma^\lambda_{\beta \sigma}A^\sigma)\\
+			%  &= (\nabla_\alpha\partial_\beta + \Gamma^\lambda_{\beta\mu}\partial_\alpha + \Gamma^\sigma_{\beta\lambda}\Gamma^\lambda_{\alpha\mu}
+		\end{aligned}
+	\]
+	Using the covariant differentiation formula $\nabla_\mu A^\nu = \partial_\mu A^\nu + \Gamma^\nu_{\mu\lambda} A^\lambda$, we can expand the terms on one side of this commutator as
+	\[
+		\begin{aligned}
+			\nabla_\alpha\nabla_\beta A^\mu
+			 & = \partial_\alpha(\nabla_\beta A^\mu) + \Gamma^\mu_{\alpha\lambda}(\nabla_\beta A^\lambda)                                                                                                                                                                         \\
+			 & = \partial_\alpha(\partial_\beta A^\mu + \Gamma^\mu_{\beta\sigma}A^\sigma)
+			+\Gamma^\mu_{\alpha\lambda}(\partial_\beta A^\lambda + \Gamma^\lambda_{\beta\sigma}A^\sigma)                                                                                                                                                                          \\
+			 & =\partial_\alpha\partial_\beta A^\mu+ (\partial_\alpha\Gamma^\mu_{\beta\sigma})A^\sigma + \Gamma^\mu_{\beta\sigma}\partial_\alpha A^\sigma + \Gamma^\mu_{\alpha\lambda}\partial_\beta A^\lambda + \Gamma^\mu_{\alpha\lambda}\Gamma^\lambda_{\beta\sigma} A^\sigma.
+		\end{aligned}
+	\]
+	By swapping $\alpha$ and $\beta$ in the above expression, we get
+	\[
+		\nabla_\beta\nabla_\alpha A^\mu
+		=\partial_\beta\partial_\alpha A^\mu + (\partial_\beta\Gamma^\mu_{\alpha\sigma})A^\sigma + \Gamma^\mu_{\alpha\sigma}\partial_\beta A^\sigma + \Gamma^\mu_{\beta\lambda}\partial_\alpha A^\lambda + \Gamma^\mu_{\beta\lambda}\Gamma^\lambda_{\alpha\sigma} A^\sigma.
+	\]
+	Many terms will cancel when we calculate the actual commutator. Namely, we are left with
+	\[
+		[\nabla_\alpha, \nabla_\beta]A^\mu = (\nabla_\alpha\nabla_\beta - \nabla_\beta\nabla_\alpha)A^\mu = (\partial_\alpha\Gamma^\mu_{\beta\sigma} - \partial_\beta \Gamma^\mu_{\alpha\sigma} + \Gamma^\mu_{\alpha\lambda}\Gamma^\lambda_{\beta\sigma} - \Gamma^\mu_{\beta\lambda}\Gamma^\lambda_{\alpha\sigma}) A^\sigma = R_{\sigma\alpha\beta}^{\mu} A^\sigma.
+	\]
+	This is exactly the identity we set out to prove.
+\end{solution}
+
+\begin{problem}{7}
+Show the following symmetry properties of the Riemann tensor.
+\end{problem}
+\begin{solution}
+	It suffices to check these properties infinitesimally, so let's work in a local inertial frame at a point $p\in M$. The Christoffel symbols vanish, so the Riemann curvature tensor takes the form
+	\[
+		\begin{aligned}
+			R^{\mu}_{\nu\alpha\beta}(p)
+			 & = \partial_\alpha \Gamma^\mu_{\beta\lambda}(p) - \partial_\beta \Gamma^\mu_{\alpha\lambda}(p)                                                                                                                                                      \\
+			 & = \frac{1}{2}g^{\mu\lambda}(p)\left( \partial_\nu \partial_\alpha g_{\beta\lambda}(p) - \partial_\nu\partial\beta g_{\alpha\lambda}(p) - \partial_\lambda\partial_\alpha g_{\beta\nu}(p) + \partial_\lambda\partial_\beta g_{\alpha\nu}(p)\right).
+		\end{aligned}
+	\]
+	Thus, after lowering the upper index, we get the infinitesimal form
+	\[
+		R_{\mu\nu\alpha\beta}(p) =
+		\frac{1}{2}\left((\partial_\nu\partial_\alpha g_{\beta\mu}(p) -\partial_\nu\partial_\beta g_{\alpha\mu}(p)) - (\partial_\mu\partial_\alpha g_{\beta\nu}(p) - \partial_\mu\partial_\beta g_{\alpha\nu}(p))\right).
+	\]
+
+	% \begin{part}{}
+	% \end{part}
+	%
+	% Recall that $R^\mu_{\nu\alpha\beta}A^\lambda = [\nabla_\alpha, \nabla_\beta] A^\mu$. Since $[\nabla_{\alpha}, \nabla_\beta] = -[\nabla_\beta, \nabla_\alpha]$, we get $R^\mu_{\nu\alpha\beta} = -R^\mu_{\nu\beta\alpha}$ and thus \[R_{\mu\nu\alpha\beta} = g^{\mu\sigma}R^\sigma_{\nu\alpha\beta} = -g^{\mu\sigma}R^\sigma_{\nu\beta\alpha} = -R_{\mu\nu\beta\alpha}.\]
+
+	\begin{part}{}
+		$R_{\mu\nu\alpha\beta} = R_{\alpha\beta\mu\nu}$,
+		$R_{\mu\nu\alpha\beta} = -R_{\nu\mu\alpha\beta}$, and
+		$R_{\mu\nu\alpha\beta}=-R_{\mu\nu\beta\alpha}$
+	\end{part}
+
+	These formulas follow immediately from our derived expression for $R_{\mu\nu\alpha\beta}(p)$ -- swapping $\alpha\leftrightarrow \beta$ or $\mu\leftrightarrow\nu$ adds a minus sign, while swapping $\alpha,\beta \leftrightarrow \mu,\nu$ does not affect the overall sign.
+
+	% Looking at the formul
+	%
+	% \begin{part}{}
+	% \end{part}
+	%
+	% This follows immediately from the first two properties, namely
+	% \[
+	% 	R_{\mu\nu\alpha\beta} = R_{\alpha\beta\mu\nu} = -R_{\alpha\beta\nu\mu} = -R_{\nu\mu\alpha\beta}
+	% \]
+
+	\begin{part}{}
+		$R_{\mu\nu\alpha\beta}+R_{\mu\beta\nu\alpha}+R_{\mu\alpha\beta\nu}=0$
+	\end{part}
+	Writing out these expressions at $p$, we get
+	\[
+		\begin{aligned}
+			R_{\mu\nu\alpha\beta}(p)+R_{\mu\beta\nu\alpha}(p)+R_{\mu\alpha\beta\nu}(p)
+			 & =
+			\frac{1}{2}\left(\partial_\nu\partial_\alpha g_{\beta\mu}(p) -\partial_\nu\partial_\beta g_{\alpha\mu}(p) - \partial_\mu\partial_\alpha g_{\beta\nu}(p) + \partial_\mu\partial_\beta g_{\alpha\nu}(p)\right)        \\
+			 & +
+			\frac{1}{2}\left(\partial_\beta\partial_\nu g_{\alpha\mu}(p) -\partial_\beta\partial_\alpha g_{\nu\mu}(p) - \partial_\mu\partial_\nu g_{\alpha\beta}(p) + \partial_\mu\partial_\alpha g_{\nu\beta}(p)\right)        \\
+			 & +\frac{1}{2}\left(\partial_\alpha\partial_\beta g_{\nu\mu}(p) -\partial_\alpha\partial_\nu g_{\beta\mu}(p) - \partial_\mu\partial_\beta g_{\nu\alpha}(p) + \partial_\mu\partial_\nu g_{\beta\alpha}(p)\right)=0, \\
+		\end{aligned}
+	\]
+	by making use of the commutation of partials and symmetry of the metric tensor to cancel like terms.
+\end{solution}
+
+\begin{problem}{8}
+Number of components in the Riemann curvature tensor.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Use the above symmetry properties to show that in $(3+1)$-dimensional spacetime, the number of independent components of $R_{\mu\nu\alpha\beta}$ is $20$.
+	\end{part}
+
+	A general tensor with $4$ indices has $4^4 = 256$ components. The antisymmetry conditions mean that there are $6$ independent combinations for $\mu\nu$ and $\alpha\beta$, so we have $36$ combinations. The further symmetry condition when swapping $\mu\nu$ and $\alpha\beta$ gives us $6\times 7/2=21$ components. Finally, the Bianchi identity reduces the number of independent components by $1$ so we are left with $20$ components.
+
+	\begin{part}{}
+		Recall that in the proof of the local flatness theorem, we counted $100$ components of $\partial_\alpha\partial_\beta g_{\mu\nu}$, and there are 80 parameters in the coordinate transformation of $\partial_\alpha\partial_\beta g_{\mu\nu}$. Can you relate these and spell out an interpretation of the number $20$?
+	\end{part}
+
+	This means that there are $20$ components of $\partial_\alpha\partial_\beta g_{\mu\nu}$ which cannot be transformed away under coordinate transformations, and these correspond to the $20$ independent components of the Riemann curvature tensor. In other words, the Riemann curvature tensor captures \emph{all} of the intrinsic second order curvature data of the Lorentzian manifold.
+\end{parts}
+
+\end{document}
