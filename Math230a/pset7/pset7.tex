@@ -1,0 +1,108 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 7}
+\author{Lev Kruglyak}
+\due{October 23, 2024}
+
+\input{../math230a.sty}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Show that the differentials of a pullback diagram of manifolds form a pullback as well.
+\end{problem}
+
+\begin{solution}
+  Suppose $f : Y \to X$ is a smooth map, $\pi : E \to X$ is a vector bundle, and $\pi' : E' \to Y$ is the pullback bundle. Recall that 
+  \[
+    E' = \{ (y, e)\in Y\times E : f(y)=\pi(e)\}.
+  \]
+  This means that the pullback $P$ of the second diagram must be the embedded submanifold 
+  \[
+    P = \{ ((y,\eta), (e, \xi)) : f(y)=\pi(e), df_y(\eta) = d\pi_e(\xi)\}.
+  \]
+  It's clear that $TE'$ is an embedded submanifold of $T(Y\times E)$. Identifying the fibers of this vector bundle with $T_y Y\times T_e E$ gives us an identification $TE' \cong P$ which completes the proof.
+\end{solution}
+
+\begin{problem}{2}
+  Let $\Sigma$ be a Riemannian $2$-manifold and $\pi : \scB_\O(\Sigma) \to \Sigma$ the principal $\O_2$-bundle of orthonormal frames.
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Construct an explicit identification of $\scB_{\O}(\Sigma) / \SO_2 \to \Sigma$ with the orientation double cover of $\Sigma$.
+  \end{part}
+  
+  Locally, an orientation on $\Sigma$ consists of an equivalence class of sections $\xi \in \Gamma(\scB(\Sigma))$ under the action of $\SO_2$. This quotient is not affected by the reduction $\scB(\Sigma) \to \scB_\O(\Sigma)$, so there is an explicit identification.
+\end{parts}
+
+\begin{problem}{3}
+  Developable surfaces.
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Let $A$ be a $3$-dimensional Euclidean space and $c : (a,b) \to A$ be a smooth curve parametrized by arc length. The surface $M$ which is the union of tangent lines to the image $C$ of $c$ is called the \emph{tangent developable} of $C$. Find conditions on $c$ so that $M$ is a smooth manifold. Compute its Gauss curvature.
+  \end{part}
+
+  Intuitively, we want $c$ to continue curving -- otherwise tangent lines could ``bunch up'' and cause a singularity. More precisely, we first claim that $C$ is an immersed submanifold if and only if $c$ has nonzero Gaussian curvature everywhere.
+
+  Let's assume $c$ is parametrized by arc length, so that $|c'(t)|=1$ for all $t$. Then the Gaussian curvature is equal to $K=|c''(t)|$. On the other hand, the surface $C$ is the image of $(a,b)\times \R$ under the map
+  \[
+    \definefunction{f}{(a,b)\times \R}{A}{(t,s)}{c(t)+s\cdot c'(t)}.
+  \]
+  Suppose the Gaussian curvature $|c''(t)|$ is non-vanishing. Then we claim that $f$ is an immersion. Note that the images of $\partial/\partial t$ and $\partial/\partial s$ are
+  \[
+    df_t(t,s) = c'(t)+s\cdot c''(t)\quad\textrm{and}\quad df_s(t,s)=c'(t).
+  \]
+  The only way for these to be linearly dependent for all $(t,s)$ would be if $c''(t)=0$, which goes against assumption. So $C$ must be an immersed submanifold in this case.
+
+  In the reverse direction, suppose $C$ is an immersed submanifold, say with immersion $f : U \to A$ with $U\subset \R^2$. Around any point, we can shrink and align the immersion to be the canonical one $f$. Then we get that the second derivative cannot vanish by the immersion property. Now for this to be an embedded submanifold, not just an immersed submanifold, we require that none of the tangent lines intersect transversally.
+
+  Finally, we'll show that the Gaussian curvature of this surface is zero, proving that it is in fact a developable surface. It's clear that the curvature in the direction of a tangent line of a tangent line to a point on the curve has Gaussian curvature zero, and it's clear that this is a principal curvature. Thus, the Gaussian curvature is zero.
+\end{parts}
+
+\begin{problem}{5}
+  Let $A=\A_{x,y}$ be the standard affine plane, and consider the product fiber bundle over $A$ with fiber $\R$.
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Which functions $F : A \times \R \to \R^2$ define a horizontal distribution? How?
+  \end{part}
+
+  Any such smooth function defines a horizontal distribution. At any point of $A$, we get a foliation of $A\times \R$ by $\R^2$. Thus, any function $F : A\times \R \to \R^2$ can be treated as a vector field $X_F \in \mathfrak{X}(A\times \R)$ with $\pi_* X_F(a, t) = F(a,t)$. Let's define a distribution $D_F$ by
+  \[
+  D_F(a,t) = \textrm{span}\{z(a,t) + X_F(a,t)\}^\perp
+  \]
+  where $z$ is the canonical vertical vector field on $A\times \R$. This is clearly a horizontal distribution by elementary linear algebra since $X_F(a,t)$ is orthogonal to $z(a,t)$.
+
+  \begin{part}{(b)}
+    For example, we might say that the infinitesimal rate of change of a parallel section of $A\times \R \to A$ at $(x,y)\in A$ along a unit vector in the direction that makes angle $\theta$ with the $x$-axis is $\cos\theta$. Does that define a horizontal distribution? Is it integrable?
+  \end{part}
+
+  The corresponding map from (a) would be $F((x,y),t)= (1,0)$. A parallel section $s : A\to \R$ is then a solution to the set of partial differential equations
+  \[
+    \begin{pmatrix}
+      \partial s/\partial x\\ \partial s/\partial y
+    \end{pmatrix}
+    =F((x,y), s(x,y)).
+  \]
+  This has solutions given simply by $s(x,y)=x+C$ for any constant $c\in \R$. These parallel planes foliate $A\times \R$ and so correspond to an integrable horizontal distribution $H$ on $A\times \R$.
+
+  \begin{part}{(c)}
+    What if instead we say that the infinitesimal rate of change is $x\cos\theta$?
+  \end{part}
+    Now, the map is $F((x,y), t) = (x,0)$ so the sections are $s(x,y)=x^2/2+C$. As before, this horizontal distribution induced by this map is integrable -- though in this case by parallel parabolic cylinders.
+
+  \begin{part}{(d)}
+    In both cases, consider parallel transport along the path that travels around the triangle $(0,0), (0,1), (1,1)$.
+  \end{part}
+  Recall that the Frobenius tensor of the horizontal distribution can be interpreted as the curvature of the corresponding Ehrsemann connection. In this case, both distributions are integrable, so the corresponding connections have no curvature, and parallel transport is just the canonical parallelism of affine space. Thus, there would be no change in vector after travelling around this triangle.
+\end{parts}
+
+\end{document}
