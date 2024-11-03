@@ -1,0 +1,185 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 8}
+\author{Lev Kruglyak}
+\due{October 30, 2024}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\input{../math230a.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{3}
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Prove that the action of a compact Lie group $G$ on a smooth manifold is proper.
+	\end{part}
+
+  We need to show that the action of $G$ on a smooth manifold $M$ by left multiplication is proper, i.e. the map
+  \[
+    \Phi : G \times M \to M \times M,\quad \Phi(g,x)=(gx,x)
+  \]
+  is proper. Suppose $K\subset M\times M$ is compact. Then the projection $\pi_M(K)$ onto $M$ must be compact, and $\Phi^{-1}(K)\subset G\times \pi_M(K)$. This is a closed subset of a compact space and so must be compact.
+
+	\begin{part}{(b)}
+		Let $G$ be a Lie group and suppose $H$ is a closed Lie subgroup. Prove that the action of $H$ on $G$ by left multiplication is proper. What if $H\subset G$ is not closed?
+	\end{part}
+
+  We need to show that the action of $H$ on $G$ by left multiplication is proper, i.e. the map
+  \[
+    \Phi : H \times G \to G \times G,\quad \Phi(h,g)=(hg,g)
+  \]
+  This map $\Phi$ is a composition of the inclusion $H\times G\to G\times G$ with the homeomorphism $G\times G \to G\times G$ given by $(g,g')\mapsto (gg', g')$. The latter map is proper because it is a homeomorphism, and the former map is proper because the inclusion of a closed subspace is proper. Thus the action is proper.
+  is proper.
+\end{parts}
+
+\begin{problem}{4}
+Principal bundles and homotopy theory.
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Let $Q \to [0,1]\times M$ be a principal bundle. Choose a connection on $Q$. Use parallel transport to construct an isomorphism $Q|_{\{0\}\times M} \to Q|_{\{1\}\times M}$.
+	\end{part}
+
+	For each point $p\in M$, the parallel transport along the vertical path $\gamma(t) = (t,p)$ in $[0,1]\times M$ which yields a map from the fiber of $Q$ over $(0,m)$ to that over $(1,m)$. This gives us the desired isomorphism $Q|_{\{0\}\times M} \to Q|_{\{1\}\times M}$.
+
+	\begin{part}{(b)}
+		Let $f_t : M \to N$ be a smooth homotopy and $P\to N$ a principal bundle. Prove that $f_0^*P\cong f_1^*P$.
+	\end{part}
+
+	Such a homotopy is a smooth map $f : [0,1]\times M \to N$. Pulling back the principal bundle $P \to N$ by $f$ then gives us a principal bundle $f^*P \to [0,1]\times M$. We can apply the results of the previous problem to get an isomorphism
+	$f^*P|_{\{0\}\times M}\cong f^*P|_{\{1\}\times M}$. However, note that $f^* P|_{\{t\}\times M}  =f_t^*P$ so we have our desired isomorphism $f_0^*P\cong f_1^*P$.
+
+	\begin{part}{(c)}
+		Prove that a principal bundle over a contractible manifold is trivializable.
+	\end{part}
+
+	Let $M$ be a contractible manifold, say by some map $f : [0,1]\times M \to M$ with $f_0 = \textrm{id}_M$ and $f_1 = c_p$ for some chosen point $p\in M$. For any principal bundle $P \to M$, we thus have $P\cong \textrm{id}_M^* P \cong c_p^* P$ by the previous problem. However, the pullback of any bundle by a constant map is trivial, so this isomorphism gives a trivialization of $P$.
+
+	\begin{part}{(d)}
+		Classify up to isomorphism principal $\U_1$-bundles on $S^n$ for all $n$.
+	\end{part}
+
+	First, let's construct the classifying space for $\U_1$. Recall that the data of a principal $\U_1$-bundle $P\to X$ is equivalent to the data of a complex line bundle $f : \overline{P} \to X$. This means that it suffices to classify complex line bundles on $S^n$. Let's pick some embedding of $X$ into affine complex space $\A_\C^k$ and simultaneous linear embedding of $\overline{P}$ into the tangent space $T\A_\C^k=\A_\C^k\times \C^k$ for $k$ large enough. This gives us a map $B(f) : X \to \CP^{k-1}$ which sends the fiber at a point $x\in X$ to the complex line $\overline{P}_x$ embedded in $T_x\A_\C^k = \C^k$.
+
+	Now, there is a tautological complex line bundle $\xi_k : E_k \to \CP^{k-1}$ where
+	\[
+		E_k = \{ (x,\ell) \in \C^k\times \CP^{k-1} : x\in \ell\}
+	\]
+	with the map $\xi_k$ given by obvious projection onto the $\CP^{k-1}$ component. For any map $F : X \to \CP^{k-1}$ we can pull back this tautological complex line bundle $\xi_k$ to get a complex line bundle on $X$. Conversely, given a line bundle $f : E \to X$, it can be shown that $B(f)^* \xi_k \cong f$. To avoid dependence on $k$, we can pass to the limit and consider maps $X \to \CP^{\infty}$. Assuming $X$ is a finite CW complex, any map $X \to \CP^\infty$ is homotopic to a map $X \to \CP^k$ for large enough $k$ so this works both ways. We know that homotopic maps correspond to isomorphic bundles, and we can also show that isomorphic bundles correspond to homotopic maps.
+
+	We thus get an isomorphism:
+	\[
+		\textrm{Bun}_{\U_1}(X) \lkxisom[] [X, \CP^\infty]
+	\]
+	For the case of spheres, classifying principal $\U_1$-bundles over $S^n$ up to isomorphism thus becomes equivalent to computing $[S^n, \CP^\infty]$. Recall that $\CP^\infty$ is the Eilenberg-Maclane space $K(\Z, 2)$, and so represents the cohomology theory $\textrm{H}^2(-; \Z)$. Thus, we have
+	\[
+		\textrm{Bun}_{\U_1}(X) \cong \textrm{H}^2(S^n; \Z)\cong \begin{cases}\Z & \textrm{if }n=2,    \\
+             0  & \textrm{otherwise}.\end{cases}
+	\]
+	We should give explicit $\U_1$-bundles on $S^2$ corresponding to every integer $n\in \Z$, since this is the only non-trivial case. Let $\mathbb{S}(TS^2)$ be the sphere bundle of the tangent bundle $TS^2$ -- this corresponds to $1\in \Z$. Then, any integer $n$ can be obtained by pulling back this bundle by a map $S^2 \to S^2$ of degree $n$. For example, the trivial bundle is obtained by pulling back the constant map.
+\end{parts}
+
+\begin{problem}{6}
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Let $P$ be a Riemannian manifold equipped with a free action of a Lie group $H$ by isometries. Assume that the quotient map $\pi : P \to X$ is a principal $H$-bundle. Use the metric to construct a connection on $\pi$.
+	\end{part}
+
+	Let's consider the distribution
+	\[
+		DH = (\ker d\pi)^\perp
+	\]
+	where $d\pi$ is the differential of the bundle, and the orthogonal complement is taken with the Riemannian structure on $P$. This distribution must be horizontal since at any point, we have $T_p P = (\ker d\pi)_p\oplus D_p$, and we know that $\pi$ is a submersion so $d\pi_p$ must be surjective. Thus, $D_p$ must be mapped isomorphically onto the tangent space at a basepoint, i.e. $T_{\pi(p)} X$.
+
+	To see that this horizontal distribution is $H$-equivariant, suppose $h\in H$ is some group element and $\rho(h) : P \to P$ is the corresponding isometry. This is a morphism of bundles, so $d\rho(h)$ preserves $\ker d\pi$. Since it is further an isometry, it must respect orthogonal complements as well and so preserves $D$.
+
+	Being an $H$-equivariant horizontal distribution, $D$ gives rise to a connection on $\pi$.
+
+	\begin{part}{(b)}
+		Let $G$ be a Lie group and let $H$ be a closed Lie subgroup. Define the notion of a \emph{bi-invariant Riemannian metric} on $G$. Give examples of a Lie group and a bi-invariant metric on it. Give an example of a Lie group which does not admit a bi-invariant metric.
+	\end{part}
+
+	A bi-invariant Riemannian metric is a metric for which the left and right multiplication maps are isometries. For a simple example, take any abelian Lie group and pick a Haar measure. A counterexample would be $\SL_2$, on which the left and right Haar measures are distinct.
+
+	\begin{part}{(c)}
+		Assuming a bi-invariant metric exists and is chosen, use it to construct a connection on $\pi : G \to G/H$. Compute the curvature of this connection.
+	\end{part}
+
+  If $G$ has a bi-invariant Riemannian structure, then $H$ acts on $G$ by isometries so we can apply the first problem to get a connection on $\pi$. Since the curvature $\Omega$ of this connection is the negative of the Frobenius tensor of the horizontal distribution. This is exactly
+  \[
+    \Omega_e(\xi, \eta) = -[\xi, \eta]_{\mathfrak{h}}, \quad \Omega\in \Omega^2(G; \mathfrak{h})
+  \]
+  where the subscript $\mathfrak{h}$ denotes projection to the subspace $\mathfrak{h}\subset \mathfrak{g}$.
+
+  \begin{part}{(d)}
+    Apply to the Hopf bundle $\U_1 \to S^3 \to S^2$. What about the Hopf bundle $\Sp_1 \to S^7 \to S^4$? The connection you construct on the latter is the basic \emph{instanton} (self-dual connection).
+  \end{part}
+
+  The first Hopf bundle can be expressed as the quotient map $\U_1 \to \SU_2 \to \SU_2/\U_1$. Recall that the Lie algebra $\mathfrak{su}_2$ can be explicitly given as the vector space
+  \[
+    \mathfrak{su}_2 = \left\{ \begin{pmatrix}ia & -\overline{z}\\ z & -ia\end{pmatrix} : a\in \R, z \in \C\right\}.
+  \]
+  The Lie algebra $\mathfrak{su}_1$ of $\U_1$ embeds into $\mathfrak{su}_2$ by diagonal matrices. If we give a basis for $\mathfrak{su}_2$ by
+  \[
+    u_1 = \begin{pmatrix}0&i\\i&0\end{pmatrix},\quad
+    u_2 = \begin{pmatrix}0&-1\\1&0\end{pmatrix},\quad
+    u_3 = \begin{pmatrix}i&0\\0&-i\end{pmatrix},
+  \]
+  then the commutator relations are $[u_3, u_1]=2u_2, [u_1, u_2]=2u_3, [u_2,u_3]=2u_1$. The embedding $\mathfrak{su}_1 \to \mathfrak{su}_2$ then becomes the inclusion of $u_3$ into $u_1,u_2,u_3$. By the previous problem, the curvature $2$-form is
+  \[
+      \Omega_e(\xi, \eta) = -[\xi, \eta]_{\mathfrak{su}_1} \quad\implies\quad \Omega_e = -2u_3\,du_1\wedge du_2.
+  \]
+\end{parts}
+
+\begin{problem}{7}
+  Let $G$ be a Lie group and let $\pi : P \to X$ be a principal $G$-bundle. A \emph{gauge transformation} of $\pi$ is a diffeomorphism $\varphi : P \to P$ that is $G$-equivariant and covers the identity map of $X$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{(a)}
+    Construct a function $\psi : P \to G$ that satisfies $\varphi(p) = p\cdot \psi(p)$ for all $p\in P$. How does $\psi$ transform under the $G$-action on $P$?
+  \end{part}
+
+  For any $p\in P$, let $\psi(p)$ be the unique element of $G$ such that $\varphi(p)=p\cdot \psi(p)$. We know that such an element exists and is unique because of the transitivity and freeness of the $G$-action on the fibers of $P$.
+
+  Now suppose $h\in G$. By $G$-equivariance of $\varphi$, we get
+  \[
+    \begin{cases}
+      \varphi (p\cdot h) = (p\cdot h)\cdot \psi(p\cdot h)\\
+      \varphi(p)\cdot h = p\cdot \psi(p)\cdot h
+    \end{cases}
+    \quad\implies\quad \psi(p\cdot h) = h^{-1}\cdot \psi(p)\cdot h.
+  \]
+  In other words, $\psi$ transforms by conjugation.
+
+  \begin{part}{(b)}
+    Express $\psi$ as a section of a fiber bundle associated to $\pi$. What kind of fiber bundle is it?
+  \end{part}
+
+  \begin{part}{(c)}
+    Do gauge transformation always exist?
+  \end{part}
+
+  \begin{part}{(d)}
+    Are there any simplifications if $G$ is abelian? If $G$ is discrete?
+  \end{part}
+
+  \begin{part}{(e)}
+    Let $\Aut(P)$ denote the group of $G$-equivariant diffeomorphisms of $P$, and let $\Aut(\pi)$ denote the group of gauge transformations. Construct an exact sequence
+    \[
+    1 \lkxto \Aut(\pi) \lkxto \Aut(P) \lkxto \Diff(X)
+    \]
+    where $\Diff(X)$ is the group of diffeomorphisms of $X$. Is the last map surjective? Give a proof or counterexample to verify your answer.
+  \end{part}
+\end{parts}
+
+\end{document}

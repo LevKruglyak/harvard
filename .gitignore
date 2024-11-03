@@ -25,3 +25,4 @@ __pycache__/
 *.fdb_latexmk
 thesis.pdf
 .python-version
+.Rproj.user
