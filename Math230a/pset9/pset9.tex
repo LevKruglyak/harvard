@@ -1,0 +1,96 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 9}
+\author{Lev Kruglyak}
+\due{November 6, 2024}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\input{../math230a.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Let $\pi : P \to X$ be a principal $G$-bundle with connection $\Theta \in \Omega^1(P; \mathfrak{g})$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{(a)}
+    Denote the right $G$-action of $G$ on $P$ as $R : P \times G \to P$. Compute $R^*\Theta$.
+  \end{part}
+
+  Letting $R_g$ denote right multiplication by $g\in G$. By $G$-equivariance of the connection form, we have the relation $R^*_g \Theta = \Ad_{g^{-1}}\Theta$. Letting $\theta_{\mc}$ be the Maurer-Cartan form on $G$, we find that
+  \[
+  R^*\Theta = {\Ad_{g^{-1}}} \textrm{pr}_P^*\Theta + \textrm{pr}_G^*\,\theta_{\mc}.
+  \]
+
+  \begin{part}{(b)}
+    Suppose $s : X \to P$ is a section of $\pi$ and $g : X \to G$ is a function, Compute $\alpha' = (s\cdot g)^*\Theta$ in terms of $\alpha = s^*\Theta$.
+  \end{part}
+
+  Let's write the function $s\cdot g$ as a composition of
+  \[
+    \lkxfunc{\phi}{X}{P\times G}{x}{(s(x), g(x))}
+    \quad\textrm{and}\quad
+    \lkxfunc{R}{P\times G}{P}{(p,g)}{p\cdot g}
+  \]
+  We know the pullback $\alpha'=(s\cdot g)^*\Theta = (R\circ\phi)^* \Theta = \phi^*R^*\Theta$. Plugging the map $\phi$ into the expression from the previous part, we get
+  \[
+    \alpha' = \Ad_{g^{-1}} \alpha + g^* \theta_{\mc}.
+  \]
+  \begin{part}{(c)}
+    Write your results in matrix notation if $G$ is a matrix group.
+  \end{part}
+  
+  In a matrix group $G$ and matrix $M\in G$, the adjoint action is conjugation, and the Maurer-Cartan form is $\theta_{\mc} = M^{-1}\,dM$. Thus, we can write the expressions from the previous parts as
+  \[
+    R^*\Theta = M^{-1}(\textrm{pr}_1^*\Theta)M + M^{-1}\,dM\quad\textrm{and}\quad\alpha' = M^{-1}\alpha M + M^{-1}\,dM.
+  \]
+\end{parts}
+
+\begin{problem}{2}
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Let $G$ be a Lie group (not necessarily compact) and let $H\subset G$ be a closed Lie subgroup which is compact. Prove that the homogeneous manifold $G/H$ is reductive.
+  \end{part}
+
+  \begin{part}{(b)}
+    Find an $H$-invariant complement $\pfr$ to $\hfr\subset \gfr$ for the homogeneous manifolds $\O_{n,1} / \O_n$ (hyperbolic space) and $\Sp_{2n} / \U_n$ (Siegel upper half space).
+  \end{part}
+
+  \begin{part}{(c)}
+    Compute the curvature of the induced linear connection on hyperbolic space. Compare to the case of the sphere.
+  \end{part}
+
+  \begin{part}{(d)}
+    Describe the Riemannian metric on hyperbolic space. Identify the total space of the orthonormal frame bundle.
+  \end{part}
+\end{parts}
+
+\begin{problem}{3}
+  Let $\pi : P \to X$ be a principal $G$-bundle with connection $\Theta$. Prove that $\Theta$ is flat if and only if the holonomy group $\Hol_p(\Theta)\subset G$ is a discrete subgroup for all $p\in P$.
+\end{problem}
+
+\begin{problem}{6}
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Fix $m\in \Z^{>0}$. Construct a $\C^\times$-action on $\CP^m$ with precisely $m+1$ fixed points.
+  \end{part}
+
+    Consider the action
+    \[
+      \lkxfunc{}{\C^\times}{\End(\CP^m)}{\lambda}{\lambda\cdot[z_1:\cdots:z_{m+1}] = [\lambda z_1 : \lambda^2 z_2 : \cdots : \lambda^{m+1} z_{m+1}].}
+    \]
+
+  \begin{part}{(b)}
+  \end{part}
+\end{parts}
+\end{document}
+
