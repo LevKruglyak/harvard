@@ -47,35 +47,89 @@
     Write your results in matrix notation if $G$ is a matrix group.
   \end{part}
   
-  In a matrix group $G$ and matrix $M\in G$, the adjoint action is conjugation, and the Maurer-Cartan form is $\theta_{\mc} = M^{-1}\,dM$. Thus, we can write the expressions from the previous parts as
+  In a matrix group $G$ the adjoint action is conjugation, and the Maurer-Cartan form is $\theta_{\mc} = g^{-1}\,dg$. Thus, we can write the expression from the previous part as
   \[
-    R^*\Theta = M^{-1}(\textrm{pr}_1^*\Theta)M + M^{-1}\,dM\quad\textrm{and}\quad\alpha' = M^{-1}\alpha M + M^{-1}\,dM.
+    \alpha' = g^{-1}\alpha g + g^{-1}\,dg.
   \]
 \end{parts}
 
+\pagebreak
 \begin{problem}{2}
+  Recall the Haar measure defined on a compact Lie group.
 \end{problem}
 \begin{parts}
   \begin{part}{(a)}
     Let $G$ be a Lie group (not necessarily compact) and let $H\subset G$ be a closed Lie subgroup which is compact. Prove that the homogeneous manifold $G/H$ is reductive.
   \end{part}
 
+  Let's pick any Riemannian structure on $G$, which will give us an inner product $\langle -, -\rangle$ on $\gfr$. Pick a Haar probability measure $\mu$ on $H$ and consider the inner product
+  \[
+    \langle \xi_1, \xi_2 \rangle_\hfr = \int_H \left\langle \Ad_h \xi_1, \Ad_h \xi_2\right\rangle\,d\mu(h).
+  \]
+  Now let $\pfr=\hfr^\perp$ be the orthogonal complement to $\hfr$ under this inner product. 
+  It follows immediately from the averaging definition of the inner product and $H$-invariance of $\mu$ that $\pfr$ is $H$-invariant, so this is indeed a reductive structure.
+
   \begin{part}{(b)}
-    Find an $H$-invariant complement $\pfr$ to $\hfr\subset \gfr$ for the homogeneous manifolds $\O_{n,1} / \O_n$ (hyperbolic space) and $\Sp_{2n} / \U_n$ (Siegel upper half space).
+    Find an $H$-invariant complement $\pfr$ to $\hfr\subset \gfr$ for the homogeneous manifolds $\O_{n,1} / \O_n$ (hyperbolic space) 
+    and $\Sp_{2n} / \U_n$ (Siegel upper half space).
   \end{part}
 
+  Let $\eta$ be the matrix $\textrm{diag}(1,\ldots, 1,-1)$. The Lie algebra of $\O_{n,1}$ is the matrix algebra
+  \[
+    \so_{n,1} = \{ X\in M_n(\R) : X^\intercal \eta + \eta X = 0\}\quad\implies\quad \so_{n,1} = \left\{\begin{pmatrix}X & v \\ v & 0\end{pmatrix} : X\in \so_n,  v\in \R^n\right\}.
+  \]
+  We can thus define $\pfr\subset \gfr$ as the subspace of $\so_{n,1}$ with $X=0$. This subspace is isomorphic to $\R^n$.
+
+  For the case $\Sp_{2n} /\U_n$, note that
+  \[
+    \mathfrak{sp}_{2n} = \left\{\begin{pmatrix}A&B\\ C&-A^\intercal\end{pmatrix} : B,C \textrm{ symmetric}\right\}\quad\textrm{and}\quad \mathfrak{u}_n = \left\{\begin{pmatrix} A & -B \\ B & A\end{pmatrix} A \in \mathfrak{so}_n, B\textrm{ symmetric}\right\}.
+  \]
+  We can thus define $\pfr\subset \gfr$ as the subspace
+  \[
+    \pfr = \left\{ \begin{pmatrix} 0 & S \\ S & 0\end{pmatrix} : S \textrm{ symmetric}\right\}.
+  \]
+  
   \begin{part}{(c)}
     Compute the curvature of the induced linear connection on hyperbolic space. Compare to the case of the sphere.
   \end{part}
+
+  Recall that the curvature form on the base space is $\Omega_e(\xi_1,\xi_2) = -[\xi_1,\xi_2]_{\pfr}$ for $\xi_1,\xi_2\in \pfr$. It's clear from the previous part that $-[\xi_1,\xi_2]\in \hfr$ for any $\xi_1,\xi_2\in \pfr$, so $\Omega=0$ on the base. In particular this means that hyperbolic space has constant curvature form, just as in the case of the sphere. However, the curvature of hyperbolic space is negative the curvature of the sphere.
 
   \begin{part}{(d)}
     Describe the Riemannian metric on hyperbolic space. Identify the total space of the orthonormal frame bundle.
   \end{part}
 \end{parts}
+%
+% \begin{problem}{3}
+%   Let $\pi : P \to X$ be a principal $G$-bundle with connection $\Theta$. Prove that $\Theta$ is flat if and only if the holonomy group $\Hol_p(\Theta)\subset G$ is a discrete subgroup for all $p\in P$.
+% \end{problem}
+%
+% \begin{solution}
+% \end{solution}
 
-\begin{problem}{3}
-  Let $\pi : P \to X$ be a principal $G$-bundle with connection $\Theta$. Prove that $\Theta$ is flat if and only if the holonomy group $\Hol_p(\Theta)\subset G$ is a discrete subgroup for all $p\in P$.
+\begin{problem}{5}
 \end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Let $G$ be a Lie group and let $\pi : P \to [0,1]$ be a principal $G$-bundle with connection $\Theta$. Let $s$ be a section and write 
+    \[
+    s^*\Theta = A(t)\,dt\in \Omega^1([0,1]; \gfr).
+    \]
+    Write the ODE for a function $g : [0,1] \to G$ which satisfies the condition that the section $sg$ of $\pi$ is flat. Impose the initial condition $g(0)=e$.
+  \end{part}
+
+  This condition that the section $sg$ is flat is equivalent to $(sg)^*\Theta=0$, so by the first problem the equation becomes
+  \[
+    \Ad_{g(t)^{-1}} A(t)\,dt + \dot{g}(t)\,dt = \Ad_{g^{-1}}(s^*\Theta) + g^*\theta_{\textrm{mc}}=0.
+  \]
+  The corresponding ODE for $g$ thus becomes $\dot{g} = -\Ad_{g^{-1}} A$.
+
+  \begin{part}{(b)}
+    Suppose first that $A(t) = A$ is a constant function. Write a solution to the ODE.
+  \end{part}
+
+  It follows that $g(t) = e^{-tA}$ satisfies the ODE, since clearly $\Ad_{e^{tA}} A = A$ for all $t\in [0,1]$, and $g(0)=e$.
+\end{parts}
 
 \begin{problem}{6}
 \end{problem}
@@ -88,9 +142,39 @@
     \[
       \lkxfunc{}{\C^\times}{\End(\CP^m)}{\lambda}{\lambda\cdot[z_1:\cdots:z_{m+1}] = [\lambda z_1 : \lambda^2 z_2 : \cdots : \lambda^{m+1} z_{m+1}].}
     \]
+    For a point $[z_1: \cdots : z_{m+1}]$ to be fixed by this action, we would require that there exists an $\alpha$ for all $\lambda\in C^\times$ such that $\lambda^k z_k = \alpha z_k$. Suppose $z_k$ and $z_\ell$ are nonzero coordinates. Then $\lambda^{k-\ell} = 1$ for all $\lambda$ which is impossible unless $k-\ell = 0$. Thus, the only fixed points of this action are those with only one nonzero coordinate.
 
   \begin{part}{(b)}
+    Let $\pi : P \to X$ be a principal $\C^\times$-bundle over a smooth manifold $X$. Let $L \to X$ be the associated complex line bundle. Construct the fiber bundle with fiber $\CP^m$ associated to $\pi$ directly in terms of $L\to X$. Construct a canonical isomorphism from the associated bundle to the fiber bundle you construct.
   \end{part}
+
+  Let's construct an isomorphism
+  \[
+    \lkxfunc{}{P\times_{\C^\times} \CP^m}{\mathbb{P}(L^1\oplus L^2\oplus \cdots \oplus L^{m+1})}
+  \]
+  where $L^n$ is the $n$-th tensor power of $L$. Recall that $P\times_{\C^\times} \CP^m = P\times \CP^m/\sim$ where $(p,\ell)\sim (p\cdot \lambda^{-1}, \lambda\cdot \ell)$ for all $p\in P$, $\ell\in \CP^m$, and $\lambda\in\C^\times$. Note that there is an inclusion map of bundles $\iota : P \to L$ which gives rise to inclusions $\iota^n : P \to L^n$.
+
+  Now consider the map
+  \[
+    \lkxfunc{\varphi}{P\times \CP^m}{\mathbb{P}(L^1\oplus L^2\oplus \cdots \oplus L^{m+1})}{(p,\ell)}{[\ell_1\cdot \iota^1(p),\ell_2\cdot \iota^2(p),\ldots,\ell_{m+1}\cdot \iota^n(p)].}
+  \]
+  It's clear that the preimage of a point $z \in \mathbb{P}(L^1\oplus L^2\oplus\cdots\oplus L^{m+1})$ is the subset $\{(p\cdot \lambda^{-1},\lambda\cdot \ell) : \lambda \in \C^\times\}$. This is exactly the defining quotient relation of the associated bundle and thus the map descends to the required isomorphism.
+
+  \begin{part}{(c)}
+    What if the $\C^\times$-action has more fixed points?
+  \end{part}
+
+  \begin{part}{(d)}
+    Specialize to $X = S^1$ and now put a connection on $\pi$. Describe the monodromy of the induced horizontal distribution on the associated fiber bundle.
+  \end{part}
+
+  Up to isomorphism there is only one non-trivial complex line bundle on $S^1$, namely the trivial bundle. This was shown on the previous homework by the observation that $\pi_1(\CP^\infty) = \pi_1(B\U_1) = 0$. So let's suppose that $P = S^1\times \C^\times$. A connection on this bundle is a map $\chi : S^1 \to \C$ where $\C$ is the Lie algebra of $\C^\times$.
+
+  It follows from part (b) that the associated fiber bundle is the trivial bundle $S^1\times \CP^m$.
 \end{parts}
+
+\begin{problem}{7}
+  Let $G$ be a Lie group and suppose $\pi : P \to S^1\times S^1$ is a principal $G$-bundle with a \emph{flat} connection $\Theta$. Fix a basepoint $p\in P$. Prove that the holonomy subgroup $\Hol_p(\Theta)\subset G$ is abelian.
+\end{problem}
 \end{document}
 
