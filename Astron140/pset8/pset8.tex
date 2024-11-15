@@ -1,0 +1,124 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 8}
+\author{Lev Kruglyak}
+\due{November 12, 2024}
+
+\input{../astron140.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Following the procedure outline in the lecture, derive the gravitational deflection angle of light using the Newtonian treatment. Notice that the answer is half of the GR result.
+\end{problem}
+
+\begin{solution}
+  % Besides the steps outlined in the lecture, in the Newtonian derivation, you will need to use the value of the total energy $\widetilde{E} = E/m$. Using the fact that at $r=\infty$, the potential energy becomes zero and the ``light particle'' travels with the speed of light $v=1$, you will be able to determine $\widetilde{E}=1/2$.
+
+  Suppose that a particle of mass $m$ is travelling at the speed of light $v_0 = c$ towards a body of mass $M$. We'll use the coordinates $(r,\phi)$ where $r$ is the distance from the particle to the body and $\phi$ is the angle between them. The velocity components of the particle give us the equation $v^2 = \dot{r}^2 + r^2\dot{\phi}^2$.
+
+  The total energy per mass of the particle is then 
+  \[
+    \widetilde{E} = \frac{E}{m} = \frac{v^2}{2} - \frac{GM}{r} = \frac{\dot{r}^2+ r^2\dot{\phi}^2}{2} - \frac{GM}{r}.
+  \]
+  However, the angular momentum per unit mass is $\widetilde{L} = L/m = r^2\dot{\phi}$, so we can write the equation as
+  \[
+    \widetilde{E} = \frac{1}{2}\dot{r}^2 + \frac{1}{2}\frac{\widetilde{L}^2}{r^2} - \frac{GM}{r}.
+  \]
+  The energy $\widetilde{E}$ is conserved, so in particular at $r=\infty$, the velocity is $v=0$ and gravitational potential is zero. Thus, the energy is $\widetilde{E}=c^2/2$. Multiplying by $2$ on both sides, we get the equation:
+  \[
+    \dot{r}^2 + \frac{\widetilde{L}^2}{r^2} - \frac{2GM}{r} = c^2.
+  \]
+  Now let $u=1/r$ so that $\dot{r} = (dr/d\phi)\dot{\phi} = -\widetilde{L}(du/d\phi)$. We rewrite the equation yet again to get
+  \[
+    \left(\widetilde{L}\frac{du}{d\phi}\right)^2 + \widetilde{L}^2u^2-2GMu = 1\quad\implies\quad
+    \left(\frac{du}{d\phi}\right)^2 + u^2 - \frac{2GM}{\widetilde{L}^2}u = \frac{c^2}{\widetilde{L}^2}.
+  \]
+  Taking the derivative of both sides with respect to $\phi$, we get
+  \[
+    2\left(\frac{du}{d\phi}\right)\frac{d^2u}{d\phi^2} + 2u \left(\frac{du}{d\phi}\right) - \frac{2GM}{\widetilde{L}^2}\left(\frac{du}{d\phi}\right) = 0\quad\implies\quad \frac{d^2u}{d\phi^2} + u = \frac{2GM}{\widetilde{L}^2}
+  \]
+  The general solution to this differential equation is
+  \[
+    u(\phi) = A\cos(\phi) + B\sin(\phi) + \frac{GM}{\widetilde{L}^2}.
+  \]
+  Now let's normalize the coordinate system so that $\phi=0$ at the closest point of the particle to the body, i.e. when $u$ is maximized. Thus, we can assume that $B=0$. By the boundary condition $u(0) = 1/r_0$, where $r_0$ is the closest radius, we get $A = (1/r_0 - GM/\widetilde{L}^2)$. Around angles $\delta$ with $u(\delta)\approx 0$, we can use the approximation $\cos(\delta) \approx \delta$ since $\delta\approx \pi/2$. Thus, we have the equation
+  \[
+    \left(\frac{1}{r_0} - \frac{GM}{\widetilde{L}^2}\right)\delta = \frac{GM}{\widetilde{L}^2}(1-\delta) \quad\implies\quad \delta \approx \frac{GM r_0}{\widetilde{L}^2}\quad\implies\quad \Delta \phi \approx \frac{2GM}{bc^2}
+  \]
+  Where $\widetilde{L} = bc$, where $b$ is the impact parameter of the particle, and $b\approx r_0$ for small deflections. This is exactly half of the deflection angle predicted by general relativity.
+\end{solution}
+
+\begin{problem}{2}
+  Explain quantitatively why the distance between the sun and the Earth is too small for us to see two separate images of a star during the total solar eclipse. What is the minimum distance for this?
+\end{problem}
+
+\begin{solution}
+  We calculated in lecture that the angle of deflection for a beam of light passing by the sun is $\Delta\phi = 8.48\times 10^{-6}\textrm{ rad}$. By some basic geometry, we can calculate the distance to the sun of the closest object which would have a double image when viewed from the Earth:
+  \[
+    D = R\tan\left(\frac{4GM}{c^2 R} - \frac{\pi}{2} + \textrm{arctan}\left(\frac{R}{d}\right)\right).
+  \]
+  Here $R$ is the radius of the sun and $d$ is the distance between the sun and the Earth. Using a graphing calculator, we see that when $d\geq \msi{5902}$, $D$ is negative. The Earth is much farther away from the sun than six kilometers, so no double images can be seen. In fact, the formula indicates that there is no distance at which a double image can be seen using the sun.
+\end{solution}
+
+\begin{problem}{3}
+  Massive objects such as galaxy clusters can serve as lenses that bend the lights coming from stars behind them. This changes the apparent position of a star from its physical position. The relation between the apparent and physical position can be derived using the result of gravitational deflection of light derived in lectures and some geometrical relations. In this exercise, we derive this ``lens equation''.
+\end{problem}
+
+\begin{solution}
+  Consider a ``lens'' cluster (with mass $M_L$ and approximately spherically symmetric) at a distance $D_L$ from the Earth, which lies near the line of sight to a background ``source'' galaxy at a distance $D_S > D_L$, as shown in the figure. If the source and lens are separated by an angle $\beta$, the bending of light from the source will create an image that is an angle $\theta$ away from the lens, and an angle $\alpha$ from the source.
+  \begin{part}{(a)}
+    Notice the relation $\beta = \theta - \alpha'$, where $\alpha'$, the source-image angular separation, is distinct from $\alpha$, the deflection angle of the source. Show that
+    \[
+      \alpha' = \left(\frac{D_S - D_L}{D_S}\right)\alpha
+    \]
+    and substitute it into the relation mentioned above.
+  \end{part}
+
+  The identity follows from basic geometry by similarity of triangles. Thus, we get:
+  \[
+    \beta = \theta - \left(\frac{D_S - D_L}{D_S}\right)\alpha.
+  \]
+
+  \begin{part}{(b)}
+    The $\alpha$ parameter is known as the ``deflection angle'', i.e. $4GM/bc^2$ which we derived in class. Substitute this expression for $\alpha$ into your equation for $\beta$ above to express $\beta$ in terms of $G, M_L, b, D_L, D_S, \theta$, and $c$.
+  \end{part}
+
+  Substituting, we get:
+  \[
+    \beta = \theta - \left(\frac{D_S - D_L}{D_S}\right)\frac{4GM}{bc^2}.
+  \]
+
+  \begin{part}{(c)}
+    Replace $b$ with an expression involving $\theta$ and $D_L$. Rearrange algebraically to show the following lens equation:
+    \[
+      \beta = \theta - \frac{4GM_L}{\theta c^2}\left(\frac{D_S - D_L}{D_S D_L}\right).
+    \]
+    Take a step back and remind yourself what each variable ($\beta, \theta$, etc.) means and understand how this equation relates these variables.
+  \end{part}
+  Recall that $b = \theta D_L$, so we get
+  \[
+    \beta = \theta - \frac{4GM_L}{\theta c^2}\left(\frac{D_S - D_L}{D_S D_L}\right).
+  \]
+  Here $\beta$ is the actual angle between the lens and the source, $\theta$ is the apparent angle between the lens and the source, $D_S$ is the distance to the source, $D_L$ is the distance to the lens, and $M_L$ is the mass of the lens.
+\end{solution}
+
+\begin{problem}{4}
+  When the lens and source lie along the exact same sight line, $\beta = 0$. For this case, solve for the special value of $\theta_E$, known as the \textbf{Einstein ring radius}, in terms of the lens mass, $M_L$, and the distances $D_L$ and $D_S$.
+\end{problem}
+
+\begin{solution}
+  Rearranging, we get:
+  \[
+      \begin{aligned}
+        \theta_E - \frac{4GM_L}{\theta_E c^2}\cdot \frac{D_S - D_L}{D_S D_L} 
+        &= 0\\
+        \theta^2_E &= \frac{4GM_L}{c^2}\cdot \frac{D_S - D_L}{D_S D_L}\\
+        \theta_E &= \sqrt{\frac{4GM_L}{c^2}\cdot \frac{D_S - D_L}{D_S D_L}}.
+      \end{aligned}
+  \]
+\end{solution}
+
+\end{document}
+
