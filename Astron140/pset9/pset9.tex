@@ -1,0 +1,158 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 9}
+\author{Lev Kruglyak}
+\due{November 19, 2024}
+
+\input{../astron140.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Consider the twin experiment described in lecture. Barbara stays at a place faraway from the black hole with the radial coordinate at $r = r_B$; and by free-falling, Alice has reached a place somewhat closer to, but still outside the horizon of the black hole with radial coordinate $r=r_A$. 
+\end{problem}
+\begin{parts}
+  \begin{part}{}
+  At this time, Alice sends a light signal to Barbara. Compute the time it takes for the light to reach Barbara. Please express your answer in terms of the coordinate time $t$, because, at a place very faraway from the black hole, $t$ is approximately Barbara's proper time (why?).
+    What does your answer behave as $r_A$ approaches $r_s$?
+  \end{part}
+
+  Recall that the Schwarzschild metric for a beam of light travelling radially is
+  \[
+    0 = - \left(1- \frac{r_s}{r}\right)c^2 dt^2 + \left(1- \frac{r_s}{r}\right)^{-1}dr^2\quad\implies\quad dt = \frac{dr}{c(1-r_s/r)}
+  \]
+  The total coordinate time from $r_A$ to $r_B$ is therefore given by
+  \[
+    \delta t = \int_{t_A}^{t_B} dt = \frac{1}{c}\int_{r_A}^{r_B}\frac{dr}{1-r_s/r} = \frac{1}{c}\left(r_B - r_A + r_s\ln\left[\frac{r_B - r_s}{r_A - r_s}\right]\right).
+  \]
+  Note that as Alice ($r_A$) gets closer to the horizon, ($r_s$) the logarithmic term $-\ln (r_A - r_s)\to \infty$, and so $\Delta t\to \infty$. This means that Barbara would never receive the light signal if Alice sent the signal from the event horizon.
+
+  \begin{part}{}
+    In terms of Alice's proper time, starting from $r_A$, how long does it take for her to reach the event horizon and the singularity $r=0$?
+    Are your above answers consistent with the description we made about this experiment in the lecture? Are they consistent with the nature of the two singularity candidates in the coordinate system we use?
+  \end{part}
+
+  Let's assume that Alice has no angular momentum, and her energy per unit mass is $\widetilde{E}=1$. We get equations of motion
+  \[
+    \left(\frac{dr}{d\tau}\right)^2 = c^2\left(\frac{r_s}{r}\right) \quad\implies\quad d\tau = -\frac{1}{c}\sqrt{\frac{r}{r_s}}dr.
+  \]
+  Integrating from $r_1$ to $r_2$, we get
+  \[
+    \Delta \tau = \frac{1}{c}\int_{r_2}^{r_1} \sqrt{\frac{r}{r_s}}dr = \frac{2}{3c\sqrt{r_2}}\left(r_1^{3/2} - r_2^{3/2}\right).
+  \]
+  We thus get that in Alice's proper time, the times to reach the event horizon and singularity are
+  \[
+    \Delta \tau_{\textrm{horizon}} = \frac{2}{3c\sqrt{r_s}}\left(r_A^{3/2} - r_s^{3/2}\right)\quad\Delta \tau_{\textrm{singularity}} = \frac{2r_s}{3c}
+  \]
+  respectively. This confirms our descriptions made in lecture -- Alice falls into the singularity in a finite amount of time in her reference frame, but takes an infinite number of time from Barbara's perspective. The fact that Alice takes a finite amount of time to cross the horizon means that the Schwarzschild singularity at the horizon is not a physical singularity.
+\end{parts}
+
+\begin{problem}{2}
+In the lecture in which we studied the orbital motion of Mercury, we have outlined all possible types of massive particle trajectories in the Schwarzschild metric. The effective potential $V_{\textrm{eff}}$ is written as a function of $r$ with parameters $r_s$, and $\widetilde{L}=L/m_0$. Recall that there is a stable circular orbit.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Compute the radius of the circular orbit, and show it is given by
+		\[
+			R = \frac{\widetilde{L}^2}{r_s}\left[1 + \sqrt{1-3\left(\frac{r_s}{\widetilde{L}}\right)^2}\right]
+		\]
+	\end{part}
+
+	Recall that the effective potential can be written as a function of radius as
+	\[
+		V_{\textrm{eff}}(r) = 1- \frac{r_s}{r} + \frac{\widetilde{L}^2}{r^2} - \frac{r_s \widetilde{L}^2}{r^3}.
+	\]
+	There are two circular orbits, one stable and one unstable. We can find the radii of both of them by solving $V_{\textrm{eff}}'(r)=0$. Note that
+	\[
+		\begin{aligned}
+			V_{\textrm{eff}}'(r) = \frac{r_s}{r^2} - \frac{2\widetilde{L}^2}{r^3} + \frac{3 r_s \widetilde{L}^2}{r^4}
+			                                                                    & = 0                                   \\
+			r_s r^2 - 2\widetilde{L}^2 r + 3r_s \widetilde{L}^2 & = 0                                   \\
+		\end{aligned}
+	\]
+	By the quadratic formula, we get roots
+	\[
+		\begin{aligned}
+			r & = \frac{2\widetilde{L}^2 \pm \sqrt{4\widetilde{L}^4 - 12r^2_s \widetilde{L}^2}}{r_s^2} = \frac{\widetilde{L}^2}{r_s}\left(1\pm \frac{\sqrt{\widetilde{L}^2 - 3r_s^2}}{\widetilde{L}}\right) = \frac{\widetilde{L}^2}{r_s}\left[ 1 \pm \sqrt{1-3\left(\frac{r_s}{\widetilde{L}}\right)^2}\right].
+		\end{aligned}
+	\]
+	The larger of these roots is the stable radius, so we get the desired formula
+	\[
+			R = \frac{\widetilde{L}^2}{r_s}\left[1 + \sqrt{1-3\left(\frac{r_s}{\widetilde{L}}\right)^2}\right].
+	\]
+
+	\begin{part}{(b)}
+		What is the smallest possible radius $R_{\textrm{min}}$ of a stable circular orbit and what is the value of the angular momentum $\widetilde{L}_{\textrm{min}}$ of the orbit?
+	\end{part}
+  Considering $R$ as a function of $\widetilde{L}$, it's clear that $R$ is increasing as $\widetilde{L}$ increases, assuming $R$ is defined. The smallest value of $\widetilde{L}$ for which $R$ is defined is 
+  \[
+    1-3\left(\frac{r_s}{\widetilde{L}_{\textrm{min}}}\right)^2 = 0 \quad\implies\quad \widetilde{L}_{\textrm{min}} = r_s\sqrt{3}, \textrm{ and }R_{\textrm{min}} = 3r_s.
+  \]
+
+	\begin{part}{(c)}
+		What is the value of the total energy $\widetilde{E} = E/m_0$ when a particle is orbiting in this innermost stable circular orbit? What is the value of this energy when the particle is at rest at infinity?
+		The difference between the two is the binding energy between the black hole and the particle, which is converted to thermal energy and emitted as radiation and jets. How much fraction of the rest energy of the particle is released? Compare this efficiency with that of the thermonuclear reactions in the sun. ($\approx 0.7\%$)
+	\end{part}
+
+	The energy of a particle orbiting at $R_{\textrm{min}}=3r_s$ is 
+	\[V_{\textrm{eff}}(R_{\textrm{min}}) = 1 - \frac{1}{3} + \frac{1}{3} - \frac{3}{27} = \frac{8}{9}.\]
+	On the other hand, it's clear that $V_{\textrm{eff}}(\infty)=1$. This means that a particle falling to the innermost stable orbit of a black hole releases $1/9$th of its energy as radiation. This is an efficiency of $\approx 11.1\%$, an order of magnitude higher than that of the sun. This suggests that we would expect black holes with large accretion disks to be brighter than stars of the same mass.
+\end{parts}
+
+\begin{problem}{3}
+The total energy radiated per unit surface area of a black body across all wavelengths per unit time, denoted as $j$, is proportional to the fourth power of the black body's temperature $T$:
+\[
+	j = \sigma T^4,\quad\textrm{where}\quad\sigma = \frac{\pi^2k_B^4}{60\hbar^3 c^2}
+\]
+is the Stefan-Boltzmann constant in which $k_B \approx \kBsi{1.38e-23}$ is the Boltzmann constant and $\hbar\approx \hsi{1.05e-34}$ is the reduced Planck constant.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{}
+		Hawking showed that a large enough black hole is a black body with temperature
+		\[
+			T_H = \frac{\hbar c^3}{8\pi G k_B M}
+		\]
+		where $M$ is the mass of the black hole. So we can use the above Stefan-Boltzmann law to estimate the rate of the energy loss due to the Hawking radiation. The radiation surface is the event horizon sphere. What is the black hole mass as a function of time $t$? How does the Hawking temperature of the black hole evolve as a function of $t$? What is the lifetime of a black hole with mass $M$, evaporating through Hawking radiation? For a solar mass black hole, what is the value of this lifetime in years?
+	\end{part}
+
+	Let $P$ be the total power radiated by the black hole per unit time. Since the black hole has a radius $r_s$, it follows that $P=(4\pi r_s^2)j$. Expanding, we get
+	\[
+		\begin{aligned}
+			P = 4\pi r_s^2 j =
+			% 4\pi\left(\frac{2GM}{c^2}\right)^2\sigma \left(\frac{\hbar c^3}{8\pi G k_B M}\right)^4 = \frac{\hbar^4 c^8\sigma}{256\pi^3 G^2 k_B^4 M^2}
+			4\pi r_s^2 \frac{\pi^2 k_B^4}{60\hbar^3 c^2}\left(\frac{\hbar c^3}{8\pi G k_B M}\right)^4
+			 & = \frac{4\pi^3 r_s^2 k_B^4}{60 \hbar^3 c^2}\cdot \frac{\hbar^4 c^{12}}{4096 \pi^4 G^4 k_B^4 M^4}
+			= \frac{\hbar c^{10} r_s^2}{61440 \pi G^4 M^4}                                                      \\
+			 & = \frac{\hbar c^{10}}{61440\pi G^4M^4}\cdot \frac{4G^2M^2}{c^4}
+			= \frac{\hbar c^6}{15360\pi G^2M^2}.
+		\end{aligned}
+	\]
+	Now since the total energy of a black hole is $Mc^2$, we can solve the differential equation:
+	\[
+		\begin{aligned}
+			\frac{dM}{dt} = -\frac{\hbar c^4}{15360 \pi G^2M^2}\quad\implies\quad
+			\int M^2 \,dM & = \int-\frac{\hbar c^4}{15360 \pi G^2}\,dt                     \\
+			\frac{M^3}{3} & = -\frac{\hbar c^4}{15360 \pi G^2}t + C                        \\
+			M(t)          & = \left(M_0^3 - \frac{\hbar c^4}{5120 \pi G^2} t\right)^{1/3},
+		\end{aligned}
+	\]
+	where $M_0$ is the initial mass of the black hole. Plugging this back into the Hawking radiation formula, we get
+	\[
+		T_H(t) = \frac{\hbar c^3}{8\pi G k_B M(t)} =
+		\frac{\hbar c^3}{8\pi G k_B}\left(M_0^3 - \frac{\hbar c^4}{5120 \pi G^2} t\right)^{-1/3}.
+	\]
+	Solving $M(t_{\textrm{evap}})=0$, we get that the lifetime of a black hole of initial mass $M_0$ is:
+	\[
+		t_{\textrm{evap}} = \frac{5120 \pi G^2 M_0^3}{\hbar c^4}.
+	\]
+	For a solar mass black hole, this time is
+	\[
+		t_{\textrm{evap}} \approx \frac{5120\pi \times (\Gsi{6.674e-11})^2 (\kgsi{1.988e30})^3}{(\hsi{1.055e-34})\times (\mpssi{2.998e8})^4}\times \frac{1\textrm{ year}}{\ssi{3.154e7}} = 2.094\times 10^{64}\textrm{ years}.
+	\]
+	This is an absurdly long time.
+\end{parts}
+
+\end{document}
