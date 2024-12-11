@@ -1,0 +1,274 @@
+\documentclass{../../templates/lkx_pset}
+
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\title{Math 230a Problem Set 11}
+\author{Lev Kruglyak}
+\due{December 4, 2024}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\input{../math230a.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let $X$ be a Riemannian manifold and suppose $\{x_1,\ldots, x_N\}\subset X$ is a finite subset. In lecture, I constructed a manifold with boundary $\widehat{X}$ and map $p : \widehat{X}\to X$ that is a diffeomorphism on the complement of $\bigsqcup_i p^{-1}(x_i)$. Furthermore, if $\xi$ is a vector field on $X$ with a transverse zero at each $x_i$ and no other zero, then the normalization $s = \xi/\|\xi\| : X\setminus\{x_1,\ldots,x_N\} \to S(TX)$ extends over $\widehat{X}$.
+Explore this construction in detail when $\dim X=1$.
+\end{problem}
+
+\begin{problem}{2}
+Consider Chern-Simons-Weil forms for $G=\U_1$ the circle group of unit norm complex numbers. The Lie algebra is $\mathfrak{g}=i\R$.
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		For each $k\in \Z^{>0}$ identify the vector space of degree $k$ symmetric $G$-polynomials on $\mathfrak{g}$.
+	\end{part}
+
+	Since $\U_1$ is abelian, the adjoint representation is trivial.
+	Now as $\mathfrak{u}_1=i\R$, the vector space of degree $k$ symmetric $G$-polynomials is
+	\[
+		(\textrm{Sym}^k \mathfrak{u}_1^*)^{\U_1} = \textrm{Sym}^k (\mathfrak{u}_1)^* = \R\cdot (-i\cdot x)^k.
+	\]
+	We'll represent any $h\in (\textrm{Sym}^k\mathfrak{u}_1^*)^{\U_1}$ as the monomial $h(x)=(-i)^k \kappa \cdot x^k$ for some $\kappa\in \R$.
+
+	\begin{part}{(b)}
+		If $\pi : P \to X$ is a principal $G$-bundle with connection $\Theta$ and $h$ is a $G$-invariant polynomial of degree $k$, then the Chern-Simons form restricts to a closed $(2k-1)$-form on each fiber of $\pi$, and this form may be identified with a bi-invariant form on $G$. Identify this form for $k=1$. For which $h$ is the integral of this form an integer?
+	\end{part}
+
+	Recall that the Chern-Simons form of a connection $\Theta$ is given by
+	\[
+		\omega = k\cdot h(\Theta\wedge \Omega\wedge\cdots \wedge\Omega)\in\Omega^{2k-1}(P).
+	\]
+	Now since $\U_1$ is abelian, $\Omega = d\Theta + [\Theta\wedge\Theta]/2 = d\Theta$ so the Chern-Simons form is $\omega = k\cdot h(\Theta\wedge d\Theta\wedge\cdots\wedge d\Theta)$. Let $x\in X$ be a point in the base space, and let $\iota_x : P_x \to P$ be the inclusion of the fiber over $x$. By the definition of a connection form, we know that the pullback $\iota_x^* \Theta$ along this inclusion is the Maurer-Cartan form $\theta_{P_x}\in \Omega^1(P_x; \mathfrak{u}_1)$ on the fiber. Pulling back the Chern-Simons form gives
+	\[
+		\iota_x^* \omega = k\cdot h(\iota_x^* \Theta\wedge \iota_x^* d\Theta\wedge \cdots \wedge \iota_x^* d\Theta) = k\cdot h(\theta_{P_x}\wedge d\theta_{P_x}\wedge\cdots\wedge d\theta_{P_x}).
+	\]
+	However the fibers are each diffeomorphic to $\U_1$, and $d\theta_{P_x}$ is a $2$-form so it must vanish. Thus the only non-vanishing Chern-Simons forms are those for $k=1$. In this case, any $h\in (\textrm{Sym}^1 \mathfrak{u}_1^*)^{\U_1}$ is given by $h(x) = -i\kappa \cdot x$, so the restricted Chern-Simons form is
+	\[
+		\iota^*_x \omega = -i\kappa\cdot \theta_{P_x} \in \Omega^1(P_x).
+	\]
+	This can be identified with the bi-invariant form $-i\kappa\cdot \theta_{U_1} = \kappa\cdot d\theta\in \Omega^1(\U_1)$. The integral of this form is
+	\[
+		\int_{P_x} \iota_x^*\omega = \int_{\U_1} -i\kappa\cdot \theta_{\U_1} = \int_0^{2\pi} \kappa \cdot d\theta = 2\pi \kappa.
+	\]
+	For this to be an integer, $\kappa$ must be equal to $n/2\pi$ for some $n\in \Z$.
+
+	\begin{part}{(c)}
+		Consider the Hopf bundle $\pi : S^3 \to S^2$, which is a principal $G$-bundle. Construct a connection. Compute the integral of the Chern-Weil form over $S^2$. For which $h$ is this an integer?
+	\end{part}
+
+	Recall that $\SU_2$ consists of unitary complex $2\times 2$ matrices with determinant $1$, and the Lie algebra $\su_2$ consists of $2\times 2$ skew-Hermitian traceless matrices. We can explicitly parametrize them by
+	\[
+		\SU_2 = \left\{
+		\begin{pmatrix} \alpha & -\overline{\beta}\\ \beta & \overline{\alpha}\end{pmatrix}
+		:
+		\begin{array}{l}\alpha,\beta\in \C\\|\alpha|^2+|\beta|^2=1\end{array}
+		\right\}
+		\qtq{and}
+		\su_2 = \left\{
+		\begin{pmatrix}
+			-i\theta & \overline{z} \\
+			-z       & i\theta
+		\end{pmatrix}
+		:
+		\theta\in \R, z\in \C
+		\right\}.
+	\]
+	The Lie algebra $\su_2$ can be given a basis of Pauli matrices
+	\[
+		\sigma_1 = \frac{1}{\sqrt{2}}\begin{pmatrix}0 & 1\\ -1 & 0\end{pmatrix},\quad
+		\sigma_2 = \frac{1}{\sqrt{2}}\begin{pmatrix}0 & -i\\ -i & 0\end{pmatrix},\qtq{and}
+		\sigma_3 = \frac{1}{\sqrt{2}}\begin{pmatrix}-i & 0\\ 0 & i\end{pmatrix}.
+	\]
+	Note that the commutators are $[\sigma_1, \sigma_2] = -\sigma_3$, $[\sigma_2, \sigma_3]=-\sigma_1$, and $[\sigma_3, \sigma_1]=-\sigma_2$. We include the normalization factor of $1/\sqrt{2}$ so that we have
+	\[
+    \textrm{Tr}(\sigma_1^2) = \Tr(\sigma_2^2) = \Tr(\sigma_3^2) = 1
+	\]
+	or in other words, $\sigma_1,\sigma_2,\sigma_3$ is an orthonormal basis for $\su_2$ under the inner product $\langle X, Y\rangle=\Tr(XY)$.
+
+	% Exponentiating these generators gives us 
+	% \[
+	%   e^{t\sigma_1} = \begin{pmatrix}\cos(t) & -\sin(t)\\ \sin(t) & \cos(t)\end{pmatrix},\quad
+	%   e^{t\sigma_2} = \begin{pmatrix}\cos(t) & i\sin(t)\\ i\sin(t) & \cos(t)\end{pmatrix},\qtq{and}
+	%   e^{t\sigma_3} = \begin{pmatrix}e^{it}&0\\ 0 & e^{-it}\end{pmatrix}.
+	% \]
+
+	Now let's construct a connection $\Theta\in \Omega^1(\SU_2; \mathfrak{u}_1)$ on $\pi : S^3 \to S^2$. Let's start with the Maurer-Cartan form $\theta_{\SU_2}\in\Omega^1(\SU_2; \su_2)$. The Maurer-Cartan form can be written as $\theta_{\SU_2} = \theta^1\sigma_1 + \theta^2\sigma_2+\theta^3\sigma_3$ for some forms $\theta^i\in \Omega^1(\SU_2)$. These forms must satisfy the Maurer-Cartan equations:
+	\[
+		d\theta^i + \frac{1}{2}\sum_{j,k} c^i_{j k} \theta^j\wedge \theta^k = 0 \quad\implies\quad \begin{array}{l}
+			d\theta^1 = \theta^2\wedge \theta^3 \\
+			d\theta^2 = \theta^3\wedge \theta^1 \\
+			d\theta^3 = \theta^1\wedge \theta^2 \\
+		\end{array}
+	\]
+	Let's split $\su_2 = \mathfrak{m}\oplus \mathfrak{u}_1$ by letting $\mathfrak{m}$ be the span of $\sigma_1$ and $\sigma_2$, and with $\mathfrak{u}_1$ the span of $\sigma_3$. This is a reductive structure on the symmetric space $\SU_2/\U_1$. Let's now let $\Theta$ be the projection of $\theta_{\SU_2}$ onto $\mathfrak{u}_1$. We can thus write $\Theta = \theta^3\sigma_3 = i\cdot \theta^3$. Since $\U_1$ is abelian, the curvature is
+	\[
+		\Omega = d\Theta + \frac{1}{2}[\Theta\wedge \Theta] = d\Theta = i(d\theta^3) = i\cdot (\theta^1\wedge \theta^2) \in \Omega^2(\SU_2; \mathfrak{u}_1).
+	\]
+	Note that all Chern-Weil forms vanish for $k>1$, since $\Omega\wedge \Omega=0$, as it is a $4$-form on the $3$-manifold $\SU_2$. When $k=1$, a polynomial $h\in (\textrm{Sym}^k \mathfrak{u}_1^*)^{\U_1}$ can be written as $h(x)=-i\kappa\cdot x$ for some $c_k\in \R$. In this case, the Chern-Weil form is
+	\[
+		\omega = h(\Omega) = \kappa\cdot(\theta^1\wedge \theta^2).
+	\]
+	This is a closed $2$-form on $\SU_2$ since $\omega = d(\kappa\cdot \theta^3)$. It also must descend to some $2$-form $\widetilde{\omega}\in \Omega^2(S^2)$, i.e. we have $\omega=\pi^*\widetilde{\omega}$. We would like to calculate the integral of $\widetilde{\omega}$ over $S^2$.
+	%
+	% % IGNORE THIS
+	% \todo{
+	% 	If we cut out the north pole (denoted $\infty$) of $S^2$, there is a closed manifold $\widehat{S^2}$ and map $p : \widehat{S^2} \to S^2$ which is a diffeomorphism on the complement of $p^{-1}(\infty)$. Furthermore, its boundary $\partial\widehat{S^2}$ is canonically diffeomorphic to $S(T_\infty S^2) \approx S^1$.
+	% 	\[
+	% 		\int_{S^2}\widetilde{\omega} = \int_{\widehat{S^2}} \widetilde{\omega} = \int_{\partial\widehat{S^2}} s^*(\kappa\cdot \theta^3)
+	% 	\]
+	% 	Thus, the only $h$ for which the integral is an integer are
+	% 	\[
+	% 		h(x) = \frac{nx}{2\pi i}.
+	% 	\]
+	% }
+	% % IGNORE THIS
+
+	\begin{part}{(d)}
+		Now consider $k=2$, so the Chern-Weil form has degree $4$. Construct a nontrivial principal $G$-bundle over $S^2\times S^2$ by first taking the Cartesian product of the Hopf bundle with itself to form a principal $(G\times G)$-bundle over $S^2\times S^2$, then use the homomorphism $G\times G\to G$ to form the associated principal $G$-bundle. Compute the integral of the Chern-Weil form. For which $h$ is the answer an integer?
+	\end{part}
+
+	Let's begin with the principal $(\U_1\times \U_1)$-bundle $\pi \times \pi : \SU_2\times_{S^2\times S^2} \SU_2 \to S^2\times S^2$ -- for brevity let's call the total space $E$. Let $\pi_1,\pi_2 : E \to \SU^2$ be respective projection maps, and let $\widetilde{\pi_i}=\pi\circ \pi_i$ be the composition with the Hopf fibration. The induced connection on this bundle can be written as
+	\[
+		\Theta = (i\cdot \pi_1^*\theta^3) \oplus (i\cdot \pi_2^*\theta^3) \in \Omega^1(E; \mathfrak{u}_1\oplus \mathfrak{u}_1)
+	\]
+	By the results of the previous problem, the curvature of this connection is then
+	\[
+		\Omega = (i\cdot \widetilde{\pi}_1^*\, dA) \oplus (i \cdot \widetilde{\pi}_2^*\, dA) \in \Omega^2(E; \mathfrak{u}_1\oplus\mathfrak{u}_1),
+	\]
+	where $dA$ is the area form on $S^2$.
+
+
+	Now we want to understand the pushforward of $\Theta$ to the principal $\U_1$-bundle $E'=E\times_{\U_1\times \U_1} \U_1$ associated to $E$ under the multiplication homomorphism $\mu : \U_1\times \U_1\to \U_1$. The differential $\mu_* : \mathfrak{u}_1\oplus \mathfrak{u}_1 \to \mathfrak{u}_1$ is the addition map. Let $\overline{\theta}_i^j\in \Omega^1(E')$ be the pushforwards of $\theta^i_j\in \Omega^1(E)$ to the associated bundle. Then, the connection and curvature of the associated bundle is
+	\[
+		\Theta' = i\cdot (\overline{\theta}_1^3 + \overline{\theta}_2^3)\qtq{and}\Omega' = 2i\cdot (
+		\overline{\theta}^1_1\wedge \overline{\theta}^2_1+
+		\overline{\theta}^1_2\wedge \overline{\theta}^2_2
+		).
+	\]
+	A polynomial $h\in (\textrm{Sym}^2\mathfrak{u}_1^*)^{\U_1}$ can be written as $h(x) = -\kappa \cdot x^2$ so the Chern-Weil form is
+	\[
+		\begin{aligned}
+			\omega = h(\Omega'\wedge \Omega') = -\kappa \cdot \Omega'\wedge \Omega'
+			 & = 4\kappa\cdot
+			(\overline{\theta}^1_1\wedge \overline{\theta}^2_1+ \overline{\theta}^1_2\wedge \overline{\theta}^2_2)
+			(\overline{\theta}^1_1\wedge \overline{\theta}^2_1+ \overline{\theta}^1_2\wedge \overline{\theta}^2_2) \\
+			 & = 8\kappa\cdot
+			\overline{\theta}^1_1\wedge \overline{\theta}^2_1\wedge
+			\overline{\theta}^1_2\wedge \overline{\theta}^2_2                                                      \\
+			 & = 2\kappa\cdot d\overline{\theta}^3_1\wedge d\overline{\theta}^3_2.
+		\end{aligned}
+	\]
+	Recall that $d\overline{\theta}^3_i$ descends to a form $\widetilde{\omega}_i$ on the $i$-th $S^2$ term in $S^2\times S^2$ with total integral $2\pi$. This means that $\omega$ descends to $2\kappa\cdot \widetilde{\omega}_1 \wedge \widetilde{\omega}_2$ on $S^2\times S^2$ and so
+	\[
+		\int_{S^2\times S^2} 2\kappa\cdot \widetilde{\omega}_1\wedge \widetilde{\omega}_2 = 2\kappa\cdot\left(\int_S^2 \widetilde{\omega}_1\right)^2 = 8\pi^2\kappa.
+	\]
+	Thus, the only $h$ for which the integral is an integer are
+	\[
+		h(x) = -\frac{n}{8\pi^2}\cdot x^2\qtq{for}n\in \Z.
+	\]
+
+	\begin{part}{(e)}
+		Continuing with $k=2$, take the base $4$-manifold to be $\CP^2$. For which $h$ do you find an integer when you integrate the Chern-Weil form?
+	\end{part}
+\end{parts}
+
+\begin{problem}{3}
+Now consider $G=\SU_2$.
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Identify the space of $G$-invariant polynomials of degree $2$ on $\mathfrak{g}$.
+	\end{part}
+
+	Let's use the same bases from the previous problem. First, note that the adjoint representation of $\SU_2$ on $\su_2$ factors through the double cover $\SU_2 \to \SO_3$. \todo{prove this.} 
+
+	This immediately implies that there are no nonzero $\SU_2$-invariant polynomials of degree $k=1$. In the next case of $k=2$, any spherically symmetric polynomial must factor through the bilinear form $\langle X, Y\rangle = \Tr(XY)$. Thus, we can write any $h\in (\Sym^2\mathfrak{su}_2^*)^{\SU_2}$ as $h(X,Y) = \kappa\cdot \Tr(XY)$ for some $\kappa\in \R$.
+
+	\begin{part}{(b)}
+		Write an explicit formula for the Chern-Simons $3$-form of a connection. Use matrix multiplication in your formula rather than the Lie bracket.
+	\end{part}
+
+	If $h\in (\Sym^2\mathfrak{su}_2^*)^{\SU_2}$, then the Chern-Simons $3$-form of a principal $\SU_2$-bundle $\pi : P \to X$ with a connection $\Theta\in \Omega^1(P; \su_2)$ is:
+	\[
+    \textrm{CS}_3(\Theta) = 2\cdot h(\Theta\wedge \Omega) = 2\kappa\cdot \Tr\left(\Theta\, d\Theta + \frac{1}{2}\Theta[\Theta\wedge\Theta]\right) = 2\kappa\left(\Tr(\Theta\, d\Theta) + \frac{1}{2}\Tr(\Theta[\Theta\wedge\Theta])\right)
+	\]
+
+	\begin{part}{(c)}
+		Use the homomorphism $\U_1 \to \SU_2$ to construct $\SU_2$-connections from $\U_1$-connections. How are the Chern-Simons forms related?
+	\end{part}
+
+	\begin{part}{(d)}
+		Investigate integrality of the integral of Chern-Weil forms for $k=2$.
+	\end{part}
+\end{parts}
+
+\begin{problem}{4}
+  Let $\Sigma\subset\mathbb{E}^3$ be a closed surface that is a submanifold of Euclidean $3$-space. Prove that $\Sigma$ has a point of positive Gauss curvature.
+\end{problem}
+\begin{solution}
+  % Suppose for the sake of contradiction that $\Sigma$ has non-positive Gauss curvature everywhere. By the Gauss-Bonnet theorem, this means that $\chi(\Sigma)\leq 0$. If $\chi(\Sigma)=0$, this would mean that $\Sigma$ is a surface of constant curvature zero -- impossible since this would mean that it was a plane which cannot be a closed manifold. Since $\Sigma$ is embeddable in $\mathbb{E}^3$, it must be orientable. These constraints imply that $\Sigma$ must topologically be a genus $g$-surface for $g\geq 2$.
+  Since $\Sigma$ is compact, it must be bounded by a sphere in $\mathbb{E}^3$. Without loss of generality, we can shrink the sphere so that it intersects $\Sigma$ tangentially at some point $p\in \Sigma$. Note that a non-tangential intersection point of this type is impossible, since the sphere would no longer bound the surface. Then the Gauss curvature at this point $K_p$ must be positive, since otherwise following a geodesic path would allow one to reach points of $\Sigma$ outside of the sphere -- a contradiction.
+\end{solution}
+
+\begin{problem}{5}
+Let $G$ be a Lie group, let $H\subset G$ be a closed Lie subgroup, and assume that the homogeneous manifold $G/H$ has a reductive structure, i.e. an $H$-invariant splitting $\mathfrak{g}=\mathfrak{p}\oplus\mathfrak{h}$ as vector spaces.
+\end{problem}
+
+\begin{parts}
+	\begin{part}{(a)}
+		Recall the definition of the canonical connection on the principal $H$-bundle $\pi : G\to G/H$.
+	\end{part}
+
+	A connection on $\pi$ is a form $\Theta \in \Omega^1(G; \mathfrak{h})$. The canonical choice is to start with the Maurer-Cartan form $\theta_G\in \Omega^1(G; \mathfrak{g})$ and set $\Theta =\pi_\mathfrak{h} \theta_G$ where $\pi_\mathfrak{h} : \mathfrak{g} \to \mathfrak{h}$ is the projection with kernel $\mathfrak{p}$.
+
+	\begin{part}{(b)}
+		Compute its curvature.
+	\end{part}
+	The Maurer-Cartan equation states that
+	\[
+    d\theta_G + \frac{1}{2}[\theta_G\wedge\theta_G]=0.
+	\]
+  Combining this with the curvature of the connection and the facts that $[\mathfrak{h},\mathfrak{h}]\subset \mathfrak{h}$ and $[\mathfrak{h},\mathfrak{p}]\subset\mathfrak{p}$, we get:
+  \[
+    \begin{aligned}
+      \Omega 
+      &= d\Theta + \frac{1}{2}[\Theta\wedge\Theta]\\
+      &= d\pi_\mathfrak{h}\theta_G + \frac{1}{2}[\pi_\mathfrak{h}\theta_G\wedge \pi_\mathfrak{h}\theta_G]\\
+      &= \pi_\mathfrak{h}d\theta_G + \frac{1}{2}[\pi_\mathfrak{h}\theta_G\wedge \pi_\mathfrak{h}\theta_G]\\
+      &= -\frac{1}{2}\pi_\mathfrak{h}[\theta_G\wedge\theta_G] + \frac{1}{2}[\pi_\mathfrak{h}\theta_G\wedge \pi_\mathfrak{h}\theta_G]\\
+      &= -\frac{1}{2}\pi_\mathfrak{h}[
+      (\pi_\mathfrak{h}\theta_G + \pi_\mathfrak{p}\theta_G)\wedge(\pi_\mathfrak{h}\theta_G + \pi_\mathfrak{p}\theta_G)
+    ] + \frac{1}{2}[\pi_\mathfrak{h}\theta_G\wedge \pi_\mathfrak{h}\theta_G]\\
+      &= -\frac{1}{2}\pi_{\mathfrak{h}}[\pi_{\mathfrak{h}} \theta_G \wedge \pi_{\mathfrak{h}}\theta_G]
+         -\frac{1}{2}\pi_{\mathfrak{h}}[\pi_{\mathfrak{p}} \theta_G \wedge \pi_{\mathfrak{p}}\theta_G]
+         +\frac{1}{2}[\pi_{\mathfrak{h}} \theta_G \wedge \pi_{\mathfrak{h}}\theta_G]\quad\quad(\textrm{since } \pi_\mathfrak{h} [\pi_\mathfrak{h}\theta_G\wedge \pi_\mathfrak{p}\theta_G]=0)\\
+      &= -\frac{1}{2}\pi_{\mathfrak{h}}[\pi_{\mathfrak{p}} \theta_G \wedge \pi_{\mathfrak{p}}\theta_G].
+    \end{aligned}
+  \]
+	\begin{part}{(c)}
+		What is the meaning of the torsion of this connection? Compute it.
+	\end{part}
+
+	\begin{part}{(d)}
+		What is the meaning of geodesics of this connection? Compute them.
+	\end{part}
+
+	\begin{part}{(e)}
+		Consider the transitive action of $G\times G$ on $G$ by left and right multiplication. Is this homogeneous space reductive?
+	\end{part}
+\end{parts}
+
+\begin{problem}{6}
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Let $(\Sigma, g)$ be a Riemannian $2$-manifold, and suppose $\phi : \Sigma \to \R$ is a smooth function. Compute the Gauss curvature $K'$ of the metric $e^{2\phi}g$ in terms of $\phi$ and the Gauss curvature $K$ of the metric $g$.
+  \end{part}
+\end{parts}
+
+\end{document}

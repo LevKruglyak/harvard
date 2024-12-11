@@ -1,0 +1,84 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Problem Set 10}
+\author{Lev Kruglyak}
+\due{November 26, 2024}
+
+\input{../astron140.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Following the lectures,
+\end{problem}
+
+\begin{parts}
+  \begin{part}{(a)}
+    Show how $\overline{h}_{\mu\nu}$, the trace-reverse of the metric pertubation, transforms under the gauge transformation $x^\mu \mapsto x^\mu_{\textrm{new}} = x^\mu + \xi^\mu(x)$.
+  \end{part}
+
+  Under the assumption of a weak field limit, we can write the metric of a solution to the Einstein equations as a small perturbation of the flat Minkowski metric:
+  \[
+    g_{\mu\nu} = \eta_{\mu\nu} + h_{\mu\nu}\quad\textrm{where}\quad |h_{\mu\nu}| \ll 1.
+  \]
+  Given a gauge transformation $x^{\mu} \mapsto x^\mu_{\textrm{new}} = x^\mu + \xi^\mu(x)$, we get
+  \[
+    \begin{aligned}
+      g_{\mu\nu} \mapsto g_{\mu\nu}^{\textrm{new}} 
+      &= \pp{x^\alpha}{x^\mu_{\textrm{new}}}\pp{x^\beta}{x^{\nu}_{\textrm{new}}} g_{\alpha\beta}\\
+      &= 
+      \left( \pp{x^\alpha_{\textrm{new}}}{x^{\mu}_{\textrm{new}}} - \pp{\xi^\alpha}{x^{\mu}_{\textrm{new}}} \right)
+      \left( \pp{x^\beta_{\textrm{new}}}{x^{\nu}_{\textrm{new}}} - \pp{\xi^\beta}{x^{\nu}_{\textrm{new}}} \right) (\eta_{\alpha\beta} + h_{\alpha\beta})\\
+      &= \left( \delta^{\alpha}_\mu - \partial_\mu \xi^\alpha\right)
+      \left( \delta^\beta_\nu -\partial_\nu \xi^\beta\right)(\eta_{\alpha\beta} + h_{\alpha\beta})\\
+      &\approx \eta_{\mu\nu}-\partial_\mu \xi_\nu - \partial_\nu \xi_\mu + h_{\mu\nu}
+    \end{aligned}
+  \]
+  where the last equality only holds up to first order. This implies that $h_{\mu\nu}$ undergoes the gauge transformation
+  \[
+    h_{\mu\nu} \mapsto h_{\mu\nu}^{\textrm{new}} = h_{\mu\nu} - \partial_\mu \xi_\nu - \partial_\nu \xi_\mu.
+  \]
+  It is however useful to consider the trace reverse of $h_{\mu\nu}$, namely \[\overline{h}_{\mu\nu} = h_{\mu\nu}- \frac{1}{2}\eta_{\mu\nu} h\quad\textrm{where}\quad h = h^{\alpha}_\alpha = \eta^{\alpha\beta}h_{\beta\alpha}.\]
+  This trace reversed perturbation undergoes the gauge transformation
+  \[
+    \begin{aligned}
+    \overline{h}_{\mu\nu} \mapsto 
+    \overline{h}^{\textrm{new}}_{\mu\nu} 
+    &= h_{\mu\nu}^{\textrm{new}} - \frac{1}{2}\eta_{\mu\nu} h^{\textrm{new}}\\
+    &= h_{\mu\nu} - \partial_\mu \xi_\nu - \partial_\nu \xi_\mu - \frac{1}{2}\eta_{\mu\nu}(\eta^{\alpha\beta} (h_{\beta\alpha} - \partial_{\beta}\xi_\alpha - \partial_{\alpha}\xi_\beta))\\
+    &= h^{\mu\nu} - \frac{1}{2}\eta_{\mu\nu}h - \partial_\mu \xi_\nu - \partial_\nu \xi_\mu + \frac{1}{2}\eta_{\mu\nu} \eta^{\alpha\beta}\partial_\alpha\xi_\beta\\
+    &= \overline{h}^{\mu\nu} - \partial_\mu \xi_\nu - \partial_\nu \xi_\mu + \eta_{\mu\nu}\partial^\alpha\xi_\alpha.
+    \end{aligned}
+  \]
+  Thus, the gauge transformation for the trace reversed perturbation is 
+  \[
+    \overline{h}_{\mu\nu} \mapsto \overline{h}_{\mu\nu}^{\textrm{new}}  
+  = \overline{h}^{\mu\nu} - \partial_\mu \xi_\nu - \partial_\nu \xi_\mu + \eta_{\mu\nu}\partial^\alpha\xi_\alpha.\]
+  \begin{part}{(b)}
+    Explain why the Lorentz gauge $\partial^\mu \overline{h}_{\mu\nu}=0$ restricts almost all the degrees of freedom in this gauge transformation; but still leaves some residual gauge degrees of freedom.
+  \end{part}
+
+  The Lorentz gauge $\partial^\mu \overline{h}_{\mu\nu} = 0$ has the following effect:
+  \[
+    \partial^\mu \overline{h}_{\mu\nu}^{\textrm{new}} = \partial^\mu \overline{h}_{\mu\nu} - \square \xi_\nu - \partial_\nu\partial^\mu \xi_\mu + \partial_\nu \partial^\alpha \xi_\alpha = 0
+  \]
+  Since $\partial^\mu \overline{h}^\textrm{new}_{\mu\nu} = 0$ as well, and the last two terms cancel, we get $\square \xi_\nu = 0$. This is a massive restriction on the space of possible perturbations of $\xi_\nu$, and makes it finite dimensional.
+
+  \begin{part}{(c)}
+    What are these residual gauge degrees of freedom?
+  \end{part}
+  The restriction we derived is a wave equation, with solutions $\xi_\mu = B_\mu e^{ik_\alpha x^\alpha}$, where $k^\mu k_\mu = 0$. This gives us $4$ degrees of freedom in $B_\mu$, and $k_\alpha$ shared with the wave solutions to the Einstein equation.
+
+  \begin{part}{(d)}
+    What other conditions need to be introduced to fix them, and then why are they fixed?
+  \end{part}
+
+  Earlier in the lectures, we derived that the Einstein equation gives us $\square \overline{h}_{\mu\nu} = 0$, another wave equation with solutions $\overline{h}_{\mu\nu}= A_{\mu\nu} e^{ik_\alpha x^\alpha}$ with $k_0^2 = k_i^2$. Combined with e Lorentz gauge, we get $k^\mu A_{\mu\nu} =0$ which leaves 6 degrees of freedom. Note that
+  \[
+    A_{\mu\nu} \mapsto A^{\textrm{new}}_{\mu\nu} = A_{\mu\nu} - ik_\mu B_\nu - ik_\nu B_\mu + i\eta_{\mu\nu} k^\alpha b_\alpha.
+  \]
+  Thus, adding the traceless condition $\eta^{\mu\nu} A_{\mu\nu}=0$ removes $1$ degree of freedom leaving us with $5$, and adding a transversality condition $A_{0\mu}=0$ gives us $3$ conditions (one redundant with the Lorenz gauge) so we are left with $2$ degrees of freedom. In particular, all of the $B_{\mu}$ are set to zero since they correspond to non-physical transformations. The remaining degrees of freedom correspond to polarizations of gravitational waves in the periodic solutions $\overline{h}_{\mu\nu}$.
+\end{parts}
+
+\end{document}
