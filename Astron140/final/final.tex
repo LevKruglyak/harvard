@@ -1,0 +1,109 @@
+\documentclass{../../templates/lkx_pset}
+
+\title{Astron 140 Final}
+\author{Lev Kruglyak}
+\due{December 16, 2024}
+
+\input{../astron140.sty}
+
+\renewcommand{\abstractname}{Honor Code Statement}
+\begin{document}
+\maketitle
+
+\begin{abstract}
+I affirm my awareness of the standards of the Harvard College Honor Code. While completing this exam, I have not consulted any external sources other than class notes and the textbooks. I have not discussed the problems or solutions of this exam with anyone, and will not discuss them until after the due date.
+
+\medskip
+Signed, \underline{\textit{Lev Kruglyak}}.
+\end{abstract}
+\vspace{1em}
+
+\begin{problem}{1}
+\end{problem}
+
+\begin{problem}{2}
+  At the leading order on the largest scales, the universe is homogeneous, (everywhere the same) isotropic, (the same in every direction) and flat. Its evolution can be modelled by the following metric
+  \[
+    ds^2 = g_{\mu\nu} dx^\mu dx^\nu = -c^2\, dt^2 + \alpha(t)^2 \Omega \quad\textrm{where}\quad \Omega = dr^2 + r^2\left(d\theta^2 + \sin^2\theta\, d\phi^2\right)
+  \]
+  Let's assume that the universe is dominated by dark energy, i.e. $T_{\mu\nu} = -\varepsilon_\Lambda g_{\mu\nu}$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{(a)}
+    Work out the $00$-component of the Einstein equation. Find out the time dependence of $\alpha(t)$ when $t$ is large.
+  \end{part}
+  
+  Using Mathematica to compute the Ricci tensor and Ricci scalar, we get
+  \[
+    R_{00} = -\frac{3\alpha''(t)}{\alpha(t)},\quad\textrm{and}\quad R = \frac{6(\alpha'(t)^2 + \alpha(t)\alpha''(t))}{c^2\alpha(t)^2}.
+  \]
+  Using this to expand the Einstein equation, we have
+  \[
+    \begin{aligned}
+      R_{00} - \frac{1}{2}Rg_{00} 
+      &= \frac{8\pi G}{c^4} T_{00}\\
+      -\frac{3\alpha''(t)}{\alpha(t)} - \frac{3(\alpha'(t)^2 + \alpha(t)\alpha''(t))}{c^2\alpha(t)^2} (-c^2) 
+      &= \frac{8\pi G}{c^4} \varepsilon_{\Lambda} c^2\\
+      \frac{3\alpha'(t)^2}{\alpha(t)^2}
+      &= \frac{8\pi G}{c^2}\varepsilon_\Lambda\\
+      \frac{d}{dt}\ln \alpha(t) &= \sqrt{\frac{8\pi G \varepsilon_\Lambda}{3c^2}}\\
+      \alpha(t) &= \exp\left(t\sqrt{\frac{8\pi G \varepsilon_\Lambda}{3c^2}}\right).
+    \end{aligned}
+  \]
+  Thus, a dark energy dominated universe undergoes exponential expansion as time increases. On massive timescales, this means the universe eventually becomes extremely cold and empty due to the lack of ordinary matter compared to dark matter.
+
+  \begin{part}{(b)}
+    Work out the $11$-component of the Einstein equation, and check that the solution you worked out above satisfies this differential equation. Verify that the $22$ and $33$ components of the Einstein equation are identical to that of the $11$-component.
+  \end{part}
+
+  Using Mathematica, we get the Ricci tensors
+  \[
+    R_{11} = \frac{2\alpha'(t)^2 + \alpha(t)\alpha''(t)}{c^2} \quad R_{22} = r^2 \frac{2\alpha'(t)^2 + \alpha(t)\alpha''(t)}{c^2}, \quad R_{33} = r^2(\sin^2\theta) \frac{2\alpha'(t)^2 + \alpha(t)\alpha''(t)}{c^2}. 
+  \]
+  We can thus write $R_{ii}$ as
+  \[
+    R_{ii} = \frac{2\alpha'(t)^2 + \alpha(t)\alpha''(t)}{c^2\alpha(t)^2} g_{ii}.
+  \]
+  The Einstein equation simplifies to
+  \[
+    \begin{aligned}
+      R_{ii} - \frac{1}{2} R g_{ii} 
+      &= \frac{8\pi G}{c^4} T_{ii}\\
+      \frac{2\alpha'(t)^2 + \alpha(t)\alpha''(t)}{c^2\alpha(t)^2} g_{ii} - \frac{3(\alpha'(t)^2 + \alpha(t)\alpha''(t))}{c^2\alpha(t)^2}g_{ii} 
+      &= -\frac{8\pi G}{c^4} \varepsilon_{\Lambda} g_{ii}\\
+      \frac{2\alpha'(t)^2 + \alpha(t)\alpha''(t) - 3(\alpha'(t)^2 + \alpha(t)\alpha''(t))}{\alpha(t)^2}
+      &= -\frac{8\pi G}{c^2} \varepsilon_{\Lambda} \\
+      \frac{\alpha'(t)^2 + 2\alpha(t)\alpha''(t)}{\alpha(t)^2}
+      &= \frac{8\pi G}{c^2} \varepsilon_{\Lambda}
+    \end{aligned}
+  \]
+  Now let $\kappa = \sqrt{8\pi G\varepsilon_\Lambda / c^2}$ so that $\alpha(t) = \exp(t\kappa/\sqrt{3})$. Expanding, we get
+  \[
+    \begin{aligned}
+      \frac{\alpha'(t)^2 + 2\alpha(t)\alpha''(t)}{\alpha(t)^2} 
+      &= \kappa^2\\
+      \frac{(\kappa^2/3) \alpha(t)^2 + 2\alpha(t)^2 \kappa^2/3}{\alpha(t)^2} &= \kappa^2\\
+      \kappa^2&=\kappa^2.
+    \end{aligned}
+  \]
+  Thus, our solution $\alpha(t)$ satisfies the Einstein equation for the $ii$-terms.
+
+\begin{part}{(c)}
+  Estimate how many years it takes for the universe to double its size.
+\end{part}
+
+Solving the equation
+\[
+  \frac{\alpha(t_2)}{\alpha(t_1)} = 2 \quad\implies\quad \exp((t_2-t_1)\kappa/\sqrt{3}) = 2,
+\]
+and substituting in the appropriate constants, we get
+\[
+  \Delta t = \frac{\ln(2)\sqrt{3}}{\kappa}
+  = \frac{1.20057\times (\mpssi{3.00e8})}{\sqrt{8\pi \times (\Gsi{6.674e-11})\times (\desi{5.3e-10})}}\times \frac{1\textrm{ year}}{\ssi{3.154e7}} = 1.211\times10^{10}\textrm{ years}.
+\]
+In other words, it takes about 12 billion years for the universe to double in size.
+\end{parts}
+
+\end{document}
+
