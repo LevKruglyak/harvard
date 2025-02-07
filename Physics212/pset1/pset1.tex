@@ -1,0 +1,117 @@
+\documentclass{lkx_pset}
+
+\title{Physics 212 Problem Set 1}
+\author{Lev Kruglyak}
+\due{February 14, 2025}
+
+\input{../physics212.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Show explicitly that the $00$ and $ij$ component of the Einstein equations are given by
+\[
+	G^0_0 = -\frac{3}{a^2}\left[\left(\frac{\dot{a}}{a}\right)^2+ K\right]
+	\quad\textrm{and}\quad
+	G^i_j = -\frac{1}{a^2}\left[2\left(\frac{\ddot{a}}{a}\right)-\left(\frac{\dot{a}}{a}\right)^2+ K\right]\delta^i_j
+\]
+The dots here correspond to derivatives with respect to conformal time.
+\end{problem}
+\begin{solution}
+	The Friedman-Roberston-Walker metric can be written as
+	\[
+		g_{\mu\nu} = -dt^2 +a^2(t)\left[\frac{dr^2}{1-Kr^2}+r^2d\Omega\right]
+	\]
+	where $d\Omega = d\theta^2 + \sin^2(\theta)d\phi^2$ is the metric on a $2$-dimensional sphere. The dual metric is then given by
+	\[
+		g^{\mu\nu} = -dt^2 +\frac{1-Kr^2}{a^2(t)}dr^2 + \frac{1}{r^2a^2(t)}d\theta^2 + \frac{1}{r^2a^2(t)\sin^2(\theta)}d\phi^2.
+	\]
+	We'll denote our coordinate system by $\{x^0, x^1, x^2, x^3\} = \{t, r, \theta, \phi\}$ to make some formulas simpler, but we will use these symbols interchangeable. Let's now calculate the Christoffel symbols. Firstly, let's expand the metric derivatives $\partial g_{\mu\nu}/\partial x^\kappa$. It suffices to consider $\mu=\nu$ since the metric is diagonal in our chosen coordinate system.
+
+	First of all, $\partial g_{00}/\partial x^\nu = 0$ since $g_{00}$ is constant. The other derivatives are given in the table:
+	\begin{equation}\label{derivatives}
+		\everymath={\displaystyle}
+		\renewcommand*{\arraystretch}{2}
+		\begin{array}{lll}
+			\pp{g_{11}}{x^0} = \dot{a}(t)\cdot 2a(t)\cdot \frac{1}{1-Kr^2},
+			 & \pp{g_{11}}{x^1} = a^2(t)\cdot -2Kr\cdot \frac{-1}{(1-Kr)^2},
+			 & \pp{g_{11}}{x^2} = 0,                                              \\
+			\pp{g_{22}}{x^0} = \dot{a}(t)\cdot 2a(t)\cdot r^2,
+			 & \pp{g_{22}}{x^1} = a^2(t)\cdot 2r,
+			 & \pp{g_{22}}{x^2} = 0,                                              \\
+			\pp{g_{33}}{x^0} = \dot{a}(t)\cdot 2a(t)\cdot r^2\sin^2(\theta),
+			 & \pp{g_{33}}{x^1} = a^2(t)\cdot 2r\cdot \sin^2(\theta),
+			 & \pp{g_{33}}{x^2} = \cos(\theta)\cdot 2\sin(\theta)\cdot a^2(t)r^2. \\
+		\end{array}
+	\end{equation}
+	Next, recall that the Christoffel symbols are defined to be
+	\[
+		\Gamma^\mu_{\alpha\beta} = \frac{g^{\mu\nu}}{2}\left[\pp{g_{\alpha\nu}}{x^\beta} + \pp{g_{\beta\nu}}{x^\alpha} -\pp{g_{\alpha\beta}}{x^\nu}\right].
+	\]
+	Since the metric is diagonal, we can rewrite this formula as
+	\begin{equation}\label{christoffel}
+		\Gamma_{\alpha\beta}^\mu = \frac{g^{\mu\mu}}{2}\left[ \pp{g_{\alpha \mu}}{x^\beta} + \pp{g_{\beta \mu}}{x^\alpha} - \pp{g_{\alpha\beta}}{x^\mu}\right].
+	\end{equation}
+	By the torsion-free property of the Levi-Civita connection, we have the symmetry $\Gamma^\mu_{\alpha\beta}=\Gamma^\mu_{\beta\alpha}$. At this point, we'll drop the function dependence of $a(t)$, $\sin(\theta)$, and $\cos(\theta)$ for brevity since we aren't taking derivatives any longer and since the variables of these functions are unambiguous. We can now plug the expressions in (\ref{derivatives}) into (\ref{christoffel}). To speed things up, we note that whenever $\alpha$ or $\beta$ are zero, $\Gamma^\mu_{\alpha\beta}=0$ since the derivatives of $g_{00}$ are all zero. Also, the indices $\mu,\alpha,\beta$ must have at least one
+
+	When $\mu=0$, the only nonzero Christoffel symbols are
+	\begin{equation}\label{christoffel-calculated-1}
+		\Gamma^0_{\alpha\alpha} = -\frac{1}{2}\left[-\pp{g_{\alpha\alpha}}{x^0}\right]\quad \implies \Gamma^0_{11} = \frac{\dot{a}a}{1-Kr^2}, \quad \Gamma^0_{22}=\dot{a}a r^2,\quad \Gamma^0_{33}=\dot{a}ar^2\sin^2.
+	\end{equation}
+	When $\mu\in \{1,2,3\}$ we have a slightly more complicated pattern. Here, the nonzero Christoffel symbols are
+	\begin{equation}\label{christoffel-calculated-2}
+		\everymath={\displaystyle}
+		\renewcommand*{\arraystretch}{2}
+		\begin{array}{ll}
+			\Gamma^1_{01} = \frac{1-Kr^2}{2a^2}\cdot \frac{2\dot{a}a}{1-Kr^2} = \frac{\dot{a}}{a},
+			 & \Gamma^1_{11} = \frac{1-Kr^2}{2a^2}\cdot\frac{2Kra^2}{(1-Kr)^2} = \frac{Kr}{1-Kr^2}, \\
+			\Gamma^1_{22} = \frac{1-Kr^2}{2a^2}\cdot(-2ra^2) =-r(1-Kr^2),
+			 & \Gamma^1_{33} = \frac{1-Kr^2}{2a^2}\cdot 2ra^2\sin^2 = \sin^2r(1-Kr^2),              \\
+			\Gamma^2_{02} = \frac{1}{2r^2a^2}\cdot 2\dot{a}r^2 = \frac{\dot{a}}{a},
+			 & \Gamma^2_{12} = \frac{1}{2r^2a^2}\cdot 2ra^2 = \frac{1}{r},                          \\
+			\Gamma^2_{33} = \frac{1}{2r^2a^2}\cdot 2a^2r^2\cos\sin=\cos\sin,
+			 & \Gamma^3_{03} = \frac{1}{2r^2a^2\sin^2}\cdot 2\dot{a}a r^2\sin^2 = \frac{\dot{a}}{a} \\
+			\Gamma^3_{13} = \frac{1}{2r^2a^2\sin^2}\cdot 2r\sin^2 a^2 = \frac{1}{r},
+			 & \Gamma^3_{23} = \frac{1}{2r^2a^2\sin^2}\cdot 2\sin\cos a^2r^2 = \cot.                \\
+		\end{array}
+	\end{equation}
+	Now that we've calculated all of the Christoffel symbols, let's calculate the Ricci curvature tensor. In terms of the Christoffel symbols, the Ricci tensor can be written as
+	\begin{equation}\label{ricci}
+		R_{\mu\nu} = \pp{\Gamma^\alpha_{\mu\nu}}{x^\alpha} - \pp{\Gamma^\alpha_{\mu\alpha}}{x^\nu} + \Gamma^\alpha_{\beta\alpha}\Gamma^\beta_{\mu\nu} - \Gamma^\alpha_{\beta\nu} \Gamma^\beta_{\mu\alpha}.
+	\end{equation}
+	At this point, the computations get a bit tedious, so we omit the details and only state the results.
+	If we plug the equations (\ref{christoffel-calculated-1}) and (\ref{christoffel-calculated-2}) into (\ref{ricci}), we get the following nonzero components for the Ricci tensor
+	\begin{equation}
+		R_{00} =  -\frac{3\ddot{a}}{a}, \quad
+		R_{ii} = g_{ii}\left(\frac{2K + 2\dot{a}^2 + a\ddot{a}}{a^2}\right).
+	\end{equation}
+	Here, we've simplified the expression $R_{ii}$ by factoring out terms which also appear in the metric tensor. Finally, let's compute the Ricci scalar.
+	\[
+		R = g^{00} R_{00} + g^{ii}R_{ii}=
+		3\left(\frac{\ddot{a}}{a}\right) + 3\left(\frac{2K+2\dot{a}^2 + a\ddot{a}}{a^2}\right) = \frac{6(K+\dot{a}^2+a\ddot{a})}{a^2}.
+	\]
+	Since we have both the Ricci tensor and scalar, we can now compute the Einstein tensor
+	\[
+		G_{\mu\nu} = R_{\mu\nu}+\frac{1}{2}g_{\mu\nu} R
+		\quad\implies\quad
+		G_{00} = -\frac{3\ddot{a}}{a}-\frac{3(K+\dot{a}^2+a\ddot{a}^2)}{a^2} = \frac{3(K+\dot{a}^2)}{a^2},\\
+	\]
+	Contracting to get $G^0_0$, we get
+	\[
+	  G_0^0 = g^{0\alpha}G_{0\alpha} -G_{00}= \frac{-3(K+\dot{a}^2)}{a^2}
+	\]
+	The remaining terms of the Einstein tensor are
+	\[
+		\begin{aligned}
+			G_{ii} = g_{ii}\left[\frac{2K + 2\dot{a}^2 + a\ddot{a}}{a^2}\right] - \frac{1}{2}g_{ii}\left[\frac{6(K+\dot{a}^2 + a\ddot{a})}{a^2}\right] &= -g_{ii}\left(\frac{K+\dot{a}^2 + 2a\ddot{a}}{a^2}\right)\\
+			\implies\quad G_i^i &= -\frac{1}{a^2}(K + \dot{a}^2 + 2a\ddot{a}).
+		\end{aligned}
+	\]
+	Putting these results together, we get the expressions
+	\[
+    \boxed{G_0^0 = \frac{-3K}{a^2} -3\left(\frac{\dot{a}}{a}\right)^2,}\quad\textrm{and}\quad \boxed{G_i^i = -\frac{K}{a^2} - \left(\frac{\dot{a}}{a}\right)^2 - 2\left(\frac{\ddot{a}}{a}\right).}
+	\]
+\end{solution}
+
+\end{document}

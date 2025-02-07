@@ -3,6 +3,10 @@
 \LoadClass[11pt,letterpaper]{article}
 \usepackage[portrait, margin=0.5in, includefoot]{geometry}
 
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+
 % -----------------------------------------------
 %                  Options 
 % -----------------------------------------------

@@ -1,0 +1,76 @@
+\renewcommand{\O}{{\operatorname{O}}}
+\renewcommand{\GL}{\operatorname{GL}}
+\providecommand{\Det}{\operatorname{Det}}
+\providecommand{\T}{\mathbb{T}}
+\providecommand{\HH}{\mathbb{H}}
+\providecommand{\gfr}{\mathfrak{g}}
+\providecommand{\pfr}{\mathfrak{p}}
+\providecommand{\gl}{\mathfrak{gl}}
+\providecommand{\hfr}{\mathfrak{h}}
+\providecommand{\U}{\operatorname{U}}
+\providecommand{\SO}{\operatorname{SO}}
+\providecommand{\SU}{\operatorname{SU}}
+\providecommand{\su}{\mathfrak{su}}
+\providecommand{\so}{\mathfrak{so}}
+\renewcommand{\sl}{\mathfrak{sl}}
+\providecommand{\Spin}{\operatorname{Spin}}
+\providecommand{\Sp}{\operatorname{Sp}}
+\providecommand{\scB}{\mathscr{B}}
+\providecommand{\Tr}{\operatorname{Tr}}
+\providecommand{\Sym}{\operatorname{Sym}}
+\providecommand{\op}[1]{\operatorname{#1}}
+
+\providecommand{\Hol}{\operatorname{Hol}}
+\providecommand{\Ad}{\operatorname{Ad}}
+\providecommand{\ad}{\operatorname{ad}}
+\providecommand{\MC}{{\operatorname{MC}}}
+\renewcommand{\T}{\operatorname{T}\!}
+     \usepackage[mathscr]{euscript}
+
+
+
+
+\ExplSyntaxOn
+\NewDocumentCommand{\lkxto}{ O{} }{%
+	\mathrel{\;\xrightarrow{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxmapsto}{ O{} }{%
+	\mathrel{\;\xmapsto{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxisom}{ O{} }{%
+	\mathrel{\;\xrightarrow{\hphantom{xx}#1\sim\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxsurj}{ O{} }{%
+	\mathrel{\;\xtwoheadrightarrow{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+
+\NewDocumentCommand{\lkxfunc}{ O{->} m m m g g }{
+	\begin{array}{rcl}
+		\IfNoValueTF {#5} {
+			\tl_if_blank:nTF {#2}{}{#2 :}
+			#3
+			\str_case:nn {#1}
+			{
+				{->} {\lkxto}
+					{~>} {\lkxisom}
+					{->>} {\lkxsurj}
+			}
+			#4
+		} {
+			\tl_if_blank:nTF {#2}{}{#2 \;:\;}
+			#3
+		   &
+			\str_case:nn {#1}
+			{
+				{->} {\lkxto}
+					{~>} {\lkxisom}
+					{->>} {\lkxsurj}
+			}
+		   & #4
+		\\
+		#5 & \lkxmapsto & #6
+		}
+	\end{array}
+}
+
+\ExplSyntaxOff

@@ -1,0 +1,51 @@
+\usepackage[T1]{fontenc}
+\RequirePackage{mlmodern}
+
+\renewcommand{\F}{\mathscr{F}}
+\providecommand{\bmid}{\;\Big\lvert\;}
+
+\ExplSyntaxOn
+\NewDocumentCommand{\lkxto}{ O{} }{%
+	\mathrel{\;\xrightarrow{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxmapsto}{ O{} }{%
+	\mathrel{\;\xmapsto{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxisom}{ O{} }{%
+	\mathrel{\;\xrightarrow{\hphantom{xx}#1\sim\hphantom{xx}}\;}
+}
+\NewDocumentCommand{\lkxsurj}{ O{} }{%
+	\mathrel{\;\xtwoheadrightarrow{\hphantom{xx}#1\hphantom{xx}}\;}
+}
+
+\NewDocumentCommand{\lkxfunc}{ O{->} m m m g g }{
+	\begin{array}{rcl}
+		\IfNoValueTF {#5} {
+			\tl_if_blank:nTF {#2}{}{#2 :}
+			#3
+			\str_case:nn {#1}
+			{
+				{->} {\lkxto}
+					{~>} {\lkxisom}
+					{->>} {\lkxsurj}
+			}
+			#4
+		} {
+			\tl_if_blank:nTF {#2}{}{#2 \;:\;}
+			#3
+		   &
+			\str_case:nn {#1}
+			{
+				{->} {\lkxto}
+					{~>} {\lkxisom}
+					{->>} {\lkxsurj}
+			}
+		   & #4
+		\\
+		#5 & \lkxmapsto & #6
+		}
+	\end{array}
+}
+
+\ExplSyntaxOff
+

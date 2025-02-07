@@ -1,0 +1,37 @@
+\documentclass{lkx_pset}
+
+\title{Math 212 Problem Set 1}
+\author{Lev Kruglyak}
+\due{February 10, 2025}
+
+\input{../math212.sty}
+
+% \collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Find an example of a continuous function on $\R$ which goes to zero at infinity and which isn't the Fourier transform of a function in $L^1(\R)$.
+\end{problem}
+\begin{solution}
+  Recall that the Fourier transform $\F$ maps $L^1(\R)$ functions to $C^0_0(\R)$ functions.
+\end{solution}
+
+\begin{problem}{2}
+  The Schwarz space $\mathcal{S}(\R^d)$ is defined as
+  \[
+    \mathcal{S}(\R^d) = \left\{ f\in C^\infty(\R^d, \R) \bmid \lim_{|x|\to \infty}|(\mathcal{D} f)(x)|=0\quad\forall \mathcal{D}\in \mathrm{Diff}(\R[x_1,\ldots, x_d])\right\}
+  \]
+  where $\mathrm{Diff}(\R[x_1,\ldots,x_d])$ denotes the space of polynomial differential operators in $d$ variables. Prove that the Fourier transform maps the vector space $\mathcal{S}$ to itself.
+\end{problem}
+\begin{solution}
+  Suppose $f\in \mathcal{S}(\R^d)$ is a Schwarz function. First, we claim that $f\in L^p(\R^d)$.
+  Note that
+  \[
+    \|f\|_p = \left(\int_{\R^d}|f|^p\right)^{1/p} = 
+  \]
+
+\end{solution}
+
+\end{document}

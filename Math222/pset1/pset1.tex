@@ -1,0 +1,81 @@
+\documentclass{lkx_pset}
+
+\title{Math 222 Problem Set 1}
+\author{Lev Kruglyak}
+\due{February 5, 2025}
+
+\input{../math222.sty}
+%
+% \collaborator{AJ LaMotta}
+% \collaborator{Leonardo Kaplan}
+% \collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{2}
+  Let $G$ have the structures of a group and a smooth manifold, and suppose that multiplication $G\times G\to G$ is smooth. Prove that inversion $G\to G$ is smooth map.
+\end{problem}
+
+\begin{solution}
+  Let $m : G\times G \to G$ be the multiplication map. For any fixed element $g\in G$, the left multiplication map $L_g : G\to G$ is a diffeomorphism. Consider the map 
+  \[
+    \lkxfunc{f}{G\times G}{G\times G}{(g,h)}{(g,gh).}
+  \]
+  At the identity $(e,e)$, the differential of this map takes the form
+  \[
+    \lkxfunc{df_{(e,e)}}{\T_e G\oplus \T_e G}{\T_e G\oplus \T_{e} G}{\xi\oplus \eta}{\xi\oplus (\xi+\eta).}
+  \]
+  By the inverse function theorem, this means that $f$ is a diffeomorphism in a neighborhood of $(e,e)$. By composing with the left multiplication diffeomorphisms, we can see that $f$ is a diffeomorphism over the whole manifold. Since the inversion map $i : G\to G$ can be written as $i(g) = \pi_2 \circ f^{-1}(g,e)$, a composition of smooth maps, the inversion map must be a smooth map as well.
+\end{solution}
+
+\begin{problem}{4}
+  Classify $1$-dimensional Lie groups $G$ which have two components and whose identity component is diffeomorphic to the circle.
+\end{problem}
+
+\begin{solution}
+  Pick any nonzero vector $\xi\in \mathfrak{g}$ and consider the exponential map
+  \[
+    \lkxfunc{\exp}{\R}{G}{t}{\exp(t\xi).}
+  \]
+  This is a homomorphism of Lie groups. Since the identity component is diffeomorphic to $S^1$ and the exponential map is a homomorphism of Lie groups, it follows that there is a non-empty lattice $\ker(\exp) = \Lambda \subset \R$ so that we have an isomorphism $\R/\Lambda \to G$ of Lie groups. This let's us construct isomorphism with the circle group $\mu \to G_e$ so $G_e$ is not only diffeomorphic to a circle but has the group structure of the circle group. 
+
+  Next, note that $G/G_e$ is a group of order two and so must be isomorphic to $\mu_2$. From a group theoretic perspective, the only group structures on $G$ are then $G\times \mu_2$ and $G\rtimes \mu_2$. These correspond to the Lie groups $\mu_2\times \mu$ and $\O_2$ respectively.
+\end{solution}
+
+\begin{problem}{5}
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Identify the group of rotations in $\R^3$ with the matrix group $\SO_3$.
+  \end{part}
+
+  Any rotation in $\R^3$ must preserve distances, preserve orientation, and fixes a line. Let $G\subset \GL_3(\R)$ be the group of matrices representing rotations. The requirement that rotations preserve distances restricts us to $\O_3\subset \GL_3(\R)$ and the requirement that rotations preserve orientation restricts us to $\SO_3\subset \O_3$. Therefore $G\subset \SO_3$ so it suffices to show that every special orthogonal matrix corresponds to a rotation. 
+
+  Let $A\in \SO_3$ be a special orthogonal matrix. The characteristic polynomial of $A$ is a real polynomial is a degree $3$ real polynomial and so it must have a real root $\lambda$. We can thus write $A$ as
+  \[
+    A = \begin{pmatrix} 
+      \lambda & 0\\
+      0 & M
+      \end{pmatrix}
+  \]
+  for some $2\times 2$ matrix $M$ in a basis $\{e_1,e_2,e_3\}$ It follows that $(\lambda)$ and $M$ must be orthogonal matrices, which in particular implies that $\lambda=\pm 1$. Therefore, $A$ represents rotation about the $e_1$ axis.
+
+  \begin{part}{(b)}
+    Embed $\O_2$ as a Lie subgroup of $\SO_3$.
+  \end{part}
+
+  For any basis, consider the inclusion map
+  \[
+    \lkxfunc{f}{\O_2}{\SO_3}{M}{\begin{pmatrix}\det(M) & 0 \\ 0 & M\end{pmatrix}.}
+  \]
+  Since the determinant of the matrix $f(M)$ is $\det(M)^2$, it follows that $f(M)$ is a special orthogonal matrix. This is injective and a Lie group homomorphism because 
+  \[
+    \begin{pmatrix}\det(M_1) & 0 \\ 0 & M_1\end{pmatrix}
+    \begin{pmatrix}\det(M_2) & 0 \\ 0 & M_2\end{pmatrix}
+    =
+    \begin{pmatrix}\det(M_1M_2) & 0 \\ 0 & M_1M_2\end{pmatrix}.
+  \]
+\end{parts}
+
+\end{document}
