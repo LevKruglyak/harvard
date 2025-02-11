@@ -1,0 +1,354 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\title{\textbf{Math 231a Problem Set 8}}
+
+\providecommand{\Sk}{\text{Sk}}
+\providecommand{\Gr}{\text{Gr}}
+\providecommand{\Tor}{\text{Tor}}
+
+% `tikz-cd` is necessary to draw commutative diagrams.
+\RequirePackage{tikz-cd}
+% `amssymb` is necessary for `\lrcorner` and `\ulcorner`.
+\RequirePackage{amssymb}
+% `calc` is necessary to draw curved arrows.
+\usetikzlibrary{calc}
+% `pathmorphing` is necessary to draw squiggly arrows.
+\usetikzlibrary{decorations.pathmorphing}
+
+% A TikZ style for curved arrows of a fixed height, due to AndréC.
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $X$ denote a space. Using the long exact sequence associated to the short exact sequence of chain complexes
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & S_*(X; \Z) \arrow[r, "n"] & S_*(X; \Z) \arrow[r] & S_*(X; \Z /n) \arrow[r] & 0,
+        \end{tikzcd}
+    \end{center} 
+    prove that there are short exact sequences
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & H_k(X; \Z) /n \arrow[r] & H_k(X; \Z /n) \arrow[r] & \text{tors}_n(H_{k-1}(X; \Z)) \arrow[r] & 0,
+        \end{tikzcd}
+    \end{center}
+    where, given an abelian group $A$, $\text{tors}_n(A)$ denotes the subgroup of $n$-torsion elements of $A$.
+
+    \quad Use this to recompute $H_*(\RP^n; \F_2)$ from $H_*(\RP^n; \Z)$.
+\end{problem}
+
+\begin{solution}
+    \quad For any $k$, consider the slice of the exact sequence given by:
+    \begin{center}
+        \begin{tikzcd}
+            H_k(X; \Z) \arrow[r,"n"] & H_k(X; \Z) \arrow[r] & H_k(X; \Z /n) \arrow[r, "\partial"] & H_{k-1}(X; \Z) \arrow[r, "n"] & H_{k-1}(X; \Z) &
+        \end{tikzcd}
+    \end{center}
+    Observe that the image of the first $n$ map is exactly $n H_k(X;\Z) \subset H_{k}(X; \Z)$, and the kernel of the last $n$ map is exactly $\text{tors}_n(H_{k-1}(X; \Z))$. Thus we have an induced exact sequence
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & H_k(X; \Z) /n \arrow[r] & H_k(X; \Z /n) \arrow[r] & \text{tors}_n(H_{k-1}(X; \Z)) \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    for every $k$.
+
+    \quad Now to calculate $H_*(\RP^n; \F_2)$, note that we have the exact sequences:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & H_k(\RP^n; \Z) /2 \arrow[r] & H_k(\RP^n; \Z /2) \arrow[r] & \text{tors}_2(H_{k-1}(\RP^n; \Z)) \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    By the previous computation of $H_*(\RP^n; \Z)$, for every $0\leq k\leq n$, either we have$H_k(\RP^n; \Z) /2 = \Z /2$ or $\text{tors}_2(H_{k-1}(\RP^n; \Z))=\Z /2$, so in either case we have an isomorphism $H_k(\RP^n; \F_2)\cong \F_2$. This gives the homology:
+    \[
+        \boxed{H_k(\RP^n; \F_2) = \begin{cases}
+            \F_2 & 0\leq k\leq n,\\
+            0 & \text{otherwise}.
+        \end{cases}}
+    \]   
+\end{solution}
+
+\begin{problem}
+    \emph{Define sequential colimits.} As an example, regard $X_0\subset X_1\subset \cdots X$ as a sequence of spaces. Then $\varinjlim_n X_n = \bigcup^\infty_{n=0} X_n$.
+\end{problem}
+
+\begin{solution}
+    \quad Fix a commutative ring $R$.
+    \begin{partproblem}{a}
+        Given a sequence $M_*$ of $R$-modules, prove that
+        \[
+            \varinjlim_n M_n \cong \frac{\bigoplus_{n\in \N} M_n}{\left(f_n(x_n)-x_n\text { for }n\in \N, x_n\in M_n\right)}
+        .\]
+        In particular, $\varinjlim_n M_n$ exists. 
+    \end{partproblem}
+    \quad Let's call the above quotient space $\widetilde{M}$, and the quotient map $p : \bigoplus_{n\in \N}M_n \to \widetilde{M}$. For each $M_n$, we have the canonical inclusion $i_n : M_n \to \bigoplus_{n\in \N}$ so composing with the quotient gives us maps $p\circ i_n = g_n : M_n \to \widetilde{M}$. It's easy to check that $g_{n+1}\circ f_n = g_n$.
+
+    \quad Now suppose there were some $R$-module $P$ with maps $h_n : M_n \to P$ such that $h_{n+1}\circ f_n\circ h_n$. By the definition of coproduct, we have a unique map $h : \bigoplus_{n\in \N} M_n \to P$ which respects these inclusions $h_n$. However since they also satisfy the compatibility condition, we can pass this to a unique map in the quotient $\widetilde{h} : \widetilde{M} \to P$.
+
+    \begin{partproblem}{b}
+        Suppose we have sequences $M_\bullet, N_\bullet,$ and $P_\bullet$ of $R$-modules and an exact sequence $M_\bullet \to N_\bullet \to P_\bullet$. Prove that $\varinjlim_n M_n \to \varinjlim_n N_n \to \varinjlim_n P_n$ is an exact sequence.
+    \end{partproblem}
+
+    \quad We'll begin by proving the hint.
+    \begin{claim}
+        Suppose that the image of $x \in M_n$ in $\varinjlim_n M_n$ is zero. Then the image of $x$ in $M_k$ is zero for some $k \geq n$.
+    \end{claim}
+    \begin{proof}
+        We'll use the isomorphism given in (a) to simplify this proof. Thus, the condition in the claim can be rephrased as
+        \[
+            x_n = \sum_{k=1}^N (y_k-f_k(y_k))
+        \]
+        for some $y_i\in M_i$, where $x_n$ is the image of $x$ in $M_n$. A simple inductive argument then shows that $x_{N+1}=0$.
+    \end{proof}
+    Note that the universal property of sequential limits give us maps $\Phi : \varinjlim_n M_n \to \varinjlim_n N_n$ and $\Psi : \varinjlim_n N_n \to \varinjlim_n P_n$. The rest is a fairly straightforward diagram chase using the claim.
+
+    \begin{partproblem}{c}
+        Given a sequence of $R$-modules $M_\bullet$ and an $R$-module $N$, prove that there is a natural isomorphism
+        \[
+            (\varinjlim_n M_n)\otimes_R N \cong \varinjlim_n\; (M_n\otimes_R N)
+        .\] 
+        % Use Hom(M, Hom(N, P)) = Hom(M o N, P)
+    \end{partproblem}
+
+    \quad Suppose $P$ is an $R$-module. Since there is a bijection 
+    \[ \Hom\left((\varinjlim_n M_n)\otimes_R N, P\right)\cong \Hom\left(\varinjlim_n M_n, \Hom(N, P)\right),\]
+    a map from $(\varinjlim_n M_n)\otimes_R N$ to $P$ is the same as a linear map $\varinjlim_n M_n\to \Hom(N, P)$, which in turn is a family of maps $g_n : M_n \to \Hom(N,P)$ 
+\end{solution}
+
+\begin{problem}
+    Flatness of $\Q$.
+\end{problem}
+
+\begin{solution}
+    \quad Consider $\Q$ as a $\Z$-module.
+    \begin{partproblem}{a}
+        Prove that $\Q$ is isomorphic to the sequential colimit of the following diagram:
+        \begin{center}
+            \begin{tikzcd}
+                \Z \arrow[r, "2"] & \Z \arrow[r, "3"] & \Z \arrow[r, "4"] & \cdots
+            \end{tikzcd}
+        \end{center}
+    \end{partproblem}
+
+    \quad Firstly note that we have a canonical diagram:
+    \begin{center}
+        \begin{tikzcd}
+            \Z & \Z & \Z & \Z \\
+            & \Q
+            \arrow["2", from=1-1, to=1-2]
+            \arrow["3", from=1-2, to=1-3]
+            \arrow["4", from=1-3, to=1-4]
+            \arrow["1"', curve={height=6pt}, from=1-1, to=2-2]
+            \arrow["{1/2}"', from=1-2, to=2-2]
+            \arrow["{2/3}", from=1-3, to=2-2]
+            \arrow["{3/4}", curve={height=-12pt}, from=1-4, to=2-2]
+        \end{tikzcd}
+    \end{center}
+    where each map is the multiplication by $n / (n+1)$ map. Any other $\Z$-module $M$ which such maps must contain all of the rational numbers (i.e. multiplicative inverses for $\Z^\times$), so there will be a unique map $\Q \to M$.
+
+    \begin{partproblem}{b}
+        Using part (a) and Problem~2, prove that $\Q$ is a \emph{flat} $\Z$-module, i.e. that the functor $-\otimes \Q : \text{Ab} \to \text{Vect}_\Q$ is exact.
+    \end{partproblem}
+    \quad Suppose $0\to A \to B\to C \to 0$ is an exact sequence. This gives us the commutative diagram:
+    \begin{center}
+        \begin{tikzcd}
+            0 & 0 & 0 \\
+            A\otimes\Z & A\otimes\Z & A\otimes\Z & \cdots \\
+            B\otimes\Z & B\otimes\Z & B\otimes\Z & \cdots \\
+            C\otimes\Z & C\otimes\Z & C\otimes\Z & \cdots \\
+            0 & 0 & 0
+            \arrow[from=1-1, to=2-1]
+            \arrow[from=2-1, to=3-1]
+            \arrow[from=3-1, to=4-1]
+            \arrow[from=4-1, to=5-1]
+            \arrow[from=1-3, to=2-3]
+            \arrow[from=2-3, to=3-3]
+            \arrow[from=3-3, to=4-3]
+            \arrow[from=4-3, to=5-3]
+            \arrow[from=4-2, to=5-2]
+            \arrow[from=3-2, to=4-2]
+            \arrow[from=2-2, to=3-2]
+            \arrow[from=1-2, to=2-2]
+            \arrow["\otimes2", from=2-1, to=2-2]
+            \arrow["\otimes2", from=3-1, to=3-2]
+            \arrow["\otimes2", from=4-1, to=4-2]
+            \arrow["\otimes3", from=4-2, to=4-3]
+            \arrow["\otimes3", from=3-2, to=3-3]
+            \arrow["\otimes3", from=2-2, to=2-3]
+            \arrow["\otimes4", from=2-3, to=2-4]
+            \arrow["\otimes4", from=3-3, to=3-4]
+            \arrow["\otimes4", from=4-3, to=4-4]
+        \end{tikzcd}
+    \end{center}
+    By Problem~2b, we get a short exact sequence:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & \varinjlim_n (A\otimes \Z) \arrow[r] & \varinjlim_n (B\otimes \Z) \arrow[r] & \varinjlim_n (C\otimes \Z) \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    Then by Problem~2c and Part~a, we get a short exact sequence:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A\otimes_\Z \Q \arrow[r] & B\otimes_\Z \Q \arrow[r] & C\otimes_\Z \Q \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    Thus $-\otimes_\Z \Q$ is exact.
+
+    \begin{partproblem}{c}
+        Given a finitely generated abelian group $A\cong \Z^{\oplus r} \oplus \Z /n_1 \oplus \cdots \oplus\Z /n_k$, prove that $A\otimes \Q \cong \Q^{\oplus r}$. 
+    \end{partproblem}
+    \quad Recall that $\Z\otimes \Q = \Q$ and $\Z / d\otimes \Q = 0$. Since tensor products distribute over direct sums, we get
+    \[
+        A\otimes \Z \cong (\Z\otimes \Q)^{\otimes r} \oplus (\Z / n_1\otimes \Q)\oplus\cdots\oplus (\Z / n_k\otimes \Q) = \Q^{\oplus r}
+    .\]  
+
+    \begin{partproblem}{d}
+        By tensoring with $\Q$ and using basic facts from linear algebra, prove that the rank of finitely generated abelian groups is additive in short exact sequences. That is, given a short exact sequence
+        \begin{center}
+            \begin{tikzcd}
+                0 \arrow[r] & A \arrow[r] & B \arrow[r] & C \arrow[r] & 0
+            \end{tikzcd}
+        \end{center}
+        of finitely generated abelian groups, prove that
+        \[
+            \text{rank}(B) = \text{rank}(A) + \text{rank}(C)
+        .\] 
+    \end{partproblem}
+    \quad Since $-\otimes_\Z \Q$ is exact, we get an exact sequence:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A\otimes_\Z \Q \arrow[r] & B\otimes_\Z \Q \arrow[r] & C\otimes_\Z \Q \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    By Part~c, this becomes an exact sequence of $\Q$-vector spaces:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & \Q^{\oplus \text{rank}(A)} \arrow[r] & \Q^{\oplus \text{rank}(B)} \arrow[r] & \Q^{\oplus \text{rank}(C)} \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    Thus by linear algebra, we get $\text{rank}(B) = \text{rank}(A) + \text{rank}(C)$.
+\end{solution}
+
+\begin{problem}
+    Tor computations.
+\end{problem}
+
+\begin{solution}
+    Let $R$ denote a commutative ring.
+    \begin{partproblem}{a}
+        Given a non zero-divisor $x\in R$ and an $R$-module $M$, compute $\mathrm{Tor}_*^R(R /x, M)$. 
+    \end{partproblem}
+
+    \quad Here we have a simple free resolution of $R/x$ given by the sequence:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & R \arrow[r,"\cdot x"] & R \arrow[r] & R/x \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    This gives rise to a chain complex:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & M\otimes_R R \arrow[r, "-\otimes_R \cdot x"] & M\otimes_R R \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    From this we get our Tor modules:
+    \[
+        \begin{aligned}
+            \Tor_0^R(R/x, M) &= M\otimes_R R / \Ima(M\otimes_R R \to M\otimes_R R) = M\otimes_R R / M\otimes_R Rx \cong M\otimes_R R/x,\\
+            \Tor_1^R(R/x, M) &= \ker(M\otimes_R R \to M\otimes_R R) \cong \text{tors}_x (M).
+        \end{aligned}
+    \] 
+    Thus the higher Tor modules are
+    \[
+        \Tor_k^R(R/x, M) = \begin{cases}
+            M\otimes_R R /x &k=0,\\
+            \text{tors}_x(M) &k=1,\\
+            0&k\geq 2.
+        \end{cases}
+    \] 
+
+    \begin{partproblem}{b}
+        Given two ideals $I, J\subset R$, prove that $\mathrm{Tor}^R_1(R /I, R/J) = (I \cap J) / IJ$. 
+    \end{partproblem}
+    \quad Since we have a short exact sequence of $R$-modules:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & I \arrow[r] & R \arrow[r] & R /I \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    This gives rise to a long exact sequence of Tor modules:
+    \begin{center}
+        \begin{tikzcd}
+            & {\Tor_2^R(R, R/J)} & {\Tor_2^R(R/I,R/J)} \\
+            {\Tor_1^R(I,R/J)} & {\Tor_1^R(R, R/J)} & {\Tor_1^R(R/I,R/J)} \\
+            {R/J\otimes_R I} & {R/J\otimes_RR} & {R/J\otimes_RR/I} & 0
+            \arrow[from=3-2, to=3-3]
+            \arrow[from=3-1, to=3-2]
+            \arrow[from=2-3, to=3-1]
+            \arrow[from=2-1, to=2-2]
+            \arrow[from=2-2, to=2-3]
+            \arrow[from=3-3, to=3-4]
+            \arrow[from=1-3, to=2-1]
+            \arrow[from=1-2, to=1-3]
+        \end{tikzcd}
+    \end{center}
+    \quad Since $R$ is flat as an $R$-module, $\Tor_k^R(R, R/J)=0$ for all $k\geq 1$. Thus we have an isomorphism
+    \[
+        \Tor^R_1(R/I, R /J) \cong \ker(R /J\otimes_R I \to R /J\otimes_R R)
+    .\] 
+    But we also have the canonical isomorphism $R /J\otimes R I \cong I / IJ$ and $R /J\otimes_R R\cong R /J$ so this map is in fact the canonical map $I / IJ \to R /J$ which sends $x + IJ \to x + J$. This is clearly well defined, and the only elements which map to zero are those $x + IJ$ with $x\in J$. Thus this kernel is $(I\cap J) / IJ$ so
+    \[
+        \Tor^R_1(R/I, R /J) \cong (I \cap J) / IJ
+    .\] 
+
+    \begin{partproblem}{c}
+        Compute $\mathrm{Tor}_*^{R[x] /x^n}(R, R)$ for any $n\geq 2$.
+    \end{partproblem}
+    \quad In this case, we can use the free resolution approach again, but the free resolution is considerably more complex. Consider the resolution:
+    \begin{center}
+        \begin{tikzcd}
+            {} & {R[x]/x^n} & {R[x]/x^n} & {R[x]/x^n} & {R[x]/x^n} & R & 0
+            \arrow["{\cdot x^{n-1}}", from=1-3, to=1-4]
+            \arrow["{\cdot x}", from=1-4, to=1-5]
+            \arrow[two heads, from=1-5, to=1-6]
+            \arrow[from=1-6, to=1-7]
+            \arrow["{\cdot x}", from=1-2, to=1-3]
+            \arrow[from=1-1, to=1-2]
+        \end{tikzcd}
+    \end{center}
+    For this to be an exact sequence, we need the maps to alternate back and forth between $\cdot x$ and $\cdot x^{n-1}$. This gives a chain complex:
+    \begin{center}
+        \begin{tikzcd}
+            {} & {R[x]/x^n\otimes_{R[x]/x^n}R} & {R[x]/x^n\otimes_{R[x]/x^n}R} & {R[x]/x^n\otimes_{R[x]/x^n}R} & 0
+            \arrow["\cdot x^{n-1}", from=1-2, to=1-3]
+            \arrow["\cdot x", from=1-3, to=1-4]
+            \arrow[from=1-4, to=1-5]
+            \arrow["\cdot x",from=1-1, to=1-2]
+        \end{tikzcd}
+    \end{center}
+    Taking the homology of this chain complex, it's clear that we have
+    \[
+        \Tor^{R[x] /x^n}_*(R, R) \cong R\otimes_{R[x] /x^n} R \cong R
+    .\] 
+\end{solution}
+
+\end{document}

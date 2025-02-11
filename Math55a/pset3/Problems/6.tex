@@ -1,0 +1,9 @@
+\begin{problem}
+  Let $\R^\infty=\{(a_0, a_1, a_2, \dots )\,|\, a_i \in \R\}$. Let $e_i = (0, \dots, 0, 1, 0, \dots) \in \R^\infty$ be the sequence with $a_1$ in the $i$-th place and all other terms zero, and let $w = (1,1,\dots) \in \R^\infty$ be the sequence consisting entirely of $1$'s. Describe the span of the set $\{w, e_0, e_1, \dots \} \subset \R^\infty$.
+\end{problem}
+
+Any $v\in \textrm{span}\{w, e_0, e_1, \dots \}$ is expressible as
+\[
+  v = \alpha w + \sum_{i\in I}\beta_i e_i
+\]
+for finite sets $I$. This represents a sequence with all values equal to $\alpha$ except for a finite number of values which can be arbitrary, equal to $\alpha-\beta_i$. So the span consists of constant sequences with finitely many differing values.

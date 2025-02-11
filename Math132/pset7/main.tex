@@ -1,0 +1,128 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+% \def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 7}}
+\date{\textbf{Due:} March 31, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+{Let $z \in \R^n - X$. Prove that if $x$ is any point of $X$ and $U$ any neighborhood of $x$ in $\R^n$, then there exists a point of $U$ that may be joined to $z$ by a curve not intersecting $X$.}
+\end{problem}
+
+\begin{solution}
+    \quad Let's set $X'$ to be the subset of points $x\in X$ such that for any open neighborhood $U\ni x$, there is some point of $U$ that can be joined to $z$ by a curve that doesn't intersect $X$. To prove the statement, we want to show that $X' = X$. We do this in several steps. First of all, to show that $X'$ is nonempty, we use compactness of $X$ to find the point $x\in X$ with minimum distance from $z$. Taking the line segment $L$ from $x$ to $z$ must clearly not intersect $X$, since this would violate the minimum distance condition. Then for any neighborhood $U$ of $x$, the must be some $y \in U\cap (L-\{x\})$ since $x$ is a limit point of $L$. This proves that $X'$ is nonempty.
+
+    \quad Next, we'll show that $X'$ is open, so let $x\in X'$. Applying the local immersion theorem to the inclusion map $X \to \R^n$, let $U$ be some neighborhood of $x$, and let $\psi : U \to \R^n$ be a diffeomorphism such that $\psi(X\cap U) = \R^{n-1}\times \{0\}$. We just need to show $X \cap U\subset X'$, so suppose we had some $a\in X\cap U$ and let $V$ be a neighborhood of $a\in \R^n$. This follows by the preceding paragraph.
+
+    \quad We'll now also show that $X'$ is closed. Suppose $x$ is some limit point of $X'$, and let $U$ be a neighborhood of $x\in \R^n$. The must be a point $x'\in X'\cap U$, so by definition of $X'$, there is some point of $U$ which is connected to $z$ by a curve not intersecting $X$, so $x\in X'$ and $X'$ is closed. Since $X'$ is a nonempty clopen subset of a connected $X$, $X=X'$ so this property is true for all points in $X$.
+\end{solution}
+
+\begin{problem}
+    {Show that $\R^n-X$ has, at most, two connected components.}
+\end{problem}
+
+\begin{solution}
+    \quad Suppose we had three points $z_1$, $z_2$, and $z_3$ in $\R^n - X$. Letting $\psi : U \to \R^n$ be a diffeomorphism from a neighborhood $U$ of some $x\in X$. By the preceding problem, we get points $q_i\in U-X$ and paths $\sigma : q_i \to z_i$ that don't intersect $X$. Notice that $\sigma(q_i)$ are points in $\psi(U-X)=\R^{n-1}\times \R^\times$, which has two path components, and so there must be a path between (WLOG) $\psi(q_1)$ and $\psi(q_2)$. Pulling back by the inverse $\psi^{-1}$ thus gives us a path between $q_1$ and $q_2$. Thus, there can be at most two path components, and hence connected components.
+\end{solution}
+    
+\begin{problem}
+Show that if $z_0$ and $z_1$ belong to the same connected component of $\R^n-X$, then $W_2(X,z_0) = W_2(X,z_1)$.
+\end{problem}
+
+\begin{solution}
+    Since $\R^n-X$ is open, it is locally path connected and so $z_0$ and $z_1$ belong to the same path component. This means that we have a smooth path $\sigma : I \to \R^n-X$ which takes $z_0 \mapsto z_1$. Now let $u_i : X \to S^{n-1}$ be the ``direction to $z_i$''-map, i.e. $x \mapsto (x-z_i) / |x-z_i|$. Recall that $W_2(X,z_i)=\deg_2(u_i)$, so it suffices to show that $u_0\simeq u_1$. Consider the homotopy $h : X\times I \to X$ given by:
+    \[
+        h(x,t) = \frac{x - \sigma(t)}{|x-\sigma(t)|}
+    .\] 
+    This completes the proof.
+\end{solution}
+    
+\begin{problem}
+{Given a point $z \in \R^n-X$ and a direction vector $v \in S^{n-1}$, consider the ray $r$ emanating from $z$ in the direction of $v$,
+\[
+    r = \{z+tv \mid t \geq 0\}.
+\]
+Check that the ray $r$ is transversal to $X$ if and only if $v$ is a regular value of the direction map $u: X \to S^{n-1}$. In particular, almost every ray from $z$ intersects $X$ transversally.}
+\end{problem}
+   
+\begin{solution}
+    \quad Consider the map $u' : \R^n-z \to S^{n-1}$ given by the direction map $u'(y) = (y-z) / |y-z|$. If we let $i : X\to \R^n-z$ be the inclusion, then $u=u'\circ i$. Notice that for any direction $v\in S^{n-1}$, we get $(u')^{-1}(v) = \{z+tv : t > 0\}$. For any $y\in (u')^{-1}(v)$, then $y=x+|y-z|v\in r-z$, yet on the other hand for any $t>0$, we get $(u')(z+tv)=v$ so $(u')^{-1}(v)=r-z$.
+
+    \quad Let's now see that that $u'$ is a submersion, which follows from the claim that $\dim \ker du'_u=1$ for $y\in \R^n-\{0\}$. Then, for all vectors $v\in \R^n$ we get
+        \[
+    \begin{aligned}
+    du'_y(v) &= \lim_{t \to 0} \frac{1}{t}\left(\frac{y+tv}{|y+tv|}-\frac{y}{|y|}\right) = \frac{1}{|y|^2}\lim_{t \to 0} \left(|y|v +\frac{|y|-|y+tv|}{t}y\right) = \frac{v}{|y|}-\left(\lim_{t\to 0} \frac{|y+tv|-|y|}{t}\right)\frac{y}{|y|^2}\\
+    &=\frac{1}{|y|}\left(v - \frac{y\cdot v}{|y|^2}y\right) = \frac{1}{|y|}(v-\mathrm{proj}_yv).
+    \end{aligned}
+    \]
+    Thus it follows that $d(u')_y(v)=0$ if and only if $v = \mathrm{proj}_y v$, which is true if and only if $v \in \mathrm{span}(y)$. Therefore $\ker df_y = \mathrm{span}(y)$, which is 1-dimensional as desired so $f$ is a submersion and in particular $f \pitchfork \{v\}$.
+
+    \quad By Exercise 7 from GP Chapter 1, Section~5, we have that $u \pitchfork \{v\}$ if and only if $X \pitchfork (u')^{-1}(v)$ in $\R^n-z$. But we also know that $u \pitchfork \{v\}$ if and only if $v$ is a regular value of $u$ so since $(u')^{-1}(v) = r-z$ and due to the fact that $\R^n-z$ is an open subset of $\R^n$, the condition $X \pitchfork (r-z)$ in $\R^n-z$ is the same as $X \pitchfork (r-z)$ in $\R^n$. This is in turn equivalent to saying that $r\pitchfork X$ since $z \notin X$. Thus, $v$ is a regular value of $u$ if and only if $r\pitchfork X$. Notice that by Sard's Theorem, almost every $v \in S^{n-1}$ is a regular value of $u$ and so almost every ray $r$ from $z$ intersects $X$ transversally. This is what we wanted to show.
+\end{solution}
+
+\begin{problem}
+Suppose that $r$ is a ray emanating from $z_0$ that intersects $X$ transversally in a nonempty (necessarily finite) set. Suppose that $z_1$ is any other point on $r$ (but not on $X$), and let $\ell$ be the number of times $r$ intersects $X$ between $z_0$ and $z_1$. Verify that 
+\[
+W_2(X,z_0) \equiv W_2(X,z_1)+\ell \pmod 2.
+\]
+\end{problem}
+
+\begin{solution}
+    \quad Let $L(z_0, z_1)$ be the line segment from $z_0$ to $z_1$, and let $L_r(z_1)$ be the subray of $r$ starting at $z_1$. Let $\overline{r}= r / |r|$. Let the direction maps $u_i$ be defined as in the previous problems. Note that $L_r(z_1)\pitchfork X$, so by the previous problem it follows that $\overline{r}$ is a regular value of $u_0, u_1$. Thus we get $W_i(X, z_i)\equiv \deg_2(u_i)\equiv I_2(u_i, \{\overline{r}\})\equiv |u_i^{-1}(\overline{r})|\mod 2$. Now note that $|u_0^{-1}(\overline{r})| = |r\cap X|$ and $|u_1^{-1}(\overline{r})| = |L_r(z_1) \cap X|$. Then since $r \cap X$ is the disjoint union of $L(z_0, z_1) \cap X$ and $L_r(z_1) \cap X$, it follows that $|r \cap X| = |L_r(z_1) \cap X|+\ell$, for some remainder $\ell$. Thus we have
+    \[
+    W_2(X,z_0) \equiv |u_0^{-1}(\overline{r})| \equiv |u_1^{-1}(\overline{r})|+\ell \equiv W_2(X,z_1)+\ell \mod 2.
+    \]    
+\end{solution}
+
+\begin{problem}
+Conclude that $\R^n-X$ has precisely two components,
+\[
+    D_0 = \{z \mid W_2(X,z)=0\}\quad\text{and}\quad D_1 = \{z \mid W_2(X,z)=1\}.
+\]
+\end{problem}
+
+\begin{solution}
+    \quad Since $\R^n-X$ has at most $2$ connected components, and $D_0$ and $D_1$ are clearly disjoint, and in separate components by Problem~3, it suffices to show that $D_0$ and $D_1$ are nonempty. Suppose without loss of generality that $D_0$ is non-empty. Let's suppose $D_i$ is nonempty for some $i\in \{0,1\}$, so pick a point $z\in D_i$. By Problem~4, we can find some ray $r$ which intersects $X$ transversally. Then $|r\cap X|<\infty$, so let $z'$ be a point on $X-r$ such that the segment of $r$ between $z$ and $z'$ contains only one point of $X$. Then by Problem~5, $z_1\in D_{i'}$ where $i'$ is the other element of $\{0,1\}$ so $D_0, D_1$ are both nonempty.
+\end{solution}
+    
+\begin{problem}
+Show that if $z$ is very large, then $W_2(X,z)=0$.
+\end{problem}
+
+\begin{solution}
+    \quad Note that since $X$ is compact, it must be bounded, so there is some $B>0$ such that $|x|\leq B$ for all $x\in X$. Let $z\in \R^n$ be outside this bounding sphere. We claim that $z/|z|$ is not in the image of the direction map $u : X \to S^{n-1}$. Suppose conversely that there is some $x\in X$ with $z / |z| = (x-z) / |x-z|$. Manipulating this gives a contradiction with regards to the bound, so $z / |z|$ is not in the image. Then $z/|z|$ is a regular value of $u$ so $W_2(X,z)\equiv |u^{-1}(z /|z|)|\equiv 0\mod 2$.
+\end{solution}
+
+\begin{problem}
+{Combine these observations to prove \textbf{The Jordan-Brouwer Separation Theorem}: The complement of the compact, connected hypersurface $X$ in $\R^n$ consists of two connected open sets, the ``outside" $D_0$ and the ``inside" $D_1$. Moreover, $\overline{D}_1$ is a compact manifold with boundary $\partial \overline{D}_1 = X$.}
+\end{problem}
+   
+\begin{solution}
+
+\quad Problem~6 lets us split the complement of $X$ into two connected open components $D_0$ and $D_1$, and $D_1$ is bounded and relatively compact. It thus makes sense to call $D_1$ the ``inside'' and $D_0$ the ``outside'' by Problem~7. Then $\overline{D_1}$ is a compact $n$-dimensional submanifold of $\R^n$. Furthermore, by the previous problems, it follows that $\partial(\overline{D_1})=X$ since we can construct a small chart $\psi : \mathbb{H}^n \to \overline{D_1}$ at any $x\in X$.
+
+\end{solution}
+
+\begin{problem}
+    {Given $z \in \R^n-X$, let $r$ be any ray emanating from $z$ that is transversal to $X$. Show that $z$ is inside $X$ if and only if $r$ intersects $X$ in an odd number of points.}
+\end{problem}
+
+\begin{solution}
+    \quad Suppose $v$ is any vector in the direction of $r$, which by Problem~4 is a regular value of $u : X \to S^{n-1}$ with $u^{-1}(v) = r\cap X$. Then $W_2(X,z)\equiv |u^{-1}(v)|\equiv |r\cap X|\mod 2.$
+    By the previous problem, $z$ is inside of $X$ if and only if $W_2(X,z)=1$ which by te above argument is true if and only if $|r\cap X|$ is odd, which is what we want.
+\end{solution}
+\end{document}

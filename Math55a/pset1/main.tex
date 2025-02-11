@@ -1,0 +1,247 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{import}
+\import{../../../../LaTeX}{basic}
+
+\title{\textbf{Math 55a Problem Set 1}}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\begin{itemize}
+  \item How long did this assignment take you? -- about 12 hours (mostly \LaTeX)
+  \item How hard was it? -- difficult enough to be interesting, but not hard
+  \item What resources did you use and how much help did you need? - I collaborated with Eliot Hodges, Swati Goel, and Rushil on some problems, and briefly exchanged ideas with random students in the math common room (I didn't get their names unfortunately).
+  \item Did you have any prior experience with this material? -- Yes, I have a pretty solid group theory and abstract algebra background.
+\end{itemize}
+
+\pagebreak
+
+\begin{problem}
+  Let $f:X\to Y$ be a map of sets. A function $g:Y\to X$ is called a
+  left (resp.\ right) inverse of $f$ if $g\circ f=\mathrm{id}_X$ (resp.
+  $f\circ g=\mathrm{id}_Y$).
+
+  \begin{enumerate}
+      \item Show that $f$ admits a right inverse if and only if $f$ is surjective. Show that, in general, a right inverse is not unique.
+      
+      \item Show that $f$ admits a left inverse if and only if $f$ is injective. Show that, in general, a left inverse is not unique.
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} Suppose $f$ is a surjective map. Construct $g : Y \to X$ by letting $g(y)$ be some $x \in X$ such that $f(x)=y$. (Note that such an $x$ is guaranteed to exist by the fact that $f$ is surjective.) Then $f \circ g = \mathrm{id}_Y$ by definition. $g$ is not unique because our choice of $g(y)$ was arbitrary, and there could be multiple $x\in X$ such that $f(x)=y$. 
+
+Conversely, suppose $f : X \to Y$ is a map with a right inverse $g : Y \to X$. Then for every $y \in Y$, $f(g(y)) = y$, so $f$ is surjective. 
+
+\textbf{(2)} Suppose $f$ is an injective map. Construct $g : Y \to X$ by letting $g(y) = x$ if there exists an $x$ such that $f(x)=y$, and letting $g(y)$ be arbitrary if no such $x$ exists. (Note that this map is well defined, because if there exists an $x$ such that $f(x)=y$, then this $x$ must be unique by injectivity of $f$.) Then $g(f(x)) = x$ for all $x\in X$. As before, note that $g$ isn't necessarily unique because it can be arbitrary for values outside the image of $f$. 
+
+Now conversely suppose that $f$ has a left inverse, $g : Y \to X$. For any two $x_1, x_2 \in X$ satisfying $f(x_1) = f(x_2)$, we have $g(f(x_1)) = g(f(x_2))$ and so $x_1=x_2$. 
+
+\pagebreak
+\begin{problem}
+  Give an explicit bijection between $\N=\{0,1,2,\dots\}$ and
+  $\N^2=\N\times\N$.
+\end{problem}
+
+Consider the map $f : \N\times\N \to \N$ given by 
+\[f(x,y) = 2^x\cdot (2y+1)-1.\] 
+We claim that this is a bijection. First of all, it's surjective. To show this let $n\in \N$. By the fundamental theorem of arithmetic, every $n\geq 1$ can be expressed as $n=2^x\cdot(2y+1)$ where $2y+1$ is some odd integer. Subtracting one from this representation gives us a representation for all $n\geq 0$. 
+
+To prove injectivity suppose $x_1,x_2,y_1,y_2\in \N$, and suppose $2^{x_1}(2y_1-1)-1=2^{x_2}(2y_2-1)-1$. Then $2^{x_1}(2y_1-1)=2^{x_2}(2y_2-1)$. By the fundamental theorem of arithmetic, it follows that $x_1=x_2$, and so $2y_1-1=2y_2-1$, hence $y_1=y_2$. This completes the proof.      
+
+
+\pagebreak
+\begin{problem} 
+  Let $F$ denote the set of all functions $f:\R\to\R$, and let $C\subset F$ denote the subset of all continuous functions. Prove that $|\R|=|C|<|F|$.
+\end{problem}
+
+\textit{(Hint: use the fact that a continuous function on $\R$ is determined by its values on the rational numbers $\Q\subset\R$; while usually you will be expected to prove any non-trivial statements that appear in hints, in this instance we will make an exception since this is not an analysis class.)}
+
+\begin{theorem}[Hint]\label{hinttheorem}
+  Suppose $f : \R \to \R$ is a continuous function. For any other continuous function $g : \R \to \R$, if $\restr{f}{\Q} = \restr{g}{\Q}$ then $f = g$.
+\end{theorem}
+
+First, let's prove that $|C| = |\R|$. Clearly $|C| \geq |\R|$ because of the injection $\R \hookrightarrow C$ mapping each real number $r$ to the constant function $f(x)=r$. Also note that by Theorem~\ref{hinttheorem}, $|C|\leq |\R^\Q|$, where $\R^\Q$ denotes the set of functions from $\R \to \Q$. 
+
+We claim that $|\R^\Q| = |\R^\N| = |\R|$. $|\R^\Q| = |\R^\N|$ is easy, since $|\Q|=|\N|$. Note that binary representation gives us a bijection $\{0,1\}^\N \cong \R$. Substituting, we get $|\R^\N|=|\left(\{0,1\}^\N\right)^\N|=|\{0,1\}^{\N\times\N}|=|\{0,1\}^\N|=|\R|$. The penultimate equality follows from the previous problem. Since $|C|\leq |\R^\Q| = |\R|$ and $|C|\geq |\R|$, it follows $|C|=|\R|$ completing the first part of the problem.
+
+Now we must show that $|C|<|F|$. It's enough to show that $|\R| < |\R^\R|$ since $|C|\leq |\R^\Q|=|\R|$ and $|F|=|\R^\R|$. However note that $|\R|<|\mathcal{P}(\R)|$ by Cantor's theorem and $|\mathcal{P}(\R)|\leq |\R^\R|$ since $|\mathcal{P}(\R)|=|\{0,1\}^\R|$. So to summarize,
+\[|C|\leq |\R^\Q| = |\R| < |\mathcal{P}(\R)|=|\{0,1\}^\R|\leq |\R^\R| = |F|.\]
+This completes the proof.   
+
+\pagebreak
+\begin{problem}
+  Let $G$ be a group, and let $x_1,\dots,x_n\in G$ be any elements. Show that $$(x_1x_2\dots x_n)^{-1}=x_n^{-1}\cdot x_{n-1}^{-1}\cdots x_1^{-1}.$$
+\end{problem}
+
+Note that,
+
+\[ x_1 x_2 \ldots x_n\cdot x_n^{-1}\cdot x_{n-1}^{-1}\ldots x_1^{-1} = e\]
+
+by a simple inductive argument, since the middle terms will always cancel. The claim then follows by the fact that inverses in a group must be unique.
+
+\pagebreak
+\begin{problem}
+  Show that a group $G$ cannot be the union of two proper subgroups.
+\end{problem}
+
+\textit{(There is a much simpler proof of this statement, but this argument is arguably more intuitive.)}
+
+Suppose for the sake of contradiction that $G=H_1\cup H_2$ where $H_1$ and $H_2$ are proper subgroups of $G$. By Lagrange's theorem, $|G|=k_1|H_1|$ and $|G|=k_2|H_2|$ for some integers $k_1,k_2\geq 2$. So $|G|=\frac{|G|}{k_1} + \frac{|G|}{k_2} - |H_1\cap H_2|$ and $1 =\frac{1}{k_1}+\frac{1}{k_2}-\frac{|H_1\cap H_2|}{|G|}$. The only way this equality could be satisfied is if $k_1=k_2=2$ and $|H_1\cap H_2|=0$. However $|H_1\cap H_2|\geq 1$ since $e\in H_1$ and $e\in H_2$. This is a contradiction.
+
+\pagebreak
+\begin{problem}
+  Show that any finite group $G$ of even order contains an element $x\in G$ such that $x\neq e$ but $x^2=e$.
+\end{problem}
+
+We can create a partition on $G$ where each set in the partition contains an element and its inverse. Let's say $G=G_1\cup\cdots G_n$. WLOG assume $G_1=\{e\}$. Then $|G|=|G_1|+|G_2|+\cdots+|G_n|$. So $|G|-1=|G_2|+\cdots+|G_n|$. Since $|G|-1$ is odd, one or more of the $|G_i|$ must be odd. But this means that $G_i=\{x\}$, with $x^2=e$. This completes the proof.       
+
+\pagebreak
+\begin{problem}
+  Let $D_4$ be the group of symmetries of a square (including
+  reflections). How many subgroups (including $D_4$ and $\{e\}$) does $D_4$ have?
+\end{problem}
+
+First we'll describe the structure of $D_4$. A simple computational check shows that $D_4$ has $8$ elements, and is generated by $r, t$ where $r^4=e$, $t^2=e$ and $rt=tr^3$.
+
+By Lagrange's Theorem, all subgroups of $D_4$ must be of sizes $1,2,4$ or $8$, since the orders of the subgroups should divide the order of the group. The subgroups of orders $1$ and $8$ are easy to find, namely $\{e\}$ and $D_4$.
+
+The subgroups of order $2$ consist of elements of order $2$ . Looking at the generating set, we can see that the only such elements are $r^2, t, tr, tr^2$ and $tr^3$.
+
+Lastly, we can find subgroups of order $4$ by a simple brute force, which yields $\{e,r,r^2,r^3,r^4\}$, $\{e, r^2, t, tr^2\}$, and $\{e, r^2, tr, tr^3\}$.
+
+So in total, there are $10$ subgroups of $D_4$.
+
+
+
+\pagebreak
+\begin{problem}
+  Let $G$ be a group, and consider the set map $\phi:G\to G$ sending each element $x\in G$ to its square $\phi(x)=x^2\in G$. Show that $\phi$ is a homomorphism if and only if $G$ is abelian.
+\end{problem}
+
+Suppose $\phi$ is a homomorphism. Then $\phi(xy)=xyxy=\phi(x)\phi(y)$. So $xyxy=x^2y^2$. Cancelling on the left side by $x$ and on the right side by $y$ we get $yx=xy$ so $G$ is abelian. Conversely suppose $G$ is abelian. Then $\phi(xy) = xyxy=xxyy=\phi(x)\phi(y)$.   
+
+\pagebreak
+\begin{problem}
+  Let $G$ be a group.
+
+  \begin{enumerate}
+    \item Show that the set of automorphisms of $G$ is itself a group (with group law given by composition). This group is denoted $\Aut(G)$.
+    \item For each element $a\in G$, define a map $c_a:G\to G$ by $c_a(x)=axa^{-1}$. Show that $c_a$ is an automorphism of $G$.
+    \item Show that the map $\phi:G\to \Aut(G)$ defined by sending $a\in G$ to $c_a\in \Aut(G)$ is a homomorphism.
+    \item Give an example of a group $G$ (other than the trivial group $\{e\}$) such that $\phi$ is an isomorphism.
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} Associativity is a basic property of function composition. The identity element is simply the identity automorphism of the group to itself. Inverses are guaranteed because automorphisms must be invertible.
+
+\textbf{(2)} The map $c_a$ is a homomorphism becuase 
+  \[c_a(xy) = axya^{-1} = axeya^{-1}=axa^{-1}aya^{-1}=c_a(x)c_a(y).\] It is an automorphism because it has an inverse, namely $c_a^{-1}(x) = a^{-1}xa$. Note that 
+  \[c_a^{-1}(c_a(x)) = a^{-1}axa^{-1}a = exe=x.\]
+
+\textbf{(3)} Observe that
+\[ \phi(xy)=(t \mapsto (xy)t(xy)^{-1} = (t\mapsto xyty^{-1}x^{-1}) = (t\mapsto x(yty^{-1}x^{-1}))\phi(x)\circ\phi(y). \]
+
+\textbf{(4)} We claim that $S_3$ works, where $S_3$ is the group of bijections of a set of $3$ elements under composition. Equivalently $S_3$ represents the symmetry group of an equilateral triangle. We claim that $\phi$ is an isomorphism in this case. We'll use a few lemmas.
+
+\begin{lemma}\label{inneraut}
+  Let $G$ be a group and let $\textrm{Inn}(G)\subset \Aut(G)$ be the group of {\em{inner automorphisms}}, i.e. automorphisms of the form $x \mapsto axa^{-1}$. Let $Z(G)$ denote the {\em{center}} of $G$, i.e. $Z(G)=\{ g\in G : gag^{-1} = a, \forall a\in G\}.$ Then,
+
+  \[ G / Z(G) \cong \textrm{Inn}(G).\]
+\end{lemma}
+\begin{proof}
+  Consider the map $\varphi : G \to \textrm{Inn}(G) : g \mapsto (x \mapsto gxg^{-1})$. This is a homomorphism by (3), and it is clearly surjective by definition of $\textrm{Inn}(G)$. The kernel of $\varphi$ is the set $g\in G$ such that $gag^{-1} = a$ for all $a\in G$. This kernel is exactly $Z(G)$, so by the first isomorphism theorem, there is an induced isomorphism $\tilde{\varphi} : G / Z(G) \to \textrm{Inn}(G)$.   
+\end{proof}
+
+A simple computational check shows that $Z(S_3)=\{e\}$ so by Lemma~\ref{inneraut}, $\phi : S_3 \hookrightarrow \Aut(S_3)$. To show that $\phi$ is indeed an isomorphism, we'll show that $|\Aut(S_3)|=6$. This can be done with the following lemma.
+
+\begin{lemma}
+  Let $\psi\in \Aut(S_3)$. Let $T=\{\tau_1, \tau_2, \tau_3\}$ be the set of {\em{transpositions}} of $S_3$, i.e. elements of order $2$. Then $\psi$ is permutes the set $T$.
+\end{lemma}
+\begin{proof}
+  Since $\psi$ is already injective, we only need to show that $\psi(T)\subset T$. Suppose $\tau\in T$ is a transposition. Then note that $\psi(\tau)^2=\psi(\tau^2)=\psi(e)=e$. Since $\psi(\tau)\neq e$, it follows that $\psi(\tau)$ has order $2$, and hence $\psi(\tau)\in T$.    
+\end{proof}
+
+Since there are $6$ ways to permute $3$ objects, $|\Aut(S_3)|\leq 6$. Combined with the results of the previous lemma, it follows that $\varphi : S_3 \to \Aut(S_3)$ is an isomorphism.  
+
+\pagebreak
+\begin{problem}
+  Let $S$ be a nonempty finite set, equipped with an associative operation $*:S\times S\to S$ such that, for every $x,y\in S$, there exists $z\in S$ such that $x*z=y$, and there exists $z'\in S$ (possibly different from $z$) such that $z'*x=y$. Show that $(S,*)$ is a group.   
+\end{problem}
+
+We'll start by proving that a unique identity exists. Pick some $x\in S$ Let $e\in S$ be the element such that $x * e = x$. We claim tat $z * e = z$ for all $z\in S$. Write $z = y * x$ (we can do this by the first condition). Then $z * e = y * x * e = y * (x * e) = y * x = z$. Similarly, using the other condition we can find an element $e'\in S$ such that $e' * z = z$ for all $z\in S$. Furthermore, these identity elements must be the same since $e=e'*e=e'$. So we have an identity.
+
+Now we'll show inverses. Let $x\in S$ be some element, and let $y\in S$ be the element such that $x * y = e$. Let $y'\in S$ be the element such that $y'*x=e$. Then $y'=y'*e=y'*x*y=e*y=y$.      
+
+\pagebreak
+\begin{problem}[Optional, Extra Credit]
+  The {\em free group} on $n$ generators $a_1,\dots,a_n$, denoted $F_n$ is the collection of all {\em reduced words} $a_{i_1}^{n_1} a_{i_2}^{n_2} \dots a_{i_k}^{n_k}$ of any length $k\geq 0$, where $i_1,\dots,i_k\in \{1,\dots,n\}$, $i_j\neq i_{j+1}$, and $n_1,\dots,n_k$ are non-zero integers, with the law of composition given by juxtaposition and simplification (non-reduced words where $i_j=i_{j+1}$ for some $j$ or some $n_j$ is zero are simplified to reduced ones, by combining repeated terms and eliminating unnecessary ones); the identity is the empty word of length $k=0$.
+
+  \begin{enumerate}
+    \item Show that there exists an injective homomorphism $F_3\hookrightarrow F_2$.
+    \item Show that for any $n$ there exists an injective
+    homomorphism $F_n\hookrightarrow F_2$.
+    \item Show that $F_2$ is not isomorphic to $F_3$ -- despite the existence of injective homomorphisms $F_2\hookrightarrow F_3$ (obvious) and $F_3\hookrightarrow F_2$ (from (1)) (so: group homomorphisms are different from maps of sets, for which the existence of injective maps in both directions implies that of a bijection).
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} Let $a_1,a_2,a_3$ be the generators of $F_3$ and let $x, y$ be the generators of $F_2$. Consider the map $\varphi : F_3 \to F_2$ given by:
+\[\varphi(a_1) = (xxy)x(xxy)^{-1}, \varphi(a_2) = (yyy)x(yyy)^{-1}, \textrm{ and } \varphi(a_3) = (xyy)x(xyy)^{-1}\]
+Observe that for all $n\in \Z, n\neq 0$, by basic properties of conjugation we have:
+\[\varphi(a_1)^n = (xxy)x^n(xxy)^{-1}, \varphi(a_2)^n = (yyy)x^n(yyy)^{-1}, \textrm{ and } \varphi(a_3)^n = (xyy)x^n(xyy)^{-1}\]
+We claim that the map $\varphi$ is injective. To show this, we'll show that $\varphi : F_3 \to \Ima(\varphi)$ is invertible. Suppose $a_{i_1}^{n_1}a_{i_2}^{n_2}\cdots a_{i_k}^{n_k}\in F_3$ is some arbitrary element. Then, 
+\[\varphi(a_{i_1}^{n_1}a_{i_2}^{n_2}\cdots a_{i_k}^{n_k}) = \beta_{i_1} x^{n_1}\beta_{i_1,i_2} x^{n_2}\beta_{i_3,i_4} \cdot \beta_{i_{k-1}, i_k}x^{n_k}\beta_{i_{k}}\]
+where $\beta$ are the so called {\em boundary terms}. With the exception of $\beta_0$ and $\beta_k$, all boundary terms are of the form $A^{-1}\cdot B$, where $A, B$ can be any distinct $xxy, yyy$ or $xyy$. We can in fact make a table of all possible values for the boundary terms: 
+
+\begin{center}
+  \begin{tabular}{ |c|c|c|c| }
+    \hline
+    $A$ & $B$ & $B^{-1}A$ & $\beta$ \\
+    \hline
+    $xxy$ & $yyy$ & $y^{-1}x^{-1}x^{-1}yyy$ & $\beta_{1,2}$\\
+    \hline
+    $xxy$ & $xyy$ & $y^{-1}x^{-1}yy$ & $\beta_{1,3}$ \\
+    \hline
+    $yyy$ & $xxy$ & $y^{-1}y^{-1}y^{-1}xxy$ & $\beta_{2,1}$ \\
+    \hline
+    $yyy$ & $xyy$ & $y^{-1}y^{-1}y^{-1}xyy$ & $\beta_{2,3}$ \\
+    \hline
+    $xyy$ & $yyy$ & $y^{-1}y^{-1}x^{-1}yyy$ & $\beta_{3,2}$ \\
+    \hline
+    $xyy$ & $xxy$ & $y^{-1}y^{-1}xy$ & $\beta_{3,1}$ \\
+    \hline 
+  \end{tabular}
+\end{center}
+
+Notice how all of these boundary terms are distinct, reduced, and of the form $y^{-1}Cy$. Since these boundary terms are intermultiplied with powers of $x$, no additional reductions can be made. So the canonical expression for $\beta_{i_1} x^{n_1}\beta_{i_1,i_2} x^{n_2}\beta_{i_3,i_4} \cdot \beta_{i_{k-1}, i_k}x^{n_k}\beta_{i_{k}}$ cannot be reduced further, and all boundary terms uniquely determine the $i_m$. From the powers of $x$, we can then also deduce the $n_m$. 
+
+So any $A\in \Ima(\varphi)$ in reduced form can be uniquely mapped to a corresponding element $\varphi^{-1}(A)\in F_3$. This shows that $\varphi$ is indeed an injection.
+
+\textbf{(2)} We'll use an inductive argument to prove that there is always an injection $F_n \hookrightarrow F_{n-1}$. Our base case for $n=3$ is proven in \textbf{(1)}. Suppose there is an injection $\iota_n : F_n \hookrightarrow F_{n-1}$. We can extend this to an injection $\iota_{n+1} : F_{n+1} \hookrightarrow F_{n}$, where $\restr{\iota_{n+1}}{F_n} = \iota_n$, and the extra generator in $F_{n+1}$ is mapped to the extra generator in $F_{n}$. Once we have these injections $\iota_n$ , we can compose them to obtain an injection $\iota_n \circ \iota_{n-1} \circ \ldots \circ \iota_3 : F_n \hookrightarrow F_2$.   
+
+\textbf{(3)} To prove that $F_2\not\cong F_3$, we'll associate each group toa  smaller (often finite) set which is much easier to work with. The key insight is that this smaller set should stay the same (under bijection) as long as the two input groups are isomorphic.
+
+\begin{lemma}\label{invariant}
+  Suppose $G$ is a group. Consider the set,
+  \[\textrm{Hom}(G, \Z /2) = \{ f : G \to \Z /2 : f \textrm{ is a homomorphism}\}.\]
+  For any group $H$ which is isomorphic to $G$ via $g : G \to H$ , there is an induced bijection
+  \[\varphi_g : \textrm{Hom}(G, \Z /2) \to \textrm{Hom}(H, \Z /2).\]  
+\end{lemma}
+\begin{proof}
+  Construct $\varphi_g$ by setting $\varphi_g(f) = f\circ g^{-1}$. This is well defined since $f$ and $g^{-1}$ are both homomorphisms. Also $\varphi_g$ is a bijection since it has an inverse, namely $\varphi_{g^{-1}}$. It's pretty straightforward to check that $\varphi_g\circ \varphi_{g^{-1}}$ and $\varphi_{g^{-1}}\circ \varphi_{g}$ are both identity maps.        
+\end{proof}
+
+Now let's compute $\textrm{Hom}(G, \Z /2)$ for $F_2$ and $F_3$.
+
+\begin{lemma}
+  For a free group $F_n$, $|\textrm{Hom}(F_n, \Z /2)| = 2^n$.  
+\end{lemma}
+\begin{proof}
+  Let $f\in \Hom(F_n, \Z /2)$ be some homomorphism. It follows that this map is entirely determined by $f(a_i)$, where $a_i$ are the generators of $F_n$. Since there are two choices for each $f(a_i)$ and there are $n$ generators, it follows that $|\Hom(F_n, \Z /2)|=2^n$.       
+\end{proof}
+
+So assuming $F_2\cong F_3$ for the sake of contradiction, by the previous lemmas, $\Hom(F_2, \Z /2) \cong \Hom(F_3, \Z /2)$ so $2^2=2^3$, a contradiction. Hence $F_2$ is not isomorphic to $F_3$.
+
+\end{document}

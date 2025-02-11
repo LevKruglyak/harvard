@@ -1,0 +1,156 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 231a Problem Set 1}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Let $[n]$ denote the totally ordered set $\{0,1,\cdots,n\}$. Let $\phi : [m] \to [n]$ be an order preserving function. Identifying $[n]$ with the vertices of $\Delta^n$, we can extend $\phi$ to an affine map $\Delta^m\to\Delta^n$. Write out this map in barycentric coordinates.
+        \item Write $d^j : [n-1] \to [n]$ for the order preserving injection that omits $j$. Show that an order preserving injection $\phi : [n-k] \to [n]$ is uniquely a composition of the form $d^{j_k}d^{j_{k-1}}\cdots d^{j_1}$ with $0\leq j_1 < j_2 < \cdots < j_k \leq n$. Do this by describing integers $j_1,\ldots,j_k$ directly in terms of $\phi$, and then verify the straightening rule
+        \[
+            d^i d^j = d^{j+1}d^i\quad\textrm{ for }\quad i\leq j    
+        .\] 
+        \item Show that any order preserving map $\phi : [m] \to [n]$ factors uniquely as the composition of an order preserving surjection followed by an order preserving injection.
+        \item Write $s^i : [m+1] \to [m]$ for the order preserving surjection which repeats the value of $i$. Show that any order preserving surjection $\phi : [m] \to [n]$ has a unique expression $(s^n)^{i_n}(s^{n-1})^{i_{n-1}}\cdots (s^0)^{i_0}$.
+        \item Establish a straightening rule of the form $s^id^j$.
+        \item Write down the identities satisfied by these operators.
+        \item Prove that $\partial^2=0$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Given an order preserving map $\phi : [m] \to [n]$, define $\phi(s_0,\cdots,s_m)=(t_0,\cdots,t_n)$ where 
+    \[t_i = \sum_{j\in\phi^{-1}(i)}s_j.\] 
+    It is clear that $\sum^n_{i=0}t_i=1$, and letting $e_j$ denote the $n$-th vertex of $\Delta^m$, it follows that $\phi(e_j)$ is mapped to the $\phi(j)^\text{th}$ vertex of $\Delta^n$, so this is the map we need. This map is affine since it is linear in $s_i$.
+    
+    \textbf{(b)} Let $\zeta : [k] \to [n]$ be the unique order preserving map with $\Ima(\zeta)\cap \Ima(\phi)=\emptyset$. Define $j_i = \zeta(i)$. It follows by elementary induction that $d^{j_k}d^{j_{k-1}}\cdots d^{j_1}=\phi$. Uniqueness follows because such a decomposition is uniquely determined by $\zeta$, i.e. the elements in the image which $\phi$ omits, and the actual decomposition can be constructed using induction. Checking the straightening rule is pretty easy, clearly $d^id^j(x)=d^{j+1}d^i(x)$ for $x<i$ and for $x>j+1$, and a simple casework shows that it is true in the case when $i\leq x\leq j+1$. 
+    
+    \textbf{(c)} We'll construct surjective $f : [m] \to [k]$ and injection $g : [k] \to [n]$. Let $k = |\phi([m])|-1$ and consider the recursive function given by $f(0)=0$ and 
+    \[
+        f(k)=\begin{cases}
+            f(k-1)&\textrm{if }\phi(k) = \phi(k-1)\\
+            f(k-1)+1 &\textrm{otherwise}
+        \end{cases}
+    .\]
+    Clearly $f$ is an order preserving surjection. Letting $g = \phi \circ f^{-1}$, we have our order preserving injection as well. These maps give a unique factoring directly from the universal property of surjective and injective maps.
+    
+    \textbf{(d)} Firstly, we have the straightening rule $s^is^j=s^{j-1}s^i$ for all $i<j$. Since $(s^i)^n$ represents the surjective map which send the $n$ integers following $i$ inclusive to $i$. We can then inductively build a decomposition $(s^n)^{i_n}(s^{n-1})^{i_{n-1}}\cdots (s^0)^{i_0}$. This is unique by the straightening rule.
+    
+    \textbf{(e)} A straightforward checking gives us:
+    \[s^id^j = \begin{cases}d^{j-1}s^i & \text{ if } i<j-1\\ \text{Id} & \text{ if } i=j \text{ or } j-1\\ d^js^{i-1} & \text{ if } i > j \end{cases}\]
+        
+    \textbf{(f)} Since $(fg)^*=g^*f^*$, we have the following identities:
+    \[
+        d_jd_i=d_{i}d_{j+1} \textrm{ if } i\leq j,\quad s_js_i=s_{i}s_{j-1} \textrm{ if } i< j,\quad\textrm{and}\quad d_js_i=\begin{cases}s_{i}d_{j-1} & \text{ if }i<j-1\\ \text{Id} & \text{ if }i=j \text{ or } j-1 \\ s_{i-1}d_{j} & \text{ if } i > j \end{cases}
+    .\] 
+    
+    \textbf{(g)} Using all of the above identities:
+    \[\begin{aligned}
+    \partial^2 = \sum^{n-1}_{i=0}(-1)^id_i\left(\sum^n_{j=0}(-1)^jd_j\right)=\sum_{0\leq j < i \leq n-1}(-1)^{i+j}d_id_j+\sum_{0\leq i < j \leq n}(-1)^{i+j}d_{j-1}d_i=\\\sum_{0\leq j < i \leq n-1}(-1)^{i+j}d_id_j+\sum_{0\leq i < j \leq n-1}(-1)^{i+j}d_id_j=0.
+    \end{aligned}\]
+\end{solution}
+
+\begin{problem}
+    Construct an isomorphism:
+    \[
+        H_n(X)\oplus H_n(Y) \to H_n(X\sqcup Y)
+    .\] 
+\end{problem}
+
+\begin{solution}
+    Consider the map $\phi : S_n(X)\oplus S_n(Y) \to S_n(X\sqcup Y)$ given by $\phi(\sigma, \omega) = i_X(\sigma)+i_Y(\omega)$, where $i_X, i_Y$ are the natural inclusion maps. This restricts to a map $\phi : Z_n(X)\oplus Z_n(Y)\to Z_n(X\sqcup Y)$ since if $\partial \sigma = 0$ and $\partial \omega = 0$ then $\partial(i_X(\sigma)+i_Y(\omega))=i_X(\partial\sigma)+i_Y(\partial\omega)=0$. Furthermore, this map is surjective, because every chain $\zeta : \Delta^n \to X\sqcup Y$ can be expressed as a $i_X(\sigma)+i_Y(\omega)$ since $\Delta^n$ is connected. Next, we compose with the surjective quotient map $Z_n(X\sqcup Y) \to H_n(X\sqcup Y)$ to get a map $\Phi : Z_n(X)\oplus Z_n(Y) \to H_n(X\sqcup Y)$.
+    
+    Let's calculate the kernel of this map. Suppose $(\sigma, \omega)$ are chains with $i_X(\sigma)+i_Y(\omega)=\partial \zeta$ for some $\zeta : \Delta^{n+1} \to X\sqcup Y$. Then by connectedness of $\Delta^{n+1}$, we can write $\zeta=i_X(\sigma')+i_Y(\omega')$ for some $\sigma'\in Z_{n+1}(X)$ and $\omega'\in Z_{n+1}(Y)$. Then $i_X(\sigma)+i_Y(\omega)=\partial(i_X(\sigma')+i_Y(\omega'))$. 
+    Moving $\partial$ around and rearranging, we get $i_X(\sigma - \partial \sigma')=i_Y(\omega - \partial \omega')$. By connectedness, it follows that $\sigma = \partial \sigma'$ and $\omega = \partial \omega'$. So the kernel is $B_n(X)\oplus B_n(Y)$, and so by the first isomorphism theorem we get an isomorphism $\tilde{\Phi} : H_n(X)\oplus H_n(Y) \to H_n(X\sqcup Y)$.
+\end{solution}
+
+\begin{problem}
+    Compute the homology groups of the following semisimplicial sets:
+    \begin{enumerate}[(a)]
+        \item The semisimplicial set $T_*$ with underlying sets $T_0 = \{v\}, T_1 = \{a, b, c\}, T_2 = \{U, L\}$ and $T_n = \emptyset$ for $n\geq 3$, and face maps given by 
+        \[
+            \begin{aligned}
+                d_0U = b,\; d_1U &= c,\; d_2U = a\\
+                d_0L = a,\; d_1L &= c,\; d_2L = b\\
+                d_ia = d_ib = d_ic& = v\textrm{ for } i =0,1.
+            \end{aligned}
+        \] 
+        \item The semisimplicial set $K_*$ with underlying sets $K_0 = \{v\}, K_1 = \{a, b, c\}, K_2 = \{U, L\}$ and $T_n = \emptyset$ for $n\geq 3$, and face maps given by 
+        \[
+            \begin{aligned}
+                d_0U = b,\; d_1U &= c,\; d_2U = a\\
+                d_0L = a,\; d_1L &= b,\; d_2L = c\\
+                d_ia = d_ib = d_ic& = v\textrm{ for } i =0,1.
+            \end{aligned}
+        \] 
+        \item Given any nonnegative integer $n$, the unique simplicial set $A[n]_*$ with $A[n]_k$ consisting of a single element for $k\leq n$ and $A[n]_k$ empty for $k > n$. 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} From the definition of the semisimplicial set, it's clear that $H_n(T_*)$ is trivial for $n>2$. We must then only check three cases:
+
+    \begin{enumerate}
+        \item $H_0(T_*):$ Here $\Ima(\partial_1)=\{1\}$ and $\Ker(\partial_0)=\Z v$ so $H_0(T_*)=\Z$.   
+        \item $H_1(T_*):$ In this case, $\Ima(\partial_2)=\Z(b-c+a)$ and $\Ker(\partial_1)=\Z a \oplus \Z b\oplus \Z c$ so $H_1(T_*)=\big\langle a, b, c \mid b-c+a \big\rangle\cong \Z\oplus \Z$.
+        \item $H_2(T_*):$ In this case, $\Ima(\partial_3)=\{1\}$ and $\Ker(\partial_2)=\Z(U-L)$ so $H_2(T_*)\cong\Z$   
+    \end{enumerate}
+    Putting everything together, we thus have
+    \[
+        H_n(T_*)=\begin{cases}
+            \Z &\textrm{ if }n=0,2\\
+            \Z\oplus \Z&\textrm{ if }n=1\\
+            \{1\}&\textrm{ otherwise }
+        \end{cases}
+    .\] 
+
+    \textbf{(b)} As before, we have $H_n(K_*)$ trivial for $n > 2$ and $\Z$ if $n = 0$, so we must only check two cases:
+    
+    \begin{enumerate}
+        \item $H_1(K_*):$ In this case, $\Ima(\partial_2)=\Z(b-c+a)\oplus \Z(a-b+c)=\Z(a-b+c)\oplus \Z(2a)$ and $\Ker(\partial_1)=\Z a\oplus \Z b\oplus \Z c$ so $H_1(K_*)\cong \Z /2\Z \oplus \Z$.
+        \item $H_2(K_*):$ Lastly, $\Ima(\partial_3)=\{1\}$ and $\Ker(\partial_2)=\{1\}$, so $H_2(K_*)=\{1\}$.    
+    \end{enumerate}
+    
+    To conclude,
+    \[
+        H_n(K_*)=\begin{cases}
+            \Z&\textrm{ if }n=0\\
+            \Z / 2\Z\oplus \Z &\textrm{ if }n=1\\
+            \{1\}&\textrm{ otherwise }
+        \end{cases}
+    .\]
+
+    \textbf{(c)} Here the boundary maps $\partial_k : \Z A[n]_k \to \Z A[n]_{k-1}$ are given by
+    \[
+        \partial_k = \begin{cases}
+            0&\textrm{ if }k\textrm{ odd, or } k>n\\
+            1&\textrm{ if }k\textrm{ even}
+        \end{cases}
+    .\] 
+    Then the kernels and images are given by
+    \[
+        \Ker(\partial_k) = \begin{cases}
+            \Z&\textrm{ if }k\textrm{ odd, or } k>n\\
+            0 &\textrm{ if }k\textrm{ even}
+        \end{cases}\quad \textrm{ and }\quad\Ima(\partial_k)=\begin{cases}
+            0&\textrm{ if }k\textrm{ odd, or } k>n\\
+            \Z&\textrm{ if }k\textrm{ even}
+        \end{cases}
+    \] 
+    so the homology groups are 
+    \[
+        H_k(A[n])=\Ima(\partial_{k+1}) /\Ker(\partial_k)=\begin{cases}
+            \Z & k=0\\
+            \Z & k=n \textrm{ and }n\textrm{ even}\\
+            0 & \textrm{otherwise}
+        \end{cases}
+    .\]
+\end{solution}
+
+\end{document}

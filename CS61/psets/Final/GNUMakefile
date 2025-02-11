@@ -1,0 +1,2 @@
+main:
+	gcc main1.cc -fsanitize=address -g -o main1

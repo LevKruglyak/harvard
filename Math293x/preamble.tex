@@ -1,0 +1,79 @@
+% Math stuff
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+% Fancy script capitals
+\usepackage{mathrsfs}
+\usepackage{cancel}
+% Bold math
+\usepackage{bm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{tikz}
+\usepackage{quiver}
+% Geometry
+\usepackage[letterpaper, portrait, margin=1.25in, includefoot]{geometry}
+
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\RP}{\mathbb{RP}}
+\providecommand{\CP}{\mathbb{CP}}
+\providecommand{\HP}{\mathbb{HP}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\GL}{\mathrm{GL}}
+\providecommand{\EU}{\mathrm{EU}}
+\providecommand{\BU}{\mathrm{BU}}
+\providecommand{\Gr}{\mathrm{Gr}}
+\providecommand{\EO}{\mathrm{EO}}
+\providecommand{\BO}{\mathrm{BO}}
+\providecommand{\BSO}{\mathrm{BSO}}
+\providecommand{\ESO}{\mathrm{ESO}}
+\providecommand{\SL}{\mathrm{SL}}
+\providecommand{\SO}{\mathrm{SO}}
+\providecommand{\MSO}{\mathrm{MSO}}
+\providecommand{\MO}{\mathrm{MO}}
+\providecommand{\MU}{\mathrm{MU}}
+\renewcommand{\O}{\mathrm{O}}
+\providecommand{\U}{\mathrm{U}}
+\providecommand{\Sp}{\mathrm{Sp}}
+\providecommand{\CC}{\mathscr{C}}
+\providecommand{\Eq}{\mathrm{Eq}}
+\providecommand{\Coeq}{\mathrm{Coeq}}
+\providecommand{\hCW}{\mathbf{hCW}}
+\providecommand{\hTop}{\mathbf{hTop}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\Set}{\mathbf{Set}}
+\providecommand{\Man}{\mathbf{Man}}
+\providecommand{\colim}{\mathrm{colim}}
+\providecommand{\Th}{\mathrm{Th}}
+
+\newcommand\defn[1]{\textbf{#1}}
+\newcommand\todo[1]{{\color{red}\textbf{#1}}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{claim}[definition]{Claim}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{example}[definition]{Example}
+\newtheorem{corollary}[definition]{Corollary}
+
+% Restriction
+\newcommand\restr[2]{{
+  \left.\kern-\nulldelimiterspace
+  #1
+  \vphantom{\big|}
+  \right|_{#2}
+}}
+
+\edef\restoreparindent{\parindent=\the\parindent\relax}
+\usepackage{parskip}
+\restoreparindent
+
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{topsep=1ex,itemsep=1ex,partopsep=1ex,parsep=1ex}
+\setlist[itemize]{topsep=1ex,itemsep=1ex,partopsep=1ex,parsep=1ex}
+
+\renewcommand{\abstractname}{Summary}    % clear the title

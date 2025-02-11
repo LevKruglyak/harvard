@@ -1,0 +1,161 @@
+% Chapter 5: Exercises 7, 11, 13, 14, 16, 18, 19
+\documentclass{pset}
+
+\title{Math 213a Problem Set 11}
+\due{November 30, 2023}
+\author{Lev Kruglyak}
+
+\input{../213a.tex}
+
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{5.7}
+  Prove the identity:
+  \[
+    60\sum_{\lambda\in \Z[i]\setminus\{0\}} \lambda^{-4} = 4\left(\int_1^\infty \frac{dx}{\sqrt{x^3-x}}\right)^4.
+  \]
+\end{problem}
+
+\begin{solution}
+  Recall that for any lattice $\Lambda=\Z\alpha \oplus \Z\beta$ with invariants $g_2, g_3$, we have
+  \[
+    \frac{\alpha}{2} = \int_{e_1}^\infty\frac{dx}{\sqrt{4x^3-g_2x-g_3}}.
+  \]
+  In our case, we have the Gaussian integer lattice $\Lambda = \Z \oplus \Z i$, and we've shown that $g_3=0$, so the cubic becomes $4x^3-g_2x$. The zeroes of this function are $0$ and $\sqrt{g_2}/2$. Note that $e_1=\sqrt{g_2}/2$ because we showed on the previous problem set that the only zero of this function is $(1+i)/2$ in the period square. Then
+  \[
+    \frac{1}{2} = \int_{e_1}^\infty \frac{dx}{\sqrt{4x^3-g_2 x}} = \frac{1}{2}\int_{e_1}^\infty\frac{dx}{\sqrt{x^3-e_1^2 x}}.
+  \]
+  Under the change of variables $u=x/e_1$, we then get
+  \[
+    1 = \int_1^\infty \frac{du e_1}{\sqrt{e_1^3(u^3-u)}} = \frac{1}{\sqrt{e_1}}\int_1^\infty \frac{du}{\sqrt{u^3-u}}.
+  \]
+  Thus, raising both sides to the power of $4$ we get
+  \[
+    g_2 = 60\sum_{\lambda \Z[i]\setminus \{0\}} \lambda^{-4} = 4\left(\int_1^\infty \frac{dx}{\sqrt{x^3-x}}\right)^4.
+  \]
+\end{solution}
+
+\begin{problem}{5.11}
+  Let $V\subset \CP^2$ be a smooth cubic curve, and let $F\subset V$ be its 9 flexes.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that any line that passes through 2 points of $F$ passes through a third.
+  \end{part}
+
+  We've shown that $F$ corresponds the $3$-torsion subgroup of the elliptic curve $E$ under the addition law. In particular, this means that $F$ is closed under addition so any line passing through distinct points $A$ and $B$ must meet a third point $-(A+B)$. This third point is distinct from the first two, since if $A=-A-B$ we would have $B=-2A=A$, a contradiction.
+
+  \begin{part}{b}
+    Show that there are no 9 points in $\R^2$ with this property, unless they all lie on the same line.
+  \end{part}
+
+  This follows from a common theorem in combinatorial geometry known as the Sylvester-Gallai theorem, which states that a finite, non-colinear set of points in the plane has a line going through exactly two points. This of course implies that there cannot be 9 points in the plane with this property.
+
+  To prove this theorem, let $S$ be a set of non-colinear points. Let $L$ be the set of all lines in $S$ which intersect at least $2$ points in $S$. Since $S$ is a finite set, there must be some pair of a point and a line with
+  \[
+    (P, \ell) = \textrm{argmin}_{(P,\ell)\in S\times L, |\ell-P|>0} | \ell -P|.
+  \]
+  Let $P'$ be the closest point to $P$ on $\ell$. Let's assume that $\ell$ intersects some third point. At least two points must be on the same side of $P'$ on $L$, so let's call them $P_1$ and $P_2$ with $P_1$ the closer point to $P$. Now we can drop a perpendicular from $P_1$ to $PP_2$, let's call the intersection $P_1'$. It then follows by elementary geometry that $PP'$ is longer that $BB'$, which contradicts the construct of $(P,\ell)$. Thus, there must be a line going through exactly two points.
+\end{parts}
+
+\begin{problem}{5.13}
+  State and prove a `double angle' formula for the Weierstrass $\wp$-function. That is, find a rational function $f(z)$ such that $\wp(2z)=f(\wp(z))$.
+\end{problem}
+
+\begin{solution}
+  We can't directly use the angle sum formula, but we can use a perturbation to keep the angles distinct and take the limit as they approach each other. Let $\varepsilon$ live in the interior of $E$. By the angle sum formula, we have
+  \[
+  \wp(z+z+\varepsilon) + \wp(z)+\wp(z) = \frac{1}{4}\left(\frac{\wp'(z+\varepsilon) - \wp'(z)}{\wp(z+\varepsilon) - \wp(z)}\right) = \frac{1}{4}\left(\frac{\wp'(z+\varepsilon) - \wp'(z)}{\varepsilon}\cdot \frac{\varepsilon}{\wp(z+\varepsilon) - \wp(z)}\right)\]
+  In the limit at $\varepsilon \to 0$ (in the interior of $E$), we get
+  \[
+    \wp(2z) + 2\wp(z) = \frac{1}{4}\left(\frac{\wp''(z)}{\wp'(z)}\right).
+  \]
+  However, we know from the differential equation that $\wp(z)^2 =4\wp(z)^3-g_2\wp(z)-g_3$ and $\wp''(z) = 6\wp(z)^2 - g_2/2$, so by substitution we have
+  \[
+    \wp(2z) = f(\wp(z))\quad\textrm{where}\quad f(z)=\frac{1}{16}\cdot \frac{(12z^2-g_2)^2}{4z^3-g_2z-g_3} - 2z.
+  \]
+\end{solution}
+
+\begin{problem}{5.14}
+  Let $X= \C/\Lambda$ be a complex torus, and define a map $F : X \to X$ by $[F(z)]=[2z]$. Show that $F$ has a dense orbit on $X$, i.e. that there exists $p\in X$ such that $\overline{\{ F^n(p) : n>0\}}=X$. Then prove the rational function $f(z)$ of the double-angle formula has a dense orbit on $\widehat{\C}$.
+\end{problem}
+
+\begin{solution}
+  There is an $\R$-linear isomorphism between any two lattices, so we can assume without generality that $\Lambda = \Z[i]$. Then if $p\in X$ is some point with binary expansion $p_x + ip_y = [0.x_0x_1x_2x_3\ldots] + i[0.y_0y_1y_2y_3\ldots]$ then $F^n(p)$ has the form
+  \[
+    F^n(p) = [0.x_{n}x_{n+1}x_{n+2}\ldots] + i[0.y_ny_{n+1}y_{n+2}\ldots].
+  \]
+  Thus, the map $F$ acts as a \emph{bit-shift}. Now let's order all pairs of finite binary sequences 
+  \[
+    \mathcal{A} = \{ (X,Y) \in \{0,1\}^k : k > 0\} = (X_0, Y_0), (X_1, Y_1), \ldots
+  \]
+  Then we can consider the point \[p = [0.[X_0][X_1][X_2]\ldots] + i[0.[Y_0][Y_1][Y_2]\ldots].\]
+  Now for any point $x\in X$, if we want to find some $n$ such that $F^n(p)\approx x$ to $k$ binary digits, we simply find the index of the first $k$ binary digits of $x$ in $\mathcal{A}$, and ``scroll'' to that location with an appropriately large $n$. we can do this to an arbitrary degree of precision since $\mathcal{A}$ contains all binary sequences, thus $p$ has dense orbit.
+
+  To map this onto the Riemann sphere, we can consider the Weierstrass $\wp$-function for the complex torus $X$, i.e. a map $\wp : X \to \widehat{\C}$. Then by the double angle formula we have $f^n(\wp(z)) = \wp(2^n z)$. This suggests we should set $q=\wp(p)$ so that $f^n(q) = \wp(F^n(p))$. Since $\wp$ is a surjective and continuous map, it must map dense sets to dense sets, so the orbit of $q$ under $f$ is dense in $\widehat{\C}$ as well.
+\end{solution}
+
+\begin{problem}{5.16}
+  Suppose $(x,y) = (\wp(z), \wp'(z))$ satisfies $y^2=4x^3+ax+b$ with $a,b\in \R$, and the polynomial $4x^3 + ax+b=0$ has only one real root. What can you say about the shape of the lattice $\Lambda$ used to define $\wp(z)$?
+\end{problem}
+
+\begin{solution}
+  We claim that this occurs if and only if the lattice is non-rectangular and conjugation invariant. Equivalently, this means that $\Lambda = \Z\oplus \tau \Z$ with $|\textrm{Re}(\tau)|=1/2$. In the excluded case the lattice is rectangular, all roots are real. 
+
+  Let's begin by supposing that we have a lattice $\Lambda = \Z\oplus \Z\tau$ with elliptic curve $y^2 = 4x^3 + g_2x+g_3$ that has a single real root and real coefficients. Recall that 
+  \[g_{2, \overline{\Lambda}} = \overline{g_{2,\Lambda}}\quad\textrm{and}\quad g_{3, \overline{\Lambda}} = \overline{g_{3,\Lambda}}.\]
+  In our case, both of these are real, so it follows that $\Lambda$ and $\overline{\Lambda}$ are the same lattice. This means that $|\textrm{Re}(\tau)| = 0$ or $1/2$ (up to a change of representative $\tau$ to be a shortest length vector). But in the case that its zero, it is a rectangular lattice, which means that it has all real roots which is a contradiction. Thus, we have $|\textrm{Re}(\tau)|=1/2$, and $\Lambda$ is conjugation invariant.
+
+  Now conversely suppose that $\tau = 1/2 + iy$. We want to show that the lattice $\Lambda= \Z\oplus \Z\tau$ gives a cubic which only has a single real root. It's clear that $\Lambda$ is closed under conjugation, and thus we can show that 
+  \[
+    \wp(\overline{z}) = \overline{\wp(z)}
+  \]
+  with $\wp(z)$ real if and only if $\textrm{Re}(z) \in \Lambda/2\cap \R$ or $i\textrm{Im}(z)\in\Lambda/2 \cap i\R$. However, recall that $e_1 = \wp(1/2)$, $e_2=\wp(\tau/2)$ and $e_3=\wp((1+\tau)/2)$. Assuming that $\tau\not\in i\R$, it's clear that only one of these can have a real value by simple geometry. These critical values are exactly the roots of the cubic, so we are done.
+\end{solution}
+
+\begin{problem}{5.18}
+  Let $\Lambda = \Z \lambda_1 \oplus \Z \lambda_2$ be a lattice in $\C$, with associated Weierstrass $\wp$-function $\wp(z)$. Let
+  \[
+    \sigma(z) = z\prod_{\lambda\in \Lambda\setminus\{0\}} (1-z/\lambda) \exp\left(\frac{z}{\lambda} + \frac{z^2}{2\lambda^2}\right)
+  \]
+  be the canonical product with zeros at the points of $\Lambda$. Prove that there is a unique odd meromorphic function $\zeta(z)$ on $\C$ such that $\zeta'(z) = -\wp(z)$, and relate $\zeta(z)$ to $\sigma(z)$.
+\end{problem}
+
+\begin{solution}
+  Let's define $\zeta(z)$ as the logarithmic derivative of $\sigma(z)$, which we showed in class satisfies $\zeta'(z) = -\wp(z)$. This has infinite series form
+  \[
+    \zeta(z) = \dlog(z) + \sum_{\lambda\in \Lambda\setminus \{0\}} \dlog(1-z/\lambda) + \dlog\exp\left(\frac{z}{\lambda} + \frac{z^2}{2\lambda^2}\right) = \frac{1}{z} + \sum_{\lambda \in \Lambda\setminus \{0\}}\left(\frac{1}{z-\lambda}+\frac{1}{\lambda}+\frac{z}{\lambda^2}\right).
+  \]
+  Clearly, this is an odd meromorphic function, since negation is a permutation of the punctured lattice $\Lambda\setminus\{0\}$. To prove uniqueness, let's suppose there were some other odd function $\xi$ which satisfies $\xi'(z) = -\wp(z)$. Away from any singularities on $\Lambda$, in any simply connected neighborhood we must have $\zeta(z)-\xi(z)$ constant. Since $\C-\Lambda$ is constant, $\zeta(z)-\xi(z)=C$ for some global constant $C$. However, both functions are odd, so this constant is zero and the functions are the same.
+\end{solution}
+
+\begin{problem}{5.19}
+  Show that $\zeta(z+\lambda_i) = \zeta(z)+\eta_i$ for suitable $\eta_i\in \C$. Show these `dual periods' satisfy
+  \[
+    \det\begin{pmatrix} \eta_1&\eta_2\\ \lambda_1&\lambda_2\end{pmatrix} = 2\pi i.
+  \]
+  % translate period parallelogram so it is centered at z=0 where zeta(z) has a pole and integrate around its boundary
+\end{problem}
+
+\begin{solution}
+  Recall by the previous problem that 
+  \[
+    \frac{\partial}{\partial z} (\zeta(z+\lambda_i) - \zeta(z)) = \wp(z) - \wp(z+\lambda_i) =0
+  \]
+  This means that $\zeta(z+\lambda_i)-\zeta(z)$ is constant, say equal to $\eta_i$. To show that the determinant identity holds, let $E$ be the period parallelogram for $\Lambda$. We shift it to be $E' = E - (\lambda_1+\lambda_2)/2$, so that it is centered at zero. Integrating along the boundary of $E'$, it follows by the residue theorem that 
+  \[
+    \oint_{\partial E'} \zeta(z)\,dz = 2\pi i
+  \]
+  since there is a simple pole at $z=0$. However, if we split up $\partial E' = \gamma_1 \sqcup \gamma_2 \sqcup -\gamma_1 \sqcup -\gamma_2$, (negative means opposite side with reverse orientation), we have
+  \[
+    2\pi i = \int_{\gamma_1}\zeta(z)\,dz+\int_{\gamma_2}\zeta(z)+\eta_1\,dz - \int_{\gamma_1} \zeta(z) + \eta_2\,dz - \int_{\gamma_2} \zeta(z)\,dz = \eta_1\lambda - \eta_2\lambda_1.
+  \]
+  This completes the proof.
+\end{solution}
+
+\end{document}

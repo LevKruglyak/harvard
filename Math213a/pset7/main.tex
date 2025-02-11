@@ -1,0 +1,180 @@
+\documentclass{pset}
+
+\title{Math 213a Problem Set 7}
+\due{October 31, 2023}
+\author{Lev Kruglyak}
+
+\input{../213a.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{3.15}
+  Express $f(z) = \sum^\infty_{n=-\infty}(z-n)^{-4}$ in terms of trigonometric functions, and use your result to evaluate $\sum^\infty_{n=1} 1/n^4$.
+\end{problem}
+
+\begin{solution}
+  Recall from the notes that we have 
+  \[
+    \pi^2\csc^2(\pi z)=\frac{\pi^2}{\sin^2(\pi z)} = \sum_{n\in \Z}\frac{1}{(z-n)^2}.
+  \]
+  Taking the second derivative of both sides, we see that
+  \[\frac{d^2\pi^2\csc^2(\pi z)}{dz^2} = 6\sum_{n\in \Z} \frac{1}{(z-n)^4} \]
+  Expanding this second derivative, we get that \[f(z) = (\pi^4/3)\csc^4(\pi z)\left(2\cos^2(\pi z) + 1\right)\] is our trigonometric form. However to actually evaluate the sum, we can expand the MacLaurin series of both sides and compare constant terms. On the right, we have
+  \[
+    \pi^2\csc^2(\pi z) = \frac{1}{z^2}+\frac{\pi^2}{3}+\frac{\pi^4z^2}{15}+O(z^4) \quad\implies\quad \frac{d^2\pi^2\csc^2(\pi z)}{dz^2} = \frac{2\pi^4}{15}+O(z^2)
+  \]
+  On the other hand, the constant term of $6\sum_{n\in \Z} \frac{1}{(z-n)^4}$ is $12\cdot\zeta(4)$, so we have
+  \[
+    \zeta(4) = \sum^\infty_{n=1} \frac{1}{n^4}=\frac{2\pi^4}{15\cdot 12} = \frac{\pi^4}{90}.
+  \]
+\end{solution}
+
+\begin{problem}{3.17}
+  Prove:
+  \[
+    \frac{\coth(\pi)}{1^7} + \frac{\coth(2\pi)}{2^7}+\frac{\coth(3\pi)}{3^7}+\cdots = \frac{19\pi^7}{56700}.
+  \]
+  % You may use the fact that the residue of cot(pi z)coth(pi z) / z^7 at z = 0 is -19pi^6 / 14175
+\end{problem}
+
+Let $f(z)=\cot(\pi z)\coth(\pi z)/z^7$. This function has poles at $\Z$ and $i\Z$, and we are given that \[\Res(f(z); 0) = -19\pi^6/14175.\]
+Now recall from the lecture notes that $\Res(\cot(\pi z); n) = 1/\pi$ for any $n\in \Z$. This means that
+\[
+    \Res(f(z); n) = \frac{\coth(\pi n)}{\pi n^7}
+\]
+for $n\in \Z^*$. Similarly, since $\coth(z)=i\cot(iz)$, we get
+\[
+  \Res(f(z); in) = \frac{\cot(\pi in)}{-\pi in^7} = \frac{\coth(\pi n)}{\pi n^7}.
+\]
+Now consider the contour integral around $z=0$ of $f(z)$ on some square of radius $R>0$. Note that since $f(z)$ grows arbitrarily small on squares avoiding poles of arbitrarily large radius (we prove this later), we get
+\[
+  \lim_{R\to \infty}\oint_{\textrm{Sq}^1_R} \frac{\coth(\pi z)\cot(\pi z)}{z^7}\;dz = 2\pi i\left(\frac{-19\pi^6}{14175} + \frac{4}{\pi}\sum^\infty_{n=1}\frac{\coth(\pi n)}{n^7}\right) = 0.
+\]
+In particular, this implies that
+\[
+    \sum^\infty_{n=1}\frac{\coth(\pi n)}{n^7} = \frac{19\pi^7}{56700}.
+\]
+
+Finally, we just need to show that we can choose some sequence of radii $R_1, R_2, \ldots \to \infty$ such that the contour integrals $\oint_{\textrm{Sq}^1_R} f(z)\;dz \to 0$. Let $R_n = 1/2+n$, and suppose $|y|\leq n+1/2$. Then we have
+\[
+    |\cot(\pi(R_n+iy))| = |\cot(\pi/2 + \pi iy)| = |\tan(\pi i y)|=|\tanh(\pi y)|\leq 1.
+\]
+We get a similar bound for $\cot(\pi(-\R_n+iy))$. Similarly, we also can show that $|\coth(\pi(\pm R_n+iy))|\leq 1$, so we get $|\cot(\pi z)\coth(\pi z)|\leq 4$ on $\mathrm{Sq}^1_{R_n}$. This in turn implies that $|f(z)|\leq 4/n^7$ on the square, and so the contour integral goes to zero as we wanted.
+
+\begin{problem}{3.20}
+  Show that for any $\alpha > 0$ we have
+  \[
+    \int^\infty_0 \exp(-x^\alpha)\,dx = \alpha^{-1}\Gamma(\alpha^{-1}).
+  \]
+  (This generalizes the formula $\int^\infty_0 \exp(-x^2)\,dx = \sqrt{\pi}/2.$)
+\end{problem}
+
+\begin{solution}
+  Let $x=t^{1/\alpha}$, so that $dx = \alpha^{-1} t^{\alpha^{-1} - 1}$. Then we have
+  \[
+    \int^\infty_0 \exp(-x^\alpha)\;dx = \int^\infty_0 \exp(-t) \alpha^{-1} t^{\alpha^{-1}} \frac{dt}{t} = \alpha^{-1}\Gamma(\alpha^{-1}).
+  \]
+\end{solution}
+
+\begin{problem}{3.23}
+  Show that the entire function $1/\Gamma(z)$ has order one, \emph{but} there is no constant $C > 0$ such that $1/\Gamma(z) = O(\exp(C|z|))$.
+\end{problem}
+
+\begin{solution}
+  Note that by construction of $\Gamma(z)$, we have $1/\Gamma(z) = ze^{\gamma z}G(z)$, which must have order one since it's a product of two order one functions, namely $ze^{\gamma z}$ and $G(z)$. To show however that there is no constant $C>0$ such that $1/\Gamma(z)=O(\exp(C|z|))$, it suffices to construct an infinite sequence $z_n$ such that $1/\Gamma(z_n) \neq O(\exp(C|z_n|))$. Recall the simple inductive identity
+  \[
+    \Gamma\left(\frac{1}{2}-n\right) = \frac{(-2)^n\sqrt{\pi}}{(2n-1)!!} \quad\implies\quad \frac{1}{\Gamma(1/2-n)} = \frac{(2n-1)!!}{(-2)^n \sqrt{\pi}}.
+  \]
+  So let's assume we restrict to the sequence $z_n = 1/2-n$. Note that
+  \[
+    \left|\frac{1}{\Gamma(z_{n+1})}\right| = \frac{(2n-1)}{2}\cdot \left|\frac{1}{\Gamma(z_n)}\right|,
+  \]
+  whereas
+  \[
+    \exp(C|z_{n+1}|) = e^{-C} \cdot \exp(C|z_n|).
+  \]
+  Since $n>0$, this means that $\log(|1/\Gamma(z_n)|)$ grows strictly faster than linear, whereas $\log(\exp(C|z_{n+1}))$ grows exactly linear. This means that given some $A$ and $C$, there will always be some $N$ such that $1/\Gamma(z_n) > A\exp(C|z_n|)$ for all $N>n$. Thus, $1/\Gamma(z)\neq O(\exp(C|z|))$.
+\end{solution}
+
+\begin{problem}{3.24}
+  Evaluate $\Gamma(1/3)\Gamma(2/3)$. Then find a formula for $\Gamma(3z)$ in terms of $\Gamma$ at $z, z+1/3$, and $z+2/3$.
+\end{problem}
+
+\begin{solution}
+  Recall \emph{Euler's supplement} formula, which gives 
+  \[
+    \frac{\pi}{\sin(\pi z)} = \Gamma(z)\Gamma(1-z).
+  \]
+  Applying this to our case with $z=1/3$, we get that the product is 
+  \[
+    \Gamma(1/3)\Gamma(2/3) = \frac{\pi}{\sin(\pi/3)} = \frac{2\pi}{\sqrt{3}} = \frac{2\pi\sqrt{3}}{3}.
+  \]
+  To get a formula for $\Gamma(3z)$, let's first consider $F(z)=\Gamma(z/3)\Gamma(z/3+1/3)\Gamma(z/3+2/3)$. Then by applying the functional equation, we get
+  \[
+    F(z+1) = \Gamma\left(\frac{z+1}{3}\right)\Gamma\left(\frac{z+2}{3}\right)\Gamma\left(\frac{z+3}{3}\right) = \frac{z}{3} F(z).
+  \]
+  We can thus consider $G(z)=3^zF(z)$, and get the functional equation $G(z+1)=zG(z)$. Since $G$ is bounded on the strip with real component $[1,2]$, it follows by the characterization of the gamma function that $G(z)=\alpha \Gamma(z)$ for some $\alpha$, and since $G(1)=3\cdot \Gamma(1)\Gamma(1/3)\Gamma(2/3) = 2\pi\sqrt{3}$, it follows that 
+  \[
+    \Gamma(3z)=\frac{1}{2\pi \sqrt{3}}G(3z) = \frac{3^{3z}\Gamma(z)\Gamma(z+1/3)\Gamma(z+2/3)}{2\pi \sqrt{3}}.
+  \]
+\end{solution}
+
+\begin{problem}{3.26}
+  Show that for any polynomial $p(z)$, there exists a meromorphic function $f(z)$ such that $f(z+1)=p(z)f(z)$.
+\end{problem}
+
+\begin{solution}
+  Recall that we have a group homomorphism $\delta : \mathcal{M}(\C)^* \to \mathcal{M}(\C)^*$ which sends a meromorphic function $f(z)$ to $f(z+1)/f(z)$. Now note that for any $a\in \C$, we have
+  \[
+    \delta(\Gamma(z+a)) = \frac{\Gamma(z+a+1)}{\Gamma(z+a)} = (z+a), \quad\textrm{and}\quad \delta(a^z) = \frac{a^{z+1}}{a^z} = a.
+  \]
+  Thus, given some polynomial $p(z)$, we factor it as $p(z)=\alpha(z-\beta_1)\cdots(z-\beta_n)$. Then
+  \[
+    \delta(\alpha^z\Gamma(z-\beta_1)\cdots \Gamma(z-\beta_n)) = \alpha(z-\beta_1)\cdots(z-\beta_n),
+  \]
+  so $f(z) = \alpha^z\Gamma(z-\beta_1)\cdots \Gamma(z-\beta_n)$ is our desired function.
+\end{solution}
+
+\begin{problem}{3.33}
+  Let $M(x) > 0$ be a continuous function on $\R$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that there exists an entire function with $|f(x)| > M(x)$ for all $x\in \R$.
+  \end{part}
+
+  For any $n\in \Z$, consider the interval $[n, n+1]$, and let's choose an even $\lambda(n)\in \Z_{>0}$ large enough such that
+  \[
+    |p_n(z)|=\left|\frac{\sup_{x\in [n, n+1]} M(x)}{n^{\lambda(n)}}z^{\lambda(n)}\right|<\frac{1}{2^{|n|}} \quad\textrm{for}\quad |z|<\frac{n}{2}.
+  \]
+  Now consider the function $f(z)$ given by $f(z) = \sum_{n\in \Z} p_n(z)$. Let's call these monomials $p_n(z)$. Note that for any $R>0$, we have
+  \[
+    \left|\sum_{n\in \Z} p_n(z)\right| = \left|\sum_{|n|\leq 2R} p_n(z) + \sum_{|n|>2R} p_n(z)\right| \leq C_R(z) + \sum_{|n|>2R} |p_n(z)| \leq C_R(z) + \sum_{|n|>2R} \frac{1}{2^{|n|}}
+  \]
+  for any $|z|<R$, with $C_R(z)=\sum_{|n|\leq 2R} p_n(z)$. This implies that the series converges everywhere, so the function is entire. To show that $|f(x)| > M(x)$ for all $x\in \R$, suppose we picked some $x\in [k,k+1]$. Then, (since $\lambda(n)$ was assumed even) we get
+  \[
+  |f(x)| = \left|\sum_{n\in \Z} p_n(x)\right| > p_k(x) = \sup_{x'\in [k, k+1]} M(x')\left(\frac{x}{k}\right)^{\lambda(k)} \geq M(x).
+  \]
+  This completes the proof.
+
+  \begin{part}{b}
+    Prove there exists an entire function with $0 < |g(x)| < M(x)$ for all $x\in \R$.
+  \end{part}
+
+  Consider the positive continuous function $1/M(x)$, well-defined because $M(x)>0$, and let $f(z)$ be some entire function with $|f(x)|>1/M(x)$ on $x\in \R$. Then, letting $g(z)=\exp(-f(x))$, we see that 
+  \[
+    0 < |g(x)| = |\exp(-f(x))| \leq |1/f(x)| < M(x).
+  \]
+  Here we used the fact that the constructed function $f(x)$ sends the real line to itself, and that $x\leq \exp(x)$.
+
+  \begin{part}{c}
+    Prove that there does not exist an entire function with $|f(z)| > |z|$ for all $z\in \C$.
+  \end{part}
+
+  Suppose for the sake of contradiction that some function satisfied this inequality. Consider the function $g(z)=z/f(z)$. By the inequality, this function is bounded, so it must be constant by Liouville's theorem, which is a contradiction.
+\end{parts}
+
+\end{document}

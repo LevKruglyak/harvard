@@ -1,0 +1,149 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 55b Problem Set 3}}
+
+\begin{document}
+\maketitle
+
+% Problem 1
+\begin{problem}
+    Let $X$ be a metric space $d$; let $A\subset X$ be nonempty.
+    \begin{enumerate}[(a)]
+        \item Show that $d(x, A) = 0$ if and only if $x\in \overline{A}$.
+        \item Show that if $A$ is compact, $d(x, A)=d(x,a)$ for some $a\in A$.
+        \item Define an $\epsilon$-neighborhood of $A$ in $X$ to be the set
+        \[
+            U(A,\epsilon) = \{x\mid d(x,A)<\epsilon\}    
+        .\] 
+        Show that $U(A,\epsilon)$ equals the union of the open balls $B_d(a,\epsilon)$ for $a\in A$.
+        \item Assume that $A$ is compact; let $U$ be an open set containing $A$. Show that
+        some $\epsilon$-neighborhood of $A$ is contained in $U$.
+        \item Show the result in (d) need not hold if $A$ is closed but not compact.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $B=\{x\in X \mid d(x, A)=0\}$. Clearly, $A\subset B$, since $d(a,A)=0$ for all $a\in A$. Note that $B=d(\cdot,A)^{-1}(\{0\})$ is the inverse image of a closed set under a continuous function, $B$ is closed. Since $B$ is a closed set containing $A$, by definition of closure it follows that $\overline{A}\subset B$. To prove the other direction, suppose for the sake of contradiction that $x\in B$ yet $x\not\in \overline{A}$. Then there exists some $B_\epsilon(x)$ with $B_\epsilon(x)\cap A=\emptyset$, so $d(x,a)>\epsilon$ for all $a\in A$. This is a contradiction because this implies that $d(x,A)\geq \epsilon$, yet we assumed that $d(x,A)=0$. Thus $B\subset \overline{A}$ so $\overline{A}=B$.   
+    
+    \textbf{(b)} Fix some $x\in X$. Since $A$ is compact, the function $d(x,\cdot) : A \to \R_{\geq 0}$ must achieve its minimum, say $d(x,a)$. Then clearly $d(x,A)=\inf_{a\in A}d(x,a)=d(x,a)$.
+    
+    \textbf{(c)} First, we'll show that $U(A,\epsilon)\subset \bigcup_{a\in A}B_\epsilon(a)$. Let $x\in U(A,\epsilon)$. Then $d(x,A)<\epsilon$ so there must be some $a\in A$ such that $d(x,a)<\epsilon$. Then $x\in B_\epsilon(a)\subset \bigcup_{a\in A}B_\epsilon(a)$. Conversely, suppose $x\in B_\epsilon(a)$ means that $d(x,a)<\epsilon$ so $d(x,A)\leq d(x,a)<\epsilon$ so $x\in U(A,\epsilon)$. So $U(A, \epsilon)=\bigcup_{a\in A}B_\epsilon(a)$. 
+    
+    \textbf{(d)} Consider the continuous function $d(\cdot, X-U) : X \to \R_{\geq 0}$. Since $A\subset U$ and $X-U$ is a closed set, it follows that $d(x,X-U)>0$ for all $x\in A$. Since $A$ is compact, $d(\cdot, X-U)$ must achieve its minimum on $A$, say $a\in A$ with $d(a, X-U)=\epsilon$ minimal. Then clearly an $\epsilon$-neighborhood of $A$ is contained in $U$.
+    
+    \textbf{(e)} Consider the closed but not compact set $A=\bigcup^\infty_{n=0}\left[n, n+\frac{1}{2}\right]\subset \R$. For any $\alpha < \frac{1}{2}$ the open set $U = \bigcup^\infty_{n=0}\left(n-\alpha^n, n+\frac{1}{2}+\alpha^n\right)$ clearly contains $A$, yet no $\epsilon$-neighborhood of $A$ is contained in $U$ because for any $\epsilon>0$, there will always be an $n$ such that $\left(n-\alpha^n, n+\frac{1}{2}+\alpha^n\right)\subset U(A,\epsilon)$.  
+\end{solution}
+
+% Problem 2
+\begin{problem}
+    Let $(X,d)$ be a metric space. A map $f:X\to X$ is a {\em shrinking map} if, $\forall x,y\in X$, $x\neq y$ $\Rightarrow$ $d(f(x),f(y))<d(x,y)$.  There is also a slightly stronger notion: $f$ is a {\em contraction} if there exists a real number $\alpha<1$ such that, for all $x,y\in X$, $d(f(x),f(y))\leq \alpha\,d(x,y)$. Finally, we say a point $p\in X$ is a {\em fixed point} of $f$ if $f(p)=p$.
+
+    \begin{enumerate}[(a)]
+        \item Show that shrinking maps are continuous.
+        \item Show that, if $(X,d)$ is complete, then every contraction has a unique fixed point. Show that the result is in general false for shrinking maps.
+        \item Show that, if $(X,d)$ is compact, then every shrinking map has a unique fixed point. 
+    \end{enumerate}
+\end{problem}
+%(Hint: show that given any $x_1\in X$ the sequence defined by $x_{n+1}=f(x_n)$ is a Cauchy sequence.)
+%(Hint: Consider $A=\cap_{n\in \N} f^n(X)$, prove that it is non-empty, and show that $A=f(A)$ by proceeding as follows: given $x\in A$, choose $x_n$ so that $x=f^{n+1}(x_n)$, and consider the limit of a convergent subsequence of the sequence $\{f^n(x_n)\}$. Then consider the diameter of $A$.)
+
+\begin{solution}
+    \textbf{(a)} Let $p\in X$ be some arbitrary point, and $\epsilon > 0$. Then setting $\delta=\epsilon$, it follows that for any $x\in X$, whenever $d(p,x)<\epsilon$ we have $d(f(p),f(x))<d(p,x)<\epsilon$, so the function is continuous at $p$. Since $p$ was arbitrary, it is a continuous function. This implies that every contraction is also continuous because every contraction is a shrinking map.
+
+    \textbf{(b)} Pick some arbitrary $x\in X$, and consider the sequence $\{f^n(x)\}$. Note that by a simple repeated application of the contraction rule, we get for any $n\geq 1$ 
+    \[
+        d(f^{n+1}(x), f^n(x)) \leq \alpha^n d(f(x), x)
+    .\] 
+    To find a general bound for $d(f^m(x), f^n(x))$ for $m > n$, observe that by the triangle inequality
+    \[
+        \begin{aligned}
+            d(f^m(x), f^n(x)) &\leq (\alpha^m + \alpha^{m-1}+\cdots+\alpha^n)d(f(x), x)\\
+            &\leq \left(\frac{\alpha^n}{1-\alpha}\right)d(f(x),x).
+        \end{aligned}
+    \]  
+    So for any $N>0$, it follows that 
+    \[
+        d(f^m(x), f^n(x)) \leq \left(\frac{\alpha^n}{1-\alpha}\right)d(f(x),x)\leq \left(\frac{\alpha^N}{1-\alpha}\right)d(f(x),x).
+    \]
+    
+    Since $d(f(x),x)$ is constant and $\frac{\alpha^N}{1-\alpha}$ gets arbitrarily small, it follows that $\{f^n(x)\}$ is a Cauchy sequence. Since $X$ is a complete space, it must converge to some $L\in X$. Then $f(L)=\lim_n f^{n+1}(x)=L$ so $L$ is a fixed point of $f$.
+    
+    Next we'll show uniqueness. Suppose $L_1$ and $L_2$ are fixed points of $f$, so $f(L_1)=L_1$ and $f(L_2)=L_2$. Then $d(f(L_1), f(L_2)) \leq \alpha d(L_1, L_2)$, so $d(L_1, L_2)\leq \alpha d(L_1, L_2)$. This is impossible unless $d(L_1,L_2)=0$ and $L_1=L_2$. So fixed points are unique. 
+    
+    A counterexample to show that this is false for general shrinking maps: Consider the complete metric space $[0,\infty)$ with the Euclidean metric and the map $f(x)=x+e^{-x}$. Then if $x,y\in [0,\infty)$ with $y>x$ we have $y-x > y+e^{-y}-x-e^{-x}=(y-x)+(e^{-y}-e^{-x})$ since $e^{-y}-e^{-x}<0$. So this is a shrinking map, yet it has no fixed point because if $x=x+e^{-x}$, then $e^{-x}=0$ which is impossible.       
+    
+    \textbf{(c)} Let $A=\bigcap_{n>0} f^n(X)$. $A$ is clearly nonempty and compact because it is an intersection of an infinite chain of descending compact sets. (Note that $f^n(X)\subset f^{n-1}(X)$)
+    
+    Next we claim that $A=f(A)$. In one direction $A \subset f(A)$ because $f(A)=\bigcap_{n>0} f^{n+  1}(X)$ which contains $A=\bigcap_{n>0}f^n(X)$. Conversely, suppose $x\in A$. Then by definition of $A$, there exists $x_n$ such that $f^{n+1}(x_n)=x$. Now consider the limit $y\in A$ of a convergent subsequence of $f^n(x_n)$. Then $f(y)=x$, so $x\in f(A)$.
+
+    Now since $A$ is nonempty, assume for the sake of contradiction that $A$ contains at least two elements. Since $A$ is compact it must have a diameter which is achieved by two points, say $a,b\in A$ with $\textrm{diam}(A)=d(a,b)$. However since $f(A)=A$ we can find $f^{-1}(a), f^{-1}(b)\in A$ with $d(f^{-1}(a), f^{-1}(b)) > d(a,b)$, a contradiction to the maximality of the diameter. So $A$ must consist of a single point $a\in A$ with $f(a)=a$.
+    
+    To prove uniqueness, suppose $a,b\in X$ are two fixed points $f(a)=a, f(b)=b$. Then $d(a,b) > d(f(a), f(b))=d(a,b)$, a contradiction. So $a=b$, and we have a unique fixed point.   
+\end{solution}
+
+% Problem 3
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Let $\mathcal{B}$ be the space of bounded continuous functions from $\R$ to
+        itself, equipped with the uniform metric $d(f_1,f_2)=\sup_{x\in \R} |f_1(x)-f_2(x)|$.  Show that the composition map,
+        \begin{eqnarray*}
+            \mathcal{B}\times \mathcal{B}\to \mathcal{B}\\
+            (f,g)\mapsto f\circ g,
+        \end{eqnarray*}
+        is continuous.
+        \item Does the result remain true if do not restrict ourselves to bounded functions? Namely: denoting by $\mathcal{C}$ the space of all continuous functions from $\R$ to itself, with the uniform topology, does $(f,g)\mapsto f\circ g$ define a continuous map from $\mathcal{C}\times \mathcal{C}$ to $\mathcal{C}$?
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Fix some $(f,g)\in \mathcal{B} \times \mathcal{B}$ and let $\epsilon>0$. $g$ is bounded, so its range fits into some compact interval $C=[-L,L]\subset \R$. By the uniform convergence theorem, $f$ must be uniformly continuous on $C$, so there exists a $\delta>0$ such that for all $x,y \in C$, $|x-y|<\delta$ implies that $|f(x)-f(y)|<\epsilon /2$. Consider the open neighborhood $U=B_{\epsilon /2}(f)\times B_{\delta}(g)$ of $(f,g)$ in $\mathcal{B} \times \mathcal{B}$. For any $(\alpha,\beta)\in U$ and $x\in \R$ we have $|f(x)-\alpha(x)|\leq d(f,\alpha) < \epsilon /2$ and $|g(x)-\beta(x)|\leq d(g,\beta)<\delta$. By uniform continuity, this implies that $|f(g(x))-f(\beta(x))|<\epsilon /2$. So $d(f\circ g, \alpha\circ \beta)$ is the supremum of 
+    \[
+        |f(g(x))-f(\beta(x))+f(\beta(x))-\alpha(\beta(x))| \leq |f(g(x))-f(\beta(x))|+|f(\beta(x))-\alpha(\beta(x))|
+    .\]
+     However $|f(g(x))-f(\beta(x))+f(\beta(x))-\alpha(\beta(x))|\leq \epsilon /2$ and $|f(\beta(x))-\alpha(\beta(x))|\leq \epsilon /2$ so $d(f\circ g, \alpha\circ\beta)<\epsilon$, and so the composition map is continuous.
+     
+     \textbf{(b)} No. Let $f=e^x$ and $g=x$. Suppose for the sake of contradiction that composition is continuous at $(e^x, x)$. Then for all $\epsilon > 0$, there exists a $\delta > 0$ such that $d((f,g), (\alpha, \beta))<\delta$ implies that $d(f\circ g, \alpha\circ \beta)<\epsilon$. Let $\alpha=e^x$ and $\beta = x+\frac{\delta}{2}$. Clearly $d((f,g), (\alpha,\beta))=\frac{\delta}{2}<\delta$. Then $d(f\circ g, \alpha\circ \beta)=d(e^x, e^{x+\delta /2})=d(e^x, e^{\delta /2}e^x)=1>\epsilon$. This is a contradiction so composition is not continuous at $(e^x,x)$.      
+\end{solution}
+
+% Problem 4
+\begin{problem}
+    Show that the rationals $\Q$ are not locally compact.
+\end{problem}
+
+\begin{solution}
+    Suppose for the sake of contradiction that $\Q$ is locally compact. Then there is a compact set $C$ containing $U=(a,b)\cap \Q$. Let $r\in (a,b)\cap (\R - \Q)$ be irrational, and suppose $r_i$ is a sequence in $U$ converging to $r$. This clearly has no convergent subsequence in $\Q$, which violates the compactness of $C$. So $\Q$ cannot be locally compact. 
+\end{solution}
+
+% Problem 5
+\begin{problem}
+    Show that the one-point compactification of $\Z_+$ is homeomorphic with subspace $\{0\}\cup \{1 /n \mid n\in \Z_+\}$ of $\R$. 
+\end{problem}
+
+\begin{solution}
+    Consider the map $f :\widehat{\Z}_+ \to \{0\}\cup\{1 /n \mid n\in \Z_+\}$ given by $f(t)= \frac{1}{t}$ if $t\neq \infty$ and $f(\infty)=0$.  To prove it's continuous suppose $U\subset \{0\}\cup\{1 /n\mid n\in \Z_+\}$ is an open interval (intersected in the subspace topology). There are two cases. If $0\in U$, then $U=\{0\}\cup \{\frac{1}{n},\frac{1}{n+1},\ldots\}$ for some $n>0$. Then $f^{-1}(U)=\{\infty\}\cup (\Z_+ - [0, n-1])$, which is open in $\widehat{\Z}_+$. Otherwise if $0\not\in U$ and $U$ is nonempty, then $U=\{\frac{1}{a}, \ldots, \frac{1}{b}\}$. Then $f^{-1}(U)=[b,a]$ which is open in $\Z_+$ and so in $\widehat{\Z}_+$. Proving that the inverse is continuous follows in basically the same exact way, so the map is a homemorphism. 
+\end{solution}
+
+% [Hint: Let An be a finite covering of X by 1/n-balls.]
+
+% Problem 6
+\begin{problem}
+    Show that every compact metrizable space $X$ has a countable basis.
+\end{problem}
+
+\begin{solution}
+    For each $n\in \Z_+$, consider the open cover of $X$ given by $\bigcup_{x\in X} B_{1 /n}(x)$. Since $X$ is compact this has a finite subcover, let's call it $\mathcal{B}_n$. We claim that $\mathcal{B}=\bigcup_{n\in \Z_+}\mathcal{B}_n$ is a countable basis for $X$. There are two axioms we must check to ensure that this is a basis. Clearly $\mathcal{B}$ is an open cover for $X$, since every $\mathcal{B}_n$ is an open cover for $X$. The second axiom is harder to check. Suppose we had two balls $B_{1 /n}(x)$ and $B_{1 /m}(y)$ which intersect nontrivially, so there exists some point $z\in B_{1 /n}(x)\cap B_{1 /m}(y)$. Let $\epsilon>0$ be some $\epsilon$ such that $B_{\epsilon}(z)\subset B_{1 /n}(x)\cap B_{1 /m}(y)$. Pick some $k\in \Z_+$ such that $1 /k < \epsilon /2$ and let $B_{1 /k}(z_0)\in \mathcal{B}$ be a basis element containing $z$. Then by basic geometry, $B_{1 /k}(z_0)\subset B_{\epsilon}(z)$ so $B_{1 /k}(z_0)\subset B_{1 /n}(x)\cap B_{1 /m}(y)$. This completes the proof. 
+\end{solution}
+
+% Problem 7
+\begin{problem}
+    Show that if $X$ is normal, every pair of disjoint closed sets have neighborhoods whose closures are disjoint.
+\end{problem}
+
+\begin{solution}
+    Recall from Munkres that $X$ is normal if and only if for every closed set $A\subset X$ and open set $U\supset A$, there exists an open set $V\supset A$ such that $\overline{V}\subset U$. So given two disjoint closed sets $A,B\subset X$, we can first use the normal property to find open $U_1\supset A, U_2\supset B$ with $U_1\cap U_2=\emptyset$ and then applying the equivalent normal property we can find $V_1\supset A$ and $V_2\supset B$ with $V_1\cap V_2=\emptyset$ and $\overline{V_1}\subset U_1, \overline{V_2}\subset U_2$. Then clearly $\overline{V_1}\cap \overline{V_2}=\emptyset$, so we are done.
+\end{solution}
+
+\end{document}

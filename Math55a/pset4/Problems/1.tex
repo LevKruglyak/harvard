@@ -1,0 +1,39 @@
+\begin{problem}
+Given a field $k$, consider the linear operator $\phi:k^2\to k^2$ given by \[\phi(x,y)=(-y,x).\]
+\begin{enumerate}
+  \item if $k=\R$, show that $\phi$ has no nontrivial invariant subspaces (and
+  in particular, no eigenvectors).
+  \item if $k=\C$, find the eigenvectors and eigenvalues of $\phi$.
+  \item what if $k=\F_2$?
+\end{enumerate}
+\end{problem}
+\textbf{(1)} Suppose for the sake of contradiction $W\subset k^2$ is an invariant subspace of $\phi$. $W$ must be one dimensional (it can't be zero or two dimensional), so $W=\mathrm{span}(v)$ for some basis vector $v\in W$. Then $\phi(v)=\lambda v$, where $\lambda$ is an eigenvalue of $\phi$. This means that every $(x,y)\in W$ must satisfy the following system of equations,
+\[
+  \begin{cases}
+    -y = \lambda x\\
+    x = \lambda y 
+  \end{cases}
+.\]    
+So $-y=\lambda^2 y$, and so $\lambda^2=-1$. Since $k=\R$, this has no solutions. This is a contradiction so $k^2$ cannot have invariant subspaces.
+
+\textbf{(2)} Solving the same system from (1) in the complex numbers, we get the eigenvalues $\lambda = \pm i$. To find the eigenvectors, we'll solve the systems
+\[
+  \begin{cases}
+    -y-ix = 0\\
+    x-iy = 0
+  \end{cases}\implies \begin{bmatrix}
+    x\\y
+  \end{bmatrix} = \begin{bmatrix}
+    -i \\ 1
+  \end{bmatrix}\quad \mathrm{ and }\quad \begin{cases}
+    -y+ix = 0\\
+    x+iy = 0
+  \end{cases}\implies \begin{bmatrix}
+    x\\y
+  \end{bmatrix} = \begin{bmatrix}
+    i \\ 1
+  \end{bmatrix}
+.\]
+So the eigenspace corresponding to $i$ is $\mathrm{span}\left([-i,1]\right)$ and the eigenspace corresponding to $-i$ is $\mathrm{span}\left([i,1]\right)$.   
+
+\textbf{(3)} If $k=\F_2$, the operator becomes $\phi(x,y)=(y,x)$. So the only eigenvalue is $1$ with eigenvector $[1,1]$.    

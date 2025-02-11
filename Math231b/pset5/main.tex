@@ -1,0 +1,166 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 5}}
+\date{\textbf{Due:} March 7, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Recall that the homotopy fiber of a map $f : X\to Y$ over some point $*\in Y$ as the space $F(f) = X\times_Y Y^I_*$. Assuming that $Y$ is path connected, the loop space $\Omega Y$ can ``act'' on this space on the right by sending $(x,\sigma)\cdot \omega = (x,\sigma\cdot \omega)$.
+\end{problem}
+
+\begin{solution}
+    \quad By passing to $\pi_0$, the action described provides a right action of the group $\pi_1(Y)$ on $\pi_0(F(f))$.
+    \begin{partproblem}{a}
+        Show that two elements in $\pi_0(F(f))$ map to the same element of $\pi_0(X)$ if and only if they are in the same orbit under this action.
+    \end{partproblem}
+
+    \quad First observe that a path $\omega : I \to F(f)$ is uniquely deterimed by paths $\omega_x : I \to X$ and a homotopy $h_\omega :I\times I \to Y$ with $h_\omega(0,t)=*$, $h_\omega(1,t) = \omega_x(t)$. Thus, there is a path between $(x_1,\omega_1), (x_2, \omega_2)\in F(f)$ if and only if there is a path $\omega : x_1 \to x_2$, and a homotopy $h : \omega_1 \to \omega_2$ with $h_0 = c_*$ and $h_1 = f(\omega)$. By a reparametrization of the unit square, this is equivalent to constructing a nullhomotopy of the loop $\omega_1\cdot \omega_x\cdot \overline{\omega_2}$ by a homotopy which fixes $*$.
+    
+    \quad Recall that the map $\pi(f) : F(f) \to X$ is simply a projection onto the $X$ component, so two path components $[(x_1, \omega_1)]$ and $[(x_2, \omega_2)]$ in $\pi_0(F(f))$ will map to the same element of $\pi_0(X)$ if and only if $x_1$ and $x_2$ are in the same path component on $X$. Now if $x_1$ and $x_2$ are in different path components, then clearly the classes $[(x_1, \omega_1)]$ and $[(x_2, \omega_2)]$ must be in different orbits, since the action can not affect the path component of $x_1, x_2$. 
+    
+    \quad Suppose instead that there is some path $\omega : x_1 \to x_2$. We want to find a loop $\sigma \in \pi_1(Y)$ such that we can construct a path between $(x_1,\sigma\cdot\omega_1)$ and $(x_2, \omega_2)$. As we discussed before, this involves finding a nullhomotopy $(\sigma\cdot\omega_1)\cdot f(\omega)\cdot \overline{\omega_2}$ which preserves the basepoint. However, since we can choose $\sigma$, we can simply let $\sigma = \omega_2\cdot\overline{f(\omega)}\cdot \overline{\omega_1}$. This nullhomotopy thus shows that $(x_1,\sigma\cdot \omega_1)$ and $(x_2,\omega_2)$ are equal in $\pi_0(F(f))$ so $(x_1,\omega_1)$ and $(x_2,\omega_2)$ are in the same orbit.
+
+    \begin{partproblem}{b}
+        Suppose $\omega$ is a path in $Y$ from $*$ to $y$. Write $\omega_\# : \pi_1(Y, *) \to \pi_1(Y, y)$ for the group isomorphism sending $\sigma$ to $\omega\sigma\omega^{-1}$. Show that the isotropy group of the component of $(x,\omega)$ in $F(f,*)$ is
+        \[
+            \omega^{-1}_\# \Ima(f_*) \subset \pi_1(Y, *)
+        \]
+        where $f_* : \pi_1(X,x) \to \pi_1(Y,f(x))$.
+    \end{partproblem}
+    \quad Let $\pi_1(Y,*)_{[(x,\omega)]}$ be the described isotropy group. This means that if $\sigma\in \pi_1(Y, *)_{[(x,\omega)]}$, we have a path from $(x,\sigma\cdot\omega)$ to $(x,\omega)$. By the argument in the previous part, this is equivalent to saying that we have a (based) nullhomotopy of $(\sigma\cdot \omega)\cdot f(\zeta)\cdot \overline{\omega}$ for some loop $\zeta\in\pi_1(X,x)$. So
+    \[
+        \sigma \cdot (\omega\cdot f(\zeta)\cdot \overline{\omega}) = c_* \quad\implies \quad \sigma = \overline{\omega}\cdot \overline{f(\zeta)} \cdot \omega = \omega^{-1}_\#(f(\zeta)) \in \omega^{-1}_\# \Ima(f_*)
+    .\] 
+    Conversely, given $\sigma = \overline{\omega}\cdot \overline{f(\zeta)}\cdot \omega$ for some $\zeta\in \pi_1(X,x)$, we get a nullhomotopy of $(\sigma\cdot \omega)\cdot f(\zeta)\cdot \overline{\omega}$ so $(x,\sigma\cdot\omega)$ to $(x,\omega)$ are in the same path component and hence $\sigma\in \pi_1(Y,*)_{[(x,\omega)]}$. Thus $\pi_1(Y,*)_{[(x,\omega)]} = \omega^{-1}_\# \Ima(f_*)$.  
+
+    \begin{partproblem}{c}
+        Suppose that $X$ is path connected, and pick $*\in X$. Conclude from (a) that the evident surjection $\pi_n(X, *) \to [S^n, X]$ can be identified with the orbit projection for the action of $\pi_1(X,*)$ on $\pi_n(X, *)$.
+    \end{partproblem}
+
+    \quad The orbit projection is the map $\pi_n(X, *) \to \pi_n(X, *) /\pi_1(X, *)$. However by a similar argument employed in (a) and the last problem of the previous pset, it's fairly clear to see that $\pi_n(X, *) / \pi_1(X,*)$ can be naturally identified with $[S^n, X]$ in a canonical way.
+\end{solution}
+
+\begin{problem}
+    Given a map $f : X \to Y$ and a point $y\in Y$, let $F(f, y)$ denote the homotopy fiber of $f$ above the point $y$. Given a commutative diagram:
+     % https://q.uiver.app/?q=WzAsNCxbMCwwLCJYXzEiXSxbMCwxLCJZXzEiXSxbMSwwLCJYXzIiXSxbMSwxLCJZXzIiXSxbMCwyXSxbMSwzLCJnIl0sWzAsMSwiZl8xIl0sWzIsMywiZl8yIl1d
+    \[\begin{tikzcd}
+        {X_1} & {X_2} \\
+        {Y_1} & {Y_2}
+        \arrow[from=1-1, to=1-2]
+        \arrow["g", from=2-1, to=2-2]
+        \arrow["{f_1}", from=1-1, to=2-1]
+        \arrow["{f_2}", from=1-2, to=2-2]
+    \end{tikzcd}\]
+    prove that if $Y_1\to Y_2$ is an $n$-equivalence and $F(f_1,y) \to F(f_2,g(y))$ is an $n$-equivalence for all $y\in Y_1$, then $X_1\to X_2$ is an $n$-equivalence.
+
+    \medskip
+    \quad Extending the fiber sequence one step further, deduce that if $X_1\to X_2$ is an $n$-equivalence and $Y_1\to Y_2$ is an $(n+1)$-equivalence, then $F(f_1,y) \to F(f_2,g(y))$ is an $n$-equivalence for all $y\in Y_1$.
+\end{problem}
+
+\begin{solution}
+    \quad Recall that the following commutative square square commutes up to homotopy:
+    % https://q.uiver.app/?q=WzAsMTIsWzIsMCwiRihmXzEseSkiXSxbMiwxLCJGKGZfMixnKHkpKSJdLFszLDAsIlhfMSJdLFs0LDAsIllfMSJdLFszLDEsIlhfMiJdLFs0LDEsIllfMiJdLFsxLDAsIlxcT21lZ2FfeVlfMSJdLFsxLDEsIlxcT21lZ2Ffe2coeSl9WV8yIl0sWzUsMCwiXFxjZG90cyJdLFs1LDEsIlxcY2RvdHMiXSxbMCwwLCJcXGNkb3RzIl0sWzAsMSwiXFxjZG90cyJdLFsxLDRdLFs0LDUsImZfMiJdLFsyLDMsImZfMSJdLFswLDJdLFswLDFdLFsyLDRdLFszLDUsImciXSxbNiwwXSxbNywxXSxbMyw4XSxbNSw5XSxbMTAsNl0sWzExLDddLFs2LDddXQ==
+    \[\begin{tikzcd}
+        \cdots & {\Omega_yY_1} & {F(f_1,y)} & {X_1} & {Y_1} & \cdots \\
+        \cdots & {\Omega_{g(y)}Y_2} & {F(f_2,g(y))} & {X_2} & {Y_2} & \cdots
+        \arrow[from=2-3, to=2-4]
+        \arrow["{f_2}", from=2-4, to=2-5]
+        \arrow["{f_1}", from=1-4, to=1-5]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-3, to=2-3]
+        \arrow[from=1-4, to=2-4]
+        \arrow["g", from=1-5, to=2-5]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=2-2, to=2-3]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=2-5, to=2-6]
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=1-2, to=2-2]
+    \end{tikzcd}\]
+    Thus, this diagram passes to the following diagram with exact rows for all $k$:
+\[\begin{tikzcd}
+	{\pi_{k+1}(Y_1)} & {\pi_k(F(f_1,y))} & {\pi_k(X_1)} & {\pi_k(Y_1)} & {\pi_{k-1}(F(f_1,y))} \\
+	{\pi_{k+1}(Y_2)} & {\pi_k(F(f_2,g(y))} & {\pi_k(X_2)} & {\pi_k(Y_2)} & {\pi_{k-1}(F(f_2,g(y))}
+	\arrow["{(f_2)_*}", from=2-3, to=2-4]
+	\arrow["{\pi(f_1)_*}", from=1-2, to=1-3]
+	\arrow["{\pi(f_2)_*}", from=2-2, to=2-3]
+	\arrow["{i(f_2)_*}", from=2-4, to=2-5]
+	\arrow["{i(f_2)_*}", from=2-1, to=2-2]
+	\arrow["{i(f_1)_*}", from=1-1, to=1-2]
+	\arrow[from=1-3, to=2-3]
+	\arrow["{(f_1)_*}", from=1-3, to=1-4]
+	\arrow[from=1-4, to=2-4]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow["{i(f_1)_*}", from=1-4, to=1-5]
+	\arrow[from=1-5, to=2-5]
+\end{tikzcd}\]
+\quad We have a couple cases to consider. When $0<k<n$, the second and fourth vertical arrows are isomorphisms, the fifth arrow is an injection, and the first arrow is a surjection, hence by the five lemma, the middle arrow is an isomorphism. In the case when $k=0$, it's clear to see that path components are preserved. Finally, in the case when $k=n$, we get a diagram:
+% https://q.uiver.app/?q=WzAsOCxbMCwwLCJcXHBpX24oRihmXzEseSkpIl0sWzAsMSwiXFxwaV9uKEYoZl8yLGcoeSkpKSJdLFsxLDAsIlxccGlfbihYXzEpIl0sWzIsMCwiXFxwaV9uKFlfMSkiXSxbMSwxLCJcXHBpX24oWF8yKSJdLFsyLDEsIlxccGlfbihZXzIpIl0sWzMsMSwiXFxwaV97bi0xfShGKGZfMixnKHkpKSkiXSxbMywwLCJcXHBpX3tuLTF9KEYoZl8xLHkpKSJdLFsxLDRdLFs0LDUsIihmXzIpXyoiXSxbMiwzLCIoZl8xKV8qIl0sWzAsMl0sWzAsMV0sWzIsNF0sWzMsNSwiZ18qIl0sWzUsNl0sWzMsN10sWzcsNl1d
+\[\begin{tikzcd}
+	{\pi_n(F(f_1,y))} & {\pi_n(X_1)} & {\pi_n(Y_1)} & {\pi_{n-1}(F(f_1,y))} \\
+	{\pi_n(F(f_2,g(y)))} & {\pi_n(X_2)} & {\pi_n(Y_2)} & {\pi_{n-1}(F(f_2,g(y)))}
+	\arrow[from=2-1, to=2-2]
+	\arrow["{(f_2)_*}", from=2-2, to=2-3]
+	\arrow["{(f_1)_*}", from=1-2, to=1-3]
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow["{g_*}", from=1-3, to=2-3]
+	\arrow[from=2-3, to=2-4]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-4, to=2-4]
+\end{tikzcd}\]
+with exact rows. Now we have a surjective first column, surjective third column, and isomorphic last column, so by the four lemma, the second column is surjective, proving that $X_1 \to X_2$ is an $n$-equivalence. By an identical argument (really, we use the same four/five lemma argument on a slightly extended version of the diagram) we can deduce the second part. Here we need $F(f_1,y)\to F(f_2, g(y))$ to be an $(n+1)$ equivalence because the induced vertical arrows are to the right, so we need the extra surjectivity of $\pi_{n+1}(F(f_1, y)) \to \pi_{n+1}(F(f_2,g(y)))$ to use the four lemma in order to deduce surjectivity of $\pi_n(Y_1) \to \pi_n(Y_2)$.
+\end{solution}
+
+\begin{problem}
+    Prove that a map $X \to Y$ of path-connected spaces may be factored as $X \to Z_n \to Y$ with $X \to Z_n$ an isomorphism on $\pi_i$ for $i\leq n$ and $Z_n\to Y$ an isomorphism on $\pi_i$ for $i>n$. 
+\end{problem}
+
+\begin{solution}
+    \quad We'll construct the space $Z_n$ by successive approximations $W_k$ and then $Z_n = \varinjlim_k W_k$. At each stage, we should have maps $\omega_k : X \to W_k$ and $\sigma_k : W_k\to Y$ with a factorization of $f$ through $\sigma_k\circ \omega_k : X \to W_k \to Y$. Furthermore, there should also be maps $\iota_k : W_k \to W_{k+1}$ which are consistent with the $\omega_k$ and $\sigma_k$. We also should have $\pi_i(\omega_k)$ an isomorphism for all $i\leq k$ and $i\leq n$, and $\pi_i(\sigma_k)$ an isomorphism for all $i\leq k$ and $i>n$. Then by construction, $Z_n$ would be a desired factorization.
+    
+    \quad To construct such a space for a given $n$, for any $k\leq n$  let's start by setting $W_k = X$, with $\omega_k = 1_X$, $\sigma_k = f$, and $\iota_{k-1} = 1_X$. This satisfies all our desired properties. Once $k=n+1$, we require only that we have a factorization and that $\pi_k W_k \to \pi_k Y$ is an isomorphism. We'll present a construction that works by induction to generate the rest of the $W_k$ . Since $X,Y$ are path connected, let's choose some arbitrary consistent basepoint for both, i.e. $*\in X, f(*)\in Y$, and make all maps pointed. Starting with $W_{k-1}$, consider the space
+    \[
+        W'_k = W_{k-1}\vee \bigvee_{\alpha\in \pi_k(Y)} S^k
+    \]
+    with $X \to W'_k$ the composition of $\sigma_{k-1}$ with the inclusion $W_{k-1} \to W_{k-1}\vee -$. To define $\sigma'_k : W'_k \to Y$, let it be the map which sends $W_{k-1} \to Y$ along $\sigma_{k-1}$, and each $S^k$ component corresponding to an $\alpha$ by $\alpha : S^k \to Y$ to $Y$. Then the map $\pi_k(W'_k) \to \pi_k(Y)$ is surjective, since the trivial map of $S^k$ into a component $\alpha$ maps to $\alpha\in \pi_k(Y)$ by $(\sigma'_k)_*$.
+
+    \quad Next, we make this map injective, which completes the proof. Let's define $W_k$ as the space
+    \[
+        W_k = W'_k\cup_{\beta} \bigsqcup_{\beta \in \ker (\sigma'_k)_*} D^{k+1}
+    \]
+    where for every map $\beta : S^k \to X$ in the kernel, we glue a $(k+1)$-cell to $W'_k$ by attaching its boundary via $\beta$. Now this map has trivial kernel, since any map in the kernel can now be nullhomotped via the atached $(k+1)$-cell. Thus we have an isomorphism $\pi_k(W_k) \to \pi_k(Y)$ so by induction we are done. Note that these maps don't change the previous homotopy groups since we attach cells of codimension greater than $1$ at each step.   
+\end{solution}
+
+\begin{problem}
+    Suppose that $X$ and $Y$ are pointed CW complexes with $X$ $m$-connected and $Y$ $n$-connected. Prove that the inclusion $X\vee Y \to X\times Y$ is an $(m+n+1)$-equivalence and $X\wedge Y$ is $(m+n+1)$-connected.
+\end{problem}
+
+\begin{solution}
+    \quad By cellular approximation, we can reduce homotopically to the case when $X$ (resp. $Y$) are complexes with a single basepoint in $0$-dimensions, and no cells in dimensions $k\leq m$. (resp. $k\leq n$). In this case, note that $S^k\wedge S^\ell \simeq S^{k+\ell}$, which in turn implies that $X\wedge Y$ has no cells of dimensions less than $(m+1)+(n+1)$, so $X\wedge Y$ is $(m+n+1)$-connected.
+
+    \quad By the same argument, $X\wedge Y$ consists of a $0$-cell, a $(n+1)$-cell, and a $(m+1)$-cell, while $X\times Y$ consits of a $0$-cell, a $n+1$-cell, a $(m+1)$-cell, and $(n+m+2)$-cells and above. Thus $\pi_i(X\wedge Y) \to \pi_i(X\times Y)$ is an isomorphism for all $i\leq n+m$ (since the next biggest cell is codimension 2). Finally, $\pi_{n+m+1}(X\wedge Y) \to \pi_{n+m+1}(X\times Y)$ is surjective because it is the induced $n$-th homotopy map of the an $n$-skeleton into an $(n+1)$-skeleton. Thus $X\vee Y \to X\times Y$ is an $(n+m+1)$-equivalence.    
+\end{solution}
+
+\end{document}

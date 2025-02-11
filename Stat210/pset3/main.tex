@@ -1,0 +1,202 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 3}
+\author{Lev Kruglyak}
+\date{October 6, 2023}
+
+\input{../stat210.tex}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Suppose that stars are distributed in space according to a $3$-dimensional Poisson process with parameter $\lambda$ (take space to be $\R^3$). You are at the origin. Find the distribution of the distance from you to the nearest star. Give the CDF, and also a simple representation for the distribution in terms of one of the named distributions.
+\end{problem}
+
+\begin{solution}
+  Let $X$ be the random variable representing distance to the nearest star, and let $F_X(r)$ be the CDF of $X$. Now for some given ball of radius $r$, the number of stars in the ball of radius $r$, denoted $N_r$ has distribution $\textrm{Pois}(\lambda\cdot \frac{4}{3}\pi r^3)$. Since $X$ represents the distance to the \emph{nearest} star, its CDF can be given the form $F_X(r) = 1-P(N_r = 0)$. By the PDF of the Poisson distribution, we thus get the CDF:
+  \[F_X(r) = 1-e^{-\frac{4\lambda}{3}\pi r^3}.\]
+  This CDF matches the \emph{Weibull distribution} with shape parameter $\left(3/4\pi \lambda\right)^{1/3}$. Thus, we have the representation
+  \[ X \sim (4\pi \lambda /3)^{1/3}\cdot \textrm{Wei}(3).\]
+\end{solution}
+
+\begin{problem}{2}
+  In a \emph{non-homogenous Poisson process} in $1$ dimension, the rate parameter is allowed to depend on time. Let $\lambda(t)$ be the rate at time $t$, bounded and continuous in $t$. The number of arrivals in $[a,b]$ is Poisson with mean $\int^b_a \lambda(t)\;dt$. As in the homogenous case, we assume that disjoint intervals have independent numbers of arrivals.
+  Let $[t_0, t_1]$ be a time interval,
+  \[\lambda_{\textrm{max}} = \max_{t\in [t_0, t_1]}\lambda(t),\quad\textrm{and}\quad S = \{(t,y) : t\in [t_0, t_1], y\in [0,\lambda_{\textrm{max}}]\}.\]
+  Show that we can simulate a non-homogenous Poisson process on the time interval $[t_0, t_1]$ using the following method:
+  \begin{enumerate}[(i)]
+    \item Draw $N\sim \textrm{Pois}(\lambda_{\textrm{max}}(t_1 - t_0))$.
+    \item Pick $N$ i.i.d. points uniformly in $S$.
+    \item Accept the points are below the curve $\lambda(t)$ as arrivals (considering $t$ to be the arrival time of a point $(t,y)\in S$).
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  Let $X_{a,b}$ be the random variable representing the number of arrivals in the time interval $[a,b]$, as constructed by the simulation process. We would like these variables to satisfy:
+  \[X_{a,b} \sim \textrm{Pois}\left(\int_a^b \lambda(t) \;dt\right),\quad X_{a,c}=X_{a,b}+X_{b,c},\quad\textrm{and} \quad X_{a,b}\ind X_{b, c},\]
+  this would show that the process simulates a non-homogenous Poisson process. Independence of $X_{a,b}$, $X_{b,c}$ follows because the $N$ points are picked i.i.d. below the curve $\lambda(t)$, so if $[a,b]$ and $[b,c]$ are disjoint, then obviously $X_{a,b}$ and $X_{b,c}$ are disjoint as well. Next, we see that $X_{a,c} = X_{a,b} + X_{b,c}$ as a consequence of the additive properties of an area under a curve, i.e.
+  \[
+    \int_{a}^c \lambda(t)\;dt = \int_a^b \lambda(t)\;dt + \int_b^c \lambda(t)\;dt.
+  \]
+  We also notice that in the limit, we have the expression
+  \[
+    X_{a,b} = \lim_{n\to \infty} \sum^n_{k=0} X_{\frac{k}{n(b-a)}, \frac{k+1}{n(b-1)}} = \lim_{n\to \infty} \sum^n_{k=0} Y_k,\quad \textrm{where}\quad Y_k\sim \textrm{Pois}\left(\max_{t\in \left[\frac{k}{n(b-a)}, \frac{k+1}{n(b-a)}\right]}\lambda(t)\right)
+  \]
+  This implies that $X_{a,b}\sim \textrm{Pois}(\lambda_{\textrm{max}} ( b-a))$.
+\end{solution}
+
+\begin{problem}{3.7}[Laplace and Logistic Representations]
+  Let $X_1$, $X_2$ be i.i.d. Expo. Prove the following representations:
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    The difference $X_1 - X_2 \sim \Laplace$.
+  \end{part}
+
+  Recall that $\Laplace\sim S\cdot \Expo$ where $S$ is a random sign. We also know that
+  \[X_1 - X_2 \sim S\cdot | X_1 - X_2 | \sim S(X_{(2)} - X_{(1)}).\]
+  By the R\'enyi representation, we can write
+  \[ X_{(1)}\sim \frac{1}{2}Y_1,\quad\textrm{and}\quad X_{(2)} \sim \frac{1}{2}Y_1 + Y_2\]
+  for some $Y_1, Y_2\sim \Expo$ i.i.d. Thus, we see that $S(X_{(2)}-X_{(1)})\sim S \cdot Y_2 \sim \Laplace$.
+
+  \begin{part}{b}
+    The difference of logarithms $\log X_1 - \log X_2 \sim \Logistic$.
+  \end{part}
+
+  Observe that
+  \[
+    \log X_1 - \log X_2 = \log\left(\frac{X_1}{X_2}\right) = \log\left(\frac{X_1}{X_1 + X_2} \bigg/ 1-\frac{X_1}{X_1 + X_2}\right) \sim \log\left(\frac{\beta(1, 1)}{1-\beta(1,1)}\right)\sim \log\left(\frac{U}{1-U}\right).
+  \]
+  This is exactly the defining representation for the Logistic distribution.
+\end{parts}
+
+\begin{problem}{3.14}[Cauchy squared]
+  Let $C\sim \Cauchy$. Show that
+  \[ C^2 + \frac{1}{C^2} \sim 4C^2 + 2.\]
+\end{problem}
+
+\begin{solution}
+  Inspired by Problem~3.6.17, we begin by proving a lemma.
+  \begin{claim}
+    Let $C\sim \Cauchy$. Then
+    \[
+      C - \frac{1}{C} \sim 2C.
+    \]
+  \end{claim}
+  \begin{proof}
+    Recall that if $C\sim \Cauchy$ then $C\sim Z_1 / Z_2$ where $Z_1, Z_2\sim \mathcal{N}(0,1)$ are i.i.d. Then
+    \[
+      C-\frac{1}{C} \sim \frac{Z_1}{Z_2} - \frac{Z_2}{Z_1} \sim \frac{Z_1^2 - Z_2^2}{Z_1 Z_2} \sim \frac{\cos^2(2\pi U_2) + \sin^2(2\pi U_2)}{\sin(2\pi U_2) \cos(2\pi U_2)} =2\frac{\cos(4\pi U_2)}{\sin(4\pi U_2)}
+    \]
+    where we use two i.i.d. Uniforms $U_1, U_2$, but $U_1$ cancels. By the winding lemma, this can be rewritten as
+    \[
+      2\frac{\sqrt{-2\log U_2} \cos(2\pi U_2)}{\sqrt{-2\log U_1} \sin(2\pi U_2)} \sim 2\frac{Z_1}{Z_2} \sim 2C.
+    \]
+  \end{proof}
+
+  Now we can use this identity to get:
+  \[
+    4C^2 + 2 = (2C)^2 + 2 \sim \left(C-\frac{1}{C}\right)^2 + 2 = C^2 + \frac{1}{C^2}.
+  \]
+\end{solution}
+
+\begin{problem}{3.17}[Competing risks]
+  In this problem, you will prove the Competing Risks Theorem~3.11.3 in several parts. Let the setup and notation be as in the statement of the theorem, and let $U_0 \equiv X_1/(X_1 + X_2)$ and $T\equiv X_1+X_2$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that $W\sim (\lambda_1 +\lambda_2)^{-1}\Expo$ and $B_0 \sim \Bern(\lambda_1 / (\lambda_1 + \lambda_2))$. % Use U0
+  \end{part}
+
+  Let's begin by showing $W \sim (\lambda_1 + \lambda_2)^{-1} \Expo$. Since $Y_1, Y_2$ are i.i.d, we can expand the joint CDF as
+  \[
+    \begin{aligned}
+      P(W \leq c) = 1 - P(W < c) = 1 - P(Y_1 < c, Y_2 < c) &= 1 - P(Y_1 < c)P(Y_2 < c)\\
+                                                           &=1 - P(X_1 < c\lambda_1) P(X_2 < c\lambda_2)\\
+                                                           &= 1 - e^{-c\lambda_1}e^{-c\lambda_2}
+                                                           = 1 - e^{-c(\lambda_1 + \lambda_2)}
+    \end{aligned}
+  \]
+  This is exactly the distribution $(\lambda_1+\lambda_2)^{-1}\Expo$. For the second case, observe that $U_0 = X_1 / (X_1 + X_2)$ is a uniform distribution. Expanding $P(Y_1 < Y_2)$, we have
+  \[
+    \begin{aligned}
+      P(Y_1 < Y_2) = P\left(\frac{X_1}{\lambda_1} < \frac{X_2}{\lambda_2}\right) = P\left(\frac{\lambda_2}{\lambda_1+\lambda_2} X_1 < \frac{\lambda_1}{\lambda_1+\lambda_2} X_2\right) = P\left(U_0 < \frac{\lambda_1}{\lambda_1 + \lambda_2}\right) = \frac{\lambda_1}{\lambda_1 + \lambda_2}.
+    \end{aligned}
+  \]
+  This means that $B_0 \sim \Bern(\lambda_1 / (\lambda_1 + \lambda_2))$.
+
+  \begin{part}{b}
+    Prove the Competing Risks Theorem, assuming Lemma 3.11.4.
+  \end{part}
+
+  Applying the lemma, let's set \[B = I_{U_0 \leq p},\quad\textrm{and}\quad M = \min\left(\frac{U_0}{p}, \frac{1-U_0}{1-p} \right), \quad \textrm{where}\quad p = \frac{\lambda_1}{\lambda_1 + \lambda_2}.\]
+  We know that $M \ind B$. By our work in part (a), we know that $B = B_0$ since $U_0 \leq p$ is the same event as $Y_1 < Y_2$. For $M$, we can write
+  \[\begin{aligned}M = \min\left(\frac{U_0}{p}, \frac{1-U_0}{1-p}\right) = \min\left(\frac{X_1/(X_1 + X_2)}{\lambda_1 / (\lambda_1 + \lambda_2)}, \frac{X_2 / (X_1 + X_2)}{\lambda_2 / (\lambda_1 + \lambda_2)}\right)
+    &=\min\left(\frac{(\lambda_1 + \lambda_2) X_1}{\lambda_1 T}, \frac{(\lambda_1 + \lambda_2)X_2}{\lambda_2 T}\right)\\
+    &=\frac{\lambda_1+\lambda_2}{T}\min\left(\frac{X_1}{\lambda_1}, \frac{X_2}{\lambda_2}\right)\\&=\frac{\lambda_1 + \lambda_2}{T}W.
+  \end{aligned}\]
+  Now since $B \ind M$, $B\ind W$ and $B\ind T$, so we conclude that $B_0 = B\ind W$, as desired.
+
+  \begin{part}{c}
+    Prove Lemma~3.11.4. % P(U \leq p | M \geq m)
+  \end{part}
+
+  Since $B$ is Bernoulli (indicator of bounding a uniform), it suffices to show that $P(U \leq p \;|\; M \geq m) = P(U\leq p)$, this would imply that $P(B = 1 \;|\; M\geq m) = P(B=1)$, and likewise for $B=0$ and thus show that $B\ind M$. Note that the event $M\geq m$ is equivalent to the system of inequalities:
+  \[
+    \begin{cases} U / p \geq m\\ (1-U) / (1-p) \geq m\end{cases} \implies \begin{cases} U \geq mp\\ 1-U \geq m-mp\end{cases} \implies m\leq 1.
+  \]
+  Now we have two cases. If $0\leq m \leq 1$, then by the above inequalities we have $P(M\geq m) = 1-m$. If $m \leq 0$, then we get $P(M\geq m) = 1$. This CDF shows that $U\sim \Unif$.
+
+  To show independence, (when $m\geq 1$, otherwise $P(M\geq m)=0$) we get
+  \[P(U\leq p, M \geq m) = P(pm \leq U \leq p) = p\cdot \min(1-m, 1) = P(U\leq p)\cdot P(M\geq m).\]
+\end{parts}
+
+\begin{problem}{3.18}[Point in the unit disk]
+  Let $(X,Y)$ be a uniformly distributed point in the unit disk $\R^2$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove the following representations:
+    \[ X \sim \frac{t_3}{\sqrt{3+t_3^2}}, \quad\textrm{and}\quad X^2 \sim \Beta(0.5,1.5).\]
+  \end{part}
+
+  We observe that if $(X,Y)$ is distributed uniformly on the unit disk, and we perform a change of coordinates $(X, Y) \mapsto (\theta, R)$, we have $\theta \sim 2\pi \Unif$ and $R^2 \sim \Unif$, i.i.d. The angle being uniformly distributed is obvious by symmetry, and $R^2 \sim \Unif$ because the area of a circle with a given radius scales quadratically. Now since $Y\sim R\sin(\theta)$ and $X^2\sim Y^2$, we have
+  \[
+    X^2 \sim Y^2 \sim R^2 \sin^2(\theta) \sim U_1^2 \sin^2(2\pi U_2) \sim \Beta(1/2, 1)\cdot \Beta(1/2, 1/2) \sim \Beta(1/2, 3/2).
+  \]
+  (some of these identities are proved in (c)) Now applying a result from the previous problem set, we have
+  \[
+    \frac{X^2}{1-X^2}\sim \frac{1}{3}{t_3}^2,\quad\textrm{since}\quad X^2\sim \Beta(1/2, 3/2).
+  \]
+  Rearranging, we have
+  \[
+    \begin{aligned}
+      \frac{1-X^2}{X^2} \sim \frac{3}{t_3^2} \implies \frac{1}{X^2} \sim \frac{3+t_3^2}{t_3^2} \implies X^2 \sim \frac{t_3^2}{3+ t_3^2} \implies X \sim \frac{t_3}{\sqrt{3+t^2}}.
+    \end{aligned}
+  \]
+  The last step follows because $X$ and $t_3$ are both symmetric distributions.
+
+  \begin{part}{b}
+    Prove that 
+    \[ Y|X \sim SU\sqrt{1-X^2},\]
+    with $S$ a random sign and $U\sim \Unif$, independently.
+  \end{part}
+
+  Conditioning on $X$, $Y$ is uniformly distributed on the vertical slice of the unit disk at $x= X$. Since this vertical slice is an interval of radius $\sqrt{1-X^2}$, we have the representation \[Y \sim \Unif_{\left(-\sqrt{1-X^2}, \sqrt{1-X^2}\right)}\sim SU\sqrt{1-X^2},\] where $U\sim \Unif$.
+
+  \begin{part}{c}
+    Using the result in (b), the fact that $U^2\sim \Beta(0.5, 1)$ (check this), and Proposition~3.7.10, show that $Y^2 \sim \Beta(0.5, 1.5)$ (so we have $Y^2 \sim X^2$).
+  \end{part}
+
+  First, suppose $U\sim \Unif$. Then $U\sim \Beta(1, 1)$, so since by Proposition~3.7.14, we have $\Beta(1/\alpha, 1)\sim U^\alpha$, it follows that $U^2 \sim \Beta(0.5, 1)$. Now by part (b), we can see that
+  \[\begin{aligned}(Y|X)^2 \sim U^2(1-X^2) \sim \Beta(1/2, 1)\cdot (1-\Beta(1/2, 3/2)) &\sim \Beta(1/2, 1)\cdot \Beta(3/2, 1/2) \\
+  &\sim \Beta(1/2, 3/2).
+  \end{aligned}\]
+  Since there is no dependence on $X$ in this distribution, it follows that $(Y|X)^2 = Y^2|X \sim Y^2$.
+\end{parts}
+
+\end{document}

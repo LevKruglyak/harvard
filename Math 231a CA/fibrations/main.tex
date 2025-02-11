@@ -1,0 +1,312 @@
+\documentclass{article}
+
+\title{\textbf{A Primer on Homotopy Theory}}
+\date{October 3, 2023}
+\author{Lev Kruglyak}
+
+% Math stuff
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+% Fancy script capitals
+\usepackage{mathrsfs}
+\usepackage{cancel}
+% Bold math
+\usepackage{bm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{tikz}
+% Geometry
+\usepackage[letterpaper, portrait, margin=1in, includefoot]{geometry}
+
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\CC}{\mathscr{C}}
+\providecommand{\Eq}{\mathrm{Eq}}
+\providecommand{\Coeq}{\mathrm{Coeq}}
+\providecommand{\colim}{\mathrm{colim}}
+\renewcommand{\abstractname}{Summary}    % clear the title
+
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{claim}[definition]{Claim}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{example}[definition]{Example}
+\newtheorem{corollary}[definition]{Corollary}
+
+% Restriction
+\newcommand\restr[2]{{% we make the whole thing an ordinary symbol
+  \left.\kern-\nulldelimiterspace % automatically resize the bar with \right
+  #1 % the function
+  \vphantom{\big|} % pretend it's a little taller at normal size
+  \right|_{#2} % this is the delimiter
+}}
+
+\edef\restoreparindent{\parindent=\the\parindent\relax}
+\usepackage{parskip}
+\restoreparindent
+
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{topsep=1ex,itemsep=1ex,partopsep=1ex,parsep=1ex}
+\setlist[itemize]{topsep=1ex,itemsep=1ex,partopsep=1ex,parsep=1ex}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+
+    \medskip
+    \begin{center}
+        \emph{Please email corrections/suggestions to:} \underline{levkruglyak@college.harvard.edu}
+    \end{center}
+\end{abstract}
+\tableofcontents
+\medskip
+
+Point set topology is hard and often annoying. There's no shortage of evil counterexamples, proofs involving endless intersections and unions, and more types of spaces than you can use in a lifetime:
+
+\begin{center}
+  \emph{Regular, normal, seperable, perfect, first-countable, second-countable, $T_0$, $T_1$, $T_2$, $T_{2.5}$ (seriously?), $T_3$, $T_4$, $T_5$, $T_6$, Hausdorff, Tychonoff, Lindel\"of, Stone, metrizable, paracompact, etc...}
+\end{center}
+
+As algebraic topologists we don't have time for this; even understanding the structure of the spheres is an impossibly hard task, much less a massive class of potentially degenerate spaces. Ideally, we would want some category of ``nice enough'' topological spaces, and then convert as many statements as possible into abstract algebraic language where we don't have to worry about point set topology.
+Often times, it's helpful to still maintain geometric and topological intuition when working with spaces, but many of the spaces we use are either hopelessly large dimensional or even infinite dimensional. Many useful spaces are even constructed as a gluing operation of infinitely many simpler objects, infinitely many times. (See Eilenberg-Maclane spaces.) Abstraction is essential in this case.
+
+\section{Categorical Constructions}
+
+Pure category theory is still way too general to encapsulate the structure we care about when dealing with topology; for instance there's no good way to define a homotopy using \emph{just} vanilla category theory, yet this is a fundamental concept in topology. The extension of category theory to allow for ``topological'' statements is referred to as \textbf{homotopy theory}. Although it is motivated by topology, homotopy theory is not inherently topogical, and it has found applications to a wide range of topics. 
+
+For instance, there has been a lot of recent work on \emph{homotopy type theory}, which applies homotopical notions to type theory and logic. In this case, a ``proof'' becomes a ``path'' between ``statements'', and many topological statements can be translated to statements of logic. Similarly, we can also do homotopy theory on \emph{chain complexes} in a natural way, even though these structures are defined purely algebraically. Thus, theorems in homotopy theory tend to be quite general since they apply so widely.
+
+\subsection{Cartesian Closed Categories}
+
+The first extension we make to category theory is the notion of a ``mapping space''; i.e. we would like to talk about a ``space of maps between two objects''. In the category of sets, $\mathbf{Set}$, there is a natural way to do this, namely,
+\[ Y^X = \Hom(X, Y) = \{ f : X \to Y \}.\]
+This exponential notation to talk about mapping spaces is justified by properties of the form
+\[(X\times Y)^Z = X^Z\times Y^Z\quad\textrm{and}\quad (X^Y)^Z = X^{(Y\times Z)}.\]
+Here equality should be interpreted as isomorphism of sets. In this category of sets, these isomorphisms are easily explained: for instance the first statement is ``equivalent'' to the universal property of the product: a map $Z \to X\times Y$ is uniquely determined by maps $Z \to X$ and $Z\to Y$. This is already a very useful notion, we can see that mapping spaces can simplify universal properties, since whenever we have a property ``statement is true for all maps satisfying condition'', we could rephrase this as just some simpler property involving mapping spaces.
+
+Another canonical notion is that of a \emph{basepoint}, which we express as a terminal object in our category. In the category of sets, this just is a singleton set $\{*\}$, usually denoted $*$. This serves as the ``identity'' for the ``multiplicative'' and ``exponential'' structure we are building:
+\[X \times * = X, \quad X^* = X,\quad\textrm{and}\quad *^X = *.\]
+
+Finally, we also observe the fundamental \emph{adjunction} relation between multiplication and exponentiation: There is a natural isomorphism
+\[
+  \Hom(X, Z^Y) \cong \Hom(X\times Y, Z).
+\]
+In $\mathbf{Set}$, such an operation is known as \textbf{currying}, and this is a common operation in many functional programming languages. A map $X \to Z^Y$ means specifying a family of maps $f_x : Y \to Z$, so we can use this family to define a map $f(x,y)=f_x(y)$. This gives our natural bijection.
+
+These properties are beginning to form some structure, so we'll encapsulate them in a category theoretic definition:
+
+\begin{definition}
+  A category $\CC$ is called \textbf{Cartesian closed} if it satisfies the following properties:
+  \begin{itemize}
+    \item There is a terminal object $*\in \CC$.
+    \item Any two objects $X,Y \in \CC$ have a product $X\times Y\in \CC$.
+    \item Any two objects $X,Y \in \CC$ have an exponential $X^Y\in \CC$.
+  \end{itemize}
+  This exponential should satisfy the following adjunction property
+  \[ [X\times Y, Z] \cong [X, Z^Y],\]
+  where we use $[-,-]$ to denote $\Hom(-,-)$. Equivalently, we could say that $-\times Y$ is a left adjoint to $-^Y$.
+\end{definition}
+
+So far, our only example of a Cartesian closed category is $\mathbf{Set}$. Cartesian closed categories generally have very nice properties. On top of all the expected multiplicative identities, we have a natural composition law
+\[Y^X \times Z^Y \to Z^X\]
+which is associative and unital. We also have natural \emph{evaluation} maps $\textrm{ev}_{Y, Z} : Z^Y  \times Y \to Z$ which in the case of $\textbf{Set}$ is actual evaluation of a function. Even better, we can show:
+
+\begin{proposition}
+  For a Cartesian closed category $\mathbf{Set}$,
+  \begin{itemize}
+    \item $X\times -$ preserves all colimits.
+    \item $-^X$ preserves all limits.
+  \end{itemize}
+\end{proposition}
+\begin{proof}
+  Left adjoints always preserve colimits and right adjoints always preserve limits. (The abstract nonsense isn't that important at the moment.)
+\end{proof}
+
+\subsection{Compactly Generated Spaces}
+
+Unfortunately for us, the category of topological spaces $\mathbf{Top}$ is not Cartesian closed; it's just way too general. The product in $\mathbf{Top}$ is just the usual product, but this doesn't always preserve colimits. If we restrict our attention to \emph{locally compact Hausdorff} spaces, we get colimit preservation, but at the cost of losing a large class of spaces we are interested in (CW complexes) which might not be locally compact Hausdorff. Also, this restriction doesn't preserve limits.
+
+\begin{proposition}
+  The category $\mathbf{kTop}$ is Cartesian closed.
+\end{proposition}
+
+\begin{proposition}
+  The category $\mathbf{kTop}$ has all limits and colimits, i.e. it is complete and cocomplete.
+\end{proposition}
+
+Since this category is plenty big enough for our homotopical rompings, we'll just drop the ``$\textbf{k}$'' and use $\textbf{Top}$ to mean the category of compactly generated spaces.
+
+\section{Spaces with Basepoint}
+
+A natural construction we could now do would be to look at \textbf{pointed topological spaces}, these are pairs $(X, * \hookrightarrow X)$ of a space with a chosen basepoint. We've seen this type of construct before when looking at fundamental groups, and many topological operations are defined in this category. As we'll see later, this is an essential type of thing for us to consider. Maps between pairs $(X, x) \mapsto (Y, y)$ are maps $X \to Y$ which preserve the basepoint, so we get a category, which we denote $\mathbf{Top}_*$.
+
+\begin{proposition}
+  The category $\mathbf{Top}_*$ is complete and cocomplete.
+\end{proposition}
+
+\begin{proposition}
+  The forgetful functor $u : \mathbf{Top}_* \to \mathbf{Top}$ preserves limits.
+\end{proposition}
+
+\begin{definition}
+  The product in the category $\mathbf{Top}_*$ is given by
+  \[(X, x)\times (Y, y) = (X\times Y, (x,y)).\]
+\end{definition}
+
+\begin{definition}
+  The coproduct in the category $\mathbf{Top}_*$ is the \textbf{wedge product}. 
+\end{definition}
+
+Tragically, $\mathbf{Top}_*$ is \emph{not} a Cartesian closed category. To see why, let's see what happens when we take [TODO]
+
+\subsection{Smash Product}
+
+\subsection{Suspension and Adjunction Functors}
+
+\section{Nice Pairs of Spaces}
+
+The next construction we would like to do relating to $\mathbf{Top}$ is to construct the \textbf{category of pairs}, usually denoted $\mathbf{Top}_2$. Generally, many geometric and topological theorems in math lie at the interface between \emph{local} and \emph{global} properties, pairs formalize this notion in some sense.
+As we will see, pairs turn out to be a fundamental notion in algebraic topology, and they will allow us to formulate many \emph{excision} results, as well as defining \emph{relative} homotopy, homology, and cohomology groups.
+
+We already know how maps should work in this context; a map $f : (X, A) \to (Y, B)$ is a morphism of pairs if $f(A)\subset B$. But what should the relationship be between the space $A$ and the space $X$? Similarly to what we had for pointed spaces, we might for example want products to be preserved; so the product of pairs is still a pair. 
+
+Other properties that should hold are a homotopical in nature. For a simple example, we would expect that if $A$ is contractible, we could collapse it to a single point and not change the homotopy type of $X$.
+
+Our first attempt might consider pairs $(X,A)$ where $X$ is compactly generated and $A$ is a closed subset. This seems like a fine definition at first, but it will turn out to be far too general for our purposes. There are no restrictions on the \emph{embedding} of $A$ into $X$, so we can come up with some strange examples. For an example of how general this construction would be, here are some allowed pairs:
+
+\begin{example}
+  The \textbf{Cantor set} as a subset of $[0,1]$. One way this set could be defined is as the set of numbers $[0,1]$ with no 2's in its base $3$ expansion.
+\end{example}
+
+\begin{example}
+  The closure of the \textbf{topologist's sine curve}, i.e. the graph of $\sin(1/x)$ for $x\in (0,1]$, in $\R^2$. This is an example of a connected but not path-connected topological space.
+\end{example}
+
+\begin{example}
+  The \textbf{Hawaiian Earring}, i.e. the union of circles which have radius $1/n$ and lie tangent to the $y$-axis in $\R^2$.
+\end{example}
+
+\begin{example}
+  The \textbf{Mandelbrot set} in $\C$. (This one is particularly hard.)
+\end{example}
+
+In the early 20th century, theorems in algebraic topology dealing with pairs had to account for all of these difficult cases which complicated matters substantially. When working with homotopies, the embedding of $A$ into $X$ should leave ``wiggle room'' around $A$. We'll formalize this notion very soon, this is the \emph{homotopy extension property.} For now, let's just find some nice notion of pairs, and then see what sort of properties they satisfy.
+
+\subsection{Neighborhood Retracts}
+
+The ideal scenario would be when $X$ retracts smoothly onto $A$, this is the case when $A$ is a \emph{deformation retract} of $X$. Since this embedding is very ``homotopical'' in nature, we shouldn't run into any problems later on. However, such a definition is far too strong for our purposes. If $A$ is a deformation retract of $X$, then the two spaces are homotopy equivalent, so their relative structure might not be very interesting. Instead, let's weaken the requirement to only require that $A$ is a \emph{local} deformation retract of $X$.
+
+\begin{definition}
+  A pair $(X, A)$ is a \textbf{neighborhood retract pair} if there is some open $A\subset U\subset X$ with $(U, A)$ a \textbf{deformation retract pair}.
+\end{definition}
+
+Such a definition eliminates many of the evil spaces we talked about earlier, but there are still some weird examples.
+\begin{example}
+  Consider the ``comb space'' $C\subset [0,1]\times \R$ defined as $C=0\times \R\cup\bigcup_{n\in \Z_{>0}} [0,1]\times \{1/n\}$. Then $([0,1]\times \R, C)$ is a neighborhood retract pair.
+\end{example}
+
+Much worse, this category of pairs no longer preserves products! For a particularly nasty example, we can consider the so-called \textbf{long ray} $L$, which can be obtained by ``gluing together an uncountable number of unit rays together''. Then we consider the pairs $([0,1], 0), (L, 0)$. It can be shown that both pairs are neighborhood retracts, yet their product $([0,1], 0)\times (L, 0) = ([0,1]\times L, 0\times L\cup [0,1]\times 0)$ is not a neighborhood retract.
+
+At this point we might start to lose hope at the prospect of uncovering some nice category of pairs. Maybe our category of spaces is too big? It would be hard to shrink this category and still allow for infinite limits and colimits, since these operations don't behave very well with our ordinary topological intuitions. 
+
+\subsection{Neighborhood Deformation Retracts (NDRs)}
+
+The correct notion for a category of pairs turns out to be the neighborhood deformation retract, a combination of two ideas we've had so far. Although this definition preceded Steenrod, the notion of a \emph{NDR-pair} was popularized in his classic 1967 paper, \underline{\emph{A convenient category of topological spaces}}, where he outlined much of this content. As such, the paper and its definitions have become ubiquitous in algebraic topology research and education. 
+
+\begin{definition}
+  A pair $(X,A)$ is a \textbf{neighborhood deformation retract pair} (NDR pair) if and only if $(X,A)\times ([0,1], 0)$ is a deformation retract pair (DR pair).
+\end{definition}
+
+This isn't the usual definition, (it is equivalent) but I prefer this presentation since it feels very canonical. We know that we should be able to take products, (this is one of our desired properties) so we take a product with the natural pair $([0,1],0)$ and enforce the strongest condition we have on this product. Unpacking this statement, we can deduce the following equivalent form: 
+
+\begin{proposition}
+  A pair $(X,A)$ is an NDR pair if there is a map $u : X \to I$ such that $u^{-1}(0)=A$ and we have a homotopy $H :X \times I \to X$ such that:
+  \begin{itemize}
+    \item $h(0,x)=x$ for all $x\in X$,
+    \item $h(t,x)=x$ for all $(t,x)\in I\times A$,
+    \item $h(1,x)\in A$ for all $x\in X$ such that $u(x)<1$.
+  \end{itemize}
+\end{proposition}
+
+Unlike neighborhood retract pairs, NDR pairs are well-behaved with respect to products!
+
+\begin{proposition}
+  If $(X,A)$ and $(Y,B)$ are NDR pairs, then so is their product
+  \[(X,A)\times (Y, B) = (X\times Y, X\times B\cup A\times Y).\]
+  If one is an NDR pair and the other is a DR pair, then their product is a DR pair.
+\end{proposition}
+
+\subsection{Homotopy Extension Property (HEP)}
+We now have the language to fully state 
+
+\begin{definition}
+  A pair $(X,A)$ is said to satisfy the \textbf{homotopy extension property} (HEP) if for any object $Y$
+\end{definition}
+
+\section{Fibrations}
+
+\subsection{Fiber Bundles}
+
+\begin{definition}
+  A map $p : E \to B$ is a \textbf{fiber bundle} if for all points $b\in B$, there is some open neighborhood $\mathcal{U}\subset B$ of $b$ such that there is a homeomorphism $p^{-1}(\mathcal{U}) \to p^{-1}(b)\times \mathcal{U}.$ Such a homeomorphism is called a \textbf{local trivialization} of the fiber bundle.
+\end{definition}
+
+When two points $b_1, b_2\in B$ are in the same connected component, we can construct a homeomorphism $p^{-1}(b_1)\to p^{-1}(b_2)$. For most cases we will deal with, the base space $B$ will be connected so we simply use ``$F$'' to denote the homeomorphism class of the \textbf{fiber} $F = p^{-1}(b)$. 
+In this case, we write our fiber bundle as a sequence:
+\[
+    F \to E \to B
+\]
+\begin{example}
+  For any space $F$, we have the trivial fiber bundle $F \to F\times B \to B$.
+\end{example}
+
+\begin{example}
+  Any covering space is a fiber bundle, and the fiber has a discrete topology, i.e. if we have an $n$-sheeted covering, $F$ consists of $n$ points.
+\end{example}
+
+\begin{example}
+  A fundamental example of a fiber bundle is the \textbf{M\"obius bundle} $M$, a fiber bundle of the form $(0,1) \to M \to S^1$ which looks like the M\"obius strip. This is a clear example of a bundle which admits local trivializations, (as any fiber bundle does) but not a ``global trivialization''.
+\end{example}
+
+\begin{example}
+  For projective spaces, we have natural fiber bundles 
+  \[S^0 \to S^n \to \mathbb{RP}^n \quad\textrm{and}\quad S^1 \to S^{2n+1} \to \mathbb{CP}^{2n}.\]
+  In the real case, this was a two-sheeted covering map, but in the complex case it's a more general \textbf{circle bundle}.
+\end{example}
+
+\begin{example}
+  Some of the most elegant fiber bundles are the \textbf{Hopf fibration(s)}, which take the form
+  \begin{itemize}
+    \item $S^0 \to S^1 \to S^1$ (real)
+    \item $S^1 \to S^3 \to S^2$ (complex)
+    \item $S^3 \to S^7 \to S^4$ (quaternionic)
+    \item $S^7 \to S^{15} \to S^8$ (octonionic)
+  \end{itemize}
+  These fiber bundles are fundamental in explaining the structure of homotopy groups of spheres, as we will later see. Rather suggestively, there are only 4 of them; it turns out that these fiber bundles have deep connections to the 4 real division algebras $\mathbb{R}, \mathbb{C}, \mathbb{H},$ and $\mathbb{O}$.
+\end{example}
+
+\begin{example}
+  In differential topology, we have a fundamental fiber bundle 
+  \[O(k) \to V_k(\R^n) \to \mathrm{Gr}_k(\R^n),\]
+  i.e. the map taking an orthogonal $k$-frame in the \textbf{Stiefel manifold} to its $k$-plane in the \textbf{Grassmannian manifold} has fibers determined by the orthogonal transformations of a $k$-dimensional space, $O(k)$.
+\end{example}
+
+\subsection{Homotopy Lifting Property (HLP)}
+
+% In the case that $B$ is a 
+This definition of a fiber bundle has a wealth of examples coming from a wide range of mathematics, but they're defined in a very ``topological'' way involving local properties and 
+
+\subsection{Operations on Fibrations}
+\begin{proposition}
+  Fibrations are closed under the following properties:
+  \begin{enumerate}[(i)]
+    \item \textbf{Products:} If $\{p_i : E_i \to B_i\}_{i\in I}$ is a family of fibrations, then the product $\prod_{i\in I} p_i : \prod_{i\in I} E_i \to \prod_{i\in I} B_i$ is a fibration as well.
+    \item \textbf{Pullbacks:} If $p: E \to B$ is a fibration, and $f : X \to B$ is a continuous map then the pullback $f_*(p) : E\times_f X \to B$ is a fibration.
+    \item \textbf{Exponentiation:} If $p : E \to B$ is a fibration, and $A$ is a space, then $p^A : E^A \to B^A$ is a fibration.
+    \item \textbf{Composition:} If $p : E \to B$ and $q : B \to X$ are fibrations, then $p\circ g : E \to X$ is a fibration.
+  \end{enumerate}
+\end{proposition}
+
+\end{document}

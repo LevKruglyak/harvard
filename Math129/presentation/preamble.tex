@@ -1,0 +1,43 @@
+% Some basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{float}
+
+% Section stuff
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{appendix}
+\usepackage{float}
+
+% Math packages
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Margin
+\usepackage[margin=1.5in]{geometry}
+
+% Theorem environments
+\usepackage{amsthm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+% Convenient redefinitions
+\let\emph\relax % there's no \RedeclareTextFontCommand
+\DeclareTextFontCommand{\emph}{\bfseries\em}
+
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\Q}{\mathbb{Q}}
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\N}{\mathbb{N}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\F}{\mathbb{F}}
+
+\providecommand{\Spec}{\textrm{Spec}}
+\providecommand{\Gal}{\textrm{Gal}}

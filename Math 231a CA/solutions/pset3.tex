@@ -1,0 +1,44 @@
+% 1. Choose 6 questions from Chapters 6-9 except Question (4) from Chap 9.
+%
+% 2. Read Chap 8 and convince yourself that the dual story with based fibrations works the same.
+%
+% 3. Read Chap 9, especially the part on homotopy groups of pairs. We will use pairs when we talk about homology in later classes.
+
+\begin{problem}{7.1}
+  Let $p : D \to B$ and $q : E \to B$ be fibrations and let $f : D \to E$ be a map such that $q\circ f = p$. Suppose that $f$ is a homotopy equivalence. Then $f$ is a fiber homotopy equivalence.
+\end{problem}
+
+\begin{problem}{8.1}
+  Prove the following lemmas.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    If $p : E \to B$ is a fibration, then the inclusion
+    \[ \phi : p^{-1}(*) \to Fp\]
+    specified by $\phi(e) = (e, c_*)$ is a based homotopy equivalence.
+  \end{part}
+
+  \begin{part}{b}
+    The right triangle commutes and the left triangle commutes up to homotopy in the diagram
+  \[\begin{tikzcd}
+	  \cdots & {\Omega X} & {\Omega Y} & Ff & X & Y \\
+	  && {F\pi(f)}
+	  \arrow[from=1-1, to=1-2]
+	  \arrow["{-\Omega f}", from=1-2, to=1-3]
+	  \arrow["f", from=1-5, to=1-6]
+	  \arrow["{\pi(f)}", from=1-4, to=1-5]
+	  \arrow["{\iota(f)}", from=1-3, to=1-4]
+	  \arrow["{\iota(\pi(f))}"', from=1-2, to=2-3]
+	  \arrow["\phi", from=1-3, to=2-3]
+	  \arrow["{\pi(\pi(f))}"', from=2-3, to=1-4]
+  \end{tikzcd}\]
+  \end{part}
+\end{parts}
+
+\begin{problem}{9.1}
+  Show that, if $n\geq 2$, then $\pi_n(X\wedge Y)$ is isomorphic to
+  \[
+    \pi_n(X) \oplus \pi_n(Y) \oplus \pi_{n+1}(X\times Y, X\wedge Y).
+  \]
+\end{problem}

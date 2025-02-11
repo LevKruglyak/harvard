@@ -1,0 +1,117 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 2}
+\author{Lev Kruglyak}
+\due{September 29, 2023}
+
+\input{../stat210.tex}
+
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{3.4.12}[Stochastic Domination Example]
+  Let $Y_1$ and $Y_2$ be r.v.s (possibly defined on different $\Omega$'s) with CDFs $F_1$ and $F_2$.
+  A commonly used partial order on distributions (and thus on r.v.s), \emph{stochastic domination}, is defined by the relation $Y_1 \preceq Y_2$ if and only if $F_1(y)\geq F_2(y)$ for all $y\in \R$. Find an example of $Y_1$ and $Y_2$ on the same space with $Y_1\preceq Y_2$, but $P(Y_1 > Y_2) \geq 0.95$. % Clockwork
+\end{problem}
+
+\begin{solution}
+  Let $\Omega=[0,1]^2$ with ordinary Lebesgue measure $P=\mu$. Let's define two r.v.s as follows:
+  \[
+    Y_1(x,y) = x,\quad\textrm{and}\quad Y_2(x,y)=\begin{cases}0.99x &y\leq 0.95,\\ 3+x&y>0.95,\end{cases}
+  \]
+  Notice that for any $c\in [0,1]$, we have $F_1(c) = \mu(Y_1 \leq c) = \mu([0,c]\times [0,1]) = c$, and 
+  \[
+    F_2(c) = \mu([0,c/0.99]\times [0,0.95] \cup [0, c-3]\times [0.95, 1]) \geq c-0.15.
+  \]
+  When $c\leq 0$, $F_1(c)=F_2(c)=0$ and when $c\geq 1$, we have $F_1(c)=F_2(c)=1$. Thus, since $c-0.15 \leq c$, we have $F_1(c) \geq F_2(c)$ so $Y_1 \preceq Y_2$. However, it's clear that $P(Y_1 > Y_2) = P([0,1]\times [0,0.95]) = 0.95$, which is what we want. 
+\end{solution}
+
+\begin{problem}{3.4.13}[Stochastic Domination Equivalence]
+  Show that $Y_1 \preceq Y_2$ if and only if there exist $Y_1^*, Y_2^*$ on the same space $\Omega^*$ such that $Y_1^* \sim Y_1$ and $Y_2^* \sim Y_2$, and $Y_1^* \leq Y_2^*$. That is, stochastic domination can be replaced by the ordinary inequality of r.v.s, after replacing $Y_1$ and $Y_2$ by suitably chosen copies. 
+\end{problem}
+
+\begin{solution}
+  To prove the forward direction, assume that $Y_1 \preceq Y_2$, so $F_1 \geq F_2$. Applying the PIT, we can construct random variables on the Borel $\sigma$-algebra $\mathcal{B}[0,1]$ by setting $Y_1^* = F_1^{-1}(U)$ and $Y_2^* = F_2^{-1}(U)$ for $U\sim \Unif$ i.i.d. Then $Y_1\sim Y_1^*$ and $Y_2 \sim Y_2^*$. Since the $F_1, F_2$ are monotonically increasing,
+  and $F_1 \geq F_2$, it follows that $F_1^{-1} \leq F_2^{-1}$ so $F_1^{-1}(U)\leq F_2^{-1}(U)$ and $Y_1^* \leq Y_2^*$.
+
+  Conversely, assume that we have two representations $Y_1^* \sim Y_1$ and $Y_2^* \sim Y_2$ with $Y_1^* \leq Y_2^*$. Then we have
+  \[
+    F_1(y)=P(Y_1\leq y) = P(Y_1^* \leq y) \geq P(Y_2^* \leq y) = P(Y_2 \leq y) = F_2(y),
+  \]
+  so $F_1 \geq F_2$ and $Y_1\preceq Y_2$. 
+\end{solution}
+
+\begin{problem}{3.5}[$t$ and Beta]
+  Show that if $T \sim t_m$, then
+  \[\frac{1}{m}\, T^2 \sim \frac{B}{1-B}, \quad\textrm{with}\quad B\sim \Beta(1 /2, m /2).\]
+\end{problem}
+
+\begin{solution}
+  Recall that $t_m\sim Z / \sqrt{m V_m}$ where $Z\sim \stn$ and $V_m \sim \chi^2_m$ and $Z\ind V_m$. Then, using standard representations we can write:
+  \[
+    \frac{1}{m}\, T^2 \sim \frac{1}{m}\,t_m^2 \sim \frac{Z^2}{V_m} \sim \frac{\chi_1^2}{\chi_m^2} \sim \frac{G_{1 /2}}{G_{1 /m}} \sim \frac{G_{1/2} / (G_{1/2} + G_{m / 2})}{G_{m /2} / (G_{1/2} + G_{m/2})} \sim \frac{\Beta(1/2, m/2)}{1- \Beta(1/2, m/2)}\sim \frac{B}{1-B}
+  \]
+  where $B\sim \Beta(1/2, m/2)$.
+\end{solution}
+
+\begin{problem}{3.6}[Fisher's method]
+  Consider a hypothesis test, where a ``test statistic'' $T$ is computed, and the null hypothesis is rejected if the observed value is deemed extreme under the null hypothesis. Assume that $T$ is continuous, and the test under consideration rejects the null hypothesis if $T$ exceeds a certain threshold value. The \emph{$p$-value} is defined to be $P_0(T\geq t_{\textrm{obs}})$ where $t_{\textrm{obs}}$ is the observed value of $T$, and the subscripted $0$ indicates that the probability is with respect to the distribution implied by the null hypothesis.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that if the null hypothesis is true, then the $p$-value (viewed as a r.v.) is Uniform.
+  \end{part}
+    % Let $F$ denote the CDF of the distribution implied by the null hypothesis and $t_{obs} \sim F$. Then by the continuity of $F$, the $p$-value equals
+    % \[
+    % P_0(T \geq t_{obs}) = 1-P_0(T < t_{obs}) = 1-P_0(T \leq t_{obs}) = 1-F(t_{obs}).
+    % \]
+    % Again by the continuity of $F$, we may apply the inverse PIT to conclude that $F(t_{obs}) \sim \Unif$. By Pencil 3.3.2, the $p$-value is distributed uniformly.
+    Let's consider $t_{\textrm{obs}}$ as a random variable, and let $F$ be the CDF of the implied distribution of the null hypothesis. Then, we have
+    \[
+      P_0(T \geq t_{\textrm{obs}}) = 1-P_0(T < t_{\textrm{obs}}) = 1-P(T \leq t_{\textrm{obs}}) = 1 - F(t_{\textrm{obs}}),
+    \]
+    since $T$, and by extension $F$, are continuous distributions. Applying the PIT, we can conclude that $P_0(T\geq t_{\textrm{obs}})\sim \Unif$.
+
+  \begin{part}{b}
+    Suppose we have several $p$-values, obtained from independent experiments testing the same hypothesis. It seems that several independent results that moderately suggest rejecting the null can be at least as convincing as one result strongly suggesting rejecting the null, but it is not obvious how
+    to combine the $p$-values into one overall value (this is a problem of meta-analysis). R.A. Fisher proposed the following method for combining the $p$-values, say $p_1,\ldots, p_n$. Take $R=-2\log(p_1p_2\cdots p_n)$, and let ``combined $p$-value'' be $P(\chi_{2n}^2 \geq r_{\textrm{obs}})$, where $r_{\textrm{obs}}$ is the observed value of $R$. Explain why the $\chi_{2n}^2$ distribution is used here.
+  \end{part}
+
+  We proved in the previous part that $p_i\sim \Unif$. Then,
+  \[R = -2\log(p_1p_2\cdots p_n) = 2(-\log(p_1)-\log(p_2)-\cdots -\log(p_n)).\]
+  But each $-\log(p_n)\sim \Expo$ i.i.d., so their sum is $\sim G_n$. Thus, $R\sim 2 G_n\sim \chi^2_{2n}$, so the observed combined $p$-value should follow this $\chi^2_{2n}$ distribution.
+\end{parts}
+
+\begin{problem}{3.10}[Product of Uniforms vs. Squared Uniform]
+  Let $U_1, U_2, U_3$ be i.i.d. Uniform. Show that
+  \[P(U_1 U_2 < U_3^2) = 5/9.\]
+\end{problem}
+
+\begin{solution}
+  Note that since $\log$ is an order preserving function, the event $U_1U_2 < U_3^2$ is equivalent to the event $\log(U_1U_2) < \log(U_3^2)$. Then,
+  \[P(\log(U_1U_2) < \log(U_3^2)) = P(\log(U_1)+\log(U_2) < 2\log(U_3)) = P(E_1 + E_2 < 2E_3), \]
+  where the $E_i$ are i.i.d. Exponential. We can further simplify by noticing that $E_3\sim G_1$ and $E_1+E_2\sim G_2$, so the probability simplifies to $P(G_1 / G_2 > 1/2)$. We then use the identity
+  \[ \frac{G_1}{G_2} = \left(\frac{G_1}{G_1+G_2}\right) \bigg/ \left(1-\frac{G_1}{G_1 +G_2}\right) \sim \frac{B(1,2)}{1-B(1,2)}\]
+  where $B(\alpha, \beta)$ has the Beta distribution. Solving $B(1,2) / (1-B(1,2)) < 1/2$, we get the event $B(1,2) < 1/3$, or equivalently, $B(2,1) > 2/3$. Recall that $\Beta(2,1) \sim \sqrt{\Unif}$. Thus, our event is equivalent to $U > 4/9$ where $U\sim \Unif$. Then,
+  \[P(U > 4/9) = 1-4/9 = 5/9.\]
+\end{solution}
+
+\begin{problem}{3.11}[Uniform Power of Uniform Product]
+  Let $U_1, U_2, U_3$ be i.i.d. Uniform. Show that
+  \[ (U_1U_2)^{U_3}\sim U_1.\]
+\end{problem}
+
+\begin{solution}
+  We begin by rewriting:
+  \[(U_1 U_2)^{U_3} = \exp(U_3(\log(U_1) + \log(U_2))).\]
+  This is an equality of random variables. Then, we recall that since $U_3\sim \Unif$, we have the $U_3\sim \Beta(1,1)$, and $\Beta(1,1)\sim G_1 / G_1 + G_1'$, for independent gamma distributions $G_1\ind G'_1$. So we have
+  \[\exp\left(\frac{G_1}{G_1 + G'_1} (\log(U_1) + \log(U_2))\right) \sim \exp(-G_1),\]
+  since $\log(U_1)\sim \log(U_2)\sim -\Expo \sim -G_1$, so we can apply Beta-Gamma independence. But $\exp(-G_1)\sim \Unif$, so 
+  \[(U_1U_2)^{U_3} \sim U_1.\]
+\end{solution}
+
+\end{document}

@@ -1,0 +1,32 @@
+\begin{problem}
+Let $V$ be an $n$-dimensional vector space over a field $k$, and $f,g:V\to V$ two linear operators such that $f\circ g-g\circ f=g$.
+\begin{enumerate}
+  \item Show that $g$ maps eigenvectors of $f$ to eigenvectors of $f$
+  or to the zero vector.
+  \item Show that, if $k=\C$, then $g$ cannot be invertible.
+  \item Give an example showing that, if $k$ is a finite field, then $g$ can be invertible. (Suggestion: look for an example where $f$ is diagonalizable, and work with a basis in which the matrix of $f$ is diagonal.)
+\end{enumerate}
+\end{problem}
+
+\textbf{(1)} Let $v$ be an eigenvector of $f$ with eigenvalue $\lambda$. Then
+\[
+  f(g(v)) = g(f(v))+g(v) = (\lambda+1)g(v)
+\] 
+so assuming $g(v)\neq 0$, $g(v)$ is an eigenvalue of $f$ with eigenvalue $\lambda+1$.
+
+\textbf{(2)} It suffices to show that $g$ has a nontrivial kernel, since invertible maps must have trivial kernel. Since $f$ is a complex operator, it must have at least one eigenvalue, say $f(v)=\lambda v$. Then by (1) there must be some minimal $k$ for which $g^k(v)=0$. (otherwise we would have an infinite list $\{v, g(v), g^2(v),\ldots\}$ of eigenvectors with distinct eigenvalues $\{\lambda, \lambda+1, \lambda+2,\ldots\}$, which is impossible since $V$ is finite dimensional)  So $g(g^{k-1}(v))=0$ and so $g^{k-1}(v)\in \Ker(g)$. This proves that $g$ isn't invertible. 
+
+\textbf{(3)} In he case of a field with positive characteristic, the argument from (2) would not work since the eigenvalues need not be distinct, since $\lambda+\ch(k)=\lambda$. 
+
+Let $k=\F_4=\F_2[x]/x^2+x+1$. Let $f,g : k^2 \to k^2$ be given by the following matrices:
+\[
+f = \begin{bmatrix}x&0\\0&x+1\end{bmatrix}\quad \mathrm{ and } \quad g = \begin{bmatrix}0&1\\1&0\end{bmatrix}
+\]
+Then observe that
+\[
+\begin{bmatrix}x&0\\0&x+1\end{bmatrix}\begin{bmatrix}0&1\\1&0\end{bmatrix}-\begin{bmatrix}0&1\\1&0\end{bmatrix}\begin{bmatrix}x&0\\0&x+1\end{bmatrix}=\begin{bmatrix}0&1\\1&0\end{bmatrix}
+\]
+while $g$ is invertible, since 
+\[
+\begin{bmatrix}0&1\\1&0\end{bmatrix}\begin{bmatrix}0&1\\1&0\end{bmatrix}=\begin{bmatrix}1&0\\0&1\end{bmatrix}
+.\]      

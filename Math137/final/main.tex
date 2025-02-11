@@ -1,0 +1,112 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 137 Final Exam}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I affirm my awareness of the standards of the Harvard College Honor Code.}
+\end{center}
+
+\begin{problem}
+    Let $A\subseteq K^a$, $B\subseteq K^b$, $C\subseteq K^c$ be algebraic subsets and let $\varphi:A\rightarrow B$ and $\psi:B\rightarrow C$ be morphisms. Assume that the morphism $\psi\circ\varphi:A\rightarrow C$ is finite.
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{(3 points)} Show that $\varphi:A\rightarrow B$ is finite.
+        \item \textbf{(4 points)} Show that if $\varphi$ is dominant, then $\psi:B\rightarrow C$ is also finite.
+        \item \textbf{(3 points)} Show that (b) can fail without the assumption that $\varphi$ is dominant.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Since $\psi\circ \varphi$ is a finite morphism, by definition $\Gamma(A)$ is a finite $(\psi\circ\varphi)^*(\Gamma(C))$-module. Since $(\psi\circ \varphi)^*=\varphi^*\circ\psi^*$, this is the same as a $\varphi^*(\psi^*(\Gamma(C)))$-module. Since $\varphi^*(\psi^*(\Gamma(C)))\subset \varphi^*(\Gamma(B))$, any generating set for $\Gamma(A)$ as a $\varphi^*(\psi^*(\Gamma(C)))$ will also be a generating set for $\Gamma(A)$ as a $\varphi^*(\Gamma(B))$-module. This proves that $\varphi$ is a finite morphism.
+
+    \textbf{(b)} Since $\psi\circ \varphi$ is a finite morphism, $\Gamma(A)$ is integral over $(\psi\circ\varphi)^*(\Gamma(C))$. This means that for any $f\in \Gamma(A)$, there is some monic polynomial $F_f\in (\psi\circ\varphi)^*(\Gamma(C))[X]$ such that $F_f(f)=0$. Since $(\psi\circ\varphi)^* = \varphi^*\circ \psi^*$, this is actually a polynomial $F_f\in \varphi^*(\psi^*(\Gamma(C)))[X]$. Now suppose $g\in \Gamma(B)$. Then $\varphi^*(g)$ is a polynomial in $\Gamma(A)$, so there is some $F_{\varphi^*(g)}$ which annihilates $\varphi^*(g)$. Since $\varphi^*$ is injective, (by dominance) there is a polynomial $H\in \psi^*(\Gamma(C))[X]$ such that $\varphi^*(H)=F_{\varphi^*(g)}$. Then $\varphi^*(H)(\varphi^*(g))=H(g)=0$ and we are done since $g$ was arbitrary.
+
+    \textbf{(c)} Consider the morphisms $K \to K^2 \to K$ given by $t \mapsto (t,0) \mapsto t$. The composition of these morphisms is the identity morphism which is clearly finite, and the first is finite as expected, yet the second projection morphism $K^2\to K$ is clearly not finite since $K\to K^2$ isn't dominant.
+\end{solution}
+
+\begin{problem}
+    \textbf{(10 points)} Show that all isomorphisms $\varphi:K\rightarrow K$ (of algebraic sets) are of the form $x\mapsto ax+b$ for $a\in K^\times$ and $b\in K$.
+\end{problem}
+
+\begin{solution}
+    Recall from lecture that there is a bijective correspondence between isomorphisms of algebraic sets and $K$-algebra isomorphisms of their coordinate rings. So let $\varphi : K \to K$ be an isomorphism. Then $\varphi^* : K[t] \to K[t]$ is a $K$-algebra homomorphism. Such a map must preserve degrees and is entirely determined by $\varphi^*(t)$, so $\varphi^*(t)=at+b$ for some $a\in K^\times$ and $b\in K$. Since $\varphi^*(\lambda(x))=\lambda(\varphi(x)) = \lambda(ax+b)$ for any $\lambda\in \Gamma(K)$, it follows that $\varphi(x) = ax+b$. It is easy to see that the converse holds as well; i.e. given any $a\in K^\times$ and $b\in K$, the map $\varphi(x)=ax+b$ is an isomorphism of algebraic sets.
+\end{solution}
+
+\begin{problem}
+    \textbf{(10 points)} Let $K=\mathbb C$. Show that there is an algebraic subset~$V$ of $K^n$ (for some $n$) and a surjective morphism $\varphi:K^2\rightarrow V$ whose fibers $\varphi^{-1}(P)$ for $P\in V$ are exactly the sets of the form $\{(x,y),(-x,-y)\}$ with $(x,y)\in K^2$.
+\end{problem}
+
+\begin{solution}
+    Let $n=3$ and let $V=\mathcal{V}(y^2-xz)\subset K^3$. Consider the morphism $\varphi : K^2 \to V$ given by $\varphi(a,b)=(a^2,ab,b^2)$. This is well defined because $(ab)^2=a^2b^2$. Next, we'll prove that for any $(x,y,z)\in V$ (satisfying $y^2=xz$) the preimage $\varphi^{-1}(x,y,z)=\{(a,b), (-a,-b)\}$. This will also prove surjectivity. Suppose $\varphi(a,b)=(x,y,z)$. This means that $a^2=x$ and $b^2=z$ so $a=\pm\sqrt{x}$ and $b=\pm\sqrt{y}$. Thus $\varphi^{-1}(x,y,z)\subset \{(\pm \sqrt{x}, \pm \sqrt{z})\}$. Checking these manually, note that $\varphi(\sqrt{x},\sqrt{y})=\varphi(-\sqrt{x}, -\sqrt{y})=(x,y,z)$ yet $\varphi(-\sqrt{x}, \sqrt{y})=\varphi(\sqrt{x}, -\sqrt{y})=(x,-y,z)$. So only two of these are in the preimage and we are done.
+\end{solution}
+
+\begin{problem}
+    Let $K=\mathbb C$. Let
+    \[
+        H = \{(a,b,c,d) \in K^4 \mid a=c=0\},
+    \]
+    \[
+        V = \{(a,b,c,d)\in K^4 \mid ab=cd\},
+    \]
+    \[
+        \Delta = \{(P,P)\in K^4\times K^4 \mid P \in V\}.
+    \]
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{(2 points)} What is the dimension of $\Delta$?
+        \item \textbf{(4 points)} Show that there is no polynomial $f\in K[A,B,C,D]$ such that $H = \mathcal V_V(f)$.
+        \item \textbf{(4 points)} Show that there are no polynomials
+            \[g_1,g_2,g_3\in K[A_1,B_1,C_1,D_1,A_2,B_2,C_2,D_2]\]
+        such that $\Delta = \mathcal V_{V\times V}(g_1,g_2,g_3)$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Since $V=\mathcal{V}_{K^4}(ab-cd)$ is the vanishing locus of a single polynomial (Krull's principal ideal theorem), $\textrm{codim}(V, K^4)=1$ so $\dim V=3$. Then there is a dominant morphism  $V \to \Delta$ which sends $P$ to $(P,P)$ so $\dim \Delta = 3$.
+
+    \textbf{(b)} Suppose for the sake of contradiction that there is some polynomial $f\in K[A,B,C,D]$ such that $H = \mathcal{V}_V(f) = \mathcal{V}(f)\cap V$. Restricting to the surface parametrized by  $(x,y)\mapsto (x,y,y,x)\in V$, note that $f(x,y,y,x)=0$ if and only if $x=y=0$. But $f(x,y,y,x)$ is a single polynomial in $K[x,y]$ with vanishing locus a single point. This is a contradiction to Krull's principal ideal theorem, since its vanishing locus should be one dimensional.
+
+    \textbf{(c)} :(
+\end{solution}
+
+\begin{problem}
+    \textbf{(10 points)} Let $n\geq1$ and $d\geq0$. Let $F=F_d$ be the vector space of polynomials $f\in K[X_1,\dots,X_n]$ of total degree at most $d$. Let $A$ be the set of tuples $(f_1,\dots,f_{n+1})\in F\times\dots\times F$ such that $\mathcal V_{K^n}(f_1,\dots,f_{n+1})\neq\emptyset$. Show that $\overline{A}\neq F\times\cdots\times F$.
+\end{problem}
+
+\begin{solution}
+    Consider the space $K^n\times F^{n+1}$ equipped with natural maps $\pi_{1} : K^n\times F^{n+1} \to K^n$ and $\pi_{2} : K^n \times F^{n+1} \to F^{n+1}$. We also have a natural morphism $\varphi : K^n\times F^{n+1} \to K^{n+1}$ which sends a point $x\in K^n$ and tuple of polynomials $(f_1,\ldots,f_{n+1})$ to the tuple $(f_1(x), \ldots, f_{n+1}(x))$. We're interested in the preimage $B=\varphi^{-1}(0)$, which is algebraic due to Zariski continuity and relevant because $\pi_2(B)=A$.
+
+    Recall that for any given point $P\in K^n$, we have an evaluation map $\textrm{ev}_P : F_d \to K$ which sends $f$ to $f(P)$. This is clearly a morphism. We observe that $\textrm{ev}_P^{-1}(0)$ is a nonempty algebraic subset of $F_d$ of dimension $\dim F_d - 1$ because it is the vanishing locus of a single nonconstant, nonzero polynomial in $\Gamma(F_d)$. (Theorem~10.7) Then since $\restr{\varphi}{\pi_1^{-1}(P)} = \textrm{ev}_P\times \cdots \times \textrm{ev}_P$, it follows that $\dim(\pi_1^{-1}(P)\cap B)=(n+1)(\dim F_d - 1)$ for any $P\in K^n$. Since $K^n$ is irreducible, we apply Theorem~13.4.1 to the components of $B$ which gives us $\dim(B)\leq \dim(\pi_1^{-1}(P)\cap B) + \dim(K^n)=  (n+1)(\dim F_d -1) + n =(n+1)\dim F_d - 1 < \dim F_d^{n+1}$. So $\dim \overline{A} \leq \dim \overline{\pi_2(B)} \leq \dim B < \dim F_d^{n+1}$ and thus $\dim \overline{A} < \dim F_d^{n+1}$.
+    Since the dimension of $\overline{A}$ is strictly smaller than the dimension of $F_d^{n+1}$, we finally have $\overline{A} \neq F_d^{n+1}$ as desired.
+\end{solution}
+
+\begin{problem}
+    \textbf{(10 points)} Which of the following statements are true? Which are false? (You don't need to give a proof or counterexample.) Any correct answer for a statement gives two points. Any incorrect answer gives zero points. If you don't answer, you get one point.
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{(2 points)} Any two birational irreducible algebraic subsets $V\subseteq K^n$ and $W\subseteq K^m$ have the same dimension.
+        \item \textbf{(2 points)} If $V\subseteq K^n$ and $W\subseteq K^m$ are algebraic sets and $\varphi:V\rightarrow W$ is a bijective finite morphism, then $\varphi$ is an isomorphism.
+        \item \textbf{(2 points)} If $V\subseteq K^n$ and $W\subseteq K^m$ are algebraic sets, $\varphi:V\rightarrow W$ is a morphism, and $P\in\varphi(V)$, then $\dim(V)\leq \dim(W) + \dim(\varphi^{-1}(P))$.
+        \item \textbf{(2 points)} For every monomial order on the monomials in $X_1,\dots,X_n$, for all monomials $M<N$, there exists a point $(a_1,\dots,a_n)\in\mathbb R^n$ such that $M(a_1,\dots,a_n)<N(a_1,\dots,a_n)$.
+        \item \textbf{(2 points)} Three planes $H_1,H_2,H_3$ in $\mathbb P^3_K$ (with $H_i\neq H_j$ for all $i\neq j$) always intersect in exactly one point.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textit{Providing explanations for myself as a sanity-check.}
+
+    \textbf{(a)} \textbf{True.} Since they are birational, $K(V)\cong K(W)$ as $K$-algebras, so these algebras must have the same transcendence degree over $K$, and so the dimensions of $V$ and $W$ must be the same.
+
+    \textbf{(b)} \textbf{False.} Consider the morphism $\varphi : K \to \mathcal{V}(y^2-x^3)$ given by $\varphi(t) = (t^2, t^3)$.
+
+    \textbf{(c)} \textbf{False.} Can construct a counterexample if $V$ and $W$ are not irreducible.
+
+    \textbf{(d)} \textbf{True.}
+
+    \textbf{(e)} \textbf{False.} Three planes intersect at a line.
+\end{solution}
+
+\end{document}

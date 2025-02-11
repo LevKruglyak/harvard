@@ -1,0 +1,42 @@
+\begin{problem}
+  \noindent
+  \begin{enumerate}
+    \item Find a field $\F_4$ with 4 elements! Namely, denote the elements by $\{0, 1, \alpha, \beta\}$ and write out the tables for addition and multiplication in $\F_4$. 
+    \item If we forget the multiplicative structure of $\F_4$ and just think of it as an abelian group, is it isomorphic to $\Z/4$ or $\Z/2 \times \Z/2$?
+    \item Show that this is the unique field with 4 elements up to isomorphism.
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} Consider the ring $\F_4=\F_2[x]/\langle x^2+x+1 \rangle$. It has four elements, $0,1,x,x+1$. This ring actually turns out to be a field. (see multiplication table to see that every element has an inverse and that there are no zero divisors) If we set $\alpha = x$ and $\beta = x+1$, we have the following multiplication and addition table:  
+
+\begin{center}
+  \setlength\doublerulesep{0pt}
+  \begin{tabular}{c||cccc}
+  + & 0 & 1 & $\alpha$ & $\beta$  \\
+  \hline\hline
+  0         & 0 & 1 & $\alpha$  & $\beta$  \\ 
+  1         & 1 & 0 & $\beta$  & $\alpha$  \\ 
+  $\alpha$  & $\alpha$  & $\beta$  & 0 & 1 \\ 
+  $\beta$   & $\beta$  & $\alpha$  & 1 & 0 \\ 
+  \end{tabular}
+  \quad\quad
+  \setlength\doublerulesep{0pt}
+  \begin{tabular}{c||cccc}
+    $\times$  & 0 & 1 & $\alpha$ & $\beta$  \\
+    \hline\hline
+    0         & 0 & 0 & 0  & 0  \\ 
+    1         & 0 & 1 & $\alpha$  & $\beta$  \\ 
+    $\alpha$  & 0  & $\alpha$  & $\beta$  & 1 \\ 
+    $\beta$   & 0  & $\beta$  & 1 & $\alpha$  \\ 
+    \end{tabular}
+\end{center}
+
+\textbf{(2)} The additive group of $\F_4$ cannot be isomorphic to $\Z /4$ because it has no elements of additive order $4$. So it should be isomorphic to $\Z /2\times \Z /2$. If we want an explicit isomorphism, consider $\alpha \mapsto (1,0)$ and $\beta \mapsto (0,1)$. Then $1\mapsto (1,1)$ so its a bijection and we can verify that its a homomorphism by looking at the addition table. 
+
+\textbf{(3)} Suppose $K$ is another field with $4$ elements, say $\{0,1,a,b\}$. Consider the homomorphism $f : \F_4 \to K$ sending $\alpha \mapsto a$ and $\beta \mapsto b$. This is a bijection so it suffices to show that it is a homomorphism. 
+
+We can start by checking addition. First of all, the additive inverses of $a$ and $b$ must be $a$ and $b$ respectively because $a+a=(1+1)a=0$, and likewise for $b$. Also, $a+1\neq 0$, $a+1\neq 1$, $a+1\neq a$ so $a+1=b$ and likewise $b+1=a$. Finally, $a+b\neq 0$, $a+b\neq a$, and $a+b\neq b$ so $a+b=1$. This lines up with $\alpha$ and $\beta$, so $f(x+y)=f(x)+f(y)$ for all $x,y\in \F_4$.
+
+Next let's check multiplication. First of all $ab\neq 0$ (we assumed it was a field so no zero divisors), $ab\neq a$ and $ab\neq b$, so $ab=1$. Next, $a^2\neq 0$, $a^2\neq 1$, $a^2\neq a$ so $a^2=b$. Similarly $b^2=a$. Again, this lines up with the multiplication table for $\alpha$ and $\beta$ so $f(xy)=f(x)f(y)$ for all $x,y\in \F_4$. 
+
+This shows that $f$ is an isomorphism, completing the proof. 

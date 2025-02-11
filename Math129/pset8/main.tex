@@ -1,0 +1,166 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 129 Problem Set 8}}
+
+\begin{document}
+\maketitle
+
+% Page 107:
+% Exercise 33
+% Exercise 34
+% Page 108:
+% Exercise 36 (you may assume Exercise 35 on Page 107 and Exercise 41 of Chapter 2)
+% Exercise 37
+% Exercise 38 (you may assume Exercise 28 of Chapter 2)
+% Exercise 39
+
+\begin{cproblem}{5.33}\noindent
+    \begin{enumerate}[(a)]
+        \item Let $m$ be a squarefree positive integer, and assume first that $m\equiv 2$ or $3\mod 4$. Consider the numbers $mb^2\pm 1$, $b\in \Z$, and take the smallest positive $b$ such that either $mb^2+1$ or $mb^2-1$ is a square, say $a^2$, $a>0$. Then $a+b\sqrt{m}$ is a unit in $\Z[\sqrt{m}]$. Prove that it is the fundamental unit. % In any case it is a power of the fundemental unit
+        \item Establish a similar procedure for determining the fundamental unit in $\mathcal{O}_{\Q[\sqrt{m}]}$ for squarefree $m>1$, $m\equiv 1\mod 4$. % Hint: mb^2\pm 4 
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} This is clear, since this procedure finds the (positive) unit with minimal $b$ in the expression $a+b\sqrt{m}$. This is the fundamental unit since any other unit $a'+b'\sqrt{m}$ with $a',b'>0$ must have $b'\leq b$. 
+    
+    \textbf{(b)} Recall that algebraic integers in $\mathcal{O}_{\Q[\sqrt{m}]}$ for $m\equiv 1\mod 4$ are of the form $\frac{a}{2}+\frac{b}{2}\sqrt{m}$ where $a$ and $b$ are both odd. So if we want such an integer to have norm $\pm 1$, this means that $a^2+mb^2=\pm 4$. Thus we can do the same thing we did for $2,3\mod 4$ except we check $mb^2\pm 4$ for squareness, choosing odd $b$.
+\end{solution}
+
+\begin{cproblem}{5.34}
+    Determine the fundamental unit in $\mathcal{O}_{\Q[\sqrt{m}]}$ for all squarefree $m$, $2\leq m\leq 30$, except for $m=19$ and $22$. 
+\end{cproblem}
+
+\begin{solution}
+    Using a simple Python program which implements the procedure from Problem~5.33, we can get the following table:
+    \begin{center}
+        \renewcommand*{\arraystretch}{1.5}
+        \begin{tabular}{|c|c||c|c|}
+            \hline
+            $m$ & $u$ & $m$ & $u$\\
+            \hline
+            2 &  $1+\sqrt{2}$ & 15 & $4+\sqrt{15}$\\ 
+            \hline
+            3 &  $2+\sqrt{3}$ & 17 & $4+\sqrt{17}$\\
+            \hline
+            5 &  $\frac{1+\sqrt{5}}{2}$ & 19 & $170+39\sqrt{19}$\\
+            \hline
+            6 &  $5+2\sqrt{6}$ & 21 & $\frac{5+\sqrt{21}}{2}$\\
+            \hline
+            7 &  $8+3\sqrt{7}$ & 22 & $\frac{197+42\sqrt{22}}{2}$\\
+            \hline
+            10 & $3+\sqrt{10}$ & 23 & $24+5\sqrt{23}$\\
+            \hline
+            11 & $10+3\sqrt{11}$ & 26 & $5+\sqrt{26}$\\
+            \hline
+            13 & $\frac{3+\sqrt{13}}{2}$ & 29 & $\frac{5+\sqrt{29}}{2}$\\
+            \hline
+            14 & $15+4\sqrt{14}$ & 30 & $11+2\sqrt{30}$\\
+            \hline
+        \end{tabular}
+    \end{center}
+
+\end{solution}
+
+\begin{cproblem}{5.36}
+    Let $\alpha=\sqrt[3]{2}$. Recall that $\mathcal{O}_{\Q[\alpha]}=\Z[\alpha]$ and $\Delta_{\Q[\alpha]}=-108$.
+    \begin{enumerate}[(a)]
+        \item Show that $u^3>20$, where $u$ is the fundamental unit in $\Z[\alpha]$.
+        \item Show that $\beta = (\alpha -1)^{-1}$ is a unit between $1$ and $u^2$; conclude that $\beta = u$.
+    \end{enumerate} 
+\end{cproblem}
+% Assume 5.35 and 2.41
+\begin{solution}
+    \textbf{(a)} By Problem~5.35, we know that if $|\Delta_{\Q[\alpha]}|\geq 33$, then
+    \[
+        u^3>\frac{|\Delta_{\Q[\alpha]}|-27}{4} = 20.25
+    \]
+    which completes the proof.  
+    
+    \textbf{(b)} First, note that by Problem~2.41 we have $\nrm(\alpha-1)=(-1)^3+2=1$, so $\alpha-1$ and $\beta$ are units. Next, since $\alpha-1<1$, it follows that $\beta=\frac{1}{\alpha-1}>1$. We know by (a) that $u^3>20$ so $u^2>\sqrt[3]{20^2}>7$, and we know that $\beta < 7$ since if $\frac{1}{\alpha-1} > 7$ then $8 > 7\alpha$ which is impossible since cubing both sides gives $512 > 686$. So $1<\alpha-1<u^2$. However since $u$ is the fundamental unit (we know there must be a single on by Dirichlet's unit theorem), it follows that $\beta=u$. So $u=1+\sqrt[3]{2}+\sqrt[3]{4}$.   
+\end{solution}
+
+\begin{cproblem}{5.37}\noindent
+    \begin{enumerate}[(a)]
+        \item Show that if $\alpha$ is a root of a monic polynomial $f$ over $\Z$, and if $f(r)=\pm 1$, $r\in \Z$, then $\alpha-r$ is a unit in $\mathcal{O}_{\overline{\Q}}$. % Hint: f(r) is the constant term of g(x)=f(x+r)
+        \item Find the fundamental unit in $\mathcal{O}_{\Q[\alpha]}$ when $\alpha=\sqrt[3]{7}$. % Estimate 3sqrt{7} < 23/12
+        \item Find the fundamental unit in $\mathcal{O}_{\Q[\alpha]}$ when $\alpha=\sqrt[3]{3}$. % Helpful: \alpha^2 is a root of x^3-9 and \alpha^2 > 27/13 
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Let $f(x)=x^n+c_{n-1}x^{n-1}+\cdots+c_1x + c_0$ be the monic polynomial. Note that 
+    \[
+        \begin{aligned}
+            f(\alpha)-f(r)&=(\alpha^n-r^n)+c_{n-1}(\alpha^{n-1}-r^{n-1})+\cdots+c_1(\alpha-r)=\pm 1\\
+            &=(\alpha-r)\left(\frac{\alpha^n-r^n}{\alpha-r}+c_{n-1}\frac{\alpha^{n-1}-r^{n-1}}{\alpha-r}+\cdots+c_1\right)=\pm 1
+        \end{aligned}
+    \]
+    so $(\alpha-r)$ is a unit since $\alpha^k-r^k$ is divisible by $\alpha-r$.   
+    
+    \textbf{(b)} Consider the monic polynomial $f(x)=x^3-7$. Note that $f(2)=1$ so $\alpha-2$ is a unit in $\mathcal{O}_{\Q[\alpha]}$. Since we want our fundamental unit to be greater than $1$, consider 
+    \[
+        u=\frac{1}{2-\alpha}=\frac{2^3-\alpha^3}{2-\alpha}=\boxed{\alpha^2+2\alpha+4}
+    .\] 
+    This is a unit greater than one, indeed $u\approx 11.49$. To prove that this is the fundamental unit, suppose for the sake of contradiction that there was some smaller unit $u'>1$ with $u=(u')^k$ for some $k>1$. Then by Problem~5.35d, we would have
+    \[
+        (u')^3 > \frac{|\Delta_{\Q[\alpha]}| - 27}{4} = 324\implies u'> 6.87
+    .\]   
+    However since $u=(u')^k$, we know that $u' \leq \sqrt{u} < 4$ which is a contradiction. So $u$ is the fundamental unit.  
+
+    \textbf{(c)} Note that $\alpha^2$ is a root of the monic polynomial $f(x)=x^3-9$, and $f(2)=-1$ so by (a), $\alpha^2-2$ is a unit. As in (b), consider
+    \[
+        u=\frac{1}{\alpha^2-2}=\frac{\alpha^6-2^3}{\alpha^2-2} = \alpha^4 + 2\alpha^2+4 = \boxed{2\alpha^2+3\alpha+4}
+    .\]   
+    Again, using the same argument as in (b), if there were a smaller unit $u'>1$ with $u=(u')^k$ for some $k>1$, we would have
+    \[
+        (u')^3 > \frac{|\Delta_{\Q[\alpha]}| - 27}{4} = 54 \implies u' > 3.77
+    .\]  
+    Yet $u' \leq \sqrt{u} < 3.54$ so we have a contradiction, and so $u$ is the fundamental unit.
+\end{solution}
+
+\begin{cproblem}{5.38}\noindent
+    \begin{enumerate}[(a)]
+        \item Show that $x^3+x-3$ has only one real root $\alpha$, and $\alpha > 1.2$.
+        \item Using Problem~2.28, show that $\disc(\alpha)$ is squarefree; conclude that it is equal to $\Delta_{\Q[\alpha]}$.
+        \item Find the fundamental unit in $\mathcal{O}_{\Q[\alpha]}$.
+    \end{enumerate}    
+\end{cproblem}
+% Assume 2.28
+
+\begin{solution}
+    \textbf{(a)} If $f(x)=x^3+x-3$ then $f'(x)=3x^2+1$, which is always positive, meaning $f(x)$ is strictly increasing. So $f(x)$ intersects the line $y=0$ only once, corresponding to only one real root $\alpha$ of $f(x)$. Note that $f(1.2)=-0.072$ so $\alpha>1.2$. To get an every better bound, note that $f(1.3)=0.497$ so $1.2<\alpha<1.3$.
+    
+    \textbf{(b)} By Problem~2.28c, we have $\disc(\alpha)=-(4\cdot 1^3+27\cdot(-3)^2)=-247$, which is squarefree since $247=13\cdot 19$. Then by Problem~2.40a it follows that because $\disc(\alpha)$ is squarefree, then $\disc(\alpha)=\Delta_{\Q[\alpha]}$.  
+    
+    \textbf{(c)} Notice that $f(1)=-1$, so by Problem~5.37a, it follows that $\alpha-1$ is a unit. This isn't the fundamental unit since by (a), $0.2<\alpha<0.3$. So consider the unit
+    \[
+        u=\frac{1}{\alpha-1} = \frac{(\alpha^3+\alpha-3)-(1^3+1-3)}{\alpha-1} = \frac{(\alpha^3-1)+(\alpha-1)}{\alpha-1} = \boxed{\alpha^2+\alpha+2}
+    .\]
+    Again, using the bound from (a), we get $4.64 < u < 4.99$. If there were another unit $u'>1$ with $u=(u')^k$, then by Problem~5.35d we would have
+    \[
+        (u')^3>\frac{|\Delta_{\Q[\alpha]}| - 27}{4}=61.5\implies u' > 3.94
+    .\] 
+    However this is a contradiction because $u'\leq \sqrt{u}$ and $2.15 < \sqrt{u}<2.24$. So $u$ is the fundamental unit.
+\end{solution}
+
+\begin{cproblem}{5.39}
+    Let $\alpha^3=2\alpha+3$. Verify that $\alpha<1.9$ and find the fundamental unit in $\mathcal{O}_{\Q[\alpha]}$.
+\end{cproblem}
+
+\begin{solution}
+    Notice that $\alpha$ is a real root of the polynomial $f(x)=x^3-2x-3$. A simple argument involving derivatives shows that this has only one real root, so $\alpha$ is uniquely defined, and $\Q[\alpha]$ has only one real embedding so we can use Problem~5.35 later. This argument also gives a simple bound $1.8<\alpha<1.9$. Notice that $f(2)=1$ so by Problem~5.37a we know that $\alpha-2$ is a unit. Then we have a unit 
+    \[
+        u = \frac{1}{2-\alpha}=\frac{f(2)-f(\alpha)}{2-\alpha}=\frac{(2^3-\alpha^3)-2(2-\alpha)}{2-\alpha} =\boxed{\alpha^2+2\alpha+2}
+    .\] 
+    We claim this is the fundamental unit, if $u'>1$ is another unit with $u=(u')^k$, then by Problem~5.35d and Problem~2.28 we have
+    \[
+        (u')^3>\frac{|\Delta_{\Q[\alpha]}| - 27}{4} = \frac{|-(4\cdot (-2)^3 + 27\cdot (-3)^3)| - 27}{4} = 46\implies u'>3.58
+    .\]  
+    On the other hand, we have $u'<\sqrt{u}$ yet $\sqrt{u}< 3.07$, a contradiction. So $u$ is the fundamental unit.
+\end{solution}
+
+\end{document}

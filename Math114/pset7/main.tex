@@ -1,0 +1,204 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[all]{tengwarscript}
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 7}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $f$ be a function on the circle. For each $N \geq 1$ the discrete Fourier coefficients of $f$ are defined by
+\[
+a_N(n) = \frac1N\sum_{k=1}^N f(e^{2\pi i k/N})e^{-2\pi i kn/N},\quad\text{for}\;n\in \Z.
+\]
+\end{problem}
+
+\begin{solution}
+   \quad Let
+\[
+a(n) = \int_0^1f(e^{2\pi i x})e^{-2\pi i nx}dx
+\]
+denote the ordinary Fourier coefficients of $f$.
+    \begin{partproblem}{a}
+        Show that $a_N(n)=a_N(n+N)$.
+    \end{partproblem}
+    
+    \quad This follows since for any $k$ we have $e^{-2\pi i k(n+N) /N} = e^{-2\pi ikn N}$.
+
+    \begin{partproblem}{b}
+        Prove that if $f$ is continuous, then $a_N(n) \to a(n)$ as $N \to \infty$.
+    \end{partproblem}
+
+    \quad This follows since $a_N(n)$ is a partial Reimann sum of a continuous function, thus we have $\lim_{N\to \infty} a_N(n) = a(n)$.
+\end{solution}
+
+\begin{problem}
+    If $f$ is a $C^1$ function on the circle, prove that $|a_N(n)| \leq c/|n|$ when $0 < |n| \leq N/2$.%\smallskip
+% \noin [Hint: Write
+% \[
+% a_N(n)[1-e^{2\pi i \ell n/N}] = \frac{1}{N}\sum_{k=1}^N[f(e^{2\pi i k/N})-f(e^{2\pi i(k+\ell)/N})]e^{-2\pi i kn/N},
+% \]
+% and choose $\ell$ so that $\ell n/N$ is nearly $1/2$.]
+\end{problem}
+
+\begin{solution}
+    \quad For any $\ell \in \Z$, we have 
+    \[
+        \begin{aligned}
+            a_N(n)e^{2\pi i \ell n /N} &= \frac1N\sum_{k=1}^N f(e^{2\pi i k/N})e^{-2\pi i (k-\ell)n/N}=\frac1N\sum_{k=1-\ell}^{N-\ell}f(e^{2\pi i (k+\ell)/N})e^{-2\pi ikn/N} \\&= \frac1N\sum_{k=1}^Nf(e^{2\pi i (k+\ell)/N})e^{-2\pi i kn/N}.
+        \end{aligned}
+    \]
+    The identity given in the hint follows immediately. Since $f(e^{2\pi i x})$ is periodic, its derivative must have a maximum $M$, and thus $|f(e^{2\pi i x})-f(e^{2\pi i y})| \leq M|x-y|$ for all $x,y$ combining this with out identity, we get
+    \[
+        \begin{aligned}
+            |a_N(n)||1-e^{2\pi i \ell n/N}| &\leq \frac{1}{N}\sum_{k=1}^N|f(e^{2\pi i k/N})-f(e^{2\pi i(k+\ell)/N})||e^{-2\pi i kn/N}| \\
+&\leq \frac{1}{N}\sum_{k=1}^NM\Bigl|\frac{k}{N}-\frac{k+\ell}{N}\Bigr| = \frac{M|\ell|}{N}
+        \end{aligned}
+    \] 
+for all integers $\ell$. Now setting $\ell$ such that $|\ell-N /2n| \leq 1 /2$ gives $1 /4 \leq \ell n / N\leq 3 / 4$. Thus, 
+\[
+\sqrt{2}|a_N(n)| \leq |a_N(n)||1-e^{2\pi i \ell n/N}| \leq \frac{3M}{4|n|}.
+\]
+Letting $c = 3M/(4\sqrt{2})$, we get $|a_N(n)| \leq c/|n|$ for $0 < |n| \leq N/2$.
+\end{solution}
+
+\begin{problem}
+    By a similar method, show that if $f$ is a $C^2$ function on the circle, then
+\[
+|a_N(n)| \leq c/|n|^2,\quad\text{whenever}\;0<|n| \leq N/2.
+\]
+\end{problem}
+\begin{solution}
+    \quad Let $g(x)=f(e^{2\pi i x / N})$. Applying Taylor's theorem, we get get 
+    \[
+        g(k+\ell) = g(k)+g'(k)\ell+\frac{g''(C_\ell)}{2}\ell^2, \quad C_\ell \in [k, k + \ell]
+    .\] 
+    This implies that
+    \[
+        g(k+\ell)+g(k-\ell) - 2g(k) = \frac{g''(C_\ell)+g''(C_{-\ell})}{2}\ell^2
+    .\] 
+    Just like the previous problem, we use the fact that functions on compact spaces achieve their extrema, so let $M = \max(\sup_{x\in \R}|f'(e^{2\pi i x})|, \sup_{x\in \R}|f''(e^{2\pi i x})|)$. Applying the chain rule to $g$, we get
+    \[
+        g''(x)=-\frac{4\pi^2}{N^2}e^{2\pi i x / N}\left(f'(e^{2\pi i x / N}) + e^{2\pi i x / N} f''(e^{2\pi i x / N})\right) \implies |g''(x)| \leq \frac{8M\pi^2}{N^2}
+    .\] 
+    This in turn implies that
+    \[
+    |g(k+\ell)+g(k-\ell)-2g(k)| \leq \frac{8M\pi^2\ell^2}{N^2}
+    \]
+    Using the expression for $a_N(n)e^{2\pi i \ell n/N}$ from the previous problem, we have
+\[
+    \begin{aligned}
+a_N(n)(e^{2\pi i \ell n/N}+e^{-2\pi i \ell n/N}-2) &= \frac1N\sum_{k=1}^N [g(k+\ell)+g(k-\ell)-2g(k)]e^{2\pi i kn/N}\\
+&\implies |a_N(n)||e^{2\pi i \ell n/N}+e^{-2\pi i \ell n/N}-2| \leq \frac{8M\pi^2\ell^2}{N^2}.
+    \end{aligned}
+\]
+Let $\ell \in \Z$ be such that $1/4 \leq \ell n/N \leq 3/4$ so that we have $\ell^2/N^2 \leq 9/(16n^2)$. Then
+\[
+    \begin{aligned}
+    |e^{2\pi i \ell n/N}+e^{-2\pi i \ell n/N}-2| &= |(e^{\pi i \ell n/N}-e^{-\pi i \ell n/N})^2| = 4\sin^2(\pi \ell n/N) \geq 2\\
+    &\implies 2|a_N(n)| \leq |a_N(n)||e^{2\pi i \ell n/N}+e^{-2\pi i \ell n/N}-2| \leq \frac{9M\pi^2}{2n^2}.
+    \end{aligned}
+\]
+So if we let $c=9M\pi^2/4$, we have $|a_N(n)| \leq c/n^2$ whenever $0 < |n| \leq N/2$. 
+
+\begin{partproblem}{Inversion formula}
+    As a result, prove the inversion formula for $f \in C^2$,
+    \[
+    f(e^{2\pi ix}) = \sum_{m=-\infty}^\infty a(n)e^{2\pi i nx}
+    \]
+    from its finite version.
+\end{partproblem}
+
+\quad Let $N$ be odd and. Then for any $1 \leq k \leq N$ we have
+\[
+    \begin{aligned}
+        \sum_{|n| < N/2}a_N(n)e^{2\pi i kn/N} &= \frac1N\sum_{|n| < N/2} \sum_{j=1}^N f(e^{2\pi i j/N})e^{2\pi i (k-j)n/N} \\
+        &= \frac{1}{N}\sum_{j=1}^Nf(e^{2\pi i j/N})\sum_{|n| < N/2}e^{2\pi i (k-j)n/N}\\
+        & = f(e^{2pi i k / N}).
+    \end{aligned}
+\] 
+Now let $x\in [0,1]$. There exists a sequence of integers $1 \leq k_N \leq N$ such that $k_N/N \to x$ as $N \to \infty$ so by the continuity of $f(e^{2\pi i x})$, we get
+\[
+f(e^{2\pi i x}) = \lim_{N \to \infty} f(e^{2\pi i k_N/N}) = \lim_{N \to \infty, N\text{ odd}} \sum_{|n| < N/2} a_N(n)e^{2\pi i k_Nn/N},\vspace{-4pt}
+\]
+Since $|a_N(n)e^{2\pi i k_Nn/N}| = |a_N(n)| \leq c/n^2$ for all $0 < |n| \leq N/2$, and $\sum_{n \in \Z-\{0\}} c/n^2 < \infty$, dominated convergence implies that
+\[
+f(e^{2\pi i x}) = \lim_{N \to \infty} a_N(0) + \sum_{n \in \Z-\{0\}} \lim_{N \to \infty} a_N(n)e^{2\pi i k_Nn/N} = \sum_{n=-\infty}^\infty a(n)e^{2\pi i nx}
+\]
+as desired.
+\end{solution}
+
+\begin{problem}
+    Suppose $w$ is a measurable function on $\R^d$ with $0 < w(x) < \infty$ for a.e.\ $x$, and $K$ is a measurable function on $\R^{2d}$ that satisfies:
+\begin{enumerate}[label=(\roman*)]
+    \item $\int_{\R^d} |K(x,y)|w(y)dy \leq Aw(x)$ for almost every $x\in \R^d$, and
+    \item $\int_{\R^d} |K(x,y)|w(x)dx \leq Aw(y)$ for almost every $y\in \R^d$.
+\end{enumerate}
+Prove that the integral operator defined by
+\[
+Tf(x) = \int_{\R^d}K(x,y)f(y)dy,\quad x \in \R^d
+\]
+is bounded on $L^2(\R^d)$ with $\|T\|\leq A$.
+
+Note as a special case that if $\int |K(x,y)|dy \leq A$ for all $x$, and $\int |K(x,y)|dx \leq A$ for all $y$, then $\|T\| \leq A$.
+\end{problem}
+\begin{solution}
+\quad We can rewrite $|K(x,y)||f(y)|$ as
+\[
+    |K(x,y)||f(y)| = \left(|K(x,y)|^{1 /2} w(y)^{1 /2}\right)\cdot \left(|K(x,y)|^{1/2}w(y)^{- 1/2}|f(y)|\right)
+.\] 
+Applying Cauchy-Schwarz to $\int_{\R^d} |K(x,y)|w(y)\; dy \leq A w(x)$ a.e, we get
+\[
+    \int |K(x,y)||f(y)|dy \leq A^{1/2}w(x)^{1/2}\left[\int |K(x,y)||f(y)|^2w(y)^{-1}dy\right]^{1/2}
+.\] 
+Integrating both sides by Tonelli's theorem we get
+\[
+    \int\left(\int |K(x,y)||f(y)|dy\right)^2dx \leq A\int |f(y)|^2w(y)^{-1}\left(\int|K(x,y)|w(x)dx\right)dy
+.\] 
+Now let's apply $\int_{\R^d} |K(x,y)|w(x)\;dx \leq Aw(y)$ a.e to get:
+\[
+    \int\left(\int |K(x,y)||f(y)|dy\right)^2dx \leq A^2\int |f(y)|^2 dy < \infty
+\]  
+since $f\in L^2(\R^d)$. This implies $K(x,y)f(y)\in L^1(\R^d)$ for almost all $x$. This also implies $\|T(f)\|_2 \leq A\|f\|_2$, so $T$ is a bounded linear operator with $\|T\|\leq A$.
+\end{solution}
+
+\begin{problem}
+    Consider the operator $T: L^2([0,1]) \to L^2([0,1])$ defined by
+\[
+T(f)(t)=tf(t).
+\]
+\end{problem}
+\begin{solution}
+    Compact operators:
+    \begin{partproblem}{a}
+        Prove that $T$ is a bounded linear operator with $T=T^*$, but that $T$ is not compact.
+    \end{partproblem}
+
+    \quad Since $\{t\in [0,1]\}^2 = [0,1]$, we have $\|Tf\|_2 = t\|f\|_2$. Thus $T$ is a bounded linear operator. To prove it isn't compact, note that for any $f,g\in L^2([0,1])$ we have
+    \[
+        \big\langle Tf, g \big\rangle = \int_0^1 tf(t)\overline{g(t)}\;dt = \int_0^1 f(t)\overline{tg(t)}\;dt = \big\langle f, Tg \big\rangle \implies T = T^*
+    .\] 
+    Thus if $T$ were compact, it would be a bounded linear Hermitian operator so it would have eigenvalues.
+
+    \quad Note that because $0 \leq t^2 \leq 1$ for all $t \in [0,1]$,
+    \[
+    \|Tf\|_2 = \left(\int_0^1 |tf(t)|^2dt\right)^{1/2} \leq \|f\|_2.
+    \]
+    It follows that $T$ is well-defined and bounded (in particular, $\|T\| \leq 1$). Linearity is trivial. Now let $f,g \in L^2([0,1])$. Then
+    \[
+    \langle Tf,g \rangle = \int_0^1 tf(t)\overline{g(t)}dt = \int_0^1 f(t)\overline{tg(t)}dt = \langle f, Tg \rangle.
+    \]
+    Thus, $T = T^*$. The fact that $T$ is not compact now follows from (b) because if $T$ were compact, then by virtue of being a bounded linear and symmetric/Hermitian operator, $\|T\|$ or $-\|T\|$ would be an eigenvalue.
+
+    \begin{partproblem}{b}
+        However, show that $T$ has no eigenvectors.
+    \end{partproblem}
+
+    \quad Suppose for the sake of contradiction that $\lambda\in \C$ is an eigenvalue with eigenvector some $f\in L^2([0,1])$ which isn't zero almost everywhere. Then we have $\{tf = \lambda f\} = \{t = \lambda\}\cup \{f = 0\}$. Since $m(\{t = \lambda\}) = 0$ and $m(\{f = 0\}) < 1$, we have a contradiction since $Tf = \lambda f$ a.e.
+\end{solution}
+
+\end{document}

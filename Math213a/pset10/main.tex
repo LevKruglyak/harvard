@@ -1,0 +1,219 @@
+% 3, 4, 6, 8, 9, 12. 
+
+\documentclass{pset}
+
+\title{Math 213a Problem Set 10}
+\due{November 21, 2023}
+\author{Lev Kruglyak}
+
+\input{../213a.tex}
+
+\collaborator{Quinn Brussel}
+\collaborator{Leo Kaplan}
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{5.3}
+  Let $\Lambda\subset \C$ be a lattice, let $X=\C/\Lambda$ and let
+  \[\End(\Lambda) = \{\alpha\in \C : \alpha\Lambda \subset \Lambda\}.\]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that for each $\alpha\in\End(\Lambda)$, the formula $[f(z)]=[\alpha z]$ defines an analytic covering map $f : X \to X$ of degree $|\alpha|^2$.
+  \end{part}
+
+  If $\alpha\in \End(\Lambda)$ is some lattice endomorphism, let's consider the linear transformation corresponding to multiplication by $\alpha$. This transformation has determinant $|\alpha|^2$, and since $\alpha\Lambda \subset \Lambda$, this transformation gives a well-defined analytic map $X \to X$. Since it's a linear map, it is a local diffeomorphism $\C \to \C$ with nonzero derivative, and hence passes to a covering map $X \to X$ under the quotient map $\C \to X$. This has degree $|\alpha|^2$ because $|\Lambda / \alpha\Lambda|=|\alpha|^2$, and so we've also indirectly proved that $|\alpha|^2\in \Z$.
+
+  \begin{part}{b}
+    For what values of $\alpha\in \C$ does there exist a lattice with $\alpha\in \End(\Lambda)$?
+  \end{part}
+
+  We can assume without loss of generality that $\Lambda = \Z \oplus \Z\tau$ is some normalization of the lattice. Clearly, $\End(\Lambda)\cap \R = \Z$. Now let's assume that $\alpha\in \End(\Lambda)$. Then $\alpha\cdot 1=a+b\tau\in \Lambda$ for integer $a,b$ with $b\neq 0$. It follows that $\alpha-a$ is a nonzero automorphism of $\Lambda$, so we get
+  \[
+      b\tau^2 = (\alpha - a)\tau = c+d\tau \quad \implies \quad (\alpha - a)^2- d(\alpha-a)-bc
+  \]
+  This means that $\alpha$ is the root of a monic quadratic integral polynomial, and conversely, any root $x$ of a monic quadratic integral polynomial $x^2+bx+c=0$ must be an endomorphism of $\Z\oplus \Z x$ as well since $x^2\in \Z\oplus \Z x$. Thus, the criteria for $\alpha\in \C$ is being a root of a monic quadratic integral polynomial, or $\alpha\in \Z$.
+
+  \begin{part}{c}
+    Conclude that $\End(\Z \oplus \Z\tau)=\Z$ for almost all values of $\tau$.
+  \end{part}
+  Note that there are a countable number of monic polynomials with integer coefficients, and uncountably many $\tau\in \H$. Thus, for almost all value of $\tau$, we have $\End(\Z\oplus \Z\tau)= \Z$.
+\end{parts}
+
+\begin{problem}{5.4}
+  In this problem, we will understand the zeroes of some canonical lattices.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    What are the zeroes of the $\wp$-function for the lattice $\Lambda=\Z\oplus \Z i$?
+  \end{part}
+
+  Suppose $z\in E$ were some zero of $\wp(z)$. Then, plugging this into the differential equation for $\wp(z)$, we get the condition
+  \[
+    \wp'(z)^2 = -g_3.
+  \]
+  We proved on a previous problem set that $g_3=0$ for this lattice, so the zeroes of $\wp(z)$ must occur at critical points. In general, the critical points of $\wp$ for the lattice $\Z\alpha\oplus\Z\beta$ are $\alpha/2, \beta/2,$ and $(\alpha+\beta)/2$. Thus, in this case the critical values of $\wp$ are $1/2, i/2,$ and $(1+i)/2$. To figure out which of these is the zero, let's prove a lemma.
+
+  \begin{claim}
+    For any $z\in E$, we have $\wp(iz) = -\wp(z)$.
+  \end{claim}
+  \begin{proof}
+    Expanding the definition of $\wp$, we get
+    \[
+      \wp(iz) = \frac{1}{(iz)^2}+\sum_{\lambda\in \Lambda -\{0\}}\left(\frac{1}{(iz-\lambda)^2}-\frac{1}{\lambda^2}\right) 
+      = \frac{1}{i^2}\left(\frac{1}{z^2}+\sum_{\lambda\in \Lambda -\{0\}}\left(\frac{1}{(z-\lambda)^2}-\frac{1}{\lambda^2}\right)\right) = - \wp(z),
+    \]
+    where the second equality follows since $i\Lambda = \Lambda$.
+  \end{proof}
+
+  Now we see that
+  \[
+    \wp\left(\frac{1+i}{2}\right) = -\wp\left(\frac{i-1}{2}\right) = \wp\left(\frac{i+1}{2}\right) \quad\implies \quad \wp\left(\frac{i+1}{2}\right)=0.
+  \]
+  Since this zero occurs at a critical point, it must be a double zero, and hence the only zero on the lattice. Thus, the full set of zeroes is:
+  \[
+    \mathcal{Z}(\wp) = \left(\frac{1+i}{2}\right) + \Lambda.
+  \]
+
+  \begin{part}{b}
+    What are the zeroes of the $\wp$-function for the lattice $\Lambda=\Z\oplus \Z \omega$?
+  \end{part}
+
+  For this lattice, we can't do a similar trick with the critical points, and we'll actually get two distinct zeroes. First, note that we have a similar identity to the previous problem.
+
+  \begin{claim}
+    For any $z\in E$, we have $\wp(\omega z) = \omega\wp(z)$.
+  \end{claim}
+  \begin{proof}
+    Expanding the definition of $\wp$, we get
+    \[
+      \wp(\omega z) = \frac{1}{(\omega z)^2}+\sum_{\lambda\in \Lambda -\{0\}}\left(\frac{1}{(\omega z-\lambda)^2}-\frac{1}{\lambda^2}\right) 
+      = \frac{1}{\omega^2}\left(\frac{1}{z^2}+\sum_{\lambda\in \Lambda -\{0\}}\left(\frac{1}{(z-\lambda)^2}-\frac{1}{\lambda^2}\right)\right) =\omega\wp(z),
+    \]
+    where, as before, $\omega \Lambda = \Lambda$ and so the second equality follows.
+  \end{proof}
+
+  Now to solve for the zeroes, we would want $\omega z \equiv z\mod \Lambda$, then $\omega \wp(z) = \wp(\omega z) = \wp(z)$ and so $\wp(z)=0$. This is equivalent to solving $(\omega - 1)z\equiv 0 \mod \Lambda$. The canonical solutions to this on the period parallelogram are $(\omega+2)/3, (2\omega + 1)/3$. Thus, the full set of zeroes is:
+  \[
+    \mathcal{Z}(\wp) = \left\{\frac{\omega+2}{3}, \frac{2\omega+1}{3}\right\} + \Lambda.
+  \]
+\end{parts}
+
+\begin{problem}{5.6}
+  Prove that there exists a pair of nonconstant meromorphic functions on $\C$ such that $f(z)^3+g(z)^3=1$. % Hint: show that x^3+y^3=1 defines the same elliptic curve in P^2 as y^2=4x^3-1
+\end{problem}
+
+\begin{solution}
+  We suspect that the answer might involve the $\wp$-function. To keep things simple, let's consider the hexagonal lattice $\Lambda = \Z \oplus \omega \Z$, where $g_2=0$ and so the differential equation becomes
+  \[
+    \wp'(z)^2 = 4\wp(z)^3 - g_3.
+  \]
+  We can scale the lattice by $\lambda = g_3^{1/6}$ so that $g_3$ is normalized to $1$. Now consider the functions
+  \[
+    f(z) = \frac{\alpha - \beta \wp'(z)}{\wp(z)}, \quad g(z)=\frac{\alpha + \beta\wp'(z)}{\wp(z)}.
+  \]
+  The sum of their cubes is then
+  \[
+    f(z)^3 + g(z)^3 = \frac{2\alpha^3 + 6\alpha\beta^2 \wp'(z)^2}{\wp(z)^3} = \frac{4(2\alpha^3 + 6\alpha\beta^2\wp'(z)^2)}{\wp'(z)^2 + 1}
+  \]
+  For this to be equal to $1$, we want $8\alpha^3 = 1$ and $24\alpha\beta^2 = 1$. This means that $\alpha = 1/2$ and $\beta = \sqrt{3}/6$.
+\end{solution}
+
+\begin{problem}{5.8}
+  Given $\tau\in \H$ let $\wp(z)$ be the Weierstrass $\wp$-function for the lattice $\Lambda = \Z\oplus \Z\tau$, and let 
+  \[
+    f(z) = \sum_{n\in \Z}\frac{\pi^2}{\sin^2(\pi(z-n\tau))}.
+  \]
+  Prove that $f(z)=\wp(z) + C$, and express the constant $C$ in terms of the function $G_1(\tau)$.
+\end{problem}
+
+\begin{solution}
+  To begin with, we note that there is an expansion of $\pi^2/\sin^2(\pi z)$ as an infinite sum:
+  \[
+    \frac{\pi^2}{\sin^2(\pi z)} = \sum_{n\in \Z}\frac{1}{(z-n)^2}.
+  \]
+  Let's now prove that the function in the problem statement converges. Since $f(z)$ is $1$-periodic, it suffices to consider convergence in the strip $S = \{0\leq \textrm{Re}(z) < 1\}$. Recall that we have the bound
+  \[
+    \sin(z)\geq \frac{2e^{\textrm{Im}(z)}}{e^{2\textrm{Im}(z)}-1},
+  \]
+  therefore we have the bound
+  \[
+    \frac{\pi^2}{\sin^2(\pi z)} \leq \frac{\pi^2}{4}\left(e^{2\pi \textrm{Im}(z)} + e^{-2\pi \textrm{Im}(z)} - 2\right).
+  \]
+  Since $\textrm{Im}(z-n\tau)=\textrm{Im}(z)-n\textrm{Im}(\tau)$ for all $n \in \Z$, it's clear that the sum converges since $\textrm{Im}(\tau)>0$, so we get an exponential falloff.
+
+  Thus, we can expand $\wp(z)$ as 
+  \[
+    \begin{aligned}
+      \wp(z) = \frac{1}{z^2}+\sum_{\lambda\in \Lambda-\{0\}}\left(\frac{1}{(z-\lambda)^2}-\frac{1}{\lambda}\right) 
+      &= \sum_{n\in \Z}\sum_{m\in \Z}\left(\frac{1}{(z-m-n\tau)^2}-\frac{1}{(m+n\tau)^2}\right)\\
+      &= \sum_{n\in \Z}\left(\frac{\pi^2}{\sin^2(\pi (z-n\tau))} - \sum_{m\in \Z}\frac{1}{(m+n\tau)^2}\right)\\
+      &= f(z) - \sum_{n\in \Z}\sum_{m\in \Z}\frac{1}{(m+n\tau)^2} = f(z) - G_1(\tau)
+    \end{aligned}
+  \]
+  (For brevity, we omit the limits in the sums which remove the $1/0$ terms). Here the first equality follows from absolute convergence, and the further decompositions are allowed because every series converges after we split it term-wise. Overall, this means that $f(z)=\wp(z)+G_1(\tau)$, where $G_1(\tau)$ is the quasimodular correcting form.
+\end{solution}
+
+\begin{problem}{5.9}
+  Let $\RP^2$ be the real projective plane.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    What is the fundamental group of $\RP^2$?
+  \end{part}
+
+  Recall that we have a degree $2$ covering map $S^2 \to \RP^2$ which identifies antipodal points. Since this is a universal cover, we have
+  \[
+    \pi_1(\RP^2) \cong \textrm{Deck}(S^2/\RP^2) \cong \Z/2.
+  \]
+
+  \begin{part}{b}
+    Let $V\subset \RP^2$ be the closed cubic curve defined by $y^2 = x(x-1)(x+1)$ (including its unique point at infinity). Show that there is no topological disk $D^2$ such that 
+    \[
+      V \subset D^2 \subset \RP^2.
+    \]
+    Conclude that there is no automorphism $g$ of $\RP^2$ such that $g(V) \subset \R^2\subset \RP^2$.
+  \end{part}
+
+  It's clear that $V$ is homoeomorphic to a disjoint union of two circles, one nullhomotopic and one is homotopy equivalent to a generator for $\pi_1(\RP^2)$ (this is given by projection onto the $y$-axis). However, if they were both contained in a topological disk, then a deformation retract of the disk onto its center would give a null-homotopy of both loops, a contradiction. 
+
+  This also implies that there is no automorphism $g$ of $\RP^2$ with $g(V)\subset \R^2\subset \RP^2$; $g(V)$ would still be compact as a subset of $\RP^2$ and so bounded in $\R^2$. This would give a topological disk containing $g(V)$, which gives a contradiction, since we can look at the image of this disk under $g^{-1}$. We have a contradiction, since this disk contains $V$.
+\end{parts}
+
+\begin{problem}{5.12}
+  Let $\wp(z)$ be the Weierstrass $\wp$-function for $E = \C/\Lambda$, and consider the meromorphic $1$-form
+  \[
+    \omega = \frac{\wp(z)\wp''(z)}{\wp'(z)}\;dz
+  \]
+  on $E$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that $\Res_0(\omega)=0$.
+  \end{part}
+
+  We can compute the residue by looking at the Laurent series expansion of $\wp(z)\wp''(z)/\wp'(z)$. Recall that
+  \[
+    \frac{\wp(z)\wp''(z)}{\wp'(z)} = \frac{(z^{-2}+O(z))(6z^{-4}+O(1))}{-2z^{-3}+O(1)} =(z^{-2}+O(z))(6z^{-4}+O(1))O(z^3).
+  \]
+  It's clear that there is no $z^{-1}$ term in this expansion, so the residue of $\omega$ must be zero at $0$.
+  
+  \begin{part}{b}
+    Using the residue theorem, show that $e_1+e_2+e_3=0$, where $e_i = \wp(c_i)$ are the images of the nonzero points of order $2$ in the group $E$.
+  \end{part}
+
+  In $E$, the only poles of $\wp(z)$ and $\wp''(z)$ are at $z=0$, so $\omega$ has an additional three simple poles at the critical points of $\wp$, namely $c_i$. Thus, we have
+  \[
+    \Res_{c_i}(\omega)=\lim_{z\to c_i} \frac{\wp(z)\wp''(z-c_i)}{\wp'(z)} = \wp(c_i)=e_i.
+  \]
+  By the residue theorem, we have $\Res_0(\omega)+\Res_{c_1}(\omega)+\Res_{c_2}(\omega)+\Res_{c_3}(\omega)=0$, so it follows that $e_1+e_2+e_3=0$.
+\end{parts}
+
+\end{document}

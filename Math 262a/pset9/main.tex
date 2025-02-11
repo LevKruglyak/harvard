@@ -1,0 +1,113 @@
+\documentclass{pset}
+
+\title{Math 262a Problem Set 9}
+\author{Lev Kruglyak}
+\due{November 17, 2023}
+
+\input{../262a.tex}
+
+\providecommand{\Man}{\mathbf{Man}}
+\providecommand{\op}{\mathrm{op}}
+\providecommand{\Grp}{\mathbf{Grp}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Carefully define the groupoid double covers as a presheaf on the category of smooth manifolds and smooth maps. Formulate the local-to-global condition for this to be a sheaf and verify it. 
+\end{problem}
+
+\begin{solution}
+  Let $\Man$ be the category of smooth manifolds and $\Grp$ the category of (small) groupoids. A \emph{presheaf of groupoids} on $\Man$ is a functor $\mathscr{F} : \Man^\op \to \Grp$. Suppose we have some manifold $M\in \Man$. Let's define the \emph{groupoid of double covers} of $M$, which we'll denote $\mathscr{D}(M)$ as follows. The objects, $\mathscr{D}(M)_0$, are the set of covering maps $p : X \to M$ of degree $2$. Since double covers are principal $\Z/2$-bundles and vice versa, given two double covers $p_1 : X_1 \to M$ and $p_2 : X_2 \to M$, we say that a morphism is some $\Z/2$-equivariant map $\eta : X_1 \to X_2$ with $p_2\circ \eta = p_1$.
+
+  In particular, this means that for any double cover $X\in \mathscr{D}(M)$, the set of automorphisms $X$ is exactly the set of deck transformations:
+  \[
+    \Hom_{\mathscr{D}(M)}(X, X) = \textrm{Deck}(X).
+  \]
+  This is a presheaf because given some map $f : X \to Y$ of manifolds, we have a corresponding ``restriction'' map $\mathscr{D}(f) : Y \to X$ which pulls back $p : Y \to M$ to $p\circ f : X \to M$.
+
+  To show that this is a sheaf, we must formulate the gluing condition. We'll do this in the simple case where $M=U_1\cup U_2$. In this case, we claim that there is an equivalence of groupoids
+  \[
+    \mathscr{D}(M) \cong \mathscr{D}(U_1)\times_{\mathscr{D}(U_1\cap U_2)} \mathscr{D}(U_2),
+  \]
+  where the latter is the pullback in the category of groupoids. I proved this in the case of $M=S^1$ and $U_1, U_2$ the standard open cover by overlapping intervals, but the proof is a bit tedious to write up.
+
+  More generally, I conjecture that if $\{\mathcal{U}_\alpha\}_{\alpha\in A}$ is an open cover of $M$ which is closed under intersections, we can take a (homotopy) colimit of the poset category and get an equivalence 
+  \[
+    \mathscr{D}(M) \cong \textrm{colim}_{\alpha} \mathscr{D}(\mathcal{U}_\alpha).
+  \]
+  Defining this colimit is slightly tricky, and requires the use of simplicial sets and ideas from homotopy theory.
+\end{solution}
+
+\begin{problem}{2}
+  Let $\mathbb{M}^1$ be the standard $1$-dimensional Minkowski spacetime: for $c>0$ the speed of light, the affine line $\mathbb{A}^1_t$ with metric $c^2dt^2$. Consider the Klein-Gordon equation for mass $m>0$:
+  \[
+    \left(\frac{1}{c^2}\partial^2_t + \frac{c^2}{\hbar^2}m^2\right)\psi = 0,
+  \]
+  where $\psi : \mathbb{M}^1 \to \R$ is a real-valued function. What is the space $\mathcal{M}$ of global solutions? Compute the symplectic form
+  \[
+    \omega(\dot{\psi_1}, \dot{\psi_2}) = \star d \dot{\psi_1}\cdot \dot{\psi_2} - \star d\dot{\psi_2}\cdot \dot{\psi_1}
+  \]
+  evaluated at some point $t\in \mathbb{M}^1$, where $\dot{\psi_1}, \dot{\psi_2}$ are tangents to $\mathcal{M}$. Prove that the form is independent of $t$. What happens under Fourier transform?
+\end{problem}
+
+\begin{solution}
+  In this simplified context, the Klein-Gordon equation can be rewritten as
+  \[
+    \ddot{\psi} = -\omega^2 \psi,\quad \textrm{where}\quad \omega=\frac{mc^2}{\hbar}.
+  \]
+  This is a standard wave equation with solutions $\psi(t) = \alpha e^{-i\omega t} + \overline{\alpha} e^{i\omega t}$ for some $\alpha \in \C$, with the conjugacy condition imposed by the fact that $\psi$ being a real-valued function. This solution space $\mathcal{M}$ is then diffeomorphic to $\C$ given some choice of time $t\in \mathcal{M}^1$.
+
+  To understand the symplectic form, we take a step back and first derive it from the Lagrangian formulation. In our case, the Lagrangian for this system is 
+  \[
+    L = \frac{1}{2}\left\{|d\psi|^2 - \frac{m^2 c^2}{\hbar^2}\psi^2\right\}|d^n x| = \frac{1}{2}\left(\frac{1}{c^2}\dot{\psi}^2 - \frac{m^2 c^2}{\hbar^2}\psi^2\right) |dt|
+  \]
+  Then letting $\delta$ be the differential along $\mathcal{M}$, we have
+  \[
+    \delta L = \left(\frac{1}{c^2}\dot{\psi}\,\delta \dot{\psi} - \frac{m^2 c^2}{\hbar^2}\psi\,\delta\psi\right) |dt|
+  \]
+  The variational $1$-form $\gamma$ is them $\gamma = \dot{\psi}\,\delta\psi/c^2$, so we get
+  \[
+    \delta L + d\gamma = -\left(\frac{1}{c^2}\ddot{\psi} + \frac{m^2 c^2}{\hbar^2}\psi\right) \delta\psi\, |dt| = -\left(\square + \frac{m^2 c^2}{\hbar^2}\right)\psi\, \delta\psi\,|dt|,
+  \]
+  a form whose vanishing defines $\mathcal{M}$ by the Klein-Gordon equation. The symplectic form on $\mathcal{M}$ is then $\omega = \delta\psi\wedge \delta\dot{\psi}/c^2$. More generally, this symplectic form is given by $\omega = (\star d\delta \psi)\wedge \delta\psi$, and when evaluated on infinitesimal variation tangents $\nu_1,\nu_2$ we get
+  \[
+    \omega(\nu_1, \nu_2) = \star d\nu_1 \cdot \nu_2 - \star d\nu_2 \cdot \nu_1
+  \]
+  which is exactly the form given in the problem statement. As in the case of the classical mechanical particle, $\omega$ is actually a $(2,0)$-form in $\Omega^{2,0}(\mathcal{M}\times \R)$ form which restricts to some form $\omega_t \in \Omega^2(\mathcal{M})$ for a given time $t\in \R$. The proof that $\omega_{t_1} = \omega_{t_2}$ is the same proof we gave for the classical mechanical case using fiber integration.
+
+  Now let's see what happens under the Fourier transform. Since $\mathbb{M}^1$ is an affine space, let's pick some time $t_0$ which turns $\mathbb{M}^1$ into a 1-dimensional real vector space. Taking the Fourier transform of $\psi$, we get
+  \[
+    \widehat{\psi}(\theta) = \frac{1}{\sqrt{2\pi}}\int_\R \psi(\xi)\cdot e^{i\theta(\xi) / \hbar} \,d\xi
+  \]
+  This is a function $\widehat{\psi} : \R^* \to \C$. We can also take the inverse Fourier transform to recover $\psi$, namely
+  \[
+    \psi(\xi) = \frac{1}{\sqrt{2\pi}}\int_{\R^*} \widehat{\psi}(\xi)\cdot e^{-i\theta(\xi)/\hbar}\, d\theta
+  \]
+  Plugging this into the Klein-Gordon equation,
+  \[
+    \begin{aligned}
+      \frac{\partial^2\psi(\xi)}{\partial \xi^2}&= - \frac{m^2c^4}{\hbar^2}\psi(\xi))\\
+      \frac{1}{\sqrt{2\pi}}\int_{\R^*}\left(\frac{-i|\theta|}{\hbar}\right)^2\widehat{\psi}(\xi)\cdot e^{-i\theta(\xi)/\hbar}\,d\theta &= \frac{1}{\sqrt{2\pi}}\int_{\R^*}\widehat{\psi}(\xi)\cdot e^{-i\theta(\xi)/\hbar}\,d\theta\\
+    \end{aligned}
+  \]
+  This gives us a ``Klein-Gordon'' equation for the dual space $L^2(\R^*; \C)$ where the Fourier transform lives:
+  \[
+    \left(-\frac{|\theta|^2}{\hbar^2} + \frac{m^2 c^4}{\hbar^2}\right)\widehat{\psi}(\theta) = 0
+  \]
+  In particular this shows that $(|\theta|^2-m^2c^4)\widehat{\psi}(\theta)=0$, so when $\theta\not\in \mathcal{O}_m\cup -\mathcal{O}_m$, we must have $\widehat{\psi}(\theta)=0$. 
+
+  However, since $\psi$ is real-valued, we have
+  \[\widehat{\psi}(-\theta)=\frac{1}{\sqrt{2\pi}}\int_{\R}\overline{\psi(\xi)\cdot e^{i\theta(\xi)/\hbar}}\,d\theta = \overline{\widehat{\psi}(\theta)},\] 
+  so the values of $\widehat{\psi}$ on $\mathcal{O}_m$ determine the whole Fourier transform. In our 1-dimensional case, $\mathcal{O}_m = \{ mc^2\,dt \}$ consists of a single functional. The entire field is then determined by $\widehat{\psi}(mc^2\,dt)$. Suppose $\alpha\in \C$ is any complex number, and set 
+  \[
+    \widehat{\psi_\alpha}(\theta) = \begin{cases} \alpha & |\theta| = mc^2,\\ \overline{\alpha} & |\theta|=-mc^2,\\ 0 &\textrm{otherwise}.\end{cases}
+  \]
+  Applying the inverse Fourier transform to this, we get
+  \[
+    \psi_\alpha(\xi) = \frac{1}{\sqrt{2\pi}}\int_{\R^*} e^{-i \theta(\xi) / \hbar}\widehat{\psi_\alpha}(\theta)\,d\theta = \frac{1}{\sqrt{2\pi}}\left(\alpha e^{-imc^2\xi/\hbar} + \overline{\alpha}e^{imc^2\xi/\hbar}\right) = \frac{\alpha}{\sqrt{2\pi}}e^{-i\omega \xi} + \frac{\overline{\alpha}}{\sqrt{2\pi}} e^{i\omega \xi}.
+  \]
+  Up to a scale factor of $1/\sqrt{2\pi}$, this is the exact solution set we derived in the first part of the problem, and shows that there is another canonical identification of $\mathcal{M}$ with $\C$ given by $\psi \mapsto \widehat{\psi}(mc^2\,dt)$.
+\end{solution}
+
+\end{document}

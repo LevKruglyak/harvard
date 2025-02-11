@@ -1,0 +1,88 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 137 Problem Set 9}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with Ignasi Segura Vicente on this problem set.}
+\end{center}
+
+Throughout, $K$ is assumed to be an algebraically closed field.
+
+\begin{problem}[bonus]
+    Let $n\geq2$ and let $F_d\cong K^{\binom{n+d}{n}}$ be the vector space of polynomials $f\in K[X_1,\dots,X_n]$ of degree $\leq d$.
+    \begin{enumerate}[label=\alph*)]
+        \item If $d>2n-3$, show that there is a nonempty Zariski open subset $U\subseteq F_d$ such that the set $\mathcal V(f)\subseteq K^n$ doesn't contain a straight line for any $f\in U$.
+        \item If $d<2n-3$, show that for every $f\in F_d$, if $\mathcal V(f)\subseteq K^n$ contains a straight line, then it contains infinitely many.
+        \item (too difficult for a bonus problem and totally unfair) If $d\leq 2n-3$, show that there is a nonempty Zariski open subset $U\subseteq F_d$ such that the set $\mathcal V(f)$ contains at least one straight line for all $f\in U$.
+    \end{enumerate}
+    \textbf{Hint:} Look at the proof of Theorem 13.5.1. What is the dimension of ``the space of straight lines'' in $K^n$? What is the dimension of the space of $f\in F_d$ such that $\mathcal V(f)$ contains a particular straight line?
+\end{problem}
+
+\begin{problem}
+    Show that a polynomial $f\in K[X_1,\dots,X_n]$ vanishes on the entire line spanned by a nonzero vector $x\in K^n$ if and only if all of its homogeneous parts $f_d$ vanish at $x$.
+\end{problem}
+
+\begin{solution}
+    Let $f\in K[X_1,\ldots,X_n]$ be an arbitrary polynomial with homogenization $f = \sum_{d\geq 0} f_d$.  It's trivial to see that if all $f_d$ vanish at $\lambda x$ for all $\lambda\in K$, so does $f$, since it is a sum of the $f_d$. Next suppose in the forward direction that $f$ vanishes at all $\lambda x$. Let $D$ be the maximal integer such that $f_d\neq 0$, so $f = f_0 + \lambda f_1 +\cdots \lambda$. Note that for any nonzero vector $x\in K^n$, we have $f(\lambda x)=\sum^D_{d\geq 0}\lambda^d f_d(x)$, since each $f_d$ is homogeneous of degree $d$. Say we choose some real numbers $\lambda_1,\ldots,\lambda_D$. Then we have the matrix relation
+    \[
+        \begin{bmatrix}
+            \lambda_1^0 & \lambda_1^1 & \cdots & \lambda_1^D\\
+            \lambda_2^0 & \lambda_2^1 & \cdots & \lambda_2^D\\
+            \vdots & \vdots & \ddots & \vdots \\
+            \lambda_D^0 & \lambda_D^1 & \cdots & \lambda_D^D\\
+        \end{bmatrix}\begin{bmatrix}
+            f_0(x)\\ f_1(x)\\ \vdots\\ f_D(x)
+        \end{bmatrix} = 0.
+    \] 
+    Matrices of this form are called \emph{Vandermonde matrices}, and we can choose for example $\lambda_1=1, \lambda_2=2, \ldots$ to get an invertible matrix in characteristic zero, and some other distinct set of values if $K$ is an infinite field of characteristic $p$. This matrix being invertible means that $f_d(x)=0$ for all $d$, so we are done. 
+\end{solution}
+
+\begin{problem}
+    Let $A=\mathcal V(I)$ for an ideal $I$ of $K[X_1,\dots,X_n]$. Let $S\subseteq K[X_0,\dots,X_n]$ be the set of homogenizations of elements of $I$ at $X_0$. Show that $\mathcal V_{\mathbb P^n_K}(S)$ is the Zariski closure of the image of $A$ under the $0$-th standard affine chart map $\varphi_0$.
+\end{problem}
+
+\begin{solution}
+    First we'll show that $\varphi_0(A)\subset \mathcal{V}_{\mathbb{P}^n_K}(S)$, this will imply that $\overline{\varphi_0(A)}\subset \mathcal{V}_{\mathbb{P}_K^n}(S)$ since the later is an algebraic set. Let $(x_1,\ldots,x_n)\in A$, so $\varphi_0(x_1,\ldots,x_n)=[1:x_1:\cdots:x_n]$. Then $[1:x_1:\cdots:x_n]\in \mathcal{V}_{\mathbb{P}_K^n}(S)$ because 
+    \[
+        \prescript{h}{}{f}(1:x_1:\cdots:x_n) = 1^{\deg f} f\left(\frac{x_1}{1},\cdots, \frac{x_n}{1}\right)=0,
+    \]
+    where $\prescript{h}{}{f}$ denotes the homogenization of $f$. Next, we'll show that
+    \[
+        \mathcal{V}_{\mathbb{P}_K^n}(S) \subset \bigcap_{\varphi_0(A) \subset H\textrm{ algebraic}} H = \overline{\varphi_0(A)}.
+    \] 
+    This is equivalent to checking that every homogeneous polynomial $g\in K[x_0,\ldots,x_n]$ such that $g(1,x_1,\ldots,x_n)\in K[x_1,\ldots,x_n]$ vanishes everywhere in $A$ must also satisfy $g(0,x_1,\ldots,x_n)$ vanishing everywhere on $B=\bigcap_{f\in I}\mathcal{V}_{K^n}(\prescript{h}{}{f}(0, x_1,\ldots,x_n))\subset K^n$. By Problem~2 however, since $g(1,x_1,\ldots,x_n)$ vanishes everywhere on $A$, the homogeneous parts also do.  This implies that $g(0,x_1,\ldots,x_n)^k\in I$ since $\mathcal{I}(A)=\sqrt{I}$. Thus by definition $g(0,x_1,\ldots,x_n)^k$ vanishes everywhere on $B$ and so $g(0,x_1,\ldots,x_n)$ vanishes everywhere in $B$ as well, completing the proof.
+\end{solution}
+
+\begin{problem}\noindent
+    Any invertible linear map $g:K^{n+1}\rightarrow K^{n+1}$ induces a map $f:\mathbb P^n_K\rightarrow\mathbb P^n_K$ sending the line spanned by $x\in K^{n+1}$ to the line spanned by $g(x)\in K^{n+1}$. Maps $f:\mathbb P^n_K\rightarrow\mathbb P^n_K$ of this form are called \emph{projective transformations}.
+    \begin{enumerate}[label=\alph*)]
+        \item Consider the projective line $\mathbb P^1_K=K\sqcup\{\infty\}$. Let $P,Q,R$ be three distinct points in $\mathbb P^1_K$. Show that there is a projective transformation $f:\mathbb P^1_K\rightarrow\mathbb P^1_K$ sending $P$ to $0$, $Q$ to $1$, and $R$ to $\infty$.
+        \item We say that points $P_1,\dots,P_m$ in $\mathbb P^n_K$ are \emph{in general linear position} if no $d+2$ of them lie on a $d$-dimensional linear subspace for any $0\leq d\leq\min(m-2,n-1)$.
+
+        Let the points $P_1,\dots,P_{n+2}\in\mathbb P^n_K$ be in general linear position and let $Q_1,\dots,Q_{n+2}\in\mathbb P^n_K$ be in general linear position. Show that there is a unique projective transformation $f:\mathbb P^n_K\rightarrow\mathbb P^n_K$ sending $P_i$ to $Q_i$ for $i=1,\dots,n+2$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $p,q,r$ be nonzero representatives of the equivalence classes $P,Q,R\in \mathbb{P}^1_K$ respectively, i.e. nonzero points on the lines $P,Q,R$. The lines are distinct, so $p,q,r$ are pairwise linearly independent. Let's choose $p,r$. We know that these form a basis for $K^2$. Then we can write $q=ap+br$ for some nonzero  $a,b\in K$. Now consider the linear transformation $L : K^2 \to K^2$ given by sending $p$ to $[1/a: 0]$ and $r$ to $[0: 1/b]$ for some nonzero $k\in K$. Then in the induced linear transformation $\widetilde{L} : \mathbb{P}_K^1 \to \mathbb{P}_K^1$ sends $P$ to a line of slope $0/(1/a) = 0$, $Q$ to a line of slope $(b/b)/(a/a)=1$, and $R$ to a line of slope $(1/b)/0=\infty$.
+
+    \textbf{(b)} As in (a), let's chose representatives $p_1,\ldots,p_{n+2}\in K^{n+1}$ for the lines $P_1,\ldots,P_{n+2}$ and $q_1,\ldots,q_{n+2}$ for $Q_1,\ldots,Q_{n+2}$. Since these lines are in general linear position, $(p_1,\ldots,p_{n+1})$ and $(q_1,\ldots,q_{n+1})$ are bases for $K^{n+1}$. Then write $p_{n+2}=a_1p_1+\cdots+a_{n+1}p_{n+1}$ and $q_{n+2}=b_1p_1+\cdots+b_{n+1}p_{n+1}$. Then the linear map $L : K^{n+1} \to K^{n+1}$ which sends $p_i$ to $q_i b_i / a_i$. 
+
+    We claim that the induced linear map $\widetilde{L} : \mathbb{P}^n_K \to \mathbb{P}^n_K$ sends $P_i$ to $Q_i$. Note that for all $i\leq n+1$, $L(p_i)=(b_i/a_i)q_i$ so $\widetilde{L}(P_i)=Q_i$. For $i=n+2$, we have $L(p_i)=(b_1/a_1)a_1q_1+\cdots+(b_{n+1}/a_{n+1})a_{n+1}q_{n+1}=b_1q_1+\cdots+b_{n+1}q_{n+1}=q_{n+2}$ so $\widetilde{L}(P_i)=Q_i$ and we are done.
+\end{solution}
+
+\begin{problem}[Pappus's hexagon theorem]
+    Let $g\neq h$ be lines in $\mathbb P^2_K$ that intersect in the point $P$. Let $A,B,C$ be points on $g$ and $A',B',C'$ be points on $h$ (all seven points $P,A,B,C,A',B',C'$ distinct). Let $Z$ be the point of intersection of the lines $AB'$ and $A'B$. Let $Y$ be the point of intersection of the lines $AC'$ and $A'C$. Let $X$ be the point of intersection of the lines $BC'$ and $B'C$. Show that $X,Y,Z$ are colinear. \textit{(Hint: Apply a projective transformation to for example make $P=[0:0:1]$, $A=[1:0:0]$, $B=[1:0:1]$, $C=[r:0:1]$, $A'=[0:1:1]$, $B'=[0:1:0]$, $C'=[0:s:1]$. Then compute $X$, $Y$, $Z$.)}
+\end{problem}
+
+\begin{solution}
+    Since $A, B, A',$ and $B'$ are in general linear position, by the previous problem there is a projective transformation $L$ which maps $A$ to $[0:0:1]$, $B$ to $[1:0:1]$, $A'$ to $[0:1:1]$, and $B'$ to $[0:1:0]$ since these are also in general linear position. This projection maps $P$ to $[0:0:1]$ because it is the intersection of the lines $AB$ and $A'B'$. Similar arguments show that $C$ and $C'$ must map to $[r:0:1]$ and $[0:s:1]$ respectively. Now we can calculate that the intersection of $f(A)f(B')$ and $f(A')f(B')$ is $[-1:1:0]$, the intersection of $f(A')f(C)$ and $f(A)f(C')$ is $[r-rs:s:1]$, and the intersection of $f(B)f(C')$ and $f(B')f(C)$ is $[r:s-rs:1]$. It's easy to check that these points of intersection are colinear in the image of the projective transformation, so they must be colinear in the preimage, i.e. $X,Y,Z$ are colinear.
+\end{solution}
+
+\end{document}

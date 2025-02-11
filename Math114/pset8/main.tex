@@ -1,0 +1,189 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[all]{tengwarscript}
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 8}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $\H$ denote a Hilbert space, and $\L(\H)$ the vector space of all bounded linear operators on $\H$.
+\end{problem}
+
+\begin{solution}
+    Given $T \in \L(\H)$, we define the operator norm
+    \[
+        \|T\| = \inf\{B : |Tv| \leq B|v|,\quad\text{for all}\;v \in \H\}.
+    \]
+    \begin{partproblem}{a}
+        Show that $\|T_1+T_2\| \leq \|T_1\|+\|T_2\|$ whenever $T_1,T_2 \in \L(\H)$.
+    \end{partproblem}
+
+    \quad Recall that we have
+    \[
+        \|T\| = \sup_{|v|=1} |Tv| = \sup_{v\neq 0} |Tv| / |v|
+    .\] 
+    Thus for any $T_1,T_2 \in \L(\H)$ and some vector $v\in \H$ we have
+    \[
+        |T_1v+T_2v| \leq |T_1v|+|T_2v| \leq (\|T_1\|+\|T_2\|)|v| \implies \|T_1+T_2\|\leq \|T_1\|+\|T_2\|
+    .\] 
+
+    \begin{partproblem}{b}
+        Prove that
+        \[
+            d(T_1,T_2) = \|T_1-T_2\|
+        \]
+        defines a metric on $\L(\H)$.
+    \end{partproblem}
+
+    \quad Nonnegativity is obvious, and we proved the triangle inequality in the previous problem. For definiteness, suppose $\|T\|=0$. For all $v\in \H$, this implies that $|Tv|\leq 0$ so $T=0$. Laslty, for any $c\in k$ we have $\|cT\|=|c|\|T\|$.
+
+    \begin{partproblem}{c}
+        Show that $\L(\H)$ is complete in the metric $d$.
+    \end{partproblem}
+
+    \quad Suppose we have a Cauchy sequence $\{T_i\}_{i=1} \subset \L(\H)$. For all $v\in \H$ we have a Cauchy sequence $\{T_i v\}_{i=1}$ since $|T_n v - T_m v| \leq \|T_n - T_m\| |v|$. Since $\H$ is a complete space by definition, the sequence $\{T_i v\}_{i=1}$ converges. Thus let's define $Tv = \lim T_i v$. 
+    
+    \quad Since addition and scalar multiplication are continuous, we obviously have linearity of $T$. All we need to show is that $T\in \L(\H)$ and $\lim T_i = T$. First of all, since $T_i$ is a Cauchy sequence, there is some $M$ with $\|T_n\|\leq M$ so for all $v\in \H$ we have $|T_i v|\leq M|v|$. Thus we have $|Tv|\leq |Tv-T_iv|+M|v|$. As $i\to \infty$, we get $|Tv|\leq M|v|$ so $\|T\|\leq M$ and thus $T\in \L(\H)$.
+
+    \quad Lastly, let $\epsilon>0$. Since $T_i$ is a Cauchy sequence, there is some $N$ with $n,m\geq N \implies \|T_m-T_n\|<\epsilon /2$. For any unit vector $v$ we have $m\geq N$ with $|Tv-T_mv|<\epsilon /2$. Thus
+    \[
+        |(T-T_n)v|=|Tv-T_mv+T_mv-T_nv|\leq |Tv -T_mv|+|(T_m-T_n)v|<\epsilon\quad \forall n\geq N
+    .\] 
+    Thus $\|T-T_n\|\leq \epsilon$ for all $n\geq N$ so $\lim T_n = T$.
+\end{solution}
+
+\begin{problem}
+    Prove that the operator
+\[
+Tf(x) = \frac1\pi\int_0^\infty \frac{f(y)}{x+y}dy
+\]
+is bounded on $L^2(0,\infty)$ with norm $\|T\| \leq 1$.
+\end{problem}
+
+\begin{solution}
+    The result of Homework~7 Problem~4 would hold for $(0,\infty)$, so we only need to find some (measurable) function $0<w(x)<\infty$ on $(0,\infty)$ with
+    \[
+        \frac{1}{\pi}\int_0^\infty \frac{w(y)}{x+y}\;dy\leq w(x)\quad\text{a.e.}\quad x>0
+    .\] 
+    To apply Problem~4, set $K(x,y)=1 / \pi(x+y)$ and $a=1$. Letting $w(y)=y^{-1 /2}$, we get
+    \[
+        \frac{1}{\pi}\int_0^\infty \frac{y^{-1/2}}{x+y}\;dy = x^{-1 /2} \implies \|T\|\leq 1
+    .\]  
+\end{solution}
+
+\begin{problem}
+    Let $\H$ be a Hilbert space.
+\end{problem} 
+
+\begin{solution}
+    Prove the following variants of the spectral theorem.
+    \begin{partproblem}{a}
+        If $T_1$ and $T_2$ are two linear symmetric and compact operators on $\H$ that commute (that is, $T_1T_2=T_2T_1$), show that they can be diagonalized simultaneously. In other words, there exists an orthonormal basis for $\H$ which consists of eigenvectors for both $T_1$ and $T_2$.
+    \end{partproblem}
+
+    \quad First, let's show that $T_1$ and $T_2$ contain a common eigenvector. Since $T_1$ is a compact symmetric operator, it has an eigenvalue $\lambda$ with an eigenvector, so the eigenspace $V^{T_1}_\lambda$ is a nontrivial subspace of $\H$. For some $v\in V^{T_1}_\lambda$, we have $T_1T_2v=T_2T_1v=T_2(\lambda v)=\lambda T_2 v$. Thus $T_2(V^{T_1}_\lambda)\subset V^{T_1}_\lambda$. So $T_2$ is a compact symmetric linear operator on $V^{T_1}_\lambda$ so it has a nonzero eigenvector in $v\in V_\lambda^{T_1}\cap V_\lambda^{T_2}$.
+
+    \quad Let $\S$ be the closure of $V^{T_1}_\lambda\cap V^{T_2}_\lambda$. This is nontrivial, so we have $\H=\S\oplus\S^\perp$. Note that $T_1$ and $T_2$ are invariant on the space $\S^\perp$, and since they're compact symmetric linear operators, they have a common eigenvector $v\in \S^\perp$. Then $v\in \S\cap \S^\perp$ which is a contradiction.
+
+    \begin{partproblem}{b}
+        A linear operator on $\H$ is \emph{normal} if $TT^*=T^*T$. Prove that if $T$ is normal and compact, then $T$ can be diagonalized.
+    \end{partproblem}
+
+    \quad Consider the compact operators
+    \[
+        T_1 = \frac{T+T^*}{2}, \quad T_2=\frac{T-T^*}{2i}\quad\text{so that}\quad T=T_1+iT_2
+    .\] 
+    These operators are also symmetric since
+    \[
+        T_1^* = \left(\frac{T+T^*}{2}\right)^* = \frac{T^*+T^{**}}{2}=\frac{T^*+T}{2}=T_1
+    .\]
+    The same follows for $T_2$. Lastly, we have
+    \[
+        T_1T_2=\frac{(T+T^*)(T-T^*)}{4i}=\frac{T^2-(T^*)^2}{4i}=\frac{(T-T^*)(T+T^*)}{4i}=T_2T_1
+    \]
+    so we can apply (a) to simultaneously diagonalize $T_1$ and $T_2$. Say $v_i$ is an orthonormal basis for $\H$ with eigenvalues $\lambda_i, \zeta_i$ for $T_1$ and $T_2$ respectively. Then $(\lambda_i+i\zeta_i)v_i$ diagonalizes $T$. 
+\end{solution}
+
+\begin{problem}
+    Suppose $\nu$, $\nu_1$, and $\nu_2$ are signed measures on $(X,\M)$ and $\mu$ is a (positive) measure on $\M$.
+\end{problem}
+
+\begin{solution}
+    Using the symbols $\perp$ and $\ll$ defined in Section 4.2, prove:
+    \begin{partproblem}{a} If $\nu_1 \perp \mu$ and $\nu_2 \perp \mu$, then $\nu_1+\nu_2 \perp \mu$. \end{partproblem}
+    \quad Suppose $A_1,A_2,B \in \M$ are such that $A_1$ and $A_2$ are both disjoint from $B$, and $\nu_i$ is supported on $A_1$ and $A_2$. Let $\mu$ be supported on $B$. Now let Let $A = A_1 \cup A_2 \in \M$. Then $A \cap B = (A_1 \cap B) \cup (A_2 \cap B) = \varnothing$. Then for any $E \in \M$, we have
+    \begin{align*}
+    (\nu_1+\nu_2)(E\cap A) &= \nu_1(E \cap A \cap A_1)+\nu_2(E \cap A \cap A_2) \\
+    &= \nu_1(E \cap A_1)+\nu_2(E \cap A_2) = (\nu_1+\nu_2)(E).
+    \end{align*}
+    So $\nu_1+\nu_2$ is supported on $A$, and thus $\nu_1+\nu_2 \perp \mu$.
+    
+\begin{partproblem}{b} If $\nu_1 \ll \mu$ and $\nu_2 \ll \mu$, then $\nu_1+\nu_2 \ll \mu$. \end{partproblem}
+    \quad Let $E\in \M$ be a $\mu$-measure zero set. Then we have $\mu_1(E)=\mu_2(E)=0$ and so $(\mu_1+\mu_2)(E)=\mu_1(E)+\mu_2(E)=0$. This implies $\mu_1+\mu_2\ll \mu$.
+
+\begin{partproblem}{c} $\nu_1 \perp \nu_2$ implies $|\nu_1|\perp |\nu_2|$. \end{partproblem}
+    \quad Let $A_1,A_2\in \M$ be disjoint sets with $\nu_1$ supported on $A_1$ and $\nu_2$ supported of $A_2$. Let $E\in \M$. For any partition $\{E_j\}$ of $E$, we get a partition $\{E_j\cap A_i\}$ of $E\cap A$ and so
+    \[
+        \sum^\infty_{j=1}|\mu_i(E_j)| = \sum^\infty_{j=1}|\mu_i(E_j\cap A)|\leq |v|(E\cap A_i)
+    .\]  
+    Thus $|\mu_i|(E)\leq |\mu_i|(E\cap A_i)$. The other direction follows trivially, so $|\mu_i|(E)=|\mu_i|(E\cap A_i)$. As a result, we have $|\mu_1|\perp |\mu_2|$.
+
+\begin{partproblem}{d} $\nu \ll |\nu|$. \end{partproblem}
+    \begin{solution}
+    Let $E \in \M$ be a set with $|\mu|$-measure zero. Then $|\nu(E)| \leq |\nu|(E)=0$ by taking the partition $(E,\emptyset, \emptyset, \ldots)$. Thus $\nu(E)=0$ and so $\nu \ll |\nu|$.
+    \end{solution}
+    
+\begin{partproblem}{e} If $\nu \perp \mu$ and $\nu \ll \mu$, then $\nu = 0$.\end{partproblem}
+    Let $A,B \in \M$ be disjoing and $\nu$ and $\mu$ supported on $A$ and $B$ respectively. Suppose $E \in \M$. Then $\mu(E \cap A) = \mu(E \cap A \cap B) = \mu(\varnothing)=0$, so $\nu \ll \mu$ implies $\nu(E) = \nu(E \cap A) = 0$. Thus $\nu = 0$.
+\end{solution}
+
+\begin{problem}
+    Examples of compactly supported functions in $\S(\R)$ are very handy in many applications in analysis.
+\end{problem}
+
+\begin{solution}
+    Some examples are:
+    \begin{partproblem}{a}
+        Suppose $a < b$, and $f$ is the function such that $f(x)=0$ if $x \leq a$ or $x \geq b$ and
+    \[
+    f(x)=e^{-1/(x-a)}e^{-1/(b-x)}\quad\text{if}\;a<x<b.
+    \]
+    Show that $f$ is infinitely differentiable on $\R$.
+    \end{partproblem}
+
+    \quad Consider the function $g(x)$ given by
+    \[
+        g(x)=\begin{cases}
+            e^{-1 /x}& x > 0,\\
+            0 & x \leq 0.
+        \end{cases}
+    \] 
+    We'll begin by showing that $g$ is $C^\infty$. This function is obviously $C^\infty$ when $x\neq 0$. Thus we only need to show that $g^{(n)}(x)=0$ as $x\to 0^+$. Note that repeated differentiation gives us $g^{(n)}(x)=p(1 /x)e^{-1 /x}$ for some polynomial $p(x)\in \R[x]$. Since $e^{-1 /x} / x^n \to 0$ as $x\mapsto 0^+$, we are done, since $f(x)=g(x-a)g(b-x)$.
+
+    \begin{partproblem}{b}
+        Prove that there exists an infinitely differentiable function $F$ on $\R$ such that $F(x)=0$ if $x \leq a$, $F(x)=1$ if $x \geq b$, and $F$ is strictly increasing on $[a,b]$.
+    \end{partproblem}
+
+    \quad Let $c=\int^\infty_{-\infty} f(t)\;dt$ and let $F(x)=\frac{1}{c}\int^x_{-\infty}f(t)\;dt$. Note that $F$ is $C^\infty$ and strictly increasing on $[a, b]$. By the fundamental theorem of calculus, $F'(x)=f(x)$. The rest follows obviously from the fact that $f$ is supported on $[a,b]$ and from our choice of $c$. 
+    
+    \begin{partproblem}{c}
+        Let $\delta > 0$ be so small that $a+\delta < b - \delta$. Show that there exists an infinitely differentiable function $g$ such that $g$ is 0 if $x \leq a$ or $x \geq b$, $g$ is 1 on $[a+\delta,b-\delta]$, and $g$ is strictly monotonic on $[a,a+\delta]$ and $[b-\delta,b]$.
+    \end{partproblem}
+
+    \quad Construct functions $F$ and $G$ as tin the previous part on the intervals $[a,a+\delta]$ and $[-b, \delta-b]$ respectively, and let $g(x)=F(x)G(-x)$. This clearly $C^\infty$. The required facts follow immediately from the previous problem.
+\end{solution}
+
+\end{document}

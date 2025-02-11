@@ -1,0 +1,33 @@
+\begin{problem}
+The {\em dilatation} of an invertible linear operator $T:V\to V$ acting on a finite-dimensional vector space $V$ over $\R$ with an inner product $\langle \cdot,\cdot\rangle$ is defined by
+\[K(T)=\frac{\sup_{\|v\|=1} \|Tv\|}{\inf_{\|v\|=1} \|Tv\|}.\]
+\begin{enumerate}[(a)]
+  \item Show that $K(T)^2$ is equal to the ratio between the largest and smallest eigenvalues of $T^*T$.
+  \item Show that $K(T_1T_2)\leq K(T_1)K(T_2)$.
+\end{enumerate}
+\end{problem}
+
+\textbf{(a)} Observe that
+\[K(T)^2=\frac{\sup_{\|v\|=1} \|Tv\|^2}{\inf_{\|v\|=1} \|Tv\|^2}=\frac{\sup_{\|v\|=1} \langle Tv, Tv\rangle}{\inf_{\|v\|=1} \langle Tv, Tv\rangle}=\frac{\sup_{\|v\|=1} \langle T^*Tv, v\rangle}{\inf_{\|v\|=1} \langle T^*Tv, v\rangle}\]
+Since $T^*T$ is a self-adjoint operator, by the spectral theorem it has an orthonormal basis of eigenvectors $v_1,\ldots,v_n$ with eigenvalues $\lambda_1,\ldots,\lambda_n$. For every $v=a_1v_1+\cdots+a_nv_n$, we have 
+\[
+  \langle T^*Tv, v\rangle = a_1^2\lambda_1+\cdots+a_n^2\lambda_n
+.\]
+Additionally, the restriction $\|v\|=1$ implies that $a_1^2+\cdots+a_n^2=1$.
+\begin{lemma}
+  Suppose $\alpha_1<\alpha_2<\cdots<\alpha_n$ are real numbers. Then for any non-negative real numbers $x_1,\ldots, x_n$ we have
+  \[
+    \alpha_1 \leq \alpha_1x_1+\cdots+\alpha_nx_n \leq \alpha_n
+  .\]  
+\end{lemma}
+\begin{proof}
+  Note that 
+  \[
+    \alpha_1\leq \alpha_1x_1+\cdots+\alpha_1x_1\leq\alpha_1x_1+\cdots+\alpha_nx_n\leq \alpha_nx_1+\cdots+\alpha_nx_n\leq \alpha_n
+  .\]
+  This concludes the proof.
+\end{proof}
+Assuming without loss of generality that the eigenvalues are sorted in order from smallest to largest, say $\lambda_1<\lambda_2<\cdots<\lambda_n$, the Lemma implies that $\lambda_1\leq \langle T^*Tv, v\rangle \leq \lambda_n$, and these bounds achieve equality as $v$ is allowed to range freely in the unit sphere since $\langle T^*Tv_1, v_1\rangle = \lambda_1$ and $\langle T^*Tv_n, v_n\rangle = \lambda_n$. So we can conclude that      
+\[K(T)^2=\frac{\sup_{\|v\|=1} \langle T^*Tv, v\rangle}{\inf_{\|v\|=1} \langle T^*Tv, v\rangle}=\frac{\lambda_n}{\lambda_1}.\]
+
+\textbf{(b)} First note that for any unit vector $v$, we can write $T_2v=\|T_2v\|u$ for some $\|u\|=1$. Then $T_1T_2v=\|T_2v\|\|T_1u\|w$ for some $\|w\|=1$. So $\|T_1T_2v\|=\|T_2v\|\|T_1u\|$ and so it follows that \[\sup_{\|v\|=1}\|T_1T_2v\|\leq \sup_{\|v\|=1}\|T_1v\|\sup_{\|v\|=1}\|T_2v\|\] and similarly we have \[\inf_{\|v\|=1}\|T_1T_2v\|\geq \inf_{\|v\|=1}\|T_1v\|\inf_{\|v\|=1}\|T_2v\|.\] Thus $K(T_1T_2)\leq K(T_1)K(T_2)$.     

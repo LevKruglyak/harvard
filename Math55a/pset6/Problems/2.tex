@@ -1,0 +1,27 @@
+\begin{problem}
+Let $V$ be a finite-dimensional (real) inner product space, and $T : V \to V$ a self-adjoint
+operator. Suppose that $v \in V$ is a vector such that $\|v\| = 1$ and $\langle Tv, v \rangle \geq \langle Tw, w \rangle$ for all $w \in V$ with $\|w\|=1$. Prove that $v$ is an eigenvector for $T$. 
+\end{problem}
+
+\textit{(Hint: let $f(w)=\frac{1}{\|w\|^2}\langle Tw,w\rangle$, and consider $f(v+tu)$
+for $u\perp v$ and $t\in\R$.)}
+
+Let $W=\mathrm{span}(v)$. We claim that $Tv\in W=(W^\perp)^\perp$. Consider the function $f$ defined by
+\[
+  f(w)=\frac{1}{\|w\|^2}\langle Tw, w\rangle
+.\]
+Let $\lambda=f(v)=\langle Tv, v\rangle$. First note that for any $w\in V$, we have
+\[
+  f(w)=\frac{1}{\|w\|^2}\langle Tw, w\rangle = \frac{1}{\|w\|^2}\left\langle \frac{\|w\|Tw}{\|w\|}, \frac{\|w\|w}{\|w\|}\right\rangle = \left\langle \frac{Tw}{\|w\|}, \frac{w}{\|w\|}\right\rangle \leq \langle Tv, v\rangle = \lambda
+.\]
+So $f$ is bounded above by $\lambda$. Now let $w\in W^\perp$ be orthogonal to $v$, say with $\|w\|=1$. Then for any $t\in \R$,
+\[
+  \begin{aligned}
+    f(v+tw)&=\frac{1}{\|v+tw\|^2}\left\langle T(v+tw), v+tw\right\rangle\\
+    &=\frac{1}{\langle v, v\rangle + 2t\langle v, w\rangle + \langle w, w\rangle}\left(\langle Tv, v\rangle + 2t\langle Tv, w\rangle + t^2\langle Tw, v\rangle\right)\\
+    &=\frac{1}{1+t^2}\left(\lambda + 2t\langle Tv, w\rangle + t^2\langle Tw, v\rangle\right)\leq \lambda\\
+    &\implies \langle Tv, w\rangle \leq \frac{t}{2}\left(\lambda - \langle Tw, w\rangle\right)
+  \end{aligned}
+.\] 
+   
+Assume WLOG that $\langle Tv, w\rangle\geq 0$. (if not, we can just pull out a $-1$ factor from $w$ without changing it's properties) However in the last inequality, $\lambda - \langle Tw, w\rangle$ is positive, so letting $t$ approach zero, we have that $\langle Tv, w\rangle\leq 0$. So $\langle Tv, w\rangle=0$ and hence $Tv\in W$.    

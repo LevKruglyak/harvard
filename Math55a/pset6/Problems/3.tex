@@ -1,0 +1,14 @@
+\begin{problem}
+Given an orthonormal basis $u_1,\dots,u_n$ of an inner product space $(V,\langle\cdot,\cdot\rangle)$, the {\em ellipsoid} with principal axes the lines spanned by $u_1,\dots,u_n$ and semi-axis lengths $a_1,\dots,a_n$ is the subset of $V$ consisting of all elements $w=\sum x_i u_i$ whose coordinates $(x_1,\dots,x_n)$ in the basis $(u_1,\dots,u_n)$ satisfy the equation 
+\[\sum_{i=1}^n \frac{x_i^2}{a_i^2}=1.\] 
+The case where $a_1=\dots=a_n=1$ gives the {\em unit sphere} $S=\{w\in V,\ \|w\|=1\}$. Let $\varphi:V\to V$ be {\em any} invertible linear transformation.  Show that $\varphi$ maps the unit sphere $S\subset V$ to an ellipsoid in $V$.
+\end{problem}
+
+\textit{(Hint: observe that $\varphi(S)$ is the set of vectors $w$ such that
+$\|Tw\|=1$, where $T=\varphi^{-1}$, and apply the spectral theorem to the operator $T^*T$.)}
+
+Following the hint, it is clear that $\varphi(S)=\{w\in V : \| \varphi^{-1}(w)\|=1\}$. Letting $T=\varphi^{-1}$, we can rewrite the condition $w\in S$ as $\|Tw\|=\sqrt{\langle Tw, Tw \rangle}=\sqrt{\langle T^*Tw, w \rangle}=1$. So $\langle T^*Tw, w\rangle=1$. Since $T^*T$ is clearly a self-adjoint operator, we have an orthonormal eigenbasis $v_1,\ldots,v_n$ with eigenvalues $\lambda_1,\ldots,\lambda_n$. All the eigenvalues are positive because $\langle T^*Tv_i, v_i\rangle = \langle Tv_i, Tv_i\rangle = \lambda_i$ and the inner product is positive definite. Then writing $w=x_1v_1+\cdots+x_nv_n$ we have $\langle T^*Tw, w\rangle = \lambda_1x_1^2+\cdots+\lambda_nx_n^2=1$. So
+\[
+  \sum^n_{i=1}\frac{x_i^2}{(1/\sqrt{\lambda_i})^2}=1
+\]
+and every $w=x_1v_1+\cdots+x_nv_n$ satisfying this equation is in $\varphi(S)$. So $\varphi(S)$ is exactly the ellipsoid with principal axes $v_1,\ldots,v_n$ and semi-axis lengths $1/\sqrt{\lambda_1},\ldots,1/\sqrt{\lambda_n}$.            

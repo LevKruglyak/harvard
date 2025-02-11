@@ -1,0 +1,311 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{import}
+\import{../../../../LaTeX}{basic}
+
+\title{\textbf{Math 55a Problem Set 7}}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\begin{itemize}
+  \item How long did this assignment take you? -- 10 hours
+  \item How hard was it? -- Moderately easy
+  \item What resources did you use and how much help did you need? -- Collaborated with AJ LaMotta
+  \item Did you have any prior experience with this material? -- Yes
+\end{itemize}
+
+% PROBLEM 1
+\pagebreak
+\begin{problem}
+  Let $V$ and $W$ be vector spaces of dimensions $m$ and $n$, with $n \geq m$. 
+  \begin{enumerate}[(a)]
+    \item Show that every element $\phi \in V \otimes W$ has rank at most $m$; that is, it is expressible as a sum of $m$ or fewer pure tensors.
+    \item If $U$, $V$ and $W$ are three finite-dimensional vector spaces, can you bound the rank of elements of the triple tensor product $U \otimes V \otimes W$?
+  \end{enumerate}
+\end{problem}
+
+\textbf{(a)} Suppose $t\in V\otimes W$ is some tensor. We can consider it as an element $\varphi \in \Hom(V^*, W)$, and the tensor rank of $t$ is equal to the rank of $\varphi$ as a linear map. However note that $\mathrm{rank}(\varphi)\leq \dim W$ and $\mathrm{rank}(\varphi)\leq \dim V^*=\dim V$, so the rank of $t$ is at most the minimum of $m$ and $n$.
+
+\textbf{(b)} We claim that the rank is equal to the minimum dimension of $U, V, W$. Indeed, note that $V\otimes W\otimes U=V\otimes(W\otimes U)=W\otimes(V\otimes U)=U\otimes(V\otimes W)$ and this correspondence doesn't change the rank of a tensor. So for any $t\in V\otimes W\otimes U$, the rank of $t$ is less than $\dim V$, $\dim W$, $\dim U$ by (a).    
+
+% PROBLEM 2
+\pagebreak
+\begin{problem}
+  Let $V$ be an $n$-dimensional vector space over a field $K$. Recall that we have a natural linear \emph{contraction map} $\kappa : V^* \otimes V \to K$ sending $\ell \otimes v \in V^* \otimes V$ to $\ell(v)$. 
+  \begin{enumerate}[(a)]
+    \item Show that, under the identification  $V^* \otimes V = \Hom(V,V) = \End(V)$, this is simply the \emph{trace}: that is, given a linear map $T : V \to V$, $\kappa(T)$ is the sum of the diagonal entries of any matrix representative of $T$.
+    \item Show that the map  $b : \End(V) \times \End(V) \to K$ which sends $(S,T)$ to the trace of the composition $S \circ T$ is bilinear and symmetric. \textit{(Try to do this in a ``coordinate-free'' manner, without introducing matrices)}
+    \item For which $n$ do there exist endomorphisms $S, T$ of an $n$-dimensional vector space such that $ST - TS = I$ is the identity?
+  \end{enumerate}
+\end{problem}
+
+\textbf{(a)} Pick some basis $e_1,\ldots, e_n$ of $V$, and let $e_1^*,\ldots,e_n^*$ be the corresponding dual basis for $V^*$. Then every element $v\in V^*\otimes V$ can be expressed as a sum
+\[
+  v=\sum_{1\leq i\leq n}\sum_{1\leq j\leq n}\alpha_{ij}e^*_i\otimes e_j
+,\] 
+where $\alpha_{ij}$ are the corresponding matrix entries of $T$. Then
+\[
+  \kappa(v)=\sum_{1\leq i\leq n}\sum_{1\leq j\leq n}\alpha_{ij}e^*_i(e_j)=\sum_{1\leq i \leq n}\alpha_{ii}
+,\]       
+since $e^*_i(e_j)=1$ if and only if $i=j$. So $\kappa(v)$ is the sum of the diagonal entries of $T$.   
+
+\textbf{(b)} Consider first the composition map $c : \End(V)\times \End(V)\to \End(V)$. This is naturally a bilinear map since $(S_1+S_2)\circ T = S_1\circ T + S_2\circ T$ and $S\circ (T_1+T_2) = S\circ T_1+S\circ T_2$. It's also clear that $\kappa : \End(V) \to K$ is linear, so since $b=\kappa \circ c$ is a composition of a linear map with a bilinear map, so it is bilinear.      
+
+To prove symmetry, we'll use the natural identification $\End(V)$ with $V^*\otimes V$. Since $b$ is bilinear, it suffices to show that $b$ is symmetric on pure tensors. So let $v^*\otimes v$ and $w^*\otimes w$ be pure tensors in $V^*\otimes V$. Then
+\[
+  \begin{aligned}
+    b(v^*\otimes v, w^*\otimes w)&=\kappa(v^*(w)(w^*\otimes v))=v^*(w)w^*(v)\\
+    b(w^*\otimes w, v^*\otimes v)&=\kappa(w^*(v)(v^*\otimes w))=w^*(v)v^*(w)
+  \end{aligned}.
+\]    
+These are equal so $b$ is a symmetric bilinear form.
+
+\textbf{(c)} Suppose $ST-TS=I$. Then $\kappa(ST-TS)=\kappa(ST)-\kappa(TS)=0=n$. This is only possible in a field of characteristic $\mathrm{char}(K)|n$. 
+
+To show that whenever $\mathrm{char}(K)|n$ we have such operators, first assume that $\mathrm{char}(K)=n$. Let $S, T$be the operators with
+\[
+  S_{ij}=\begin{cases}
+    n-i&\mathrm{if } j=i-1\\
+    0
+  \end{cases}, \quad T_{ij}=\begin{cases}
+    1 &\mathrm{if } j=i-1\\
+    0
+  \end{cases}
+.\]  
+It's easy to check that these work.
+
+% PROBLEM 3
+\pagebreak
+\begin{problem}
+  Let $V=\R^n$, and $\End(V)=M_n(\R)$ the space of $n\times n$ real matrices. The symmetric bilinear form considered in the previous problem is now explicitly the bilinear map $b:M_n(\R)\times M_n(\R)\to\R$ given by $b(M,N)=tr(MN)$.
+  \begin{enumerate}[(a)]
+    \item Show that the symmetric bilinear form $b$ is non-degenerate.
+    \textit{(Hint: what is $b(M,M^T)$?)}
+    \item Find a pair of subspaces $W_\pm\subset M_n(\R)$ such that
+    \begin{enumerate}[(1)]
+      \item $M_n(\R)=W_+\oplus W_-$,
+      \item $W_+$ and $W_-$ are orthogonal to each other for
+      $b$,
+      \item the restriction $b$ to $W_+$, resp.\ $W_-$, is definite 
+      positive, resp.\ definite negative.
+    \end{enumerate}
+  \end{enumerate}
+  What is the {\em signature} $(\dim W_+,\dim W_-)$ of the symmetric bilinear form $b$?
+\end{problem}
+
+\textbf{(a)} Suppose $M$ is some matrix for which $b(M, N) = 0$ for all nonzero $N\in M_n(\R)$. Then $b(M, M^\intercal) = 0$. However $b(M, M^\intercal)=\sum_{1\leq j\leq n}\sum_{1\leq i \leq n}m_{ij}^2=0$. So this implies that $m_{ij}=0$ so $M=0$. Thus $b$ is non-degenerate.       
+
+\textbf{(b)} Consider the decomposition $M_n(\R) = W_+ \oplus W_-$ where $W_+$ is the space of symmetric matrices and $W_-$ is the space of skew-symmetric matrices. (This follows from an earlier PSET) Then for any symmetric matrix $A$ and skew-symmetric matrix $B$. Then since the trace is invariant under transpose,
+\[
+  b(A,B)=\mathrm{Tr}(AB)=\mathrm{Tr}((AB)^\intercal) = \mathrm{Tr}(B^\intercal A^\intercal) = \mathrm{Tr}(-BA)=-b(A,B)
+\]
+since $b(A,B)=-b(A,B)$, it follows that $b(A,B)=0$ so $W_+$ and $W_-$ are orthogonal.
+
+To prove the second part, let $A$ be a symmetric matrix. Then $b(A,A)=b(A, A^\intercal)\geq 0$, and if $b(A,A)=0$, $A$ must be zero since $b(A,A)=b(A,A^\intercal)$ is the sum of squares of entries of the matrix. The skew-symmetric part follows in the same manner, except $b(A,A)=-b(A, A^\intercal)$, so we have negative definiteness.
+
+% PROBLEM 4
+\pagebreak
+\begin{problem}
+  Let $V$ be an $n$-dimensional vector space over a field $K$. What is the dimension of $\Sym^d\,V$?
+\end{problem}
+
+Recall from lecture that there is a natural isomorphism $\Hom(\Sym^d(V), k)\cong T_{\mathrm{symm}}^d(V)$, where $T_{\mathrm{symm}}^d(V)$ is the set of symmetric multilinear $k$-forms on $V$. Using a lemma from PSET 5 (see Lemma~\ref{dimsymm}), we have 
+\[
+  \dim T_{\mathrm{symm}}^d(V) = \binom{n+d-1}{d}
+.\] 
+Since $\dim \Hom(\Sym^d(V), k) = \dim \Sym^d(V)$, $\Sym^d(V)$ has the same dimension, $\binom{n+d-1}{d}$.
+
+% PROBLEM 5
+\pagebreak
+\begin{problem}
+  Let $V$ be a finite dimensional vector space over a field of characteristic zero. Show that there is a natural map $\Sym^2(\Sym^2 V) \to \Sym^4\,V$. Find the kernel of this map in the case where $\dim V = 2$.
+\end{problem}
+
+Recall that in order to construct a map $\overline{\alpha} : \Sym^2(\Sym^2(V)) \to \Sym^4(v)$, it suffices to construct a symmetric bilinear map $\alpha : \Sym^2(V)\times \Sym^2(V) \to \Sym^4(V)$. Let $\alpha(v_1\vee v_2,v_3\vee v_4)=v_1\vee v_2\vee v_3 \vee v_4$ where $\vee$ is the symmetric tensor product. This is clearly symmetric and bilinear.
+
+To compute the kernel of $\overline{\alpha}$ in the case when $\dim V = 2$, first note that by Problem~4 we have $\dim \Sym^2(\Sym^2(V))=6$ whereas $\dim \Sym^4(V)=5$. Now let $e_1,e_2$ be a basis for $V$. Then $e_1\vee e_1, e_1\vee e_2, e_2\vee e_2$ is a basis for $\Sym^2(V)$. So to determine the image of $\overline{\alpha}$,
+\[
+  \begin{aligned}
+    \alpha(e_1\vee e_1, e_1\vee e_1) &= e_1\vee e_1 \vee e_1\vee e_1\\  
+    \alpha(e_1\vee e_1, e_1\vee e_2) &= e_1\vee e_1 \vee e_1\vee e_2\\  
+    \alpha(e_1\vee e_1, e_2\vee e_2) &= e_1\vee e_1 \vee e_2\vee e_2\\  
+    \alpha(e_1\vee e_2, e_1\vee e_2) &= e_1\vee e_2 \vee e_1\vee e_2\\  
+    \alpha(e_1\vee e_2, e_2\vee e_2) &= e_1\vee e_2 \vee e_2\vee e_2\\  
+    \alpha(e_2\vee e_2, e_2\vee e_2) &= e_2\vee e_2 \vee e_2\vee e_2.    
+  \end{aligned}
+\]
+Since $\alpha(e_1\vee e_2, e_1\vee e_2)=\alpha(e_1\vee e_1, e_2\vee e_2)$, the dimension of the image is $5$, and also that the kernel is one-dimensional, spanned by $(e_1\vee e_2-e_1\vee e_1, e_1\vee e_2-e_2\vee e_2)$.   
+
+% \pagebreak
+% Recall that a \emph{commutative ring} $R$ is a set with composition laws $+$ and $\times$ satisfying all the axioms of a field except possibly the existence of multiplicative inverses.  A \emph{module} $M$ over the ring $R$ is an abelian group, together with a map $R \times M \to M$ satisfying the usual axioms of scalar multiplication.  Homomorphisms of modules over $R$ are defined exactly the same way as linear maps of vector spaces.  
+
+% Any abelian group $(G,+)$ can be made into a $\Z$-module in exactly one way, by setting $ng = g+\dots+g$ ($n$ times) for any positive integer $n$, $(-n)g=-(ng)$, and $0g=0$. (These identities are forced by the properties of scalar multiplication, for instance distributivity implies $2g=(1+1)g=1g+1g=g+g$ and so on.) Conversely, a $\Z$-module is an abelian group (forgetting the scalar multiplication), so the two notions are equivalent.
+
+% A subset $\Gamma \subset M$ of a module over $R$ is called a \emph{spanning set} (or we just say that $\Gamma$ \emph{generates} $M$) if every element of $M$ can be written as a linear combination of elements of $\Gamma$; it is said to be \emph{independent} if there are no non-trivial relations of linear dependence among elements of $\Gamma$. All modules below are assumed to be finitely generated (i.e., have a finite spanning set).
+
+% $R^n = \{(x_1,\dots,x_n) \mid x_i \in R \}$ is a module over $R$; this is called the \emph{free module of rank $n$} over $R$; a finitely generated $R$-module is called \emph{free} if it is isomorphic to $R^n$ for some $n$, or equivalently, if it has a basis (i.e., a spanning set whose elements are independent). Most finitely generated modules are not free. For example, $\Z/k$ is a finitely generated $\Z$-module (the single element $1$ generates) but it is not free (it is not isomorphic to $\Z^n$ for any $n$) and does not have a basis (every element $x$ satisfies a non-trivial linear relation, $k\,x=0$).
+
+% PROBLEM 6
+\pagebreak
+\begin{problem}
+  Define the \emph{direct sum} $M\oplus N$ of two modules over a ring $R$. Show by giving an example that if $L \subset M$ is a submodule, there need not exist a module $N$ such that $M \cong L \oplus N$, in contrast to the case of finite-dimensional vector spaces over a field.
+\end{problem}
+First let us define the direct sum of two $R$-modules.
+\begin{definition}
+  Let $M$ and $N$ be $R$-modules. The {\em direct sum} of $M$ and $N$, denoted $M\oplus N$ is defined as the set $M\times N$ with scalar multiplication and addition given by:
+  \begin{enumerate}
+      \item $c\cdot (m,n)= (cm, cn)$ for all $m\in M, n\in N, c\in R$.
+      \item $(m_1, n_1) + (m_2, n_2) = (m_1 + m_2, n_1 + n_2)$ for all $m_1,m_2\in M$ and $n_1,n_2\in N$.     
+    \end{enumerate}    
+  \end{definition} 
+  Now let $R=\Z$ and consider the $R$-module $M=\Z/4$ and consider the submodule $L=\Z/2$, included in the canonical way. We claim that there cannot be a module $N$ such that $M\cong L\oplus N$. Suppose for the sake of contradiction that $M\cong L\oplus N$. Note that $|L\oplus N| = |L|\cdot |N|$ so $|N|=2$. It's pretty easy to check that there is only one $\Z$-module with two elements, namely $\Z/2$. However $\Z/4\not\cong \Z/2\oplus \Z/2$, since $\Z/4$ has an element of (additive) order $4$ yet $\Z/2\oplus\Z/2$ doesn't. This is a contradiction so we are done.    
+
+% PROBLEM 7
+\pagebreak
+\begin{problem}
+  Show by giving an example over the ring $R = k[x,y]$ of polynomials in two variables that, again in contrast to the case of vector spaces over a field, a submodule of a free module need not be free.
+  \end{problem}
+  
+Let $R = k[x,y]$ be an $R$-module, so it trivially is a free $R$-module of rank $1$. Consider the submodule $M\subset R$ which consists of all polynomials which are multiples of $xy$. This is clearly closed under addition and multiplication, and also under $R$-multiplication since multiplying any polynomial by a multiple of $xy$ gives a multiple of $xy$.
+
+We claim that this submodule isn't free. Suppose for the sake of contradiction that $\{g_i\}_{i\in I}$ is a basis for $M$. Write $x=a_{i_1}g_{i_1}+\cdots+a_{i_n}g_{i_n}$ and $y=b_{i_1}g_{i_1}+\cdots+b_{i_n}g_{i_n}$ where $a_{i_k}, b_{i_k}\in R$. Then,
+\[
+  \begin{aligned}
+    y(a_{i_1}g_{i_1}+\cdots+a_{i_n}g_{i_n})-x(b_{i_1}g_{i_1}+\cdots+b_{i_n}g_{i_n})&=0\\
+    (ya_{i_1}-xb_{i_1})g_{i_1}+\cdots+(ya_{i_n}-xb_{i_n})=0.
+  \end{aligned}  
+\]
+Since $g_{i_k}$ are linearly independent, it follows that $ya_{i_k}-xb_{i_k}=0$ for all $1\leq k\leq n$. So $a_{i_k}$ is a multiple of $x$ and $b_{i_k}$ is a multiple of $y$. So we can rewrite
+\[
+  x=a_{i_1}g_{i_1}+\cdots+a_{i_n}g_{i_n}=x\left(\frac{a_{i_1}}{x}g_{i_1}+\cdots+\frac{a_{i_n}}{x}g_{i_n}\right)
+\]
+where $\frac{a_{i_1}}{x}g_{i_1}+\cdots+\frac{a_{i_n}}{x}g_{i_n}=1$. This is a contradiction since $1\not\in M$. 
+ 
+% PROBLEM 8
+\pagebreak
+\begin{problem}
+  Let $M$ and $N$ be modules over a ring $R$. Show that the set of homomorphisms $\phi : M \to N$ can itself be given the structure of an $R$-module, called $\Hom_R(M,N)$, and describe the following modules:
+  \begin{enumerate}[(a)]
+    \item $\Hom_\Z(\Z^m,\Z^n)$;
+    \item $\Hom_\Z(\Z^m,\Z/2)$;
+    \item $\Hom_\Z(\Z/2,\Z)$;
+    \item $\Hom_\Z(\Z/2,\Z/3)$;
+    \item $\Hom_\Z(\Z/4,\Z/6)$.
+  \end{enumerate}
+\end{problem}
+
+Let $\Hom_R(M,N)$ be the set of homomorphisms $\phi : M \to N$. To check that it is an $R$-module, first let $r\in R$. Then $r\phi$ is also a homomorphism so $\Hom_R(M,N)$ is closed under scalar multiplication. Furthermore the sum of two homomorphisms is again a homomorphism and the other properties are easy to check as well. So $\Hom_R(M,N)$ is an $R$-module. 
+
+\textbf{(a)} $\Hom_\Z(\Z^m,\Z^n)$ is the $\Z$-module of $m\times n$ matrices with entries in $\Z$.   
+
+\textbf{(b)} $\Hom_\Z(\Z^m,\Z/2)$ is isomorphic as a $\Z$-module to $(\Z/2)^n$. This is because any map from $\Z^m$ to $\Z/2$ is uniquely determined by where the basis vectors map to in $\Z/2$.
+
+\textbf{(c)} $\Hom_\Z(\Z/2,\Z)$ is the trivial group, since $1\in \Z/2$ can only map to $0$ in $\Z$ so there is only one map. (This is the only element in $\Z$ which satisfies $a+a=0$)
+
+\textbf{(d)} $\Hom_\Z(\Z/2,\Z/3)$ is also the trivial group, for the same reason as for (c). 
+
+\textbf{(e)} $\Hom_\Z(\Z/4,\Z/6)$ is exactly the group $\Z/2$, since $1\in \Z/4$ can only map to $0$ or $3$ in $\Z/6$. (These are the only elements in $\Z/6$ satisfying $a+a+a+a=0$)
+
+% PROBLEM 9
+\pagebreak
+\begin{problem}
+  Given any module $M$ over the ring $R$, its \emph{dual} is the module $M^* := \Hom_R(M,R)$. 
+  
+  \begin{enumerate}[(a)]
+    \item Show that there exists a natural homomorphism $\phi : M \to (M^*)^*$.
+    \item Show by example, either  over $R = k[x]$ or over $R = \Z$, that (once more in contrast to the case of finite-dimensional vector spaces over a field) the map $\phi$ need not be an isomorphism, even for finitely generated $R$-modules.
+  \end{enumerate}
+\end{problem}
+
+\textbf{(a)} Consider the map $\Phi : M \to M^{**}$ given by $\Phi_m(f) = f(m)$ for all $f\in M^*$. This is a homomorphism because for any $c\in R$ and $m_1, m_2\in M$ we have $\Phi_{cm}(f)=f(cm)=cf(m)=c\Phi_{m}(f)$ and $\Phi_{m_1+m_2}(f)=f(m_1+m_2)=f(m_1)+f(m_2)=\Phi_{m_1}(f)+\Phi_{m_2}(f)$.
+
+\textbf{(b)} Let $M=\Z^n\oplus T$ be a generic finitely generated $\Z$-module, where $n$ is the rank of $M$ and $T$ is the torsion component. Since for every $0\oplus t \in M$ there exists an $k\in Z$ such that $k\cdot 0\oplus t = 0$, it follows that $0\oplus t$ must map to $0$ under any homomorphism $f : M \to \Z$. So $M^*=\Hom(M, \Z)=\Hom(\Z^n, \Z)=\Z^n$. So $M^{**}=\Hom(\Z^n, \Z) = \Z^n$. Thus if $M$ has a nontrivial torsion component, it isnt isomorphic to its double dual. For a concrete example, take $M=\Z/2$.           
+
+% PROBLEM 10
+\pagebreak
+\begin{problem}
+  Let $R$ be a commutative ring. Show that $R$ is in fact a field if and only if every finitely generated $R$-module is free. 
+\end{problem}
+\textit{(Hint: if $a\neq 0$ is not invertible, consider $R/aR$, the quotient of $R$ by the subgroup $aR=\{ar,\ r\in R\}$; check that it is an $R$-module, and study its properties.)}
+
+If $R$ is a field, then any finitely generated $R$-module is in fact a finite dimensional vector space which is free since any finite dimensional vector space has a basis. Now suppose conversely that every finitely generated $R$-module is free. Let $a\neq 0$ be some element, and assume for the sake of contradiction that it isn't invertible. 
+
+Note that $R/aR$ is an $R$-module, and since for every $[x]=x+aR$ we have $a\cdot [x]=[0]$, it follows that no set of elements in $R/aR$ can be linearly independent. So $R/aR$ isn't free, yet it is generated by $[1]$. (This is non-trivial since $1\not\in aR$ because $a$ isn't invertible) So we have a contradiction because we have a finitely generated module which isn't free. Thus $R$ is a field.     
+
+\pagebreak
+\appendix
+\section{Appendix (From PSET 5)}
+In this section we will define multilinear forms and prove general results about symmetric and skew symmetric multilinear forms. Assume the base field is not characteristic $2$.
+\begin{definition}\label{kform}
+  Let $V$ be a finite dimensional vector space. For $k\geq 1$, define a {\em $k$-form} on $V$ as a map $T : V\times\cdots\times V \to k$ such that
+  \[
+    \begin{aligned}
+      T(av_1,v_2,\ldots,v_k) &= aT(v_1,v_2\ldots,v_k)\\
+      T(v+w,v_2,\ldots,v_k) &= T(v,v_2,\ldots,v_k) + T(w,v_2,\ldots,v_k)\\
+    \end{aligned} 
+  \]
+  for all $a\in \F$ and $v,w,v_1,\ldots,v_k\in V$, with similar conditions for the other arguments. The space of $k$-forms on $V$ is denoted by $T^k(V)$. This set can be given a natural vector space structure, where scalar multiplication and vector addition are both done piecewise on the values of the $k$-form.
+\end{definition}
+
+Next, we can prove a proposition related to the dimension of $T^k(V)$.
+\begin{proposition}\label{dimension}
+  Let $V$ be finite dimensional and $k\geq 2$. Then $T^k(V)\cong \Hom(V, T^{k-1}(V))$. Notably, this implies that $\dim T^k(V) = \left(\dim V\right)^k$.   
+\end{proposition}
+\begin{proof}
+  Define an isomorphism $\varphi : \Hom(V, T^{k-1}(V)) \to T^k(V)$ by sending $f : V \to T^{k-1}(V)$ to the $k$-form $T(v_1,v_2,\ldots,v_n) = f(v_1)(v_2,\ldots,v_n)$. This can be easily shown to be a linear map and there is an inverse map taking a $k$-form $T$ to the map $v \mapsto T(v,\cdots)$.\\
+
+  Thus $T^1(V)\cong V^*$ so $\dim T^1(V) = \dim V$, and $\dim T^k(V) = (\dim T^{k-1}(V))(\dim V)$. By induction this proves that $\dim T^k(V)=\left(\dim V\right)^k$.  
+\end{proof}
+
+Now to generalize the notions of symmetric and skew symmetric bilinear forms:
+
+\begin{definition}\label{symm}
+  Let $V$ be a finite dimensional vector space, with $k\geq 1$. A $k$-form $T\in T^k(V)$ is said to be {\em symmetric} if for any permutation $\sigma\in S_k$,
+  \[
+    T(v_1,v_2,\ldots, v_k) = T\left(v_{\sigma(1)}, v_{\sigma(2)}, \ldots, v_{\sigma(k)}\right)
+  .\] 
+ Similarly a $k$-form is said to be {\em skew-symmetric} if for any permutation $\sigma\in S_k$,
+  \[
+    T(v_1,v_2,\ldots, v_k) = \sgn(\sigma)T\left(v_{\sigma(1)}, v_{\sigma(2)}, \ldots, v_{\sigma(k)}\right)
+  .\] 
+  Let $T^k_{\mathrm{symm}}(V)$ be the set of symmetric $k$-forms on $V$ and let $T^k_{\mathrm{skew}}(V)$ be the set of skew-symmetric $k$-forms on $V$. 
+\end{definition}
+
+Both $T^k_{\mathrm{symm}}(V)$ and $T^k_{\mathrm{skew}}(V)$ are in fact subspaces of $T^k(V)$. It's trivial to see that they are closed under scalar multiplication. For additive closure, if $T, H$ are skew-symmetric $k$-forms then
+\[
+  \begin{aligned}
+  (T+H)(v_1,\ldots, v_k) &= \sgn(\sigma)T(v_{\sigma(1)},\ldots, v_{\sigma(k)})+\sgn(\sigma)H(v_{\sigma(1)},\ldots,v_{\sigma(k)})\\
+  &= \sgn(\sigma)(T+H)(v_{\sigma(1)},\ldots, v_{\sigma(k)})
+  \end{aligned}
+\]
+for all $\sigma\in S_k$. So $T+H$ is skew-symmetric. A similar argument can be used for symmetric $k$-forms. The last thing to now check is the dimensions of these spaces $T^k_{\mathrm{symm}}(V)$ and $T^k_{\mathrm{skew}}(V)$.
+
+\begin{proposition}\label{dimsymm}
+  Let $V$ be an $n$-dimensional vector space with $k\geq 1$. Then
+  \[
+    \dim T^k_{\mathrm{symm}}(V) = \binom{n+k-1}{k}
+  .\]   
+\end{proposition}
+\begin{proof}
+  If $e_1,\ldots,e_n$ is a basis for $V$, then a form $\mu\in T^k(V)$ is symmetric if and only if $\mu(e_{i_1},\ldots, e_{i_k})=\mu(e_{\sigma(i_1)},\ldots, e_{\sigma(i_k)})$ for all $i_1,\ldots, i_k$ and $\sigma\in S_k$. So $\mu$ is determined by the values $\mu(e_{i_1},\ldots, e_{i_k})$ where $1\leq i_1\leq i_2\leq\cdots\leq i_k\leq n$, and these values can rangle freely and independently. Since the $i_m$ don't have to be distinct, we are choosing $k$ things from $n$ objects with repetition, so there are exactly $\binom{n+k-1}{k}$ basis forms. 
+\end{proof}
+
+\begin{proposition}\label{dimskew}
+  Let $V$ be an $n$-dimensional vector space with $k\geq 1$. Then
+  \[
+    \dim T^k_{\mathrm{skew}}(V) = \binom{n}{k}
+  .\]   
+\end{proposition}
+\begin{proof}
+  Let $e_1,\ldots, e_n$ be a basis for $V$. A general form $\mu\in T^k(V)$ is skew-symmetric if and only if:
+  \begin{itemize}
+    \item $\mu(e_{i_1},\ldots,e_{i_k})=0$ if $i_a=i_b$ for some distinct $a,b$.
+    \item $\mu(e_{i_1},\ldots,e_{i_k})=\sgn(\sigma)\mu(e_{\sigma(i_1)},\ldots,e_{\sigma(i_k)})$ for all $\sigma\in S_k$ when all of the $i_a$ are distinct. 
+  \end{itemize}
+  So $\mu$ is determined by the values $\mu(e_{i_1},\ldots, e_{i_k})$ where $1\leq i_1< i_2<\cdots< i_k\leq n$, and these values can rangle freely and independently. Since the $i_m$ are distinct, we are choosing $k$ things from $n$ objects without repetition, so there are exactly $\binom{n}{k}$ basis forms. 
+\end{proof}
+
+\end{document}

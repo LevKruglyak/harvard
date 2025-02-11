@@ -1,0 +1,132 @@
+\documentclass{pset}
+
+\title{Math 262a Problem Set 6}
+\author{Lev Kruglyak}
+\due{October 27, 2023}
+
+\input{../262a.tex}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  In this problem you can work over any field, for example the complex numbers.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Let 
+    \[\begin{tikzcd}
+	    0 & {V''} & V & {V'} & 0
+	    \arrow[from=1-4, to=1-5]
+	    \arrow["g",from=1-3, to=1-4]
+	    \arrow["f",from=1-2, to=1-3]
+	    \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    be a short exact sequences of vector spaces. Show that the space of splittings has a natural structure as affine space over $\Hom(V', V'')$.
+  \end{part}
+
+  Recall that a splitting of this sequence is a map $s : V' \to V$ such that $g\circ s = \textrm{id}_{V'}$. So let's consider the space of splittings
+  \[
+    S_{(V)} = \{ s \in \Hom(V', V) : g\circ s = \textrm{id}_{V'}\}.
+  \]
+  This is clearly a vector space. Now given any $\xi \in \Hom(V', V'')$, we get a linear ``translation'' map 
+  \[
+      L_\xi : S_{(V)} \to S_{(V)} : s \mapsto s+f(\xi).
+  \]
+  The translation map is well-defined since $g(s+f(\xi)) = g(s)+g(f(\xi)) = g(s)=\textrm{id}_{V'}$. Now we must check that this action is transitive, so suppose we had splittings $s_1, s_2\in S_{(V)}$. Now consider the map $s_2 - s_1 : V' \to V$. For any $v'\in V'$, note that $v=(s_2-s_1)(v')$ satisfies $g(v)=v'-v'=0$, so there must be some $v''\in V''$ such that $f(v'')=v$ by exactness of the sequence. Thus, we can form a linear map $\xi$ which sends $v'$ to this $v''$, and it clearly satisfies $s_2-s_1=f(\xi)$ so $s_2 = s_1+f(\xi)$.
+  This means that we have an affine structure for $S_{(V)}$ over $\Hom(V', V'')$.
+
+  \begin{part}{b}
+    Let $V$ be a finite dimensional vector space and $W\subset V$ a subspace. Let $A_W$ denote the space of subspaces $W'\subset V$ such that $V=W\oplus W'$. Show that $A_W$ has a natural structure of an affine space over $\Hom(V/W, W)$. Give a geometric construction for the sum of an element of $A_W$ and a linear map $V/W \to W$.
+  \end{part}
+
+  Let $W'\in A_W$ be a subspace and $\xi : V/W \to W$ be some linear map. Let's define
+  \[
+    W' + \xi = \{ w' + \xi(w') : w'\in W'\}.
+  \]
+  First, we check that $V = W\oplus(W'+\xi)$. Suppose $v\in V$ is some vector. We can write it as $v = w+w'$ where $w\in W$ and $w'\in W'$ since $W'\in A_W$. Then $v=(w-\xi(w'))+(w'+\xi(w'))$, and now $w-\xi(w')\in W$ and $w'+\xi(w')\in W'+\xi$. Now we must show that this action is transitive. Suppose $W_1, W_2\in A_W$. Then for any (nonzero) $v\in V$, we can uniquely express it as a sum $w+w_1\in W\oplus W_1$ and $w'+w_2 \in W\oplus W_2$. Since $w+w_1=w'+w_2$, it follows that $w_2-w_1=w-w'\in W$, so let's set $\xi$ to be a linear map $V \to W$ sending $v$ to $w_2 - w_1$. This map is invariant under the quotient action of $W$, so it descends to a $\xi : V/W \to W$, which is the required translation. Thus, $A_W$ is affine over $\Hom(V/W, W)$.
+
+  To interpret this affine structure geometrically, recall that $V/W$ can be thought of as the space of lines parallel to $W$. Alternatively, this can be thought of as a \emph{foliation} of $V$ by parallel copies of $W$. A linear function $\xi : V/W \to W$ thus assigns a $W$-translation to each leaf of this foliation linearly. Now given a subspace $W'$, it must intersect each leaf only once (this is exactly the direct sum condition), so we simply translate it by $\xi$ to get a new subspace $W'+\xi$ which still only intersects each leaf only once.
+
+  \begin{part}{c}
+    Use (b) to construct charts on the Grassmannian $\Gr_k(V)$ of $k$-dimensional subspaces of $V$. %Index the charts by subspaces of dimensions n-k. What are transition functions?
+  \end{part}
+
+  For any subspace $W$ of dimension $n-k$, note that $A_W \subset \Gr_k(V)$. These in fact form an open cover, since 
+  \[
+    \bigcup_{W'\in A_W} W' = (V\setminus W)\cup\{0\}
+  \]
+  is an open set. We know from (b) that $A_W$ is an affine space over $\Hom(V/W, W)$, so it must have dimension $\dim(V/W)\cdot \dim(W) = k(n-k)$. Thus, by picking a distinguished plane $W'\in A_W$, and a basis for $\Hom(V/W, W)$, we could construct a coordinate chart $A_W \to \mathbb{F}^{k(n-k)}$. 
+
+  % \begin{claim}
+  %   Let $W$ be a $k$-dimensional subspace of $V$. Then, there is a canonical isomorphism
+  %   \[\Omega_W : T_{W} \Gr_k(V) \to \Hom(W, V/W).\]
+  % \end{claim}
+  %
+  % \begin{proof}
+  %   Pick some $S\in \Gr_{n-k}(V)$ with $V=W\oplus S$. Then $W\in A_S$, an affine space over $\Hom(V/S, S)$, so we can identify $T_W \Gr_k(V) = \Hom(V/S, S)$. However, note that we have canonical identifications of $V/S=W$ and $S=V/W$. This gives us our isomorphism $\Omega_W : T_W \Gr_k(V) \to \Hom(W, V/W)$.
+  % \end{proof}
+
+  \begin{part}{d}
+    Let $M$ be a Galilean spacetime with translation group $V$ equipped with a codimension one subspace $W$. Let $C, C'\subset M$ be affine lines transverse to the simultaneity foliation, i.e. $C,C'$ are \emph{affine worldlines}. Produce a linear map $V/W \to W$ and interpret it as the relative velocity of the affine wordlines. Define the acceleration of a single affine worldline $C\subset M$ as a map $(V/W)^{\otimes 2} \to W$.
+  \end{part}
+
+  Recall that a Galilean spacetime is an affine space $M$ over a vector space $V$ with a Galilean structure, i.e. a codimension $1$ subspace $W\subset V$. The orbits of the action of $W$ by affine translation form the simultaneity foliation $\mathcal{S}=M/W$. Now suppose we have two affine worldlines $C, C'$ which, by definition, are transverse to $\mathcal{S}$. This means that for every leaf $L\in \mathcal{S}$, and for every $p\in C\cap L$, we have $T_p M = T_p C\oplus T_p L$.
+
+  In our case, for any $p\in L$, we have natural identifications of the tangent spaces $T_p L$ with $W$ and $T_p M$ with $V$. Thus, the transversality condition simply means that $T_p C \in A_W$ for all $p\in C$. Now fixing some leaf $L\in \mathcal{S}$, let's pick $p\in C\cap L$ and $p\in C'\cap L$, then define their relative velocity 
+  \[
+    \mathcal{V}_{p,p'}(C,C') : V/W \to W \quad=\quad T_{p'}(C) - T_p(C) \textrm{ in }A_W
+  \]
+  when considered over an affine space over $\Hom(V/W, W)$. This is well-defined because $T_p(C)$, considered as an element of $A_W$, is independent of the choice of $p\in C$, as $C$ is an affine line. Thus, we have a well-defined \emph{relative velocity}. In the case when $C,C'$ are not affine, the dependence on the chosen points becomes important.
+
+  To get a notion of \emph{absolute velocity}, let's consider the Gauss map $\Gamma : C \to A_W$ which sends a point $p\in C$ to its tangent space $T_p C\in A_W$. Taking the differential of this map (considered as a map of smooth manifolds), we get
+  \[
+    d\Gamma_p : T_p C \to T_{\Gamma(p)} A_W 
+  \]
+  However, $A_W$ is an affine space so $T_{\Gamma(p)} A_W = \Hom(V/W, W)$, and by the natural identifications $V/W=T_pC$ and $W=V/T_p C$ we get the map
+  \[
+    d\Gamma_p : T_p C \to \Hom(T_p C, V/ T_p C).
+  \]
+  This map can be canonically interpreted as a bilinear form on $T_p C$, so we have a natural linear map
+  \[
+    \mathcal{A}_p(C) : (T_p C)^{\otimes 2} \to V/T_p C.
+  \]
+  When $C$ is an affine line, we note that $T_p C$ splits $V=T_p C\oplus W$, so we have natural identifications $T_p C = V/W$ and $V/T_p C=W$. This gives us our desired absolute acceleration map
+  \[\mathcal{A}(C) : (V/W)^{\otimes 2} \to W.\]
+\end{parts}
+
+\begin{problem}{4}
+  Construct the symplectic manifold that is the phase space of a classical Galilean particle.
+\end{problem}
+
+\begin{solution}
+  Let $M$ be a Galilean spacetime, i.e. an affine space over a vector space $V$ with Galilean structure $W$, and an orientation on $V/W$. Recall that a classical Galilean particle is some one-dimensional submanifold $C\subset M$ which is transverse to the simultaneity foliation $\mathcal{S}=V/W$.
+
+  Consider the cotangent bundle $T^*M \to M$. Given some particle $C\subset M$, by transversality, it follows that $T_p^*M = T_p^*C\oplus W^*$ for any $p\in C$. More generally, we can consider the subbundle $\Omega : M\times W=T^* \mathcal{S} \to M$. Let $\theta \in \Omega^1(T^*\mathcal{S})$ be the canonical one-form. Then we get a symplectic form $\omega = d\theta$, and this can be thought of as a two-form $\omega\in \Omega^2(T^* M)$.
+\end{solution}
+
+\begin{problem}{6}
+  Consider Maxwell’s equations in whatever form is familiar to you. Define an action of the group of isometries of Minkowski spacetime on the variables (fields) in those equations. Are the equations invariant? If not, is there a subgroup under which they are invariant?
+\end{problem}
+
+\begin{solution}
+  Given an inner product space $\R^3$, and assuming a perfect vacuum with units set $c=1$, the standard form of the Maxwell equations is
+  \[
+    \div \textbf{E} = 0, \quad \div \textbf{B} = 0, \quad\curl\textbf{E} = -\frac{\partial \textbf{B}}{\partial t}, \quad \curl \textbf{B} = \frac{\partial \textbf{E}}{\partial t},
+  \]
+  where $\textbf{E}(t), \textbf{B}(t)\in \VF^1(\R^3)$ are the electric and magnetic fields respectively. We can reformulate these equations in a rather elegant way using the Hodge dual operator. Let $\star : \Omega^1(\R^3) \to \Omega^2(\R^3)$ be the Hodge dual operator on $\R^3$ with respect to the inner product. Let's now define the $2$-form $F = dt\wedge E + (\star_{\R^3} B)$ in $\Omega^2(M)$, where $M=\R^{1,3}$ is the standard Minkowski spacetime with metric signature $\mu = (+---)$ extending the inner product on $\R^3$. Notice that in general, given some differential $2$-form $F\in \Omega^2(M)$, we can recover the vector fields $\textbf{E}$ and $\textbf{B}$ by splitting $F$ as a sum based on $dt$. 
+
+  \begin{claim}
+    The Maxwell equations are equivalent to \[\begin{aligned}dF &= 0\\d\!\star\! F &= 0\end{aligned}\]
+    where $\star$ is the Hodge dual operator on $\Omega(M)$.
+  \end{claim}
+
+  Now let $P(M)$ be the Poincare group of isometries of Minkowski spacetime $M$. Given some isometry $g\in P(M)$, let $\Phi_g : M \to M$ be the diffeomorphism corresponding to $g$. This gives us an induced action on vector fields $g^* : \VF^1(M) \to \VF^1(M)$ which sends 
+  \[
+    \left(g^* \textbf{X}\right)(v) = \left(d\Phi_g\right)_v\circ \textbf{X}(\Phi_{g^{-1}}(v)).
+  \]
+  Furthermore, such an action sends boundaries to boundaries, so clearly $d(g^*F)=0$ if $dF=0$. For the second condition, note that $\star F$ satisfies $F\wedge \star F = \mu(F, F)\; dt\wedge dx\wedge dy\wedge dz$. Clearly, any $g\in P(M)$ which preserves the Minkowski metric and volume form orientation also preserves this equation, so the desired group of isometries is $P^{\uparrow}(M)$.
+\end{solution}
+
+\end{document}

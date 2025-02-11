@@ -1,0 +1,203 @@
+\documentclass{pset}
+
+\title{Math 213a Problem Set 5}
+\author{Lev Kruglyak}
+\due{October 10, 2023}
+
+\input{../213a.tex}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ignasi Vicente}
+
+\begin{document}
+\maketitle
+\collaborators
+% Chapter 1: Exercises 39, 40, 48; 
+% Chapter 2: Exercises 1, 3, 4, 5.
+
+\begin{problem}{1.39}
+  Find a bounded harmonic function $u : \Delta \to \R$ such that $\lim_{r\to 1} u(re^{i\theta})=1$ for $\theta\in (0,\pi)$ and $-1$ for $\theta\in (\pi, 2\pi)$.
+\end{problem}
+
+\begin{solution}
+  Consider the function $u$ given by
+  \[
+    u(x,y) = \frac{2}{\pi}\arctan\left(\frac{2y}{1-x^2-y^2}\right).
+  \]
+  Note that this is bounded since $\arctan$ is bounded. To show that it is harmonic, we calculate the laplacian,
+  \[
+    \nabla^2 u(x,y) = \frac{2}{\pi}\left(\frac{\partial^2}{\partial x^2}\arctan\left(\frac{2y}{1-x^2-y^2}\right) + \frac{\partial^2}{\partial y^2}\arctan\left(\frac{2y}{1-x^2-y^2}\right)\right)=0.
+  \]
+  This can be checked manually with pain. Alternatively, we can observe that this is the imaginary part of a complex function involving the principal branch of the logarithm. 
+  In polar coordinates, this function can be expressed as 
+  \[
+    u(r,\theta)=\frac{2}{\pi}\arctan\left(\frac{2r\sin(\theta)}{1-r^2}\right).
+  \]
+  By this expression, we can take the limit of the interior to get
+  \[\lim_{r\to 1^-} \frac{2r\sin(\theta)}{1-r^2} = \begin{cases}\infty & \theta\in (0,\pi),\\ -\infty & \theta \in (\pi, 2\pi).\end{cases}\]
+  Thus, we have $\lim_{r\to 1^-} u(r, \theta) = 1$ for $\theta\in (0,\pi)$ and $-1$ for $\theta\in(\pi, 2\pi)$. This is the desired function.
+\end{solution}
+
+\begin{problem}{1.40}
+  Give an example of a bounded harmonic function $u$ on the unit disk whose harmonic conjugate $v$ is unbounded.
+\end{problem}
+
+\begin{solution}
+  Let's consider the function on $\Delta$ defined by
+  \[
+    f(z) = -i\log\left(\frac{1}{z+1}\right).
+  \]
+  Taking $\log$ to be the principal branch, we see that $1/(z+1)$ maps the disk $\Delta$ into the open right half-plane, so this is well-defined. This function can then be broken down into its real and imaginary parts
+  \[
+    f(z) =\arg\left(\frac{1}{z+1}\right)-i\log\left|\frac{1}{z+1}\right|.
+  \]
+  The real part of this, the $\arg$ part, is bounded because $\arg$ is. However, the imaginary part is unbounded, since as $z \to -1^+$ along a line on the real axis, we have
+  \[
+    \lim_{z\to -1^+} \log\left|\frac{1}{z+1}\right| = \infty
+  \]
+  which shows that the imaginary part is unbounded. The real and imaginary parts of $f$ are harmonic conjugates, so we are done.
+\end{solution}
+
+\begin{problem}{1.48}
+  Let $f(z) = \sum a_n z^n$ be a power series with coefficients $a_n \in \Z$. Suppose that $f(z)$ defines a bounded analytic function on the unit disk. Prove that $f(z)$ is a polynomial.
+\end{problem}
+
+\begin{solution}
+  We begin by proving a lemma.
+  \begin{claim}
+    Let $f$ be a bounded harmonic function $u$ on the unit disk with power series $f(z)=\sum a_n z^n$. Then $\sum |a_n|^2 < \infty$.
+  \end{claim}
+
+  \begin{proof}
+    Recall that by Parseval's theorem that for any $0<R<1$, we have
+    \[
+      \sum |a_n|^2 R^{2n} = \frac{1}{2\pi} \int_0^{2\pi}|f(Re^{i\theta})|^2\;d\theta \leq \frac{2\pi M^2}{2\pi} = M^2.
+    \]
+    Note that the partial sums of the series $|a_n|^2R^{2n}$ are a monotonically increasing sequence, so we get a limit
+    \[\lim_{R\to 1^-}\sum |a_n|^2 R^{2n} = \sum \lim_{R \to 1^-}|a_n|^2 R^{2n}  = \sum |a_n|^2.\]
+    By our bound, it follows that $\sum |a_n|^2<M^2$.
+  \end{proof}
+
+  Now if $f$ is some power series on the unit disk with integer coefficients, we apply the lemma to see that $\sum |a_n|^2 < \infty$. This of course implies that all but finitely many $a_n$ are nonzero, and so $f$ is a polynomial.
+\end{solution}
+
+\begin{problem}{2.1}
+  Prove there is no proper holomorphic map $f: \Delta \to \C$.
+\end{problem}
+
+\begin{solution}
+  Since $\Delta$ and $\mathbb{H}$ are biholomorphic, and biholomorphisms are proper, this is equivalent to proving that there is no proper holomorphic map $f : \mathbb{H} \to \C$. Suppose for the sake of contradiction that there was such a map. 
+  Note that $f^{-1}(0)$ must be compact by properness, and is discrete since zeroes of holomorphic functions are discrete. 
+
+  Let $U\subset \mathbb{H}$ be some region which contains no zeroes of $f$ and such that $\overline{U}\cap \partial\mathbb{H}$ has an accumulation point. Now consider the function $g(z) = 1/f(z)$. Since $U$ contains no zeros of $f$, this is holomorphic on $U$. Furthermore, by properness of $f$ it follows that $\lim_{z\to b} f(z)=\infty$ for any $b\in \partial\mathbb{H}$. Thus, $g$ can be extended to be continuous on the region $U^+ = U\cup (\overline{U}\cap \mathbb{H})$, with it being identically zero along the intersection with the boundary. 
+
+  By the Schwarz reflection principle, we get a holomorphic map on the reflection of $U^+$ over $\partial\mathbb{H}$. But this implies that $g$ is identically zero since it vanishes on a set with an accumulation point. This is a contradiction.
+\end{solution}
+
+\begin{problem}{2.3}
+  Let $\Gamma \subset \Aut(\widehat{\C})$ be a finite group. A rational map $f : \widehat{\C} \to \widehat{\C}$ is a \emph{quotient map} for $\Gamma$ if $f(x)=f(y)$, if and only if $\gamma(x) = y)$ for some $\gamma\in \Gamma$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Find a quotient map for the dihedral group $D_{2m}$ generated by $z \mapsto \zeta_m z$ and $z\mapsto 1/z$ for $\zeta_m = \exp(2\pi i/m)$.
+  \end{part}
+
+  We begin by proving this for the case of $D_{2}$. In this case, we only need to satisfy the quotient relation for the map $z \mapsto 1/z$. Consider the map
+  \[
+    f_1(z) = z+\frac{1}{z}.
+  \]
+  Clearly this map satisfies $f_1(1/z) = f_1(z)$. Now observe that $f_1(z) = (z^2+1)/z$ has degree $2$, so this map can have no other symmetries aside from $z\mapsto z$ and $z\mapsto 1/z$.
+
+  Now for $m>1$, we consider the map
+  \[
+    f_m(z) =f_1(z^m)= z^m + \frac{1}{z^m}.
+  \]
+  This clearly preserves the symmetry $z\mapsto 1/z$, and for any $\zeta_m$ we have $f_m(\zeta_m z) = f_1(z^m) = f_m(z)$. Since $f_m$ has degree $2m$, it follows that it's a quotient map for $D_{2m}$.
+
+  \begin{part}{b}
+    Let $\Gamma \subset \Aut(\widehat{\C})$ be the subgroup leaving the set $\{0, 1, \infty\}$ invariant. Give generators for $\Gamma$ and find a quotient map for $\Gamma$, normalized so that $f(\infty) = \infty$, $f(\zeta_6) = 0$ and $f(-1)=1$.
+  \end{part}
+
+  Note that $\Gamma$ is isomorphic to $S_3$, since a permutation of three points determines an automorphism of the Riemann sphere. This group is generated by transpositions of the form $z\mapsto 1/z$, $z\mapsto 1-z$, and $z\mapsto 1/1-z$. Now consider the mysterious function $f$ given by
+  \[
+    f(z) = \frac{4(1-z(1-z))^3}{27z^2(1-z)^2}.
+  \]
+  Clearly $f(z)=z$ and $f(1-z)=f(z)$. By some annoying algebraic manipulations we derive,
+  \[
+    f(1/z) = \frac{4\left(1-\frac{1}{z}\left(1-\frac{1}{z}\right)\right)^3}{27\frac{1}{z^2}\left(1-\frac{1}{z}\right)^2} = \frac{4\left(1-z(1-z)\right)^3}{27z^2(1-z)^2}=f(z).
+  \]
+  We can do the same for the other symmetries $f(1/(1-z))=f(z)$, $f(1-1/z)=f(z)$, and $f(1-1/(1-z))$. Since $f(z)$ is degree $6$, it follows that these are the only symmetries of $f$, so $f$ is a quotient map for $\Gamma$.
+\end{parts}
+
+\begin{problem}{2.4}
+  Symmetries of the spherical metric.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Verify that the spherical metric
+    \[\rho = \frac{2|dz|}{1+|z|^2}\]
+    is invariant under $h(z) = (z-1) / (z+1)$.
+  \end{part}
+
+  We begin by proving a useful geometric lemma:
+  \begin{claim}[Parallelogram Law]
+    Let $z_1, z_2\in \C$ be distinct complex numbers. Then we have:
+    \[
+      |z_1-z_2|^2 + |z_1+z_2|^2 = 2(|z_1|^2 + |z_2|^2).
+    \]
+  \end{claim}
+  \begin{proof}
+    Expanding, we have
+    \[\begin{aligned}
+      |z_1-z_2|^2 + |z_1+z_2|^2 &= (z_1-z_2)\overline{(z_1-z_2)} + (z_1+z_2)\overline{(z_1+z_2)}\\ &= |z_1|^2 - z_2\overline{z_1} - \overline{z_2}z_1 + |z_2|^2 + |z_1|^2 + z_2\overline{z_1} + \overline{z_2}z_1 + |z_2|^2\\
+                                &= 2(|z_1|^2 + |z_2|^2).
+    \end{aligned}\]
+    This can also be interpreted geometrically.
+  \end{proof}
+
+  Now to show that $\rho$ is $h$-invariant, we prove that $h^*\rho = \rho$. Expanding, and applying the parallelogram law, we get
+  \[\begin{aligned}
+    h^* \rho(z) = \rho(h(z))|h'(z)||dz| = \frac{2}{1+\left|(z-1)/(z+1)\right|}\left|\frac{2}{(z+1)^2}\right||dz| &= \frac{4}{|z+1|^2+|z-1|^2}|dz|\\
+                                                                                                                                        &=\frac{2}{1+|z|^2}|dz| = \rho(z).
+  \end{aligned}\]
+  A similar argument can be used on a chart around the point $z=\infty$, and this completes the proof.
+
+  \begin{part}{b}
+    Show that the rotations $g_\theta(z) = e^{i\theta}z$ together with $h$, generate the full group $\textrm{SU}_2 / \pm I\subset \textrm{PSL}_2(\C)$.
+  \end{part}
+
+  By the results of Problem 2.5, we can translate this to a statement about a quotient of the unit norm quaternion group $U/\pm 1$. Note that $h = (1-j)/\sqrt{2}$ in this group, and $g_\theta = \cos(\theta/2) + \sin(\theta/2)i$. Notice that $h^2=-j$. Treating $\mathbb{H}$ as a real $4$-space with the canonical real inner product. The unit norm quaternions form a multiplicatively closed $3$-sphere. The set $g_\theta$ and $h^2$, and $k=h^2 g_{\pi}$ are orthogonal in this space, and one of them is one dimensional so their multiplicative closure spans the whole sphere.
+\end{parts}
+
+\begin{problem}{2.5}
+  Prove that $\textrm{SU}_2$ is isomorphic, as a group, the unit norm quaternions $U$.
+\end{problem}
+
+\begin{solution}
+  First, let $U\in \textrm{SU}_2$ be a special unitary matrix. This means that $\det(U)=1$ and $U^* = U^{-1}$. This means that
+  \[
+    \begin{pmatrix}
+      a&b\\ c&d
+    \end{pmatrix}^* = 
+    \begin{pmatrix}
+      a&b\\ c&d
+      \end{pmatrix}^{-1} \quad\implies\quad \begin{pmatrix}\overline{a}&\overline{c}\\ \overline{b}&\overline{d}\end{pmatrix} = \begin{pmatrix}d&-b\\ -c&a\end{pmatrix}.
+  \]
+  So we know that $a=\overline{d}$ and $b = -\overline{c}$. Since $U$ has determinant $1$, it follows that $|a|^2+|b|^2=1$, and so matrices $U\in \mathrm{SU}_2$ can be parametrized by points $(a,b)$ in the complex circle. Explicitly, this parametrization looks like 
+  \[
+    U = \begin{pmatrix}a&b\\ -\overline{b}&\overline{a}\end{pmatrix}.
+  \]
+  Plugging in the $4$-th roots of unity into this parametrization (excluding duplicates up to sign) motivates the construction of the following set of matrices:
+  \[
+    \mathbf{1} = \begin{pmatrix}1&0\\0&1\end{pmatrix},\quad \mathbf{I}=\begin{pmatrix}i&0\\0&-i\end{pmatrix},\quad \mathbf{J}=\begin{pmatrix}0&1\\-1&0\end{pmatrix},\quad \mathbf{K} = \begin{pmatrix}0&i\\i&0\end{pmatrix}.
+  \]
+  Note that if $(a+bi, c+di)$ parametrizes a unitary matrix $U$, we have $U = a\mathbf{1}+b\mathbf{I}+c\mathbf{J}+d\mathbf{K}$, so these matrices span $\textbf{SU}_2$. From here it becomes an easy matrix computation exercise to check the identity:
+  \[
+    \mathbf{I}^2=\mathbf{J}^2=\mathbf{K}^2=\mathbf{I}\mathbf{J}\mathbf{K}=-\mathbf{1}.
+  \]
+  As this is the defining relation for the group of quaternions, this gives us a well-defined homomorphism $\textrm{U}_2 \to \mathbb{H}$. Since the norm of a quaternion $a+bi+cj+dk$ is exactly equal to the determinant of $a\mathbf{1} + b\mathbf{I} + c\mathbf{J}+d\mathbf{K}$, this is restricts to well-defined group isomorphism to the subgroup of unit norm quaternions so we are done.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,129 @@
+\documentclass{pset}
+
+\title{Math 213a Problem Set 4}
+\author{Lev Kruglyak}
+\due{October 3, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{18}
+  Let $p(n)$ be the number of partitions of $n$ into \emph{unequal} parts.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that $f(z)=\prod^\infty_{n=1}(1+z^n)$ defines an analytic function on $\Delta$.
+  \end{part}
+
+  Recall that $\prod^\infty_{n=1}(1+f_n(z))$ defines a holomorphic function on $\Delta$ if $\sum^\infty_{n=1} |f_n(z)|$ converges uniformly on compact subsets of $\Delta$. In this case, we simply have $f_n(z)=z^n$, and $\sum^\infty_{n=1} |z^n|$ is simply the geometric series when $|z|<1$. Thus, $f(z)$ is well-defined.
+
+  \begin{part}{b}
+    Show that $f(z)=\sum^\infty_{n=1}p(n)z^n$.
+  \end{part}
+
+  Let's do an expansion of the partial products $f_N(z) = \prod^N_{n=1}(1+z^n)$ by setting
+  \[ f_N(z) = \prod^N_{n=1}(1+z^n) = \sum^{N'}_{n=1} a_nz^n + O(z^{N'+1})\quad\textrm{for } N \gg N'.\]
+  Then we can see by induction and the distributive property that
+  \[a_n = \sum_{\substack{\ell_1+\cdots+\ell_k = n,\\ \ell_i\neq \ell_j, i<j}} 1 = p(n)\]
+  As $N \to \infty$, we can see that the $a_n$ remain constant. Then, since $f(z)$ has no singularities on the open disk $\Delta$, it follows that this power series has radius of convergence $R=1$.
+ 
+  \begin{part}{c}
+    Show that $f(z)$ cannot be analytically continued beyond the unit disk.
+  \end{part}
+
+  This problem was hard, so I wasn't able to solve it prior to the deadline. Here are my ideas/observations so far.
+\end{parts}
+
+\begin{problem}{23}
+  Consider the equation
+  \[
+    \int^\infty_0 \frac{x^\alpha \;dx}{(1+x^2)^2} = \frac{\pi(1-\alpha)}{4\cos(\pi \alpha / 2)}.
+  \]
+  Find the set of real $\alpha$ such that the integral above is absolutely convergent, and prove the equation above holds for all such $\alpha$. 
+\end{problem}
+
+\begin{solution}
+  We'll do this in two cases, one when $\alpha$ is not an integer and one when $\alpha$ is an integer. We'll first use a formula from a previous problem set to calculate the residues of $z^\alpha / (1+z^2)^2$, namely:
+  \[
+    \textrm{Res}\left(\frac{p(z)}{q(z)};\; a\right) = \frac{6q''(a)p'(a) - 2p(a)q'''(a)}{3q''(a)^2}.
+  \]
+\end{solution}
+
+\begin{problem}{25}
+  Prove the identity
+  \[
+    \int^{2\pi}_{0} \cos^{2n}(\theta)\;d\theta = 2\pi \frac{1\cdot 3\cdot 5\cdots (2n-1)}{2\cdot 4\cdot 6\cdots (2n)}
+  \]
+  by applying the residue theorem to $\int_{S^1} (z+1 /z)^{2n}\;dz/z$.
+\end{problem}
+
+\begin{solution}
+  We begin by noting that
+  \[
+    \oint_{S^1} (z+1/z)^{2n}\;dz/z = i\int_0^{2\pi} (e^{i\theta} + e^{-i\theta})^{2n}\;d\theta = 2^{2n}i\int_0^{2\pi} \cos^{2n}(\theta)\;d\theta
+  \]
+  To calculate this first integral, we observe that
+  \[(z+1/z)^{2n} = (z^2+1)^{2n}/z^{2n} = \sum^{2n}_{k=0}{\binom{2n}{k}} z^{2k-2n},\]
+  so the residue of $(z+1/z)^{2n}\;dz/z$ is the constant term of this polynomial, namely $\binom{2n}{n}$. Thus, by the residue theorem, we have
+  \[\int_{0}^{2\pi} \cos^{2n}(\theta)\;d\theta = 2\pi \cdot 2^{2n} \binom{2n}{n} = 2\pi\frac{1\cdot 3\cdot 5\cdots (2n-1)}{2\cdot 4\cdot 6\cdots (2n)},\]
+  where the last identity follows from a standard combinatorial identity.
+\end{solution}
+
+\begin{problem}{27}
+  Let $p(z)$ be polynomial of degree $d$ with no zeroes on the imaginary axis. 
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that
+    \[
+      N(p)=\lim_{R \to \infty}\frac{1}{2\pi i}\int^{iR}_{-iR}\frac{p'(z)}{p(z)}\;dz
+    \]
+    exists (where the integral is taken along the imaginary axis).
+  \end{part}
+  Let's set $N(p)=\lim_{R\to \infty} N_R(p)$, where
+  \[N_R(p) = \frac{1}{2\pi i}\int_{-iR}^{iR}d\log(p).\]
+
+  \begin{part}{b}
+    Prove that the number of zeroes of $p(z)$ with $\textrm{Re}(z)>0$ is given by $d /2 - N(p)$.
+  \end{part}
+\end{parts}
+
+\begin{problem}{28}
+  Suppose $a, b, c\in \R$, and $b\leq 0$. How many zeroes does
+  \[
+    p(z) = z^4 + az^3 + bz^2 + cz + 1
+  \]
+  have in the region $\textrm{Re}(z) >0$.
+\end{problem}
+
+\begin{problem}{32}
+  Compute the first four nonzero terms in the power series for $\tan(z)$ at $z=0$ by formally inverting the power series for 
+  \[
+    \tan^{-1}(z) = \int \frac{dz}{1+z^2}.
+  \]
+\end{problem}
+
+\begin{solution}
+  This integral expression gives us the standard power series:
+  \[\tan^{-1}(z) = \sum^\infty_{n=1} (-1)^{n+1}\frac{z^{2n-1}}{2n-1},\quad \implies \quad a_n = \frac{(-1)^{n+1}}{2n-1}.\]
+  Recall that to invert a power series $\sum a_nz^n$, we have the recursive form for its coefficients $\sum b_nz^n$, given by
+  \[b_0 = \frac{1}{a_0}, \quad b_n = -\frac{1}{a_0}\sum^n_{i=1}a_ib_{n-i}.\]
+  Plugging our terms into the recurrence, we get:
+  \[\begin{aligned}
+    b_0 &= 1\\
+    b_1 &= -(-1/3) = 1/3\\
+    b_2 &= -(1/5 -(1/3)(1/3)) = 
+  \end{aligned}\]
+\end{solution}
+
+\begin{problem}{34}
+  Evaluate $J=\int_0^\infty \sin(x) / x\;dx$ as follows. First, for all $a\geq 0$, define
+  \[
+    I(a) = \int^\infty_{0}\exp(-ax)\sin(x) /x\;dx.
+  \]
+  Then, compute $I'(a)$ in closed form by differentiating under the integral sign. Prove that this computation is justified!
+\end{problem}
+
+\end{document}

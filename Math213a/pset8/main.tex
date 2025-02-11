@@ -1,0 +1,183 @@
+% 3, 5, 8, 10, 12, 16, 18.
+
+\documentclass{pset}
+
+\title{Math 213a Problem Set 8}
+\due{November 7, 2023}
+\author{Lev Kruglyak}
+
+\input{../213a.tex}
+
+\collaborator{Leonardo Kaplan}
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{3}
+  Show that if $f,g\in S$ and $f(\Delta)$ contains $g(\Delta)$, then $f=g$.
+\end{problem}
+
+\begin{solution}
+  Suppose $g(\Delta)\subset f(\Delta)$. Since $f$ is univalent, we can consider the holomorphic map $h : \Delta \to \Delta$ given by $h = f^{-1}\circ g$. Clearly $h(0)=0$, and by the chain rule we have
+  \[
+    h'(0) = g'(0)\cdot \frac{1}{f'(g(0))} = 1.
+  \]
+  Now since $|h(z)|< 1$ for all $|z|<1$ and $|h'(0)|=0$, it follows by Schwarz lemma that $h(z)=az$ for some $|a|=1$. Composing with $f$ on both sides gives us $g(z)=f(az)$ which is a contradiction to the univalence of $f$ and $g$ unless $a=1$. Thus, $f=g$.
+\end{solution}
+
+\begin{problem}{5}
+  Show that if $f\in \Sigma$ and $w$ is not in the image of $f$, then $|w|\leq 2$.
+  % apply the bound |b1|<=1 to the function sqrt(f(z^2)-w)
+\end{problem}
+
+\begin{solution}
+  If $w$ is not in the image of $f$, then there is a well-defined branch cut $\sqrt{(f(z^2)-w)}\in \Sigma$, and it's clear that it has Laurent expansion 
+  \[
+    \sqrt{-w+z^2+\frac{b_1}{z^2}+\frac{b_2}{z^4}+\cdots} = z - \frac{w}{2z} + \frac{4b_1-w^2}{2z^3}+\cdots.
+  \]
+  It thus follows that $|w/2|\leq 1$ so $|w|\leq 2$.
+\end{solution}
+
+\begin{problem}{8}
+  For $a > b > 0$ consider the ellipse $E\subset \C$ with major axis $[-a,a]$ and minor axis $[-ib, ib]$. Let $I\subset [-a, a]$ be the segment joining the foci of $E$. Finally, let $B$ be the annular region between $E$ and $I$. Find an explicit conformal map $f : A(R) \to B$ for some $R>1$.
+\end{problem}
+
+\begin{solution}
+  Recall that the focal radius satisfies $c^2=a^2-b^2$, so $I=[-c, c]$. Since the image of the upper semicircle of the unit disk under $z+1/z$ is $[-2,2]$, we might consider the conformal map
+  \[
+    f(z) = \frac{c}{2}\left(z+\frac{1}{z}\right),\quad\textrm{with}\quad R = \frac{c}{a-b}.
+  \]
+  To prove that this is the desired conformal map, we must show that it is an bijection $A(R) \to B$. First, let's note that $f$ maps $\C - \overline{\Delta}$ to $\C - [-c, c]$, this follows since $z+1/z$ maps $\C - \overline{\Delta}$ to $\C - [-2,2]$. Similarly, we know that circles centered at $z=0$ are mapped by $z+1/z$ to ellipses with foci at $\pm 2$. Thus, it follows that $S^1(R)$ is mapped by $f$ to $E$ since $f(\pm R) = \pm a$ and $f(\pm iR) = \pm ib$. This shows that the map is injective and maps surjectively onto $B$.
+\end{solution}
+
+\begin{problem}{10}
+  Let $f : \Delta \to \C$ be analytic and suppose $\int_\Delta |f'(z)|^2|dz|<\infty$. Prove that $F(z)=\lim_{r\to 1} f(rz)$ exists and is finite for almost every $z\in S^1$.
+\end{problem}
+
+\begin{solution}
+  Note that in polar coordinates, we have
+  \[
+    \int_\Delta |f'(z)|^2|dz|^2 = \int_0^{2\pi}\int_0^1 r|f'(re^{i\theta})|^2 \;dr\wedge d\theta <\infty.
+  \]
+  Separating $S^1$ into a subset where $\int_0^1 r|f'(re^{i\theta})|^2\;dr=\infty$, we see that this set must have measure zero. So let's assume that $z\in S^1$ is some point with $\int_0^1 r|f'(rz)|^2\;dr < \infty$. Note that by the H\"older inequality, we have
+  \[
+    \int^1_0 \sqrt{r}|f'(rz)|\;dr \leq \left(\int^1_0 r|f'(rz)|^2\;dr\right)^{1/2}\left(\int^1_0 1^2\; dr\right)^{1/2} <\infty.
+  \]
+  This means that $\sqrt{r} f'(rz)$ is an $L^1$ function, and so we have
+  \[
+    \int^1_0 \sqrt{r} f'(rz)\;dr = \sqrt{r} f(rz)\big|^1_0 = \lim_{r\to 1^-} \sqrt{r}f(rz) < \infty.
+  \]
+  Finally, we see that
+  \[
+    F(z) = \lim_{r\to 1^-} f(rz) = \lim_{r\to 1^-}\sqrt{r} f(rz)
+  \]
+  since $1/\sqrt{r}\to 1$ as $r\to 1^-$. This whole calculation was done for almost any $z$, so $F(z)$ is defined for almost every $z$.
+\end{solution}
+
+\begin{problem}{12}
+  What are the conformal radii of the following pointed regions?
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    $(\mathbb{H}, i)$
+  \end{part}
+
+  There is a Riemann map $f : (\Delta, 0) \to (\H, i)$ given by 
+  \[
+    f(z) = \frac{i(1-z)}{(1+z)}\quad\implies\quad |f'(0)| = \left|\frac{-2}{(1+z)^2}\right|_{z=0} = 2.
+  \]
+  Thus, the conformal radius is $2$.
+
+  \begin{part}{b}
+    $(\{z : -1<\textrm{Re }z<1\}, 0)$
+  \end{part}
+
+  Let's call this region $(S, 0)$. First, we have a Riemann map $f_1 : (S, 0) \to (\H, i)$ given by
+  \[
+    f_1(z) = \exp\left( \frac{\pi i}{2}(z+1)\right).
+  \]
+  We can then compose with inverse of the Riemann map from the previous problem $f_2 : (\H, i) \to (\Delta, 0)$, and then the conformal radius is $1/|(f_2\circ f_1)'(0)|$. This evaluates to
+  \[
+    \frac{1}{|(f_2\circ f_1)'(0)|} = \frac{1}{|f_1'(0)\cdot f_2'(f_1(0))|} = \frac{1}{|f_2'(i)|}\cdot \frac{1}{|f_1'(0)|} = 2\cdot \frac{2}{\pi} = \frac{4}{\pi}.
+  \]
+
+  \begin{part}{c}
+    $(\{z\in \mathbb{H} : -\pi < \textrm{Re }z < \pi\}, i)$
+  \end{part}
+
+  To begin, note that the map $f_1(z) = -i\exp(iz/2)$ sends the region to $\Delta \cap -\H$. The map $f_2(z)=z+1/z$ further sends this region to $\H$, and composing the two functions gives us $(f_2\circ f_1)(z)=2\sin(z/2)$. Scaling this function appropriately, we can construct the function
+  \[
+    f_3(z) = \frac{2\sin(z/2)}{e^{1/2} - e^{-1/2}} = i\frac{\sin(z/2)}{\sin(i/2)}\quad\implies\quad f_3'(i) = 1/2\coth(1/2).
+  \]
+  Finally, we compose with the M\"obius transformation from (a), and we can see that the conformal radius becomes $4\tanh(1/2)$.
+
+  \begin{part}{d}
+    $(\widehat{\C} - [-2, 2], \infty)$
+  \end{part}
+
+  Let $f$ be the reciprocal of the local inverse of $z+\frac{1}{z}$ which maps $(\Delta,0)$ to $(\widehat{\C} - [-2, 2], \infty)$. This has derivative $1$ at the origin, so it follows that the conformal radius of the region must be $1$.
+
+  \begin{part}{e}
+    $(S_\alpha, r)$, where $r>0$ and $S_\alpha = \{z : \arg(z)\in (-\alpha, \alpha)\}$
+  \end{part}
+
+  We have a well-defined branch of the logarithm on $S_\alpha$, so we can map $S_\alpha$ to the upper half-plane by the map $iz^{\pi/2\alpha}$. We normalize by setting $f_1(z) = iz^{\pi /2\alpha}/r^{\pi/2\alpha}$. Finally, we compose with the M\"obius transformation $M$ from (a), finally setting
+  \[
+    f(z) = e^{-i\pi^2/4\alpha}M\left(\frac{iz^{\pi/2\alpha}}{r^{\pi / 2\alpha}}\right).
+  \]
+  By taking derivatives, we can then calculate the conformal radius to be $(4\alpha/\pi)r^{\pi/2\alpha}$.
+\end{parts}
+
+\begin{problem}{16}
+  For $t\geq 0$, let $U_t = \mathbb{H}\cup (-\mathbb{H}) \cup (-t,t)$. Let $f_t : (\mathbb{H}, i) \to (U_t, i)$ be the Riemann mapping, normalized so that $f'_t(i)>0$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Find $f_t(z)$ explicitly for $t>0$.
+  \end{part}
+
+  Consider the family of functions $f_t(z)$ given by 
+  \[
+    f_t(z) = \frac{(t^2+2\sqrt{1+t^2}+2)z^2 + t^2}{2(\sqrt{1+t^2}+1) z}.
+  \]
+  Clearly this function is holomorphic on $\H$ for any $t>0$. Furthermore, we have
+  \[
+    f'_t(z) = \frac{2t^2+4\sqrt{1+t^2} + 4}{2\sqrt{1+t^2} + 2}z-\frac{t^2}{2(\sqrt{1+t^2}+1)}\frac{1}{z^2}
+  \]
+  which is real and positive at $z=i$ for any $t>0$. This map is clearly a Riemann map because it can be expressed as a composition of $z+1/z : \H \to U_2$ with automorphisms of $\H$ and M\"obius transformations. (Slightly tedious details.)
+
+  \begin{part}{b}
+    Show that as $t\to 0$, $f_t(z) \to f_0(z)=z$ in $\mathcal{O}(\mathbb{H})$.
+  \end{part}
+
+  Notice that for any compact $C\subset \H$, we can expand the norm
+  \[
+    \| f_t(z) - z\|_C = \frac{t^2}{1+\sqrt{t^2+1}}\left|\frac{z^2+1}{2z}\right|_C.
+  \]
+  As $t\to 0$, this coefficient $t^2/(1+\sqrt{t^2+1})\to 0$, so $\|f_t(z)-z\|_C \to 0$ since $(z^2+1)/2z$ is bounded on a compact subset of $\H$. This means we have convergence $f_t(z) \to z$ in $\mathcal{O}(\H)$.
+
+  \begin{part}{c}
+    Note that $-\mathbb{H}\subset f_t(\mathbb{H})$ for all $t>0$, but $-\mathbb{H}$ is disjoint from $f_0(\mathbb{H})$. How is this possible, if $f_t \to f_0$?
+  \end{part}
+
+  This is because $-\mathbb{H} \subset f_t(B_R(0)\cap \H)$ fits in the image of a ball with radius $R$ where $R\to 0$ as $t\to 0$.
+\end{parts}
+
+\begin{problem}{18}
+  Is there a univalent map $f : \C - \overline{\Delta} \to \C$ of the form $f(z)=z+\sum^\infty_{n=1} b_n / z^n$ with $b_2 = 1/\sqrt{2}$?
+\end{problem}
+
+\begin{solution}
+  Suppose such a function existed. Then we would have $\sum n |b_n|^2 \leq 1$, so all $b_n=0$ for $n\neq 2$. This means that our function is given by
+  \[
+    f(z) = z+ \frac{1}{z^2\sqrt{2}}.
+  \]
+  Note that $f'(z)=1-1/2\sqrt{2}z^3$, which has roots $|z|=(2)^{1/6} >1$. Such a critical point cannot happen in the domain of a univalent function, so we have a contradiction. Thus, no univalent function of this form can exist.
+\end{solution}
+
+\end{document}
+

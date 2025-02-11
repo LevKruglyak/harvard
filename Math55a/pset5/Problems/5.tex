@@ -1,0 +1,22 @@
+\begin{problem}
+Let $V\subset \R[x]$ be the space of real polynomials of degree at most 2, and define an inner product on $V$ by $\langle f,g\rangle=\int_0^1 f(x)g(x)\,dx$. Find an orthonormal basis of $V$ with respect to this inner product.
+\end{problem}
+
+We'll use the Gram-Schmidt process to get an orthonormal basis for $V$ from the standard basis $v_1=1, v_2=x, v_3=x^2$. First we'll get an orthogonal basis $u_1,u_2,u_3$. By the Gram-Schmidt process,
+\[
+  \begin{aligned}
+    &u_1 = v_1 = 1\\
+    &u_2 = v_2 - \proj_{u_1}(v_2) = x - \frac{\langle x, 1 \rangle}{\langle 1, 1\rangle}1 = x - \frac12\\
+    &u_3 = v_3 - \proj_{u_1}(v_3) - \proj_{u_2}(v_3) = x^2 - \frac{\langle x^2, 1\rangle}{\langle 1, 1\rangle}1 - \frac{\langle x^2, x-\frac12 \rangle}{\langle x-\frac12, x-\frac12\rangle}\left(x-\frac12\right)\\
+    &\quad\quad=x^2-x-\frac{1}{6}.
+  \end{aligned}
+\]
+To normalize this basis,
+\[
+  \begin{aligned}
+    &e_1 = \frac{u_1}{\| u_1\|} = 1\\
+    &e_2 = \frac{u_2}{\| u_2\|} = \left(\int^1_0\left(x-\frac{1}{2}\right)^2 dx\right)^{-\frac12}\left(x-\frac12\right) = 2x\sqrt{3}-\sqrt{3}\\
+    &e_3 = \frac{u_3}{\| u_3\|} = \left(\int^1_0\left(x^2-x-\frac{1}{6}\right)^2 dx\right)^{-\frac12}\left(x^2-x-\frac{1}{6}\right) = 6x^2\sqrt{5}-6x\sqrt{5}-\sqrt{5}.
+  \end{aligned}
+\]  
+So $1, 2x\sqrt{3}-\sqrt{3}, 6x^2\sqrt{5}-6x\sqrt{5}-\sqrt{5}$ is an orthonormal basis for $V$. 

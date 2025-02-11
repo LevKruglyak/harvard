@@ -1,0 +1,106 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 6}
+\author{Lev Kruglyak}
+\due{November 3, 2023}
+
+\usepackage{bm}
+\input{../stat210.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{8.5}[Correlation of squared Bivariate Normal components as squared correlation] Let $(Y_1, Y_2)$ be Bivariate Normal with correlation $\rho$ and with $Y_i$ marginally $\mathcal{N}(0,1)$. Show that
+  \[\Cor(Y_1^2, Y_2^2) = \rho^2.\]
+\end{problem}
+
+\begin{solution}
+  Letting $\mathbf{Y}$ be the random vector with components $Y_1$ and $Y_2$, we clearly see that
+  \[
+    \mathbf{Y}\sim \mathcal{N}_2\left(\begin{bmatrix}0\\0\end{bmatrix}, \begin{bmatrix}1&\rho\\ \rho&1\end{bmatrix}\right) \sim A\mathbf{Z}=\begin{bmatrix}1&0\\\rho&\tau\end{bmatrix}\mathbf{Z}\quad\textrm{where}\quad \mathbf{Z}\sim \mathcal{N}_2(0,1) \textrm{ and }\tau^2+\rho^2=1,
+  \]
+  since $AA^\intercal$ is equal to the covariance matrix. Thus, we have a joint representation $Y_1\sim Z_1$ and $Y_2\sim \rho Z_1+\tau Z_2$ for $Z_1,Z_2\in \mathcal{N}(0,1)$. Now that the moments of the Normal distribution are
+  \[
+    \E(Z_i^{n}) = \begin{cases}(2k)!/k!\cdot 2^{k} & n=2k,\\ 0&\textrm{otherwise}.\end{cases}
+  \]
+  We can use this to calculate the moments of $Z_i^2$, clearly $\E(Z_i^2) = 1$, and
+  \[
+    \Var(Z_i^2) = \E(Z_i^4)-\E(Z_i^2)^2 = 2 \quad\implies\quad \sigma(Z_i)=\sqrt{2}.
+  \]
+  Now, expanding the correlation, we have
+  \[
+    \begin{aligned}
+      \Cor(Y_1^2,Y_2^2) = \frac{\Cov(Y_1^2, Y_2^2)}{\sigma(Y_1^2)\sigma(Y_2^2)} &= \frac{\E(Y_1^2Y_2^2) - \E(Y_1^2)\E(Y_2^2)}{2}\\ &= \frac{\E(\rho^2 Z_1^4+2\rho\tau Z_1^3Z_2+\tau^2 Z_1^2Z_2^2) + \E(Z_1^2)\E(\rho^2Z_1^2+2\rho\tau Z_1Z_2+\tau^2\Z_2^2)}{2}\\ &=\frac{3\rho^2+\tau^2+\rho^2+\tau^2}{2} = \frac{2\rho^2}{2}=\rho^2.
+    \end{aligned}
+  \]
+\end{solution}
+
+\begin{problem}{8.6}[Conditioning on more information]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a} Show that within a Multivariate Normal, conditioning on more information reduces variance: $\Var(Y|\mathbf{X_1}) \leq \Var(Y|\mathbf{X_2})$ if $Y$, $\mathbf{X_1}, \mathbf{X_2}$ are subvectors of a MVN random vector, with $Y$ one-dimensional and $\mathbf{X_2}$ a subvector of $\mathbf{X_1}$.
+  \end{part}
+
+  First consider the case when $Y$ is a subvector of $\mathbf{X_1}$. In this case, $\Var(Y|\mathbf{X_1})=0$, and since conditional variance is positive almost surely, it follows that $\Var(Y|\mathbf{X_1})\leq \Var(Y|\mathbf{X_2})$. In case when $Y$ is not a subvector of $\mathbf{X_1}$, we can use the ``uncorrelation trick'' to express $Y=B\mathbf{X_1}+Y'$ for some random variable $Y'\ind \mathbf{X_1}$. Then, we have the inequality
+  \[\Var(Y|\mathbf{X_2}) = \Var(B\mathbf{X_1}|\mathbf{X_2}) + \Var(Y'|\mathbf{X_2}) \geq \Var(Y') = \Var(Y'|\mathbf{X_1})=\Var(Y'+B\mathbf{X_1}|\mathbf{X_1}) = \Var(Y|\mathbf{X_1})\]
+  from the fact that conditional variance is positive almost surely.
+
+  \begin{part}{b}
+    Give a counterexample to the above if the distribution is \emph{not} MVN. On the other hand, show that \emph{on average} conditioning on more information reduces variance:
+    \[\E(\Var(Y|\mathbf{X_1})) \leq \E(\Var(Y|\mathbf{X_2})).\]
+  \end{part}
+
+  To prove the average claim, we first can make a reduction
+  \[
+    \begin{aligned}
+      \E\left(\Var(Y|\mathbf{X_1})\right) &\leq \E\left(\Var(Y|\mathbf{X_2})\right)\\ \E\left(\E(Y^2|\mathbf{X_1}\right) - \E\left(Y|\mathbf{X_1})^2\right) &\leq \E\left(\E(Y^2|\mathbf{X_2}\right) - \E\left(Y|\mathbf{X_2})^2\right)\\
+      \E(Y^2)-\E\left(\E(Y|\mathbf{X_1})^2\right) &\leq \E(Y^2)-\E\left(\E(Y|\mathbf{X_2})^2\right)\\
+      \E\left(\E(Y|\mathbf{X_2})^2\right) &\leq \E\left(\E(Y|\mathbf{X_1})^2\right),
+    \end{aligned}
+  \]
+  Thus it suffices to prove this last statement. Note that $\E\left((\E(Y|\mathbf{X_1})-\E(Y|\mathbf{X_2}))^2\right)\geq 0$ since it is the expected value of a positive random variable. Expanding, we see that
+  \[
+    \begin{aligned}
+      \E\left((\E(Y|\mathbf{X_1})-\E(Y|\mathbf{X_2}))^2\right)&\geq 0\\
+      \E\left(\E(Y|\mathbf{X_1})^2\right) + \E\left(\E(Y|\mathbf{X_2})^2\right) -2\E\left(\E(Y|\mathbf{X_1})\E(Y|\mathbf{X_2})\right) &\geq 0\\
+      \E\left(\E(Y|\mathbf{X_1})^2\right) + \E\left(\E(Y|\mathbf{X_2})^2\right) -2\E\left(\E\left(\E(Y|\mathbf{X_1})\E(Y|\mathbf{X_2})\right)|\mathbf{X_2}\right) &\geq 0\\
+      \E\left(\E(Y|\mathbf{X_1})^2\right) - \E\left(\E(Y|\mathbf{X_2})^2\right) &\geq 0.
+    \end{aligned}
+  \]
+  Thus, we get the desired statement that $\E\left(\E(Y|\mathbf{X_2})^2\right) \leq \E\left(\E(Y|\mathbf{X_1})^2\right)$.
+\end{parts}
+
+\begin{problem}{8.9}[A Quadratic Form] Let $\mathbf{Y} \sim \mathcal{N}_k(0, V)$ with $V$ nonsingular. What (named) distribution does $\mathbf{Y}^\intercal V^{-1}\mathbf{Y}$ follow? Give a \emph{short} proof.
+\end{problem}
+
+\begin{solution}
+  Let's write $V=AA^\intercal$, then $\mathbf{Y}\sim A\mathbf{Z}$ for some $\mathbf{Z}\sim \mathcal{N}_k(0, 1)$. Then we have
+  \[
+    \mathbf{Y}^\intercal V^{-1} \mathbf{Y} = \mathbf{Z}^\intercal A^\intercal (AA^\intercal)^{-1} A\mathbf{Z} = \mathbf{Z}^\intercal \mathbf{Z}.
+  \]
+  This is exactly a sum of squares of $k$ Normal distributions, so it has a $\chi^2$ disistribution with $k$ degrees of freedom, usually denoted $\chi^2_k$.
+\end{solution}
+
+\begin{problem}{8.14}[Hat matrix in a linear model] Consider the Normal linear model $\mathbf{y} = X\pmb{\beta}+\pmb{\epsilon}$, where $\pmb{\beta}\in \R^k$, $X$ is an $n$ by $k$ data matrix of full rank (consider fixed, with $n\geq k$), and $\pmb{\epsilon}\sim \mathcal{N}_n(0, \sigma^2I)$ is the error term. Let $H\equiv X(X^\intercal X)^{-1}X^\intercal$ be the ``hat matrix'', which is the projection matrix onto the column space of $X$. 
+Show that the \emph{fitted values} $\widehat{\mathbf{y}}=H\mathbf{y}$ are independent of the \emph{residuals} $\mathbf{e}=(I-H)\mathbf{y}$.
+\end{problem}
+
+\begin{solution}
+  First, we'll note that $\widehat{\mathbf{y}}$ and $\mathbf{e}$ form a multivariate Normal distribution, indeed, we can write
+  \[
+    \begin{pmatrix}\widehat{\mathbf{y}}\\\mathbf{e}\end{pmatrix} =\begin{pmatrix}H\\I-H\end{pmatrix}\pmb{\epsilon} + \begin{pmatrix}HX\\(I-H)X\end{pmatrix}\pmb{\beta}.
+  \]
+  Thus, to show that $\widehat{\mathbf{y}}\ind \mathbf{e}$, it suffices to show that $\Cov(\widehat{\mathbf{y}}, \mathbf{e})=0$. Expanding, we have 
+  \[\begin{aligned}
+    \Cov(\widehat{\mathbf{y}}, \mathbf{e}) = \Cov(H\mathbf{y}, (I-H)\mathbf{y}) = \Cov(H\mathbf{y}, \mathbf{y}) - \Cov(H\mathbf{y}, H\mathbf{y}) &= H\Var(\mathbf{y})-H\Var(\mathbf{y})H^\intercal\\ &= (H-HH^\intercal)\Var(\mathbf{y}).
+  \end{aligned}\]
+  This last equality follows because $\Var(\mathbf{y})=\sigma^2 I$. Finally, note that
+  \[
+    HH^\intercal = \left(X(X^\intercal X)^{-1}X^\intercal\right)\left(X(X^\intercal X)^{-1}X^\intercal\right)^\intercal = X(X^\intercal X)^{-1}X^\intercal X (X^\intercal X)^{-1} X^\intercal = H,
+  \]
+  so the prior covariance calculation results in zero, proving that $\widehat{\mathbf{y}}\ind \mathbf{e}$.
+\end{solution}
+
+\end{document}

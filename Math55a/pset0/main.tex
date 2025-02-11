@@ -1,0 +1,197 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{import}
+\import{../../../../LaTeX}{basic}
+
+\title{Math 55a Optional Warm-Up}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\begin{center}
+Briefly met with fellow student Eliot Hodges discuss Problem 5.
+\end{center}
+
+\pagebreak
+
+\begin{problem}
+    Let $f:X\to Y$ be a map of sets. A function $g:Y\to X$ is called a
+    left (resp.\ right) inverse of $f$ if $g\circ f=\mathrm{id}_X$ (resp.
+    $f\circ g=\mathrm{id}_Y$).
+
+    \begin{enumerate}
+        \item Show that $f$ admits a right inverse if and only if $f$ is surjective. Show that, in general, a right inverse is not unique.
+        
+        \item Show that $f$ admits a left inverse if and only if $f$ is injective. Show that, in general, a left inverse is not unique.
+    \end{enumerate}
+\end{problem}
+
+\begin{enumerate}
+    \item Suppose $f$ is a surjective map. Construct $g : Y \to X$ by letting $g(y)$ be some $x \in X$ such that $f(x)=y$. (Note that such an $x$ is guaranteed to exist by the fact that $f$ is surjective.) Then $f \circ g = \mathrm{id}_Y$ by definition. $g$ is not unique because our choice of $g(y)$ was arbitrary, and there could be multiple $x\in X$ such that $f(x)=y$. Conversely, suppose $f : X \to Y$ is a map with a right inverse $g : Y \to X$. Then for every $y \in Y$, $f(g(y)) = y$, so $f$ is surjective. 
+    
+    \item Suppose $f$ is an injective map. Construct $g : Y \to X$ by letting $g(y) = x$ if there exists an $x$ such that $f(x)=y$, and letting $g(y)$ be arbitrary if no such $x$ exists. (Note that this map is well defined, because if there exists an $x$ such that $f(x)=y$, then this $x$ must be unique by injectivity of $f$.) Then $g(f(x)) = x$ for all $x\in X$. As before, note that $g$ isn't necessarily unique because it can be arbitrary for values outside the image of $f$. Now conversely suppose that $f$ has a left inverse, $g : Y \to X$. For any two $x_1, x_2 \in X$ satisfying $f(x_1) = f(x_2)$, we have $g(f(x_1)) = g(f(x_2))$ and so $x_1=x_2$. 
+\end{enumerate}
+
+\pagebreak
+\begin{problem}
+    Let $f:X\to Y$ be a map of sets.
+
+    \begin{enumerate}
+        \item For $B\subset Y$ we define $f^{-1}(B)=\{x\in X\,|\,f(x)\in B\}$. Show that:
+            \begin{enumerate}
+                \item $f^{-1}(Y-B)=X-f^{-1}(B)$
+                \item $f^{-1}\Bigl(\bigcup_{i\in I} B_i\Bigr)=\bigcup_{i\in I}
+                f^{-1}(B_i)$
+                \item $f^{-1}\Bigl(\bigcap_{i\in I} B_i\Bigr)=\bigcap_{i\in I}
+                f^{-1}(B_i)$
+            \end{enumerate}
+
+        \item For $A\subset X$ we define $f(A)$ to be the subset of $Y$ consisting of
+        all elements $y\in Y$ for which there exists $x\in A$ with $f(x)=y$. 
+        How does $f(X-A)$ compare with $Y-f(A)$?  How does $f\Bigl(\bigcup_{i\in I}
+        A_i\Bigr)$ compare with $\bigcup_{i\in I} f(A_i)$?
+        How does $f\Bigl(\bigcap_{i\in I}
+        A_i\Bigr)$ compare with $\bigcap_{i\in I} f(A_i)$?
+    \end{enumerate}
+\end{problem}
+
+\begin{enumerate}
+    \item To prove these set equalities, we'll show that both sides are subsets of each other.
+        \begin{enumerate}
+            \item Suppose $x \in f^{-1}(Y - B)$. This means that $f(x) \in Y - B$. Hence $f(x) \notin B$, and so $x \notin f^{-1}(B)$. Therefore, $x \in X - f^{-1}(B)$. Now conversely suppose $x \in X - f^{-1}(B)$. This means that $x \notin f^{-1}(B)$, so $f(x) \notin B$, so $f(x) \in Y - B$, so finally, $x \in f^{-1}(Y - B)$. This proves that the sets are equal.
+            \item Suppose $x \in f^{-1}\Bigl(\bigcup_{i\in I} B_i\Bigr)$. This means $f(x) \in \bigcup_{i \in I} B_i$, so $f(x)\in B_j$ for some $j\in I$. Thus $x\in f^{-1}(B_j)$ and so $x\in \bigcup_{i\in I}f^{-1}(B_i)$. Conversely if $x \in \bigcup_{i \in I}f^{-1}(B_i)$ then $x \in f^{-1}(B_j)$ for some $j\in I$, so $f(x)\in B_j$ and so $x \in f^{-1}\Bigl(\bigcup_{i\in I} B_i\Bigr)$. This proves that the sets are equal.
+            \item Suppose $x \in f^{-1}\Bigl(\bigcap_{i\in I} B_i\Bigr)$. Then $f(x) \in \bigcap_{i\in I} B_i$, so $f(x)\in B_i$ for all $i\in I$. Then $x\in f^{-1}(B_i)$ for all $i\in I$, and so $x\in \bigcap_{i\in I} f^{-1}(B_i)$. Conversely, if $x\in \bigcap_{i\in I} f^{-1}(B_i)$ then $x\in f^{-1}(B_i)$ for all $i\in I$ so $f(x)\in B_i$ for all $i\in I$. Hence, $f(x) \in \bigcap_{i\in I} B_i$ and $x \in f^{-1}\Bigl(\bigcap_{i\in I} B_i\Bigr)$ so the sets are equal.
+        \end{enumerate}
+    \item 
+\end{enumerate}
+
+\pagebreak
+\begin{problem}
+    Give an explicit bijection between $\N=\{0,1,2,\dots\}$ and
+    $\N^2=\N\times\N$.
+\end{problem}
+
+Let $T(n)=\left\lfloor \frac{1+\sqrt{1+8n}}{2} \right\rfloor$. Consider the  ``sawtooth'' map $f : \N \to \N \times \N$ given by:
+
+\[ f(n) = \left( n - \frac{T(n)(T(n)-1)}{2}, (T(n)-1)\left(\frac{T(n)}{2}+1\right) - n\right).\]
+
+To provide some context for what $T(n)$ is:
+
+\begin{lemma}
+    $T(n)$ is an integral inverse for the triangular numbers, i.e.
+    \[T\left(\frac{n(n-1)}{2}\right) = \left\lfloor n \right\rfloor.\]
+\end{lemma}
+
+\begin{proof} Straightfoward algebraic manipulations yield:
+    \[T\left( \frac{n(n-1)}{2}\right) = \left\lfloor \frac{1+\sqrt{1+4n(n-1)}}{2} \right\rfloor = \left\lfloor \frac{1+\sqrt{4n^2-4n+1}}{2} \right\rfloor = \left\lfloor \frac{1+2n-1}{2} \right\rfloor = \left\lfloor n \right\rfloor\]
+\end{proof}
+
+This map is generally quite complex and difficult to work with, however it's inverse is much simpler so we'll prove that its inverse is a bijection instead. 
+
+\begin{lemma}
+    Consider the map $g : \N \times \N \to \N$ given by:
+    \[ g(x,y) = \frac{(x+y+1)(x+y)}{2} + x\]
+    We claim this is a bijection.
+\end{lemma}
+\begin{proof} To prove $g$ is a bijection, we can verify that it is injective and surjective.
+    \begin{enumerate}
+        \item To prove surjectivity, suppose $n\in \N$. Then
+    \end{enumerate}
+\end{proof}
+
+\pagebreak
+\begin{problem}
+    At his death, a millionaire left his 10 children a million dollars in cash, all in \$100, \$10, \$1 bills, 10-cent, and 1-cent coins. Show that there is a way for them to split the fortune into ten stacks of equal value. (Note that this would not be true if there were \$3 bills).
+\end{problem}
+
+We can use the following lemma:
+
+\begin{claim}
+    Let $b \geq 2$, $N, L \geq 0$ be positive integers, and suppose
+    \[ b^{N}L = a_{N}b^{N-1}+\cdots+a_{1}b^1+a_{0}b^0\]
+    for some nonnegative integers $a_i$. Then there exist nonnegative integers $c_i \leq a_i$ such that 
+    \[ b^{N} = c_{N}b^{N}+\cdots+c_1b^1+c_0b^0.\]
+\end{claim}
+\begin{proof}
+    We proceed by induction on $N$. When $N = 0$, we have $L=a_0$, so $b^{N}=1$, satisfying the condition. Now suppose the claim is true for $N-1$. By assumption, we have 
+    \[ b^{N}L = a_{N}b^{N}+\cdots+a_1b^1+a_0b^0. \]
+    Now let $c_{N}=\left\lfloor L-a_{N} \right\rfloor$. Then,
+    \[ b^{N-1}\cdot b(L-a_{N}) = a_{N-1}b^{N-1}+\cdots+a_1b^1+a_0b^0.\]
+    Since we assumed the inductive hypothesis holds true for $N-1$, there must be $c_i$ such that
+    \[b^{N-1}=c_{N-1}b^{N-1}+\cdots+c_1b^1+c_0b^0.\]
+    
+\end{proof}
+
+\pagebreak
+\begin{problem}
+    Given a set $S$, let $\mathcal{E}\subset \mathcal{P}(S)$ be such that:
+    \begin{enumerate}
+        \item $S\in \mathcal{E}$.
+        \item If $A\in \mathcal{E}$ then $S-A\in \mathcal{E}$.
+        \item If $A,B\in \mathcal{E}$ then $A\cup B\in \mathcal{E}$ and $A\cap B\in \mathcal{E}$.
+    \end{enumerate}
+
+    Prove that if $S$ is finite then there is a set $T$ and a surjective map $f:S\to T$ such that $\mathcal{E}=\{f^{-1}(A),\ A\subset T\}$. What happens if $S$ is infinite?
+\end{problem}
+
+For the sake of clarity, we will refer to the pair $(S, \mathcal{E})$ satisfying conditions (1), (2), and (3) of the problem as a ``pseudo-measurable space'' and refer to $\mathcal{E}$ as a  ``pseudo-$\sigma$-algebra''. (In a real $\sigma$-algebra, countable unions and intersections as opposed to finite unions and intersections here)
+
+\begin{lemma}\label{restrlemma}
+    Suppose $(X, \sigma)$ is a pseudo-measurable space and suppose $Y\in\sigma$. Then $(Y, \restr{\sigma}{Y})$ is a pseudo-measurable space, where $\restr{\sigma}{Y} := \{ A\cap Y : A\in \sigma\}$.
+\end{lemma}
+\begin{proof}
+    We can check all the conditions to show $\sigma\cap \mathcal{P}(Y)$ is a $\sigma$-algebra.
+    \begin{enumerate}
+        \item It's clear that $Y\in \restr{\sigma}{Y}$.
+        \item Suppose $A\in \restr{\sigma}{Y}$. Then $S-A\in \sigma$, so $(S-A)\cap Y = Y-A\in \restr{\sigma}{Y}$.
+        \item Suppose $A,B \in \restr{\sigma}{Y}$. Then $A\cup B, A\cap B\in \sigma$. Since $A,B\subset Y$, it follows that $Y\cap (A\cup B) = A\cup B$ and $Y \cap (A\cap B) = A\cap B$ so $A\cup B, A\cap B\in \restr{\sigma}{Y}$.
+    \end{enumerate}
+    This proves that $\left(Y, \restr{\sigma}{Y}\right)$ is a pseudo-measurable space. 
+\end{proof}
+
+We can then rephrase the above problem somewhat:
+
+\begin{lemma}
+    Prove that for any finite set $S$ and pseudo-$\sigma$-algebra $\mathcal{E}$ on $S$, there exists a surjective function $f : S \to T$ such that $\mathcal{E}=f^{-1}(\mathcal{P}(T))$. (This last part is a slight abuse of notation.)
+\end{lemma}
+
+\begin{proof}
+    We'll prove the claim by strong induction on the size of $S$.
+
+    \begin{itemize}
+        \item If $|S|=1$, the only possible pseudo-$\sigma$-algebra on $S$ is $\mathcal{E}=\{\varnothing, S\}$, so we can let $f : S \to \{0\}$.
+        \item Now suppose the claim is true for all sets of size less than $N$. Now let $|S|=N$. We can assume WLOG that $\mathcal{E}$ contains a proper subset of $S$, say $A\in\mathcal{E}$. (Otherwise, $\mathcal{E}=\{\varnothing, S\}$ and we'd be done.) Consider the following two pairs:
+        \[\left(S-A, \restr{\mathcal{E}}{S-A}\right)\textrm{ and }\left(A, \restr{\mathcal{E}   }{A}\right)\]
+        By Lemma~\ref{restrlemma}, these are both pseudo-measurable spaces, and $|S-A|<N$ and $|A|<N$ since $A$ was assumed to be a proper subset of $S$. Hence, by the inductive hypothesis, there exist functions
+        \[ f_1 : \left(S-A, \restr{\mathcal{E}}{S-A}\right) \to T_1\textrm{ and } f_2 : \left(A, \restr{\mathcal{E}}{A}\right) \to T_2 \]
+        satisfying $\restr{\mathcal{E}}{S-A} = f_1^{-1}(\mathcal{P}(T_1))$ and $\restr{\mathcal{E}}{A} = f_2^{-1}(\mathcal{P}(T_2))$. We can then construct a function,
+        \[ f : S = (S-A)\sqcup A \to T_1\sqcup T_2 = T\]
+        defined in the obvious way. We can show that this function satisfies $\mathcal{E} = f^{-1}(\mathcal{P}(T))$, which would complete the induction.
+        \begin{itemize}
+            \item First, suppose $B\in f^{-1}(\mathcal{P}(T))$, say $B=f^{-1}(H)$, where $H\subset T$. Then $H=H_1\sqcup H_2$ where $H_1\subset T_1$ and $H_2\subset T_2$. By the definition of $f$, it follows that $f^{-1}(H)=f_1^{-1}(H_1)\sqcup f_2^{-1}(H_2)$. Since $f^{-1}_1(H_1)\in \restr{\mathcal{E}}{S-A}$ and $f^{-1}_2(H_2)\in \restr{\mathcal{E}}{A}$, (by definition of $f_1$ and $f_2$), it follows that $B = f_1^{-1}(H_1)\sqcup f_2^{-1}(H_2) = (S-A)\cap E_1 \cup A\cap E_2$ for some $E_1, E_2\in \mathcal{E}$. Since this expression only contains complements, unions, and intersections, it must be in the pseudo-$\sigma$-algebra, so $B\in \mathcal{E}$.
+            \item Conversely, suppose $B\in \mathcal{E}$. $B$ can be decomposed as $B=B_1\sqcup B_2$ where $B_1=(S-A)\cap B$ and $B_2=A\cap B$. Then $B_1\in \restr{\mathcal{E}}{S-A}$ and $B_2\in \restr{\mathcal{E}}{A}$ so $B_1\in f_1^{-1}(\mathcal{P}(T_1))$ and $B_2\in f_2^{-1}(\mathcal{P}(T_2))$. By a similar argument to the first part, we can conclude that $B\in f^{-1}(\mathcal{P}(T))$.
+        \end{itemize}
+
+        Now since $\mathcal{E} \subset f^{-1}(\mathcal{P}(T))$ and $f^{-1}(\mathcal{P}(T)) \subset \mathcal{E}$, it follows that $\mathcal{E} = f^{-1}(\mathcal{P}(T))$, so the claim follows by induction. \qedhere
+    \end{itemize}
+\end{proof}
+
+The case when $S$ is infinite is not as simple. However if $\mathcal{E}$ is finite, then we can modify the induction to be on the size of $\mathcal{E}$ and get the same result. In general however, the claim is not true. 
+
+\begin{counterexample}
+    Let $\{p_i\}_{i\geq 0}$ be the set of all prime integers. Consider the pseudo-measurable space $(\N, \mathcal{E})$ where $\mathcal{E} = \langle \{p_i\}_{i\geq 0}\rangle$ is the pseudo-$\sigma$-algebra generated by $\{p_i\}_{i\geq 0}$. Then there does not exist a set $T$ and surjective map $f : \N \to T$ such that $\mathcal{E} = f^{-1}(\mathcal{P}(T))$.   
+\end{counterexample}
+\begin{cproof}
+    Suppose for the sake of contradiction that there did exist some map $f : \N \to T$ satisfying the conditions of the claim. Since $f$ is surjective, and $\mathcal{E}=f^{-1}(\mathcal{P}(T))$, $T$ must be countably infinite so we can assume WLOG that $T=\N$. Consider the set $A=\{p_i\}_{i\geq 0}$. By assumption, $A\in \mathcal{E}$ since $A=f^{-1}\left(\{f(p_i)\}_{i\geq 0}\right)$. This is a contradiction, because $A$ cannot be expressed as a finite combination of complemenets, intersections, and unions of $\{p_i\}$.
+\end{cproof}
+
+So generally, it appears the claim holds true for finite pseudo-$\sigma$-algebras but in general does not hold true for infinite pseudo-$\sigma$-algebras.
+
+%{\bf 7.} How long did this assignment take you?  How hard was it?
+% What resources did you use, and how much help did you need?
+% (Remember to list the students you collaborated with on this assignment.)
+% How much prior experience with the material do you have?
+
+\end{document}

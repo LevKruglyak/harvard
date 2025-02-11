@@ -1,0 +1,163 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Review Homework}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Suppose $a > 0, b > 0$ and $1 < p \leq 2$. Consider the quantities
+    \[
+        U = (a+b)^p,\quad V = a^p+b^p
+    .\]
+    Is it true that $U\geq V$? Prove your answer or give a counter example. 
+\end{problem}
+
+\begin{solution}
+    \quad Note that $f(x)=x^p$ has second derivative $f''(x)=p(p-1)x^{p-2}$. For $x>0$ and $p>1$, this second derivative is positive so the function $f$ is convex. Thus we can apply Jensen's inequality to get $f(a)+f(b)\geq f(a+b)$. Thus $U \geq V$.
+\end{solution}
+
+\begin{problem}
+    Suppose $f_n \to f$ a.e. for all $x\in X = (0,1)$ and $\sup_n \|f_n\|_{L^2(X)} \leq M$ for some fixed $M$.
+    \begin{enumerate}[(a)]
+        \item Do we know $\|f\|_{L^2(X)}<\infty$?
+        \item Do we know $\lim_{n\to \infty} \|f_n-f\|_{L^2(X)} = 0$?
+        \item Do we know that $\lim_{n\to \infty} \|f_n-f\|_{L^p(X)}=0$ for $1 < p < 2$? 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} This is true. By Fatou's lemma, we get
+    \[
+       \|f\|_{L^2(X)}^2= \int_X |f|^2 =  \int_X \liminf_n|f_n|^2 \leq \liminf_n \int_X |f_n|^2 \leq \sup_n \int_X |f_n|^2 = M^2
+    .\] 
+    Thus $\|f\|_{L^2(X)} \leq M < \infty$. 
+
+    \textbf{(b)} This is false. Consider the functions $f_n = n^{1 /2}\chi_{[0,1 /n]}$. Then clearly $f_n \to 0$ on $(0,1)$, and $\|f_n\|_{L^2(X)} = n\cdot 1 / n =1$, yet $\lim_{n\to\infty} \|f_n - 0\|_{L^2(X)}=1$.
+
+    \textbf{(c)} This is true. We'll begin by proving a generalization of H\"older's inequality.
+    \begin{claim}
+        Let $a,b,c\geq 1$ satisfy $\frac{1}{a}+\frac{1}{b}=\frac{1}{c}$. Then for any functions $f,g$, we have $\|fg\|_c \leq \|f\|_a\|f\|_b$.  
+    \end{claim}
+    \begin{proof}
+        Let $f' = f^c$ and $g'=g^c$. Since $\frac{1}{a /c} + \frac{1}{b /c} = 1$, we can apply H\"older's inequality to get $\|f'g'\|_1 \leq \|f'\|_{a /c}\|g'\|_{b /c}.$ However recall that $\|f\|_{ab} = \|f^a\|^{1 /a}_b$. We can use this identity to get
+        \[
+            \begin{aligned}
+                \|f'g'\|_1=\|(f'g')^{1 /c}\|_{c}^c = \|fg\|^c_c \leq \|f'\|_{a /c}\|g'\|_{b /c} = \|f\|_{a}^c\|g\|_b^c\\
+                \implies \|fg\|_c \leq \|f\|_a\|g\|_b,
+            \end{aligned}
+        \]
+        which is what we were trying to prove. Furthermore, equality only happens when $(f')^{a /c}=f^a$ and $(g')^{b /c}=g^b$ are linearly dependent almost everywhere.
+    \end{proof}
+
+    \quad First of all, let's use Egorov's theorem to construct closed sets $A_\epsilon \subset X$ with $\mu(X\setminus A_\epsilon)< \epsilon$ and $f_n \to f$ uniformly on $A_\epsilon$. This means that for all $\delta>0$, there is some $N$ such that for all $n\geq N$ we have $\sup_{A_\epsilon} |f-f_n| < \delta$. Then $\lim_{n\to \infty}\|f-f_n\|_{L^p(A_\epsilon)}=0$.
+    
+    \quad Next, notice that $\|f-f_n\|_{L^p(X)} = \|f-f_n\|_{L^p(A_\epsilon)} + \|f-f_n\|_{L^p(X\setminus A_\epsilon)}$. By Minkowski's inequality, we have
+    \[
+        \|f-f_n\|_{L^p(X\setminus A_\epsilon)} \leq \|f\|_{L^p(X\setminus A_\epsilon)}+\|f_n\|_{L^p(X\setminus A_\epsilon)}
+    .\] 
+    Since $p<2$, by generalized H\"older's inequality we have
+    \[
+        \|f\|_{L^p(X\setminus A_\epsilon)} = \|f\cdot \chi_{X\setminus A_\epsilon}\|_{L^p(X\setminus A_\epsilon)} \leq \|f\|_{L^2(X\setminus A_\epsilon)}\|f\|_{L^{2p / p-1}(X\setminus A_\epsilon)} = \|f\|_{L^2(X\setminus A_\epsilon)} \mu(X\setminus A_\epsilon) \leq M\epsilon
+    .\] 
+    Similarly, we get $\|f_n\|_{L^p(X\setminus A_\epsilon)}\leq M\epsilon$. Putting this together, we get
+    \[
+        \lim_{n\to \infty}\|f-f_n\|_{L^p(X)} = \lim_{n\to \infty}\|f-f_n\|_{L^p(A_\epsilon)}+\lim_{n\to \infty}\|f-f_n\|_{L^p(X\setminus A_\epsilon)} \leq 2M\epsilon
+    .\]  
+    Since $\epsilon$ was arbitrary, we get $\lim_{n\to \infty}\|f-f_n\|_{L^p(X)}=0$.
+\end{solution}
+
+\begin{problem}
+    Suppose $f$ is a positive function on $[0,1]$. Which of the following is larger? Prove your claim.
+    \[
+        \int^1_0 f(x)\log f(x)\;dx,\quad \int^1_0 f(s)\;ds \int^1_0 \log f(t)\;dt
+    .\] 
+\end{problem}
+
+\begin{solution}
+    \quad We claim that the first is larger. Consider the function $g : x \to -\log(x)$. This has second derivative $g''(x) = x^{-2}$ which is positive on $(0, \infty)$. Since $\mu([0,1])=1$, we can apply Jensen's inequality to get
+    \[
+        -\log\int_0^1 f(x)\;dx \leq -\int_0^1 \log f(x)\;dx \implies \int_0^1 \log f(x)\;dx \leq \log \int_0^1 f(x)\;dx
+    .\]
+    Similarly, the function $h : x \to x\log(x)$ has second derivative $h''(x) = 1 /x$ on $(0,\infty)$ so we get
+    \[
+        \int_0^1 f(x)\;dx \log \int_0^1 f(x)\;dx \leq \int_0^1 f(x)\log f(x)\;dx 
+    .\]  
+    Combining the inequalities together, we get
+    \[
+        \int_0^1 f(x)\;dx \int_0^1 \log f(x)\;dx \leq \int_0^1 f(x)\;dx\log\int_0^1 f(x)\;dx \leq \int_0^1 f(x)\log f(x)\;dx
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Let $\frac{1}{p}+\frac{1}{q}+\frac{1}{r}=1$ and $1\leq p,q,r<\infty$. For any positive functions $f,g,h$ on $\R^n$, prove that
+    \[
+        \int_{\R^n} fgh\; dx\leq \|f\|_p\|g\|_q\|h\|_r
+    .\]  
+\end{problem}
+
+\begin{solution}
+    \quad Note that $\frac{1}{p}+\frac{1}{qr / (q+r)} = 1$ so we can apply H\"older's inequality to get
+    \[
+        \int_{\R^n} fgh\;dx = \|f\cdot gh\|_1 \leq \|f\|_p\|gh\|_{qr / (q+r)}
+    .\]  
+    Then by generalized H\"older inequality, (proved in Problem 2) since $\frac{1}{q}+\frac{1}{r}=\frac{1}{qr /(q+r)}$, we get
+    \[
+        \|gh\|_{qr / (q+r)} \leq \|g\|_q\|h\|_r \implies \int_{\R^n} fgh\;dx \leq \|f\|_p\|g\|_q\|h\|_r
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Let $\mu$ be a positive measure on $X$. A sequence $\{f_n\}$ of complex measurable functions on $X$ is said to \emph{converge in measure} to the measurable function $f$ if for every $\epsilon>0$ there corresponds an $N$ such that
+    \[
+        \mu(\{x : |f_n(x) - f(x)|>\epsilon\}) < \epsilon
+    \]
+    for all $n > N$. (This notion is of importance in probability theory.) Assume $\mu(X)<\infty$ and prove the following statements:
+    \begin{enumerate}[(a)]
+        \item If $f_n(x)\to f(x)$ a.e., then $f_n \to f$ in measure.
+        \item If $f_n\in L^p(\mu)$ and $\|f_n-f\|_p \to 0$, then $f_n \to f$ in measure; here $1\leq p\leq \infty$.
+        \item If $f_n\to f$ in measure, then $\{f_n\}$ has a subsequence which converges to $f$ a.e.  
+    \end{enumerate}  
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} By Egorov's theorem, for every $\epsilon>0$, let $A_\epsilon$ be a closed subset of $X$ with $\mu(X\setminus A_\epsilon)$ and $f_n\to f$ uniformly on $A_\epsilon$. Then there is some $N$ such that for all $n\geq N$ we have $|f(x)-f_n(x)|<\epsilon$ for all $x\in A_\epsilon$. Thus
+    \[
+        \mu(\{x : |f(x)-f_n(x)| > \epsilon\}) \leq \mu(X\setminus A_\epsilon) <\epsilon
+    .\]
+    This means that $f_n \to f$ in measure.
+
+    \textbf{(b)} Let $\epsilon>0$. Let $N$ be such that for all $n \geq N$, $\|f-f_n\|_p < \epsilon^{\frac{p+1}{p}}$. This means
+    \[
+        \int_X |f-f_n|^p < \epsilon^{p+1}
+    .\] 
+    By Tchebychev's inequality and since $p\geq 1$, we get
+    \[
+        \mu(\{|f-f_n|>\epsilon\}) = \mu(\{|f-f_n|^p>\epsilon^p\}) \leq \frac{1}{\epsilon^p}\int_X |f-f_n|^p < \epsilon
+    \]
+    for all $n\geq N$. The case when $p=\infty$ follows by definition, since $\|f_n-f\|_\infty\to 0$ means that $|f-f_n|< \epsilon$ almost everywhere. 
+    
+    \textbf{(c)} Consider the set
+    \[
+        E_{n,\epsilon} = \{x : |f(x)-f_n(x)|>\epsilon\}
+    .\]  
+    Consider some subsequence $\{n_k\}$ such that $\mu(E_{n_k, 1/2^k}) < 1 /2^k$. Then since $\sum_k \mu(E_{n_k, 1 /2^k}) < \infty$, we can apply the Borel-Cantelli lemma to get $\mu(\limsup_k E_{n_k, 1 /2^k})=0$. This means that $f_n \to f$ almost everywhere, since $\limsup_k E_{n^k, 1 /2^k}$ is exactly the set where the functions do not converge.  
+\end{solution}
+
+\begin{problem}
+    What about the converse of 5a and 5b, i.e., we assume that $f_n \to f$ in measure then whether $f_n \to f$ a.e. or in $L_p$? There is no need to consider the case $\mu(X)=\infty$.  
+\end{problem}
+
+\begin{solution}
+    \quad In the previous problem we've shown that convergence almost everywhere implies convergence in measure and that $L^p$ convergence implies convergence in measure. If convergence in measure implied either one of these, then convergence almost everywhere and $L^p$ convergence would be the same which is not true. To see why, consider the functions $f_n$ on $(0,1)$ given by
+    \[
+        f_n(x) = n\chi_{[0,1 /n]}
+    .\]  
+    Then $f_n \to f$ almost everywhere, but $\|f-f_n\|_p =n^{1 / p}$. Conversely the functions $f_n=\chi_{E_n}$ where $E_n=[a 2^{-k}, (a+1)2^{-k}]$ for $n=2^k+a$ converges in $L^1$ but not on $X=(0,1)$.
+\end{solution}
+
+\end{document}

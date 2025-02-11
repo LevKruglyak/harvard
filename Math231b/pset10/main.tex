@@ -1,0 +1,100 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 10}}
+\date{\textbf{Due:} April 30, 2023}
+
+\providecommand{\Sq}{\textrm{Sq}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Using the splitting principle, prove the \emph{Wu formula} for the action of the Steenrod squares on the mod $2$ reduction of the Chern classes:
+    \[
+        \Sq^{2i}(c_j) = \sum_k \binom{j+k-i-1}{k}c_{i-k}c_{j+k}
+    .\] 
+\end{problem}
+
+\begin{solution}
+    \quad The splitting principle tells us that we only need to check this formula for Chern classes of sums of line bundles. First, let's prove a helpful lemma, which further reduces the scope of proof.
+    \begin{claim}
+        Suppose the Wu formula holds for classes $c_k^{(1)}(\zeta_1)$ and $c_k^{(n)}(\zeta_2)$ over $X$, where $\zeta_1$ is a line bundle and $\zeta_2$ is a general bundle. Then it holds for $c_k^{(p+1)}(\zeta_1\oplus \zeta_2)$.
+    \end{claim}
+    \begin{proof}
+        We know by assumption that
+        \[
+            \Sq^{2i}(c_j(\zeta_i)) = \sum_k \binom{j+k-i-1}{k}c_{i-k}(\zeta_i)\smile c_{j+k}(\zeta_i)
+        .\] 
+        Using the Whitney sum formula for Chern classes, Cartan formula, and properties of Steenrod squares, we can simplify
+        \[
+            \begin{aligned}
+                \Sq^{2i}(c_j^{(p+q)}(\zeta_1\oplus \zeta_2)) = \Sq^{2i}\left(\sum_{a+b=j} c_a(\zeta_1)\smile c_b(\zeta_2)\right)&=\sum_{a+b=j} \Sq^{2i}\left(c_a(\zeta_1)\smile c_b(\zeta_2)\right)\\
+                &=\sum_{a+b=j}\sum_{c+d=2i} \Sq^c(c_a(\zeta_1))\smile \Sq^d(c_b(\zeta_2))
+            \end{aligned}
+        \]
+        At this point I became a bit stuck and was unable to get unstuck, I'm still fairly sure that the inductive step holds.
+    \end{proof}
+
+    So now we only need to prove the Wu formula for line bundles. However this follows from the base relation
+    \[
+        \Sq^2(c_1) = c_1\smile c_1
+    \]
+    This forms a base case for the Wu relation.
+\end{solution}
+
+\begin{problem}
+    Let $n=2^m(2s+1)$ denote a positive integer which is divisible by $2$ exactly $m$ times. In this problem, you will use Steenrod operations to prove that $S^{n-1}$ does not admit $2^m$ vector fields which are linearly independent at every point of $S^{n-1}$.
+\end{problem}
+
+\begin{solution}
+    \quad Let $V_k(\R^n)$ denote the space of $k$ orthonormal vectors in $\R^n$. Then $V_1(\R^n)$ may be identified with $S^{n-1}$.
+    \begin{partproblem}{a}
+        Consider the map $p_{k+1} : V_{k+1}(\R^n) \to V_1(\R^n)=S^{n-1}$ which sends $(v_1,\ldots,v_{k+1})$ to $v_{k+1}$. Prove that $S^{n-1}$ admits $k$ linearly independent vector fields if and only if $p_{k+1}$ admits a section $S^{n-1}\to V_{k+1}(\R^n)$. %Use Gram-Schmidt
+    \end{partproblem}
+
+    \quad First suppose $p_{k+1}$ admits a section $s : S^{n-1}\to V_{k+1}(\R^n)$. We have projection maps $\pi_i : V_{k+1}(\R^n) \to \R^n$ which send $(v_1,\ldots,v_{k+1})$ to $v_i$. Then $\pi_i\circ s$ for $i\leq k$ is a set of $k$ linearly independent vector fields on $S^{n-1}$. In the opposite direction, given $k$ linearly independent vector fields $v_i$ on $S^{n-1}$, we can apply the Gram-Schmidt formula
+    \[
+        u_k = v_k - \sum^{k-1}_{j=1} \textbf{proj}_{u_j}(v_k)
+    \]
+    to each tuple $(v_1(x),\ldots,v_k(x),x)$. These adjusted orthonormal vector fields are thus still continuous, and can be called $\widetilde{v}_i$. We then define a map $S^{n-1} \to V_{k+1}(\R^n)$ which sends $x$ to $(\widetilde{v}_1(x), \ldots,\widetilde{v}_k(x), x)$. 
+
+    \begin{partproblem}{b}
+        There is a map $\RP^{n-1} \to O(n)\cong V_n(\R^n)$ which sends a line in $\R^n$ to the reflection across its normal hyperplane. Prove that the composition of this map with the map $V_n(\R^n)\to V_k(\R^n)$ taking $(v_1,\ldots,v_n)$ to $(v_{n-k+1}, \ldots, v_n)$ factors through a map $\RP^{n-1} / \RP^{n-k-1} \to V_k(\R^n)$. When $k=1$, prove that $\RP^{n-1} / \RP^{n-2} \cong V_1(\R^n)$ is a homemorphism.
+    \end{partproblem}
+
+    \quad The map $\RP^{n-1} \to O(n)$ sends a line $\ell$ to the matrix reflecting across it's normal hyperplane. In a basis where $\ell/|\ell|$ is the first vector, this is a diagonal matrix with first coordinate $-1$ and the others set to $1$. In $\RP^{n-1} / \RP^{n-k-1}$, this would be the identity matrix, so the map factors through.
+
+    \begin{partproblem}{c}
+        There is a commutative diagram
+        % https://q.uiver.app/?q=WzAsNixbMCwwLCJhIl0sWzEsMCwiYiJdLFsyLDAsImMiXSxbMCwxLCJkIl0sWzEsMSwiZSJdLFsyLDEsImYiXSxbMCwxXSxbMSw0XSxbMSwyXSxbMyw0XSxbNCw1XSxbMiw1XSxbMCwzXV0=
+        \[\begin{tikzcd}
+            S^{n-k} & \RP^{n-1}/\RP^{n-k-1} & \RP^{n-1} / \RP^{n-k} \\
+            S^{n-k} & V_k(\R^n) & V_{k-1}(\R^n)
+            \arrow[from=1-1, to=1-2]
+            \arrow[from=1-2, to=2-2]
+            \arrow[from=1-2, to=1-3]
+            \arrow[from=2-1, to=2-2]
+            \arrow[from=2-2, to=2-3]
+            \arrow[from=1-3, to=2-3]
+            \arrow[from=1-1, to=2-1]
+        \end{tikzcd}\]
+        where the top tow is a cofiber sequence and the bottom row is a fiber sequence. Using the Serre long exact sequence, prove by induction on $k$ that $\RP^{n-1} / \RP^{n-k-1} \to V_k(\R^n)$ is a $(2n-2k)$-equivalence.
+    \end{partproblem}
+    Not sure.
+
+    \begin{partproblem}{d}
+        When $2k\leq n$, prove that $S^{n-1}$ admits $(k-1)$ everywhere linearly independent vector fields if and only if the map $\RP^{n-1} / \RP^{n-k-1} \to \RP^{n-1} / \RP^{n-2}\simeq S^{n-1}$ admits a section up to homotopy. %Use the fact that $V_k(\R^n) \to V_1(\R^n) is a fibration to show that homotopy sections can be rigidified to genuine sections
+    \end{partproblem}
+    Not sure.
+
+    \begin{partproblem}{e}
+        Using the action of the Steenrod operations on $H^*(\RP^{n-1} / \RP^{n-k-1}; \F_2)$, prove that $S^{n-1}$ does not admit $2^m$ linearly independent sections, where $n=2^m(2s+1)$.
+    \end{partproblem}
+    Not sure.
+\end{solution}
+
+\end{document}

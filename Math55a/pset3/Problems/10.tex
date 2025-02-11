@@ -1,0 +1,46 @@
+A {\em perfect difference set} is a subset $S=\{s_0,\dots,s_q\}\subset \Z/N$  such that each non-zero element of $\Z/N$ occurs {\em exactly once} as the difference $s_i-s_j$ ($i,j\in \{0,\dots,q\}$, $i\neq j$) of two distinct elements of $S$. Example: $S=\{0,1,3\}\subset \Z/7$. (Optional: find examples of perfect difference sets in $\Z/13$ and $\Z/21$). This problem describes a systematic construction discovered by J.~Singer in 1938.
+
+As in the previous problem, let $k=\F_q$ be a finite field with $q$ elements, and let $V$ be a 3-dimensional vector space over $k$. The key ingredient in Singer's construction is the following:
+
+\begin{theorem}
+There exists an invertible linear transformation $f:V\to V$ which acts on the set of lines through the origin (one-dimensional subspaces) in $V$ by a cyclic permutation, so all lines occur as the successive images of any given line $L_0=L\subset V$: denoting by $N$ the number of lines in $V$, the assignment $j\mapsto L_j=f^j(L)$ defines a bijection from $\Z/N$ to the set of lines in $V$. Moreover, $f$ acts in the same manner on the set of planes (two-dimensional subspaces) in $V$, with all planes arising as the successive images $P_j=f^j(P)$ of any given plane $P_0=P\subset V$ under iterates of $f$.
+\end{theorem}
+
+We can now state the main problem.
+
+\begin{problem}[Optional, extra credit]
+  \noindent
+  \begin{enumerate}
+    \item Assuming the theorem holds, show that $S=\{j\in \Z/N\,|\,L_j\subset P_0\}$ is a perfect difference set.
+    \item We now prove the theorem. Let $p(x)=x^3-a x^2-b x-c\in k[x]$ be a degree 3 polynomial which has no roots in $k$, and let $K=k[x]/(p)$, i.e.\ the 3-dimensional vector space of polynomials of degree $\leq 2$ with coefficients in $k$, with a multiplication operation defined by taking the product of two polynomials and taking the remainder mod $p(x)$ (i.e., replacing $x^3$ by $ax^2+bx+c$, and $x^4$ by $a(ax^2+bx+c)+bx^2+cx$).
+    We will be using, without proof, two classical facts of field theory
+    (take Math 123!):
+    \begin{enumerate}
+      \item $K$ is a field (containing $k$ as a subfield);
+      \item the multiplicative group of non-zero elements of any finite field is cyclic.
+    \end{enumerate}
+    Let $\alpha$ be a generator of the multiplicative group $K^\times$ of non-zero
+    elements of $K$. Show that multiplication by $\alpha$, viewed as a linear
+    map $f:K\to K$, has the properties of Theorem 1.
+  \end{enumerate}
+\end{problem}
+
+\textit{(Hint: take the line $L_0$ to be the subspace of constant polynomials,
+i.e.\ $k\subset K$; which powers of $\alpha$ are elements of $k$?
+take the plane $P_0$ to be the subspace of polynomials of degree $\leq 1$,
+i.e.\ the span of $1$ and $x$).}
+
+\textbf{(1)} First we'll show that for any nonzero $k\in \Z / N$, we can find $a,b\in S$ such that $k=b-a$. Since every line in $V$ is of the form $L_i$, note that $P_0=\bigcup_{j\in S}L_j$. Then $f^k\left(\bigcup_{j\in S}L_j\right)=f^k(P_0)=P_k$, by the theorem. Now consider $P_0\cap P_k$. By the Lemma in the previous problem, we know that their intersection contains some line $L_b$. So since $f$ cycles around lines, it follows that $f^k(L_a) = L_b$ for some $a\in S$. So $L_b=L_{a+k}$ and $k=b-a$.
+
+So every $k\in \Z /N$ can be expressed as a difference of two elements of $S$. To show that this difference is unique, we'll use a counting argument. Since $|S|=q+1$ by Problem $9$ (Every plane must contain $q+1$ lines), we can count the number of possible differences in $S$ as 
+\[
+  2 \binom{|S|}{2}=2\binom{q+1}{2}= {2\frac{(q+1)q}{2}}=q^2+q=(q^2+q+1)-1=N-1
+.\]
+So by the pigeonhole principle, there must be a bijection between nonzero elements of $N$ and differences of elements of $S$.
+
+
+\textbf{(2)} Clearly the map $f : K \to K : t \mapsto \alpha t$ is a linear map since $\alpha(t_1+t_2)=\alpha t_1+\alpha t_2$ and $\alpha(ct)=c\alpha t$ for any $c\in k$. This map is in fact a linear isomorphism, because it has an inverse $f : t \mapsto \alpha^{-1}t$. (which is a linear map by the same argument) 
+
+Now let $L,H$ be lines in $K$. We claim that there is some $k$ such that $f^k(L)=H$. Let $l\in L$ and $h\in H$ be basis vectors for the lines. Write $l=\alpha^a$ and $h=\alpha^b$. Then $f^{b-a}(cl)=cf^{b-a}(l)=c\alpha^{b-a}\alpha^a=c\alpha^b=ch$. So $f^{b-a}$ takes $L$ to $H$. In general, $f$ takes lines to lines so if we start with some line $L_0$, then this argument implies that the set $\{L_0, f(L_0), f^2(L_0),\ldots\}$ contains all of the lines in $K$, and that $f$ cycles them. So we can write $L_k=f^k(L_0)$. 
+
+To show that planes are cycled, we start with the plane $P_0=\big\langle L_0, L_1\big\rangle$ where $L_0=k$. $\alpha$ must have a nonzero degree, so this is a plane since $k, \alpha k$ are linearly independent. Then $f^k(P_0)=\big\langle L_k, L_{k+1} \big\rangle$ so $f^N(P_0)=\big\langle L_0, L_1 \big\rangle = P_0$. Since all $f^k(P_0)$ were different planes and by Problem $9$ there are the same number of planes and lines, every plane is of the form $f^k(P_0)$. So we are done.      

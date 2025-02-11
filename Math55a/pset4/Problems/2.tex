@@ -1,0 +1,35 @@
+\begin{problem}
+  The {\em Fibonacci sequence} $F_1, F_2, F_3, \ldots$ is defined by 
+  \[
+    F_1=1, F_2=1, \quad \mathrm{ and } \quad F_n=F_{n-1}+F_{n-2} \mathrm{ for } n\geq 3
+  .\] 
+  Define $T\in \End(\R^2)$ by $T(x,y)=(y, x+y)$.  
+  \begin{enumerate}
+    \item Show that $T^n(0,1)=(F_n, F_{n+1})$ for each positive integer $n$.
+    \item Find the eigenvalues of $T$.
+    \item Find a basis of $\R^2$ consisting of eigenvectors of $T$.
+    \item Use the solution to (3) to conclude that
+    \[
+      F_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^n-\left(\frac{1-\sqrt{5}}{2}\right)^n\right]
+    .\]   
+    \item Use (4) to conclude that for every positive integer $n$, the Fibonacci number $F_n$ is the closest number to 
+    \[
+      F_n = \frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^n
+    .\]  
+  \end{enumerate}
+\end{problem}
+\textbf{(1)} We'll prove this by induction. It's true when $n=1$ since $T^1(0,1)=(1,1)=(F_1,F_2)$. Now suppose it's true for $n=k$. Then 
+\[T^{k+1}(0,1)=T(T^k(0,1))=T(F_k, F_{k+1})=(F_{k+1}, F_k+F_{k+1})=(F_{k+1}, F_{k+2}).\]
+\textbf{(2)} Suppose $T(x,y)=\lambda(x,y)$. This means that $y=\lambda x$ and $x+y=\lambda y$. Substituting, we get $(1+\lambda)x=\lambda^2x$ so $\lambda^2-\lambda-1=0$. The solutions to this quadratic are $\frac{1\pm\sqrt{5}}{2}$, so these are exactly the eigenvalues.
+
+\textbf{(3)} We claim that $v_0=(2, 1+\sqrt{5})$ and $v_1=(2, 1-\sqrt{5})$ are eigenvectors of $T$. This can be easily checked. These are linearly independent because the determinant of the matrix corresponding to the change of basis map is $2(1-\sqrt{5})-2(1+\sqrt{5})=-4\sqrt{5}$ which is nonzero.
+
+\textbf{(4)} Observe that $(0,1)=\frac{1}{2\sqrt{5}}(v_0-v_1)$, so
+\[
+  T^n(0,1)=T^n\left(\frac{1}{2\sqrt{5}}(v_0-v_1)\right)=\frac{1}{2\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^nv_0-\left(\frac{1-\sqrt{5}}{2}\right)^nv_1\right]
+.\]  
+Looking only at the first component, we get 
+\[
+  F_n = \frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^n-\left(\frac{1-\sqrt{5}}{2}\right)^n\right]
+.\]
+\textbf{(5)} Note that $\frac{1}{\sqrt{5}}\left(\frac{1-\sqrt{5}}{2}\right)^n\leq \frac{1}{2}$, so this term doesn't affect the closest integer. So $F_n$ is the closest integer to $\frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^n$.

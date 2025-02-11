@@ -1,0 +1,34 @@
+\begin{problem}
+  Let $k$ be any field of characteristic $\ch(k) \neq 2$, and let $T : k^n \to k^n$ be the linear map
+\[ (x_1, x_2, \dots, x_n) \mapsto (x_1+x_n, x_2+x_{n-1}, \dots, x_n+x_1). \]What are the dimensions of the kernel and image of $T$? What changes if $\ch(k) = 2$?
+\end{problem}
+
+The answer depends on $\ch(k)$ and $n\mod 2$. In general, for a vector $(x_1,x_2,\ldots ,x_n)\in\ker(T)$ we have $x_i=-x_{n+1-i}$.
+
+We'll start with the case when $n\equiv 0\mod 2$. Then we claim that $\dim \ker(T) = \frac{n}{2}$, regardless of $\ch(k)$. Indeed, in this case a basis for the kernel can be found by setting $x_i=1$ and $x_{n+1-i}=-1$ for all $1\leq i\leq \frac{n}{2}$. Since there are exactly $\frac{n}{2}$ basis vectors, $\dim \ker (T)=\frac{n}{2}$ and $\dim \Ima(T)=\frac{n}{2}$ by the rank-nullity formula.      
+
+Now suppose $n\equiv 1\mod 2$ and $\ch(k)!=2$. Then our basis for the kernel is $x_i=1$ and $x_{n+1-i}=-1$ for all $1\leq i < \frac{n}{2}$. The middle term must satisfy the condition $2x_{(n+1) /2}=0$, so there are exactly $\frac{n-1}{2}$ basis vectors in the kernel. By the rank-nullity formula we similarly have $\frac{n+1}{2}$ basis vector for the kernel.
+
+So to summarize if $\ch(k)\neq 2$ we have,
+\[
+  \dim \ker(T)=\begin{cases}
+    \frac{n}{2}&n\equiv 0\mod 2\\
+    \frac{n-1}{2}& n\equiv 1\mod 2
+  \end{cases}\quad\quad
+  \dim \Ima(T)=\begin{cases}
+    \frac{n}{2}&n\equiv 0\mod 2\\
+    \frac{n+1}{2}& n\equiv 1\mod 2
+  \end{cases}
+.\] 
+
+If $\ch(k)=2$, the case when $n\equiv 0 \mod 2$ doesn't change, but the condition when $n\equiv 1\mod 2$ does change. Here, the middle term is $2x_{(n+1) /2}=0$ and this is always zero no matter what $x_{(n+1) /2}$ is, so the kernel has one dimension more in this case, and the image has one dimension less. This can be summarized as:
+\[
+  \dim \ker(T)=\begin{cases}
+  \frac{n}{2}&n\equiv 0\mod 2\\
+  \frac{n+1}{2}& n\equiv 1\mod 2
+\end{cases}\quad\quad
+\dim \Ima(T)=\begin{cases}
+  \frac{n}{2}&n\equiv 0\mod 2\\
+  \frac{n-1}{2}& n\equiv 1\mod 2
+\end{cases}
+\] 

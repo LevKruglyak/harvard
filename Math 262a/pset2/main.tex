@@ -1,0 +1,294 @@
+\documentclass{pset}
+
+\title{Math 262a Problem Set 2}
+\due{Wednesday, September 20}
+\author{Lev Kruglyak}
+
+\input{../262a.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{1}
+    Let $N$ be a smooth manifold of dimension $n=2m$ and suppose $\omega\in \Omega^2(N)$.
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Prove that $\omega$ is non-degenerate at each point of $N$ if and only if $\omega^{\wedge m}\in \Omega^{2m}(N)$ is everywhere nonzero.
+    \end{part}
+
+    Suppose first that $\omega$ is non-degenerate at each point of $N$. This means that the map $\omega_p : T_pN\times T_pN \to \R$ is a non-degenerate bilinear form for each $p\in N$. By a Gram-Schmidt style argument, we can find a \emph{Darboux basis} for $T_pN$, i.e. some basis $\{x^1,\ldots,x^m,y^1,\ldots,y^m\}$ satisfying: 
+    \[
+        \omega(x^i, y^j) = \delta_{ij},\quad \omega(x^i,x^j)=0,\quad\omega(y^i, y^j)=0
+    .\] 
+    Then (locally) we can write $\omega$ as 
+    \[
+        \omega = \sum^m_{i= 1} dx_i\wedge dy_i
+    .\]  
+    If we now take the $m$-th exterior power, we expand to get:
+    \[
+        \omega^{\wedge m} = \sum_{\sigma\in S_m} (dx_{\sigma(1)}\wedge dy_{\sigma(1)})\wedge\cdots\wedge (dx_{\sigma(m)}\wedge dy_{\sigma(m)})= m\; dx_1\wedge dy_1\wedge\cdots\wedge dx_m\wedge dy_m
+    .\] 
+    Since $m$ is everywhere nonzero, and the canonical $2m$-form is also everywhere nonzero, it follows that $\omega^{\wedge m}$ is everywhere nonzero as well.
+
+    Now conversely, suppose $\omega^{\wedge m}$ is everywhere nonzero. By a similar Gram-Schmidt style argument, we can find a basis $\{z^1,\ldots,z^{2m}\}$ for $T_pN$ with $\omega^{\wedge m}(z^1,\ldots,z^{2m})=1$. Now suppose for the sake of contradiction that there is a $u\in T_pN$ with $\omega(u,v)=0$ for all $v\in T_pN$. We claim that $\omega^k(u,\ldots) = 0$ for all $k$, so we proceed by induction. The base case of $k=1$ follows by assumption. Now assume it holds for $k-1$. We expand
+    \[
+        (\omega\wedge\omega^{k-1})(v^1, v^2, \ldots, v^{2k}) = \frac{1}{2! (2k-2)!}\sum_{\sigma\in S_{2k}}\omega(v^{\sigma(1)}, v^{\sigma(2)})\cdot \omega^{k-1}\left(v^{\sigma(2)},\ldots,v^{\sigma(2k)}\right),
+    \] 
+    and since $\sigma$ is a permutation, setting $v^1=u$ would kill every term in this sum by the inductive step, since $u$ appears in either the $\omega$ or $\omega^{k-1}$ term. Now write $u=\sum^{2m}_{i =1}c_i z^i$. By the inductive argument earlier, we have
+    \[
+        0=\omega^{\wedge m}(u, z^2, \ldots, z^{2m}) = \omega^{\wedge m}\left(\sum c_i z^i, z^2, \ldots, z^{2m}\right) = c_1
+    .\] 
+    We can do this in turn for all coefficients $c_i$, by evaluating expressions of the form \[0=\omega^{\wedge m}(z^1,\ldots,z^{i-1}, u, z^{i+1}, \ldots, z^{2m}) = c_i.\]
+    Thus we conclude that $u=0$ which contradicts our earlier assumption.x
+
+    \begin{part}{b}
+        Now assume that $\omega$ is a symplectic form. Prove that the subspace $\VF^\omega(N)\subset \VF(N)$ of symplectic vector fields is closed under the Lie bracket of vector fields.
+    \end{part}
+
+    Let $f,g\in \VF(N)$ be two symplectic vector fields, which means that $\lie_{f}\,\omega = \lie_{g}\,\omega = 0$. Lie derivatives act naturally with respect to the Lie bracket, so we have
+    \[
+        \lie_{[f,g]}\,\omega = \lie_{f}\lie_{g}\,{\omega} - \lie_{g}\lie_{f}\,{\omega} = 0
+    .\] 
+    Thus $[f,g]\in \VF(N)$.
+
+    \begin{part}{c}
+        Define a Lie algebra structure on $\Omega^0(N)$ by transport from the Lie bracket on $\VF^\omega(N)$ via the symplectic gradient map $f \mapsto X_f$. Prove the formula:
+        \[
+            \{f, g\} = X_f\cdot g = \omega\left(X_f, X_g\right),\quad f,g\in \Omega^0(N)
+        .\] 
+    \end{part}
+
+    Given two functions $f,g \in \Omega^0(N)$, the transport relation gives us the identity:
+    \[
+        X_{\{f, g\}} = [X_f, X_g].
+    \] 
+    If we can show that $\omega(X_f, X_g)$ satisfies this identity, we would be done. We'll do this in several steps.
+    
+    \begin{claim}
+        We have $\omega(X_f, X_g) = -\lie_{X_g}{f}$.
+    \end{claim}
+    \begin{proof}Recall that we defined the symplectic gradient of a function $f$ as the unique function satisfying:
+        \[
+            df = -\iota_{X_f}(\omega)
+        .\] 
+        Thus we can rewrite
+        \[
+            \omega(X_f, X_g) = \omega(X_f, X_g) = \iota_{X_f}(\omega)(X_g) = -df(X_g) = -\lie_{X_g}f,
+        \]
+        which is the desired result.
+    \end{proof}
+
+    \begin{claim}
+        For $X,Y\in \VF^\omega(N)$, we have $\iota_{[X,Y]}\,\omega = \lie_X \iota_Y \omega$.
+    \end{claim}
+    \begin{proof}
+        Since the Lie derivative is a derivation, we have:
+        \[
+            \iota_{[X,Y]}\,\omega = \left[\lie_{X}, \iota_Y\right]\omega
+        .\] 
+        However $\lie_X\,\omega = 0$ because $X$ is symplectic, so $\iota_Y \lie_X\,\omega = 0$ and the result follows.
+    \end{proof}
+
+    \begin{claim}
+        For any $X\in \VF^\omega(N)$ we have $d\iota_X\,\omega = 0$.
+    \end{claim}
+
+    \begin{proof}
+        By closure of $\omega$ and Cartan's formula, we write
+        \[
+            d\iota_X\,\omega = d\iota_X\,\omega + \iota_X\,d\omega = \lie_X\,\omega
+        .\]
+        But $X$ is a symplectic vector field so this is zero.
+    \end{proof}
+
+    Putting everything together, note that:
+    \[
+        -\iota_{[X_f, X_g]}\omega = -\lie_{X_f}\iota_{X_g}\,\omega = -d\iota_{X_f}\iota_{X_g}\,\omega-\iota_{X_f}d\iota_{X_g}\omega = -d\iota_{X_f}\iota_{X_g}\,\omega
+    .\] 
+    By the definition of symplectic gradient, this measn that $[X_f,X_g]=-X_{\omega(X_g, X_f)}=X_{\omega(X_f, X_g)}$. This is exactly what we set out to prove, since $\{f,g\} = \omega(X_f,X_g)$.
+
+    \begin{part}{d}
+        A \emph{Hamiltonian vector field} is a symplectic gradient of a function. Is the subspace of Hamiltonian vector fields invariant under the Lie bracket?
+    \end{part}
+
+    Yes. Let $X_f$ and $X_g$ be two Hamiltonian vector fields. Then
+    \[
+        [X_f, X_g] = X_{\{f,g\}},
+    \]
+    which we proved in (c). Thus their Lie bracket is also a Hamiltonian vector field.
+\end{parts}
+
+\begin{problem}{2}
+    Let $V$ be a real symplectic vector space, and suppose $A$ is an affine space over $V$. Feel free to work with the model spaces.
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Define the space of affine polynomial functions on $A$ and prove that it is closed under the Poisson bracket on smooth functions.
+    \end{part}
+
+    The space of affine polynomial functions on $A$, which we will denote $P_V(A)$ is
+    \[
+        P_V(A) = \{ f\in C^\infty(A, \R) : \forall p\in A, v\in V, f(p+tv)\in \R[t]\},
+    \]
+    i.e. smooth functions which are polynomial when evaluated in any direction. For the rest of the problem, we will work with the model spaces for simplicity sake, so let $V=\R^{2m}$ and $A=\E^{2m}$, with coordinate basis $\{x_1,\ldots,x_m, y_1,\ldots,y_m\}$ and canonical symplectic form:
+    \[
+        \omega = \sum dy^i\wedge dx^i 
+    .\] 
+    Then $P_V(A)=\{f \in C^\infty(A,\R) : f_{\mu}\in \R[x_1, \ldots, x_m, y_1,\ldots,y_m]\}$, i.e. the smooth functions with polynomial components. To show that it is closed under the Poisson bracket, let $f,g\in P_V(A)$. By the previous problem, we know that $\{f,g\}$ is a smooth function. In this basis, the Poisson bracket is:
+    \[
+       \{f,g\} = X_f\cdot g = \sum\left(\frac{\partial f}{\partial x^i}\frac{\partial g}{\partial y^i} - \frac{\partial f}{\partial y^i}\frac{\partial g}{\partial x^i}\right) = \sum\left(f'_{x_i}\,g'_{y_i} - f'_{y_i}\,g'_{x_i}\right)
+    .\] 
+    
+    Since the derivative of a polynomial is also a polynomial, the Poisson bracket also has polynomial components and thus $\{f,g\}\in P_V(A)$. More fundamentally, notice that in this basis we have the relations:
+    \[
+        \{x^i, x^j\} = 0, \quad \{y^i,y^j\}=0,\quad \{x^i, y^j\} = \delta_{ij}
+    .\]
+    This is enough to completely characterize the behavior of the Poisson bracket on $P_V(A)$. In fact, we can completely characterize this Lie algebra, $\mathcal{U}(P_V(A))$ with a simpler description.
+
+    \begin{claim}
+        Let $W_m$ be the associative algebra of \emph{polynomial differential operators} in $m$ variables. (also known as the \emph{$m$-th Weyl Algebra}) Concretely, $W$ has generating set $x^1,\ldots,x^m, \partial_1, \ldots,\partial_m$, where $x^i$ are variables in a polynomial ring $\R[x^1,\ldots,x^m]$ and $\partial_i$ is the differentiation operation with respect to $x^i$. Then we have a Lie algebra isomorphism
+        \[
+            \mathcal{U}(W_m) \to \mathcal{U}(P_V(A)),
+        \] 
+        given by $x^i \mapsto x^i$ and $\partial_i \mapsto y^i$.    
+    \end{claim}
+
+    \begin{proof}
+        We have the following presentation of $W_n$:
+        \[
+            W_m = \frac{\R\big\langle x^1,\ldots,x^m,\partial_1,\ldots,\partial_m \big\rangle}{(x^ix^j=x^jx^i,\quad \partial_i\partial_j=\partial_j\partial_i,\quad x^i\partial_j-\partial_jx^i = \delta_{ij})}
+        .\] 
+        The result follows immediately.
+    \end{proof}
+
+    \begin{claim}
+
+    Equivalently, $\mathcal{U}(P_V(A))$ is isomorphic to the quotient of the Heisenberg algebra $\mathcal{U}(\mathfrak{h}_{2m} / (z-1))$ where $z$ is a generator of the center $Z(\mathfrak{h}_{2m})$.
+    \end{claim}
+
+    This algebra has a canonical grading generated by $|x^i|=|\partial_i| = 1$, so we have a filtration
+    \[
+        \gr_{\leq 0}(\mathcal{U}(W_m)) \subset \gr_{\leq 1}(\mathcal{U}(W_m)) \subset \gr_{\leq 2}(\mathcal{U}(W_m)) \subset \cdots \subset W_m,
+    \] 
+    where $\gr_{\leq k}(\mathcal{U}(W_m))$ is the set of operators of grading at most $k$. To simplify the work in the next few parts, we also prove a useful lemma.
+
+    \begin{claim}
+        The subspace $\gr_{\leq k}(\mathcal{U}(W_m))$ is closed under the Lie bracket.
+    \end{claim}
+
+    \begin{proof}
+        We proceed by induction to show that $\deg [f,g] \leq \max(\deg f, \deg g)$. For the grading 1 basis elements, it is clearly true. Now note that
+        \[
+            \begin{aligned}
+                \deg[f,hg] = \deg h[f,g] + \deg [f,h]g &\leq \max(\deg h + \max(\deg f, \deg g), \max(\deg f, \deg h) + \deg g)\\ &\leq \max(\deg f, \deg h + \deg g).
+            \end{aligned}
+        \]
+        This works in both coordinates since the bracket is antisymmetric, so we get the relation for elements of any grading.
+    \end{proof}
+
+    \begin{part}{b}
+        Prove that the space of affine linear functions is also invariant. Do you recognize the resulting Lie algebra?
+    \end{part}
+
+    By the results of the previous problem, the space of affine linear functions is invariant, and isomorphic to the algebra $\gr_{\leq 1}(\mathcal{U}(W_m))$. As a Lie algebra, this has basis $\{x^1,\ldots,x^m, y_1,\ldots,y_m\}$ with relations
+    \[
+        [x^i, x^j] = 0, \quad [y_i, y_j] = 0, \quad [x^i, y_j] = \delta_{ij}
+    .\]
+    This is a $2m$-dimensional Lie algebra.
+    \begin{part}{c}
+        Prove that the space of affine quadratic functions is also invariant. Do you recognize the resulting Lie algebra?
+    \end{part}
+
+    By the results of the previous problem, the space of affine quadratic functions is invariant, and isomorphic to the algebra $\gr_{\leq 2}(\mathcal{U}(W_m))$. As a Lie algebra, this has basis $\{x^i, y_j, x^iy_j, (x^i)^2, (y_j)^2\}$ with a superset of relations from the previous part, extended to follow the Liebniz rule:
+    \[
+        [fg, h] = f[g,h] + [f,h]g
+    .\] 
+    This is a $(2m+4m^2)$-dimensional Lie algebra.
+
+    \begin{part}{d}
+        Does the pattern continue?
+    \end{part}
+
+    Yes, these build up the graded components of the Lie algebra $\mathcal{U}(\mathfrak{h}_{2m} / (z-1))$.
+\end{parts}
+
+\begin{problem}{3}
+    An \emph{almost symplectic structure} on a smooth $2m$-manifold $N$ is a section of $\Symp(TN) \to N$. An \emph{almost complex structure} on a smooth manifold $N$ is a section $I$ of $\End(TN) \to N$ such that $I^2=-1$.
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Prove that an almost symplectic manifold admits an almost complex structure.
+    \end{part}
+
+    Given some (almost) symplectic structure $\omega$ on a smooth manifold $N$, we obtain a way to map Riemannian structures to almost complex structures. 
+    Explicitly, if $g$ is a Riemannian metric on $N$, we can get an endomorphism $J$ on $N$ by setting $J$ as the section of the endomorphism bundle satisfying
+    \[
+        \omega(u, v) = g(u,J(v))
+    \]
+    By this construction it follows that $J$ is skew-symmetric with respect to this metric, i.e. $J^* = -J$, and invertible. Thus, we can find a square root for $JJ^*$ since $JJ^* = -J^2$. We can check that $\tilde{J} = (\sqrt{JJ^*})^{-1}J$ is the desired almost complex structure. This proof is not super complete, there are a lot of properties left to check, especially checking that all of these operations produce well-defined smooth sections of the endomorphism bundle. This should be true since every choice is quite canonical, and we don't assume a choice of basis anywhere.
+
+    \begin{part}{b}
+        Prove that $S^4$ does not admit an almost symplectic structure. % characteristic classes
+    \end{part}
+
+    Suppose for the sake of contradiction that $S^4$ admitted an almost symplectic structure. By the previous part, it must also have an almost complex structure. This means that the tangent bundle $TS^4$ can be viewed as a complex plane bundle over $S^4$. Then we have the identity:
+    \[
+        p_1(TS^4) = c_1(TS^4)^2 - 2c_2(TS^4)
+    \]
+    where $p_i$ is the Pontryagin class and $c_i$ is the Chern class. Then since $TS^4$ is a complex $2$-bundle, we have $c_2(TS^4)=e(TS^4)$, where $e$ is the Euler class. However, recall that for a closed oriented smooth manifold, we have $e(TM)=\chi(M)[M]$, so in our case $e(TS^4)=2[S^4]$. Finally, since the second cohomology of $S^4$ vanishes, $c_1(TS^4)$ must be trivial. So we get:
+    \[
+        p_1(TS^4)=-4[S^4]
+    \]
+    However, we also know that $p_1(TS^4) = \sigma(TS^4) / 3$, where $\sigma$ is the signature genus. $S^4$ is null-cobordant, so this signature must be zero and hence $p_1(TS^4)=0$. We thus have a contradiction.
+\end{parts}
+
+\begin{problem}{4}
+    Let $(M, g)$ be a Riemannian manifold and suppose $V: M \to \R$ is a smooth potential function. Fix some mass $m>0$. Now let $\mathcal{F}=C^\infty(\R, M)$ be the infinite dimensional manifold of particle trajectories. Consider the Lagrangian:
+    \[
+        L = \left\{ \frac{m}{2}\big\langle \dot{x},\dot{x} \big\rangle - V(x)\right\}\,|dt|
+    \]
+    where $x : \mathcal{F}\times \R\to M$ is the evaluation map. Compute the Euler-Lagrange equations, the symplectic form, and the Hamiltonian.
+\end{problem}
+
+\begin{solution}
+    I do not have enough differential geometry to derive this formulation. I will return to this problem once I have the differential geometry background.
+\end{solution}
+
+\begin{problem}{5}
+    Define the notion of a symmetry of a general mechanical system. Does a symmetry have to preserve the direction of time or can a symmetry reverse time flow?
+\end{problem}
+
+\begin{solution}
+    Recall the axioms for a general mechanical system:
+    \begin{enumerate}
+        \item \textbf{States:} A real convex space $\mathcal{S}$.
+        \item \textbf{Observables:} A complex lie algebra structure on $\mathcal{O}^\infty$ with real structure $\mathcal{O}^\infty_\R$.
+        \item \textbf{Measurement:} A pairing $\mathcal{O}_\R^\infty \times \mathcal{S} \to \textrm{Prob}(\R).$
+        \item \textbf{Motion:} A map from $\mathcal{O}^\infty_\R$ to a one-parameter group of automorphisms of $\mathcal{S}$ and $\mathcal{O}^\infty$.
+        \item \textbf{Time Evolution:} A choice of compatible one-parameter groups of automorphisms of $\mathcal{S}$ and $\mathcal{O}^\infty$.
+    \end{enumerate}
+    Here is some of the data needed to describe the notion of a symmetry of a system. A symmetry should consist of the following data:
+
+    \begin{enumerate}
+        \item \textbf{Spatial component:} A finite or Lie group $G$ with an action on $\mathcal{S}$.
+        \item \textbf{Temporal component:} A diffeomorphism $\psi : \R \to \R$.
+        \item \textbf{Conserved quantity:} Some choice of real observable $A\in \mathcal{O}^\infty_\R$.
+    \end{enumerate}
+
+    These should satisfy the axioms:
+    \[
+        (g\cdot \sigma^{(t)})_A = (g\cdot \sigma)^{(\psi(t))}_A
+    \]
+
+    In the case that there is no spatial component, we can just let the trivial group act, and in the case there is no temporal component, we can just let $\psi$ be the identity diffeomorphism. We say that a symmetry preserves time if the diffeomorphism preserves orientation, and time-reversing if it reverses orientation.
+
+    For example, we could consider the classical mechanical system of particles in $\E^d$ moving with respect to some potential function $V$. We have a Hamiltonian observable $H$ which measures the total energy of a particle. Letting $G$ be trivial, we have a symmetry conserving $H$ for any time diffeomorphism $\psi : \R \to \R$. If we know more about the potential function, we could also find some spatial symmetries. For instance, if $V(x)=0$, we could let $G$ be the space of affine transformations of $\E^d$.
+
+\end{solution}
+
+\end{document}

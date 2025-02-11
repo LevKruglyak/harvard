@@ -1,0 +1,21 @@
+\begin{problem}
+Let $V$ be a finite-dimensional vector space over a field $k$, and let $\phi:V\to V$ be a linear operator. 
+\begin{enumerate}
+  \item Show that there exists a nonzero polynomial $p\in k[x]$ such that $p(\phi)=0$. (Hint: are the elements $1,\phi,\phi^2,\dots\in \Hom(V,V)$ linearly independent?)
+  \item Show that, if $\phi$ is invertible, then there exists a polynomial $q\in k[x]$ such that $\phi^{-1}=q(\phi)$.
+\end{enumerate}
+\end{problem}
+
+\textbf{(1)} Let $0<m\leq \dim \End(V)$ be the smallest integer such that the set $\{ 1, \phi, \phi^2, \ldots , \phi^{m}\}$ isn't linearly independent. Such a $m$ must exist because otherwise we would have an infinite linearly independent set in $\End(V)$, which is a finite dimensional vector space since $V$ is finite dimensional. Then by definition we have some relation
+\[
+  \alpha_0+\alpha_1 \phi + \alpha_2 \phi^2 + \cdots + \alpha_{m}\phi^m=0
+.\] 
+So the polynomial $p(x)=\alpha_0+\alpha_1x+\alpha_2x^2+\cdots+\alpha_m x^m$ is a polynomial satisfying the conditions of the problem.
+
+\textbf{(2)} Let $p\in k[x]$ be the polynomial from (1). Let $n$ be the smallest positive integer such that $\alpha_n\neq 0$, so $p(x)=\alpha^nx^n+\alpha^{n+1}x^{n+1}+\cdots+\alpha^mx^m$. Then $\phi^{-n-1}p(\phi)=0$ so
+\[\begin{aligned}
+  \phi^{-n-1}\alpha^n\phi^n+\alpha^{n+1}\phi^{n+1}+\cdots+\alpha^m\phi^m=0\\
+  \alpha_n\phi^{-1}+\alpha_{n+1}+\alpha_{n+2}\phi+\cdots+\alpha^m\phi^{m-n-1}=0\\
+  \phi^{-1}=\frac{1}{\alpha_n}\left(\alpha_{n+1}+\alpha_{n+2}\phi+\cdots+\alpha^m\phi^{m-n-1}\right).
+\end{aligned}\]
+Thus, $\phi^{-1}$ is expressible as a polynomial in $\phi$.  

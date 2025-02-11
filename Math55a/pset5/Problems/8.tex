@@ -1,0 +1,19 @@
+\begin{problem}
+Let $V$ be an $n$-dimensional vector space over a field $k$, with $\ch(k)\neq 2$. 
+\begin{enumerate}
+  \item How should one define the notion of a {\em trilinear form} $t:V\times V\times V\to k$? Show that the set $T(V)$ of trilinear forms on $V$ can be given the structure of a vector space, and calculate its dimension.
+  \item Say a trilinear form $t:V\times V\times V\to k$ is {\em symmetric} if the value $t(u,v,w)$ is unchanged if we permute the variables, and denote by $T_{\mathrm{symm}}(V)\subset T(V)$ the subset of symmetric trilinear forms. Show that $T_{\mathrm{symm}}(V)$ is a subspace of $T(V)$, and calculate its dimension.
+  \item Say a trilinear form $t:V\times V\times V\to k$ is {\em skew-symmetric} (or {\em alternating}) if permuting the variables multiplies the value $t(u,v,w)$ by $\pm 1$ according to the sign of the permutation. Show that the subset $T_{\mathrm{skew}}(V)\subset T(V)$ of skew-symmetric trilinear forms is a subspace of $T(V)$, and calculate its dimension.
+  \item Show that, if $n\geq 2$, then we do {\em not} have $T(V)=T_{\mathrm{symm}}(V)\oplus T_{\mathrm{skew}}(V)$.  (The reason for this will become clearer when we discuss the representation theory of the symmetric group.)
+\end{enumerate}
+\end{problem}
+
+\textit{(See the appendix for definitions and lemmas)}
+
+\textbf{(1)} Using the language of Definition~\ref{kform}, a trilinear form is exactly a $3$-form, and $T(V)=T^3(V)$. By Proposition~\ref{dimension}, the dimension of $T(V)=n^3$. 
+
+\textbf{(2)} By Proposition~\ref{dimsymm}, $\dim T_{\mathrm{symm}}^3(V) = \binom{n+2}{3}$.  
+
+\textbf{(3)} By Proposition~\ref{dimskew}, $\dim T_{\mathrm{skew}}^3(V) = \binom{n}{3}$.
+
+\textbf{(4)} This isn't true because $\dim\left(T_{\mathrm{symm}}^3(V)\oplus T_{\mathrm{skew}}^3(V)\right)=\binom{n+2}{3}+\binom{n}{3}=\frac{n^3+2n}{3} \neq n^3=\dim T^3(V)$ so they can't be isomorphic for $n\geq 2$.   

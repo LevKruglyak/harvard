@@ -1,0 +1,188 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 129 Problem Set 11}}
+
+\begin{document}
+\maketitle
+
+% Chapter 7 - Page 146: Exercises 7, 8
+% Chapter 7 - Page 147: Exercise 10
+% Chapter 7 - Page 147/148: Read Exercise 12 so that you understand the statement of part (f)
+% Chapter 7 - Page 148: Exercises 13, 14
+% Chapter 7 - Page 149: Exercise 15
+
+\begin{cproblem}{7.7}
+    Let $A$ be a set of primes having polar density $m/n$ in a number field $K$.
+    \begin{enumerate}[(a)]
+        \item Show that
+            \[
+                \zeta_K(s)^m\prod_{\mathfrak{p}\in A}\left(1-\frac{1}{\|\mathfrak{p}\|^s}\right)^n
+            \] 
+            extends to a nonzero analytic function in a neighborhood of $s=1$.
+        \item Prove that
+            \[
+                n\sum_{\mathfrak{p}\in A}\frac{1}{\|\mathfrak{p}\|^s}-m\sum_{\textrm{all }\mathfrak{p}}\frac{1}{\|\mathfrak{p}\|^s}
+            \] 
+            extends to a nonzero analytic neighborhood of $s=1$. 
+            % (Suggestion: Express $\zeta_K(s)$ as a product and apply the log function using
+            % \[
+            %     \log(1-z)=-\sum^\infty_{n=1}\frac{z^n}{n}.
+            % \] 
+            % Alternatively, check out the proof of Theorem~48.)
+        \item Prove that 
+            \[
+                \lim_{s\to 1^+}\frac{\sum_{\mathfrak{p}\in A}{\|\mathfrak{p}\|^{-s}}}{\sum_{\textrm{all }\mathfrak{p}}{\|\mathfrak{p}\|^{-s}}}=\frac{m}{n}
+            \] 
+            This limit is called the \emph{Dirichlet density} of $A$.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} By definition of polar density, we know that the function $\zeta_{K,A}(s)^n$ can be extended to a meromorphic function around $s=1$ with a pole of order $m$ at $s=1$. This means that $\zeta_{K,A}(s)^n(s-1)^m=g(s)$ is a nonzero analytic function in some neighborhood of $s=1$. Then in this neighborhood,
+    \[
+        \zeta_{K}(s)^m\prod_{\mathfrak{p}\in A}\left(1-\frac{1}{\|\mathfrak{p}\|^s}\right)^n = \zeta_K(s)^m\zeta_{K,A}(s)^{-n} = \frac{\zeta_K(s)^m(s-1)^m}{g(s)}=\frac{(\zeta_K(s)(s-1))^m}{g(s)}.
+    \] 
+    Recall that $\zeta_K(s)$ has a simple pole at $s=1$ so $\zeta_K(s)(s-1)$ is analytic around $s=1$. Since $g(s)$ is nonzero around $s=1$, it follows that this function is analytic around $s=1$.
+
+    \textbf{(b)} We've proved in (a) that there is complex function $g(s)$, analytic around $s=1$ with 
+    \[
+        \frac{\zeta_K(s)^m}{\zeta_{K,A}(s)^n} = g(s).
+    \] 
+    Let's use the principal branch of the logarithm, then we have
+    \[\begin{aligned}
+        m\log \zeta_K(s)-n\log \zeta_{K,A}(s) = m\sum_{\textrm{all }\mathfrak{p}}\log\left(1-\frac{1}{\|\mathfrak{p}\|^s}\right)-n\sum_{\mathfrak{p}\in A}\log\left(1-\frac{1}{\|\mathfrak{p}\|^s}\right) = \log g(s)
+    \end{aligned}\]
+    Using the Taylor expansion $\log(1-z)=-\sum^\infty_{n=1}\frac{z^n}{n}$, we can rewrite this as
+    \[\begin{aligned}
+        \log g(s)=\left(n\sum_{\mathfrak{p}\in A}\frac{1}{\|\mathfrak{p}\|^s}-m\sum_{\textrm{all }\mathfrak{p}}\frac{1}{\|\mathfrak{p}\|^s}\right)+\sum_{\textrm{all }\mathfrak{p}}O\left(\frac{1}{\|\mathfrak{p}\|^{2s}}\right)
+    \end{aligned}\]
+    So if we can show that the sum $\sum_{\textrm{all }\mathfrak{p}} O\left(\|\mathfrak{p}\|^{-2s}\right)$ is analytic around $s=1$, we are done. But $\sum_{\textrm{all }\mathfrak{p}} \|\mathfrak{p}\|^{-2s}$ is bounded by $\sum_{I\subset \mathcal{O}_K} \|I\|^{-2s}=\zeta_K(2s)$. $\zeta_K(2s)$ is analytic around $s=1$, so we are done. 
+
+    \textbf{(c)} Recall from (b) that we have
+    \[
+        n\sum_{\mathfrak{p}\in A}\frac{1}{\|\mathfrak{p}\|^s}-m\sum_{\textrm{all }\mathfrak{p}}\frac{1}{\|p\|^s}=O(\log g(s) - \zeta_K(2s)).
+    \] 
+    In the limit as $s\to 1^+$, $\log g(s)-\zeta_K(2s)$ is constant since $g(s)$ is defined and nonzero at $s=1$, so we get
+    \[
+        \lim_{s\to 1^+}\left(n\sum_{\mathfrak{p}\in A}\frac{1}{\|\mathfrak{p}\|^s}-m\sum_{\textrm{all }\mathfrak{p}}\frac{1}{\|\mathfrak{p}\|^s}\right)=\kappa\quad\textrm{for some }\kappa\in \C.
+    \] 
+    Rearranging, this means that
+    \[
+        \lim_{s\to 1^+}\left(\frac{\sum_{\mathfrak{p}\in A}\|\mathfrak{p}\|^{-s}}{\sum_{\textrm{all }\mathfrak{p}}\|\mathfrak{p}\|^{-s}}\right)=\lim_{s\to 1^+}\left(\frac{\kappa}{n\sum_{\textrm{all }\mathfrak{p}}\|\mathfrak{p}\|^{-s}}\right) + \frac{m}{n} = \frac{m}{n}.
+    \] 
+    The limit in the middle vanishes because
+    \[
+        \lim_{s\to 1^+}\sum_{\textrm{all }\mathfrak{p}}\|\mathfrak{p}\|^{-s} \to \infty.
+    \] 
+\end{solution}
+
+\begin{cproblem}{7.8}
+    Use Corollary~2 of Theorem~43 to determine the density of the set of primes $p\in \Z$ such that
+    \begin{enumerate}[(a)]
+        \item 2 is a square mod $p$,
+        \item 2 is a cube mod $p$,
+        \item 2 is a fourth power mod $p$.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    As a reminder, the corollary states
+    \begin{corollary}
+        Let $K$ be a number field and let $f$ be a monic irreducible polynomial over $\mathcal{O}_K$. Let $A$ be the set of primes $ \mathfrak{p}$ of $ \mathcal{O}_K$ such that $f$ splits into linear factors over $ \mathcal{O}_K/\mathfrak{p}$. Then $A$ has polar density $1/[L:K]$ where $L$ is the splitting field of $f$ over $K$.
+    \end{corollary}
+
+    Let $K=\Q$ so that $ \mathcal{O}_K=\Z$. 
+
+    \textbf{(a)} Let $f(x)=x^2-2\in \Z[x]$. This is monic irreducible over $\Z$, and $A$ is the set of primes $p$ such that $x^2-2$ splits in $\Z_p[x]$, which is exactly the set of primes $p$ for which $2$ is a square mod $p$. The corollary then tells us that $\delta(A)=1/2$.
+
+    \textbf{(b)} First suppose $p\not\equiv 1\mod 3$. Then there is a group homomorphism $\Z^\times_p \to \Z^\times_p$ which sends $x\mapsto x^3$. Since $\Z_p^\times$ is cyclic, the kernel of this map is the set of elements whose order divides $3$, yet since $3\nmid p-1$, this map is an isomorphism so every number is a cube mod $p$. The set of primes with $p\not\equiv 1\mod 3$ has density $1/2$. 
+
+    Next, if $p\equiv 1\mod 3$, we claim that $x^3-2$ splits completely mod $p$ if and only if $2$ is a cube mod $p$. This can also be seen in a similar way using the homomorphism $\Z_p^\times \to \Z_p^\times$. Then applying the corollary, we see that the density of these primes is $1/6$ since the splitting field of $x^3-2$ is $\Q[\sqrt[3]{2}, i\sqrt{3}]$. So the total density is $1/2+1/6=2/3$ by a result proved on the previous homework set.
+
+    \textbf{(c)} We can use the same argument as in the previous part to deduce that $x^4-2$ splits completely when $p\equiv 1\mod 4$ iff $2$ is a $4$-th power mod $p$. The density here is $1/8$ since the splitting field of $x^4-2$ is $\Q[\sqrt[4]{2}, i]$. If  $p\equiv 3\mod 4$, we have two cases, $p\equiv 3\mod 8$ and $p\equiv 7\mod 8$. In the first case, $2$ is not a quadratic residue mod $p$, so it cannot be a quartic residue. When $p\equiv 7\mod 8$, $2$ is a quadratic residue, so either $\sqrt{2}$ or $-\sqrt{2}$ is a quadratic residue mod $p$, so $2$ must be a $4$-th power mod $p$. The density here is $1/4$. Thus the total density is $3/8$.
+\end{solution}
+
+\begin{cproblem}{7.10}
+    Let $L$ be a normal extension of $K$ with cyclic Galois group $G$ of order $n$. For each divisor $d$ of $n$, let $A_d$ be the set of primes $\mathfrak{p}$ of $K$ which are unramified in $L$ and such that $\phi(\mathfrak{q}\mid \mathfrak{p})$ has order $d$ for some prime $\mathfrak{q}$ of $L$ lying over $\mathfrak{p}$. Equivalently, this holds for all $\mathfrak{q}$ over $\mathfrak{p}$. Prove that $A_d$ has polar density $\varphi(d)/n$.
+\end{cproblem}
+
+\begin{solution}
+    Let $B_d$ be the set of unramified primes $\mathfrak{p}$ of $K$ such that $\phi(\mathfrak{p}\mid\mathfrak{q})$ has order dividing $d$. This corresponds to the subgroup $H\subset \Gal(L/K)$ of elements of order dividing $d$. Then Corollary~4 implies that $\delta(B_d)=d/n$ since $|H|=d$. Then 
+    \[
+        B_d=\bigsqcup_{d'\mid d} A_{d'} \implies \delta(B_d) = \sum_{d'\mid d}\delta(A_{d'}) = \frac{d}{n}
+    \] 
+    Applying M\"obius inversion to this summation, we get
+    \[
+        n\delta(A_d)=\sum_{d'\mid d} \mu(d')\frac{d}{d'} = \varphi(d).
+    \] 
+    And so $\delta(A_d)=\frac{\varphi(d)}{n}$ as desired.
+\end{solution}
+
+\begin{cproblem}{7.13}
+    Let $K$ be a number field and let $g$ be a monic irreducible polynomial over $\mathcal{O}_K$. Let $M$ be the splitting field of $g$ over $K$ and let $L=K[\alpha]$ for some root $\alpha$ of $g$.
+    \begin{enumerate}[(a)]
+        \item Prove that for all but finitely many primes $\mathfrak{p}$ of $K$, the following are equivalent:
+            \begin{enumerate}[(i)]
+                \item $g$ has a root mod $ \mathfrak{p}$;
+                \item $f(\mathfrak{q}\mid \mathfrak{p})=1$ for some prime $\mathfrak{q}$ of $L$ lying over $\mathfrak{p}$;
+                \item $\phi(\mathfrak{u}\mid \mathfrak{p})$ fixes $L$ for some prime $ \mathfrak{u}$ of $M$ lying over $\mathfrak{p}$. % Use Theorem 27, 29 or use Theorem 33
+            \end{enumerate}
+        \item Show that a finite group $G$ cannot be the union of the conjugates of a proper subgroup $H$. % The number of conjugates is the index of the normalizer, which is at most the index of H
+        \item Prove that there are infinitely many primes $\mathfrak{p}$ of $K$ such that $g$ has no roots mod $\mathfrak{p}$. % Let H be the Galois group of M over L. Use Frobenius Density Theorem
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Let's start with (i) $\to$ (ii). Since $g$ has a root mod $\mathfrak{p}$, then $g$ must have some linear factor $(x-\beta)$ in $(\mathcal{O}_K/\mathfrak{p})[x]$. By Theorem~27, for all but finitely many $\mathfrak{p}$, there must be a $\mathfrak{q}_i$ lying over $\mathfrak{p}$ with $f(\mathfrak{q}_i\mid \mathfrak{p})=\deg (x-\beta)=1$ as desired.
+
+    Next we'll prove (ii) $\to$ (iii). Suppose $f(\mathfrak{q}\mid \mathfrak{p})=1$. Let $\mathfrak{u}$ be a prime of $M$ lying over $\mathfrak{p}$. Then $\phi(\mathfrak{u}\mid \mathfrak{p})$ is the generator of $\Gal((\mathcal{O}_M/\mathfrak{u})/(\mathcal{O}_K/\mathfrak{p}))$. Then $\phi(\mathfrak{u}\mid \mathfrak{p})$ lifts to an element in $D(\mathfrak{u}\mid \mathfrak{p})$. Since $f(\mathfrak{q}\mid\mathfrak{p})$, we have $\mathcal{O}_L/\mathfrak{q} \cong \mathcal{O}_K/\mathfrak{p}$, so $\phi(\mathfrak{u}\mid \mathfrak{p})$ generates the aforementioned Galois group. Then it also must lift to a Galois automorphism in $\Gal(M/L)$ so $\phi(\mathfrak{u}\mid \mathfrak{p})$ fixes $L$.
+
+    Finally, let's prove (iii) $\to$ (i). Suppose $\phi(\mathfrak{u}\mid \mathfrak{p})$ fixes $L$. Then letting $G=\Gal(M/K)$ and $H=\Gal(M/L)$ and $\phi(\mathfrak{u}\mid \mathfrak{p})\in H\sigma_i$, it follows from Theorem~33 that $f(\mathfrak{q}_i\mid \mathfrak{p})=1$ and so we are done.
+
+    \textbf{(b)} Let $H$ be a proper subgroup of $G$. The number of conjugates is the index of the normalizer, which is at most the index of $H$ because $H\subset N_G(H)$ for any $H$. Let $n$ be the number of distinct elements in the conjugates of $H$. Since all conjugates of $H$ contain the identity, we have $n < |H|[ G:N_G(H)]$. Then $n < |H|[G: N_G(H)]\leq |H|[G:H]=|G|.$ This is a contradiction because $G$contains more elements than conjugates of $H$ can cover, so $G$ cannot be the union of conjugates of $H$.
+
+    \textbf{(c)} Let $H=\Gal(M/L)$, and suppose $\mathfrak{p}$ is a prime such that $g$ has no roots mod $\mathfrak{p}$. Then (a) tells us that apart from finitely many primes, $\phi(\mathfrak{u}\mid \mathfrak{p})\in H$. Furthermore, the conjugacy class of $\phi(\mathfrak{u}\mid \mathfrak{p})$ is uniquely determined by $\mathfrak{p}$. Let's pick a representative $\sigma\in H$ from each conjugacy class of $G$ that intersects $H$ nontrivially. Then by the Chebotarev density theorem, the density of the primes such that $g$ has a root mod $\mathfrak{p}$ is $\sum_\sigma c_\sigma / |G|$. It's clear to see that $0<d<1$, so we are done.
+\end{solution}
+
+\begin{cproblem}{7.14}
+    Let $K, L, M,$ and $g$ be as in the previous exercise.
+    \begin{enumerate}[(a)]
+        \item Prove that for all but finitely many primes $\mathfrak{p}$ of $K$, the following are equivalent:
+            \begin{enumerate}[(i)]
+                \item $g$ is irreducible mod $\mathfrak{p}$.
+                \item $\mathfrak{p}$ is inert in $L$.
+                \item $f(\mathfrak{q}\mid \mathfrak{p})$ is equal to the degree of $g$ for some prime $ \mathfrak{q}$ of $L$ lying over $\mathfrak{p}$.
+            \end{enumerate}
+        \item Prove that if $g$ has prime degree $p$, then $g$ is irreducible mod $ \mathfrak{p}$ for infinitely many primes $\mathfrak{p}$ of $K$. % The Galois group of M over L has an element of order p. Use this to get infinitely many P such that f(U|P) = p for some prime U of M. Moreover show that [M : L] is not divisible by p hence f(U|Q)!=p where Q = U cap L.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Theorem~27 immediately shows that these are equivalent.
+
+    \textbf{(b)} Let $\sigma\in \Gal(M/K)$ be an element of order $p$. Then Chebotarev density theorem tells us that the set of primes $\mathfrak{p}$ of $K$ unramified in $M$ such that $\phi(\mathfrak{u}\mid \mathfrak{p})=\sigma$ has nonzero density. So there are infinitely many such primes. The result then follows since if we have some $\mathfrak{u}$ over $\mathfrak{p}$ such that $f(\mathfrak{u}\mid \mathfrak{p})=p$, then $g$ is irreducible mod $\mathfrak{p}$.
+\end{solution}
+
+\begin{cproblem}{7.15}\noindent
+    \begin{enumerate}[(a)]
+        \item Let $G$ be a cyclic group of order $n$. Show that the character group $\widehat{G}$ is also cyclic of order $n$.
+        \item Let $G$ and $H$ be finite abelian groups. Show that there is an isomorphism
+            \[
+                \widehat{G} \times \widehat{H} \to \widehat{G\times H}.
+            \] 
+        \item Let $G$ be a finite abelian group. Prove that $\widehat{G}$ is isomorphic $G$. % G is a direct product of cyclic groups.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Let $g$ be a generator of $G$. Then consider the character $\chi_g : G \to \C$ which sends $g$ to a primitive $n$-th root of unity. This clearly has order $n$, so $\chi_g^n=\textrm{Id}$ and $n \mid |\widehat{G}|$. Now suppose $\chi\in \widehat{G}$ is some arbitrary character. Since $\chi^n=\textrm{Id}$, and it is entirely determined by where the identity element of the group maps to. However this identity element maps to any $n$-th root of unity. The group of $n$-th roots of unity are exactly $G$ so we are done.
+
+    \textbf{(b)} Let $\chi_1 : G \to \C$ and $\chi_2 : H \to \C$ be characters. Consider the character $\chi_1\times \chi_2 : G\to H \to \C$ given by $(\chi_1\times\chi_2)(g,h) = \chi_1(g)\cdot \chi_2(h)$. This is clearly reversible since given $\chi\in\widehat{G\times H}$ we can set $\chi_1 = \chi(-,1)$ and $\chi_2=\chi(1,-)$.
+
+    \textbf{(c)} Since $\Z/n\Z\cong \widehat{\Z/n\Z}$ by (a), for any finite abelian group of the form $\prod_i \Z/n_i\Z$ we apply (b) to show that it is isomorphic to $\widehat{\prod_i\Z/n_i\Z}$.
+\end{solution}
+
+\end{document}

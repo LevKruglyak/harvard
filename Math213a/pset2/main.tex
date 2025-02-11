@@ -1,0 +1,230 @@
+\documentclass{pset}
+
+\title{Math 213a Problem Set 2}
+\due{Tuesday, September 19}
+\author{Lev Kruglyak}
+
+\input{../213a.tex}
+
+\collaborator{Leonardo Kaplan}
+\collaborator{A.J. LaMotta}
+\collaborator{Quinn Brussel}
+
+\begin{document}
+\maketitle
+
+% Chapter 1: Exercises 2, 3, 5, 7, 8, 10, 14
+
+\begin{problem}{2}
+    Let $v(z)$ be a smooth vector field in $\C$. Express $dv /dz$ in terms of $\textrm{div}(v)$ and $\textrm{curl}(v)$.
+\end{problem}
+
+\begin{solution}
+    Recall the definition of the $\partial / \partial z$ as:
+    \[
+        \frac{\partial}{\partial z} = \frac{1}{2}\left(\frac{\partial}{\partial x}-i\frac{\partial}{\partial y}\right)
+    .\] 
+    If we write $v(z)=a(z)+ib(z)$, for real valued $a,b : \C \to \R$, we can calculate:
+    \[
+        \begin{aligned}
+            \frac{\partial v}{\partial z} = \frac{\partial a}{\partial z} + i\frac{\partial b}{\partial z} &= \frac{1}{2}\left(\frac{\partial a}{\partial x} + i \frac{\partial b}{\partial x} - i \frac{\partial a}{\partial y} + \frac{\partial b}{\partial y}\right)\\
+            &= \frac{1}{2}\left(\frac{\partial a}{\partial x}+\frac{\partial b}{\partial y}\right) + \frac{i}{2}\left(\frac{\partial b}{\partial x} - \frac{\partial a}{\partial y}\right)\\
+            &= \frac{1}{2}\left(\textrm{div}(v)+i\;\textrm{curl}(v)\right).
+        \end{aligned}
+    \] 
+\end{solution}
+
+\begin{problem}{3}
+    Let $f(z)$ be one-to-one and analytic on a neighborhood of the unit circle $S^1\subset \C$. Relate $\int_{S^1}\overline{f(z)}f'(z)\;dz$ to the area of the region enclosed by $f(S^1)$.
+\end{problem}
+
+\begin{solution}
+    Recall that we have the relation of forms:
+    \[
+        i\;dz\wedge d\bar{z} = 2\;dx\wedge dy
+    .\] 
+    Thus, by the pullback formula,
+    \[
+        \begin{aligned}
+            \textrm{Area}(f(\Delta)) = \int_{f(\Delta)} dx\wedge dy = \frac{i}{2}\int_{f(\Delta)}dz\wedge d\bar{z} = \frac{i}{2}\int_{\Delta} f^*(dz\wedge d\bar{z}) &= \frac{i}{2}\int_{\Delta} df\wedge d\bar{f}\\
+            &= \frac{i}{2}\int_\Delta f'(z)f'(\bar{z})\;dz\wedge d\bar{z}
+        \end{aligned} 
+    \] 
+    We then observe that:
+    \[
+        \begin{aligned}
+            d(\overline{f(z)}f'(z)\;dz) = d\left(f(\bar{z})f'(z)\;dz\right) &= df(\bar{z})f'(z)\;dz + f(\bar{z})df'(z)\;dz\\
+            &= f'(\bar{z})f'(z)\;d\bar{z}\wedge dz + f(\bar{z})f''(z)\;dz\wedge dz\\
+            &= -f'(\bar{z})f'(z)\;dz\wedge d\bar{z}
+        \end{aligned}
+    \] 
+    Now since $\Delta$ is a compact manifold, we can apply Stoke's theorem and the previous two computations to get
+    \[
+        \int_\Delta f'(z)f'(\bar{z})\;dz\wedge d\bar{z} = -\int_{\partial \Delta} \overline{f(z)f'(z)}\;dz
+    .\] 
+    So putting everything together, we see that:
+    \[
+        \textrm{Area}(f(\Delta)) = \frac{-i}{2}\int_{S^1}\overline{f(z)}f'(z)\;dz
+    .\] 
+\end{solution}
+
+\begin{problem}{5}
+    Suppose $f(z)$ is analytic. Compute $(d/dz)(d /d\bar{z})|f(z)|^2$.
+\end{problem}
+
+\begin{solution}
+    A direct computation shows:
+    \[
+        \begin{aligned}
+            \frac{\partial}{\partial z\partial \bar{z}}|f(z)|^2 = 
+            \frac{\partial}{\partial z\partial\bar{z}}\left(f(z)\overline{f(z)}\right)=\frac{\partial}{\partial z}\left(f(z)f'(\overline{z})\right) = f'(z)f'(\overline{z})=|f'(z)|^2.
+        \end{aligned}
+    \] 
+\end{solution}
+
+\begin{problem}{7}
+    Let $f_1,\ldots,f_n$ be analytic functions on $\Delta$. Suppose $\sum |f_i(z)|^2=1$ for all $z\in \Delta$.
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Show all $f_i$ are constant functions, by taking the Laplacian of both sides of this equation.
+    \end{part}
+
+    Recall that the Laplacian operator satisfies the following relation (proved in the notes):
+    \[
+        \frac{1}{4}\nabla^2f = \frac{\partial f}{\partial z\partial\bar{z}}
+    \]
+    Thus by the result of the previous problem, we have:
+    \[
+        \nabla^2 |f_i(z)|^2 = 4|f_i'(z)|^2
+    .\]  
+    Since the Laplacian is a linear operator, and $\nabla^2 1= 0$, taking the Laplacian of both sides of the equation gives
+    \[
+        4\sum |f'_i(z)|^2 = 0,
+    \] 
+    which implies that $|f_i'(z)|=0$ so all functions $f_i$ are constant.
+
+
+    \begin{part}{b}
+        Show that all $f_i$ are constant functions, by applying the maximum principle to suitable linear combinations of these functions.
+    \end{part}
+
+    Consider the analytic function $g : \Delta \to \C$ give by
+    \[
+        g(z)=\sum \overline{f_i(0)}f_i(z)
+    .\] 
+    Note that $g(0)=\sum |f_i(0)|^2=1$. Now we have
+    \[
+        \begin{aligned}
+            |g(z)| = \left|\sum \overline{f_i(0)}f_i(z)\right|\leq \sum |f_i(0)||f_i(z)|\leq \sum \frac{|f_i(0)|^2+|f_i(z)|^2}{2}&\leq \sum |f_i(0)||f_i(z)|\\
+            &\leq \sum \frac{|f_i(0)|^2}{2}+\sum\frac{|f_i(z)|^2}{2} =1.
+        \end{aligned}
+    \]
+    Since $g$ is analytic on a compact set and achieves its maximum on the interior, $g$ must be constantly $1$. Then we must have an equality $|f_i(z)|=|f_i(0)|$ for all $i$ since this is the only time equality can be achieved in the AM-GM inequality. This completes the proof, since a constant magnitude analytic function is constant.
+
+    \begin{part}{c}
+        Let $H: \C^n \to \R$ be a strictly convex smooth function. Using one of the first two methods, prove that if $H(f_1(z),\ldots,f_n(z))$ is constant on $\Delta$, then each function $f_i(z)$ is constant.
+    \end{part}
+
+    Let $\Gamma \subset \C^n$ be the set $\{(f_1(z), \ldots, f_n(z)) : z\in \Delta\}$. Since $f_i$ are analytic, and we assume for the sake of contradiction that they are non-constant, this is a smooth complex $1$-manifold, without boundary, by the open mapping theorem. This manifold also has a natural smooth map into $\C^n$ given by its parametrization. We can also consider its convex hull $\Cvx(\Gamma)$, which is likewise a smooth submanifold of $\C^n$. Finally, we have a smooth map $H : \Cvx(\Gamma) \to \R$, with $H$ strictly convex and constant on $\Gamma \subset \Cvx(\Gamma)$, say equal to $c\in \R$.
+
+    We can make a few observations now with this setup. First of all, recall that for any distinct points $x,y\in \Gamma$, we have $H(tx+(1-t)y) > tH(x)+(1-t)H(y) = c$ where any $t\in (0,1)$. This means that $\Gamma$ cannot contain any line segments, and that $\Gamma = H^{-1}(c)$. Since all $f_i$ are non-constant and analytic, $c$ is a regular value, so by the preimage theorem $\Gamma$ has codimension $1$ in $\Cvx(\Gamma)$. Furthermore, $\Gamma$ is the boundary of $\Cvx(\Gamma)$ since $\Cvx(\Gamma) = H^{-1}([c, \infty))$. Now I'm not super sure where to go from here, I think we might want to consider the function 
+    \[
+        g(z) = \big\langle z_0, (f_1(z), \ldots, f_n(z)) \big\rangle
+    \]
+    for some $z_0\in \Gamma$, and where $\big\langle -, - \big\rangle$ is the canonical Hermitian inner product. Then we could apply the maximum principle to this function at some point and derive a contradiction with dimension?
+\end{parts}
+
+\begin{problem}{8}
+    In this problem you will evaluate different series for $\log(2)$. Do not use Euler's method, a simpler proof exists.
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Show that $\log(2) = 1 - 1 /2 + 1 /3 - 1 /4 +\cdots$.
+    \end{part}
+
+    This follows by the alternating series test, which says that $\sum_k (-1)^kb_k$ converges if $0\leq b_{k+1}\leq b_k$ and $\lim_{k\to \infty} b_k=0$. In this case, both of these conditions are satisfied by $b_k=1 /k$, so Abel's theorem implies that this series converges to $\log(2)$.
+
+    \begin{part}{b}
+        Show that $\log(2)=\sum_{k\geq 1} 2^{-k} / k$.
+    \end{part}
+    
+    Since $\log(1+z)=-\sum_{k\geq 1}(-1)^{k}z^k / k$, we can set $z=-1 /2$ to get $\log(2)=-\log(1 /2) = \sum_{k\geq 1}2^{-k} / k$. $1/2$ is in the radius of convergence so this works fine.
+
+    \begin{part}{c}
+        Sum the first $5$ terms of each series, and compare the results to the actual value of $\log(2)$.
+    \end{part}
+
+    The first series gives $\approx 0.7833$, the second series gives $\approx 0.6885$, whereas actual value is $\approx 0.6931$. The second series converges significantly faster because it's denominator grows much faster, and its not an alternating series.
+\end{parts}
+
+\begin{problem}{10}
+    Let $C\left(\overline{\Delta}\right)$ be the Banach space of continuous, complex-valued functions on the unit disk, with $\|f\| = \sup |f(z)|$. Let $f\in C\left(\overline{\Delta}\right)$ be analytic on $\Delta.$
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Prove that the $\C$-algebra $\C[f]$ generated by $f$ is not dense in $C(\overline{\Delta})$.
+    \end{part}
+    Consider the linear functional on $C(\overline{\Delta})$ given by
+    \[
+        L(f) = \int_{\partial \Delta} f(z)dz
+    .\] 
+    The functional is bounded because:
+    \[
+        |L(f)| = \left|\int_{\partial \Delta} f(z)\;dz\right|\leq \int_{\partial \Delta}|f(z)|\;dz \leq 2\pi\|f\|
+    .\]
+    Here the last inequality follows by the maximum principle, since any supremum of $f$ must be achieved on the boundary of $\Delta$. Thus $L$ is continuous because any bounded linear functional on a Banach space is continuous. Now note that $\C[f]$ is in the kernel of $L$ by Cauchy's theorem. Yet $L$ is surjective because $L(\alpha\bar{z})=2\pi i\alpha$. So $\C[f]$ cannot be dense, since otherwise it would have full image under $L$.
+
+    \begin{part}{b}
+        Prove that $\C[f, \bar{f}]$ is dense in $C\left(\overline{\Delta}\right)$ if and only if $f$ is injective on $\overline{\Delta}$.
+    \end{part}
+
+    For the forward direction of this problem, we use the following classic result:
+    \begin{theorem}[Stone-Weierstrass approximation]
+        Let $C(K, \C)$ be the Banach space of continuous real functions on some compact subset $K \subset \C$, and let $A$ be a subalgebra of $C(K,\C)$ which is closed under conjugation and separates points.
+    \end{theorem}
+
+    Since $\C[f, \overline{f}]$ is a subalgebra of $C(\overline{\Delta}, \C)$ is closed under conjugation, and separates points if $f$ is injective, we are done with the forward direction. In the reverse direction, suppose $f$ is not injective, say with $f(z_1)=f(z_2)$ for $z_1\neq z_2$. This immediately implies that every function $g\in \C[f, \overline{f}]$ is not injective as well, with $g(z_1)=g(z_2)$. Now let $g\in \C[f, \overline{f}]$ be arbitrary. Then $\|g - z\| \geq |g(z_1) - z_1|$ and $\|g-z\|\geq |g(z_2) - z_2|$. Then we get
+    \[
+        \|g-z\| \geq \max(|g(z_1) - z_1|, |g(z_2)-z_2|) \geq |z_1-z_2|,
+    \]
+    where the last inequality follows from the triangle inequality on the max metric. However note that $\delta = |z_1-z_2|$ is fixed and nonzero, so $\|g-z\|\geq \delta$ for any $g\in \C[f, \overline{f}]$. This implies that $\C[f,\overline{f}]$ cannot be dense, since it has positive distance to $z$.
+
+    % Now we can make a few reductions to make this problem simpler. Firstly, we translate the Weierstrauss approximation theorem into the complex domain:
+    % \begin{claim}
+    %     The space $\C[z, \bar{z}]$ is dense in $C(\overline{\Delta})$.
+    % \end{claim}
+    % \begin{proof}
+    %     Let $f\in C(\overline{\Delta})$ be a continuous function. To show that $\C[z,\bar{z}]$ is dense in $C(\overline{\Delta})$, we want to show that given some arbitrary $\epsilon > 0$, we can always find a $g\in \C[z,\bar{z}]$ such that $\|f-g\|<\epsilon$. We first express $f$ as it as $f(z)=R(z)+iI(z)$, where $R$ and $I$ are real valued functions $\C \to \R$. If we consider them both as real function in $C(\R^2, \R)$, with $R(x,y)=R(x+iy)$ and $I(x,y)=I(x+iy)$, we can apply the Weierstrauss approximation theorem to find polynomials $P,Q\in \R[x,y]$ such that $\|R-P\|< \epsilon^2 / 4$ and $\|I-Q\|<\epsilon^2 / 4$.
+
+    %     If we set $g=P+iQ$ (here considered as a function of $z=x+iy=(x,y)$), we observe that we have
+    %     \[
+    %         \begin{aligned}
+    %             \|f - g\| = \sup_{z\in \overline{\Delta}} |f(z) - P(z)-iQ(z)| &= \sup_{z\in \overline{\Delta}} |R(z) + iQ(z) - P(z)-iQ(z)|\\
+    %             &= \sup_{z\in \overline{\Delta}} \sqrt{(R(z) - P(z))^2 + (I(z)-Q(z))^2}\\
+    %             &=\sqrt{\sup_{z\in \overline{\Delta}}(R(z) - P(z))^2 + \sup_{z\in \overline{\Delta}}(I(z) - Q(z))^2 }\\
+    %             &< \sqrt{\epsilon^2 / 4 + \epsilon^2 / 4}=\epsilon.
+    %         \end{aligned}
+    %     \] 
+    %     So it suffices to prove that $g\in \C[z,\bar{z}]$. But this follows because of standard identities involving conjugation which show that
+    %     \[
+    %         g(z) = P\left(\frac{z+\bar{z}}{2}, \frac{z-\bar{z}}{2}\right) + iQ\left(\frac{z+\bar{z}}{2}, \frac{z-\bar{z}}{2}\right)
+    %     ,\] 
+    %     so we are done.
+    % \end{proof}
+\end{parts}
+
+\begin{problem}{14}
+    Show for any polynomial $p(z)$ there is a $z$ with $|z|=1$ such that $|p(z)-1 /z|\geq 1$.
+\end{problem}
+
+\begin{solution}
+    This is actually true for any analytic function $p$. Indeed, consider the function $f(z)=zp(z)-1$. This is an analytic function on the unit disk $\overline{\Delta}$. Then $f(0)=-1$, so by the maximum principle, there must be some point $z\in \partial \Delta$ such that $|f(z)| \geq 1$. Thus we have $|zp(z)-1| \geq |z| \implies |p(z) - 1/z| \geq 1$.
+\end{solution}
+
+\collaborators
+
+\end{document}

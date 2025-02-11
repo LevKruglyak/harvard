@@ -1,0 +1,11 @@
+\begin{problem}
+Let $V$ be a finite-dimensional vector space over a field $k$, and let $\phi$ and $\psi:V\to V$ be two linear operators.
+\begin{enumerate}
+  \item If $\phi\circ \psi=0$, does it follow that $\psi\circ \phi=0$?
+  \item If $\phi\circ\psi$ is nilpotent (i.e., there exists $m$ such that ${(\phi\circ \psi)}^m=0$),does it follow that $\psi\circ \phi$ is nilpotent?
+\end{enumerate}
+\end{problem}
+\textbf{(1)} No. Consider the linear operators on $k^3$ given by $\phi(x,y,z)=(0,0,z)$ and $\psi(x,y,z)=(z,y,0)$. Then $\phi\circ \psi=0$ but $\psi\circ \phi(x,y,z)=(z,0,0)$.     
+
+\textbf{(2)} Yes. Suppose ${(\phi\circ \psi)}^m=0$. Then ${(\psi\circ\phi)}^{m+1}=\psi\circ{(\phi\circ\psi)}^{m}\circ \phi = \psi \circ 0 \circ \phi = 0$. So $\psi\circ\phi$ is idempotent.
+ 

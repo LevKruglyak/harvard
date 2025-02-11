@@ -1,0 +1,336 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{Math 55b Problem Set 7}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with AJ LaMotta on this problem set.}
+\end{center}
+
+\begin{problem}
+    Suppose that $\sum a_n$ is a {\em divergent} series of real positive numbers $a_n>0$, and denote by $s_n=a_1+\dots+a_n$ its partial sums.
+    \begin{enumerate}[(a)]
+        \item Show that $\displaystyle \sum \frac{a_n}{1+a_n}$ diverges.
+        \item What can you say about $\displaystyle \sum \frac{a_n}{1+na_n}$ and $\displaystyle \sum \frac{a_n}{1+n^2a_n}$?
+        \item Prove that $\displaystyle \frac{a_{N+1}}{s_{N+1}}+\dots+\frac{a_{N+k}}{s_{N+k}}\geq 1-\frac{s_N}{s_{N+k}}$, and deduce that $\displaystyle \sum \frac{a_n}{s_n}$ diverges.
+        \item Prove that $\displaystyle \frac{a_n}{s_n^2}\leq \frac{1}{s_{n-1}}-\frac{1}{s_n}$, and deduce that $\displaystyle \sum \frac{a_n}{s_n^2}$ converges.
+    \end{enumerate}
+\end{problem}
+
+% (Hint for (a): it might be easier to treat separately the cases $a_n\to 0$ and $a_n\not\to 0$. Hint for (c): what does the divergence of $\sum a_n$ tell you about the sequence $s_n$?)
+
+\begin{solution}
+    \textbf{(a)} We have two cases to consider. First, consider the case when $a_n\to 0$. Note that 
+    \[
+        \lim_{n\to \infty}\left(\frac{a_n}{1+a_n}\right)/a_n = \lim_{n\to \infty} \frac{1}{1+a_n} = 1
+    \]
+    so by the ratio test $\sum \frac{a_n}{1+a_n}$ diverges. Next if $a_n\not\to 0$, there must be an infinite number of $a_n>\epsilon$ for some $\epsilon>0$. So an infinite number of $a_n$ satisfy $\frac{a_n}{1+a_n} > \frac{\epsilon}{1+\epsilon} > 0$ which necessarily means that $\sum \frac{a_n}{1+a_n}$ diverges.
+
+    \textbf{(b)} Let's start with $\sum \frac{a_n}{1+na_n}$. First note that if $a_n=\frac{1}{n}$, we have
+    \[
+        \sum \frac{a_n}{1+na_n} = \sum \frac{1}{2n} = 2\sum \frac{1}{n} \to \infty
+    \]
+    so in some cases the sum can diverge. On the other hand if we let $a_n=1$ whenever $n$ is square and $a_n=0$ otherwise, the sum $\sum a_n$ clearly diverges because there are an infinite number of squares, yet
+    \[
+        \sum \frac{a_n}{1+na_n} = \sum_{n\textrm{ square}} \frac{1}{1+n} = \sum \frac{1}{1+n^2}\leq \sum \frac{1}{n^2} = \frac{\pi^2}{6}
+    \]
+    so the series converges. For the second series, we have
+    \[
+        \sum \frac{a_n}{1+n^2a_n} \leq \sum \frac{1}{n^2} = \frac{\pi^2}{6} 
+    \]
+    so the series will always converge, irrespective of the choice of $a_n$.   
+    
+    \textbf{(c)} Notice that for any $N,k\geq 1$ we have 
+    \[
+        \begin{aligned}
+            \frac{a_{N+1}}{S_{N+1}}+\cdots+\frac{a_{N+k}}{s_{N+k}}&\geq \frac{a_{N+1}+\cdots+a_{N+k}}{s_{N+k}}=\frac{S_{N+k}-S_N}{S_{N+k}} = 1-\frac{S_N}{S_{N+k}}.
+        \end{aligned}
+    \] 
+    We claim that $\sum \frac{a_n}{s_n}$ diverges. Suppose for the sake of contradiction that $\sum \frac{a_n}{s_n}=L$ for some $L>0$. Then for any $N\geq 0$, we have
+    \[
+        \lim_{k\to \infty}\sum^k_{n=1}\frac{a_n}{s_n} = s_N+\lim_{k\to\infty}\sum^k_{n=N+1}\frac{a_n}{s_n} \geq s_N + 1-\lim_{k\to \infty}\sum^k_{n=N+1}\frac{s_N}{s_{N+k}} = s_N+1
+    .\] 
+    Here $\frac{s_N}{s_{N+k}}\to 0$ because $s_n\to \infty$ since $\sum a_n$ diverges. However as $N\to\infty$, $s_N+1$ also goes to infinity and since this is a lower bound for $\sum \frac{a_n}{s_n}$, this series must also diverge. 
+    
+    \textbf{(d)} Note that for any $n>1$, we have
+    \[
+        \frac{1}{s_{n-1}}-\frac{1}{s_n} = \frac{s_n - s_{n-1}}{s_n s_{n-1}} = \frac{a_n}{s_{n-1}s_n}\geq \frac{a_n}{s_n^2}
+    .\] 
+    So we have the upper bound
+    \[
+        \sum \frac{a_n}{s_n^2} \leq \frac{a_1}{s_1^2}+ \sum_{n=2}\left(\frac{1}{s_{n-1}} - \frac{1}{s_{n}}\right) = \frac{a_1}{s_1^2} + \frac{1}{s_1}
+    .\] 
+    This is of course a finite quantity so the series converges.
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item For what values of $x$ does the series  $\displaystyle f(x)=\sum_{n=1}^\infty \frac{1}{1+n^2 x^2}$ converge? On what intervals does it converge uniformly? On what intervals does it fail to converge uniformly? 
+        \item Is $f$ continuous wherever the series converges? Is $f$ bounded?
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} For any $k\geq 1$ let $f_j(x)$ be the partial sum function, i.e.
+    \[
+        f_n(x)=\sum^k_{n=1}\frac{1}{1+n^2x^2}
+    .\] 
+    Now let $\epsilon > 0$. We have 
+    \[
+        \begin{aligned}
+            \left|f(x)-f_k(x)\right|= \left|\sum^\infty_{n=1}\frac{1}{1+n^2x^2}-\sum^k_{n=1}\frac{1}{1+n^2x^2}\right|=\left|\sum^\infty_{n=k+1}\frac{1}{1+x^2n^2}\right|\leq \frac{1}{x^2}\sum^{\infty}_{n=k+1}\frac{1}{n^2}
+        \end{aligned}
+    .\] 
+    Since $\sum^\infty_{n=1}\frac{1}{n^2}$ converges, for any $\epsilon>0$ there is some $K(\epsilon)$ such that whenever $k\geq K(\epsilon)$, we have $\sum^\infty_{n=k+1}\frac{1}{n^2}< \epsilon$. Thus for any $x\neq 0$, we know that $|f(x)-f_k(x)|<\epsilon$ as long as $k\geq K(\epsilon /x^2)$. Thus the interval of convergence for the series $f(x)$ is $\R-\{0\}$. To see where this function is uniformly convergent, we simply need to find all intervals $I\subset \R-\{0\}$ for which $\frac{1}{x^2}$ is bounded above, i.e. intervals like $[a,\infty)$ and $(-\infty,-a]$ for $a>0$. On every other interval, $f(x)$ does not uniformly converge.
+
+    \textbf{(b)} Yes, it is continuous on the points where it is defined. To see this, let $x\neq 0$ and $\epsilon >0$. Then for any $y\neq 0$, we have
+    \[
+        |f(x)-f(y)| = \left|\sum^\infty_{n=1}\left(\frac{1}{1+n^2x^2}+\frac{1}{1+n^2y^2}\right)\right|\leq \left|\left(\frac{1}{x^2}-\frac{1}{y^2}\right)\sum^\infty_{n=1}\frac{1}{n^2}\right|=\frac{\pi^2}{6}\left|\frac{1}{x^2}-\frac{1}{y^2}\right|
+    .\] 
+    Since $g(x)=\frac{1}{x}$ is continuous everywhere except for $x=0$, we can find some $\delta>0$ such that whenever $|x-y|<\delta$ we have $\left|\frac{1}{x^2}-\frac{1}{y^2}\right|<\epsilon\cdot \frac{6}{\pi^2}$. This would imply that $|f(x)-f(y)|<\epsilon$, completing the proof that $f$ is continuous on $\R-\{0\}$. 
+
+    Next, we claim that $f(x)$ is unbounded. Note that 
+    \[
+        f(x) = \sum^\infty_{n=1}\frac{1}{1+n^2x^2} \geq \sum^\infty_{n=1}\frac{1}{2n^2x^2} =\frac{1}{2x^2}\sum^\infty_{n=1}\frac{1}{x^2}=\frac{\pi^2}{12x^2}
+    .\]  
+    Since $\frac{\pi^2}{12x^2}$ is unbounded, and smaller than $f(x)$, it follows that $f(x)$ is unbounded as well.
+\end{solution}
+
+\begin{problem}
+    Let $f(t)=a_d t^d+a_{d-1} t^{d-1}+\dots+a_0$ be a polynomial of degree $d$ with {\em integer} coefficients, and suppose that $x\in \R$ satisfies $f(x)=0$. Prove that there exists a constant $c>0$ such that for any rational number $p/q\in \Q$ with $p/q\neq \alpha$, 
+    \[
+        \Bigl|x-\frac{p}{q}\Bigr|\geq \frac{c}{q^d}
+    .\] 
+    Use this to show that $\alpha=\sum_{n=0}^\infty 10^{-n!}$ is transcendental (i.e.\ not the solution of any polynomial equation with integer coefficients).
+\end{problem}
+
+\begin{solution}
+    First assume that $\left|x-\frac{p}{q}\right|\leq 1$, we'll address the other case subsequently. Since $f(t)$ is a polynomial, it is analytic infinitely differentiable and so we can apply Taylor's theorem to get an expansion at $x$:
+    \[
+        f(t)=\sum^\infty_{k=0}\frac{1}{k!}f^{(k)}(x)(x-t)^k=\sum^d_{k=1}\frac{1}{k!}f^{(k)}(x)(x-t)^k
+    .\] 
+    Plugging in $\frac{p}{q}$, we get
+    \[
+        \begin{aligned}
+            \left|f\left(\frac{p}{q}\right)\right| &= \left|\sum^d_{k=1}\frac{1}{k!}f^{(k)}(x)\left(x-\frac{p}{q}\right)^k\right|\\
+            &\leq \left|x-\frac{p}{q}\right|\cdot \sum^d_{k=1}\left|\frac{1}{k!}f^{(k)}(x)\right|\cdot \left|x-\frac{p}{q}\right|^{k-1}
+            &\leq \left|x-\frac{p}{q}\right|\cdot \sum^d_{k=1}\left|\frac{1}{k!}f^{(k)}(x)\right|\cdot 1^{k-1}\\
+            &\leq \left|x-\frac{p}{q}\right|\cdot d \cdot \max_{1\leq k \leq d}\left|\frac{1}{k!}f^{(k)}(x)\right|.
+        \end{aligned}
+    \]  
+    Note that 
+    \[
+        f\left(\frac{p}{q}\right)=a_d\left(\frac{p}{q}\right)^d+a_{d-1}\left(\frac{p}{q}\right)+\cdots+a_0=\frac{a_dp^d+a_{d-1}p^{d-1}q+\cdots+a_0q^d}{q^d}
+    .\]  
+    Let's write $N(p,q)=a_dp^d+a_{d-1}p^{d-1}q+\cdots+a_0q^d$ so that $f\left(\frac{p}{q}\right)=\frac{N(p,q)}{q^d}$. Similarly let $M(x)=\max_{1\leq k\leq d}\left|\frac{1}{k!}f^{(k)}(x)\right|$. Note that $M(x)>0$ since any polynomial has at least one nonvanishing derivative at any given point. Then 
+    \[
+        \left|f\left(\frac{p}{q}\right)\right|=\left|\frac{N(p,q)}{q^d}\right|\leq \left|x-\frac{p}{q}\right|\cdot d\cdot M(x).
+    \]   
+    Rearranging terms around in the inequality, we get
+    \[
+        \left|x-\frac{p}{q}\right|\geq \frac{\left|N(p,q) /dM(x)\right|}{q^d}\geq \frac{1/dM(x)}{q^d}
+    .\] 
+    So letting $c=1 /dM(x)$ works. Note that $c>0$. Now if $\left|x-\frac{p}{q}\right|> 1$, write $\frac{p}{q} = n+\frac{p'}{q}$ for some $p',n\in \Z$ such that $\left|x-\frac{p'}{q}\right|\leq 1$ with $x-\frac{p'}{q}$ and $n$ having the same sign. Then
+    \[
+        \left|x-\frac{p}{q}\right|=\left|x-\frac{p'}{q}-n\right|=\left|x-\frac{p'}{q}\right|+|n|\geq \left|\frac{c}{q^d}\right|
+    .\]
+    Now let $\alpha=\sum_{n=0}^\infty 10^{-n!}$ as in the problem. Suppose for the sake of contradiction that $\alpha$ is not transcendental, say that it is the root of an integral polynomial. For every $k\geq 0$, let $\alpha_k=\sum^k_{n=0}10^{-n!}$. Note that $\alpha_k$ can be expressed as a rational number with denominator $10^{k!}$. Then by the preceding argument, there is some constant $c$ with 
+    \[
+        \frac{c}{10^{d\cdot k!}}\leq \left|\alpha-\alpha_k\right|=\left|\sum^\infty_{n=0}10^{-n!}-\sum^k_{n=0}10^{-n!}\right|=\left|\sum^\infty_{n=k+1}10^{-n!}\right|\leq 10^{-(k+1)!+1}
+    .\]   
+    This implies that $c\leq  10^{d\cdot k!-(k+1)!+1}$ for all $k\geq 0$. This of course implies that $c=0$ since $10^{d\cdot k!-(k+1)!+1}\to 0$ as $k\to \infty$. But this is a contradiction since $c>0$ so $\alpha$ must be transcendental.
+\end{solution}
+
+\begin{problem}
+    Suppose $f:\R\to \R$ is twice differentiable, $|f''(x)|\leq 1$ for all $x\in \R$, and $\lim_{x\to +\infty} f(x)=0$ (i.e., $\forall \epsilon>0$ $\exists M$ such that $x>M\Rightarrow |f(x)|<\epsilon$). Show that $\lim_{x\to +\infty} f'(x)=0$.
+\end{problem}
+% (Hint: assuming $f'(x)=a>0$, find a lower bound for $f'$ over the interval $[x-a/2,x+a/2]$).
+
+\begin{problem}
+    Let $f:\R \to \R$ be the function defined by
+    \[
+        \begin{cases} 
+            f(p/q)=1/q \quad & \textrm{if $p/q\in \Q$ is an irreducible fraction, $p,q\in \Z$, $q>0$}\\ 
+            f(x)=0 \quad & \textrm{if $x\not\in\Q$} 
+        \end{cases}
+    \]
+    \begin{enumerate}[(a)]
+        \item At which points of $\R$ is $f$ continuous?     
+        \item At which points of $\R$ is $f$ differentiable?
+        \item Show that $f$ is the pointwise limit of a sequence of continuous functions.
+        \item Show that $f$ is Riemann integrable, and that $\int_0^1 f(x)\,dx=0$.
+        \item (optional, extra credit) Consider the function $g:\R \to \R$ defined similarly but with $g(p/q)=1/q^3$ (and still $g(x)=0$ for $x\not\in\Q$). Find examples of points at which $g$ is differentiable, and of points at which $g$ is continuous but not differentiable. (Hint: use Problem 3.)
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} We claim that $f$ is continuous precisely at the irrational numbers. Firstly, let $\frac{p}{q}\in \Q$ be rational, and suppose for the sake of contradiction that $f$ is rational at $\frac{p}{q}$. This means that for every $\epsilon>0$ there exists some $\delta>0$ such that $|x-\frac{p}{q}|<\delta$ implies that $|f(x)-f(\frac{p}{q})|<\epsilon$. However contained in any interval $(\frac{p}{q}-\delta, \frac{p}{q}+\delta)$ are an infinite number of irrational numbers $x$, so $|f(x)-f(\frac{p}{q})|=\frac{1}{q}$ which may not be less than $\epsilon$. 
+    
+    On the other hand suppose $x$ is irrational. Then for every $\epsilon>0$, choose the largest value of $q$ so that $\frac{1}{q}<\epsilon$. Then let $\delta=\min_{q'\leq q, p\in \Z} | x- \frac{p}{q'}|$. Thus any rational number $\frac{p}{q'}\in (x-\delta, x+\delta)$ will have $q'\geq q$ so $|f(x)-f(\frac{p}{q'})|=\frac{1}{q'}<\epsilon$. We can disregard irrational numbers in this interval since $f(y)=0$ and so $|f(x)-f(y)|=0 < \epsilon$.    
+    
+    \textbf{(b)} Since a function can only be differentiable at points where it is continuous, it suffices to only check its differentiability at irrational numbers. We claim it is not differentiable. Let $x\in \R-\Q$ be irrational. If the derivative exists at $x$, it would have to be zero, since we can find another irrational number $y$ arbitrarily close to $x$ with $f(x)-f(y)=0$. So let $\epsilon>0$ and suppose there is a rational $y$ with
+    \[
+        \frac{|f(x)-f(y)|}{|x-y|}=\frac{|f(y)|}{|x-y|}<\epsilon
+    .\] 
+    We don't care about the case when $y$ is irrational since then the ratio would simply be zero. Say $y=\frac{p}{q}$, then
+    \[
+        \epsilon > \frac{|f(\frac{p}{q})}{|x-\frac{p}{q}|} = \frac{\frac{1}{q}}{|x-\frac{p}{q}|} \geq \frac{\frac{1}{q}}{\min_{p\in\Z} |x-\frac{p}{q}|} = \frac{\frac{1}{q}}{\frac{1}{2q}} = 2
+    .\] 
+    This is a contradiction, since $\epsilon$ need not be greater than $2$. So $f$ isn't differentiable at $x$.
+
+    \textbf{(c)} Recall that the rationals are countable, so we can order them $\{\frac{p_i}{q_i}\}_{i\geq 0}$. Now let's construct functions $f(x,i)$, with $0\leq f(x,i)\leq 1$ for all $x,i$, and defined recursively as follows. First, $f(x,0)$ is defined as a function which takes on values $f(\frac{p_0}{q_0},0)=\frac{1}{q_0}$, and any other values between $0$ and $<1$ elsewhere. Next, for any $i$, define $f(x,i)$ as some function with $f(\frac{p_i}{q_i}, i)=\frac{1}{q_i}$, and $f(x,i)=1$ whenever $x$ is in some chosen open neighborhood of $\{\frac{p_k}{q_k}\}_{k\leq i}$ which doesn't contain $\frac{p_i}{q_i}$. Then clearly since $f(x,i) \in [0,1]$ we have a well defined infinite product
+    \[
+        f(x)=\prod_{i\geq 0}f(x,i)
+    .\] 
+    Clearly $f(\frac{p_i}{q_i})=\frac{1}{q_i}$, and by choosing the values of $f(x,i)$ appropriately we can get $f(x)=0$ for irrational $x$. (Indeed it is a product of infinitely many values $<1$) All of these functions are continuous so we are done.
+    
+    \textbf{(d)} Since $\inf_{x\in [a, b]} f(x) = 0$ for any interval $[a,b]\subset [0,1]$, the lower Riemann integral $I_-(f) = \sup_{[a,b]} \inf_{x\in [a,b]} f(x) = 0$. Similarly, we claim that $\inf_{[a,b]} \sup_{x\in [a,b]}f(x) = 0$. Consider an interval $[a,b]$ where every rational number $\frac{p}{q}\in [a,b]$ has $q>Q$ for some $Q>2$. (This can be done because there are a finite number of rational numbers to avoid) Then $\sup_{x\in [a,b] f(x)=\frac{1}{Q}}$. Since $\frac{1}{Q}$ can be made arbitrarily small, it follows that the upper Riemann integral is also zero. Thus $I_-(f)=I_+(f)=\int_0^1f(x)\;dx = 0$.      
+\end{solution}
+
+\begin{problem}
+    Let $p,q$ be positive real numbers such that $\frac{1}{p}+\frac{1}{q}=1$. 
+    \begin{enumerate}[(a)]
+        \item Show that if $f,g$ are integrable, $f,g\geq 0$, and $\int_a^b f^p\,dx = \int_a^b g^q\,dx = 1,$ then $\int_a^b fg\,dx \leq 1$.
+        \item Use this to deduce {\em H\"older's inequality} for integrable functions: 
+        \[
+            \left|\int_a^b fg\,dx\right|\leq \left(\int_a^b |f|^p\,dx\right)^{1/p} \left(\int_a^b |g|^q\,dx\right)^{1/q}
+        .\]
+        \item (optional, extra credit) The $L^p$ norm of $f\in C^0([a,b])$ is defined to be $\|f\|_p=\left(\int_a^b |f|^p\,dx\right)^{1/p}$. The triangle inequality for the $L^p$ norm is known as {\em Minkowski's inequality}: $$\|f+g\|_p\leq \|f\|_p+\|g\|_p.$$ Prove Minkowski's inequality for $p>1$ by observing that $|f+g|^p\leq |f|\,|f+g|^{p-1}+|g|\,|f+g|^{p-1}$, and using H\"older's inequality to bound the integral of the right hand side.
+    \end{enumerate}
+\end{problem}
+% (Hint: first show that the inequality $uv\leq \frac{1}{p}u^p+\frac{1}{q}v^q$ holds for all $u,v\in \R_{\geq 0}$; this can be done e.g.\ by studying the function $u\mapsto \frac{1}{p}u^p-uv$ for fixed $v$.)
+
+\begin{solution}
+    First we'll prove a useful inequality.
+
+    \begin{claim}
+        Let $p,q$ be positive integers satisfying $\frac{1}{p}+\frac{1}{q}=1$. Then for any nonnegative $u,v$, we have
+        \[
+            uv\leq \frac{u^p}{p}+\frac{v^q}{q}
+        .\] 
+    \end{claim}
+    \begin{proof}
+        We can assume that $u,v\neq 0$ since the case when one or both are zero is trivial. Then
+        \[
+            \begin{aligned}
+                uv = e^{\log uv} = e^{\log u + \log v} = e^{\frac{1}{p}p\log u+\frac{1}{q}q\log v}=e^{\frac{1}{p}\log u^p + \frac{1}{q} \log v^q}
+            \end{aligned}
+        .\] 
+        However since $e^x$ is a strictly convex function and $\frac{1}{p}+\frac{1}{q}=1$, by Jensen's inequality we have 
+        \[
+            e^{\frac{1}{p}\log u^p+\frac{1}{q}\log v^q} \leq \frac{1}{p}e^{\log u^p}+\frac{1}{q}e^{\log v^q}=\frac{u^p}{p}+\frac{v^{q}}{q}
+        .\] 
+        So this proves the inequality.
+    \end{proof}
+
+    \textbf{(a)} Applying this inequality to the given integrals, we get
+    \[
+        \int_a^b fg\, dx \leq \frac{1}{p}\int_a^b |f|^p\,dx + \frac{1}{q}\int_a^b |g|^q\,dx=1
+    ,\]
+    which is the desired inequality.
+    
+    \textbf{(b)} Using the notation of the $L^p$ norm, let $f' = |f|/\|f\|_p$ and $g' = |g|/\|g\|_q$. (We'll address the cases when $\|f\|_p$ and/or $\|g\|_q$ are zero later. Then $f', g'$ satisfy the conditions of (a), so we get
+    \[
+        \begin{aligned}
+            \int^b_a f'g' dx = \frac{1}{\|f\|_p\|g\|_q}\int^b_a |f||g| dx &\leq 1\\
+            \int^b_a |f||g| dx &\leq \left(\int^b_a |f|^p dx\right)^{1/p}\left(\int^b_a |g|^q dx\right)^{1 /q}.
+        \end{aligned}
+    \]   
+    which is the desired inequality. Now suppose that one of $\|f\|_p$ or $\|g\|_q$ is zero, say without loss of generality that $\|g\|_q=0$.\footnote{Credit to AJ LaMotta for providing a hint which motivates this argument.} Let $c >0$. Then by the claim, $c|f| \leq \frac{1}{p}|f|^p+\frac{1}{q}c^q$ so 
+    \[
+        \begin{aligned}
+            c\int^b_a |g| dx &\leq \frac{1}{q}\int^b_q|g|^p dx + \frac{1}{q}\int^b_a c^q dx = \frac{c^q(b-a)}{q}\\
+            \int^b_a |g| dx &\leq \frac{c^{q-1}(b-a)}{q}.
+        \end{aligned}
+    \]  
+    Thus, $\int^b_a |g| dx = 0$ since we can make $\frac{c^{q-1}(b-a)}{q}$ arbitrarily small. This means that $\int^b_a |f||g| dx \leq (\max_{[a,b]} |f|)\int^b_a |g| dx = 0$ so
+    \[
+        \left|\int^b_a fg dx\right|\leq \int^b_a |f||g|dx = 0 = \left(\int^b_a |f|^p dx\right)^{1/p}\left(\int^b_a |g|^q dx\right)^{1 /q}
+    .\]  
+    This completes the proof.
+\end{solution}
+
+\begin{problem}
+    Prove that the series given by the sum of the inverses of the primes, $\sum 1/p$, is divergent. (This shows that the primes are not too sparse as a subset of the positive integers).
+\end{problem}
+
+\begin{solution}
+    Let $N\in \Z_+$. Then by unique factorization of integers, we have
+    \[
+        \sum^N_{k=1} \frac{1}{k} \leq \prod_{p\textrm{ prime}}^N\left(1+\frac{1}{p}+\frac{1}{p^2}+\cdots\right)=\prod^N_{p\textrm{ prime}}\frac{1}{1-\frac{1}{p}}
+    .\] 
+    Next, we claim that for any $x\in [0, \frac{1}{2}]$, $1-x\geq 4^{-x}$. This is easy to see, note that $1-x=4^{-x}$ has only two solutions at $x=0$ and $x=\frac{1}{2}$. Since $1-x$ and $4^{-x}$ are both continuous, by the intermediate value theorem it suffices to check the inequality only at a single $x\in (0, \frac{1}{2})$. Note that $1-\frac{1}{4}=\frac{3}{4}$ and $4^{-\frac{1}{4}}=\frac{\sqrt{2}}{2}$. Then $\frac{\sqrt{2}}{2}<\frac{3}{4}$ because $\frac{1}{2}<\frac{9}{16}$. So $1-x\geq 4^{-x}$ on this interval. 
+    Equivalently, $\frac{1}{1-x}\leq 4^x$. Since $0\leq \frac{1}{p}\leq \frac{1}{2}$ for any prime $p$, we can apply this inequality to the product, getting: 
+    \[
+        \prod_{p\textrm{ prime}}^N \frac{1}{1-\frac{1}{p}}\leq \prod_{p\textrm{ prime}}^N 4^{\frac{1}{p}}=4^{\left(\sum^N_{p\textrm{ prime}}\frac{1}{p}\right)}
+    .\] 
+    Rearranging terms and using the order preserving properties of the logarithm, we get
+    \[
+        \sum^N_{p\textrm{ prime}} \frac{1}{p}\geq \frac{1}{\log{4}}\log\left(\sum^N_{k=1}\frac{1}{k}\right)
+    .\]
+    Thus since $\sum^N_{k=1}\frac{1}{k}$ diverges as $N\to \infty$, so does $\sum^N_{p\textrm{ prime}}\frac{1}{p}$. 
+\end{solution}
+
+
+\begin{problem}
+    This problem gives a weaker form of Stirling's formula, which asserts that 
+    \[
+        n!\sim n^n e^{-n} \sqrt{2\pi n}.
+    \]
+    Let $\{x\}=\left\lfloor x \right\rfloor$. Define 
+    \[f(x)=(1-\{x\})\log \left\lfloor x \right\rfloor+\{x\}\log(\left\lfloor x \right\rfloor +1),\] 
+    and \[g(x)=\frac{x}{\left\lfloor x+\frac{1}{2} \right\rfloor}-1+\log \left\lfloor x+\frac{1}{2} \right\rfloor.\]
+    Describe or sketch the graphs of $f$ and $g$, and show that $f(x)\leq \log x\leq g(x)$ for all $x\geq 1$. Then show that for $n$ a positive integer, 
+    \[
+        \int_1^n f(x)\,dx=\log(n!)-\frac12 \log n \quad \textrm{and}\quad \int_1^n g(x)\,dx < \log(n!)-\frac{1}{2} \log n + \frac{1}{8}.
+    \]
+    Conclude, by integrating $\log x$ over $[1,n]$, that 
+    \[
+        \frac{7}{8} < \log(n!)-\left(n+\frac{1}{2}\right)\log n+n<1
+    \]
+    for all integers $n\geq 2$, and hence that 
+    \[
+        e^{7/8}\,n^n e^{-n} \sqrt{n} < n! < e\,n^n e^{-n} \sqrt{n}.
+    \]
+\end{problem}
+
+\begin{solution}
+    Notice that $f(x)$ is a ``polygonal'' approximation of $\log x$, with $f(n)=\log n$ for all $n\in \Z_+$, and being piecewise linear for all $x\in [n,n+1]$. Clearly $f(x)\leq \log x$ because $\log x$ is a concave function. $g(x)$ similarly satisfies $g(n)=\log n$ for all $n\in \Z_+$, but takes on the values of the tangent line to $\log x$ at $n$ on the interval $\left[n-\frac{1}{2}, n+\frac{1}{2}\right)$. Just as with $f(x)$, $g(x) \geq \log x$ because $\log x$ is a concave function. Now we calculate the integrals.
+    \[
+        \begin{aligned}
+            \int^n_1 f(x) dx = \sum^{n-1}_{k=1} \int_{0}^{1} f(x+k) dx &= \sum^{n-1}_{k=1} \int^1_0(1-x)\log k + x\log (k+1)dx\\
+            &=\sum^{n-1}_{k=1}\left(\log k\int^1_0(1-x)dx + \log(k+1)\int^1_0 x\;dx\right)\\
+            &= \log(n!) - \frac{1}{2}\log n.
+        \end{aligned}
+    \] 
+    Similarly for $g(x)$,
+    \[
+        \begin{aligned}
+            \int^n_1 g(x)\;dx &= \left(\sum^{n-1}_{k=1}\int^{\frac{1}{2}}_{-\frac{1}{2}} \frac{x}{n}-1+\log n\;dx\right)+\int^{n}_{n-\frac{1}{2}}\frac{x}{n}-1+\log n\;dx\\
+            &= \log (n!) - \frac{1}{2}\log n +\frac{1}{8}.
+        \end{aligned}
+    \] 
+    Now integrating on both sides of the inequality,
+    \[
+        \begin{aligned}
+            \log (n!)-\frac{1}{2}\log n &\leq \int^n_1 \log x \;dx \leq \log (n!) -\frac{1}{2}\log n+\frac{1}{8}\\
+            \log (n!)-\frac{1}{2}\log n&\leq n\log n - n+1\leq \log(n!)-\frac{1}{2}\log n + \frac{1}{8}\\
+            \frac{7}{8} &< \log (n!) - \left(n+\frac{1}{2}\right)\log n + n < 1.
+        \end{aligned}
+    \]
+    Then applying $e^x$ to both sides, we get
+    \[
+        \begin{aligned}
+            e^{7 /8} &< \frac{n! e^{-n}}{n^{n+\frac{1}{2}}} < e\\
+            e^{7 /8}n^n e^{-n}\sqrt{n} &< n! < en^ne^{-n}\sqrt{n}.
+        \end{aligned}
+    \] 
+    This is the desired inequality.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,184 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 55b Problem Set 11}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with AJ LaMotta and Marvin Li for this problem set.}
+\end{center}
+
+\begin{problem}
+    Find Laurent series expressions for the function
+$f(z)=\dfrac{1}{z(z-1)(z-2)}$:
+\begin{enumerate}[(i)]
+    \item in the region $\{1<|z|<2\}$, 
+    \item in the region $\{|z|>2\}$.
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+    We begin by using partial fractions to decompose this function into a sum of simple fractions, i.e.
+    \[
+        \frac{1}{z(z-1)(z-2)} = \frac12\left(\frac{1}{z}\right)-\frac{1}{z-1}+\frac12\left(\frac{1}{z-2}\right).
+    \]
+
+    \textbf{(i)} Since $1<|z|<2$, we have $|1/z|<1$ and $|z/2|<1$ so by geometric series we have
+    \[
+        f(z)=\frac12\left(\frac{1}{z}\right)-\frac{1}{z(1-1/z)}-\frac14\left(\frac{1}{1-z/2}\right)=\frac{1}{2z}-\frac{1}{z}\sum^\infty_{n=0} z^{-n} - \frac14\sum^\infty_{n=0} \frac{z^n}{2^n}=\sum^\infty_{n=-\infty} a_n z^n
+    \] 
+    where the coefficients $a_n$ of the Laurent series expansion are
+    \[
+        a_n=\begin{cases}
+            1/2^{n+2}&n\geq 0\\
+            -1/2&n=-1\\
+            -1&n\leq -2
+        \end{cases}
+    .\]
+    
+    \textbf{(ii)} Here $|z|>2$ so $|1/z|, |2/z| < 1$. Thus by geometric series we can similarly expand
+    \[
+        f(z)=\frac12\left(\frac{1}{z}\right)-\frac{1}{z(1-1/z)}+\frac{1}{2z}\left(\frac{1}{1-2/z}\right)=\frac{1}{2z}-\frac{1}{z}\sum^\infty_{n=0}z^{-n}+\frac{1}{2z}\sum^\infty_{n=0}\frac{2^n}{z^n} = \sum^\infty_{n=-\infty} a_n z^n    
+    \]
+    where the Laurent coefficients are given by
+    \[
+        a_n=\begin{cases}
+            0 & n\geq -1\\
+            1/2^{n+2}-1 & n\leq -2\\
+        \end{cases}
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Let $f$ be an analytic function over a domain $U$ which contains the closed disc $\{z\in\C,\ |z|\leq 3\}$, and suppose that $f(1)=f(i)=f(-1)=f(-i)=0$. Show that $\displaystyle |f(0)|\leq \frac{1}{80} \max\limits_{|z|=3} |f(z)|$.
+\end{problem}
+
+\begin{solution}
+    Let's consider the magically chosen function $g(z)=f(z)/(1-z^4)$. Notice that it is analytic over $U\setminus \{\pm 1, \pm i\}$, and undefined at those points. However $f(z)$ vanishes on $\{\pm 1,\pm i\}$, so we can extend $g(z)$ to an analytic function on all of $U$. Now apply the maximum-modulus principle to $g(z)$ on the disk $B_3(0)$ of radius $3$ centered at the origin. We get that 
+    \[
+        |f(0)| = |g(0)| \leq \max_{z\in \partial B_3(0)} |g(z)| = \max_{z\in \partial B_3(0)} \frac{|f(z)|}{|1-z^4|}
+    .\] 
+    However on the radius $3$ circle $\partial B_3(0)$, we have $|z^4-1|\geq |z^4|-1=80$, so we get the desired claim that
+    \[
+        |f(0)|\leq \frac{1}{80}\max_{|z|=3} |f(z)|
+    .\] 
+\end{solution}
+
+\begin{problem}
+     Let $f(z)$ be an analytic function over the annulus $R_1<|z|<R_2$, and let $M(r)=\sup_{z\in S^1(r)} |f(z)|$. Prove that $\log M(e^s)$ is a convex function of $s\in (\log R_1,\log R_2)$. 
+\end{problem}
+% (Hint: apply the maximum principle to $z^m f(z)^n$ for suitably chosen $m,n$.)
+
+\begin{solution}
+    Suppose for the sake of contradiction that $\log M(e^s)$ is not a convex function of $s\in (\log R_1,\log R_2)$. This means that there exists a $0 < t < 1$ and disctinct $s_1,s_2\in (\log R_1,\log R_2)$ such that if $u=ts_1+(1-t)s_2$ we have
+    \[
+        \log(M(e^u)) > t\log(M(e^{s_1}))+(1-t)\log(M(e^{s_2})),
+    \] 
+    and raising $e$ to the power of both sides we get
+    \[
+        M(e^u) > M(e^{s_1})^tM(e^{s_2})^{1-t}.
+    \] 
+    We can assume without loss of generality that $M(e^s)>0$ for all $s\in (\log R_1,\log R_2)$, (otherwise $f$ would be identically zero) so we can consider the quantity
+    \[
+        \Delta = \frac{M(e^u)}{M(e^{s_1})^t M(e^{s_2})^{1-t}}-1 > 0.
+    \] 
+    Next, for any integers $m,n$ with $n>0$ and $r\in (R_1,R_2)$, we can define the notation
+    \[
+        M_{m,n}(r) = \sup_{z\in S^1(r)} |z^mf(z)^n| = r^mM(r)^n.
+    \] 
+    We can similarly define $\Delta_{m,n}$ in the obvious way. We can check that $\Delta_{m,n}=(\Delta+1)^n-1\geq \Delta$. Now apply the maximum-modulus principle to the function $z^mf(z)^n$ over the annulus $e^{s_1}<|z|<e^{s_2}$, which yields
+    \[
+        e^{um}M(e^u)^n \leq \max(e^{s_1m}M(e^{s_1})^n, e^{s_2m}M(e^{s_2})^n).
+    \] 
+    This means that
+    \[
+        \frac{M_{m,n}(e^u)}{\max(M_{m,n}(e^{s_1}), M_{m,n}(e^{s_2}))} \leq 1.
+    \] 
+    We will obtain a contradiction by showing that this ratio is in fact bigger than $1$. We'll do this by showing that given any $\delta>0$, we can find a tuple $(m,n)$ such that $|M_{m,n}(e^{s_1})-M_{m,n}(e^{s_2})| < \delta$, this would mean that
+    \[\begin{aligned}
+        \left|\frac{M_{m,n}(e^{u})}{M_{m,n}(e^{s_1})^t M_{m,n}(e^{s_2})^{1-t}} - \frac{M_{m,n}(e^u)}{\max(M_{m,n}(e^{s_1}), M_{m,n}(e^{s_2}))}\right|&=\left|\Delta_{m,n}-\frac{M_{m,n}(e^u)}{\max(M_{m,n}(e^{s_1}), M_{m,n}(e^{s_2}))}\right|
+    \end{aligned}\]
+    becomes arbitrarily small, in fact lest that $(1+\Delta)^n-1$, which implies that
+    \[
+        \frac{M_{m,n}(e^{u})}{\max(M_{m,n}(e^{s_1}), M_{m,n}(e^{s_2}))} > 1.
+    \] 
+    To find such a tuple, observe that
+    \[
+        \frac{M_{m,n}(e^{s_1})}{M_{m,n}(e^{s_2})} = e^{m(s_1-s_2)}\left(\frac{M(e^{s_1})}{M(e^{s_2})}\right)^n.
+    \] 
+    Since we're trying to get the left side to be as close as possible to $1$, set it equal to $1+\gamma$. Then
+    \[
+        \log(1+\gamma) = m(s_1-s_2)+n\log\left(\frac{M(e^{s_1})}{M(e^{s_2})}\right) \implies \frac{m}{n}=\frac{n\log\left(\frac{M(e^{s_1})}{M(e^{s_2})}\right)-\log(1+\gamma)}{s_2-s_1}.
+    \] 
+    However for any $\gamma\approx$, we can always find an arbitrarily good rational approximation of $\frac{m}{n}$, so we can make the ratio approach $1$, completing the contradiction.
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item We consider the following three domains in $\C$: $D=\{|z|<1\}$, $H=\{\Re(z)>0\}$, and $S=\{0<\Im(z)<1\}$ (the unit disc, the right half-plane, and an infinite horizontal strip), and their closures in $\C$. Find explicit homeomorphisms $\overline{D}-\{\pm 1\}\simeq \overline{H}-\{0\}\simeq \overline{S}$ whose restrictions to the interior are biholomorphisms (i.e.\ analytic maps with analytic inverses) $D\simeq H\simeq S$.
+        \item Use this to find a continuous function $u:\overline{D}-\{\pm 1\}\to \R$ such that $u$ is harmonic in $D$, $u(z)=1$ on the upper half of the unit circle ($|z|=1$ and $\Im(z)>0$), and $u(z)=0$ on the lower half of the unit circle ($|z|=1$ and $\Im(z)<0$).
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} We'll first consider the M\"obius transformation $f : \overline{D}\setminus\{\pm 1\} \to \overline{H}\setminus\{0\}$ given by $z \mapsto (z+1)/(1-z)$. Clearly, 
+    \[
+        \Re(f(z)) = \frac{1-|z|^2}{|1-z|^2},
+    \] 
+    so $f(z)$ is indeed a map from $\overline{D}\setminus\{\pm 1\} \to \overline{H}\setminus \{0\}$. Notice that $f$ has an inverse given by $f^{-1}(z)=(z-1)/(z+1)$. The inverse clearly maps $\overline{H}\setminus \{0\}$ into $\overline{D}\setminus \{\pm 1\}$ since 
+    \[
+        |f^{-1}(z)| = \left|\frac{z-1}{z+1}\right|=\frac{|z|^2+1-2\Re(z)}{|z|^2+1+2\Re(z)}
+    .\] 
+    Since both $f$ and $f^{-1}$ are continuous, the map is a homeomorphisms. Similarly, $\restr{f}{D}$ and its inverse are given by rational analytic functions so $\restr{f}{D}$ is a biholomorphism.
+
+    Next, consider the map $g : \overline{H}\setminus \{0\} \to \overline{S}$ given by $z\mapsto \frac{1}{\pi}\log z + \frac{i}{2}$, where we take the branch of log with $\Im(\log z)\in (-\pi, \pi)$. Notice that it maps into $\overline{S}$ because $\arg(z)\in [-\pi / 2, \pi / 2]$ for all $z\in \overline{H}\setminus\{0\}$. (This can be easily seen geometrically.) More so, $g$ has continuous inverse $g^{-1}(z)=\exp(\pi(z-\frac12))$ so $g$ is a homeomorphism. $g$ and its inverse are also clearly analytic when restricted to the interior, so $g$ is a biholomorphism.
+
+    \textbf{(b)} If we compose the functions from (a), we get a continuous map $g\circ f : \overline{D}\setminus\{\pm 1\}$ which becomes analytic when we restrict to $D$. Because it is analytic, the real-valued functions $\Re(g\circ f)$ and $\Im(g\circ f)$ are harmonic in $D$. The imaginary part of this function $\Im(g\circ f)$ then clearly satisfies the conditions of the problem.
+\end{solution}
+
+\begin{problem}
+    How many roots of the equation $z^7+7z^4-3z^2+2=0$ satisfy $1<|z|<2$?
+\end{problem}
+% (Hint: use Rouche's theorem)
+
+\begin{solution}
+    Let $f(z)=z^7+7z^4-3z^2+2$. We'll first count the number of roots with $|z|\leq 1$. On the boundary of this region, when $|z|=1$, we have
+    \[
+        |z^7-3z^2+2|\leq 1+3+2= 6 < 7 = |7z^4|
+    \]
+    so by Rouche's theorem, there are exactly $4$ roots of $f(z)$ with $|z|\leq 1$. If we instead consider the region given by $|z|\leq 2$, on the boundary $|z|=2$ we have
+    \[
+        |7z^4-3z^2+2|\leq 7\cdot 16 + 3\cdot 4 + 2\leq 126 < 128 = |z^7|
+    \]
+    so by Rouche's theorem, there are exactly $7$ roots in the region. Thus, there are $7-4=3$ roots in the region $1<|z|<2$.
+\end{solution}
+
+\begin{problem}
+    Prove or disprove: if $f(z)$ is analytic on the unit disc $D$ and has $n$ zeros in $D$, then $f'(z)$ has at least $n-1$ zeros in $D$. What happens if ``at least'' is replaced by ``at most''?
+\end{problem}
+
+\begin{solution}
+    Recall that $\cos z$ has no zeroes in the unit disk, yet its derivative $\sin z$ has a zero in $D$ at the origin. So $f'(z)$ does not necessarily have at most $n-1$ zeroes in $D$. Conversely, consider the function $f(z)=e^{8\pi i z^2}-1$. $f(z)$ has at least $3$ zeroes in the unit disk, namely $0,\pm 1/2$, yet its derivative $f'(z)=16\pi i z (f(z)+1)$ has only one zero in the unit disk at the origin. This contradcits the claim that $f'(z)$ should have at least $2$ zeroes in the unit disk.
+\end{solution}
+
+\begin{problem}
+    Find all the singularities of $f(z)=z/(e^{z^2}-1)$, and determine the residues at each of its poles.
+\end{problem}
+
+\begin{solution}
+    We first must find the singularities of $f(z)$. Solving $e^{z^2}-1=0$, we get that $z^2\equiv 0 \mod 2\pi i$ so $z = \pm \sqrt{2\pi i k}$ for all $k\in \Z$. The simple pole at zero has residue one because
+    \[
+        \lim_{z \to 0} zf(z) = \lim_{z\to 0} \frac{z^2}{e^{z^2}-1} = \lim_{c\to 0} \frac{c}{e^c-1} = \left(\lim_{c\to 0} \frac{e^c-1}{c}\right)^{-1} = 1
+    .\] 
+    For other singularities, of the form $z_0=\pm \sqrt{2\pi i k}$, notice that the coefficient of $z-z_0$ in the Taylor expansion of $e^{z^2}-1$ is $2z_0$, so we have $e^{z^2}-1=2z_0(z-z_0)+(z-z_0)^2g(z)$ for some analytic $g(z)$. Since this pole is simple, the residue is thus
+    \[
+        \lim_{z\to z_0} (z-z_0)f(z)=\lim_{z\to z_0}\frac{z}{2z_0+(z-z_0)g(z)} = \frac{1}{2}
+    .\] 
+\end{solution}
+
+\end{document}

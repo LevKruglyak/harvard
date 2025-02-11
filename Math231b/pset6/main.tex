@@ -1,0 +1,260 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\Ext{\mathrm{Ext}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 6}}
+\date{\textbf{Due:} March 24, 2023}
+
+\begin{document}
+\maketitle
+
+% Replace "fibration with fiber weakly equivalent to" with "map with homotopy fiber weakly equivalent to"
+\begin{problem}
+    Eilenberg-MacLane spaces.
+\end{problem}
+
+\begin{solution}
+    For any group $\pi$, let $K(\pi, n)$ be the $n$-th Eilenberg-MacLane space. 
+    \begin{partproblem}{a}
+        Let $N < G$ be a normal subgroup, with quotient group $H$. Show that there is a map $K(G,1) \to K(H,1)$ with homotopy fiber weakly equivalent to $K(N,1)$.
+    \end{partproblem} 
+
+    \quad Let $F_0G = \Z[G]$, and $F_1G = \ker(\Z[G] \to G)$ so that $0\to F_1G \to F_0G \to G \to 0$ is a free resolution. Given some normal subgroup $N$, note that we have induced maps:
+    % https://q.uiver.app/?q=WzAsMTAsWzMsMCwiRyJdLFszLDEsIkcvTiJdLFsyLDAsIkZfMChHKSJdLFsyLDEsIkZfMChHL04pIl0sWzEsMSwiRl8xKEcvTikiXSxbMSwwLCJGXzEoRy9OKSJdLFs0LDAsIjAiXSxbMCwwLCIwIl0sWzAsMSwiMCJdLFs0LDEsIjAiXSxbMCwxLCJcXHBpIiwwLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoiZXBpIn19fV0sWzIsMF0sWzUsMl0sWzAsNl0sWzgsNF0sWzcsNV0sWzEsOV0sWzMsMV0sWzQsM10sWzIsMywiRl8wKFxccGkpIl0sWzUsNCwiRl8xKFxccGkpIl1d
+    \[\begin{tikzcd}
+        0 & {F_1(G)} & {F_0(G)} & G & 0 \\
+        0 & {F_1(G/N)} & {F_0(G/N)} & {G/N} & 0
+        \arrow["\pi", two heads, from=1-4, to=2-4]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=2-4, to=2-5]
+        \arrow[from=2-3, to=2-4]
+        \arrow[from=2-2, to=2-3]
+        \arrow["{F_0(\pi)}", from=1-3, to=2-3]
+        \arrow["{F_1(\pi)}", from=1-2, to=2-2]
+    \end{tikzcd}\]
+    Recall that to construct a Moore space we can look at the cofibers of the rows of the following induced diagram:
+    % https://q.uiver.app/?q=WzAsNyxbMCwxLCJcXGJpZ3ZlZV97XFxhbHBoYVxcaW4gRl8xKEcpfVNebiJdLFsxLDEsIlxcYmlndmVlX3tcXGFscGhhXFxpbiBGXzAoRyl9U15uIl0sWzAsMiwiXFxiaWd2ZWVfe1xcYWxwaGFcXGluIEZfMShHL04pfVNebiJdLFsxLDIsIlxcYmlndmVlX3tcXGFscGhhXFxpbiBGXzAoRy9OKX1TXm4iXSxbMiwxLCJNKEcsbikiXSxbMiwyLCJNKEcvTixuKSJdLFsyLDAsIkYoaCkiXSxbMCwxXSxbMiwzXSxbMCwyXSxbMSwzXSxbMSw0XSxbMyw1XSxbNCw1LCJoIiwwLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoiZXBpIn19fV0sWzYsNF1d
+    \[\begin{tikzcd}
+        && {F(h)} \\
+        {\bigvee_{\alpha\in F_1(G)}S^n} & {\bigvee_{\alpha\in F_0(G)}S^n} & {M(G,n)} \\
+        {\bigvee_{\alpha\in F_1(G/N)}S^n} & {\bigvee_{\alpha\in F_0(G/N)}S^n} & {M(G/N,n)}
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=3-1, to=3-2]
+        \arrow[from=2-1, to=3-1]
+        \arrow[from=2-2, to=3-2]
+        \arrow[from=2-2, to=2-3]
+        \arrow[from=3-2, to=3-3]
+        \arrow["h", two heads, from=2-3, to=3-3]
+        \arrow[from=1-3, to=2-3]
+    \end{tikzcd}\]
+    Then this vertical map is the induced map between cofibers, as shown in a previous problem set. Now applying the functor $\tau_{\leq n}$ to this vertical arrow gives us a fiber sequence $\tau_{\leq n}F(h) \to K(G,n) \to K(G/N, n)$. Note that the long exact sequence of a fiber sequence gives us an exact:
+    % https://q.uiver.app/?q=WzAsNixbNCwwLCJcXHBpX3tuLTF9KFxcdGF1X3tcXGxlcSBufSBGKGgpKSJdLFs1LDAsIjAiXSxbMywwLCJcXHBpX24oSyhHL04sbikpIl0sWzIsMCwiXFxwaV9uKEsoRyxuKSkiXSxbMSwwLCJcXHBpX24oXFx0YXVfe1xcbGVxIG59IEYoaCkpIl0sWzAsMCwiMCJdLFsyLDBdLFswLDFdLFszLDJdLFs0LDNdLFs1LDRdXQ==
+    \[\begin{tikzcd}
+        0 & {\pi_n(\tau_{\leq n} F(h))} & {\pi_n(K(G,n))} & {\pi_n(K(G/N,n))} & {\pi_{n-1}(\tau_{\leq n} F(h))} & 0
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    By the way we constructed $h$, it's clear that $\pi_n(h) : \pi_n(K(G,n)) \to \pi_n(K(G /N, n))$ is simply the map $G \to G /N$. This implies that $\pi_{n-1}(\tau_{\leq n}F(h)) =0$ and $\pi_n(\tau_{\leq n}F(h))=N$. All of the lower groups are zero by the exact sequence, and the higher groups are zero by the $\tau_{\leq n}$ functor. Thus, $\tau_{\leq n}F(h)\simeq K(N,n)$.  
+
+    \begin{partproblem}{b}
+        Suppose that $G$ is abelian. The same argument gives us a map $K(G,n) \to K(H,n)$ with homotopy fiber $K(N,n)$. But show also that there is a map $K(N, n) \to K(G, n)$ with homotopy fiber $K(H, n-1)$ and a map $K(H, n) \to K(N, n+1)$ with homotopy fiber $K(G,n)$. For example, what is the homotopy fiber of the map $\CP^\infty \to \CP^\infty$ represented by twice a generator of $H^2(\CP^\infty)$?     
+    \end{partproblem}
+
+    \quad In (a), we used free resolutions of the projection map $G \to G/N$ was used to construct a map $K(G,n) \to K(G /N, n)$ which induces the original projection map when taking homotopy. We can do a similar thing here, first we take the inclusion $N \to G$, which induces a map $K(N,n) \to K(G,n)$. Then by the same argument as in the previous part we get some cofiber $F$ which satisfies the exact sequence:
+    % https://q.uiver.app/?q=WzAsNixbNCwwLCJcXHBpX3tuLTF9KEYpIl0sWzUsMCwiMCJdLFszLDAsIlxccGlfbihLKEcsbikpIl0sWzIsMCwiXFxwaV9uKEsoTixuKSkiXSxbMSwwLCJcXHBpX24oRikiXSxbMCwwLCIwIl0sWzIsMF0sWzAsMV0sWzMsMl0sWzQsM10sWzUsNF1d
+    \[\begin{tikzcd}
+        0 & {\pi_n(F)} & {\pi_n(K(N,n))} & {\pi_n(K(G,n))} & {\pi_{n-1}(F)} & 0
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    Then we get $\pi_{n-1}(F)\cong G / N$, and this is the only nontrivial homotopy group, thus $F\simeq K(G /N, n-1)$. For the last sequence, we simply extend the homotopy fiber sequence $K(N,n)\to K(G,n)\to K(G / N, n)$ to the extra term $\Omega K(N,n) \simeq K(N, n+1)$. This will have cofiber $K(G,n)$ by the fibration sequence.
+    
+    \medskip
+    \quad Now letting $\iota_2\in H^2(\CP^\infty)$ be a generator, the corresponding map $\CP^\infty\to \CP^\infty$ induces the inclusion map $2\Z \to \Z$. Thus, the fiber is $K(\Z / 2, 2)$, which is homotopy equivalent to $\Omega \RP^\infty$.
+\end{solution}
+
+\begin{problem}
+    Let $Y$ be a simply-connected space such that $H_n(Y)$ is finitely generated for all $n$. Let $\beta_n$ be the $n$-th Betti number and let $n$-th torsion number. Then there is a CW complex with $(\beta_n+\tau_n+\tau_{n-1})$ $n$-cells for each $n$ that admits a weak equivalence to $Y$. % This is clearly optimal
+\end{problem}
+
+\quad We'll build up this cell structure by induction. Starting at $n=1$, since $Y$ is simply connected, it follows that $Y_1$ is just a basepoint. Now inductively, suppose we have an $n$-homology equivalence $f_n : Y_n \to Y$, and $Y_n$ has the given minimal cell structure. (induced isomorphisms $H_k(f_n)$ for $k<n$ and $H_k(f_n)$ surjective for $k=n$) Taking the homotopy cofiber, we get $H_k(C(f_n), Y_n) = 0$ for $k\leq n$ so by the Hurewicz isomorphism, we get $H_{n+1}(C(f_n), Y_n) \cong \pi_{n+1}(C(f_n), Y_n)$. We then have two exact sequences:
+% https://q.uiver.app/?q=WzAsMTAsWzAsMCwiSF97bisxfShDKGYpKSJdLFswLDEsIkhfe24rMX0oWV97bisxfSkiXSxbMSwxLCJIX3tuKzF9KFlfe24rMX0sWV9uKSJdLFsxLDAsIkhfe24rMX0oQyhmX24pLCBZX24pIl0sWzIsMCwiSF9uKFlfbikiXSxbMiwxLCJIX24oWV9uKSJdLFszLDEsIkhfbihZX3tuKzF9KSJdLFszLDAsIkhfbihDKGZfbikpIl0sWzQsMCwiMCJdLFs0LDEsIjAiXSxbNiw5XSxbNyw4XSxbNiw3XSxbMiwzXSxbMSwwXSxbMSwyXSxbMiw1XSxbNSw2XSxbNCw3XSxbMyw0XSxbMCwzXSxbNCw1LCIiLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+\[\begin{tikzcd}
+	{H_{n+1}(C(f))} & {H_{n+1}(C(f_n), Y_n)} & {H_n(Y_n)} & {H_n(C(f_n))} & 0 \\
+	{H_{n+1}(Y_{n+1})} & {H_{n+1}(Y_{n+1},Y_n)} & {H_n(Y_n)} & {H_n(Y_{n+1})} & 0
+	\arrow[from=2-4, to=2-5]
+	\arrow[from=1-4, to=1-5]
+	\arrow[from=2-4, to=1-4]
+	\arrow[from=2-2, to=1-2]
+	\arrow[from=2-1, to=1-1]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=2-2, to=2-3]
+	\arrow[from=2-3, to=2-4]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-1, to=1-2]
+	\arrow[dashed, no head, from=1-3, to=2-3]
+\end{tikzcd}\]
+Since elements of $H_{n+1}(C(f_n), Y_n)$ are mapped to attachment maps of $D^{n+1}$ to $Y_n$, we can get our desired generaters attached to $Y_n$ to form $Y_{n+1}$.
+
+\begin{problem}
+Let $M$ denote a simply-connected, compact $3$-manifold. Prove that $M\simeq S^3$.    
+\end{problem}
+
+\begin{solution}
+    \quad First we claim that $M$ must be oriented.
+    \begin{claim}
+        Any simply-connected manifold is orientable.
+    \end{claim}
+    \begin{proof}
+       Suppose for the sake of contradiction that $M$ is a simply-connected, non-orientable manifold, and let $\widetilde{M}$ be its orientable double cover. This is a (connected) two-sheeted covering, which is a contradiction, since $M$ is it's own universal cover.
+    \end{proof}
+
+    \quad Now let's compute the (reduced) homology of $M$. The first few groups are easy; $\widetilde{H}_0(M)=0$ since $M$ is connected, and $\widetilde{H}_1(M)\cong \pi_1(M)=0$ by the Hurewicz isomorphism. Next, we have $\widetilde{H}_3(M)=\Z$ since $M$ is an orientable, compact, connected manifold. All of the other homology groups $\widetilde{H}_k(M)$ must be trivial for $k>3$ by duality. Now finally, we want to compute $\widetilde{H}_2(M)$. By duality, $H_2(M)\cong H^1(M)$, and by the universal coefficients theorem we get a short exact sequence
+    % https://q.uiver.app/?q=WzAsNSxbMCwwLCIwIl0sWzEsMCwiXFxFeHReMV9cXFooSF8wKE0pLCBcXFopIl0sWzIsMCwiSF8xKE0pIl0sWzMsMCwiXFxIb21fXFxaKEhfMShNKSxcXFopIl0sWzQsMCwiMCJdLFswLDFdLFsxLDJdLFsyLDNdLFszLDRdXQ==
+    \[\begin{tikzcd}
+        0 & {\Ext^1_\Z(H_0(M), \Z)} & {H^1(M)} & {\Hom_\Z(H_1(M),\Z)} & 0
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-4, to=1-5]
+    \end{tikzcd}\]
+    Since both $H_0(M)$ and $H_1(M)$ are trivial, we conclude that $H^1(M)$ is trivial, and so $\widetilde{H}_2(M)=0$. Thus, $M$ is a $M(\Z, 3)$ Moore space.
+
+    \medskip
+    \quad By the Hurewicz theorem, we notice that $\pi_3(M)\cong H_3(M)= \Z$. Let $\sigma : S^3 \to M$ be some generator of $\pi_3(M)$. The map $\sigma$ clearly induces an isomorphism $H_*(\sigma) : H_*(S^3) \to H_*(M)$ so it is a homotopy equivalence. This concludes the proof.
+\end{solution}
+
+\begin{problem}
+    (Co)homological characterization of $\CP^n$.
+\end{problem}
+
+\begin{solution}
+    Let $X$ denote a simple space.
+    \begin{partproblem}{a}
+        If $X$ has homology groups $H_*(X; \Z)\cong \Z[0]\oplus \Z[2]\oplus \cdots\oplus \Z[2n]$ and cohomology ring $H^*(X; \Z)\cong \Z[x] / (x^{n+1})$ where $|x|=2$. Prove that $X\simeq \CP^n$.
+    \end{partproblem}
+
+    \quad First of all, by cellular approximation, we can assume without loss of generality that $X$ is a CW complex. Next by Problem~2, we can further restrict by giving $X$ a CW structure with only a single cell in each dimension $0, 2,\ldots, 2n$ since $H_*(X; \Z)\cong \Z[0]\oplus \Z[2]\oplus \cdots\oplus \Z[2n]$. Now recall by representability of cohomology that we have a natural bijection
+    \[
+        [X, K(\Z, 2)]_* \to H^2(X; \Z)
+    \]
+    which sends $f : X \to K(\Z, 2)$ to the pullback $f^*(\iota_2)$ for some fundamental $\iota_2\in H^2(K(\Z,2); \Z)$. Since $\CP^\infty \simeq K(\Z,2)$, and $H_2(X; \Z)\cong \Z$ by assumption, we will consider the preimage $\sigma : X \to \CP^\infty$ of a generator of $H_2(X; \Z)$. Notice that this map $\sigma : X \to \CP^\infty$ induces an isomorphism $\sigma^* : H^2(\CP^\infty; \Z) \to H^2(X; \Z)$. Recall that $X$ has no cells of dimension greater than $2n$, so by skeletal approximation, $\sigma$ can be factored through some map $\zeta : X \to \CP^n$. Since the inclusion $\CP^n \to \CP^\infty$ induces an isomorphism on $H^2$, by functoriality we get an induced isomorphism $\zeta^* : H^2(\CP^n; \Z) \to H^2(X; \Z)$.
+
+    \medskip
+    \quad We claim that $\zeta^*$ is an isomorphism in every dimension. Since the odd dimensional cohomology groups, and higher cohomology groups past dimension $2n$ are all zero, we are only interested in the cohomology groups of dimension $2k$ for $k\leq n$. For any such $k$, the cohomology ring structure of $X$ and $\CP^n$ give us ``lifting'' isomorphisms
+    \[
+        H^2(X;\Z) \to H^{2k}(X; \Z) \quad\text{and}\quad H^2(\CP^n;\Z) \to H^{2k}(\CP^n; \Z)
+    \]
+    which send some $\omega$ to $\omega\smile\cdots\smile \omega$. By naturality of the cup product, and by extension this map, we get a commutative square
+    % https://q.uiver.app/?q=WzAsNCxbMCwwLCJIXnsya30oXFxDUF5uO1xcWikiXSxbMSwwLCJIXnsya30oWDtcXFopIl0sWzEsMSwiSF4yKFg7XFxaKSJdLFswLDEsIkheezJrfShcXENQXm47XFxaKSJdLFswLDEsIlxcemV0YV4qIl0sWzMsMiwiXFx6ZXRhXioiXSxbMywwLCJcXHNtaWxlIl0sWzIsMSwiXFxzbWlsZSIsMl1d
+    \[\begin{tikzcd}
+        {H^{2k}(\CP^n;\Z)} & {H^{2k}(X;\Z)} \\
+        {H^{2k}(\CP^n;\Z)} & {H^2(X;\Z)}
+        \arrow["{\zeta^*}", from=1-1, to=1-2]
+        \arrow["{\zeta^*}", from=2-1, to=2-2]
+        \arrow["\smile", from=2-1, to=1-1]
+        \arrow["\smile"', from=2-2, to=1-2]
+    \end{tikzcd}\]  
+    Since the bottom and side arrows are isomorphisms, it follows that the top arrow is as well. Thus it follows that $\zeta$ induces an isomorphism on all cohomology groups. Since $X$ is simple, this implies that $\zeta$ is a homotopy equivalence, so $X\simeq \CP^\infty$.
+
+    \begin{partproblem}{b}
+        Prove that $[\CP^n, \CP^n]\cong \Z$ via the map sending a map $\CP^n\to \CP^n$ to the induced homomorphism on $H_2$. 
+    \end{partproblem}
+    \quad Firstly, note that by the skeletal approximation theorem, we have a canonical isomorphism $[\CP^n, \CP^n] \cong [\CP^n, \CP^\infty]$ induced by the CW inclusion $\CP^n \to \CP^\infty$. Furthermore this isomorphism also clearly preserves induced homomorphisms between homology groups, so it is sufficient to investigate $[\CP^n, \CP^\infty]$. Recall that the universal coefficient theorem gives us a map $h : H^2(\CP^n; \Z) \to \Hom(H_2(\CP^n; \Z), \Z)$ which sends $\sigma$ to $x \mapsto \sigma(x)$. This map is also part of a short exact sequence:
+    % https://q.uiver.app/?q=WzAsNSxbMCwwLCIwIl0sWzEsMCwiXFxFeHReMV9cXFooSF8xKFxcQ1BebjsgXFxaKSxcXFopIl0sWzIsMCwiSF4yKFxcQ1BebixcXFopIl0sWzMsMCwiXFxIb20oSF8yKFxcQ1BebixcXFopLFxcWikiXSxbNCwwLCIwIl0sWzAsMV0sWzIsMywiaCJdLFsxLDJdLFszLDRdXQ==
+    \[\begin{tikzcd}
+        0 & {\Ext^1_\Z(H_1(\CP^n; \Z),\Z)} & {H^2(\CP^n;\Z)} & {\Hom(H_2(\CP^n;\Z),\Z)} & 0
+        \arrow[from=1-1, to=1-2]
+        \arrow["h", from=1-3, to=1-4]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-4, to=1-5]
+    \end{tikzcd}\]
+    Since $\CP^1$ is simply connected, the $\Ext$ term vanishes, and it follows that $h$ is an isomorphism. Now let $\psi$ be the representation isomorphism $[\CP^n, \CP^\infty] \to H^2(\CP^n; \Z)$. This map sends $f$ to $f^*(\iota_2)$ for some universal $\iota_2\in H^2(\CP^\infty; \Z)$ so we get a diagram:  
+    % https://q.uiver.app/?q=WzAsNCxbMCwwLCJbXFxDUF5uLFxcQ1BeXFxpbmZ0eV0iXSxbMSwwLCJIXjIoXFxDUF5uO1xcWikiXSxbMCwxLCJcXEhvbShIXzIoXFxDUF5uO1xcWiksSF8yKFxcQ1BeXFxpbmZ0eTtcXFopIl0sWzEsMSwiXFxIb20oSF8yKFxcQ1BebjtcXFopLCBcXFopIl0sWzAsMSwiXFxwc2kiXSxbMCwyLCJIXzIiLDJdLFsxLDMsImgiLDJdLFsyLDMsIi1cXGNpcmMgaChcXGlvdGFfMikiLDJdXQ==
+    \[\begin{tikzcd}
+        {[\CP^n,\CP^\infty]} & {H^2(\CP^n;\Z)} \\
+        {\Hom(H_2(\CP^n;\Z),H_2(\CP^\infty;\Z)} & {\Hom(H_2(\CP^n;\Z), \Z)}
+        \arrow["\psi", from=1-1, to=1-2]
+        \arrow["{H_2}"', from=1-1, to=2-1]
+        \arrow["h"', from=1-2, to=2-2]
+        \arrow["{-\circ h(\iota_2)}"', from=2-1, to=2-2]
+    \end{tikzcd}\]
+    Clearly this diagram commutes. Recall that $\psi$ is an isomorphism, $h$ is an isomorphism. Similarly, $-\circ h(\iota_2)$ is an isomorphism because $h(\iota_2)$ is as a consequence of $\iota_2$ being a generator. Thus by commutativity, $H_2$ must be an isomorphism as well. This completes the proof since $\Hom(H_2(\CP^n;\Z),H_2(\CP^\infty;\Z))$ is isomorphic to $\Z$.
+\end{solution}
+
+\begin{problem}
+    Let $Y$ be a simple space and $N$ an integer, and suppose that $N\pi_*(Y) = 0$. Let $(X,A)$ be a relative CW complex and assume that $H_*(X, A; \F_p)=0$ whenever the prime $p$ divides $N$. Show that the restriction map $[X, Y] \to [A, Y]$ is bijective.  
+\end{problem}
+\quad A consequence of the obstruction theorem implies that the restriction map $[X,Y] \to [A,Y]$ is bijective if the cohomology groups $H^{n+1}(X,A; \pi_n(Y)) =0$ for all $n$, so we prove this. Note that for every prime $p|N$, we have an exact sequence
+\[
+    0\to p\cdot\pi_n(Y) \to \pi_n(Y) \to \pi_n(Y)_p \to 0
+\]
+where $\pi_n(Y)_p$ is the $p$-torsion component of $\pi_n(Y)$. Then $\pi_n(Y)_p$ naturally has the structure of an $\F_p$-vector space, so it splits $\pi_n(Y)_p = \bigoplus_i \F_p$. By the exactness of cohomology in coefficients, we get a short exact sequence
+\[
+    0 \to H^{n+1}(X, A; p\cdot \pi_n(Y) \to H^{n+1}(X, A; \pi_n(Y) \to H^{n+1}(X, A; \pi_n(Y)_p) \to 0
+.\] 
+Since $H_*(X, A; \F_p)=0$, the universal coefficients theorem implies that $H^*(X, A; \F_p)=0$ so $H^{n+1}(X, A; \pi_n(Y)_p) = \bigoplus_i H^{n+1}(X, A; \F_p)=0$. Thus we get an isomorphism:
+\[
+    H^{n+1}(X,A; p\cdot \pi_n(Y)) \cong H^{n+1}(X,A; \pi_n(Y))
+\]  
+Now $p\cdot \pi_n(Y)$ satisfies $(N / p)p\cdot \pi_n(Y)=0$. This means we can induct all the way down until $\pi_*(Y)=0$, completing the proof.  
+
+
+
+% Recall that by the universal coefficient theorem we have an exact sequence
+% \[\begin{tikzcd}
+%     0 & {\Ext^1_\Z(H_n(X,A),\pi_n(Y))} & {H^{n+1}(X,A;\pi_n(Y))} & {\Hom(H_{n+1}(X,A), \pi_n(Y))} & 0
+%     \arrow[from=1-1, to=1-2]
+%     \arrow["h", from=1-3, to=1-4]
+%     \arrow[from=1-2, to=1-3]
+%     \arrow[from=1-4, to=1-5]
+% \end{tikzcd}\]
+% This admits a (non-natural) splitting, so we get a natural isomorphism:
+% \[
+%     H^{n+1}(X,A;\pi_n(Y)) \cong \Ext^1_\Z(H_n(X,A),\pi_n(Y))\oplus \Hom(H_{n+1}(X,A), \pi_n(Y)) 
+% .\]
+% If we could show that each of these factors is zero, we would be done. Note that $\pi_*(Y)$ is a torsion group by assumption, so we have a decomposition:
+% \[
+%     \pi_n(Y)=\bigoplus_{p|N} \textrm{Tor}^\Z_1(\pi_n(Y), \F_p)
+% \]
+% where $\textrm{Tor}^\Z_1(\pi_n(Y), \F_p)$ is the $p$-group representing the $p$-torsion subgroup of $\pi_n(Y)$. Thus we get a further decomposition:
+% \[
+%     H^{n+1}(X,A;\pi_n(Y)) \cong \bigoplus_{p|N}\Ext^1_\Z(H_n(X,A),\textrm{Tor}^\Z_1(\pi_n(Y), \F_p))\oplus \Hom(H_{n+1}(X,A), \textrm{Tor}^\Z_1(\pi_n(Y), \F_p)) 
+% .\] 
+% Using the universal coefficient theorem for homology, we have an exact sequence:
+% \[\begin{tikzcd}
+%     0 & {H_n(X,A)\otimes \F_p} & {H_{n+1}(X,A; \F_p)} & {\textrm{Tor}_1^\Z(H_{n+1}(X,A), \F_p)} & 0
+%     \arrow[from=1-1, to=1-2]
+%     \arrow[from=1-3, to=1-4]
+%     \arrow[from=1-2, to=1-3]
+%     \arrow[from=1-4, to=1-5]
+% \end{tikzcd}\]
+% For any $p|N$, $H_{*}(X,A; \F_p)=0$ so by this exact sequence we have $H_*(X,A)\otimes \F_p=0$ and $\textrm{Tor}^\Z_1(H_*(X,A), \F_p)=0$. From this it follows that $\Hom(H_{n+1}(X,A), \textrm{Tor}^\Z_1(\pi_n(Y), \F_p))$ and $\Ext^1_\Z(H_n(X,A),\textrm{Tor}^\Z_1(\pi_n(Y), \F_p))$ vanish,completing the proof.
+
+\end{document}

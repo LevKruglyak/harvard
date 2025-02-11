@@ -1,0 +1,38 @@
+\begin{problem}
+  Let $V$ and $W$ be vector spaces of dimensions $m$ and $n$ over a field $k$, and let $U \subset V$ and $T \subset W$ be subspaces of dimensions $a$ and $b$, and let $S = \{ \phi\in \mathrm{Hom}(V,W)\,|\, \phi(U) \subset T \}$.
+  \begin{enumerate}
+    \item Show that $S$ is a subspace of $\mathrm{Hom}(V,W)$.
+    \item What is the dimension of $S$?
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} We only need to show that $S$ is closed under addition and scalar multiplication. Let $\phi, \varphi\in S$. Then $(\phi+\varphi)(U)=\phi(U)+\varphi(U)\subset T$ since $T$ is a subspace, hence closed under addition. Similarly, if $\phi\in S$ and $c\in k$, $(c\phi)(U)=c\phi(U)\subset cT\subset T$ because $T$ is a subspace and hence is closed under scalar multiplication. This completes the proof.      
+
+\textbf{(2)} We claim that
+\[
+  \dim(S)=mn-a(n-b)  
+.\] 
+\begin{lemma}
+  Suppose $U$ is a subspace of a finite dimensional vector space $V$. Then there exists a basis $v_1,\ldots,v_n$ such that $v_1,\ldots, v_a$ is a basis for $U$. (Here $a= \dim U$)    
+\end{lemma}
+\begin{proof}
+  Let $W$ be the complement of $U$ in $V$, i.e. the subspace such that $V=W\oplus U$. Then letting $u_1,\ldots , u_a$ be a basis for $U$ and $w_1,\ldots , w_{n-a}$, the set $u_1,\ldots ,u_a, w_1,\ldots w_{n-a}$ is the desired basis for $V$.       
+\end{proof}
+
+Since $U$ is a subspace of $V$, we can find a basis $v_1,\ldots v_m$ for $V$ such that $v_1,\ldots,v_a$ is a basis for $U$. Similarly we can find a basis for $W$, say $w_1,\ldots, w_n$. Then any $\phi\in S$ can be expressed as a block matrix:
+\[
+\begingroup
+\renewcommand*{\arraystretch}{1.5}
+\begin{pmatrix}
+  \bigletter{A}
+  & \rvline & \bigletter{B} \\
+\hline
+  \bigletter{0} & \rvline &
+  \bigletter{C}
+\end{pmatrix}
+\endgroup
+\]
+
+Here $A$ represents the matrix of the restriction $\restr{\phi}{U}$, and $B,C$ represent the parts of the map which are defined outside of the domain of $U$, hence they are allowed to be anything. The only corner with a restriction is the bottom left corner, because it represents basis vectors in $U$ mapping to basis vectors outside of $T$. So this corner must be zero.
+
+Since all values in nonzero blocks of this matrix can vary freely and independently, the dimension of this space $S$ is $mn-a(n-b)$. An explicit basis can be made by considering the linear transformations represented by matrices with all zeroes and a single $1$ in $A,B$ or $C$.

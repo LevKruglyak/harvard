@@ -1,0 +1,215 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 11}}
+\date{\textbf{Due: } May 2, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{cproblem}{1}
+    This problem is more or less worked out in your book, at the end of \S4 of Chapter 4.
+\end{cproblem}
+
+\begin{solution}
+    See if you can do it on your own, looking at the book if you need a hint.
+    \begin{partproblem}{a}
+        In calculus courses, line integrals in $\R^3$ are usually written in the form
+        \[
+            \oint_C \vec{F}\cdot d\vec{r}
+        .\] 
+        Given a vector function $\vec{F}$, show how to construct a $1$-form $\theta$ with the property that for every oriented curve $C$,
+        \[
+            \oint_C \vec{F}\cdot d\vec{r} = \int_C \theta
+        .\] 
+    \end{partproblem}
+
+    \quad Let $\theta\in \Omega^1(\R^3)$ be the $1$-form given by $\theta = \vec{F}_x\, dx + \vec{F}_y\, dy + \vec{F}_z\, dz$, where $\vec{F}_*$ are the component functions of the vector field. Then given a parametrization $r : I \to C$ of the curve $C$, we have
+    \[
+        \oint_C \vec{F}\cdot d\vec{r} = \int_0^1 \vec{F}(r(t))\cdot r'(t)\,dt
+    .\] 
+    On the other hand, we have
+    \[
+        \begin{aligned}
+            \int_C \theta &= \int_I r^* \theta = \int_I \vec{F}_x r^* dx + \vec{F}_y r^* dy+\vec{F}_z r^* dz \\&= \int_I \vec{F}_x r'(t)dt + \vec{F}_y r'(t)dt +\vec{F}_z r'(t)dt=\int_0^1 \vec{F}(r(t))\cdot r'(t)\,dt. 
+        \end{aligned}   
+    \]
+    So these two integrals are equivalent.  
+
+    \begin{partproblem}{b}
+        In multivariable calculus, surface integrals are written in the form
+        \[
+            \iint_S \vec{F}\cdot \mathbf{n}\,dS,
+        \]
+        and computed when $S$ is the set of points $(u,v,\mathbf{X}(u,v))$, with $(u,v)\in D$ using
+        \[
+            \mathbf{n}\,dS = \mathbf{X}_u\times \mathbf{X}_v\,du\,dv
+        \]
+        and
+        \[
+            \iint_S \vec{F}\cdot \mathbf{n}\,dS = \iint_D \vec{F}\cdot \mathbf{X}_u\times\mathbf{X}_v\,du\,dv
+        .\]
+        Reconcile this with our formulation of integration on manifolds. More specifically, show how to associate a $2$-form $\omega\in \Omega^2(\R^3)$ to the vector function $\vec{F} = (f_1, f_2, f_3)$ with the property that for every surface $S$,
+        \[
+            \iint_S \vec{F}\cdot \mathbf{n}\,dS = \int_S \omega
+        .\]
+    \end{partproblem}
+
+    \quad Let $\omega\in \Omega^2(\R^3)$ be the $2$-form given by 
+    \[
+        \omega = \vec{F}_x\, dy\wedge dz + \vec{F}_y\, dz\wedge dx + \vec{F}_z\, dx\wedge dy
+    .\]
+    Now let $h : D \to S$ be the parametrization given by $h(u,v)=(u,v,\mathbf{X}(u,v))$. Then
+    \[
+        \begin{aligned}
+            \int_S \omega = \int_D h^*\omega = \int_D \vec{F}\cdot\left(-\frac{\partial \mathbf{X}}{\partial u}, -\frac{\partial \mathbf{X}}{\partial v}, 1\right) du\wedge dv = \int_D \vec{F}\cdot \vec{n}\, du\wedge dv
+        \end{aligned}
+    \] 
+    where $\vec{n}=\left(-\frac{\partial \mathbf{X}}{\partial u}, -\frac{\partial \mathbf{X}}{\partial v}, 1\right)$. Clearly, $\vec{n}(x)\perp T_x(S)$, so this is a normal vector. Letting $\mathbf{n} = \vec{n} / \|\vec{n}\|$, we can then let $dS=|\vec{n}|\, du\wedge dv$ so that
+    \[
+        \int_S \omega = \int_D \vec{F}\cdot \mathbf{n}\,dS
+    .\] 
+    Since there is a unique unit normal vector, this formulation is the same as with the definition which was provided: $\mathbf{n}\,dS = \mathbf{X}_u\times \mathbf{X}_v\,du\,dv$.
+
+    \begin{partproblem}{c}
+        In multivariable calculus courses, Stokes Theorem is usually stated in the form
+        \[
+            \iint_{S} \mathbf{curl}\;\vec{F}\cdot \mathbf{n}\,dS = \oint_{\partial S}\vec{F}\cdot d\vec{r}
+        .\] 
+        Reconcile this with our formulation of Stokes Theorem.
+    \end{partproblem}
+
+    \quad Our formulation of the (Generalized) Stokes Theorem was that for any $\omega\in \Omega^{k-1}(X)$, we have
+    \[
+        \int_X d\omega = \int_{\partial X}\omega
+    .\]
+    For our case, we have $X=\R^3$, and $S$ some surface. Then given a vector field $\vec{F}$, we have a differential form $\omega = \vec{F}_x\,dx+\vec{F}_y\,dy+\vec{F}_z\,dz$, with \[\oint_{\partial S} \vec{F}\cdot d\vec{r}=\int_{\partial S} \omega\] by the first part of this problem. By Stokes theorem, this should be equal to $\int_S d\omega$. By an earlier book calculation, we have: \[d\omega = \textbf{curl}\, \vec{F}\cdot \left(dy\wedge dz, dz\wedge dx, dx\wedge dy\right) = \textbf{curl}\, \vec{F}\cdot \textbf{n}\,dS\]
+    Thus $\int_S \textbf{curl}\, \vec{F}\cdot \textbf{n}\,dS = \int_{\partial S}\omega$.
+
+    \begin{partproblem}{d}
+        When the surface $S$ is the boundary of a $3$-dimensional region $D\subset \R^3$, the \emph{divergence theorem} states that
+        \[
+            \iiint_D \nabla\cdot \vec{F}\,dV = \iint_S \vec{F}\cdot \mathbf{n}\,dS
+        .\] 
+        Show that this is also a special case of our formulation of Stokes theorem.
+    \end{partproblem}
+    \quad Here we apply Stokes Theorem to get
+    \[
+        \iint_S \vec{F}\cdot \mathbf{n}\,dS = \int_{\partial D} \textbf{curl}\, \vec{F}\cdot \left(dy\wedge dz, dz\wedge dx, dx\wedge dy\right) = \int_D d\left(\textbf{curl}\, \vec{F}\cdot \left(dy\wedge dz, dz\wedge dx, dx\wedge dy\right)\right)
+    .\] 
+    Some very annoying computations involving properties of exterior products and exterior derivatives then show that this latter differential form is equivalent to $\nabla\cdot \vec{F}\,dx\wedge dy\wedge dz$.
+\end{solution}
+
+\begin{cproblem}{2}
+    Conservative vector fields.
+\end{cproblem}
+
+\begin{solution}
+    Here are some familiar facts about \emph{conservative vector fields} stated in the language of $1$-forms.
+    \begin{partproblem}{a}% S4 Ch 4 P11
+        Suppose that $\omega$ is a $1$-form on a connected manifold $X$, having the property that $\oint_\gamma \omega = 0$ for all closed curves $\gamma$. Show that if $p,q\in X$ are two points. Choose a smooth path $c : [0,1] \to X$ with $c(0)=p$ and $c(1)=q$. Show that $\int^1_0 c^*\omega$ is independent of the choice of $c$.
+    \end{partproblem}
+
+    \quad Suppose we have two curves $c_1$ and $c_2$. Using bump functions and the results of Exercise~4, we can reparametrize the curves $c_1$ and $c_2$ so that they are constant in neighborhoods of $0$ and $1$. More specifically, letting
+    \[
+        \psi(x) = \begin{cases}
+            \exp\left(\frac{-x^2}{1-x^2}\right)&x\in (0,1),\\
+            1 & x\leq 0,\\
+            0 & x \geq 1.
+        \end{cases}
+    \] 
+    be a step function, we can use the reparametrizations $f_1(t) = 1-f(4t-2)$ and $f_2(t) = 1-f(4(1-t)-2)$. By Exercise~4, this doesn't affect $\int^1_0 c_i^*\omega$, but allows us to continuously stich the functions together, where the second one runs backwards. Let's call this combined close curve $c$. Then
+    \[
+        0=\int_0^1 c^*\omega=\int_0^1 c_1^*\omega - \int_0^1 c_2^*\omega,
+    \] 
+    so the two integrals are the same.
+
+    \begin{partproblem}{b}% S4 Ch 4 P12
+        Prove that any $1$-form $\omega$ on $X$ with the property that $\oint_\gamma \omega = 0$ for all closed curves $\gamma$ is \emph{exact} in the sense that there is a smooth function $f$ with $\omega = df$. A curve $\gamma$ is \emph{closed} if $\gamma(0)=\gamma(1)$.
+    \end{partproblem}
+
+    \quad Without loss of generality, we can assume that $X$ is (path) connected. If it wasn't, we could run this program on each connected component, and define a global function as a disjoint union of the component functions. Now for some arbitrary point $p\in X$, let's define $f(x) = \int^x_p \omega = \int^1_0 c^*\omega$, for some path $c : p \mapsto x$. We claim that $df = \omega$. For any point $x\in X$, let $(U,\varphi)$ be some coordinate chart about $x$, with coordinates $x_i$. We simply need to show that
+    \[
+        \frac{\partial f}{\partial x_i}(x) = \omega_i(x) \quad \implies\quad  df = \omega.
+    \] 
+    Notice that we can work entirely in the chart $U$ by picking some $p'\in U$. Then we get 
+    \[
+        f(x) = f(p')+\int_{p'}^x \omega
+    .\] 
+    The function $\widetilde{f}(x)=\int_{p'}^x \omega$ differs from $f$ by a constant, so it suffices to prove that its derivative has the desired form. However in this chart we can simply use the fundamental theorem of calculus in $\R^n$, or Stokes theorem by composing with the chart diffeomorphism $\varphi$, so it's straightforward to show that $\partial f / \partial x_i(x)=\omega_i(x)$, which proves the claim.
+\end{solution}
+
+\begin{cproblem}{3}
+There are many variations on bordism homology. An important one is
+{\em oriented bordism}. One defines an {\em oriented $k$-manfifold}
+over a space $X$ to be a pair $(M,f)$ consisting of an oriented $k$-manifold $M$ and a continuous map $f:M\to X$. The notion of {\em cobordism} is a little more subtle in this case. A {\em cobordism} of
+$(M_{0},f_{0})$ and $(M_{1},f_{1})$ consists of an oriented $(k+1)$-manifold $N$, a continuous map $h:N\to X$, and an oriented diffeomorphism $M_{1}\amalg (-M_{0})\approx \partial N$ having the property that for $i=0,1$, the composition
+$
+M_{i}\to N\xrightarrow{h}{}X
+$ is $f_{i}$. 
+\end{cproblem}
+
+\begin{solution}
+    \quad As a ``reminder'' when $M$ is an oriented manifold, the
+symbol $(-M)$ refers to $M$ with the opposite orientation. The {\em oriented bordism homology group} $MSO_{k}(X)$ is defined to be the set
+of equivalence classes of oriented closed $k$-manifolds over $X$ modulo the equivalence relation of oriented cobordism. The set $MSO_{k}(X)$ is a commutative monoid under disjoint union.
+    \begin{partproblem}{a}
+        Suppose that $f:M\to X$ is an oriented $k$-manifold over $X$.
+    Show that 
+    \[
+    (M,f)+(-M,f)=0\in MSO_{k}(X).
+    \]
+    (Thus $MSO_{k}(X)$ is an abelian group.)
+    \end{partproblem}
+
+    \quad Since $M\times I$ is an oriented $(k+1)$-manifold with boundary $M \amalg (-M)$, we can use the projection $M\times I$ composed with $f$ to get a cobordism between $(M\amalg(-M), f \amalg f)$ and $\varnothing$. 
+
+    \begin{partproblem}{b}
+        Now suppose that $X$ is a smooth manifold and $\omega\in
+    \Omega^{k}(X)$ is a $k$-form which is {\em closed} in the sense that
+    $d\omega=0$. The proof that $MO_{k}(X)$ can be computed by smooth maps and smooth cobordism applies to $MSO_{k}(X)$.   Show that sending $f:M\to X$ to $\int_{M}f^{\ast}\omega$ gives a well-defined homomorphism
+    \[
+    MSO_{k}(X) \to \R.
+    \]
+    \end{partproblem}
+
+    We need to show that this map is well-defined, and a homomorphism. For the well defined part, let $(N,h)$ be a cobordism between $(M_0,f_0)$ and $(M_1,f_1)$. By Stokes theorem, we have:
+
+    \[
+        \begin{aligned}
+            \int_{M_1}f_1^*\omega - \int_{M_0}f_0^*\omega = \int_{M_1 \amalg (-M_0)} (f_1\amalg f_0)^*\omega &= \int_N d(h^*\omega) \\
+            &= \int_N h^*(d\omega) = 0.
+        \end{aligned}  
+    \] 
+    It thus follows that the map is well defined. To prove that it is a homomorphism, suppose we had manifolds $(M_0,f_0)$ and $(M_1,f_1)$. Then we have 
+    \[
+    \int_{M_0\amalg M_1} (f_0 \amalg f_1)^*\omega = \int_{M_0}f_0^*\omega + \int_{M_1} f_1^*\omega
+    \]
+    so the map is a well-defined homomorphism.
+
+    
+    \begin{partproblem}{c}
+        A $k$-form $\omega$ is {\em exact} if there is a $(k-1)$-form $\eta$ with $d\eta=\omega$.  Show that if $\omega$ is exact then the above homomorphism is zero.  Thus there is a map
+        \[
+        H_{\text{DR}}^{k}(X) = \{\text{closed }k\text{-forms}\}/\{\text{exact }k\text{-forms} \} \to \Hom(MSO_{k}(X),\R).
+        \]
+    \end{partproblem}
+    Let $(M,f)$ be a manifold over $X$. By Stokes theorem, we get
+    \[
+    \int_M f^*\omega = \int_M f^*d\eta = \int_M df^*\eta = 0.
+    \]
+    So the homomorphism extends to a mapping of De Rham cohomology.
+\end{solution}
+
+\begin{cproblem}{5}
+    Prove that for the $(n-1)$ sphere of radius $r$ in $\R^n$, the Gaussian curvature is everywhere $1 /r^{n-1}$.
+\end{cproblem}
+
+\begin{solution}
+    \quad Let $S^{n-1}_r(0)$ be the unit sphere of radius $r$. Recall that the Gauss map $g : S^{n-1}_r(0) \to S^{n-1}$ sends $x$ to $\vec{n}(x)$. Then the Gaussian curvature is the Jacobian: $J_g(x) = \kappa(x)$. In this case, $g(x)=x /r$, so the Jacobian matrix is an $(n-1)\times (n-1)$ diagonal with entries equal to $1 /r$, and so the Jacobian is thus a constant function with value $\frac{1}{r^{n-1}}$. Thus $\kappa(x) = \frac{1}{r^{n-1}}$.
+\end{solution}
+
+\end{document}

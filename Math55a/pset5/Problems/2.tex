@@ -1,0 +1,43 @@
+\begin{problem}
+Let $V$ be a vector space over a field $k$ and $\phi:V\to V$ a linear operator. 
+\begin{enumerate}
+  \item Show that for all $m\geq 1$, $\Ima(\phi^{m+1})\subset \Ima(\phi^m)$, and if $\Ima(\phi^{m+1})=\Ima(\phi^m)$ then $\Ima(\phi^n)=\Ima(\phi^m)$ for all $n\geq m$. 
+  \item The {\em eventual image} of $\phi$, denoted $\mathrm{ev Im}(\phi)$, is the set of vectors which can be expressed as $\phi^m(v)$ for {\em all} $m\in\N$, i.e.\ $\mathrm{ev Im}(\phi)=\bigcap_{m\geq 1} \Ima(\phi^m)$. Show that $\mathrm{ev Im}(\phi)$ is an invariant subspace for $\phi$, and that if V is finite-dimensional then the restriction of $\phi$ to $\mathrm{ev Im}(\phi)$ is surjective.
+  \item Show that, if $V$ is finite-dimensional, then the eventual image of $\phi$ and its generalized kernel $\mathrm{gKer}(\phi)=\{v\in V\,|\, \exists m\in \N,\ \phi^m(v)=0\}$ coincide with the image and kernel of $\phi^n$ where $n=\dim V$, and give a direct sum decomposition $V=\mathrm{evIm}(\phi)\oplus \mathrm{gKer}(\phi)$, where $\phi$ is invertible on $\mathrm{evIm}(\phi)$ and nilpotent on $\mathrm{gKer}(\phi)$.
+  \item Show that, if $V$ is infinite-dimensional, then none of the statements in (3) need to hold: find an infinite-dimensional vector space $V$ and two linear operators $\phi,\psi:V\to V$ for which:
+  \begin{enumerate}
+    \item $\mathrm{evIm}(\phi)=\mathrm{gKer}(\phi)=V$, the restriction of $\phi$ to $\mathrm{evIm}(\phi)$ is not injective, and the restriction of $\phi$ to $\mathrm{gKer}(\phi)$ is not nilpotent;
+    \item $\mathrm{evIm}(\psi)=\mathrm{gKer}(\psi)=0$.
+  \end{enumerate}
+\end{enumerate}
+\end{problem}
+
+\textbf{(1)} To prove the first part, suppose $v\in\Ima(\phi^{m+1})$, so $v=\phi^{m+1}(w)$ for some $w\in V$. Then $v=\phi^m(\phi(w))$ so $v\in \Ima(\phi^m)$. 
+
+We'll induct on $n-m$. The base case when $n=m+1$ is true by assumption, since $\Ima(\phi^{m+1})=\Ima(\phi^m)$. Suppose now that $\Ima(\phi^n)=\Ima(\phi^m)$. Then $\Ima(\phi^{n+1})\subset \Ima(\phi^m)$ by the first part. To prove the reverse inclusion, suppose $v\in \Ima(\phi^m)=\Ima(\phi^n)$. Then $v=\phi^n(w)=\phi^{n-m}(\phi^m(w))$. Since $\Ima(\phi^m)=\Ima(\phi^{m+1})$, $\phi^m(v)=\phi^{m+1}(q)$ for some $q$. So $v=\phi^{n-m}(\phi^{m+1}(q))=\phi^{n+1}(q)$ so $v\in \Ima(\phi^{n+1})$. So $\Ima(\phi^m)\subset \Ima(\phi^{n+1})$ and $\Ima(\phi^m)= \Ima(\phi^{n+1})$. The rest follows by induction.               
+
+\textbf{(2)} Suppose $v\in \mathrm{evIm}(\phi)$, with $v=\phi^m(v_m)$ for some vectors $v_m$. Then $\phi(v)=\phi^{m+1}(v_m)$ and $\phi(v)=\phi^1(v)$ so $\phi(v)\in \mathrm{evIm}(\phi)$ and $\mathrm{evIm}(\phi)$ is $\phi$-invariant. 
+
+Now we'll show that $\restr{\phi}{\mathrm{evIm}(\phi)}$ is surjective if $V$ is finite dimensional. We'll use the fact from (3) which states that $\mathrm{evIm}(\phi)=\Ima(\phi^n)$. (This doesn't depend on (2)) Then if $v\in \mathrm{evIm}(\phi)$, we can write $v=\phi(\phi^n(w))$ and $\phi^n(w)\in\Ima(\phi^n)=\mathrm{evIm}(\phi)$. So $\restr{\phi}{\mathrm{evIm}(\phi)}(\phi^n(w))=v$. 
+
+\textbf{(3)} Consider the sequence of inclusions
+\[
+  V \supset \Ima(\phi) \supset \Ima(\phi^2) \supset \Ima(\phi^3) \supset \cdots
+\]
+Since $V$ is finite dimensional, this sequence must eventually be constant, and by a similar argument as in Problem~1 (1), it follows that $\Ima(\phi^n)=\Ima(\phi^{n+1})=\cdots$. So $\textrm{evIm}(\phi)=\Ima(\phi^n)$. Similarly, we have a sequence of inclusions
+\[
+  {0} \subset \Ker(\phi) \subset \Ker(\phi^2) \subset \Ker(\phi^3) \subset \cdots
+\]
+By a similar argument, $\Ker(\phi^n)=\Ker(\phi^{n+1})=\cdots$, so $\mathrm{gKer}(\phi)=\Ker(\phi^n)$. The direct sum composition follows from the rank theorem since $V=\Ima(\phi^n)\oplus\ker(\phi^n)=\mathrm{evIm}(\phi)\oplus \mathrm{gKer}(\phi)$. $\phi$ is invertible on $\mathrm{evIm}(\phi)$ because it is surjective and invariant on $\textrm{evIm}(V)$. $\restr{\phi^n}{\mathrm{gKer}(\phi)}=0$ because $\mathrm{gKer}(\phi)=\phi^n$.
+
+\textbf{(4)} Let $V=\R[x]$ as an $\R$-vector space. Consider the operator $\phi : V \to V$ given by
+\[
+  \phi(f)=\deriv{x}\left(f\right)
+.\]  
+This is linear by basis properties of the derivative. Then every polynomial is the $m$-th derivative of some polynomial (proven by repeated integration), and every polynomial eventually becomes zero after repeated derivation. So $\mathrm{evIm}(\phi)=\mathrm{gKer}(\phi)=V$. Furthermore, the restriction of $\phi$ to $\mathrm{evIm}(\phi)$ isn't injective because $\phi(x)=\phi(x+1)$, and $\phi$ to $\mathrm{gKer}(\phi)$ isn't nilpotent because for any $\phi^N=0$, $\phi^N(x^{N+1})\neq 0$.        
+
+Now consider the operator $\psi : V \to V$ given by 
+\[
+  \psi(f)=\int^x_0f(t)dt
+.\]
+This is an operator by basis properties of the integral. Observe that $\deg \psi(f) = \deg(f)+1$. This implies that $\mathrm{gKer}(\psi)=0$ because if $f$ is nonzero then $\psi(f)$ is nonzero as it has positive degree. $\mathrm{evIm}(\psi)=0$ because if $f$ is expressible as $\psi^m(f_m)$ for all $m$, then $\deg(f_m)=\deg(f) - m$ for all $m$ which is impossible since degrees cannot be negative. This concludes the proof.        

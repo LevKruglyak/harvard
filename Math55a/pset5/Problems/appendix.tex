@@ -1,0 +1,72 @@
+\appendix
+\section{Appendix}
+In this section we will define multilinear forms and prove general results about symmetric and skew symmetric multilinear forms. This makes Problem~7 and Problem~8 a lot easier. Assume the base field is not characteristic $2$.
+\begin{definition}\label{kform}
+  Let $V$ be a finite dimensional vector space. For $k\geq 1$, define a {\em $k$-form} on $V$ as a map $T : V\times\cdots\times V \to k$ such that
+  \[
+    \begin{aligned}
+      T(av_1,v_2,\ldots,v_k) &= aT(v_1,v_2\ldots,v_k)\\
+      T(v+w,v_2,\ldots,v_k) &= T(v,v_2,\ldots,v_k) + T(w,v_2,\ldots,v_k)\\
+    \end{aligned} 
+  \]
+  for all $a\in \F$ and $v,w,v_1,\ldots,v_k\in V$, with similar conditions for the other arguments. The space of $k$-forms on $V$ is denoted by $T^k(V)$. This set can be given a natural vector space structure, where scalar multiplication and vector addition are both done piecewise on the values of the $k$-form.
+\end{definition}
+
+Next, we can prove a proposition related to the dimension of $T^k(V)$.
+\begin{proposition}\label{dimension}
+  Let $V$ be finite dimensional and $k\geq 2$. Then $T^k(V)\cong \Hom(V, T^{k-1}(V))$. Notably, this implies that $\dim T^k(V) = \left(\dim V\right)^k$.   
+\end{proposition}
+\begin{proof}
+  Define an isomorphism $\varphi : \Hom(V, T^{k-1}(V)) \to T^k(V)$ by sending $f : V \to T^{k-1}(V)$ to the $k$-form $T(v_1,v_2,\ldots,v_n) = f(v_1)(v_2,\ldots,v_n)$. This can be easily shown to be a linear map and there is an inverse map taking a $k$-form $T$ to the map $v \mapsto T(v,\cdots)$.\\
+
+  Thus $T^1(V)\cong V^*$ so $\dim T^1(V) = \dim V$, and $\dim T^k(V) = (\dim T^{k-1}(V))(\dim V)$. By induction this proves that $\dim T^k(V)=\left(\dim V\right)^k$.  
+\end{proof}
+
+Now to generalize the notions of symmetric and skew symmetric bilinear forms:
+
+\begin{definition}\label{symm}
+  Let $V$ be a finite dimensional vector space, with $k\geq 1$. A $k$-form $T\in T^k(V)$ is said to be {\em symmetric} if for any permutation $\sigma\in S_k$,
+  \[
+    T(v_1,v_2,\ldots, v_k) = T\left(v_{\sigma(1)}, v_{\sigma(2)}, \ldots, v_{\sigma(k)}\right)
+  .\] 
+ Similarly a $k$-form is said to be {\em skew-symmetric} if for any permutation $\sigma\in S_k$,
+  \[
+    T(v_1,v_2,\ldots, v_k) = \sgn(\sigma)T\left(v_{\sigma(1)}, v_{\sigma(2)}, \ldots, v_{\sigma(k)}\right)
+  .\] 
+  Let $T^k_{\mathrm{symm}}(V)$ be the set of symmetric $k$-forms on $V$ and let $T^k_{\mathrm{skew}}(V)$ be the set of skew-symmetric $k$-forms on $V$. 
+\end{definition}
+
+Both $T^k_{\mathrm{symm}}(V)$ and $T^k_{\mathrm{skew}}(V)$ are in fact subspaces of $T^k(V)$. It's trivial to see that they are closed under scalar multiplication. For additive closure, if $T, H$ are skew-symmetric $k$-forms then
+\[
+  \begin{aligned}
+  (T+H)(v_1,\ldots, v_k) &= \sgn(\sigma)T(v_{\sigma(1)},\ldots, v_{\sigma(k)})+\sgn(\sigma)H(v_{\sigma(1)},\ldots,v_{\sigma(k)})\\
+  &= \sgn(\sigma)(T+H)(v_{\sigma(1)},\ldots, v_{\sigma(k)})
+  \end{aligned}
+\]
+for all $\sigma\in S_k$. So $T+H$ is skew-symmetric. A similar argument can be used for symmetric $k$-forms. The last thing to now check is the dimensions of these spaces $T^k_{\mathrm{symm}}(V)$ and $T^k_{\mathrm{skew}}(V)$.
+
+\begin{proposition}\label{dimsymm}
+  Let $V$ be an $n$-dimensional vector space with $k\geq 1$. Then
+  \[
+    \dim T^k_{\mathrm{symm}}(V) = \binom{n+k-1}{k}
+  .\]   
+\end{proposition}
+\begin{proof}
+  If $e_1,\ldots,e_n$ is a basis for $V$, then a form $\mu\in T^k(V)$ is symmetric if and only if $\mu(e_{i_1},\ldots, e_{i_k})=\mu(e_{\sigma(i_1)},\ldots, e_{\sigma(i_k)})$ for all $i_1,\ldots, i_k$ and $\sigma\in S_k$. So $\mu$ is determined by the values $\mu(e_{i_1},\ldots, e_{i_k})$ where $1\leq i_1\leq i_2\leq\cdots\leq i_k\leq n$, and these values can rangle freely and independently. Since the $i_m$ don't have to be distinct, we are choosing $k$ things from $n$ objects with repetition, so there are exactly $\binom{n+k-1}{k}$ basis forms. 
+\end{proof}
+
+\begin{proposition}\label{dimskew}
+  Let $V$ be an $n$-dimensional vector space with $k\geq 1$. Then
+  \[
+    \dim T^k_{\mathrm{skew}}(V) = \binom{n}{k}
+  .\]   
+\end{proposition}
+\begin{proof}
+  Let $e_1,\ldots, e_n$ be a basis for $V$. A general form $\mu\in T^k(V)$ is skew-symmetric if and only if:
+  \begin{itemize}
+    \item $\mu(e_{i_1},\ldots,e_{i_k})=0$ if $i_a=i_b$ for some distinct $a,b$.
+    \item $\mu(e_{i_1},\ldots,e_{i_k})=\sgn(\sigma)\mu(e_{\sigma(i_1)},\ldots,e_{\sigma(i_k)})$ for all $\sigma\in S_k$ when all of the $i_a$ are distinct. 
+  \end{itemize}
+  So $\mu$ is determined by the values $\mu(e_{i_1},\ldots, e_{i_k})$ where $1\leq i_1< i_2<\cdots< i_k\leq n$, and these values can rangle freely and independently. Since the $i_m$ are distinct, we are choosing $k$ things from $n$ objects without repetition, so there are exactly $\binom{n}{k}$ basis forms. 
+\end{proof}
+

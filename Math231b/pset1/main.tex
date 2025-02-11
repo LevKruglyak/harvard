@@ -1,0 +1,234 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 1}}
+\date{\textbf{Due:} February 7, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Show that any limit in a complete category can be expressed as an equalizer of two maps between products.
+\end{problem}
+
+\begin{solution}
+    \quad Let $I$ be a small category, and $\CC$ be a complete category, and suppose $F : I \to \CC$ is some functor. Consider the products in $\CC$:
+    \[
+        F_S = \prod_{i\in I}F(i)\quad\text{and}\quad F_D = \prod_{f \in I(i,j)} F(j)
+    .\]
+    Now consider the two maps $s, t : F_S \to F_D$ given by:
+    \[
+        s(x_i)_{x_i\in F(i)} = \prod_{f\in I(i, j)} F(f)(x_i) \quad\text{and}\quad t(x_i)_{x_i\in F(i)} = \prod_{f\in I(i,j)} x_j
+    .\] 
+    \quad We claim that $\lim_{i\in I} F(i) \cong \Eq(s,t)$. Letting $\pi_i : \prod_{k\in I} F(k) \to F(i)$ and $p_f : \prod_{f\in I(i,j)} F(j) \to F(j)$ be the natural projection maps, notice that the maps $s$ and $t$ are uniquely characterized by the relations $p_f\circ s = F(f)\circ \pi_i$ and $p_f\circ t = \pi_j$ for all $f\in I(i,j)$. 
+
+    \quad Now for any $i\in I$, consider the composition $r_i = \pi_i\circ \iota_\Eq : \Eq(s,t) \to F(i)$. By definition of equalizer, the map $\iota_\Eq$ satisfies $s\circ \iota_\Eq = t\circ \iota_\Eq$. Thus for any function $f \in I(i,j)$, we have \[r_j = \pi_j\circ \iota_\Eq = p_f \circ t \circ \iota_\Eq = p_f\circ s\circ \iota_\Eq = F(f)\circ \pi_i \circ \iota_\Eq = F(f)\circ r_i.\]
+    This identity $r_j = F(f)\circ r_i$ shows that $\Eq(s,t)$, together with the maps $\{r_i\}_{i\in I}$ form a cone over $F$. 
+    
+    \quad To prove that this cone is in fact universal, suppose we had another cone $Y$ with maps $q_i : Y \to F(i)$. By the universal property of product, this extends to a map $q : Y \to F_S$, and since it is a cone over $F$, it naturally follows that $s\circ q = t\circ q$. Thus by the universal property of the equalizer, $q$ extends to a map $\iota_Y : Y \to \Eq(s,t)$ which commutes with $s,t$. This in turn means that the maps $q_i$ satisfy $q_i = r_i\circ \iota_Y$ so we are done. Since the limit is unique up to isomorphism, we thus get:
+    \[
+        \lim_{i\in I} F(i) \cong \Eq(s,t)
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Let $\CC$ and $\DD$ be two categories and $F : \CC \to \DD$ and $G : \DD \to \CC$ two functors. An \emph{adjunction} between $F$ and $G$ is an isomorphism
+    \[
+        \DD(FX, Y) \cong \CC(X, GY)
+    \]
+    that is natural in both variables. Show that this is equivalent to giving natural transformations
+    \[
+        \alpha_X : X \to GFX, \quad \beta_Y : FGY \to Y
+    ,\]
+    such that the following two diagrams commute:
+    % https://q.uiver.app/?q=WzAsNixbMCwwLCJGWCJdLFsxLDAsIkZHRlgiXSxbMSwxLCJGWCJdLFszLDAsIkdZIl0sWzQsMCwiR0ZHWSJdLFs0LDEsIkdZIl0sWzAsMiwiMV97Rlh9IiwyXSxbMCwxLCJGX3tcXGFscGhhX1h9Il0sWzEsMiwiXFxiZXRhX3tGWH0iXSxbMyw1LCIxX3tHWX0iLDJdLFszLDQsIlxcYWxwaGFfe0dYfSJdLFs0LDUsIkdcXGJldGFfWSJdXQ==
+    \[\begin{tikzcd}
+        FX & FGFX && GY & GFGY \\
+        & FX &&& GY
+        \arrow["{1_{FX}}"', from=1-1, to=2-2]
+        \arrow["{F\alpha_X}", from=1-1, to=1-2]
+        \arrow["{\beta_{FX}}", from=1-2, to=2-2]
+        \arrow["{1_{GY}}"', from=1-4, to=2-5]
+        \arrow["{\alpha_{GY}}", from=1-4, to=1-5]
+        \arrow["{G\beta_Y}", from=1-5, to=2-5]
+    \end{tikzcd}\]
+    The map $\alpha$ is the \emph{unit} of the adjunction, and $\beta$ is the \emph{counit}. They are called \emph{adjunction morphisms}.
+\end{problem}
+
+\begin{solution}
+    \quad First suppose we're given an adjunction $\Psi_{X,Y} : \DD(FX, Y) \to \CC(X, GY)$. The fact that this adjunction is ``natural'' in $X$ and $Y$ means that there are natural isomorphisms of the contravariant functors $\CC(F-, Y)\cong \DD(-, GY)$ and covariant functors $\CC(FX, -)\cong D(X, G-)$ for any fixed $X\in \CC$ and $Y\in \DD$ respectively. This can be summarized with the identities:
+    \[
+        \Psi_{A, Y} \circ \DD(f, GY) = \CC(Ff, Y)\circ\Psi_{B,Y}\quad\text{and}\quad \DD(X,Gg)\circ \Psi_{X,C} = \Psi_{X,D}\circ \CC(FX,g)
+    \]
+    for any $X,A,B\in \CC, Y,C,D\in \DD$, $f\in \CC(A,B)$, and $g\in\DD(C,D)$. More intuitively, these can be expressed as the identities:
+    \[
+        \boxed{\Psi_{B, Y}(\omega)\circ f = \Psi_{A, Y}(\omega\circ Ff)}\quad \text{and}\quad \boxed{\Psi_{X,D}(g\circ\sigma) = Gg\circ\Psi_{X,C}(\sigma)}
+    \]
+    for $\omega\in \DD(FB,Y)$ and $\sigma\in \DD(FX, C)$. Similarly we have dual identities for $\Psi^{-1}_{-,-}$: 
+    \[
+        \boxed{\Psi^{-1}_{A, Y}(\omega'\circ f) = \Psi_{B, Y}^{-1}(\omega')\circ Ff}\quad \text{and}\quad\boxed{ g\circ\Psi_{X,C}^{-1}(\sigma') = \Psi^{-1}_{X,D}(Gg\circ\sigma')}
+    \]
+    where now $\omega'\in \CC(B,GY)$ and $\sigma'\in \CC(X,GC)$.   
+    
+    \quad Now let's set $\alpha_X=\Psi_{X,FX}(1_{FX})$ and $\beta_Y = \Psi_{GY,Y}^{-1}(1_{GY})$. Let's first prove that $\alpha_- : 1_\CC \to GF$ and $\beta_- : FG \to 1_\DD$ are natural transformations. Starting with $\alpha_-$, let $A,B\in \CC$ and $f\in \CC(A,B)$. Then, applying the identities;
+    \[
+        \begin{aligned}
+            GFf\circ \alpha_A &= GFf\circ \Psi_{A,FA}(1_{FA})=\Psi_{A, FB}(Ff\circ 1_{FA})=\Psi_{A,FB}(Ff)\\
+            &=\Psi_{A,FB}(1_{FB}\circ Ff)=\Psi_{B,FB}(1_{FB})\circ f=\alpha_B\circ f
+        \end{aligned}
+    \]
+    so $\alpha_-$ is a natural transformation. For the $\beta_-$ case, let $C,D\in \DD$ and $g\in \DD(C,D)$. Then, applying our identities, we get
+    \[
+        \begin{aligned}
+            \beta_D\circ FGg &= \Psi^{-1}_{GD,D}(1_{GD})\circ FGg = \Psi^{-1}_{FGD,D}(1_{GD}\circ Gg)=\Psi^{-1}_{FGD,D}(Gg)\\
+            &=\Psi^{-1}_{FGD,D}(Gg\circ 1_{GC})=g\circ\Psi^{-1}_{GC,C}(1_{GC})=g\circ \beta_C
+        \end{aligned}
+    \] 
+    
+    Next, to show that the triangle diagrams commute:
+    \[
+        \begin{aligned}
+            \beta_{FX}\circ F\alpha_X &= \Psi_{GFX,FX}^{-1}(1_{GFX})\circ F\alpha_X = \Psi_{X,FX}^{-1}(1_{GFX}\circ \alpha_X)\\
+            &=\Psi_{X,FX}^{-1}(\alpha_X)=\Psi_{X,FX}^{-1}(\Psi_{X,FX}(1_{FX})) = 1_{FX}
+        \end{aligned}
+    \] 
+    Similarly for the other triangle, we get:
+    \[
+        \begin{aligned}
+            G\beta_Y \circ \alpha_{GY} &= G\beta_Y \circ \Psi_{GY,FGY}(1_{FGY}) = \Psi_{GY,Y}(1_{FGY}\circ \beta_Y)\\
+            &=\Psi_{GY,Y}(\beta_Y) = \Psi_{GY,Y}(\Psi^{-1}_{GY,Y}(1_{GY})) = 1_{GY}
+        \end{aligned}
+    \] 
+    This completes the proof in this direction. 
+    
+    \quad Now suppose conversely that we had natural transformations $\alpha_X : X \to GFX$ and $\beta_Y : FGY \to Y$ satisfying $\beta_{FX}\circ F{\alpha_X} = 1_{FX}$ and $G\beta_Y\circ \alpha_{GY}=1_{GY}$. Let's now construct the isomorphism $\Psi_{X,Y} : \DD(FX, Y) \to \CC(X,GY)$ by setting $\Psi_{X,Y}(f) = G(f)\circ\alpha_X$. This has inverse given by $\Psi^{-1}_{X,Y}(g)=\beta_Y\circ F(g)$, as can be easily checked by the triangle identities. So this is indeed an isomorphism.
+
+    \quad All that is left is to show naturality. Suppose $f \in \CC(A,B)$ is some function, and $\omega\in \DD(FB, Y)$ is some function, as in the first identities. Then:
+    \[
+        \Psi_{B,Y}(\omega)\circ f = G(\omega)\circ \alpha_B\circ f =G(\omega)\circ GFf\circ \alpha_A = G(\omega\circ Ff)\circ \alpha_A = \Psi_{A,Y}(\omega\circ Ff)
+    .\] 
+    Similarly, if $g\in \DD(C,D)$ and $\sigma\in \DD(FX,C)$ we get:
+    \[
+        \Psi_{X,D}(g\circ \sigma) = G(g\circ \sigma)\circ \alpha_X = Gg\circ G\sigma\circ \alpha_X = Gg\circ \Psi_{X,D}(\sigma)
+    .\] 
+    This means $\Psi_{X,Y}$ is an adjunction so we are done.
+\end{solution}
+
+\begin{problem}
+    Suppose that $F$ and $F'$ are both left adjoint to $G : \DD \to \CC$. Show that there is a unique natural isomorphism $F \to F'$ that is compatible with the adjunction morphisms.
+\end{problem}
+
+\begin{solution}
+    \quad For disambiguation, let $\alpha_-, \beta_-$ be the adjunction morphisms for $F$ and $\alpha'_-, \beta'_-$ be the adjunction morphisms for $F'$. We're looking to construct some natural isomorphism $\zeta_X : FX \to F'X$ such that:
+    \[
+        \beta'_Y\circ \zeta_{GY} = \beta_Y\quad\text{and}\quad G\zeta_X\circ \alpha_X = \alpha'_X
+    \]
+    \quad Let $\Psi_{X,Y} : \DD(FX, Y) \to \CC(X,GY)$ and $\Psi_{X,Y} : \DD(F'X, Y) \to \CC(X,GY)$ be the adjunctions between $F,F'$ and $G$ respectively. Observe that we have a natural isomorphism $\Phi_{X,Y} : \DD(F'X, Y) \to \DD(FX,Y)$ given by $\Phi_{X,Y} = \Psi^{-1}_{X,Y}\circ \Psi'_{X,Y}$. Now working backwards, if we did have a natural isomorphism $\zeta_X : FX \to F'X$, we would get a natural isomorphism $\DD(F'X, Y) \to \DD(FX,Y)$ given by $\sigma \mapsto \sigma \circ \zeta_X$. Motivated by this, let's set
+    \[
+        \zeta_X = \Phi_{X, F'X}(1_{F'X})
+    .\]  
+    Expanding this, we get:
+    \[
+        \zeta_X = \Psi^{-1}_{X,F'X}(\Psi'_{X,F'X}(1_{F'X})) = \Psi^{-1}_{X,F'X}(\alpha'_X)
+    .\] 
+    \quad Now verifying the compatibility identities (using some of the naturality identities for $\Psi$ from the previous problem) we get
+    \[
+        \begin{aligned}
+            \beta'_Y\circ \zeta_{GY} &= \beta'_Y\circ \Psi^{-1}_{GY,F'GY}(\alpha'_{GY}) = \Psi^{-1}_{GY, Y}(G\beta'_Y\circ \alpha_{GY}')= \Psi^{-1}_{GY,Y}(1_{GY}) = \beta_Y,\\
+            G\zeta_X\circ \alpha_X &= G\Psi^{-1}_{X, F'X}(\alpha'_X)\circ \alpha_X = G\Psi^{-1}_{X,F'X}(\alpha'_X)\circ \Psi_{X, FX}(1_{FX}) = \Psi_{X,F'X}(\Psi^{-1}_{X,F'X}(\alpha'_X)) = \alpha'_X,
+        \end{aligned}
+    \] 
+    so $\zeta_-$ is compatible with the adjunction morphisms, and we've shown uniqueness.
+\end{solution}
+
+\begin{problem}
+    Properties of mapping objects.
+\end{problem}
+
+\begin{solution}
+    Let $\CC$ be a Cartesian closed category.
+
+    \begin{partproblem}{a}
+        Verify the exponential laws: construct natural isomorphisms
+        \[
+            Z^{X\times Y}\cong (Z^X)^Y,\quad (Y\times Z)^X\cong Y^X\times Z^X
+        .\] 
+        The first of these shows that the adjunction bijection $\CC(X\times Y, Z)\cong \CC(Y, Z^X)$ ``enriches'' to an isomorphism in $\CC$. The second says that the product in $\CC$ is actually an ``enriched'' product. 
+    \end{partproblem}
+
+    \begin{solution}
+        \quad For the first isomorphism, first note that for any $W\in \CC$ we have a natural isomorphism $W\times (X,Y) \cong (W\times X)\times Y$. Using this, we compose several natural isomorphisms to get 
+        \[
+            \CC(-, Z^{X\times Y}) \cong \CC(-\times (X\times Y), Z) \cong \CC((-\times Y)\times X, Z) \cong \CC(-\times Y, Z^X) \cong \CC(-, (Z^X)^Y)
+        .\]
+        However the Yoneda lemma implies that a natural isomorphism of $\Hom$ functors implies an isomorphism between the objects, so we get the desired isomorphism $Z^{X\times Y} \cong (Z^X)^Y$. Furthermore, this isomorphism will clearly be natural in each of the components $X,Y,Z$.
+        
+        \quad For the second isomorphism, we recall that by definition, the functor $-^X$ is a right adjoint to $-\times X$. Thus it must preserve limits, including products, in a natural way. Thus we have a natural isomorphism $(Y\times Z)^X \cong Y^X\times Z^X$. 
+    \end{solution}
+
+    \begin{partproblem}{b}
+        Construct a ``composition'' natural transformation
+        \[
+            Y^X\times Z^Y \to Z^X
+        \]
+        using the evaluation maps, and show that it is associative and unital. 
+    \end{partproblem}
+
+    \begin{solution}
+        \quad Recall that the universal property of the product gives us a natural isomorphism $\CC(-,A\times B) \cong \CC(-,A)\times \CC(-,B)$. Composing this isomorphism with the mapping object isomorphism, we get
+        \[
+            \CC(-, Y^X\times Z^Y) \cong \CC(-,Y^X)\times \CC(-,Z^Y) \cong \CC(-\times X, Y) \times \CC(-\times Y, Z)
+        .\] 
+        Lastly, we compose with the map:
+        \[
+            \begin{aligned}
+                \CC(-\times X, Y)\times \CC(-\times Y, Z) &\to \CC(-\times X, Z) \\
+                (f,g) &\mapsto g\circ (f\times \pi_-)
+            \end{aligned}
+        \] 
+        where $\pi_- : -\times X \to -$ is the projection map onto the first coordinate. This is clearly a natural transformation so we have a natural transformation
+        \[
+            \CC(-, Y^X\times Z^Y) \to \CC(-, Z^X) \implies Y^X\times Z^Y \to Z^X
+        .\]
+        \quad To see why this transformation is associative, we need to check that the following diagram commutes:
+        % https://q.uiver.app/?q=WzAsNCxbMCwxLCJZXlhcXHRpbWVzIFpeWVxcdGltZXMgV15aIl0sWzEsMCwiWV5YXFx0aW1lcyBXXlkiXSxbMiwxLCJXXlgiXSxbMSwyLCJaXlhcXHRpbWVzIFdeWiJdLFswLDMsIlxcY2lyY1xcdGltZXMxX3tXXlp9IiwyXSxbMywyLCJcXGNpcmMiLDJdLFswLDEsIjFfe1leWH1cXHRpbWVzIFxcY2lyYyJdLFsxLDIsIlxcY2lyYyJdXQ==
+        \[\begin{tikzcd}[ampersand replacement=\&]
+            \& {Y^X\times W^Y} \\
+            {Y^X\times Z^Y\times W^Z} \&\& {W^X} \\
+            \& {Z^X\times W^Z}
+            \arrow["{\circ\times1_{W^Z}}"', from=2-1, to=3-2]
+            \arrow["\circ"', from=3-2, to=2-3]
+            \arrow["{1_{Y^X}\times \circ}", from=2-1, to=1-2]
+            \arrow["\circ", from=1-2, to=2-3]
+        \end{tikzcd}\]
+        However this is equivalent to showing that the dual $\Hom(-,X)$ diagram is commutative:
+        % https://q.uiver.app/?q=WzAsNCxbMCwxLCJcXENDKC0sIFleWFxcdGltZXMgWl5ZXFx0aW1lcyBXXlopIl0sWzEsMCwiXFxDQygtLFleWFxcdGltZXMgV15ZKSJdLFsyLDEsIlxcQ0MoLSxXXlgpIl0sWzEsMiwiXFxDQygtLFpeWFxcdGltZXMgV15aKSJdLFswLDMsIlxcY2lyY1xcdGltZXMxX3tXXlp9IiwyXSxbMywyLCJcXENDKC0sXFxjaXJjKSIsMl0sWzAsMSwiXFxDQygtLDFfe1leWH1cXHRpbWVzIFxcY2lyYykiXSxbMSwyLCJcXENDKC0sXFxjaXJjKSJdXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	\& {\CC(-,Y^X\times W^Y)} \\
+	{\CC(-, Y^X\times Z^Y\times W^Z)} \&\& {\CC(-,W^X)} \\
+	\& {\CC(-,Z^X\times W^Z)}
+	\arrow["{\circ\times1_{W^Z}}"', from=2-1, to=3-2]
+	\arrow["{\CC(-,\circ)}"', from=3-2, to=2-3]
+	\arrow["{\CC(-,1_{Y^X}\times \circ)}", from=2-1, to=1-2]
+	\arrow["{\CC(-,\circ)}", from=1-2, to=2-3]
+\end{tikzcd}\] 
+    This is clear by definition. (Huge pain to write up, please trust me) For unitality, we want to construct some element $1\in X^X$ such that $\circ: X^X\times Y^X \to Y^X$ sends $(1,x)$ to $x$. Let $1'$ be the image of $-\times x \mapsto x$ in $\CC(-, X^X)$, and let $1$ be any object in the image of $1'$. By the $\Hom(-,X)$ definition of composition, this is clearly a unital object.
+    \end{solution}
+\end{solution}
+
+\end{document}

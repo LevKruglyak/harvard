@@ -1,0 +1,45 @@
+\begin{problem}
+  With $\R^\infty$ as above, and for $p\in \{1,2,\dots\}$, let 
+  \[\ell^p=\Bigl\{(a_0,a_1,a_2,\dots)\in \R^\infty\,\Big|\,\sum\limits_{i=0}^\infty |a_i|^p < \infty\Bigr\}.\]
+  \begin{enumerate}
+    \item Show that $\ell^p$ is a subspace of $\R^\infty$.
+    \item Show that $\ell^p$ is a proper subspace of $\ell^{p+1}$.
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} First we'll show $\ell^p$ is closed under scalar multiplication. Let $a\in \ell^p$ and suppose $c\in \R$. Then
+\[
+  \sum^\infty_{i=0}|ca_i|^p=\sum^\infty_{i=0}c^p|a_i|^p=c^p\sum^\infty_{i=0}|a_i|^p < \infty
+.\]    
+So $ca\in \ell^p$. To prove additive closure, suppose $a,b\in \ell^p$.  
+\begin{lemma}
+  For any $x,y\in \R$ and $p\in \Z^+$, we have $|x+y|^p\leq 2^{p-1}(|x|^p+|y|^p)$.   
+\end{lemma}
+\begin{proof}
+  Consider the function $f(x)=|x|^p$. This is a convex function, so by the midpoint property (or Jensen's inequality), for any $x,y\in \R$ we have 
+  \[
+    f\left(\frac{x+y}{2}\right)\leq \frac{f(x)+f(y)}{2}
+  .\]
+  Expanding this out, we get
+  \begin{align*}
+    \left|\frac{x+y}{2}\right|^p&\leq \frac{|x|^p+|y|^p}{2}\\
+    \frac{|x+y|^p}{2^p}&\leq  \frac{|x|^p+|y|^p}{2}\\
+    |x+y|^p&\leq 2^{p-1}(|x|^p+|y|^p)
+  \end{align*}
+  This completes the proof.
+\end{proof}
+
+Now we can prove additive closure. To show that $a,b\in \ell^p$, note that
+\[
+  \sum^\infty_{i=0}|a_i+b_i|^p\leq 2^{p-1}\sum^\infty_{i=0}|a_i|^p+|b_i|^p \leq 2^{p-1}\left(\sum^\infty_{i=0}|a_i|^p+\sum^\infty_{i=0}|b_i|^p\right) < \infty
+.\] 
+
+\textbf{(2)} Consider the sequence $a_k=(k)^{1 /p}$. Then
+\[
+  \sum_{k=0}^\infty \left|(k)^{\frac{1}{p}}\right|^p=\sum_{k=0}^\infty k \to \infty
+\]
+since the harmonic series diverges for powers $\leq 1$ , yet
+\[
+  \sum_{k=0}^\infty \left|(k)^{\frac{1}{p}}\right|^{p+1}=\sum_{k=0}^\infty k^{\frac{p+1}{p}} \leq \infty
+.\]
+So $a\in \ell^{p+1}$ but $a\notin \ell^p$. So $\ell^p$ is a proper subset of $\ell^{p+1}$, and it is in fact a proper subspace, since both are subspaces of $\R^\infty$.

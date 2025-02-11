@@ -1,0 +1,25 @@
+\begin{problem}
+  Let $\phi$ and $\psi:V\to V$ be linear operators on a vector space $V$ of dimension $n$. Show that 
+  \[\mathrm{rank}(\phi\circ\psi)\geq \mathrm{rank}(\phi)+\mathrm{rank}(\psi)-n.\]
+\end{problem}
+
+We'll start by proving a lemma.
+\begin{lemma}
+  For any linear operators $\psi$ and $\phi$ on a finite dimensional vector space $n$,
+  \[
+    \dim\mathrm{ker}(\phi\circ\psi)\leq \dim\mathrm{ker}(\phi)+\dim\mathrm{ker}(\psi)
+  .\]   
+\end{lemma}
+\begin{proof}
+  Consider the map $f : \ker(\phi\circ\psi)/\ker(\psi) \to \ker(\phi)$ given by $w+\ker(\psi)\mapsto \psi(w)$. This map is clearly well defined and injective, so $\dim \ker(\phi\circ\psi)/\ker(\psi)=\dim\ker(\phi\circ\psi)-\dim\ker(\psi)\leq \dim \ker(\phi)$. This is the inequality we are trying to prove.
+\end{proof}
+
+Using this lemma, we have
+\[
+  \begin{aligned}
+    \dim\mathrm{ker}(\phi\circ\psi)&\leq \dim\mathrm{ker}(\phi)+\dim\mathrm{ker}(\psi)\\
+    n-\mathrm{rank}(\phi\circ\psi)&\leq n-\mathrm{rank}(\phi)+n-\mathrm{rank}(\psi)\\
+    \mathrm{rank}(\phi\circ\psi)&\geq \mathrm{rank}(\phi)+\mathrm{rank}(\psi)-n.
+  \end{aligned}
+\] 
+So we are done.

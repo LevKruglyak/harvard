@@ -1,0 +1,26 @@
+\begin{problem}
+A \emph{reflection} on a (real) inner-product space $V$ is a self-adjoint transformation such that $P^2 = I$ and $\Ker(P+I)$ is one dimensional.
+
+\begin{enumerate}[(a)]
+  \item Show that any reflection can be expressed in the form $P(x) = x - 2\langle x,v\rangle v$, where $\|v\|=1$.
+  \item Show that, given any two vectors $x,y \in V$ of the same length, there is a reflection such that $P(x)=y$. 
+  \item Using (b), show that any orthogonal transformation of $\R^n$ is a product of at most $n$ reflections. 
+\end{enumerate}
+\end{problem}
+
+\textbf{(a)} Since $P$ is self-adjoint, by the real spectral theorem, there is an orthonormal basis $v_1,\cdots,v_n$ of eigenvectors with corresponding eigenvalues $\lambda_1,\cdots,\lambda_n$. The condition that $P^2=I$ implies that $\lambda_i=\pm 1$. However since $\Ker(P+I)$ is one dimensional, there can only be one eigenvalue which is $-1$. Without loss of generality, assume that $\lambda_1=-1$. Writing any vector $x$ as $x=a_1v_1+a_2v_2+\cdots+a_nv_n$, it follows that $P(x)=-a_1v_1+a_2v_2+\cdots+a_nv_n=x-2\langle x, v_1\rangle v_1$ and $\|v_1\|=1$ since it is part of the orthonormal basis. So $P(x)$ has the required form.
+
+Furthermore, $v_1$ can be arbitrary since every unit vector can be extended to an orthonormal basis by the Gram-Schmidt process. So for any $\|v\|=1$, the map $P_v(x)=x-2\langle x, v\rangle v$ is in fact a reflection.
+
+\textbf{(b)} Suppose $x,y\in V$ with $\|x\|=\|y\|$. Consider the reflection $P_v$ where $v = \frac{y-x}{\|y-x\|}$. Then
+\[
+  \begin{aligned}
+    P_v(x)=x-{2\langle x, v\rangle}v&=x-2\frac{\langle x, y-x\rangle}{\|y-x\|^2}(y-x)\\
+    &=x-2\frac{\langle x, y\rangle - \langle x, x\rangle}{\langle y-x, y-x\rangle}(y-x)\\
+    &=x-2\frac{\langle x, y\rangle - \langle x, x\rangle}{\langle y, y\rangle+\langle x, x\rangle-2\langle x, y\rangle}(y-x)\\
+    &=x-\frac{\langle x, y\rangle - \langle x, x\rangle}{\langle x, x\rangle-\langle x, y\rangle}(y-x)=y.\\
+  \end{aligned}
+\]
+We already established in (a) that any $P_v$ is a reflection so we are done.
+
+\textbf{(c)} Let $A$ be an orthogonal transformation of $\R^n$. Suppose $v_1, \ldots, v_n$ is an orthonormal basis of $\R^n$. Then $A(v_1), \ldots, A(v_n)$ is also an orthonormal basis of $\R^n$ since $A$ preserves lengths and orthogonality. Let $P_i$ be the reflection flipping $v_i$ and $A(v_i)$, which exists by (b). Then $A=P_1P_2\cdots P_n$. 

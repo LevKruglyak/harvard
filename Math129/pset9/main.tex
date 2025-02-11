@@ -1,0 +1,161 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 129 Problem Set 9}}
+
+\begin{document}
+\maketitle
+
+\begin{cproblem}{6.1}
+    Fill in the proof of Theorem~39:
+    \begin{enumerate}[(a)]
+        \item Prove Lemma~1.
+        \item Verify that $D$ is homogenous when $\upsilon = (1,\ldots,2)$.
+        \item Be sure you believe that $f$ is Lipschitz. 
+        \item Verify that $f$ is the composition of the $f_i$ and that the $f_i$ preserve open sets.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} The statement of Lemma~1 is:
+    \begin{ilemma}
+        Let $f : G \to G'$ be a homomorphism is abelian groups and let $S$ be a subgroup of $G$ which is carried isomorphically onto a subgroup $S'\subset G'$. Suppose $D'$ is a set of coset representatives for $S'$ in $G'$. Then its total inverse image $D=f^{-1}(D')$ is a set of coset representatives for $S$ in $G$.
+    \end{ilemma}
+    \begin{proof}
+        We'll prove this in two parts, first showing that no two elements in $D$ represent the same coset for $S$ in $G$, then showing that every coset for $S$ in $G$ is represented by an element of $D$. Let $d_1,d_2\in D$ be distinct, and suppose for the sake of contradiction that $d_1+S=d_2+S$, or equivalently $d_2-d_1\in S$. Then $f(d_2-d_1)=f(d_2)-f(d_1)\in S'$, so $f(d_2)+S'=f(d_1)+S'$. Since $f$ is an isomorphism when restricted to $S$, these are distinct elements of $D'$, contradicting the fact that $D'$ are coset representatives for $S'$ in $G'$. Next, to prove that every coset for $S$ in $G$ is represented by an element of $D$, let $g+S$ be any coset. Let $d'$ be a representative of the coset $f(g)+S'$, then clearly $f^{-1}(d')+S=g+S$ and $f^{-1}(d')\in D$ so we are done.
+    \end{proof}
+    
+    \textbf{(b)} Recall that the logarithm function is a function $\log : (\R^*)^r\times (\C^*)^s \to \R^{r+s}$, given by
+    \[
+        \log(x_1,\ldots,x_r,z_1,\ldots,z_s) = (\log |x_1|, \ldots, \log |x_r|, 2\log |z_1|,\ldots, 2\log |z_s|)
+    .\] 
+    Thus for any vector $x\in (\R^*)^r\times (\C^*)^s$ and $a\in \R^*$, we have $\log(ax)=a\upsilon+\log(x)$, where $\upsilon = (1,\ldots, 2)$. Recall now that $D$ is the set
+    \[
+        D = \{x\in (\R^*)^r\times (\C^*)^s\mid \log x\in F\oplus \R\upsilon\}
+    \] 
+    where $F$ is a fundamental parallelotype for $\Lambda_U$. Thus for any $a\in \R^*$ and $x\in D$, we have $\log (ax)=a\upsilon + \log(x)=\upsilon(a+t)+f$ for some $t\in \R$ and $f\in F$, where $\log(x)=f+\upsilon t$. So $ax\in D$ and so $D$ is homogenous. 
+
+    \textbf{(c)} As the proof notes, $f : [0,1]^n \to \R^r\times \C^s$ has all of its partial derivatives, and since $[0,1]^n$ is a compact space, the partial derivatives must be bounded. We just have to show that this implies that $f$ is a Lipschitz function, which means that there exists some bound $B>0$ such that for any $x,y\in [0,1]^n$ we have
+    \[
+        \frac{|f(x)-f(y)|}{|x-y|} \leq B
+    .\] 
+    By the triangle inequality it suffices to show that $f$ is Lipschitz (with independent Lipschitz constant) on every line parallel to a coordinate axis. However this is clear to see by the one dimensional mean value theorem that this is the case.
+
+    \textbf{(d)} The fact that $f$ is the composition of all of the $f_i$ is obvious, and follows straight from the definitions of $f_i$ as well as the parametrization. $f_1$ is an open map because it is the identity everywhere except for the $(r+s)$th coordinate, and log is an open map on $(0,1)$. $f_2$ is an open map because it is a linear transformation of rank $n$, so it is invertible. $f_3$ is again an open map because it applies open maps to each of the coordinates, same for $f_4$.
+\end{solution}
+
+\begin{cproblem}{6.2}
+    Fill in the proof of Theorem~40:
+    \begin{enumerate}[(a)]
+        \item Verify that the $\frac{\partial w_j}{\partial t_k}$ are as claimed.
+        \item Verify that $J(t_1,\ldots,t_n)$ is as claimed.
+        \item Verify that $x_1\cdots x_r\rho^2_1\cdots\rho^2_s=t^n_{r+s}$ 
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Recall that the $w_j$ are defined as 
+    \[
+        w_j=\begin{cases}
+            t_{r+s}\exp\left(\sum^{r+s-1}_{k=1}t_k\upsilon_k^{(j)}\right)& j \leq r\\
+            t_{r+s}\exp\left(\frac12\sum^{r+s-1}_{k=1}t_k\upsilon^{(j)}_k\right) & r<j\leq r+s\\
+            2\pi t_j & j>r+s
+        \end{cases}
+    \] 
+    Thus is it quite easy to see that for $k<r+s$ we have
+    \[
+        \frac{\partial w_j}{\partial t_k} = \begin{cases}
+            \upsilon_k^{(j)} t_{r+s}\exp\left(\sum^{r+s-1}_{i=1}t_i\upsilon_i^{(j)}\right) = \upsilon_k^{(j)}w_j& j \leq r\\
+            \frac12\upsilon_k^{(j)} t_{r+s}\exp\left(\sum^{r+s-1}_{i=1}t_i\upsilon_i^{(j)}\right) = \frac12\upsilon_k^{(j)}w_j& r < j\leq r+s\\
+            0& j>r+s
+        \end{cases}
+    \]
+    When $k=r+s$, $w_j$ is linear in $t_k$ so we have
+    \[
+        \frac{\partial w_j}{\partial t_k} = \begin{cases}
+            \exp\left(\sum^{r+s-1}_{i=1}t_i\upsilon_i^{(j)}\right) = \frac{w_j}{t_{r+s}}&j\leq r+s\\
+            0 & j > r+s
+        \end{cases}
+    \] 
+    Lastly, for $k>r+s$ we also have the simple linear relation
+    \[
+        \frac{\partial w_j}{\partial t_k} = \begin{cases}
+            2\pi & j=k\\
+            0 &\textrm{otherwise}
+        \end{cases}
+    \]
+    This is exactly the form given in the proof so we are done.
+
+    \textbf{(b)} Recall that the Jacobian has the form
+    \[
+        J(t_1,\ldots,t_n)=\begin{vmatrix}
+            \frac{\partial w_1}{\partial t_1}&\cdots &\frac{\partial w_n}{\partial t_1}\\
+            \vdots & \ddots & \vdots\\
+            \frac{\partial w_1}{\partial t_n}&\cdots & \frac{\partial w_n}{\partial t_n}\\
+        \end{vmatrix}=\begin{vmatrix}
+            A & B & 0\\
+              & C & \\
+            0 & D & 0 \\
+        \end{vmatrix}
+    .\] 
+    Here $A$ is the Jacobian matrix $\left|\frac{\partial x_j}{t_k}\right|$, $B=\left|\frac{\partial \rho_j}{\partial t_k}\right|$, $C$ is the single row consisting of $w_j/t_{r+s}$, and $D$ is a single vertical column consisting of $2\pi$. Factoring out constant terms and through a sequence of row operations, we get
+    \[
+        J(t_1,\ldots,t_n)=\frac{\pi^s x_1\cdots x_r \rho_1\cdots \rho_s}{t_{r+s}} |M|
+    \]
+    where $M$ has equal determinant to the $M$ matrix from earlier in the proof.
+
+    \textbf{(c)} Notice that
+    \[
+        \begin{aligned}
+            x_1\cdots x_r\rho_1^2\cdots \rho_s^2 = t_{r+s}^{r+2s}\exp\left(\sum_{j=1}^{r+s}\sum_{k=1}^{r+s-1} t_k\upsilon_k^{(j)}\right)=t^n_{r+s}
+        \end{aligned}
+    \]
+    since the sum of the coordinates of $\upsilon_k$ must be zero.
+\end{solution}
+
+\begin{cproblem}{5.48}
+    For $m\geq 3$, set $\omega=e^{2\pi i /m}$ and $\alpha=e^{\pi i /m}$. 
+    \begin{enumerate}[(a)]
+        \item Show that
+        \[
+            1-\omega^k = -2i\alpha^k\sin(k\pi /m)    
+        \]
+        for all $k\in \Z$; conclude that
+        \[
+            \frac{1-\omega^k}{1-\omega} = \alpha^{k-1}\frac{\sin(k\pi /m)}{\sin (\pi /m)}
+        .\]  
+        \item Show that if $k$ and $m$ are not both even, then $\alpha^{k-1}=\pm\omega^h$ for some $h\in \Z$.
+        \item Show that if $k$ and $m$ are relatively prime, then 
+        \[
+            u_k = \frac{\sin(k\pi /m)}{\sin(\pi /m)}    
+        \]  
+        is a unit in $\Z[\omega]$.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Recall that for real $\theta$, we have 
+    \[
+        \sin(\theta)=\frac{e^{i\theta}-e^{-i\theta}}{2i}
+    .\] 
+    Then $1-\omega^k=\alpha^k\alpha^{-k}-\alpha^{2k} = -\alpha^k(\alpha^k-\alpha^{-k})$. Using the definition of sin, this in turn is equal to $-2i\alpha^k(e^{k\pi i / m} - e^{-k\pi i / m}) = - 2i\alpha^k\sin(k\pi /m)$ which naturally implies 
+    \[
+        \frac{1-\omega^k}{1-\omega}=\alpha^{k-1}\frac{\sin(k\pi /m)}{\sin(\pi /m)}
+    .\] 
+
+    \textbf{(b)} Let $h$ be some solution to the modular equation $k-1\equiv 2h\mod m$. Notice that this equation has a solution since $k$ and $m$ are not both even. Then 
+    \[
+        \alpha^{k-1} = \alpha^{2h + mt} = \alpha^{mt}\omega^h = e^{t\pi i}\omega^h=\pm \omega^h 
+    \] 
+    for some $t\in \Z$.
+
+    \textbf{(c)} Notice that by (b), $\alpha^{k-1}$ is a unit, so it suffices to show that $(1-\omega^k)/(1-\omega)$ is a unit. To do this, we'll prove that its norm is $1$. Recalling that $\Gal(\Q(\omega)/\Q)=(\Z/m\Z)^*$, we have
+    \[
+        \nrm^{\Q(\omega)}_{\Q}\left(\frac{1-\omega^k}{1-\omega}\right) = \prod^{m-1}_{a=1}\left(\frac{1-\omega^{ak}}{1-\omega^a}\right) = \prod_{z\in \mu_m^*} \left(\frac{1-z^k}{1-z}\right)=\prod_{z\in \mu_m^*}\sum^{k-1}_{a=0}z^a
+    .\] 
+    However since $k$ is relatively prime to $m$, the terms cancel by the property $1+\omega+\omega^2+\cdots+\omega^{m-1}=1$, and we are left with $1$. So the $u_k$ must be a unit.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,237 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 129 Problem Set 3}}
+
+\begin{document}
+\maketitle
+
+\hr
+\begin{center}
+    \textit{I did not collaborate with anyone for this problem set}
+\end{center}
+\hr
+
+\begin{cproblem}{2.19}
+    Let $R$ be a commutative ring and fix elements $a_1,a_2,\ldots,a_n\in R$. Prove that 
+    \[
+        \begin{vmatrix}
+        1 & a_1 & \cdots & a_1^{n-1}\\
+        \vdots & \vdots & \ddots & \vdots\\
+        1 & a_n & \cdots & a_n^{n-1}
+        \end{vmatrix} = \prod_{1\leq r < s \leq n}(a_s-a_r).
+    \] 
+\end{cproblem}
+
+\begin{solution}
+    We'll proceed by induction. Clearly if $n=1$ we get the desired result. Now suppose for some $n$ that
+    \[
+        \begin{vmatrix}
+            1 & a_1 & \cdots & a_1^{n-1}\\
+            \vdots & \vdots & \ddots & \vdots\\
+            1 & a_n & \cdots & a_n^{n-1}
+        \end{vmatrix} = \prod_{1\leq r < s \leq n}(a_s-a_r)
+    .\] 
+    Note that for any polynomial $f(t)=t^n+c_{n-1}t^{n-1}+\cdots+c_1t+c_0$, we have the equality of determinants:
+    \[
+        \begin{vmatrix}
+            1 & a_1 & \cdots & a_1^{n-1} & a_1^n\\
+            \vdots & \vdots & \ddots & \vdots & \vdots\\
+            1 & a_n & \cdots & a_n^{n-1} & a_n^n\\
+            1 & a_{n+1} & \cdots & a_{n+1}^{n-1} & a_{n+1}^n
+        \end{vmatrix} = \begin{vmatrix}
+            1 & a_1 & \cdots & a_1^{n-1} & f(a_1)\\
+            \vdots & \vdots & \ddots & \vdots & \vdots\\
+            1 & a_n & \cdots & a_n^{n-1} & f(a_n)\\
+            1 & a_{n+1} & \cdots & a_{n+1}^{n-1} & f(a_{n+1}) 
+        \end{vmatrix}
+    .\]  
+    This can be seen by simply performing repeated column operations; to the last column of the matrix add $c_0$ times the first column, $c_1$ times the second column, etc. Set $f(t)=\prod^n_{i=1} (t-a_i)$. Then
+    \[
+        \begin{aligned}
+            \begin{vmatrix}
+                1 &  \cdots & a_1^{n-1} & a_1^n\\
+                \vdots  &\ddots & \vdots & \vdots\\
+                1  &\cdots & a_n^{n-1} & a_n^n\\
+                1  &\cdots & a_{n+1}^{n-1} & a_{n+1}^n
+            \end{vmatrix}&=
+            \begin{vmatrix}
+                1&  \cdots & a_1^{n-1} & f(a_1)\\
+                \vdots  &\ddots & \vdots & \vdots\\
+                1  &\cdots & a_n^{n-1} & f(a_n)\\
+                1 & \cdots & a_{n+1}^{n-1} & f(a_{n+1}) 
+            \end{vmatrix}=\begin{vmatrix}
+                1  &\cdots & a_1^{n-1} & 0\\
+               \vdots &  \ddots & \vdots & \vdots\\
+                1 & \cdots & a_n^{n-1} & 0\\
+                1 & \cdots & a_{n+1}^{n-1} & f(a_{n+1}) 
+            \end{vmatrix}\\
+            &=f(a_{n+1})\left(\prod_{1\leq r < s \leq n} (a_s-a_r)\right)=\prod_{1\leq r<s\leq n+1}(a_s-a_r).
+        \end{aligned}
+    \] 
+    This completes the inductive step.
+
+\end{solution}
+
+\begin{cproblem}{2.21}
+    Let $\alpha$ be an algebraic integer and let $f$ be a monic polynomial over $\Z$ (not necessarily irreducible) such that $f(\alpha)=0$. Show that $\disc(\alpha)$ divides $\nrm^{\Q[\alpha]}f'(\alpha)$.     
+\end{cproblem}
+
+\begin{solution}
+    Since $f(x)$ is a monic polynomial vanishing at $\alpha$, it must be a polynomial multiple of the minimal irreducible polynomial for $\alpha$, $m_\alpha(x)$. Say $f(x)=m_\alpha(x)g(x)$ for some $g(x)\in \Z[x]$. Then by Theorem~2.8, $\disc(\alpha)=\pm\nrm^{\Q[\alpha]}_\Q m_\alpha'(\alpha)$. But
+    \[
+        \begin{aligned}
+            \nrm^{\Q[\alpha]}_\Q f'(\alpha)&=\nrm^{\Q[\alpha]}_\Q m_\alpha'(\alpha)g(\alpha)+\nrm^{\Q[\alpha]}_\Q m_{\alpha}(\alpha)g'(\alpha)\\
+            &=\pm g(\alpha) \disc(\alpha)
+        \end{aligned}
+    .\]
+    Thus $\disc(\alpha) \mid \nrm^{\Q[\alpha]}_\Q f'(\alpha)$. 
+\end{solution}
+
+\begin{cproblem}{2.22}
+    Let $K$ be a number field of degree $n$ over $\Q$ and fix algebraic integers $\alpha_1,\ldots,\alpha_n\in K$. Prove that $\disc(\alpha_1, \ldots, \alpha_n)\equiv 0$ or $1\mod 4$. 
+\end{cproblem}
+
+\begin{solution}
+    We know that $d = \disc(\alpha_1,\ldots,\alpha_n)$ is in $\Z$; we will first show that $d \equiv 0$ or $1\mod 4$. Letting $\alpha_1, \ldots, \alpha_n$ denote the embeddings of $K$ in $\C$, we know that $d$ is the square of the determinant $\left|\sigma_i(\alpha_j)\right|$. This determinant is a sum of $n!$ terms, one for each permutation of $\{1,\ldots, n\}$. Let $P$ denote the sum of the terms corresponding to even permutations, and let $N$ denote the sum of the terms (without negative signs)corresponding to odd permutations. Thus $d =(P-N)^2 =(P+N)^2-4PN$. 
+    
+    We'll prove that $P+N\in \Z$ and $PN\in \Z$. First note that $P+N$ and $PN$ are algebraic integers, being sums and products of algebraic integers. Pick some normal extension $L$ of $\Q$ containing $K$, and let $\sigma$ be any automorphism of $L$. Then for any complex embedding $\sigma_i$, $\sigma\sigma_i$ is also a complex embedding, so $\{\sigma\sigma_1,\ldots,\sigma\sigma_n\}$ is a permutation of $\{\sigma_1,\ldots,\sigma_n\}$. Let $\pi\in S_n$ be the permutation such that $\sigma\sigma_i=\sigma_{\pi(i)}$. 
+    
+    If $\pi$ is an even permutation, pick any even permutation $\tau\in S_n$ so we have $\sigma(\sigma_{\tau(1)}(\alpha_1)+\cdots+\sigma_{\tau(n)}(\alpha_n))=\sigma_{\pi \tau(1)}(\alpha_1)+\cdots+\sigma_{\pi\tau(n)}(\alpha_n)$. Since $\pi\tau$ is even, every term on the left is sent to a term on the right so $\sigma(P)=P$ and $\sigma(N)=N$. Thus $\sigma(P+N)=P+N$ and $\sigma(PN)=PN$. Similarly if $\pi$ is an odd permutation, we get $\sigma(P)=N$ and $\sigma(N)=P$. Since $L$ is a normal extension, and $P+N$ and $PN$ are preserved by every automorphism of $L$, $P+N, PN\in \Q$ and so $P+N, PN\in \Z$ since they are algebraic integers.
+    
+    Finally $d=(P+N)^2-4PN\equiv (P+N)^2\mod 4$ so $d\equiv 0$ or $1\mod 4$. 
+\end{solution}
+
+%(Suggestion: Show that they are algebraic integers and that they are in Q; for the latter, extend all σi to some normal extension L of Q so that they become automorphisms of L.)
+
+\begin{cproblem}{2.23}
+    Just as with the trace and norm, we can define the relative discriminant $\disc^L_K$  of an $n$-tuple, for any pair of number fields $K\subset L$, $[L : K] = n$.
+    \begin{enumerate}[(a)]
+        \item Generalize Theorems~2.6-2.8 and the corollary to Theorem~2.6
+        \item Let $K\subset L \subset M$ be number fields; $[L : K]=n$, $[M : L]=m$ and let $\{\alpha_1,\ldots,\alpha_n\}$ and $\{\beta_1,\ldots,\beta_m\}$ be bases for $L$ over $K$ and $M$ over $L$ respectively. Establish the formula:
+        \[
+            \disc^M_K(\alpha_1\beta_1,\ldots,\alpha_n\beta_m) = (\disc^L_K(\alpha_1,\ldots,\alpha_n))^m\nrm^L_M\disc^M_L(\beta_1,\ldots,\beta_m)
+        .\] 
+        \item Let $K$ and $L$ be number fields satisfying the conditions to Corollary~1, Theorem~12. Show that $\disc(T) = \disc(R)^{[L:Q]}\cdot \disc(S)^{[K :Q]}$. 
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} The proofs of all of the theorems are basically the same, just replacing trace and nrm with relative traces. For any pair of number fields $K\subset L$ with $[L:K]=n$: 
+
+    \begin{ctheorem}{2.6}
+        \[
+            \disc^L_K(\alpha_1,\ldots,\alpha_n)=\left|T^L_K(\alpha_i\alpha_j)\right|
+        .\] 
+    \end{ctheorem}
+    
+    \begin{corollary}
+        $\disc^L_K(\alpha_1,\ldots,\alpha_n)\in K$; and if all of the $\alpha_i$ are algebraic integers then $\disc^L_K(\alpha_1,\ldots,\alpha_n)\in \mathbb{A}\cap K$.  
+    \end{corollary}
+    
+    \begin{ctheorem}{2.7}
+        $\disc^L_K(\alpha_1,\ldots,\alpha_n)=0$ if and only if $\alpha_1,\ldots,\alpha_n$ are linearly dependent over $K$.
+    \end{ctheorem}
+    
+    \begin{ctheorem}{2.8}
+        Suppose $L=K[\alpha]$, and let $\alpha_1,\ldots,\alpha_n$ be the conjugates of $\alpha$ over $K$. Then 
+        \[
+            \disc^L_K(1, \alpha,\ldots,\alpha^{n-1})=\prod_{1\leq r<s\leq n}(a_r-a_s)^2=\pm \nrm^L_K(f'(\alpha))
+        .\] 
+    \end{ctheorem}
+    
+    \textbf{(b)}
+
+    \textbf{(c)} 
+\end{solution}
+
+\begin{cproblem}{2.28}
+    Let $f(x)=x^3+ax+b$, $a$ and $b\in \Z$,and assume $f$ is irreducible over $\Q$. Let $\alpha$ be a root of $f$.
+    \begin{enumerate}[(a)]
+        \item Show that $f'(\alpha)=-(2a\alpha+3b)/\alpha$. 
+        \item Show that $2a\alpha+3b$ is a root of $\left(\frac{x-3b}{2a}\right)^3+a\left(\frac{x-3b}{2a}\right)+b$. Use this to find $\nrm^{\Q[\alpha]}_{\Q}(2a\alpha+3b)$.
+        \item Show that $\disc(\alpha)=-(4a^3+27b^2)$.
+        \item Suppose $\alpha^3=\alpha+1$. Prove that $\{1,\alpha,\alpha^2\}$ is an integral basis for $\mathbb{A}\cap \Q[\alpha]$. Do the same if $\alpha^3+\alpha=1$.   
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Note that $f'(x)=3x^2+a$ and $\alpha^3+a\alpha+b=0$ so $\alpha^2=\frac{-a\alpha-b}{\alpha}$. Thus $f'(\alpha)=3\left(\frac{-a\alpha-b}{\alpha}\right)+a=-(2a\alpha+3b) /\alpha$ so we are done.
+
+    \textbf{(b)} Since plugging in $x=2a\alpha+3b$ to $\frac{x-3b}{2b}$ gives $\alpha$, clearly $2a\alpha+3b$ is a root of $\left(\frac{x-3b}{2a}\right)^3+a\left(\frac{x-3b}{2a}\right)+b$. This polynomial is irreducible because it is simply a linear substitution of an irreducible polynomial. Then by Theorem~2.4, the norm of $2a\alpha+3b$ is simply the negative ratio of the $x^0$ and $x^3$ coefficients, so $\nrm^{\Q[\alpha]}_{\Q}(2a\alpha+3b)=27b^3+4a^3b$.
+    
+    \textbf{(c)} Note that by Theorem~2.8, $\disc(\alpha)=\pm \nrm^{\Q[\alpha]}_\Q f'(\alpha)$ where $f$ is the minimal polynomial for $\alpha$. By (a), $\disc(\alpha)= -\nrm^{\Q[\alpha]}_\Q-(2a\alpha+3b) /\alpha = -\nrm^{\Q[\alpha]}_\Q(-1)\nrm^{\Q[\alpha]}_\Q(2a\alpha+3b) / \nrm^{\Q[\alpha]}_\Q(\alpha)$. $\nrm^{\Q[\alpha]}_\Q(-1)=-1$ and $\nrm^{\Q[\alpha]}_\Q(\alpha)=-b$ so by (b), $\disc(\alpha)=-(27b^3+4a^3b) /b=-27b^2-4a^3$.   
+    
+    \textbf{(d)} First we'll prove a convenient lemma relating the discriminant to an integral basis.
+    \begin{claim}
+        Let $\alpha$ be an algebraic integer of degree $d$. Then $\{1,\alpha,\ldots,\alpha^{d-1}\}$ is an integral basis for $\Q[\alpha]$ if $\disc(\alpha)$ is squarefree. 
+    \end{claim}
+    \begin{proof}
+        Let $\{\beta_1,\ldots,\beta_{d-1}\}$ be an integral basis for $\Q[\alpha]$. Then there is some matrix $A\in M_{d\times d}(\Z)$ such that
+        \[
+            \disc(\alpha)=\disc(1,\alpha,\ldots,\alpha^{d-1})=(\det A)^2\disc(\beta_1,\ldots,\beta_{d-1})
+        .\] 
+        However since $\disc(\alpha)$ is squarefree, $\det A=\pm 1$ therefore $1,\alpha,\ldots,\alpha^{d-1}$ is an integral basis for $\Q[\alpha]$. 
+    \end{proof}
+    
+    If $\alpha^3=\alpha+1$ then $\alpha$ has minimal polynomial $x^3-x-1$, which is irreducible by the rational root theorem. Then by (c) $\disc(\alpha)=-23$ which is a squarefree integer so $\{1,\alpha,\alpha^2\}$ is an integral basis for $\Q[\alpha]$. If $\alpha^3+\alpha=1$ then $\alpha$ has minimal polynomial $x^3+x-1$ which is again irreducible by the rational root theorem. Then $\disc(\alpha)=-31$ which is squarefree integer so $\{1,\alpha,\alpha^2\}$ is an integral basis for $\Q[\alpha]$.
+\end{solution}
+
+\begin{cproblem}{2.33}
+    Let $\omega=e^{2\pi i /m}$, $m\geq 3$. We know that $\nrm(\omega)=\pm 1$ since $\omega$ is a unit. Show that the $+$ sign holds. 
+\end{cproblem}
+
+\begin{solution}
+    Note that since $m>2$, $\pm 1$ are not conjugates of $\omega$. Also the product of $\omega^i$ and $\overline{\omega^i}$ is $1$ because $\overline{\omega^i}=\omega^{m-i}$. Thus $\nrm(\omega)=1$ because it is the product of all of the conjugates of $\omega$.   
+\end{solution}
+
+\begin{cproblem}{2.34}
+    Let $\omega=e^{2\pi i /m}$ for $m$ a positive integer.
+    \begin{enumerate}[(a)]
+        \item Show that $1+\omega+\omega^2+\cdots+\omega^{k-1}$ is a unit in $\Z[\omega]$ if $k$ is relatively prime to $m$. 
+        \item Let $m=p^r$, $p$ a prime. Show that $p=u(1-\omega)^n$ where $n=\varphi(p^r)$ and $u$ is a unit in $\Z[\omega]$.  
+    \end{enumerate} 
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Suppose $k$ is relatively prime to $m$. Then $k$ has a modular inverse modulo $m$ so there is some $\ell$ such that $k\ell \equiv 1\mod m$ and so $\omega^{k\ell}=\omega$. This gives us the element of $\Z[\omega]$,
+    \[
+        \frac{1-\omega}{1-\omega^k}=\frac{1-\omega^{k\ell}}{1-\omega^k}=1+\omega^k+\cdots+\omega^{k(\ell-1)}
+    .\]
+    This is actually an inverse to $1+\omega+\omega^2+\cdots+\omega^{k-1}$, since 
+    \[
+        \frac{1-\omega}{1-\omega^k}(1+\omega+\omega^2+\cdots+\omega^{k-1})=\frac{1-\omega}{1-\omega^k}\frac{1-\omega^k}{1-\omega}=1
+    .\]  
+    So $1+\omega+\omega^2+\cdots+\omega^{k-1}\in \Z[\omega]^\times$.
+    
+    \textbf{(b)} Recall that Lemma~2 of Theorem~2.10 states that
+    \[
+        p=\prod_{p\nmid k}^{p^r}(1-\omega^k)
+    .\] 
+    (a) implies that $(1-\omega^k)=u_k(1-\omega)$, for $u_k=1+\omega+\omega^2+\cdots+\omega^{k-1}\in \Z[\omega]^\times$. Since there are $\varphi(p^r)$ terms in the product, it follows that $p=u(1-\omega)^{\varphi(p^r)}$ where $u=\prod^{p^r}_{p\nmid k}u_k$.    
+\end{solution}
+
+\begin{cproblem}{2.35}
+    Set $\theta=\omega+\omega^{-1}$ for $\omega=e^{2\pi i /m}$, $m\geq 3$.
+    \begin{enumerate}[(a)]
+        \item Show that $\omega$ is a root of a polynomial of degree $2$ over $\Q[\theta]$. 
+        \item Show that $\Q[\theta]=\R\cap \Q[\omega]$ and that $\Q[\omega]$ has degree $2$ over this field.
+        \item Show that $\Q[\theta]$ is the fixed field of the automorphism $\sigma$ of $\Q[\omega]$ given by $\sigma(\omega)=\omega^{-1}$. Note that $\sigma$ is just complex conjugation. 
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Clearly $\omega$ is a root of $x^2-\theta x+1\in \Q[\theta, x]$ since $\omega^2-\theta \omega+1=\omega^2-\omega^2-1+1=0$.
+    
+    \textbf{(b)} Since $\omega\not\in \R$ yet $\theta\in \R$, $\Q[\theta]\subsetneq \Q[\omega]$. This combined with (a) means that $[\Q[\omega] : \Q[\theta]]=2$. So we have $\Q[\theta]\subset \R\cap \Q[\omega]\subsetneq \Q[\omega]$. By the degree tower property, 
+    \[
+        [\R\cap \Q[\omega]:\Q[\theta]]=\frac{[\Q[\omega]:\Q[\theta]]}{[\Q[\omega] : \R\cap \Q[\omega]]}<2
+    \]  
+    yet $[\Q[\omega]:\Q[\theta]]=2$ so $[\R\cap \Q[\omega]:\Q[\theta]]=1$ and thus $\Q[\theta]=\R\cap \Q[\omega]$. This also implies that $[\Q[\omega] : \R\cap \Q[\omega]]=2$.    
+    
+    \textbf{(c)} Since $\sigma$ is just complex conjugation, the fixed field of $\sigma$ in $\Q[\omega]$ is $\R\cap \Q[\omega]=\Q[\theta]$, since $\R$ is the fixed field of $\sigma$ in $\C$. 
+\end{solution}
+
+\end{document}

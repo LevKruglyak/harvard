@@ -1,0 +1,192 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage{import}
+\import{../../../../LaTeX}{basic}
+
+\title{\textbf{Math 55a Problem Set 8}}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\begin{itemize}
+  \item How long did this assignment take you? -- 10 hours
+  \item How hard was it? -- Tough
+  \item What resources did you use and how much help did you need? -- Collaborated with AJ LaMotta
+  \item Did you have any prior experience with this material? -- No
+\end{itemize}
+
+% PROBLEM 1
+\pagebreak
+\begin{problem}
+Let $G$ be a finite abelian group.
+
+\begin{enumerate} [(a)]
+  \item For each prime $p$, show that the set of elements of order a power of $p$, 
+    \[G_p := \{ g \in G \mid g^{p^n} = e \ \text{ for some } n \},\]
+    is a subgroup of $G$.
+  \item Show that there is a natural isomorphism $G\cong \prod_p G_p$.
+\end{enumerate}
+\end{problem}
+
+\textit{(Hint: first construct a homomorphism $\varphi: \prod_p G_p\to G$ whose
+restriction to each factor is the inclusion $G_p\hookrightarrow G$.
+Next, for each prime $p$, write $|G|=p^k\,m$ with $p\! \not| m$, let
+$r$ be such that $m|r$ and $r\equiv 1\mod p^k$, and consider the
+homomorphism $g\mapsto g^r$ from $G$ to itself. Show that the image of
+this homomorphism is $G_p$, and use this to construct an inverse to $\varphi$.)}
+
+\textbf{(a)} First of all, $e\in G_p$ because $e$ has order $1=p^0$, so the subset contains the identity. It is closed under composition because if $a,b\in G_p$ say with $a^{p^{n_1}}=e$ and $b^{p^{n_2}}=e$, then since $G$ is abelian, $(ab)^{p^{n_1+n_2}}=e$ so $ab\in G_p$. Finally, it is closed under inverses because if  $a^{p^n}=e$, then  $(a^{-1})^{p^n}=\left(a^{p^{n}}\right)^{-1}=e$ so $a^{-1}\in G_p$.
+
+\textbf{(b)} Let $\varphi : \prod_p G_p \to G$ be defined by $(g_2, g_3, g_5, \ldots) \mapsto \prod_p g_p$. This is clearly a homomorphism since $G$ is abelian. Furtherore, $\restr{\varphi}{G_p}$ is an inclusion.  
+
+Now for each prime $p$, write $|G|=p^km$ for some $p\nmid m$. Using the Chinese remainder theorem, we can find some $r_p$ such that $r\equiv 1\mod p^k$ and $r\equiv 0\mod m$. Then the homomorphism $\psi_p : G \to G$ which maps $g$ to $g^r$. Clearly $(g^r)^{p^k}=g^{rp^k}=e$ so $\Ima(\phi_p)\subset G_p$ and for any $g\in G_p$, we have $g^r=g^{1+np^k}=g^1=g$ so $\Ima(\phi_p)=G_p$.
+
+Now we'll construct an inverse for $\varphi$. Let $\varphi^{-1}(g)=(\psi_2(g), \psi_3(g), \psi_5(g),\ldots)$. Observe that $\varphi(\varphi^{-1}(g))=\prod_p \psi_p(g)=\prod_p g^{r_p}=g^{\sum_p r_p}$. Observe that $\sum_p r_p\equiv 1\mod p^k$ for all $p$ and maximal powers of $k$. Then by the Chinese remainder theorem, $\sum_p r_p\equiv 1\mod |G|$, so $g^{\sum_p r_p}=g$. The other direction follows the same way. This concludes the proof.
+
+% PROBLEM 2
+\pagebreak
+\begin{problem}
+  Prove that for any pair of positive integers $a,b$, the group $\Z/a \times \Z/b$ is isomorphic to $\Z/\mathrm{lcm}(a,b) \times \Z/\mathrm{gcd}(a,b)$. Using this, prove any finite product of finite cyclic groups is isomorphic to a product of the form $\Z/a_1 \times \cdots \times \Z/a_n$, where $a_1|a_2| \cdots | a_n$.
+\end{problem}
+
+By Bezout's lemma, let $u,v$ be integers satisfying $ua+vb=\gcd(a,b)$.
+Consider the map
+\[
+  \begin{aligned}
+    \varphi :& \Z/\lcm(a,b)\times \Z/\gcd(a,b) \to \Z/a\times\Z/b\\
+    & (x,y) \mapsto \left(ux+\frac{a}{\gcd(a,b)}, vx-\frac{b}{\gcd(a,b)}\right).
+    \end{aligned}
+\]   
+It can be shown with basic properties of $\lcm$ and $\gcd$ that this is an injective homomorphism, and so since the two groups are finite of the same order, they must be isomorphic. The second part follows by induction since $\gcd(a,b) | \lcm(a,b)$.   
+
+
+% PROBLEM 3
+\pagebreak
+\begin{problem}
+Show that, if an element of $\GL(2,\Z)$ (the group of invertible $2\times 2$ matrices with integer coefficients) has finite order $n$, then $n\in\{1,2,3,4,6\}$.
+\end{problem}
+\textit{(Hint: view the given element as a linear operator on a 2-dimensional complex vector space.
+What can you say about its eigenvalues, and about its trace?)}
+
+Suppose $T\in\GL(2,\Z)$ is some integral matrix with finite order $n$. Considered as an operator in $\GL(2,\C)$, we can find eigenvalues $\lambda_1, \lambda_2$ with $\lambda_1\lambda_2\in \Z$ and  $\lambda_1+\lambda_2\in \Z$. (This follows from trace and determinant respectively.) Since $T$ has order $n$, we also have $\lambda_1^n = \lambda_2^n = 1$, so the eigenvalues are both roots of unity, say $\lambda_1=\zeta^a$ and $\lambda_2=\zeta^b$ where $\zeta = e^{\frac{2\pi i}{n}}$.
+
+Since $\lambda_1\lambda_2=\pm 1$, we have $\lambda_2=\pm\frac{1}{\lambda_1}$. Now recall that $\lambda_1+\lambda_2$ is an integer. Except for in the trivial cases when $\lambda_1=\lambda_2=\pm 1$, generally $\lambda_1+\lambda_2\in \{ -1, 0, 1\}$. So
+\[
+  \lambda_1+\frac{\pm 1}{\lambda_1}\in \{-1,0,1\} \implies \lambda_1^2+\{-1,0,1\}\lambda_1\pm 1=0 
+.\]
+So there is a one-to-one correspondence between finite order elements of $\GL(2,\Z)$ and complex numbers $\lambda$ which satisfies $\lambda^n=1$ and $\lambda^2+a\lambda+b=0$ for some $a\in \{-1,0,1\}$ and $b\in \{-1,1\}$. Assuming $\lambda$ has nonzero imaginary part, the quadratic polynomial is irreducible, so it must be a cyclotomic polynomial. So we are looking for $n$ such that $\deg \Phi_n(x)=\varphi(n)=2$. Basic properties of the Euler totient function imply that the only such $n$ are $3,4,$ and $6$. So including the trivial cases where the eigenvalues were $1$ or $-1$, the only possible orders are $1,2,3,4,6$.     
+
+\pagebreak
+\begin{problem}
+A {\em lattice} in the Euclidean plane $\R^2$ is an additive subgroup $\Lambda=\Z u\oplus \Z v\subset \R^2$ generated by two linearly independent vectors. Let $\Lambda\subset \R^2$ be a lattice, and let $G\subset O(2)$ be the subgroup of all orthogonal transformations (rotations and/or reflections) of $\R^2$ which map $\Lambda$ to itself.
+
+\medskip
+Show that every element of $G$ has finite order (hint: $\Lambda$ has finitely many shortest vectors), and use the result of the previous problem to show that $G$ must be isomorphic to either $\Z/n$ or the dihedral group $D_n$, for some $n\in \{2,4,6\}$. (Optional: which of these possibilities actually occur?)
+\end{problem}
+
+Every element of $O(2)$ is either a reflection or a rotation by some real angle $\alpha$. The reflections clearly have order $2$, but we need to show that $\alpha$ is an rational multiple of $2\pi$. Clearly $\{u,v,-u,-v\}$ is the set of vectors in the lattice with minimum length, i.e. every other non-zero vector must have length strictly greater than a vector in this list.      
+
+Since $T\in O(2)$ is orthogonal, letting $u$ be a shortest vector in the lattice, it follows that $T(u)\in \{u, v, -u, -v\}$. From this we can conclude that $T$ has finite order. By the results of the previous problem and using the fact that every subgroup of $O(2)$ is dihedral or cyclic, we know that $G$ can either be $\Z/2, \Z/3, \Z/4, \Z/6$ or $D_2, D_3, D_4, D_6$. However it can't be $\Z/3$ and $D_3$ since they do not contain a $180$ degree rotation. So we are done.           
+
+\pagebreak
+\begin{problem}
+\leavevmode
+\begin{enumerate}[(a)]
+  \item Show that any group of order 6 is isomorphic to either $\Z/6$ or the symmetric group $S_3$.
+  \item Classify all groups of order 8 up to isomorphism.
+\end{enumerate}
+\end{problem}
+\textit{Hint for both parts: If $ab\neq ba$, then one of $a$, $b$, and $ab$ must have order $>2$. (Why?) Moreover, a subgroup $H\subset G$ with $|G/H|=2$ must be normal. (Why?)}
+
+\begin{lemma}
+  Suppose $ab\neq ba$ in some finite group $G$. Then $a,b$ or $ab$ must have order greater than $2$.   
+\end{lemma}
+\begin{proof}
+
+\end{proof}
+
+\textbf{(a)} Suppose $G$ is a group of order $6$. We have two cases.
+\begin{itemize}
+  \item Suppose 
+\end{itemize}
+
+\textbf{(b)}
+
+\pagebreak
+\begin{problem}
+Let $G$ be a group, not necessarily finite, and let $H \subset G$ be a subgroup of finite index, that is, such that there are finitely many left cosets of $H$ in $G$. Prove that the number of right cosets is equal to the number of left cosets (so that we can define the index of $H$ in $G$ unambiguously).
+\end{problem}
+\textit{(Hint: find an operation on $G$ which maps left
+cosets to right cosets)}
+
+Consider the isomorphism $\varphi_a : G \to G$ given by $x\mapsto a^{-1}xa$. (i.e. conjugation by $a^{-1}$) This is an isomorphism by an earlier problem set, and it clearly maps left cosets to right cosets. This concludes the proof.  
+
+\pagebreak
+\begin{problem}
+Let $G\subset S_n$ be any subgroup of the symmetric group. The action of $G$ on $\{1,\dots,n\}$ is said to be {\em twice transitive} if $G$ acts transitively on ordered pairs of distinct elements, i.e.\ for every $i,i',j,j'\in\{1,\dots,n\}$ with $i\neq i'$ and $j\neq j'$, there exists $\sigma\in G$ such that $\sigma(i)=j$ and $\sigma(i')=j'$. Show that if the action of $G$ on $\{1,\dots,n\}$ is twice transitive and $G$ contains a transposition then $G=S_n$.
+\end{problem}
+
+Suppose WLOG that $(12)\in G$. Then for any $i\neq j$ let $\sigma$ be an element such that $\sigma(i)=j$ and $\sigma(j)=i$. Such an element is guaranteed to exist because $G$ is twice transitive. Then $(ij)=\sigma(12)\sigma^{-1}$. Since $G$ contains all transpositions, it is the full symmetric group.   
+
+\pagebreak
+\begin{problem}
+Let $V$ be a 2-dimensional vector space over the field $\F_p$, and $G = \GL(V)$ the group of automorphisms of $V$ (i.e., $G = \GL_2(\F_p)$, the group of $2 \times 2$ invertible matrices with entries in $\F_p$).
+
+\begin{enumerate}[(a)]
+  \item Show that $V$ has exactly $p+1$ 1-dimensional subspaces.
+  \item Given this, we have a homomorphism $\phi:G\to S_{p+1}$, since every automorphism of $V$ must permute its 1-dimensional subspaces. Describe the kernel and the image of $\phi$ for $p=2$ and $p=3$.
+\end{enumerate}
+\end{problem}
+
+\textbf{(a)} There are $p^2-1$ nonzero elements in $V$. Under the equivalence relation $x\tilde y$ iff $x=cy$ for some nonzero $c\in \F_p$, there are $p-1$ members in each equivalence class, so there are $(p^2-1)/(p-1)=p+1$ equivalence classes. These correspond to one dimensional subspaces of $V$, so there are exactly $p+1$ lines.     
+
+\textbf{(b)} For $p=2$, the kernel is trivial, since the only matrix which acts trivially on the one-dimensional subspaces is the identity matrix. Thus the image is full since $|G|=6$ and $|S_{3}|=6$. So $\phi$ is an isomorphism. 
+
+For $p=3$, the kernel consists of $I$ and $2I$, so the image is again full by the first isomorphism theorem and since $|G|=48$ and $|S_4|=24$.
+
+\pagebreak
+\begin{problem}
+An element of the symmetric group $S_n$ is called a $k$-cycle if it permutes $k$ elements cyclically and fixes the remaining $n-k$. How many $k$-cycles are there in $S_n$?
+\end{problem}
+
+There are $\binom{n}{k}$ subsets of size $k$ in $\{1,2,3,\ldots,n\}$ which the cycle can permute, and $(k-1)!$ possible permutations. So the total number of $k$-cycles is
+\[
+  (k-1)!\binom{n}{k}=\frac{n!}{k(n-k)!}
+.\] 
+
+\pagebreak
+\begin{problem}
+Let $G$ be a group of order $p^n$ with $p$ prime, and suppose $G$ acts on a finite set $S$. Prove that if the cardinality of $S$ is not divisible by $p$, then there must be an element $s \in S$ fixed by every $g \in G$; that is, an element whose stabilizer is all of $G$.
+\end{problem}
+
+By the orbit stabilizer theorem we can write
+\[
+  |S|=\sum_{s\in S/G}|Gs|=\sum_{s\in S/G}\frac{|G|}{|\mathrm{Stab}(s)|}
+.\]
+Since $|G|/|\mathrm{Stab}(s)|$ is a power of $p$  for every $s\in S$, and $S$ is not divisible by $p$,  it follows that at least one of the $|G|/|\mathrm{Stab}(s)|=1$, so $|G|=|\mathrm{Stab}(s)|$. This concludes the proof.  
+
+\pagebreak
+\begin{problem}
+How many different bracelets can you make with 4 white beads and 4 black beads?
+\end{problem}
+\textit{(Hint: use Burnside's formula!)}
+
+Let $S$ be the set of bracelets with $4$ white beads and $4$ black beads. There are exactly $\binom{8}{4}=70$ elements. To find the number of bracelets up to symmetries, let $D_8$ act on $S$ in the natural way. Then to figure out the number of orbits, by Burnside's formula we must find the size of the fixed point sets for all elements of the group.
+\begin{itemize}
+  \item The identity element fixes all $70$ elements.
+  \item The four reflections have $\binom{4}{2}=6$ fixed elements.
+  \item The four reflections across diagonals have $2\cdot\binom{3}{1}=6$. 
+  \item The four rotations by $\pm 45^\circ, \pm 135^\circ$ have no fixed elements.
+  \item The two rotations by $\pm 90^\circ$ have $2$ fixed elements.
+  \item The rotation by $180^\circ$ has $6$ fixed elements.  
+\end{itemize}    
+
+Using Burnside's formula, we have
+\[
+  |S/D_8|=\frac{1}{16}(70+4\cdot 6+4\cdot 6+4\cdot 0 + 2\cdot 2+6)=8
+.\] 
+So there are $8$ unique bracelets which can be made.
+
+\end{document}

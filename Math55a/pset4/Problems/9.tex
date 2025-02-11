@@ -1,0 +1,28 @@
+\begin{problem}
+Given a vector space $V$ over a field $k$, a linear operator $p:V\to V$ is said to be a {\em projection} if $p^2=p$.  
+\begin{enumerate}
+  \item Show that if $p$ is a projection, then $V=\Ima (p)\oplus \Ker(p)$. How does $p$ act on each summand?
+  \item Assume $\ch(k)\neq 2$. Show that, if $p_1$ and $p_2:V\to V$ are projections, then $p_1+p_2$ is a projection if and only if $p_1\circ p_2 = p_2\circ p_1=0$.
+  What goes wrong if $\ch(k)=2$?
+\end{enumerate}
+\end{problem}
+\textbf{(1)} Suppose $p$ is a projection, and let $v\in V$ be arbitrary. Then $v=p(v)+(v-p(v))$. Note that $p(v)\in \Ima (p)$ and $(v-p(v))\in \Ker (p)$ since $p(v-p(v))=p(v)-p(v)=0$. The image and kernel also have trivial intersection since if $p(w)=v$ and $p(v)=0$, $p(p(w))=p(w)=v=0$. So $V=\Ima(p)\oplus \Ker(p)$.
+
+$p$ acts trivially on $\Ima(p)$, since $p(p(v))=p(v)$. Thus $\Ima(p)$ is an invariant subspace of $p$. On the other hand, $p$ annihilates the kernel, by definition of kernel.         
+
+\textbf{(2)} Suppose first that $p_1\circ p_2=p_2\circ p_1=0$. Then
+\[
+  (p_1+p_2)^2=p_1^2+p_1\circ p_2+p_2\circ p_1+p_2^2=p_1+p_2
+.\]
+Now suppose conversely that $(p_1+p_2)^2=p_1^2+p^2$. Then by (1), we have the decomposition $V=\Ima(p_1+p_2)\oplus\Ker(p_1+p_2)$. So it suffices to show that $p_1\circ p_2$ and $p_2\circ p_1$ are zero on each of these components. We'll prove it for $p_1\circ p_2$, since the proof should be symmetric for $p_2\circ p_1$. 
+
+First suppose $v\in \Ker(p_1+p_2)$, so $p_1(v)+p_2(v)=0$ or $p_1(v)=-p_2(v)$. Then $(p_1\circ p_2)(v)=p_1(-p_1(v))=-p_1(v)$. But also $(p_1\circ p_2)(v)=-p_2(p_2(v))=-p_2(v)$. So $p_1(v)=p_2(v)$ but also $p_1(v)=-p_2(v)$. Since $\ch(k)\neq 2$, it follows that $p_1(v)=0$ and so $(p_1\circ p_2)(v)=0$.   
+
+Next suppose $(p_1+p_2)(v)\in \Ima(p_1+p_2)$. Then
+\begin{align*}
+  (p_1\circ p_2)(p_1(v)+ p_2(v))&=(p_1\circ p_2\circ p_1)(v)+(p_1\circ p_2\circ p_2)(v)\\
+  &= (p_1\circ p_2)(-p_2(v))+(p_1\circ p_2)(v)\\
+  &= -(p_1\circ p_2)(v)+(p_1\circ p_2)(v)\\
+  &=0.
+\end{align*}
+In characteristic $2$, this proof fails because we assumed that if $x=-x$, $x=0$. This isn't true in characteristic $2$.     

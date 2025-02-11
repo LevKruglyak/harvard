@@ -1,0 +1,138 @@
+\documentclass{pset}
+
+\input{../stat210.tex}
+\usepackage{multirow}
+
+\title{Stat 210 Midterm}
+\author{Lev Kruglyak}
+\due{Oct 29, 2023}
+
+\renewcommand{\abstractname}{Honor Code Statement}
+\begin{document}
+\maketitle
+
+% \vspace{2.5em}
+% \begin{abstract}
+% I affirm my awareness of the standards of the Harvard College Honor Code. While completing this exam, I have not consulted any external sources other than class notes and the textbooks. I have not discussed the problems or solutions of this exam with anyone, and will not discuss them until after the due date.
+%
+% \medskip
+% Signed, \underline{\textit{Lev Kruglyak}}.
+% \end{abstract}
+% \vspace{2.5em}
+
+\begin{problem}{1} Let $(\Omega, \mathcal{F}, P)$ be a probability space and $A_1,A_2,\dots$  be events such that
+$$A_1 \subseteq A_2 \subseteq A_3 \subseteq \cdots.$$
+Let $\mathcal{L}$ be the smallest $\lambda$-system containing all of the events $A_1,A_2,\dots$. Let $\mathcal{G}$ be the smallest $\sigma$-algebra containing all of the events $A_1,A_2,\dots$.
+\end{problem}
+
+\begin{parts}
+
+\begin{part}{a}
+Is it necessarily true that if $B_1,B_2,\ldots \in \mathcal{L}$, then $\bigcup \limits_{n=1}^{\infty} B_n \in \mathcal{L}$? If so, prove this. If not, give a counterexample.
+\end{part}
+
+This is true by the pi-lambda theorem. First, let $\mathcal{B}$ be the smallest $\pi$-system containing $\{B_i\}_{i=1}^\infty$. Note that the infinite union $\bigcup_{B\in \mathcal{B}} B = \bigcup^\infty_{n=1} B_n$. Now, by the results of (b) (since $\mathcal{L}\subset \mathcal{G}$), it follows that for any $A,B\in \mathcal{L}$, we have $A\cap B\in \mathcal{L}$. Thus, $\mathcal{B}\subset \mathcal{L}$, so by the pi-lambda theorem it follows that $\sigma(\mathcal{B}) \subset \mathcal{L}$. This means that countable unions of sets in $\mathcal{B}$ must also be in $\mathcal{L}$, so $\bigcup^\infty_{n=1} B_n\in \mathcal{L}$.
+
+\begin{part}{b} Show that there are events $C_0,C_1,\dots$ such that any $G \in \mathcal{G}$ can be expressed as 
+$$ G = \bigcup_{j \in J} C_j,$$
+where $J$ is a set of nonnegative integers. (If $J = \emptyset$, then $G = \emptyset$.)
+\end{part}
+
+Let $C_j = A_{j-1}\setminus A_j$. We claim that for any $G\in \mathcal{G}$, we have the decomposition
+\[
+    G = \bigcup_{C_j \cap G \neq \emptyset} C_j.
+\]
+First, let's show that sets of this form are closed under the axioms of a $\sigma$-algebra. Clearly, the empty set and $\Omega$ can be expressed in this form. Furthermore, for any complement of such a union, we simply flip which $C_j$ are included and which ones are not. Finally, arbitrary unions are also supported, we just form the union of $C_j$ which appear in either side.
+
+Now since for any $A_i$, we have the decomposition
+\[
+  A_i = \bigcup_{j> i} C_j,
+\]
+it follows that any $G\in \mathcal{G}$ is expressible in this format.
+\end{parts}
+
+\begin{problem}{2} Let $C \sim \textrm{Cauchy}$.\end{problem}
+
+\begin{parts}
+\begin{part}{a}Find the distribution of
+$$ \frac{2C}{1-C^2}.$$
+\end{part}
+
+Recall that by Box-Muller, we can express any Cauchy distribution as
+\[
+  C \sim \frac{Z_1}{Z_2} \sim \frac{\sqrt{-2\log U_1}\sin(2\pi U_2)}{\sqrt{-2\log U_1}\cos(2\pi U_2)} \sim \tan(2\pi U)
+\]
+where $Z_1,Z_2\sim \mathcal{N}(0,1)$ and $U,U_1,U_2\sim \Unif$. Then by the double-angle tangent identity, we get
+\[
+  \frac{2C}{1-C^2} \sim \frac{2\tan(2\pi U)}{1-\tan^2(2\pi U)} \sim \tan(4\pi U) \sim \frac{\sin(4\pi U)}{\cos(4\pi U)}.
+\]
+The winding lemma however states that $\sin(2k\pi U) \sim \sin(2\pi U)$ for any $k\in \Z_{>0}$, and similarly for cosine, so this ratio is just
+\[
+  \frac{\sin(4\pi U)}{\cos(4\pi U)} \sim \frac{\sin(2\pi U)}{\cos(2\pi U)} \sim \tan(2\pi U) \sim C.
+\]
+So the overall distribution is Cauchy.
+
+\begin{part}{b}
+Let $a$ be a constant. Find the distribution of 
+$$ \frac{C+a}{1-aC}.$$
+\end{part}
+
+By a similar argument to the previous part, this time using the tangent sum identity, we see that
+\[
+  \frac{C+a}{1-aC} \sim \frac{\tan(2\pi U) + a}{1-a\tan(2\pi U)} = \tan(2\pi U + \tan^{-1}(a)) \sim \tan(2\pi U) \sim C.
+\]
+Thus, the Cauchy distribution is stable under such transformations.
+
+\begin{part}{c} Let $X$ be a random variable with $X \ind C$. Let $F$ be the CDF of $X$. Find the distribution of 
+$$ \frac{C+X}{1-CX}.$$
+\end{part}
+
+Let's call this ratio $Y$. By the previous problem, we know that $Y|X\sim C$. Since this is independent from $X$, it follows that $Y\sim X+C$, since the pdf of $Y$ can be given by the convolution of $X$ and $C$.
+\end{parts}
+
+\begin{problem}{3} 
+  Let $U_1,\dots,U_n$ be i.i.d.~$\textrm{Uniform}$ r.v.s~(with $n \geq 2$). Let $U_{(1)} \leq U_{(2)} \leq \dots \leq U_{(n)}$ be their order statistics,
+$$V = U_1^{1/n}, \textrm{ and } W =  U_2^{1/(n-1)}.$$
+\end{problem}
+
+\begin{parts}
+\begin{part}{a}
+  Show that $U_{(n)} \sim V.$
+\end{part}
+
+Let's consider the CDF of $U_{(n)}$. Recall that by independence, we get
+\[
+    P(U_{(n)} \leq u) = P(U_1 \leq u, U_2 \leq u, \cdots, U_n \leq u) = P(U_1\leq u)P(U_2\leq u) \cdots P(U_n\leq u).
+\]
+If $u\in [0,1]$, this product is exactly $P(U_{n}\leq u) = u^n$. (When $u<0$, the CDF is $0$ and when $u > 1$, the CDF is $1$.) On the other hand, for $V$, we get the CDF
+\[
+    P(V \leq u) = P(U_1^{1/n} \leq u) = P(U_1 \leq u^n) = u^n
+\]
+when $u\in [0,1]$. Since $U_{(n)}$ and $V$ have the same CDFs, it follows that $U_{(n)}\sim V$.
+
+\begin{part}{b}
+Show that $$U_{(n)} - U_{(1)} \sim VW.$$
+\end{part}
+
+The R\'enyi representation states that
+\[
+    U_{(j)} \sim \frac{X_1+\cdots+X_j}{X_1+\cdots +X_{n+1}},\quad\textrm{where}\quad X_i\sim \Expo.
+\]
+Combining this with the previous part, we've shown that
+\[
+  \frac{X_1+\cdots+X_n}{X_1+\cdots+X_{n+1}} \sim U^{1/n},\quad \textrm{where}\quad U\sim \Unif.
+\]
+Thus, we can see that
+\[
+  \begin{aligned}
+    VW = U_1^{1/n} U_2^{1/(n-1)} \sim \frac{X_1+\cdots +X_n}{X_1+\cdots+X_{n+1}}\cdot \frac{X_1+\cdots + X_{n-1}}{X_1+\cdots+X_n} &= \frac{X_1+\cdots+X_{n-1}}{X_1+\cdots+X_{n+1}}\\ &\sim\frac{X_1+\cdots+X_n}{X_1+\cdots+X_{n+1}}-\frac{X_1}{X_1+\cdots + X_{n+1}}\\ &\sim U_{(n)} - U_{(1)}.
+  \end{aligned}
+\]
+
+\begin{part}{c} 
+Find $P(U_{(n)} \leq V).$
+\end{part}
+
+Observe that $P(U_{(n)} \leq V | U_1) = P(U_{(n)} \leq U_1^{1/n}) = U_1$, by the CDF derived in part (a). It then follows \[P(U_{(n)} \leq V) = \E(P(U_{(n)} \leq V | U_1))=\E(U_1)=0.5.\]
+\end{parts}
+\end{document}

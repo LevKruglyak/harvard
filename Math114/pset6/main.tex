@@ -1,0 +1,168 @@
+\documentclass[11pt,letterpaper]{article}
+
+\usepackage[all]{tengwarscript}
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 6}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    The following exercise illustrates the principle that the decay of $\widehat{f}$ is related to the continuity properties of $f$.
+\end{problem}
+
+\begin{solution}
+    Let $f$ be a continuous function on $\R$.
+    \begin{partproblem}{a}
+        Suppose $f$ is a function of moderate decrease whose Fourier transform is continuous and satisfies:
+        \[
+            \widehat{f}(\zeta) = O\left(\frac{1}{|\zeta|^{1+\alpha}}\right)\quad \text{ as }|\zeta|\to \infty
+        .\] 
+        for some $0 < \alpha < 1$. Prove that $f$ satisfies a H\"older condition of order $\alpha$, that is that
+        \[
+            |f(x+h)-f(x)|\leq M|h|^\alpha\quad\text{ for some }M > 0\text{ and all }x,h\in \R
+        .\] 
+    \end{partproblem}
+    \quad First, let's prove that $\widehat{f}$ is a function of moderate descent. First, we know by the asymptotic bound that there is some constant $C$ and $\ell\in \R$ such that $|\widehat{f}(\zeta)| \leq C / |\zeta|^{1+\alpha}$ for all $|\zeta|\geq \ell$. Then assuming $\ell\geq 1$, we have
+    \[
+        |\widehat{f}(\zeta)| \leq \frac{C}{|\zeta|^{1+\alpha}} =\frac{2C}{2|\zeta|^{1+\alpha}} \leq \frac{2C}{1+|\zeta|^{1+\alpha}}
+    \]
+    since $|\zeta|^{1+\alpha}\geq 1$. For $\zeta$ lying inside the disk $D_\ell$ of radius $\ell$, we have
+    \[
+        |\widehat{f}(\zeta)| \leq \max_{\zeta\in D_\ell} |\widehat{f}(\zeta)| = \frac{\max_{\zeta\in D_\ell} |\widehat{f}(\zeta)| (1+\ell^{1+\alpha})}{1+\ell^{1+\alpha}}\leq \frac{\max_{\zeta\in D_\ell} |\widehat{f}(\zeta)| (1+\ell^{1+\alpha})}{1+|\zeta|^{1+\alpha}}
+    .\] 
+    Thus for all $\zeta$ we have 
+    \[
+        |\widehat{f}(\zeta)| \leq \frac{C'}{1+|\zeta|^{1+\alpha}}\quad\text{where}\quad C' = \max\left(\max_{\zeta\in D_\ell} |\widehat{f}(\zeta)|(1+\ell^{1+\alpha}), 2C\right)
+    \] 
+    and so $\widehat{f}$ is of moderate decrease. Using the Fourier inversion formula, we get 
+    \[
+        f(x+h)-f(x) = \int^\infty_{-\infty} \widehat{f}(\zeta)e^{2\pi i \zeta x}(e^{2\pi i \zeta h} - 1)d\zeta
+    .\]
+    Since $|e^{2\pi i \zeta h} - 1| \leq 2|\sin(2\pi \zeta h)|$, this can be reexpressed as
+    \[
+        \begin{aligned}
+            |f(x+h)-f(x)| &\leq \int^\infty_{-\infty} 2|\widehat{f}(\zeta)||\sin(2\pi \zeta h)| d\zeta \leq 2C'\int^\infty_{-\infty} \frac{|\sin(2\pi \zeta h)|}{1+|\zeta|^{1+\alpha}}d\zeta\\
+            &\leq 4C'(2\pi |h|)^\alpha \int_0^\infty \frac{|\sin x|}{x^{1+\alpha}}dx = 4C'(2\pi)^\alpha |h|^\alpha\left(\int^\infty_0 |\sin(x)|/|x|^{1+\alpha} dx\right).
+        \end{aligned}
+    \] 
+    Thus, letting $M = 4C'(2\pi)^\alpha\int^\infty_0 |\sin(x)| / |x|^{1+\alpha}dx$ completes the proof.
+
+    \begin{partproblem}{b}
+        Suppose $f$ vanishes for $|x|\geq 1$, with $f(0)=0$, and which is equal to $1 / \log (1 /|x|)$ for all $x$ in a neighborhood of the origin. Prove that $\widehat{f}$ is not of moderate decrease. In fact, there is no $\epsilon > 0$ so that $\widehat{f}(\zeta)=O(1/|\zeta|^{1+\epsilon})$ as $|\zeta| \to \infty$. 
+    \end{partproblem}
+
+    \tengwarannatar
+    \quad Assume that there exists an $\epsilon > 0$ with $\widehat{f}(\zeta) = O(1 /|\zeta|^{1+\epsilon})$ as $|\zeta|\to \infty$, say WLOG that $\epsilon < 1$. As a compactly supported continuous function, $f$ is of moderate decrease and $\widehat{f}$ is continuous because $f\in L^1$. 
+
+    \quad By the first part, we have some $M > 0$ such that $|f(x+h)-f(x)| \leq M|h|^{\epsilon}$ for all $x, h\in \R$. In particular, we have \[\frac{|f(h)-f(0)|}{h^{\epsilon}} = \frac{1}{\log( 1/h) h^{\epsilon}} \leq M < \infty.\]
+
+    This is a contradiction, since by L'Hospital's rule we can evaluate the limit as $h\to 0$ as
+    \[
+        \lim_{h \to 0} \left(\frac{h^{-\epsilon}}{\log(1/h)}\right) = \lim_{h \to 0} \left(\frac{\epsilon}{h^\epsilon}\right) = \infty
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Below is an outline of a different proof of the Weierstrauss approximation theorem. Define the \emph{Landau} kernels by
+    \[
+        L_n(x)=\begin{cases}
+            \frac{(1-x^2)^n}{c_n} & |x|\leq 1,\\
+            0 & |x|\geq 1,
+        \end{cases}
+    \] 
+    where $c_n$ is chosen so that $\int^\infty_{-\infty}L_n(x)\;dx =1$. Prove that $\{L_n\}_{n\geq 0}$ is a family of good kernels as $n\to \infty$. As a result, show that if $f$ is a continuous function supported in $[-1 /2, 1/2]$, then $(f * L_n)(x)$ is a sequence of polynomials on $[-1 /2, 1 /2]$ which converges uniformly to $f$. % First show that c_n >= 2 / (n+1)
+\end{problem}
+
+\begin{solution}
+    \tengwarannatar
+    \quad First of all, the fact that $\int^\infty_{-\infty} |L_n(x)|\;dx = 1$ by definition. So to prove that $L_n$ are good kernels, it suffices to show for any $\text{\Troomen}>0$ that
+    \[
+        \int_{|x|>\text{\Troomen}} L_n(x)\;dx \to 0\quad \text{as}\;n\to \infty
+    .\] 
+    Assume without loss of generality that $\text{\Troomen} < 1$. Since $(1-x^2)^n$ is an even function, so we have
+    \[
+        \int_{-\infty}^\infty \frac{(1-x^2)^n}{c_n}\;dx = 1 \implies c_n = \int^1_{-1} (1-x^2)^n\;dx = 2\int_0^1(1-x^2)^n\;dx \geq 2\int_0^1 (1-x)^ndx = \frac{2}{n+1}
+    .\] 
+    Since $\text{\Troomen} \leq x \leq 1$, we have $(1-x^2)^n \leq (1-\text{\Troomen}^2)^n$, so we have
+    \[
+        \int_{|x| > \text{\Troomen}} L_n(x)\;dx = \frac{2}{c_n}\int_{\text{\Troomen}}^1 (1-x^2)^n\;dx \leq (n+1)\int_{\text{\Troomen}}^1 (1-\text{\Troomen}^2)^n\; dx = (n+1)(1-\text{\Troomen})(1-\text{\Troomen}^2)^n
+    .\] 
+    This right hand side goes to $0$ as $n\to \infty$ since $|1-\text{\Troomen}^2| < 1$.
+
+    \quad Now suppose $f$ is a continuous function supported in $[-1 /2, 1 /2]$. We know that $f * L_n$ converges to $f$ uniformly on $[-1 /2, 1 /2]$ because $L_n$ are good kernels. Furthermore, we can express $f * L_n$ as a polynomial of degree at most $2n$ on the interval since $(f * L_n)^{2n + 1} = 0$. (These facts can be found in Auroux's lecture notes from Math 55.)
+\end{solution}
+
+\begin{problem}
+    Let $A$ be a real symmetric $n\times n$ matrix whose eigenvalues are all positive. Prove that
+    \[
+        \int_{\R^n} f(x) \;d\mu = 1,\quad f(x)=\frac{1}{(2\pi)^{n /2}\sqrt{\det A}}e^{-\big\langle x, Ax \big\rangle / 2}
+    .\] 
+    Find the Fourier transform of the function $f$.
+\end{problem}
+
+\begin{solution}
+    \quad By the Cholesky decomposition theorem, $A$ can be decomposed as a product $B^T B$ where $\det B = \sqrt{\det A}$. For any vector $v$, we have $v^T A v = |Av|^2$. Now if we perform a change of variables $w = Bv / \sqrt{2}$, we get
+    \[
+        \int_{\R^n} f(v)\;dv = \pi^{-n /2}\int_{\R^n} e^{-|w|^2}\;dw = 1
+    .\] 
+    We can make the same variable change in the Fourier transform:
+    \[
+        \widehat{f}(\zeta) = \int_{\R^n} f(x)e^{-2\pi i \zeta \cdot v}\;dv = \pi^{-n /2}\int_{\R^n} e^{-|w|^2}e^{-2\pi i (\sqrt{2}(B^{-1})^T\zeta)\cdot w}\;dw
+    .\] 
+    Using the last integral from the proof of Lemma~4.4 in Stein Chapter~2, we can evaluate this integral as
+    \[
+        \widehat{f}(\zeta) = \pi^{-n/2}(\pi^{n/2}e^{-2\pi^2|(B^{-1})^T\zeta|^2}) = e^{-2\pi^2\zeta^TA^{-1}\zeta}
+    .\] 
+\end{solution}
+
+% Note that every real symmetric $n \times n$ matrix $A$ with positive eigenvalues can be written as $B^TB$, where $B$ has determinant equal to $\sqrt{\det A}$ (see, e.g., the Cholesky decomposition theorem). In particular, $x^TAx = |Bx|^2$. Making the change of variables $Bx/\sqrt{2} \mapsto y$ yields
+% \[
+% \int f(x)dx = \pi^{-n/2}\int e^{-|y|^2}dy = 1. 
+% \]
+% For the Fourier transform, we make the same change of variables to get
+% \[
+% \hat{f}(\xi) = \int f(x)e^{-2\pi i \xi \cdot x}dx  =\pi^{-n/2}\int e^{-|y|^2}e^{-2\pi i (\sqrt{2}(B^{-1})^T\xi)\cdot y}dy.
+% \]
+% Pattern matching the last integral with the integral of a modulated Gaussian (contained in the proof of Stein Chapter 2, Lemma 4.4), we substitute $\delta \mapsto 1/\pi$, $\xi \mapsto y$, and $x - y \mapsto \sqrt{2}(B^{-1})^T\xi$ to obtain
+% \[
+% \hat{f}(\xi) = \pi^{-n/2}(\pi^{n/2}e^{-2\pi^2|(B^{-1})^T\xi|^2}) = e^{-2\pi^2\xi^TA^{-1}\xi}.
+% \]
+ 
+\begin{problem}
+    Find the Fourier transform of the function $f(x)=e^{-|x|}$ with $x\in \R$. 
+\end{problem}
+
+\begin{solution}
+    \quad Basic calculus gives us:
+    \begin{align*}
+        \hat{f}(\xi) &= \int_{-\infty}^\infty e^{-|x|}e^{-2\pi i \xi x}dx = \int_{-\infty}^0 e^{(-2\pi i \xi +1)x}dx+\int_0^\infty e^{(-2\pi i \xi -1)x}dx\\
+        &= \frac{e^{(-2\pi i \xi +1)x}}{1 -2\pi i \xi}\Big\rvert_{-\infty}^0 -\frac{e^{(-2\pi i \xi -1)x}}{1+ 2\pi i \xi}\Big\rvert_0^\infty=\frac{1}{1-2\pi i \xi}+\frac{1}{1+2\pi i \xi} = \frac{2}{1+4\pi^2\xi^2}.
+    \end{align*}
+\end{solution}
+
+\begin{problem}
+    Find the Fourier transform of the function on $\R^3$:
+    \[
+        f(x) = \frac{1}{m^2+|x|^2}, \quad x\in \R^3
+    .\] 
+\end{problem}
+
+\begin{solution}
+    \quad Consider the function on $\R^3$ given by $g(x)=e^{-|x|}/|x|$. Since $g$ is invariant under the change of variables $x \mapsto e^{i\theta}x$, it suffices to compute $\widehat{g}(z, 0, 0)$ for $z\in \R$. Note that
+    \[
+        \begin{aligned}
+            \widehat{g}(z, 0, 0) = \int_{\R^3}\frac{e^{-|x|}}{|x|}e^{-2\pi i x_1 z}\;dx &= \int^\infty_{-\infty} e^{-2\pi i x_1 z}\left(\int_{\R^2}\frac{e^{-\sqrt{x_1^2+x_2^2+x_3^3}}}{\sqrt{x_1^2+x_2^2+x_3^2}}\;dx_2 \; dx_3\right)dx_1\\
+            &=\int^\infty_{-\infty} e^{-2\pi i x_1 z}\left(2\pi \int_0^\infty\frac{r}{\sqrt{x_1^2+r^2}}e^{-\sqrt{x_1^2+r^2}}\;dr\right)dx_1\\
+            &=\int^\infty_{-\infty} e^{-2\pi i x_1 z} 2\pi e^{-|x_1|}\;dx_1 = \frac{4\pi}{1+4\pi^2z^2}.
+        \end{aligned}
+    \] 
+    Let $y = 2\pi m \zeta$. Then $f(y) = \widehat{g}(\zeta)$ so by Fourier inversion and some minor calculations we get
+\[
+\hat{f}(\xi) = h(\xi) = \frac{\pi}{|\xi|}e^{-2\pi m |\xi|}.
+\]
+\end{solution}
+\end{document}

@@ -1,0 +1,98 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+% \def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\rank{\textrm{rank }}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 8}}
+\date{\textbf{Due:} April 7, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Suppose that $f_0 : M \to X$ and $f_1 : M \to X$ are homotopic maps. Show that $f_0$ and $f_1$ are cobordant when regarded as manifolds over $X$.
+\end{problem}
+
+\begin{solution}
+    \quad A homotopy between $f_0$ and $f_1$ is some map $H: M\times I \to X$ with $H(-,0) = f_0$ and $H(-,1) = f_1$. Notice that $M\times I$ is an $(n+1)$-manifold over $X$, with boundary $\partial M\times I = M\sqcup M$. Clearly $H|_{\partial (M\times I)}$ is a cobordism between $f_0$ and $f_1$ so we are done. 
+\end{solution}
+
+\begin{problem}
+    Suppose that $g : X \to Y$ is a continuous map of topological spaces. Show that the map sending $f : M \to X$ to $g\circ f : M \to Y$ induces a linear transformation $f_* : MO_n(X) \to MO_n(Y)$. Show that if 
+    \[\begin{tikzcd}
+        X & Y & Z
+        \arrow["f", from=1-1, to=1-2]
+        \arrow["g", from=1-2, to=1-3]
+    \end{tikzcd}\]
+    are two composable maps then $(g\circ f)_*=g_*\circ f_*$, or in other words that the diagram
+    \[\begin{tikzcd}
+        {MO_d(X)} & {MO_d(Y)} \\
+        & {MO_d(Z)}
+        \arrow["{f_*}", from=1-1, to=1-2]
+        \arrow["{g_*}", from=1-2, to=2-2]
+        \arrow["{(g\circ f)_*}"', from=1-1, to=2-2]
+    \end{tikzcd}\]
+    commutes.
+\end{problem}
+
+\begin{solution}
+    \quad This problem essentially amounts to proving that the pushforward $MO_d(-) : \textbf{Top}^{co} \to \textbf{Vect}_{\F_2}$ is a well-defined functor, where $\textbf{Top}^{co}$ is the category of cobordism classes of topological manifolds. First, let's show that for any $f: X \to Y$ $MO_d(f)$ is well-defined on cobordism classes. Suppose $f_0 : A \to X$ and $f_1 : B \to X$ are cobordant $d$-manifolds over $X$, so there is some map $h : C \to X$ where $C$ is a $(d+1)$-manifold, and there is a diffeomorphism $\iota / X : f_0\sqcup f_1 \to \partial h$. Note that $\partial(f\circ h) = f\circ \partial h$ and $f\circ (f_0\sqcup f_1) = (f\circ f_0)\sqcup (f\circ f_1)$, so we have a commutative diagram:
+    % https://q.uiver.app/?q=WzAsNCxbMCwxLCJBXFxzcWN1cCBCIl0sWzEsMCwiXFxwYXJ0aWFsIEMiXSxbMSwxLCJYIl0sWzIsMiwiWSJdLFsyLDMsImciXSxbMCwyLCJmXzBcXHNxY3VwIGZfMSIsMl0sWzEsMiwiXFxwYXJ0aWFsIGgiXSxbMCwzLCIoZ1xcY2lyYyBmXzApXFxzcWN1cChnXFxjaXJjIGZfMSkiLDIseyJjdXJ2ZSI6Mn1dLFsxLDMsIlxccGFydGlhbChnXFxjaXJjIGgpIiwwLHsiY3VydmUiOi0yfV0sWzAsMSwiXFxpb3RhIl1d
+    \[\begin{tikzcd}
+        & {\partial C} \\
+        {A\sqcup B} & X \\
+        && Y
+        \arrow["f", from=2-2, to=3-3]
+        \arrow["{f_0\sqcup f_1}"', from=2-1, to=2-2]
+        \arrow["{\partial h}", from=1-2, to=2-2]
+        \arrow["{(f\circ f_0)\sqcup(f\circ f_1)}"', curve={height=12pt}, from=2-1, to=3-3]
+        \arrow["{\partial(f\circ h)}", curve={height=-12pt}, from=1-2, to=3-3]
+        \arrow["\iota", from=2-1, to=1-2]
+    \end{tikzcd}\]
+    This proves that $(f\circ f_0)$ is cobordant to $(f\circ f_1)$ and so $f_*$ is well defined. The above diagram also proves that $MO_d(f)$ is a linear map, since $MO_d(f)(f_0)+MO_d(f)(f_1)=MO_d(f)(f_0\sqcup f_1)=MO_d(f)(f_0+ f_1)$, and $MO_d(-)$ is an $\F_2$-vector space. The preservation of identities is obvious, and composition follows since $MO_d(f)$ is a pushforward.
+\end{solution}
+
+\begin{problem}
+    {Suppose that $M$ is a manifold.   Show that every continuous function
+    $f:\partial M\to \R$ extends to a continuous function $g:M\to \R$.
+    Using this for every $k$, the map 
+    \[
+    MO_{k}(\R^{n})\to MO_{k}(\text{pt}) = MO_{k}
+    \]
+    is an isomorphism. (Hint: Use a collar neighborhood.)}
+\end{problem}
+
+\begin{solution}
+    \quad Suppose we are given $f: \partial M \to \R$. Let $U$ be some collar neighborhood of $\partial M$ in $M$, this comes with a diffeomorphism $\psi : U \to \partial M \times [0,1)$, with $\psi\circ (1_{\partial M}\times 0)$ a the identity map. Consider the projections $\psi_{\partial M}=\pi_{\partial M}\circ \psi$ and $\psi_{[0,1)}=\pi_{[0,1)}\circ \psi$. Consider now the continuous $\alpha : U \to \R$ given by \[g(x)=\max(0, 1 - 2\psi_{[0,1)}(x)) ( f\circ \psi_{\partial M})(x).\]\
+    Let $V$ be the complement of $\psi^{-1}(\partial M\times [0, 1 / 2])$ in $M$. Then let $\beta : V \to \R$ to be the zero function on $V$. Since $\alpha|_{\partial M} = f$, $U\cup V = M$, and $\alpha|_{U\cap V}=\beta|_{U\cap V} = 0$, it follows that we can extend $f$ to some $g : M \to \R$. This also works for extending $f : \partial M \to \R^n$ to maps $f : M \to \R^n$ by the universal property of a product.
+
+    \quad Let's now prove that $MO_k(\R^n) \to MO_k$ is an isomorphism. Recall that $MO_k$ is a functor. We're interested in the induced map $\R^n \to \textrm{pt}$. First of all, note that it has a left inverse given by the zero map $\textrm{pt} \to \R^n$, and this gives a left inverse to $MO_k(\R^n)\to MO_k$. The right inverse follows because there is a cobordism $f : M\to \R^n$ with $0 : M\to \R^n$. Indeed, consider $f\sqcup 0 : \partial(M\times I) = M\sqcup M \to \R^n$. By the first part of the problem, let's extend this to some $g : M\times I \to \R^n$, which is a cobordism between $f$ and $0$. Thus $MO_k(\R^n) \to MO_k$.
+\end{solution}
+
+\begin{problem}
+    {Suppose that $V_1$, $V_2$, and $V_3$ are vector spaces over a field $k$. A sequence of linear transformations
+    % https://q.uiver.app/?q=WzAsMyxbMCwwLCJWXzEiXSxbMSwwLCJWXzIiXSxbMiwwLCJWXzMiXSxbMCwxLCJwIl0sWzEsMiwicSJdXQ==
+    \[\begin{tikzcd}[column sep=scriptsize]
+        {V_1} & {V_2} & {V_3}
+        \arrow["p", from=1-1, to=1-2]
+        \arrow["q", from=1-2, to=1-3]
+    \end{tikzcd}\]
+    is \emph{exact} if the image of $p$ is equal to the kernel of $q$. Note that this implies that the composition $q \circ p$ is zero. Show that in this situation one has $\dim V_2 \leq \dim V_1 + \dim V_3$.}
+\end{problem}
+
+\begin{solution}
+    \quad By the rank-nullity theorem, we have $\rank p\leq \dim V_1$ and $\rank q\leq \dim V_3$, By exactness, we get $\Ima\;p = \ker q$ so $\dim \ker q = \rank p$ so again by the rank-nullity theorem we get $\dim V_2=\rank p + \rank q \leq \dim V_1 + \dim V_2.$
+\end{solution}
+
+\end{document}

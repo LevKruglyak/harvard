@@ -1,0 +1,25 @@
+\begin{problem}
+Let $T:V\to V$ be an operator on a real vector space $V$ with inner product $\langle \cdot,\cdot\rangle$, and assume that $\langle Tv,w\rangle=-\langle v,Tw\rangle$ for all $v,w\in V$. (Such an operator is called {\em skew-adjoint}. The matrix representing $T$ in an orthonormal basis is skew-symmetric: $M_{ij}=-M_{ji}$). Prove that $I+T$ is invertible, and that $S=(I-T)(I+T)^{-1}$ is an orthogonal operator.
+\end{problem}
+
+To prove $I+T$ is invertible, we will show that it has a trivial kernel. Suppose $(I+T)v=0$ for some $v\in V$. Then $Tv=-v$. So
+\[
+  \langle Tv, v\rangle = \langle -v, v\rangle = -\langle v, v\rangle
+\]
+yet also
+\[
+  \langle Tv, v\rangle = -\langle v, Tv\rangle = -\langle v, -v\rangle = \langle v, v\rangle
+.\]
+So $-\langle v, v\rangle = \langle v, v\rangle = 0$ so since $\langle \cdot, \cdot \rangle$ is definite, $v=0$ and so the kernel is trivial.
+To show that $(I-T)(I+T)^{-1}$ is an orthogonal operator, let $v,w\in V$ be arbitrary. Then
+\[
+  \begin{aligned}
+    S^*S&=((I-T)(I+T)^{-1})^*(I-T)(I+T)^{-1}\\
+    &=\left((I+T)^{-1}\right)^*(I-T)^*(I-T)(I+T)^{-1}\\
+    &= (I-T)^{-1}(I+T)(I-T)(I+T)^{-1}\\
+    &= (I-T)^{-1}(I-T^2)(I+T)^{-1}\\
+    &= (I-T)^{-1}(I-T)(I+T)(I+T)^{-1}\\
+    &= I.
+  \end{aligned}
+\]
+Since $S^*S=I$, $S$ is orthogonal.

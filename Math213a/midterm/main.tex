@@ -1,0 +1,153 @@
+\documentclass{pset}
+
+\input{../213a.tex}
+\usepackage{multirow}
+
+\title{Math 213a Midterm}
+\author{Lev Kruglyak}
+\due{Oct 24, 2023}
+
+\input{../213a.tex}
+
+
+\renewcommand{\abstractname}{Honor Code Statement}
+\begin{document}
+\maketitle
+
+\vspace{2.5em}
+\begin{abstract}
+I affirm my awareness of the standards of the Harvard College Honor Code. While completing this exam, I have not consulted any external sources other than class notes and the textbooks. I have not discussed the problems or solutions of this exam with anyone, and will not discuss them until after the due date.
+
+\medskip
+Signed, \underline{\textit{Lev Kruglyak}}.
+\end{abstract}
+\vspace{2.5em}
+
+\begin{problem}{1.42}
+  Given $R>1$, let $A_R =\{z : 1 < |z|<R\}$. Let $f : A_R \to A_S$ be a bijective holomorphic map. Prove that $R=S$. %apply schwarz reflection to extend f to C*
+\end{problem}
+
+\begin{solution}
+  We begin by extending $f$ to the punctured disk.
+
+  \begin{claim}
+    Let $f : A_{R} \to A_{S}$ be a bijective holomorphic map between annuli. This extends to a map of punctured disks $f : \Delta_R^* \to \Delta_S^*$.
+  \end{claim}
+
+  \begin{proof}
+    To begin, we know that since $f$ extends continuously to the closure $f : \overline{A_R} \to \overline{A_S}$. Since it's a bijective holomorphism, it also must send the inner radius of $A_R$ either to the inner radius of $A_S$, or the outer radius of $A_S$. By setting $z \mapsto R/z$ if needed, we can assume without loss of generality that $f$ preserves inner radii. This means that $|f(z)|\to 1$ as $|z|\to 1^+$, so we can apply Schwarz reflection to extend $f$ holomorphically to a map $f: A(1/R, R) \to A(1/S, S)$, where  $A(R_1, R_2) = \{z : R_1 < |z|<R_2\}$ is the annulus with inner radius $R_1$ and outer radius $R_2$. We can repeat this process, reflecting over the inner radius to get maps $f : A(1/R^n, R) \to A(1/S^n, S)$ for any $n>0$, and since $1/R^n, 1/S^n \to 0$, it follows that we can extend $f$ for any point in $\Delta^*_R$.
+  \end{proof}
+
+  So we can consider our function $f$ to be a map $f : \Delta^*_R \to \Delta^*_S$. Note that since $f$ is bounded, it must have a removable singularity at $z=0$. Similarly, we can use Cauchy's bound to get the following simple bound on the derivative of $f$, namely
+  \[
+    |f'(z)|\leq \max_{z\in \Delta_R} |f(z)|/R = S/R \quad\implies \quad |f(z)| = O(|z|)\quad\textrm{ near zero}
+  \]
+  However, note that by construction of the extension of $f$, we know that $|f(z)|=1/S^n$ whenever $|z|=1/R^n$. Since both sequences get arbitrarily close to zero, we get a contradiction unless $R=S$, since $1/R^n \neq O(1/S^n)$ unless $R=S$. This completes the proof.
+\end{solution}
+
+\begin{problem}{1.49}
+  Compute
+  \[
+    \int_{|z|=1/2}\frac{dz}{z\sin^2(z)}.
+  \]
+\end{problem}
+
+\begin{solution}
+  Recall that by the residue theorem, we have
+  \[\oint_{|z|=1/2} \frac{dz}{z\sin^2(z)} = 2\pi i\sum_{\substack{|a|\leq 1/2,\\ a\textrm{ is a pole}}}\Res\left(\frac{1}{z\sin^2(z)}, a\right).\]
+  The only pole of the function within the disk of radius $1/2$ is at $z=0$ of order $3$. To calculate this residue, let's expand the Laurent series
+  \[
+    \frac{1}{z\sin^2(z)} = \frac{1}{z^3}\left(\frac{1}{1+z^2/3!-z^4/5!+\cdots}\right)^2 = \frac{1}{z^3}\left(\frac{1}{1+2\cdot z^2/3! + \cdots}\right)^2 = \frac{1}{z^3}+\frac{1}{3\cdot z}+\cdots
+  \]
+  Looking at the coefficient of $1/z$, we see that the residue is $1/3$ and so
+  \[
+    \oint_{|z|=1/2}\frac{dz}{z\sin^2(z)} = \frac{2\pi i}{3}.
+  \]
+\end{solution}
+
+\begin{problem}{2.2}
+  Find all the following maps:
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Proper holomorphic maps $f : \C^* \to \C$.
+  \end{part}
+
+  Let $f$ be a proper holomorphic function $\C^* \to \C$. Expanding the Laurent series at $z=0$, we can see that $f$ has an isolated singularity at $z=0$. Clearly, the order of this singularity must be negative, since properness implies that as $z\to 0$, we have $f(z) \to \infty$. However, the order can't be $-\infty$, since then the Weierstrauss-Casorati theorem gives us a sequence $z_n \to 0$ such that $f(z_n)$ is dense in $\C$. This contradicts properness, since the preimage of any compact set must get arbitrarily close to the origin. So we know that $f(z) = \sum_{k=-n}^\infty a_k z^k$ for some $n>0$. By properness, we need $f(z)\to \infty$ as $z\to 0$ or $z\to \infty$. The requirement that the function is unbounded as $z\to 0$ means that $a_k\neq 0$ for at least one $k<0$, and the requirement that the function is unbounded as $z\to \infty$ means that $a_k\neq 0$ for at least one $k\geq 0$. 
+
+  We claim that only a finite number of the $a_k$ are nonzero. By properness, the preimage of $\Delta$ must be compact, and so must lie in an annulus with radii $R_1<R_2$, i.e. $|f(z)|>1$ when $|z|>R_2$ or $|z|<R_1$. Now let $g(z)=1/f(1/z)$. Note that $|g(z)|\leq 1$ when $|z|<1/R_2$ or $|z|>1/R_1$. In particular, we care about the case $|z|<1/R_1$. In this region, we have $|g(z)|\geq \epsilon|z|^k$ for some $k$, so for large $z$ we have $|f(z)|\leq M|z|^k$. Then, by Cauchy's bound it follows that there is some largest $k$ such that $a_k\neq 0$. Putting this criterion together, we conclude that the only proper maps are of the form:
+
+  \[
+  f(z) = \frac{p(z)}{z^n}, \quad \textrm{where }p(z)\textrm{ is a polynomial satisfying } p(0)\neq 0, \deg(p)>n.
+  \]
+
+  By the same argument, clearly any function satisfying this condition is proper.
+
+  \begin{part}{b}
+    Proper holomorphic maps $g : \C \to \C^*$.
+  \end{part}
+
+  Suppose that $g$ is a proper holomorphic map $\C \to \C^*$. By lifting to the universal cover $\C$, or by taking logarithmic derivative, we can write $g(z) = \exp(h(z))$ for some holomorphic function $h : \C \to \C$. Now let's consider the preimage by $g$ of the closed disk of radius $R$, i.e. $g^{-1}\left(\overline{\Delta_R}\right)$, a compact set. This preimage is exactly $h^{-1}(H_R)$, where $H_R$ is the closed left half-plane of points $z$ such that $\textrm{Re}(z) \geq \log(R)$. This preimage must be compact by properness. Yet as $R \to 0$, this preimage becomes and closer to the preimage of the entirety of $\C$. The preimage condition implies that $h$ explodes at $z=0$, which is a contradiction since it was assumed entire. So no such maps can exist.
+\end{parts}
+
+\begin{problem}{2.18}
+  Compute the hyperbolic metric on $\Delta^* = \Delta - \{0\}$.
+\end{problem}
+
+\begin{solution}
+  Recall that we have a universal covering map of Riemann surfaces $\pi : \mathbb{H} \to \Delta^*$ given by $z\mapsto e^{iz}$. This has inverse $f : \Delta^* \to \mathbb{H}$ given by $z\mapsto -i\log(z)$. $f$ is a local homeomorphism, so we can pullback the standard hyperbolic metric on $\mathbb{H}$, which is given by $\rho|dz| = |dz|/\textrm{Im}(z)$. Using the pullback formula, we get
+  \[
+    \omega|dz| = f^*\rho|dz| = |f'|\cdot \rho(f)\cdot |dz| = \frac{|dz|}{|z|(-\log |z|)}.
+  \]
+  This is the standard hyperbolic metric on $\Delta^*$.
+\end{solution}
+
+\begin{problem}{3.1}
+  Prove that for any nonzero polynomial $p(z)$, the function $f(z)=e^z - p(z)$ has infinitely many zeroes. % if not, f(z) is product of a poloynomial and an exponential, yet high enough derivative is just e^z
+\end{problem}
+
+\begin{solution}
+  Let's assume for the sake of contradiction that $f(z)$ has finitely many zeroes, say $\{a_n\}_{n=1}^N$. Let's begin by proving that $f(z)$ has \emph{finite order}. Note that since $|p(z)|\approx A|z|^n$ for some constant $A$, which grows slower than any exponential function. Thus,
+  \[
+    |f(z)| = |e^z-p(z)| \leq |e^z| + |p(z)| \leq \exp(|z|^1) + B\exp(|z|^{\epsilon}) \leq C\exp(|z|^1)
+  \]
+  for some $\epsilon>0$ and large enough $B,C$. This means that $\rho < 1$ and so $f$ has finite order. Furthermore, $f$ has no poles and is thus entire, meaning that $f(z)$ can be expressed in the following form
+  \[
+    f(z) = z^m e^{Q(z)}\prod^N_{n=1} E_p(z/a_n), \quad \textrm{where}\quad E_p(z) = (1-z)\exp\left(z+\frac{z^2}{2}+\cdots+\frac{z^p}{p}\right)
+  \]
+  and $p$ is some unique integer satisfying $\sum 1/|a_n|^p = \infty$ yet $\sum 1/|a_n|^{p+1} < \infty$. We can also assume without loss of generality that $a_n\neq 0$, then $m$ becomes the order of $f$ at $z=0$. In our case, $p=0$, so $E_p(z)=(1-z)$, so our function can be expressed as
+  \[
+    f(z) = z^m e^{Q(z)} \prod^N_{n=1} (1-z/a_n) = P(z)e^{Q(z)}, \quad \textrm{where}\quad \deg P(z) = N+m.
+  \]
+  Now let's consider the $(n+1)$-th derivative of $f$, where $n=\deg p(z)$. Since $f(z)=e^z-p(z)$, $f^{(n+1)}(z) =e^z$. Using the other form for $f(z)$ which we derived, we note that $f^{(n+1)}(z) = F(z)e^{Q(z)}$ for some polynomial $F$. This immediately implies that $Q(z)=z$. By induction and the product rule, we similarly get
+  \[
+    f^{(n+1)}(z) = e^z\sum^{n+1}_{k=1} \binom{n+1}{k} P^{(k)}(z).
+  \]
+  The leading term of this binomial sum is the leading term of $P^{(0)}(z)=P(z)$, and must be equal to $1$, so $P(z)=1$. This implies that $f(z)=e^z$, which is a contradiction since we assumed that $p(z)$ was nonzero. Thus, $f(z)$ must have infinitely many zeroes.
+\end{solution}
+
+\begin{problem}{3.6}
+  Give an example of a (convergent) canonical product $f(z) = \prod^\infty_{n=1}(1-z/a_n)$ that has order exactly $1$.
+\end{problem}
+
+\begin{solution}
+  Recall that if $\sum |a_n|^{p+1}<\infty$ but $\sum |a_n|^p=\infty$, then the canonical product $f(z)=\prod E_p(z/a_n)$ converges, and is a function of order $\rho(f) = \alpha(a_n)$, where $\alpha(a_n)=\inf_\alpha \left\{ \sum 1/|a_n|^\alpha < \infty\right\}$. In our case, we would like $p=0$ to get $E_0(z)=1-z$. This means finding a series such that
+  \[
+    \sum^\infty_{n=1} \frac{1}{|a_n|^\alpha} = \begin{cases} \infty & \alpha < 1\\
+    \textrm{finite} & \alpha \geq 1\end{cases}\quad\implies\quad \rho(P)=\alpha(a_n)=1, \textrm{ and } p=0.
+  \]
+  Let's set $a_n = n\log^2(n)$, and start $n$ at $2$. 
+  To prove the convergence condition, we can use the Cauchy condensation test, considering the series $\sum_{n=2}^\infty 2^n a_{2^n}^\alpha$. Note that
+  \[2^n a_{2^n} = \frac{2^n}{(2^n n^2 \log^2(2))^\alpha} = \left(\frac{1}{\log^{2\alpha}(2)}\right)\frac{2^{(1-\alpha)n}}{n^{2\alpha}}\]
+  Taking the limit as $n\to \infty$, we see that if $1-\alpha > 0$, the limit goes to $\infty$ as $n\to \infty$, otherwise the limit goes to $0$. This means that the sum diverges when $\alpha < 1$. When $\alpha=1$, we use the integral test to get 
+  \[
+    \sum^\infty_{n=2} \frac{1}{n\log^2(n)} \leq \int_2^\infty \frac{dx}{x\log^2(x)} = \left(\frac{1}{\log(x)}\right)^\infty_{2} = \frac{1}{\log(2)}<\infty.
+  \]
+  Then, by the comparison test, it follows that the series converges for all $\alpha\geq 1$. 
+  This convergence condition implies that the order is $1$, so our desired function is 
+  \[
+    f(z) = \prod^\infty_{n=2}\left(1-\frac{z}{n\log^2(n)}\right).
+  \]
+\end{solution}
+\end{document}

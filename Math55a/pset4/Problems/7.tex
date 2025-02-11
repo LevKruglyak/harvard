@@ -1,0 +1,25 @@
+\begin{problem}
+Let $V$ be a finite-dimensional vector space over a field $k$. We say that two operators $\phi,\psi:V\to V$ are {\em simultaneously diagonalizable} if there exists a single basis for $V$ such that the matrices representing $\phi$ and $\psi$ in that basis are both diagonal.\\
+
+Show that, if $\phi$ and $\psi$ are diagonalizable, then they are simultaneously diagonalizable if and only if they commute, i.e.\ $\phi\circ \psi = \psi \circ \phi$.
+\end{problem}
+\textit{(Hint: the hard part of the argument is showing that, if $\phi$ is diagonalizable and a subspace $W\subset V$ is invariant under $\phi$, then the restriction $\phi_{|W}$ is diagonalizable. One way to go about this is to use the result of the preceding problem to express any vector in $W$ as a sum of eigenvectors which also belong to $W$.)}
+
+First suppose $\phi$ and $\psi$ are simultaneously diagonalizable, so there is some basis $v_1,\ldots, v_n$ such that $\phi(v_i)=\lambda_iv_i$ and $\psi(v_i)=\sigma_iv_i$ for some eigenvalues $\lambda_i$ and $\sigma_i$. Then for any $v$ written as $\sum_{1\leq i\leq n}a_iv_i$, we can write  
+\[
+  (\phi\circ\psi)(v)=\left(\phi\circ\psi\right)\left(\sum_{1\leq i\leq n}a_iv_i\right)=\sum_{1\leq i\leq n}a_i\lambda_i\sigma_i v_i=\left(\psi\circ\phi\right)\left(\sum_{1\leq i\leq n}a_iv_i\right)=(\psi\circ\phi)(v)
+.\]
+So the operators commute. In the converse direction, suppose $\phi\circ\psi=\psi\circ\phi$. Let $V=\bigoplus_{1\leq i \leq m}V_{\lambda_i}$ be the eigenspace decomposition of $\phi$. We claim that $\psi$ is diagonalizable on each of these $V_{\lambda_i}$, which would prove that $\phi$ and $\psi$ are simultaneously diagonalizable, since they are diagonalizable with respect to this eigenvector basis. To do this, we use the hint.               
+
+\begin{lemma}[Hint]
+  Suppose $\phi$ is a diagonalizable linear operator on $V$ and $W$ is a $\phi$-invariant subspace of $V$. Then the restriction $\restr{\phi}{W}$ is diagonalizable.  
+\end{lemma}
+\begin{proof}
+  It suffices to show that $W$ has a basis of eigenvectors of $\phi$. By the previous problem, we have $w=\sum_{1\leq i \leq m}\pi_i(w)$ where $\pi_i(w)$ are eigenvectors of $\phi$. We claim that $\pi_i(w)\in W$. Note that 
+  \[
+    \pi_i(w)=\frac{1}{\prod_{j\neq i}(\lambda_i-\lambda_j)}\,\left(\prod_{j\neq i,k} (\phi-\lambda_j)\right)(\phi(w)-\lambda_jw)\in W
+  ,\] 
+  since $\phi(w)\in W$ by the $\phi$-invariance of $W$. So the nonzero $\pi_i(w)$ for an eigenvector basis for $W$, hence $\restr{\phi}{W}$ is diagonalizable.   
+\end{proof}
+
+Now consider $\restr{\psi}{V_{\lambda_i}}$. $V_{\lambda_i}$ is an invariant subspace of $\psi$ because for any $v\in V_{\lambda_i}$, $\phi(\psi(v))=(\psi\circ\phi)(v)=\psi(\lambda_iv)=\lambda_i\psi(v)$ so $\psi(v)\in V_{\lambda_i}$. Thus by the lemma $\restr{\psi}{V_{\lambda_i}}$ is diagonalizable for all $\lambda_i$ and so we are done.  

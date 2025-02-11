@@ -1,0 +1,209 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+% \def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 3}}
+\date{\textbf{Due:} February 17, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Show using the preimage theorem that the tangent space to the Stiefel manifold of orthonormal $2$-frames in $\R^n$ at a point $[v_1, v_2]$, is the vector space of vectors $(v,w)\in \R^n\times \R^n$ satisfying $v_1 \cdot v = 0$, $v_2\cdot w = 0$, and $v_1\cdot v + v_2\cdot w = 0$.
+\end{problem}
+
+\begin{solution}
+    \quad Recall that the Stiefel manifold of orthonormal $2$-frames in $\R^n$, denoted $S_{n,2}$, is the preimage of the point $(1,1,0)\in \R^3$ under the map $f : \R^n\times \R^n \to \R^3$ given by $f(v,w)=(v\cdot v, w\cdot w, v\cdot w)$. Taking partial derivatives, we get
+    \[
+        \frac{\partial f_0}{\partial v_i} = 2v_i,\; \frac{\partial f_1}{\partial w_i} = 2w_i, \; \frac{\partial f_2}{\partial w_i} = v_i, \; \frac{\partial f_2}{\partial v_i} = w_i
+    \]
+    with all others set to $0$. So the derivative map $df_{[v_1,v_2]} : \R^n\times \R^n \to \R^3$ sends $(v,w)$ to $(2v_1\cdot v, 2v_2\cdot w, v_1\cdot w + v_2\cdot w)$. Thus by the preimage theorem, the tangent space $T_{[v_1,v_2]}S_{n,2}$ is the kernel of this derivative map, which is exactly the space described in the problem statement.
+\end{solution}
+
+\begin{problem}
+    GP \S5, Problem 1
+\end{problem}
+
+\begin{solution}
+    Transversality of linear subspaces.
+    \begin{partproblem}{a}
+        Suppose that $A : \R^k \to \R^n$ is a linear map and $V$ is a vector subspace of $\R^n$. Check that $A\pitchfork V$ means just that $A(\R^k) + V = \R^n$.
+    \end{partproblem}
+
+    \quad Recall that the derivative of a linear map at a vector $v\in \R^k$, i.e. $dA_v : T_v\R^k \to T_{Av} R^n$ is just $A : \R^k \to \R^n$, and does not depend on the choice of $v$. Thus, for $A$ to be transverse to a linear subspace $V\subset \R^n$, we need that for every $v\in \R^k$ such that $Av\in V$, the map 
+    \[
+        T_v \R^k \oplus T_{Av} V \to T_{Av}\R^n
+    \] 
+    is surjective. On the first coordinate, this map is just $A$, and on the second it is the inclusion $i_V : V \to \R^n$ since the tangent space of a linear subspace is the space itself. Thus we want the map $A\oplus i_V$ to be surjective. This just means that every vector $w\in \R^n$ can be expressed as a sum of some $Av_1$ and $v_2\in V$, which is exactly the condition $A(\R^k)+V=\R^n$. 
+
+    \begin{partproblem}{b}
+        If $V$ and $W$ are linear subspaces of $\R^n$, then $V\pitchfork W$ means just that $V + W = \R^n$.
+    \end{partproblem}
+    \quad This follows from the previous part by letting $A$ be the injective map $\phi_V : \R^{\dim V} \to \R^n$. Then the condition of $V\pitchfork W$ is equivalent to $\phi_V(\R^{\dim V}) + W = \R^n$, and $\phi_V(\R^{\dim V}) = V$ by construction.
+\end{solution}
+
+\begin{problem}
+(GP, \S5, Problem 2) Which of the following spaces intersect transversally?
+\begin{enumerate}[(a)]
+    \item The $xy$ plane and the $z$-axis in $\R^3$.
+    \item The $xy$ plane and the plane spanned by $\{(3,2,0), (0,4,-1)\}$ in $\R^3$.
+    \item The plane spanned by $\{(1,0,0), (2,1,0)\}$ and the $y$ axis in $\R^3$.
+    \item $\R^k\times \{0\}$ and $\{0\}\times \R^\ell$ in $\R^n$.
+    \item $\R^k\times \{0\}$ and $\R^\ell \times \{0\}$ in $\R^n$. 
+    \item $V\times \{0\}$ and the diagonal in $V\times V$.
+    \item The symmetric and skew symmetric matrices in $M(n)$. 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \underline{\textbf{a}:} Yes, since $xy + z = \R^3$. 
+
+    \underline{\textbf{b}:} Yes, since $xy + \{(3,2,0), (0,4,-1)\} = \R^3$.
+
+    \underline{\textbf{c}:} No, because $\{(1,0,0), (2,1,0)\} + y = xy$.
+
+    \underline{\textbf{d}:} Yes, only if $k+\ell \geq n$.
+
+    \underline{\textbf{e}:} Yes, only if $\max(k, \ell) = n$.
+
+    \underline{\textbf{f}:} Yes, since $V\times \{0\} + \Delta = V\times V$.
+
+    \underline{\textbf{g}:} Yes, since any matrix can be expressed as a sum of a symetric and skew symmetric matrix.
+\end{solution}
+
+\begin{problem}
+    (GP, \S5, Problem 9). Let $V$ be a vector space, and let $\Delta$ be the diagonal of $V\times V$. For a linear map $A: V \to V$, consider the graph $W = \{(v, Av)\}$. Show that $W\pitchfork \Delta$ if and only if $+1$ is not an eigenvalue of $A$.  
+\end{problem}
+
+\begin{solution}
+    \quad If $W\pitchfork \Delta$, this means that for every $v\in V$ such that $(v,Av) = (v,v)$, the natural map \[\psi: T_{(v,Av)}W\oplus T_{(v,v)}\Delta \to T_{(v,v)}V\times V\] is onto. 
+    If $A$ does not have $+1$ as an eigenvalue, this preimage is empty so the spaces are vacuously transverse. Conversely, if we only know that $W\pitchfork \Delta$, we know this map must be onto. By the first problem set, the tangent space at the graph of a function is the graph of it's derivative, so $T_{(v,Av)} W = W$, since $A\cdot v$ is a linear function. Similarly $\Delta$ is the graph of the identity function, so overall the map $\psi$ takes $W\oplus \Delta \to V\times V$ by sending $((v,Av), (v,v)) \mapsto (2v, Av+v)$. This is a contradiction since there can't be a preimage of $(0,1)$ for instance. Thus there can be no vector for which $v=Av$, and so $A$ has no eigenvalue $+1$.  
+\end{solution}
+
+\begin{problem}
+    (GP, \S5, Problem 10). Let $f : X \to X$ be a map with fixed point $x$; that is, $f(x)=x$. If $+1$ is not an eigenvalue of $df_x : T_xX \to T_xX$ then $x$ is called a \emph{Lefschetz fixed point} of $f$. A map $f$ is called a \emph{Lefschetz map} if all of its fixed points are Lefschetz. Prove that if $X$ is compact and $f$ is Leschetz, then $f$ has only finitely many fixed points.
+\end{problem}
+
+\begin{solution}
+    \quad First we notice that the proof of the previous problem only relied on the fact that the derivative of the map $A\cdot v$ had no eigenvalue $+1$. Thus we can generalize to the following lemma:
+    \begin{claim}
+        Let $f : X \to X$ be a map, and let $F= \{(x,f(x))\in X\times X : x\in X\}$ be the graph of $f$. Then $F\pitchfork \Delta$ if and only if $+1$ isn't an eigenvalue of $df_x$ for all fixed points $x\in X$ of $f$. 
+    \end{claim} 
+    \begin{proof}
+        Follows from the proof of previous problem and the fact that transversality is a local property.
+    \end{proof}
+    
+    \quad Now let $x\in X$ be a fixed point of a Lefschetz map $f$. This means that $F\pitchfork \Delta$ in $X\times X$, where $F$ is the graph of $f$. By the generalization of the preimage theorem, this means that the pullback $W = F\times_{X\times X} \Delta$ is a smooth manifold of dimension $0$. However there is a homeomorphism between $W$ and the set of fixed points of $f$, viewed as a subspace of $X$. (This is just by construction.) So the set of fixed points of $f$ is a $0$-submanifold of a compact manifold, and hence compact itself. Thus it must be finite.
+\end{solution}
+
+\begin{problem}
+    If $f : M \to N$ is a diffeomorphism of smooth manifolds of dimension $n$ and $x\in M$ is a point, then there are coordinate neighborhoods
+    \[
+        \begin{aligned}
+            \Phi_1 : U_1 \to \R^n &\quad U_1\subset M\\
+            \Phi_2 : U_2 \to \R^n &\quad U_2\subset N\\
+        \end{aligned}
+    \] 
+    around $x$ and $f(x)$ respectively, having the property that the following diagram commutes:
+    % https://q.uiver.app/?q=WzAsNixbMCwwLCJcXFJebiJdLFswLDEsIlxcUl5uIl0sWzEsMCwiVV8xIl0sWzEsMSwiVV8yIl0sWzIsMCwiTSJdLFsyLDEsIk4iXSxbMywxLCJcXFBoaV8yIiwyXSxbMiwwLCJcXFBoaV8xIiwyXSxbMCwxLCIiLDEseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFsyLDMsImYiXSxbNCw1LCJmIl0sWzIsNCwiIiwwLHsic3R5bGUiOnsidGFpbCI6eyJuYW1lIjoiaG9vayIsInNpZGUiOiJ0b3AifX19XSxbMyw1LCIiLDAseyJzdHlsZSI6eyJ0YWlsIjp7Im5hbWUiOiJob29rIiwic2lkZSI6InRvcCJ9fX1dXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {\R^n} \& {U_1} \& M \\
+        {\R^n} \& {U_2} \& N
+        \arrow["{\Phi_2}"', from=2-2, to=2-1]
+        \arrow["{\Phi_1}"', from=1-2, to=1-1]
+        \arrow[dashed, no head, from=1-1, to=2-1]
+        \arrow["f", from=1-2, to=2-2]
+        \arrow["f", from=1-3, to=2-3]
+        \arrow[hook, from=1-2, to=1-3]
+        \arrow[hook, from=2-2, to=2-3]
+    \end{tikzcd}\]
+\end{problem}
+
+\begin{solution}
+   \quad Let $U_1$ be a neighborhood of $x$ with $\Phi_1 : U_1 \to \R^n$ a diffeomorphism. Since $f$ is a diffeomorphism, the restriction $\restr{f}{U_1} : U_1 \to f(U_1)$ is also a diffeomorphism, and $f(U_1)$ is an open neighborhood of $f(x)$ since diffeomorphisms are open maps. We can then let $\Phi_2 : f(U_2) \to \R^n$ be the composition $\Phi_1\circ \restr{f^{-1}}{U_1}$. This clearly makes the diagram commute.  
+\end{solution}
+
+\begin{problem}
+    This problem is from the section \textit{Colloquialisms in differential topology} in the lecture notes.
+\end{problem}
+
+\begin{solution}
+    Write expanded versions of the following assertions.
+    \begin{partproblem}{a}
+        Locally every immersion looks like the standard immersion $\R^k \to \R^k \times \R^\ell$ which sends $x$ to $(x,0)$.
+    \end{partproblem}
+
+    \quad Let $f : X \to Y$ be an immersion of a $k$-manifold into an $n$-manifold. Then for any $x\in X$, there exist open neighborhoods $x\in U_1$ and $f(x)\in U_2$ with diffeomorphisms $\Psi_1 : U_1 \to \R^k$ and $\Psi_2 : U_2 \to \R^n$ such that $\Psi_2\circ f\circ\Psi_1^{-1} : \R^k \to \R^n$ is the map which sends $x$ to $(x,0)$.
+    
+    \begin{partproblem}{b}
+        Locally every submersion looks like the standard submersion $\R^k\times \R^\ell \to \R^k$ sending $(x,y)\to x$.
+    \end{partproblem}
+
+    \quad Let $f : X \to Y$ be a submersion of an $n$-manifold to a $k$-manifold. Then for any $x\in X$, there exist open neighborhoods $x\in U_1$ and $f(x)\in U_2$ with diffeomorphisms $\Psi_1 : U_1 \to \R^n$ and $\Psi_2 : U_2 \to \R^k$ such that $\Psi_2\circ f\circ\Psi_1^{-1} : \R^n \to \R^k$ is the map which sends $(x,y)$ to $x$.
+
+    \begin{partproblem}{c}
+        Every transverse pullback square $W$ of $X\pitchfork Y \subset M$ in which $X$ and $Y$ are submanifolds of $M$ looks, near every $w\in W$, like:
+        % https://q.uiver.app/?q=WzAsNCxbMCwwLCJcXFJeXFxlbGwiXSxbMSwwLCJcXFJeXFxlbGxcXHRpbWVzXFxSXm0iXSxbMCwxLCJcXFJea1xcdGltZXNcXFJeXFxlbGwiXSxbMSwxLCJcXFJea1xcdGltZXNcXFJeXFxlbGxcXHRpbWVzXFxSXm0iXSxbMiwzLCIoYSxiKVxcbWFwc3RvKGEsYiwwKSIsMl0sWzAsMiwieFxcbWFwc3RvKHgsMCkiLDJdLFswLDEsInhcXG1hcHN0byh4LDApIl0sWzEsMywiKHgseSlcXG1hcHN0bygwLHgseSkiXV0=
+        \[\begin{tikzcd}[ampersand replacement=\&]
+            {\R^\ell} \& {\R^\ell\times\R^m} \\
+            {\R^k\times\R^\ell} \& {\R^k\times\R^\ell\times\R^m}
+            \arrow["{(a,b)\mapsto(a,b,0)}"', from=2-1, to=2-2]
+            \arrow["{x\mapsto(x,0)}"', from=1-1, to=2-1]
+            \arrow["{x\mapsto(x,0)}", from=1-1, to=1-2]
+            \arrow["{(x,y)\mapsto(0,x,y)}", from=1-2, to=2-2]
+        \end{tikzcd}\]
+    \end{partproblem}
+
+    \quad Suppose $X$ and $Y$ are transverse submanifolds of $M$ with pullback $W$. Let $n=\dim X, m = \dim Y$, $\ell=\dim W$, and $q=\dim M$. Then for any point $w\in W$, there are neighborhoods $U_W, U_X, U_Y,$ and $U_M$ that make the following diagram commute:
+    % https://q.uiver.app/?q=WzAsOCxbMCwwLCJVX1ciXSxbMSwxLCJcXFJeXFxlbGwiXSxbMCwzLCJVX1giXSxbMywwLCJVX1kiXSxbMywzLCJVX00iXSxbMSwyLCJcXFJebiJdLFsyLDEsIlxcUl5tIl0sWzIsMiwiXFxSXnEiXSxbNSw3XSxbMSw1XSxbMSw2XSxbNiw3XSxbMCwyXSxbMCwzXSxbMiw0XSxbMyw0XSxbNiwzXSxbMSwwXSxbNSwyXSxbNyw0XV0=
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {U_W} \&\&\& {U_Y} \\
+        \& {\R^\ell} \& {\R^m} \\
+        \& {\R^n} \& {\R^q} \\
+        {U_X} \&\&\& {U_M}
+        \arrow[from=3-2, to=3-3]
+        \arrow[from=2-2, to=3-2]
+        \arrow[from=2-2, to=2-3]
+        \arrow[from=2-3, to=3-3]
+        \arrow[from=1-1, to=4-1]
+        \arrow[from=1-1, to=1-4]
+        \arrow[from=4-1, to=4-4]
+        \arrow[from=1-4, to=4-4]
+        \arrow[from=2-3, to=1-4]
+        \arrow[from=2-2, to=1-1]
+        \arrow[from=3-2, to=4-1]
+        \arrow[from=3-3, to=4-4]
+    \end{tikzcd}\]
+    where the central square is the one given in the problem description.
+\end{solution}
+
+\begin{problem}
+    Suppose that $M$ is a smooth manifold of dimension $2$, that $X$ and $Y$ are submanifolds of $M$ of dimension $1$ intersecting transversally and that $x$ is a point of $X\cap Y$. Show that there is a coordinate neighborhood $\Phi : U \to \R^2$ centered at $x\in M$ under which $\Phi(X\cap U)$ is the $x$-axis and $\Phi(Y\cap U)$ is the $y$-axis.
+\end{problem}
+
+\begin{solution}
+    \quad Starting with some point $x\in X\cap Y$, let's pick a neighborhood $U_{X\cap Y}$ of $x$. Since the pullback of $X\pitchfork Y$ is a $0$ manifold, the set $X\cap Y$ doesn't have any limit points. Thus we can shrink $U_{X\cap Y}$ so that it only contains one intersection point of $X$ and $Y$. Since we're investigating a local property, it suffices to just consider the case when $X\cap Y = \{x\},$ and replace $X$ and $Y$ with their intersections with $U_{X\cap Y}$. Then we get the transverse pullback square $\{x\}\subset X,Y\subset M$ which gives a diagram on charts:
+    % https://q.uiver.app/?q=WzAsNCxbMCwwLCJcXHt4XFx9Il0sWzAsMSwiXFxSXFx0aW1lc1xce3hcXH0iXSxbMSwwLCJcXHt4XFx9XFx0aW1lc1xcUiJdLFsxLDEsIlxcUlxcdGltZXNcXFIiXSxbMCwxXSxbMCwyXSxbMSwzXSxbMiwzXV0=
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {\{x\}} \& {\{x\}\times\R} \\
+        {\R\times\{x\}} \& \R\times\R
+        \arrow[from=1-1, to=2-1]
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=1-2, to=2-2]
+    \end{tikzcd}\]
+    This is exactly the axis embedding we are looking for.
+\end{solution}
+
+\end{document}

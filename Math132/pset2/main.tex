@@ -1,0 +1,152 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 2}}
+\date{\textbf{Due:} February 10, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Using the preimage theorem, show that the Stiefel manifold from the previous problem set is a smooth manifold of dimension $2n-3$. Can you generalize your argument to the Stiefel manifold of orthonormal $k$-frames in $\R^n$.
+\end{problem}
+
+\begin{solution}
+    \quad As before, we'll work with the full generality of the previous problem. Let $\R^{nk}$ be the space of all $k$-frames in $\R^n$, and consider the map $\phi : \R^{nk} \to \R^{\binom{k+1}{2}}$ be the map given by $\phi_q(v_1, \ldots, v_k) = \big\langle v_q, v_q \big\rangle$ for $1\leq q\leq k$ and when $q> k$, $\phi_q(v_1,\ldots,v_k) = \big\langle v_{a(q)}, v_{b(q)} \big\rangle$ for some parametrization $1\leq a(q)<b(q)\leq k$. Now by construction, the Stiefel manifold $S_{n,k}$ is exactly the preimage of the point $y=(1,\ldots,1,0,\ldots,0)\in \R^{\binom{k+1}{2}}$. So if this is a regular value, the preimage theorem would state that $S_{n,k}$ is a smooth manifold of dimension $nk - \binom{k+1}{2}$ as desired.
+
+    \quad To show that this point is a regular value, we must show that for any $x\in \phi^{-1}(y)$ the tanget space map $d\phi_x : T_x\R^{nk} \to T_y\R^{\binom{k+1}{2}}$ is surjective. So let $(v_1,\ldots,v_k)\in \phi^{-1}(y)$ be some orthonormal $k$-frame in $\R^n$. Then we have 
+    \[
+        \frac{\partial \phi_q}{\partial v_i} = \begin{cases}
+            2v_i & 1\leq q\leq k, q=i,\\
+            v_{b(q)} & k<q, a(q)=i.
+        \end{cases}
+    \]  
+    Note that is somewhat of an abuse of notation, since $v_i$ is a $k$-vector in $\R^{nk}$, however $v_i$ could be replaced by $v_{i,j}$ to denote the $j$-th component of $v_i$ and the formula would work the same. Since these vectors are orthonormal, it follows that the rows of the $d\phi_{v_1,\ldots,v_k}$ matrix are linearly independent and so the map $d\phi_{v_1,\ldots,v_k}$ is surjective as desired.
+\end{solution}
+
+\begin{problem}
+    Let $A=(a_{ij})$ be a symmetric $n\times n$ matrix, and define $f_A : \R^n \to \R$ by \[f_A(v) = v^T \cdot A \cdot v = \sum a_{ij}v_iv_j\] in which we are interpreting a vector $v\in \R^n$ as a column vector, with $i^\textrm{th}$ coordinate $v_i$. Set
+    \[
+        S_A = \{v\in \R^n : f_A(v) = 1\}
+    .\] 
+    Show that if $\det A\neq 0$, then $S$ is a smooth manifold of dimension $(n-1)$. Describe the tangent space to $S$ at a point $v$. % Recall that in the preimage theorem, the tangent space to f^{-1}(y) at the point x is the kernel of df_x 
+\end{problem}
+
+\begin{solution}
+    \quad Calculating the derivative of this function:
+    \[
+        \begin{aligned}
+            f_A(v) = \sum_{0\leq i,j<n} a_{ij} v_i v_j \implies \frac{\partial f_A}{\partial v_k} = \sum_{0\leq i,j<n} \frac{\partial}{\partial v_k} a_{ij} v_i v_j& = \sum_{0\leq j < n} (a_{kj} v_j + a_{jk} v_j)\\
+            &=\sum_{0\leq j < n} 2a_{kj} v_j = 2v^TA
+        \end{aligned}
+    \]
+    This means that our derivative map between tangent spaces can be expressed as:
+    \[
+        \begin{aligned}
+            (df_A)_v : T_v \R^n &\to T_{f_A(v)} \R, \\
+            x &\mapsto 2v^TA \cdot x.
+        \end{aligned}
+    \]  
+    This is a submersion for any $v\in f^{-1}_A(1)$, since $2v^TA$ must be nonzero, so by the preimage theorem $S_A=f^{-1}_A(1)$ is a manifold of dimension $n-1$. The tangent space at a point $v\in S_A$ is kernel of $(df_A)_v$ and so consists of the vectors $x$ such that $2v^TAx=\big\langle 
+    2v^TA, x\big\rangle = 0$. This is exactly the orthogonal complement of $2v^TA$ so we have
+    \[
+        T_v S_A = (2v^TA)^\perp \subset T_v\R^n
+    .\]  
+\end{solution}
+
+\begin{problem}
+    GP, Problem 18 of Chapter 1, Section 1
+\end{problem}
+
+\begin{solution}
+    We will be making quite a lot of use of this.
+    \begin{partproblem}{a}
+        An extremely useful function $f : \R^1 \to \R^1$ is
+        \[
+            f(x)=\begin{cases}
+                e^{-1 /x^2} & x > 0,\\
+                0 & x \leq 0.
+            \end{cases}
+        \]
+        Prove that $f$ is smooth. 
+    \end{partproblem}
+
+    \quad Let's first work with a modified $f$:
+    \[
+        f(x)=\begin{cases}
+            e^{-1 /x^2} & x\neq 0,\\
+            0 &x= 0.
+        \end{cases}
+    \] 
+    It follows from the chain rule and power rule that on $\R -\{0\}$, the derivative $\partial^n f(x) / \partial x^n$ exists and takes the form $q(x)f(x)$ for some polynomial $q(x)\in\Z[x, x^{-1}]$. Since such polynomials are smooth everywhere except possibly $0$, it follows that $f(x)$ is smooth everywhere except possibly at $0$. To show that $f(x)$ is smooth at $0$, we'll inductively show that $\lim_{x_0 \to 0}\left(\partial^n f(x) / \partial x^n\right)(x_0) = 0$.
+    
+    \quad First of all, for $f(x)$ itself has limit by basic calculus:
+    \[
+        \begin{aligned}
+            \lim_{x \to 0} f(x) = \lim_{x\to 0} e^{-1 / x^2} &= \lim_{x\to -\infty} e^{x} = 0\\
+            &\text{since } \lim_{x\to 0} \frac{-1}{x^2} = -\infty.
+        \end{aligned}
+    \] 
+    Now more generally, for any $n$, the derivative $\partial^n f(x)/\partial x^n$ is bounded above (from the right) side by $e^{-1 /x}$ and from below by $e^{-1 /x^2}$ so by the squeeze theorem, we get
+    \[
+        \lim_{x_0 \to 0^+}\partial^n f(x)/\partial x^n(x_0) = 0
+    .\]   
+    We can do a similar thing on the left side by bounding it above by $e^{1 /x}$ so the limit must be equal to $0$ and so all the derivatives are continuous. Lastly, we check that this ``limit completed'' derivative is indeed the derivative, but this is easy to see since the $n$-th derivative at $0$ is always zero by induction.
+
+    Now since the $n$-th derivative at zero is zero, we can replace the negative side of this function by $0$ and it will still be smooth. Thus we get our smooth function:
+    \[
+        f(x)=\begin{cases}
+            e^{-1/x^2}& x>0,\\
+            0 & x\leq 0.
+        \end{cases}
+    \] 
+
+    \begin{partproblem}{b}
+        Suppose that $a < b$ are real numbers. Show that $g(x)=f(x-a)f(b-x)$ is a smooth function, positive on $(a,b)$ and zero elsewhere. It follows that
+        \[
+            h(x)=\frac{\int^x_{-\infty} g(x)\;dx}{\int^\infty_{-\infty}g(x)\;dx} \text{ is smooth}\implies h(x)=\begin{cases}
+                0 & x < a,\\
+                1 & x> b,\\
+                0 < h(x)<1 & x\in (a,b).
+            \end{cases}
+        \]  
+        In fact $h$ is monotone increasing on $(a,b)$.
+    \end{partproblem}
+
+    \quad As a product of smooth functions, clearly $g(x)=f(x-a)f(b-x)$ is a smooth function. Furthermore, since $f(x-a)=0$ iff $x>a$ and $f(b-x)=0$ iff $x<b$, it follows that $g(x)$ is zero on $\R-(a,b)$ and positive on $(a,b)$. There isn't really much else to show here, the rest follows as stated in the problem.   
+
+    \begin{partproblem}{c}
+        Now construct a smooth function on $\R^k$ that equals $1$ on the ball of radius $a$, is zero outside the ball of radius $b$ and is strictly between $0$ and $1$ at points $x$ with $a < |x| < b$. Such a function is called a \emph{bump} function, and will play a very important role in our later work.
+    \end{partproblem}
+
+    \quad Let $B_{a,b} : \R^k \to \R$ be the function defined as $B_{a,b}(x)=1-h(\|x\|)$, which clearly satisfies all the properties we want it to by the previous problem. The only thing we have to check is that it is a smooth function. Recall that $\|-\| : \R^n \to \R$ is smooth everywhere except for zero. However the function $1-h(-)$ is constant in a neighborhood around $0$, so the composition $1-h(\|-\|)$ must be smooth at zero. This completes the proof.   
+\end{solution}
+
+\begin{problem} Suppose that $y$ is a regular value of $f : X \to Y$, where $X$ is compact and has the same dimension as $Y$. Show that $f^{-1}(y)$ is a finite set $\{x_1,\ldots,x_N\}$. Prove that there exists a neighborhood $U$ of $y\in Y$ such that $f^{-1}(U)$ is a disjoint union $V_1\sqcup \cdots \sqcup V_N$, where $V_i$ is an open neighborhood of $x_i$, and $f$ maps each $V_i$ diffeomorphically onto $U$. % pick disjoint neighborhood W of X that are mapped diffeomorphically. Show that f(X- uW_i) is compact and does not contain y.
+\end{problem}
+
+\begin{solution}
+    \quad By the preimage theorem, $f^{-1}(y)$ is a submanifold of $X$ of dimension $0$. Suppose for the sake of contradiction that $f^{-1}(y)$ is an infinite set of points. Since $X$ is compact, this means that $f^{-1}(y)$ has a limit point, which violates the manifold condition of being locally diffeomorphic to $\R^0$. Thus $f^{-1}(y)$ is a finite set, say composed of $\{x_1, \ldots, x_N\}$.
+
+    \quad Now since $y$ is a regular value, $df_x : T_xX \to T_yY$ is a submersion for any $x\in f^{-1}(X)$. Since $T_xX$ and $T_yY$ have the same dimensions, it must be an isomorphism. Thus by the inverse function theorem, we have local diffeomorphisms $\psi_i : \mathcal{V}_{x_i} \to \mathcal{U}_{x_i}$. We can shrink the sets $\mathcal{V}_{x_i}$ so that they are all disjoint. Now let $U=Y-f(X-\bigcup_i \mathcal{V}_{x_i})$. Since $X-\bigcup_i \mathcal{V}_{x_i}$ is compact, its image is compact and hence closed so $U$ is open as desired. Letting $V_i = \mathcal{V}_{x_i} \cap f^{-1}(U)$ gives us the required properties.  
+\end{solution}
+
+\begin{problem}
+    Prove that the set of all $2\times 2$ matrices of rank $1$ is a three-dimensional submanifold of $\R^4=M(2)$. %Remark: This can be generalized to the space of (n+1)×(n+1) rank 1 matrices, and also to the space of projection matrices (a projection matrix is a matrix P satisfying P^2 = P). The space of all rank 1-matrices is a smooth manifold of dimension 2n+1. The space of rank 1 projection matrices is a smooth manifold of dimension 2n called a Jouanolou device for RPn. For the general case it is easier to show directly that it is a manifold than it is to use the Preimage Theorem.
+\end{problem}
+
+\quad The rank of a $2\times 2$ matrix can either be $0,1,$ or $2$. It is only rank $0$ if the matrix is the zero matrix, otherwise it is rank $1$ if the determinant is $0$. So consider the smooth function $\det : M(2)-\{0\} \to \R$. Since $\det(a,b,c,d)=ad-bc$, it's easy to check that $0\in \R$ is a regular value of $\det$, indeed every real number is a regular value since the derivative map is nonzero and hence surjective for any $(a,b,c,d)\in M(2)-\{0\}$. Thus $\det^{-1}(0)$, the set we are investigating, is a smooth manifold of dimension $4-1=3$.
+
+\end{document}

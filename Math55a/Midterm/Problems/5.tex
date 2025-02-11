@@ -1,0 +1,9 @@
+\begin{problem}
+Let $V$ be a finite-dimensional vector space over the field $k$, and $f,g:V\to k$ two linear maps. Show that if $\Ker(f)\subset \Ker(g)$ then there exists $c\in k$ such that $g=c\,f$.
+\end{problem}
+
+Let $f,g$ be as in the problem description. By the first isomorphism theorem, we have an injective linear map $\widetilde{f} : V/\Ker(f)\to k$. However, since $\Ker(f)\subset \Ker(g)$, we also have an injective map $\widetilde{g} : V/\Ker(g)\to V/\Ker(f) : v+\Ker(g) \mapsto v+\Ker(f)$. This map is clearly a linear homomorphism and injective because $v+\Ker(f)=w+\Ker(f)$ implies $v-w\in \Ker(f)$ so $v-w\in \Ker(g)$ and $v+\Ker(g)=w+\Ker(g)$. So we have a sequence of injective maps,
+\[
+  V/\Ker(g) \longrightarrow V/\Ker(f) \longrightarrow k
+.\]
+Now let $V_f$ be the image of $V/\Ker(f)$ in $k$ and let $V_g$ be the image of $V/\Ker(g)$ in $k$. Clearly $V_g$ is a subspace of $V_f$. Since $k$ is a one dimensional space, where every element is of the form $c\cdot 1$, it follows that $V_g=cV_f$ for some $c\in k$. This means that for every $v+\Ker(g)\in V/\Ker(g)$, $g(v)=cf(v)$. So $g(v)=cf(v)$ for all $v\in V$, since $v$ is simply a coset representative.     

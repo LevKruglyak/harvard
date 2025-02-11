@@ -1,0 +1,11 @@
+\begin{problem}
+Suppose the bilinear form $B(x,y)=\sum a_{ij} x_i y_j$ gives a (symmetric definite positive) inner product on $\R^n$ (whose matrix in the standard basis is $A=(a_{ij})$). 
+\begin{enumerate}[(a)]
+  \item For $n=2$, show that the largest entry (or entries) in the matrix $A$ occur on the diagonal, namely at least one of $a_{11}$ or $a_{22}$ achieves the maximum of all $\{a_{ij}\}$.
+  \item For $n>2$, does it remain true that the largest entry or entries in the matrix $A$ occur on the diagonal? (Give a proof or a counterexample)
+\end{enumerate}
+\end{problem}
+
+\textbf{(a)} See (b).
+
+\textbf{(b)} Let $\lambda$ be the maximum diagonal entry of $A$. Suppose $a_{ij}$ is some entry in the matrix. Let $v$ be the vector with all zeroes, $1$ in the $i$-th place, and $-1$ in the $j$-th place. Then $B(v,v)=a_{ii}-2a_{ij}+a_{jj}\geq 0$. So $\frac{a_{ii}+a_{jj}}{2}\geq a_{ij}$. However because $\frac{a_{ii}+a_{jj}}{2}\leq \lambda$, it follows that $a_{ij}\leq \lambda$. So $\lambda$ is the maximal entry of the matrix and it occurs exactly on the diagonal.   

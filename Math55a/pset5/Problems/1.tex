@@ -1,0 +1,20 @@
+\begin{problem}
+Let $V$ be an $n$-dimensional vector space, and $T : V \to V$ a linear map; suppose that $T$ is nilpotent, i.e.\ $T^N = 0$ for some $N > 0$.
+\begin{enumerate}
+  \item Show that $T^n = 0$.
+  \item Show that $I+T$ is invertible (where $I$ is the identity operator), and give a formula for its inverse.
+\end{enumerate}
+\end{problem}
+
+\textbf{(1)} Consider the sequence of inclusions $\ker(T)\subset \ker(T^2)\subset \cdots \subset \ker(T^N) = V$. This sequence must become eventually constant, so let $i$ be the smallest integer for which $\ker(T^i)=\ker(T^{i+1})$. Then $\ker(T^i)=\ker(T^j)$ for all $j\geq i$. Now suppose $T^n\neq 0$ for the sake of contradiction. So we have a strictly increasing chain $\dim \ker(T) < \dim \ker(T^2) < \cdots < \dim \ker(T^n) < n$. This is impossible, since $\dim \ker(T) \geq 0$. So $\dim \ker(T^n)$ must be equal to $n$ and $T^n$ must be the zero operator.  
+
+\textbf{(2)} Observe
+\[
+  \begin{aligned}
+    &T^N=0\\
+    &(-T)^N=0\\
+    &(-T)^N-I=-I\\
+    &(I+T)((-T)^{n-1}+(-T)^{n-2}+\cdots+I)=I
+  \end{aligned}
+.\] 
+So $(-T)^{n-1}+(-T)^{n-2}+\cdots+I$ is an inverse for $I+T$. 

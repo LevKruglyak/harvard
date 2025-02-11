@@ -1,0 +1,65 @@
+% Math stuff
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+% Fancy script capitals
+\usepackage{mathrsfs}
+\usepackage{cancel}
+% Bold math
+\usepackage{bm}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{tikz}
+\usepackage{quiver}
+% Geometry
+\usepackage[letterpaper, portrait, margin=1.25in, includefoot]{geometry}
+
+
+\providecommand{\bE}{\mathbf{E}}
+\providecommand{\bB}{\mathbf{B}}
+\providecommand{\bJ}{\mathbf{J}}
+\providecommand{\bj}{\mathbf{j}}
+\providecommand{\bff}{\mathbf{f}}
+\providecommand{\VF}{\mathfrak{X}}
+
+\providecommand{\R}{\mathbb{R}}
+\providecommand{\C}{\mathbb{C}}
+\providecommand{\Z}{\mathbb{Z}}
+\providecommand{\RP}{\mathbb{RP}}
+\providecommand{\Hom}{\mathrm{Hom}}
+\providecommand{\CC}{\mathscr{C}}
+\providecommand{\Eq}{\mathrm{Eq}}
+\providecommand{\Coeq}{\mathrm{Coeq}}
+\providecommand{\hCW}{\mathbf{hCW}}
+\providecommand{\Set}{\mathbf{Set}}
+\providecommand{\colim}{\mathrm{colim}}
+\providecommand{\Th}{\mathrm{Th}}
+
+\newcommand\defn[1]{\textbf{#1}}
+\newcommand\todo[1]{{\color{red}\textbf{#1}}}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[subsection]
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{claim}[definition]{Claim}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{example}[definition]{Example}
+\newtheorem{corollary}[definition]{Corollary}
+
+% Restriction
+\newcommand\restr[2]{{
+  \left.\kern-\nulldelimiterspace
+  #1
+  \vphantom{\big|}
+  \right|_{#2}
+}}
+
+\edef\restoreparindent{\parindent=\the\parindent\relax}
+\usepackage{parskip}
+\restoreparindent
+
+\usepackage[shortlabels]{enumitem}
+\setlist[enumerate]{topsep=1ex,itemsep=1ex,partopsep=1ex,parsep=1ex}
+\setlist[itemize]{topsep=1ex,itemsep=1ex,partopsep=1ex,parsep=1ex}
+
+\renewcommand{\abstractname}{Summary}    % clear the title

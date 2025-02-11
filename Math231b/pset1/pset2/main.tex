@@ -1,0 +1,258 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 2}}
+\date{\textbf{Due:} February 14, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}%41.6
+    Let $W$ be a pointed $k$-space. Show that the functors
+    \[
+        W\wedge - : k\textbf{Top}_* \to k\textbf{Top}_*\quad\text{and}\quad (-)^W_* : k\textbf{Top}_* \to k\textbf{Top}_*  
+    \]
+    are \emph{homotopy functors}: they descend to well-defined functors
+    \[
+        W\wedge - : \text{ho}(k\textbf{Top}_*) \to \text{ho}(k\textbf{Top}_*)\quad\text{and}\quad (-)^W_* : \text{ho}(k\textbf{Top}_*) \to \text{ho}(k\textbf{Top}_*)
+    .\]  
+\end{problem}
+
+\begin{solution}
+    \quad For the functor $W\wedge -$, suppose we had pointed $k$-spaces $X$ and $Y$ with maps $f,g : X \to Y$. By a simple construction, a  homotopy $f\simeq g$ is equivalent to a map $H : X\wedge I_+ \to Y$, where $I_+$ is the interval disjoint union a basepoint. Applying the $W\wedge -$ functor gives us a map $W \wedge H : W\wedge (X\wedge I_+) \to Y$. If we use the natural associativity isomorphism on smash products, this can be considered as a map $W\wedge H : (W\wedge X)\wedge I_+ \to Y$, which by naturality must be a homotopy between the maps $W\wedge f$ and $W\wedge g$. This is sufficient to show that $W\wedge -$ is a well defined functor on homotopy categories.
+
+    \quad For the other functor $(-)^W_*$, we first will construct a map $\Psi : A\wedge X^W_* \to (A\wedge X)^W_*$. Using the adjunction, associativity, natural isomorphisms, we get:
+    \[
+        \begin{aligned}
+            k\textbf{Top}_*(X^W_*, X^W_*) &\to k\textbf{Top}_*(W\wedge (X^W_*), X) \to k\textbf{Top}_*(A\wedge (W\wedge X^W_*), A\wedge X) \\
+            &\to  k\textbf{Top}_*(W\wedge (A\wedge X^W_*), A\wedge X) \to k\textbf{Top}_*(A\wedge X^W_*, (A\wedge X)^W) 
+        \end{aligned}
+    \] 
+    So natural choice of map $A\wedge X^W_* \to (A\wedge X)^W_*$ is thus to just take the image of the identity $1_{X^W_*}$ under this sequence of compositions. A simpler presentation of this map is given by $(a, f)\in A\wedge X^W_* \mapsto \left((a', x)\mapsto f(x)\right)\in (A\wedge X)^W_*$. Now suppose $f,g : X \to Y$ are two maps, and $H : X\wedge I_+ \to Y$ is a homotopy between them. By functoriality, we then have a map $H^W_* : (X\wedge I_+)^W_* \to Y^W_+$. Precomposing with $\Psi$, we get a map $H^W_* \circ \Psi : X^W_*\wedge I_+ \to Y^W_+$. It's clear to see that this is a homotopy between $f^W_*$ and $g^W_*$ by the expanded definition of $\Psi$, so this completes the proof.  
+\end{solution}
+
+\begin{problem} % 45.4
+    Cofibration sequences and co-exactness.
+\end{problem}
+
+\begin{solution}
+    Homotopy equivalence of mapping cones:
+    \begin{partproblem}{a}
+        Use a homotopy $h : A \times I \to Y$ between the branches of the first diagram to construct a map $C(i) \to C(j)$ such that in the second diagram, the left square commutes and the right one commutes up to homotopy:
+        % https://q.uiver.app/?q=WzAsMTAsWzAsMCwiQSJdLFsxLDAsIlgiXSxbMCwxLCJCIl0sWzEsMSwiWSJdLFszLDAsIlgiXSxbNCwwLCJDKGkpIl0sWzUsMCwiXFxTaWdtYSBBIl0sWzUsMSwiXFxTaWdtYSBCIl0sWzQsMSwiQyhqKSJdLFszLDEsIlkiXSxbMCwxLCJpIl0sWzAsMiwiZiJdLFsxLDMsImciXSxbMiwzLCJqIl0sWzQsOSwiZyJdLFs0LDVdLFs5LDhdLFs1LDhdLFs1LDZdLFs4LDddLFs2LDcsIlxcU2lnbWEgZiJdLFsxMiwxNCwiIiwwLHsic2hvcnRlbiI6eyJzb3VyY2UiOjMwLCJ0YXJnZXQiOjMwfX1dXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        A \& X \&\& X \& {C(i)} \& {\Sigma A} \\
+        B \& Y \&\& Y \& {C(j)} \& {\Sigma B}
+        \arrow["i", from=1-1, to=1-2]
+        \arrow["f", from=1-1, to=2-1]
+        \arrow[""{name=0, anchor=center, inner sep=0}, "g", from=1-2, to=2-2]
+        \arrow["j", from=2-1, to=2-2]
+        \arrow[""{name=1, anchor=center, inner sep=0}, "g", from=1-4, to=2-4]
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=2-4, to=2-5]
+        \arrow[from=1-5, to=2-5]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=2-5, to=2-6]
+        \arrow["{\Sigma f}", from=1-6, to=2-6]
+        \arrow[shorten <=19pt, shorten >=19pt, Rightarrow, from=0, to=1]
+    \end{tikzcd}\]
+    \end{partproblem}
+
+    \quad First of all, to disambiguate the homotopy $h : A\times I \to Y$, let $h(-,0) = g\circ i$ and $h(-,1) = j\circ f$. Now by the universal property of the pushout, to construct a map $X\cup_i CA \to Y\cup_j CB$, it suffices to construct maps $X \to Y\cup_j CB$ and $CA \times I \to Y\cup_j CB$ which agree on the map $i : A\to X$ and inclusion $A \to CA$. To get from $X \to Y\cup_j CB$ we can simply compose $g : X\to Y$ with the natural inclusion $i(j) : Y\to Y\cup_j CB$. For the map $H : CA \times I\to Y\cup_j CB$, let's define it as
+    \[
+        H(a,t) = \begin{cases}
+            i(j)(h(a,2t)) & 0\leq t\leq 1/2\\
+            i_{CB}(Cf(a, 2t-1)) & 1/2 \leq t \leq 1    
+        \end{cases}
+    \]
+    where $i(j) : Y \to Y\cup_f CB$ and $i_{CY} : CB \to Y\cup_f CB$ are the natural maps. Note that this is well defined since at $t=1 /2$, we have $i(j)(h(a,1))=(i(j)\circ j\circ f)(a) = i_{CB}(f(a)) = i_{CB}(Cf(f(a), 0)) = i_{CB}(Cf(a, 0))$. Furthermore, $H$ is a well defined map on the cone, since $H(a,1)=i_{CB}(Cf(a, 1))$ is a constant map. Next, we claim that $i(j)\circ g\circ i = H\circ \iota_{A}$ where $\iota : A \to CA$ is the natural inclusion. This is because for any $a\in A$, we have $i(j)\circ g\circ i(a) = i(j)(h(a, 0)) = H(a, 0) = H\circ \iota_{A}(a)$. Putting everything together, we have a map $\lambda_h : C(i) \to C(j)$ by the universal property of the coproduct. We thus have two things to check.
+
+    \begin{enumerate}
+        \item \underline{The left square commutes:} The bottom side is the map $X \to Y\cup_j CB = C(j)$ given by $g$ composed with the inclusion $Y \to Y\cup_j CB$. However by construction of $\lambda_h$, the top square is also the composition of $g$ with the inclusion $Y\to Y\cup_j CB$.
+        \item \underline{The right square commutes up to homotopy:} Both maps $C(i) \to \Sigma B$ are uniquely determined by maps $X \to \Sigma B$ and $CA \to \Sigma B$ that agree on the map $A \to X$ and inclusion $A \to CA$. Since mapping from the mapping cones to the suspension collapses $X,Y$ to a point, it suffices to just specify maps $CA \to \Sigma B$. The top map is the standard map $CA \to \Sigma B$ which sends $A\times I \to B\times I$ by $f\times I$ and passes to the quotient in both cases. The bottom map is the map which takes $CA$ to the top half of $\Sigma B$. However these maps are clearly homotopic by linear interpolation.  
+    \end{enumerate}
+
+    \begin{partproblem}{b}
+        Use a homotopy $f \simeq g : X \to Y$ to construct a homotopy equivalence $C(f) \simeq C(g)$. % See [4] Prop 3.2.15
+    \end{partproblem}
+    \quad Letting $h$ be the homotopy $f \simeq g$ and $\overline{h}$ be the homotopy $g \simeq f$. Note that the functions $\lambda_h : C(f) \to C(g)$ and $\lambda_{\overline{h}} : C(g) \to C(f)$ are given on $CX$ by:
+    \[
+        \lambda_h(x,t)=\begin{cases}
+            h(x,2t)&0 \leq t\leq \frac{1}{2},\\
+            (x,2t - 1) & \frac{1}{2} \leq t \leq 1,\\
+        \end{cases}\quad\text{and}\quad \lambda_{\overline{h}}(x,t)=\begin{cases}
+            h(x,1-2t)&0 \leq t\leq \frac{1}{2},\\
+            (x,2t-1) & \frac{1}{2} \leq t \leq 1,\\
+        \end{cases}
+    \] 
+    Then the composition $\lambda_{\overline{h}}\circ \lambda_{h}$ is given by:
+    \[
+        \lambda_{\overline{h}}\circ \lambda_h(x, t) = \begin{cases}
+            h(x,2t) & 0 \leq t\leq \frac{1}{2},\\
+            h(x,3-4t) & \frac{1}{2}\leq t\leq \frac{3}{4},\\
+            (x,4t-3) & \frac{3}{4}\leq t\leq 1.
+        \end{cases}
+    \]
+    We can then define a homotopy $\lambda_{\overline{h}}\circ \lambda_{h}\simeq \text{id}_{C(f)}$ by
+    \[
+        H(x,t,s) = \begin{cases}
+            h(x,2t(1-s)) & 0 \leq t\leq \frac{1-s}{2},\\
+            h(x,(3-4t)(1-s)) & \frac{1-s}{2}\leq t\leq \frac{3(1-s)}{4},\\
+            (x,(4t-3) + st) & \frac{3(1-s)}{4}\leq t\leq 1.
+        \end{cases}
+    \]  
+    We can do a very similar thing for $\lambda_h\circ \lambda_{\overline{h}}$, so we have a homotopy equivalence $C(f)\simeq C(g)$.
+\end{solution}
+
+\begin{problem}
+    Let $p$ denote a prime number and let $n\geq 2$. Let $M(\Z /p, n)=S^{n-1}\cup_p D^n$ denote the $n$-dimensional mod $p$ Moore space, and define the \emph{mod $p$ homotopy groups} of a pointed space $X$ to be $\pi_n(X; \Z /p) = [M(\Z /p, n), X]_*$. Since $M(\Z/p, n)\simeq \Sigma^{n-2}M(\Z /p, 2)$, this is a group for $n\geq 3$, and abelian for $n\geq 4$. When $n\geq 3$, prove that there is a short exact sequence
+    \[
+        0 \to \pi_n(X) / p \to \pi_n(X; \Z /p) \to \text{tors}_p\; \pi_{n-1}(X) \to 0
+    .\]    
+    This is the analogue of the universal coefficients theorem for homotopy groups.
+\end{problem}
+
+\begin{solution}
+    \quad Before constructing this exact sequence, we'll first prove some relevant properties of the degree of a map of spheres. (We've only defined it in terms of homology.)
+
+    \begin{claim}
+        For any $n\geq 1$, suppose $f : S^n \to S^n$ is a continuous map. We claim that $\deg f = \pm\deg \Sigma f$ where $\Sigma f$ is the induced map $\Sigma S^n \to \Sigma S^n$ and we use the homeomorphism $\Sigma S^n \cong S^{n+1}$. 
+    \end{claim}
+
+    \begin{proof}
+        We proved last semester that for any $n\geq 1$ there is a natural isomorphism $\widetilde{H}_n(X) \cong \widetilde{H}_{n+1}(\Sigma X)$ for any space $X$. Since this is natural in $X$, we can form a commutative square:
+        \[\begin{tikzcd}[ampersand replacement=\&]
+            {\widetilde{H}_n(S^n)} \& {\widetilde{H}_n(S^n)} \\
+            {\widetilde{H}_{n+1}(\Sigma S^n)} \& {\widetilde{H}_{n+1}(\Sigma S^n)}
+            \arrow["{f_*}", from=1-1, to=1-2]
+            \arrow[from=1-1, to=2-1]
+            \arrow["{\Sigma f_*}"', from=2-1, to=2-2]
+            \arrow[from=1-2, to=2-2]
+        \end{tikzcd}\]
+        All the groups involved are $\Z$, and the vertical maps must be the $\pm 1$ maps since they are isomorphisms, thus we have $\deg f = \pm \deg \Sigma f$.
+    \end{proof}
+
+    \begin{claim}
+        Let $n\geq 1$, and suppose $f : S^n \to S^n$ is a continuous map. For any space $X$, we defined the $n$-th homotopy group of $X$ as $\pi_n(X) = [S^n, X]_*$. Thus we have an induced pullback map $f^* : \pi_n(X) \to \pi_n(X)$ given by precomposition with $f$. We claim that $f^*(\sigma) = \deg f \cdot \sigma$.
+    \end{claim}
+    \begin{proof}
+        To prove this fully, we need a couple of facts from homotopy theory that we haven't proved yet. To make our life easier, let's assume that we have the natural group composition map $* : [S^n, X]_* \times [S^n, X]_* \to [S^n, X]_*$ which is associative, unital, and invertible. Furthermore, we assume that the map $f \in [S^n, S^n]_*$ is given by $p \cdot 1_{S^n} = 1_{S^n} * \cdots * 1_{S^n}$.
+        
+        \medskip
+        \quad Now for any $\sigma\in \pi_n(X)$, the pullback map $f^*(\sigma)$ is given by $\sigma \circ f$, which under homotopy is $\sigma \circ (1_{S^n} * \cdots * 1_{S^n})$. By naturality of the group operation, this is $(\sigma \circ 1_{S^n}) * \cdots * (\sigma \circ 1_{S^n}) = \sigma * \cdots * \sigma$ as desired. 
+    \end{proof}
+    
+    \quad Now the observation that $M(\Z /p, n)\simeq \Sigma^{n-2}M(\Z /p, 2)$ follows from the fact that $\Sigma$ is a left adjoint and thus preserves colimits, including adjunctions, so $\Sigma M(\Z /p, n) = \Sigma(S^{n-1}\cup_p D^n) \cong \Sigma S^{n-1}\cup_{\Sigma p} \Sigma D^n = M(\Z /p, n+1)$. So let's set $n\geq 3$ such that we have a group structure on $\pi_n(X; \Z/p)$. Recall that to define the Moore space, we have a pushout square
+    % https://q.uiver.app/?q=WzAsNCxbMCwwLCJTXntuLTF9Il0sWzEsMCwiU157bi0xfVxcY3VwX2YgRF5uIl0sWzEsMSwiRF5uIl0sWzAsMSwiU157bi0xfSJdLFswLDFdLFsyLDFdLFszLDJdLFszLDAsImYiXV0=
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {S^{n-1}} \& {S^{n-1}\cup_f D^n} \\
+        {S^{n-1}} \& {D^n}
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=2-2, to=1-2]
+        \arrow[from=2-1, to=2-2]
+        \arrow["f", from=2-1, to=1-1]
+    \end{tikzcd}\]
+    where $f : S^{n-1} \to S^{n-1}$ is some map of degree $p$. We can notice, either by construction or by the universal property that the composition $S^{n-1} \to S^{n-1} \to S^{n-1}\cup_f D^n$ is a homotopy cofiber sequence. Thus for any space $X$ we get the Barratt-Puppe long exact sequence:
+    % https://q.uiver.app/?q=WzAsMTIsWzAsMCwiW1Nee24tMX0sWF1fKiJdLFsxLDAsIltTXntuLTF9LFhdXyoiXSxbMiwwLCJbU157bi0xfVxcY3VwX2YgRF5uLCBYXV8qIl0sWzMsMCwiW1xcU2lnbWEgU157bi0xfSwgWF1fKiJdLFs0LDAsIltcXFNpZ21hIFNee24tMX0sWF1fKiJdLFs1LDAsIlxcY2RvdHMiXSxbMCwxLCJcXHBpX3tuLTF9KFgpIl0sWzEsMSwiXFxwaV97bi0xfShYKSJdLFsyLDEsIlxccGlfe259KFg7XFxaL3ApIl0sWzMsMSwiXFxwaV9uKFgpIl0sWzQsMSwiXFxwaV9uKFgpIl0sWzUsMSwiXFxjZG90cyJdLFsxLDAsImZeKl97bi0xfSIsMl0sWzIsMSwiaShmX3tuLTF9XiopIiwyXSxbMywyLCJcXHBpX3tuLTF9IiwyXSxbNCwzLCJmXipfbiIsMl0sWzUsNF0sWzcsNl0sWzgsN10sWzksOF0sWzEwLDldLFswLDYsIiIsMSx7Im9mZnNldCI6MSwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFswLDYsIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMSw3LCIiLDEseyJvZmZzZXQiOjEsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMiw4LCIiLDEseyJvZmZzZXQiOjEsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbMyw5LCIiLDEseyJvZmZzZXQiOjEsInN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNCwxMCwiIiwxLHsib2Zmc2V0IjoxLCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzExLDEwXSxbMSw3LCIiLDEseyJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzIsOCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFszLDksIiIsMSx7InN0eWxlIjp7ImhlYWQiOnsibmFtZSI6Im5vbmUifX19XSxbNCwxMCwiIiwxLHsic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{[S^{n-1},X]_*} \& {[S^{n-1},X]_*} \& {[S^{n-1}\cup_f D^n, X]_*} \& {[\Sigma S^{n-1}, X]_*} \& {[\Sigma S^{n-1},X]_*} \& \cdots \\
+	{\pi_{n-1}(X)} \& {\pi_{n-1}(X)} \& {\pi_{n}(X;\Z/p)} \& {\pi_n(X)} \& {\pi_n(X)} \& \cdots
+	\arrow["{f^*_{n-1}}"', from=1-2, to=1-1]
+	\arrow["{i(f_{n-1}^*)}"', from=1-3, to=1-2]
+	\arrow["{\pi_{n-1}}"', from=1-4, to=1-3]
+	\arrow["{f^*_n}"', from=1-5, to=1-4]
+	\arrow[from=1-6, to=1-5]
+	\arrow[from=2-2, to=2-1]
+	\arrow[from=2-3, to=2-2]
+	\arrow[from=2-4, to=2-3]
+	\arrow[from=2-5, to=2-4]
+	\arrow[shift right=1, no head, from=1-1, to=2-1]
+	\arrow[no head, from=1-1, to=2-1]
+	\arrow[shift right=1, no head, from=1-2, to=2-2]
+	\arrow[shift right=1, no head, from=1-3, to=2-3]
+	\arrow[shift right=1, no head, from=1-4, to=2-4]
+	\arrow[shift right=1, no head, from=1-5, to=2-5]
+	\arrow[from=2-6, to=2-5]
+	\arrow[no head, from=1-2, to=2-2]
+	\arrow[no head, from=1-3, to=2-3]
+	\arrow[no head, from=1-4, to=2-4]
+	\arrow[no head, from=1-5, to=2-5]
+\end{tikzcd}\]
+
+We can now make a couple of reductions to reduce this long exact sequence into the desired short exact sequence. 
+
+\quad First recall that by the second claim, the map $f^*_{n-1} : \pi_{n-1}(X) \to \pi_{n-1}(X)$ is the multiplication by $\pm p$ map, and exactness says that $(f^*_{n-1})^{-1}(c_*) = \Ima(i(f^*_{n-1}))$. However $(f^*_{n-1})^{-1}(c_*)$ is exactly $\text{tors}_p\; \pi_{n-1}(X)$, so by the first isomorphism theorem we have an exact sequence:
+\[
+    \pi_n(X; \Z /p) \to \text{tors}_p\; \pi_{n-1}(X) \to 0
+.\]
+We can do the same thing on the other side of the diagram; by the first claim, the map $f^*_n = \Sigma f^*_{n-1}$ also has degree $p$, and exactness shows that $\pi_{n-1}^{-1}(c_*) = \Ima(f^*_n) = p\cdot \pi_n(X)$. Thus we also have an exact sequence:
+\[
+    0 \to \pi_n(X) /p \to \pi_n(X; \Z /p)
+.\]
+The center term is exact by the long exact sequence, so we are done, and we get a short exact sequence:
+\[
+    0 \to \pi_n(X) /p \to \pi_n(X; \Z /p) \to \text{tors}_p\; \pi_{n-1}(X) \to 0
+.\]
+\end{solution}
+
+\begin{problem}
+    Let $R$ denote a commutative ring. Given a chain complex of $R$-modules $C$ and integer $i\in \Z$, let $C[i]$ denote a chain complex with $C[i]_n = C_[n-i]$ and boundary maps $d_n^{C[1]} = (-1)^i d^C_{n-i}$. Given a map $f : C \to D$ of chain complexes of $R$-modules, define the homotopy cofiber $i(f) : D \to C(f)$ and construct a map $\pi(f) : C(f) \to C[1]$ by analogy with the case of spaces.\\
+
+    \quad Prove that applying $H_0$ to the bi-infinite sequence
+    % https://q.uiver.app/?q=WzAsOSxbMiwwLCJDIl0sWzMsMCwiRCJdLFs0LDAsIkMoZikiXSxbNSwwLCJDWzFdIl0sWzYsMCwiRFsxXSJdLFs3LDAsIkMoZilbMV0iXSxbMSwwLCJDKGYpWy0xXSJdLFswLDAsIlxcY2RvdHMiXSxbOCwwLCJcXGNkb3RzIl0sWzcsNl0sWzYsMCwiXFxwaShmKVstMV0iXSxbMCwxLCJmIl0sWzEsMiwiaShmKSJdLFsyLDMsIlxccGkoZikiXSxbMyw0LCJmWzFdIl0sWzQsNSwiaShmKVsxXSJdLFs1LDhdXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        \cdots \& {C(f)[-1]} \& C \& D \& {C(f)} \& {C[1]} \& {D[1]} \& {C(f)[1]} \& \cdots
+        \arrow[from=1-1, to=1-2]
+        \arrow["{\pi(f)[-1]}", from=1-2, to=1-3]
+        \arrow["f", from=1-3, to=1-4]
+        \arrow["{i(f)}", from=1-4, to=1-5]
+        \arrow["{\pi(f)}", from=1-5, to=1-6]
+        \arrow["{f[1]}", from=1-6, to=1-7]
+        \arrow["{i(f)[1]}", from=1-7, to=1-8]
+        \arrow[from=1-8, to=1-9]
+    \end{tikzcd}\]
+    gives rise to a long exact sequence
+    % https://q.uiver.app/?q=WzAsOSxbMSwwLCJIX3stMX0oQyhmKSkiXSxbMiwwLCJIXzAoQykiXSxbMywwLCJIXzAoRCkiXSxbNCwwLCJIXzAoQyhmKSkiXSxbNSwwLCJIXzEoQykiXSxbNiwwLCJIXzEoRCkiXSxbNywwLCJIXzEoQyhmKSkiXSxbOCwwLCJcXGNkb3RzIl0sWzAsMCwiXFxjZG90cyJdLFswLDFdLFsxLDJdLFsyLDNdLFszLDRdLFs0LDVdLFs1LDZdLFs2LDddLFs4LDBdXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&,column sep=small]
+        \cdots \& {H_{-1}(C(f))} \& {H_0(C)} \& {H_0(D)} \& {H_0(C(f))} \& {H_1(C)} \& {H_1(D)} \& {H_1(C(f))} \& \cdots
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=1-6, to=1-7]
+        \arrow[from=1-7, to=1-8]
+        \arrow[from=1-8, to=1-9]
+        \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+\end{problem}
+
+\begin{solution}
+    \quad Let $C(f)_\bullet$ be the chain complex given by:
+    \[
+        C(f)_n = D_n \oplus C_{n-1} \quad \text{ with }\quad  d^{C(f)}(d,c) = (d^Dd+f(c), -d^Cc)
+    .\]  
+    We have a clear map $i(f) : D \to C(f)$ by taking the inclusion of $D_n \to D_n\oplus C_{n-1}$ and a map $\pi(f) : C(f) \to C[1]$ by taking the projection $D_n \oplus C_{n-1} \to C_{n-1}$. It's clear that these are in fact chain map, by definition of the boundary map $d^{C(f)}$. Now let's prove that we get an exact sequence. Since this exact sequence is completely translation invariant, it suffices to prove three exactness conditions for any $n\in \Z$.
+
+    \begin{enumerate}
+        \item \underline{$\Ima (H_{n-1}(\pi(f)[-1])) = \Ker (H_n (f))$:} For the forward inclusion, suppose $(\omega_d, \omega_c)\in D_{n+1}\oplus C_n = C(f)_{n-1}$ is a cycle, so $d^D\omega_d+f(\omega_c) = 0$ and $d^C\omega_c = 0$. Then $H_{n-1}(\pi(f)[-1])(\omega_d, \omega_c) = \omega_c$, and $H_n(f)(\omega_c)=0$ since $f(\omega_c)=-d^D$ is a boundary. For the converse direction, suppose $\omega\in C_n$ and with $H_n(f)(\omega)=0$. This means $f(\omega) = d^D \sigma$ for some $\sigma \in D_{n+1}$. Then $\omega = H_{n-1}(\pi(f)[-1])(-\sigma, \omega)$ which is a cycle because $d^{H(f)}(-\sigma, \omega) = (-f(\omega) + f(\omega), -d\omega) = 0$.
+        \item \underline{$\Ima(H_{n}(f)) = \Ker(H_{n}(i(f)))$:} For the forward inclusion, suppose $\omega\in C_n$ is a cycle, so $f(\omega)\in D_n$ is a cycle. Then $H_{n}(i(f))(f(\omega)) = (f(\omega), 0)$. This is also a cycle, since $d^{C(f)}(f(\omega), 0)=(d^D f(\omega), 0)=0$. But up to boundaries, $0=d^{C(f)}(0, \omega) = (f(\omega), -d^C\omega) = (f(\omega),0)$, so $(f(\omega), 0) = 0$. In the reverse direction, suppose $\omega\in D_n$ with $H_{n}(i(f))(\omega, 0) = 0$. This means that there exists some $(\omega_d, \omega_c)\in D^{n+1}\oplus C_n$ with $d^{C(f)}(\omega_d, \omega_c) = 0$. Thus $d^D\omega_d + f(\omega_c)=\omega$ so $\omega = H_n(f)(\omega_c)$.
+        \item \underline{$\Ima(H_{n}(i(f))) = \Ker(H_{n}(\pi(f)))$:} The forward direction follows trivially because $i(f)\circ \pi(f)=0$. To prove the converse direction, suppose $(\sigma_d, \sigma_c)\in D_n\oplus C_{n-1}$ for some cycle $(\sigma_d, \sigma_c)$, with $H_{n}(\pi(f))(\sigma_d, \sigma_c) = 0$. This means that $\sigma_c$ is a boundary, so $H_n(i(f))(\sigma_d) = (\sigma_d, 0)$ is equal to $(\sigma_d, \sigma_c)$ relative to a boundary. 
+    \end{enumerate} 
+\end{solution}
+
+\end{document}

@@ -1,0 +1,199 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 231a Problem Set 3}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $0 \to A \xrightarrow{i} B \xrightarrow{p} C \to 0$ be a short exact sequence. Establish bijections among the following three sets.
+    \begin{enumerate}[(i)]
+        \item The set of homomorphisms $\sigma : C \to B$ such that $p\circ\sigma = \text{id}_{C}$.
+        \item The set of homomorphisms $\pi : B \to A$ such that $\pi\circ i = \text{id}_A$.
+        \item The set of homomorphisms $\alpha : A \oplus C \to B$ such that $\alpha(a,0)=i(a)$ for all $a\in A$ and $p\circ\alpha(a,c)$ for all $(a,b)\in A\oplus C$. Any such map is an isomorphism.
+    \end{enumerate} 
+\end{problem}
+
+\begin{solution}
+    We'll begin by proving (i) is a subset of (iii). Suppose $\sigma : C \to B$ is a homomorphism from (i). We would like to construct an $\alpha$ which makes the following diagram commute:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A \arrow[r, "i"] \arrow[d, "\text{id}_A"] & B \arrow[r, "p"]                                          & C \arrow[r] \arrow[d, "\text{id}_C"] & 0 \\
+            0 \arrow[r] & A \arrow[r, "i_A"]                        & A\oplus C \arrow[r, "\pi_C"] \arrow[u, "\alpha"', dashed] & C \arrow[r] \arrow[lu, "\sigma"']    & 0
+        \end{tikzcd}
+    \end{center} 
+    First observe that any $b\in B$ can be expressed as $b=(b-\sigma p(b)) + \sigma p(b)$. Here $(b-\sigma p(b))$. Since $\Ima(\sigma)\cap \Ker(p)=0$, it follows that $B=\Ima(\sigma)\oplus \Ker(p)$. However exactness implies that $\Ker(p)=\Ima(i)$, so $B=\Ima(\sigma)\oplus \Ima(i)$. Note that $i$ and $\sigma$ are both injections so the maps $i : A \to \Ima(i)$ and $\sigma : C \to \Ima(\sigma)$ are isomorphisms. This gives us a map $\alpha = i\oplus \sigma : A\oplus C \to \Ima(i)\oplus \Ima(\sigma) = B$.
+
+    Next, we prove that (ii) is a subset of (iii). Suppose $\pi : B \to A$ is a homomorphism from (ii). Just as before, we're looking for a map $\alpha$ which makes the following diagram commute:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A \arrow[r, "i"] \arrow[d, "\text{id}_A"] & B \arrow[r, "p"] \arrow[ld, "\pi"']                       & C \arrow[r] \arrow[d, "\text{id}_C"] & 0 \\
+            0 \arrow[r] & A \arrow[r, "i_A"]                        & A\oplus C \arrow[r, "\pi_C"] \arrow[u, "\alpha"', dashed] & C \arrow[r]                          & 0
+        \end{tikzcd}
+    \end{center}
+    Any $b\in B$ can be expressed as $b=(b-i\pi(a))+i\pi(a)$, so as before we have $B=\ker(\pi)\oplus \Ima(i)$. By exactness, $\ker(p)=\Ima(i)$ and so the restriction $p : \Ker(\pi)\to C$ is an isomorphism. Similarly, $i : A \to \Ima(i)$ is an isomorphism so the sum map $\alpha = i\oplus p^{-1} : A\oplus C \to \Ima(i)\oplus \Ker(\pi) = B$ is an isomorphism as well.
+
+    Finally, to show that (iii) is a subset of (i) and (ii), which would complete the bijection, suppose we had an $\alpha : A\oplus C \to B$ making the diagram commute:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A \arrow[r, "i"] \arrow[d, "\text{id}_A"] & B \arrow[r, "p"] \arrow[ld, "\pi"', dashed]       & C \arrow[r] \arrow[d, "\text{id}_C"]             & 0 \\
+                        & A                                         & A\oplus C \arrow[u, "\alpha"'] \arrow[l, "\pi_A"] & C \arrow[lu, "\sigma"', dashed] \arrow[l, "i_C"] &  
+        \end{tikzcd}
+    \end{center}
+    Then we can simply take $\pi = \pi_A\circ \alpha^{-1}$ and $\sigma = \alpha\circ i_C$, which works since $\alpha$ is an isomorphism. 
+\end{solution}
+
+\begin{problem}
+    Say that $i : A \subset X$ is a \emph{retract} if there is a continuous map $f : X \to A$ such that $r\circ i = \text{id}_A$. Prove that if $A\subset X$ is a retract, then $H_*(X) \cong H_*(A)\oplus H_*(X,A)$.
+\end{problem}
+
+\begin{solution}
+    Recall that we have a long exact sequence
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & {H_{n+1}(X,A)} \arrow[r, "\partial"] & H_n(A) \arrow[r, "i_*"] & H_n(X) \arrow[r] & {H_n(X,A)} \arrow[r, "\partial"] & H_{n-1}(A) \arrow[r, "i_*"] & \cdots
+        \end{tikzcd}
+    \end{center}
+    Since $r\circ i = \text{id}_A$, $r_*\circ i_*=\text{id}_{H_n(A)}$ and ro $i_*$ is injective. This gives us a short exact sequence
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & H_n(A) \arrow[r, "i_*"] & H_n(X) \arrow[r] & {H_n(X,A)} \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    By the previous problem (i.e. the splitting lemma), the map $r_* : H_n(X) \to H_n(A)$ gives us an isomorphism $H_n(X)\cong H_n(A)\oplus H_n(X,A)$ for all $n$. 
+\end{solution}
+
+\begin{problem} Suppose that
+    \medskip
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & A_n \arrow[r] \arrow[d] & B_n \arrow[r] \arrow[d] & C_n \arrow[r] \arrow[d, "\cong"] & A_{n-1} \arrow[d] \arrow[r] & \cdots \\
+            \cdots \arrow[r] & A'_n \arrow[r]          & B'_n \arrow[r]          & C'_n \arrow[r]                   & A'_{n-1} \arrow[r]          & \cdots
+        \end{tikzcd}
+    \end{center}
+    \medskip
+    is a “ladder”: a map of long exact sequences. So both rows are exact and each square commutes. Suppose also that every third vertical map is an isomorphism, as indicated. Prove that these data determine a long exact sequence
+    \[
+        \cdots \to A_n \to A'_n\oplus B_n \to B'_n \to A_{n-1} \to \cdots
+    .\] 
+\end{problem}
+
+\begin{solution}
+    Let's label the rows and columns of the diagram as follows:
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & A_n \arrow[r, "f"] \arrow[d, "\alpha"] & B_n \arrow[r, "g"] \arrow[d, "\beta"] & C_n \arrow[r, "\partial"] \arrow[d, "\gamma"] & A_{n-1} \arrow[d, "\alpha"] \arrow[r] & \cdots \\
+            \cdots \arrow[r] & A'_n \arrow[r, "s"]                    & B'_n \arrow[r, "t"]                   & C'_n \arrow[r, "\partial"]                    & A'_{n-1} \arrow[r]                    & \cdots
+        \end{tikzcd}
+    \end{center}
+    Lets construct the exact sequence as follows. Let $q : A_n \to A'_n\oplus B_n$ be the map which sends $a$ to $(\alpha(a), f(a))$, let $r : A'_n\oplus B_n \to B'_n$ be the map which sends $(a',b)$ to $\beta(b)-s  (a')$, and let $w : B'_n \to A_{n-1}$ be given by $w = \partial\circ \gamma^{-1} \circ t$. We claim the sequence formed by these maps is exact.
+    
+    \textbf{Step 1:} $\Ima(q) = \Ker(r)$. Suppose $a\in A$. Then $q(a)=(\alpha(a),f(a))$ so $r\circ q(a)=\beta\circ f(a)-s\circ\alpha(a)=0$ by commutativity. Conversely, if $r(a',b)=0$ then $\beta(b)=s(a')$. Then $t\circ \beta(b)=t\circ s(a')=0$, so by commutativity $\gamma\circ g(b)=0$. This means that $g(b)=0$ by injectivity of $\gamma$, and so there must be some $a\in A_n$ such that $b=f(a)$. Then by commutativity, $s\circ\alpha(a)=\beta\circ f(a)=s(a')$. Since $s(\alpha(a)-a')=0$, there must be a $c'\in C'_{n-1}$ with $\partial c' = \alpha(a)-a'$. It then follows that $\alpha(a)=a'$.
+    
+    \textbf{Step 2:} $\Ima(r) = \Ker(w)$. Suppose $(a',b)\in A'_n\oplus B_n$. Then 
+    \[
+        \begin{aligned}
+            w\circ r(a',b)=w(\beta(b)-s(a'))=\partial\circ\gamma^{-1}\circ t(\beta(b)-s(a'))&=\partial\circ\gamma^{-1}\circ t\circ \beta(b) - \partial\circ\gamma^{-1}\circ t\circ s(a')\\
+            &=\partial\circ\gamma^{-1}\circ \gamma \circ g(b)=\partial\circ g(b)=0\\ 
+        \end{aligned}
+    .\] 
+    Conversely, if $w(b')=0$ we have $\partial\circ \gamma^{-1}\circ t(b')=0$. This means there must be a $b\in B_n$ with $g(b)=\gamma^{-1}\circ t(b')$. Then $t(b')=\gamma\circ g(b)=t\circ\beta(b)$, so $t(b'-\beta(b))=0$. But then there must exist an $a'\in A'_n$ with $b'-\beta(b)=s(a')$. We are done, since $b'=\beta(b)-s(-a')$ and so $b'=r(-a',b)$.
+
+    \textbf{Step 3:} $\Ima(w) = \Ker(q)$. Let $b'\in B'_n$. Then
+    \[
+        \begin{aligned}
+            q\circ \partial\circ \gamma^{-1}\circ t(b') = (\alpha\circ \partial\circ \gamma^{-1}\circ t(b), f\circ \partial \circ \gamma^{-1}\circ t(b')) &= (\partial\circ\gamma\circ \gamma^{-1}\circ t(b'), 0)\\
+            &= (\partial \circ t(b'), 0) = (0,0)\\
+        \end{aligned}
+    \]  
+    Conversely for $a\in A_n$ if $q(a)=(0,0)$ then $\alpha(a)=0$ and $f(a)=0$, so there is some $c\in C_{n+1}$ such that $a=\partial c$. Then $\alpha\circ\partial c = 0$ so $\partial\circ\gamma(c)=0$. Then there is a $b'\in B'_{n+1}$ with $\gamma(c)=t(b')$. Then $a=\partial\circ\gamma^{-1}\circ t(b')$ so we are done.   
+\end{solution}
+
+\begin{problem}
+    Suppose that we are given a commutative diagram of abelian groups:
+    \medskip
+    \begin{center}
+        \begin{tikzcd}
+            A \arrow[d, "\alpha"] \arrow[r] & B \arrow[d, "\beta"] \arrow[r] & C \arrow[d, "\gamma"] \arrow[r] & D \arrow[d, "\delta"] \arrow[r] & E \arrow[d, "\epsilon"] \\
+            A' \arrow[r]                    & B' \arrow[r]                   & C' \arrow[r]                    & D' \arrow[r]                    & E'                     
+        \end{tikzcd}
+    \end{center}
+    \medskip
+    with exact rows.
+    \begin{enumerate}[(i)]
+        \item Prove that $\gamma$ is surjective if $\beta$ and $\delta$ are surjective and $\epsilon$ is injective.
+        \item Give analogous conditions on $\alpha$, $\beta$, $\delta$, and $\epsilon$ under which $\gamma$ is injective. 
+        \item Using (i) and (ii), give conditions on $\alpha$, $\beta$, $\delta$, and $\epsilon$ under which $\gamma$ is an isomorphism.
+        \item As an application, prove that if $(X,A) \to (Y,B)$ is a map of pairs and two of $A \to B$,
+        $X \to Y$ and $(X,A) \to (Y,B)$ induce isomorphisms on homology, then so does the third.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    Suppose we have a commutative diagram with exact rows:
+    \begin{center}
+        \begin{tikzcd}
+            A \arrow[d, "\alpha"] \arrow[r, "f"] & B \arrow[d, "\beta"] \arrow[r, "g"] & C \arrow[d, "\gamma"] \arrow[r, "h"] & D \arrow[d, "\delta"] \arrow[r, "t"] & E \arrow[d, "\epsilon"] \\
+            A' \arrow[r, "s"]                    & B' \arrow[r, "w"]                   & C' \arrow[r, "p"]                    & D' \arrow[r, "q"]                    & E'                     
+        \end{tikzcd}
+    \end{center}
+    \textbf{(i)} Let $c'\in C'$. Then by surjectivity of $\delta$, there must be an $d\in D$ with $p(c')=\delta(d)$. Commutativity shows that $q\circ\delta(d)=\epsilon\circ t(d)$. Yet $\delta(d)=p(c')$ so $\epsilon\circ t(d)=q\circ p(c')$. Since the bottom row is exact, $q\circ p=0$ so $\epsilon\circ t(d)=0$. Since $\epsilon$ is injective, this means that $t(d)=0$. Since the top row is exact, the must be a $c\in C$ such that $h(c)=d$.
+
+    Recall that $p(c')=\delta\circ h(c)$. This means that $p(c'-\gamma(c))=p(c')-p\circ \gamma(c)=p(c')-\delta\circ h(c)=0$. By exactness of the bottom row, there must be a $b'\in B'$ with $w(b')=c'-\gamma(c)$, and by surjectivity of $\beta$, this pulls back to a $b\in B$ with $w\circ \beta(b)=c'-\gamma(c)$. By commutativity, $w\circ \beta(b)=\gamma\circ g(b)$. So $\gamma(c)+\gamma(g(b))=\gamma(c+g(b))=c'$ and we are done. 
+
+    \textbf{(ii)} In this case, we require that $\beta$ and $\delta$ are injective, and $\alpha$ is surjective. To prove that $\gamma$ is injective, suppose that $\gamma(c)=0$ for some $c\in C$. Then $p\circ \gamma(c)=0$ and by commutativity $\delta\circ h(c)=0$. Since $\delta$ is injective, this means that $h(c)=0$, and so $c\in \ker(h)$. By exactness of the top row, there must be a $b\in B$ with $g(b)=c$. Then $0=\gamma\circ g(b)=w\circ \beta(b)$ by commutativity, so $\beta(b)\in \ker(w)$ and so there must be an $a'\in A'$ with $\beta(b)=s(a')$ by exactness of the bottom row. Since $\alpha$ is surjective, we can lift this to an $a\in A$, so we get $\beta(b)=\beta\circ f(a)$ and by injectivity of $\beta$, it follows that $b=f(a)$. Yet $c=g(b)=f\circ g(a)=0$, so we are done.  
+
+    \textbf{(iii)} Combining the first two conditions, we can see that if $\beta$ and $\delta$ are isomorphisms, $\alpha$ is surjective, and $\epsilon$ is injective, then $\gamma$ is an isomorphism.
+
+    \textbf{(iv)} In this case, we have a commutative diagram of chain complexes:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & S_*(A) \arrow[r] \arrow[d] & S_*(X) \arrow[r] \arrow[d] & {S_*(X,A)} \arrow[r] \arrow[d] & 0 \\
+            0 \arrow[r] & S_*(B) \arrow[r]           & S_*(Y) \arrow[r]           & {S_*(Y,B)} \arrow[r]           & 0
+        \end{tikzcd}
+    \end{center}
+    where the top and bottom sequences are exact. By the next problem, this gives us a commutative diagram:
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r, "\partial"] & H_n(A) \arrow[r] \arrow[d] & H_n(X) \arrow[r] \arrow[d] & {H_n(X,A)} \arrow[r, "\partial"] \arrow[d, "\alpha"] & H_{n-1}(A) \arrow[r] \arrow[d] & H_{n-1}(X) \arrow[d] \arrow[r] & \cdots \\
+            \cdots \arrow[r, "\partial"] & H_n(B) \arrow[r]           & H_n(Y) \arrow[r]           & {H_n(Y,B)} \arrow[r, "\partial"]                     & H_{n-1}(B) \arrow[r]           & H_{n-1}(X) \arrow[r]           & \cdots
+        \end{tikzcd}
+    \end{center}
+    where the top and bottom sequences are exact. (Commutativity follows naturally from the functorial properties of $H_*$) Since the maps $H_*(A)\to H_*(B)$ and $H_*(X)\to H_*(Y)$ are isomorphisms, by (iii), the map $\alpha$ must be as well. 
+\end{solution}
+
+\begin{problem}
+    Suppose that that we are given a commutative diagram of chain complexes
+    \medskip
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A_* \arrow[r] \arrow[d] & B_* \arrow[r] \arrow[d] & C_* \arrow[r] \arrow[d] & 0 \\
+            0 \arrow[r] & A'_* \arrow[r]          & B'_* \arrow[r]          & C'_* \arrow[r]          & 0
+        \end{tikzcd}
+    \end{center}
+    \medskip
+    with rows short exact sequences of chain complexes. Prove that the following diagram commutes:
+    \medskip
+    \begin{center}
+        \begin{tikzcd}
+            H_n(C_*) \arrow[d] \arrow[r, "\partial"] & H_{n-1}(A_*) \arrow[d] \\
+            H_n(C'_*) \arrow[r, "\partial"]          & H_{n-1}(A'_*).        
+        \end{tikzcd}
+    \end{center}
+\end{problem}
+
+\begin{solution}
+    Let's label the maps as follows:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & A_* \arrow[r, "f"] \arrow[d,"\alpha"] & B_* \arrow[r,"g"] \arrow[d,"\beta"] & C_* \arrow[r] \arrow[d, "\gamma"] & 0 \\
+            0 \arrow[r] & A'_* \arrow[r,"s"]          & B'_* \arrow[r,"t"]          & C'_* \arrow[r]          & 0
+        \end{tikzcd}
+    \end{center}
+    Suppose $c\in C_n$, then there must be $a\in A_{n-1}$ and $b\in B_n$ with $g(b)=c$ and $f(a)=db$ so $\partial[c]=[a]$. Then we have $s\circ\alpha(a)=\beta\circ f(a)=\beta(db)=d\beta(b)$. Similarly, $t(\beta(b)=\gamma\circ g(b)=\gamma(c)$ so $\partial \circ \gamma([c])=\partial[\gamma(c)]=[\alpha(a)]=\alpha[a]=(\alpha\circ \partial)[c]$ so we are done.
+\end{solution}
+\end{document}

@@ -1,0 +1,12 @@
+\begin{problem}[Optional, Extra Credit]
+Let $S_1,\dots,S_m$ be subsets of $\{1,\dots,n\}$ such that $S_i$ contains an odd number of elements for each $1\leq i\leq m$, and $S_i\cap S_j$ contains an even number of elements for each $1\leq i<j\leq m$. Show that $m\leq n$. 
+\end{problem}
+\textit{(Hint: construct vectors $v_1,\dots,v_m$ in $(\F_2)^n$, and use the
+standard dot product (mod 2) to show they are linearly independent)}
+
+Consider the set theoretic bijection $\varphi : \mathcal{P}(\{1,\dots,n\}) \to (\F_2)^n$ which maps a set $S$ to the vector with $1$'s in the $i$-th place for every $i\in S$ and zeroes elsewhere. Furthermore, this correspondence gives us the following relation for $A,B\subset \{1,\dots,n\}$:
+\[
+  \big\langle \varphi(A), \varphi(B)\big\rangle = |A\cap B|\mod 2
+\] 
+Now consider the set $\varphi(S_1),\dots,\varphi(S_m)$. The fact that $S_i$ contain an odd number of elements implies that $\big\langle\varphi(S_i), \varphi(S_i)\big\rangle=1$. Furthermore, for all $i\neq j$, since $S_i\,\cap\,S_j$ contains an even number of elements we have $\big\langle \varphi(S_i), \varphi(S_j)\big\rangle=0$. So $\varphi(S_1),\dots,\varphi(S_m)$ are orthogonal and hence linearly independent, from which it follows that $m\leq n$. 
+

@@ -1,0 +1,112 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+% \def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 6}}
+\date{\textbf{Due:} March 24, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Give an example of a $1$-manifold $M$ having the property that $\partial M$ consists of $3$ points. Show that there are infinitely many such manifolds, no two of which are diffeomorphic. Why doesn't this contradict our classification result.
+\end{problem}
+
+\begin{solution}
+    \quad The $3$-manifold $[0,1]\sqcup [0, 1)$ has exactly $3$ points on its boundary. This isn't a compact manifold, so it doesn't contradict the classification result. Furthermore, to get an infinite amount of non-diffeomorphic manifolds of this form, we can simply disjoint union an arbitrary number of copies of $S^1$.
+\end{solution}
+
+\begin{problem}
+    Suppose that $X$ is a compact $n$-manifold, and we have smooth functions $\phi_i : X \to \R^n$, $\lambda_i : X \to [0,1]$ for $i=1,..,k$ with the following properties:
+    \begin{enumerate}[(i)]
+        \item For all $i$, the image $\phi_i$ contains the open ball $B_2\subset \R^n$ of radius $2$.
+        \item Set $V_i = \phi_i^{-1}(B_2)$. The map $\phi_i$ restricts to a diffeomorphism $V_i \to B_2$.
+        \item The open subsets $U_i = \phi^{-1}_i B_1$ cover $X$, in which $B_1\subset \R^n$ is the open ball of radius $1$.
+        \item For $x\in U_i$, $\lambda_i(x) = 1$.
+        \item For $x\in X \setminus V_i$, $\lambda_i(x)=0$.
+    \end{enumerate} 
+    One can construct such data using some coordinate charts and a bump function. Using these, define a map $g : X \to (\R^n \times \R^1)^k = \R^{k(n+1)}$ by $g(x)=\left((\phi_1, \lambda_1),\ldots,(\phi_k, \lambda_k)\right)$. Show that the map $g$ is an embedding. Since $X$ is compact, this amounts to showing that it is an immersion and one-to-one.
+\end{problem}
+
+\begin{solution}
+    \quad Let's show that $g$ is an immersion. This means that for any $x\in X$, the map $dg_x : T_xX \to T_{g(x)}(\R^n\times \R)^k$ is injective. We can do this by showing that $dg_x$ has a trivial kernel, so assume $dg_x(v) = 0$ for some $v\in T_xX$. Then since by (iii), we have some open set $U_i=\phi_i^{-1}(B_1)$ containing $x$, it follows that $(d\phi_i)_x(v)=0$. However (ii) implies that $(d\phi_i)_x$ is an isomorphism, so $v=0$. To show that $g$ is injective, suppose we had $x,y\in X$ with $g(x)=g(y)$. Then using picking some $U_i$ containing $x$, by (iv) we have $\lambda_i(x)=\lambda_i(y)=1$. But since $\phi_i$ is a diffeomorphism on $V_i$ by (ii), we get $x=y$. This completes the proof.
+\end{solution}
+
+\begin{problem}
+    Recall the tubular neighborhood theorem: If $X\subset \R^n$ is a smooth manifold there is an open neighborhood $X\subset U \subset \R^n$ of $X$, and a smooth map $r : U \to X$ having the property that for all $x\in X$, $r(x)=x$.
+\end{problem}
+
+\begin{solution}
+    \quad Using the tubular neighborhood theorem, prove the following results.
+    \begin{partproblem}{a}
+        Suppose that $Z\subset X$ is a compact submanifold of a compact manifold $X$ (both without boundary), there is an open neighborhood $Z\subset U \subset X$ and a smooth retraction $r: U \to Z$.
+    \end{partproblem}
+
+    \quad Suppose $X$ is embedded in $\R^n$. The tubular neighborhood theorem gives us a tubular neighborhood $V\subset Z$ of $Z$ with a smooth retraction $r : V \to Z$. Intersecting with $X$ gives us $U=V\cap X$ which is the desired open neighborhood, and $r|_U$ the desired smooth retraction.  
+    
+    \begin{partproblem}{b}
+        If $X$ is a compact manifold with non-empty boundary, $\partial X$, there is an open neighborhood $\partial X\subset U \subset X$ and a retraction $r : U \to \partial X$.
+    \end{partproblem}
+
+    \quad Since $\partial X$ is a compact submanifold of $X$ (if $X$ is compact) this follows immediately from the previous part, since we never used the assumption that $X$ had to be boundaryless in (a).
+\end{solution}
+
+\begin{problem}
+    This problem proves the existence of a \emph{collar} neighborhood of the boundary of a manifold.
+\end{problem}
+
+\begin{solution}
+    \quad Suppose that $X$ is a compact smooth manifold with non-empty boundary $\partial X$.
+    \begin{partproblem}{a}
+        Show that there is a smooth function $f : X \to [0, \infty)$ having the properties that $f^{-1}(0)=\partial X$ and $df_x :T_xX \to T_0\R$ is surjective for all $x\in \partial X$. 
+    \end{partproblem}
+
+    \quad Let $\{(U_i, \varphi_i)\}$ be a finite set of atlases, i.e. diffeomorphisms $\varphi_i : U_i \to V_i\subset\bb{H}^n$. Letting $\pi$ be the projection map $\bb{H}^n \to [0,\infty)$, we can then set
+    \[
+        f = \sum_i \psi_i\cdot\pi(\varphi_i)
+    \]
+    where $\psi_i$ is some partition of unity subordinate to $\{U_i\}$. By the positivity conditions of $\pi$ and $\psi_i$, note that $f(x)=0$ if and only if $\pi(\varphi_i(v))=0$ for all $U_i$ which contain $v$. This means that $\varphi_i(v)\in \partial \bb{H}^n$ and thus $v\in \partial X$.
+
+    \medskip
+    \quad To show that $df_x : T_xX \to T_0\R$ is surjective, note that
+    \[
+        \begin{aligned}
+            df_x(v) = \sum_i d(\psi_i\cdot \pi(\varphi_i))_x(v) = \sum_i d(\psi_i\cdot \pi(\varphi_i))_x(v) &= \sum_i (d\psi_i)_x(v) \pi(\varphi_i)(v) + \psi_i(v)d(\pi(\varphi_i))_x(v)\\
+            &= \sum_i \psi_i(v)\cdot d(\pi(\varphi_i))_x(v).
+        \end{aligned}
+    \] 
+    Thus it suffices to show that there is a vector $v\in T_xX$ with $d(\pi(\varphi_i))_x(v) > 0$ for all $i$ such that $x\in U_i$. Recall that we have an isomorphism $T_xX \to T_x\partial X\oplus N$ where $N=(T_x\partial X)^\perp$. Since $\partial X$ has codimension $1$, and represents the normal vectors to $x\in \partial X$, we can pick some inward pointing normal vector $v\in \partial X$, and then $d(\pi(\varphi_i))_x(v)>0$ for all $i$ such that $x\in U_i$. This means that $df_x(v)>0$ and so $df_x$ is a surjection.  
+
+    \begin{partproblem}{b}
+        Now let $(U,r)$ be the neighborhood of $\partial X$ and the retraction $r : U \to \partial X$ constructed in the previous problem. Show that the map $(r,f) : U \to \partial X\times [0,\infty)$ restricts to a diffeomorphism $U'\to \partial X \times [0,\epsilon)$ for some neighborhood $U'\subset U$ of $\partial X$. Such a neighborhood is called a \emph{collar neighborhood}. 
+    \end{partproblem}
+
+    \quad Note that by the inverse function theorem, it suffices to show that $dr\times df$ is an isomorphism at each $\partial X$ to show that $(r,f)$ is a local diffeomorphism on $\partial X$. To do this, we'll show that $\ker(dr_x\times df_x)=0$ for all $x\in \partial X$. Since $f|_{\partial X} = 0$, $T_x\partial X\subset \ker(df_x)$ but by the rank-nullity theorem, $\dim \ker(df_x) = n-1 $ so $\ker(df_x)=T_x\partial X$. Thus $\ker(dr_x\times df_x)=\ker(dr_x)\cap T_x\partial X$, which is trivial because $r|_{\partial X} = 1_{\partial X}$. 
+
+    \medskip
+    \quad Next, let $\{\mathcal{U}_i\}$ be an open cover of $\partial X$ on which $(r,f)$ restricts to a diffemorphism. Let $\mathcal{V}=\bigcup_i \mathcal{U}_i$ and $A_\epsilon = f^{-1}([0,\epsilon))$ and $B_\epsilon = f^{-1}((\epsilon,\infty))$. $\mathcal{V}$ must contain some $A_\epsilon$, so since $V^c$ is compact, there must be a finite set of $\epsilon_i$ with $V^c \subset B_{\epsilon_1}\cup\cdots\cup B_{\epsilon_k}$. Letting $\epsilon = \min(\epsilon_1,\ldots,\epsilon_k) / 2$ we see that $V\subset A_\epsilon$, and so $(r,f)$ restricts to a local diffeomorphism on $A_\epsilon$.
+
+    \medskip
+    \quad Finally, let us show show that we can find some $\epsilon' > 0$ for which $(r,f)$ is injective on $U' = U_{\min(\epsilon,\epsilon')}$. Assume for the sake of contradiction, that we can't find such an $\epsilon'$. For every positive integer $n$, we can find distinct $x_n, y_n \in U_{1/n}$ such that $(r,f)(x_n)=(r,f)(y_n)$. By compactness of $X$, we can find convergent subsequences of $\{x_{n_k}\}$ and $\{y_{n_k}\}$. Let $x=\lim_{k\to \infty}x_{n_k}$ and $y=\lim_{k\to\infty}y_{n_k}$. Since $(r,f)$ is continuous and $(r,f)(x_{n_k})=(r,f)(y_{n_k})$ for all $k$, it follows that $(r,f)(x)=(r,f)(y)$. By construction $x,y \in \partial X$, so since $r$ restricts to the identity on $\partial X$, we have $x = y$. This contradicts the injectivity of $(r,f)$ in a neighborhood of $x$, which contradicts the fact that $(r,f)$ is a local diffeomorphism at $x$, as desired.
+\end{solution}
+
+\begin{problem}
+    Let $X$ and $Y$ be submanifolds of $\R^N$. Show that for almost all $a\in \R^N$, the translate $X+a=\{x+a : x\in X\}$ intersects $Y$ transversally.
+\end{problem}
+
+\begin{solution}
+    \quad Consider the translation map $t : \R^N\times X \to \R^N$ which sends $t(a,x)=a+x$. This is clearly smooth and a submersion, since $dt_{(a,x)}(v,w)=v+w$. Clearly $t\pitchfork Y$, so by the transversality theorem we get $t(a,-)\pitchfork Y$ for almost all $a\in \R^N$. For any of these $a\in \R^N$, note that we have $T_x(X)+T_{a+x}(Y)=T_{a+x}(a+X)+T_{a+x}Y = \R^N$ because $t(a,-)$ is a diffeomorphism when restricted to $X$. Thus $(a+X)\pitchfork Y$ as desired.
+\end{solution}
+
+\end{document}

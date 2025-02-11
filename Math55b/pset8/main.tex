@@ -1,0 +1,291 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 55b Problem Set 8}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I did not collaborate with anyone on this problem set.}
+\end{center}
+\begin{problem}
+    Show that, if $f:\R\to \R$ is continuous and satisfies $\int_0^1 x^n\,f(x)\,dx=0$ for all $n\in \N$, then $f(x)=0$ on $[0,1]$. 
+\end{problem}
+\begin{solution}
+    For clarity, we'll rephrase this problem. Consider the bilinear form defined on $C^0([0,1])$ by
+    \[
+        \big\langle f,g \big\rangle = \int^1_0 f(x)g(x)\;dx
+    .\] 
+    This clearly satisfies the bilinearity condition by elementary properties of the Riemann integral. The condition that $\int_0^1 x^nf(x)\;dx=0$ then becomes that $\big\langle p,f \big\rangle=0$ for any $p\in \R[x]$. We claim that $\big\langle f,f \big\rangle=0$. Let $\epsilon > 0$. Then by the Weierstrass theorem, there is some polynomial $p\in \R[x]$ with $|f-p|<\epsilon$ on $[0,1]$. This means that $|\big\langle f,f \big\rangle| = |\big\langle f-p, f \big\rangle| \leq \big\langle |f-p|, |f| \big\rangle < \big\langle \epsilon, |f| \big\rangle = \epsilon \|f\|_1$. So $\big\langle f,f \big\rangle=0$ since it can be bound arbitrarily small. 
+    
+    We claim that this implies that $f=0$. Consider the function
+    \[
+        F(x)=\int_0^x|f(x)|^2\;dx
+    .\]  
+    Since $|f(x)|^2\geq 0$, $F(x)$ is an increasing function on $[0,1]$. Since $F(0)=F(1)=0$, $F(x)$ vanishes on $[0,1]$. This means that $F'(x)=0$ on $[0,1]$. However by the fundamental theorem of calculus, $F'(x)=|f(x)^2|$, so $f(x)=0$ on $[0,1]$. 
+\end{solution}
+
+\begin{problem}
+    Let $c_n$ be the Fourier coefficients of a continuous $2\pi$-periodic function $f:\R\to\R$, and $k\in\N$ an integer.
+    \begin{enumerate}[(a)]
+        \item Show that if $\sum |c_n|$ is convergent then the Fourier series $\sum c_n e^{inx}$ converges uniformly to $f$.
+        \item Show that if $\sum |n|^k |c_n|$ is convergent then $f\in C^k$.
+        \item Conversely, show that if $f\in C^k$ then $\sum n^{2k} |c_n|^2$ converges, and in particular $n^k |c_n|\to 0$.
+        \item Deduce Dirichlet's theorem: if $f\in C^1$ then $\sum c_n e^{inx}$ converges uniformly to $f$.  
+    \end{enumerate}
+\end{problem}
+% (Hints for (b) and (c): how are the Fourier coefficients of $f'$ related to those of $f$? for (d): observe that $2|c_n|\leq \frac{1}{n^2}+n^2|c_n|^2$)
+
+\begin{solution}
+    \textbf{(a)} Suppose $\sum_{k\in \Z}|c_k|$ converges, and let $f_n(x)=\sum_{|k|\leq n}c_ke^{ikx}$ be the partial sum. Since $|c_ke^{ikx}|\leq |c_k|$, the sum $f_\infty(x)=\sum_{k\in \Z}c_ke^{ikx}$ is defined everywhere. By the triangle inequality we have
+    \[
+        |f_\infty(x)-f_n(x)|=\left|\sum_{|k|>n}c_ke^{ikx}\right|\leq \left|\sum_{|k|>n}c_k\right|\leq \sum_{|k|>n}|c_k|
+    .\] 
+    This right sum can be made arbitrarily small since $\sum_{k\in \Z}|c_k|$ converges, so for every $\epsilon>0$, there is some $N$ such that whenever $n\geq N$ we have $|f_\infty(x)-f_n(x)|<\epsilon$ for all $x\in \R$. So $\sum c_ne^{inx}$ converge uniformly to $f_\infty$. Next we claim that $f_\infty(x)=f(x)$ for all $x\in \R$. Since $f_\infty$ is a uniform limit of continuous functions, it must be continuous. (and similarly $2\pi$-periodic). Then notice that
+    \[
+        \big\langle f_\infty, e_n \big\rangle = \frac{1}{2\pi} \int^{2\pi}_0 \left(\sum_{k\in \Z} c_k e^{ikx}\right)e^{-inx}\;dx = \sum^{2\pi}_0 c_k \cdot \frac{1}{2\pi}\int^{2\pi}_0 e^{ikx}e^{-inx}\;dx = c_n
+    .\] 
+    So $f_\infty$ and $f$ have the same Fourier coefficients. We claim that $f_\infty - f=0$. Let $b_n$ be the Fourier coefficients of $f_\infty -f$. Then by Parseval's theorem,
+    \[
+        0 = \sum_{k\in \Z}|b_k| = \|f_\infty - f\|^2 = \frac{1}{2\pi}\int^{2\pi}_0 |f_\infty(x)-f(x)|^2\;dx
+    .\] 
+    This shows that $f_\infty=f$. 
+    
+    \textbf{(b)} First of all, since $\sum_{n\in\Z}|n|^k|c_n|$ converges, $\sum_{n\in \Z}|c_n|$ must converge by the comparison test, so by (a) we can write $f(x)=\sum_{n\in \Z}c_ne_{inx}$. Now for any $\ell \leq k$, consider the function $D_\ell f(x)=\sum_{n\in \Z}(in)^\ell c_ne^{inx}$. This is a continuous function because $\sum_{n\in \Z}|in^\ell c_n|=\sum_{n\in\Z}|n^\ell||c_n|\leq \sum_{n\in \Z}|n^k||c_n|$, so by (a), $D_\ell f(x)$ is a uniform limit of continuous functions and hence continuous. 
+    
+    We claim that $D_{\ell}(x)$ is an $\ell$-th derivative of $f$. Note that as long as $\ell+1\leq k$, $D_1D_\ell f=D_{\ell+1}f$ so we can proceed by induction, i.e. it suffices to prove that $D_1 f$ is the first derivative of $f$. Let $f_N(x)=\sum_{|n|\leq N}c_n e^{inx}$ be the partial sum. Note that $f'_N(x)=\sum_{|n|\leq N}(in)c_ne^{inx}$. This is exactly a partial sum of $D_1 f$, and by (a) $f'_N$ converge uniformly to $D_1 f$. This meaans that $D_1 f = f'$ since uniform limits preserve differentiation. This completes the proof.  
+    
+    \textbf{(c)} First, suppose $f\in C^1$. Then using integration by parts we have
+    \[
+        \big\langle f',e_n \big\rangle = \frac{1}{2\pi}\int^{2\pi}_0 f'(x)e^{-inx}\;dx=\frac{1}{2\pi}\left( f'(x)e^{-inx}\right)\bigg|_0^{2\pi}+in\frac{1}{2\pi}\int^{2\pi}_0 f(x)e^{inx}\;dx=in\big\langle f,e_n \big\rangle
+    .\]  
+    Then by Parseval's theorem, the sum $\sum_{n\in \Z}|in c_n|^2 = \sum_{n\in \Z}n^2|c_n|^2$ converges. By induction, and using the above identity for the coefficients of a derivative, we get that $\sum_{n\in \Z}n^{2k}|c_n|^{2k}$ converges. In particular, $n^{2k}|c_n|^{2k}\to 0$ and so $n^k|c_n|^k\to 0$ as well.
+    
+    \textbf{(d)} First, we note the inequality $2x\leq 1/n^2+n^2x^2$, which is implied by $(nx-1 /n)^2=n^2x^2-2x+1 /n^2\geq 0$. Now if $f\in C^1$ then by (c), $\sum_{n\in \Z} n^2|c_n|^2$ converges. Yet $n^2|c_n|^2\geq 2|c_n|- 1/n^2$ so by the comparison test, $2\sum_{n\in \Z}|c_n|-\sum_{n\in \Z}\frac{1}{n^2}$ converges. This of course means that $\sum_{n\in \Z}|c_n|$ converges, which means that $f$ is a uniform limit of its Fourier series.  
+\end{solution}
+
+\begin{problem}
+    Let $f:\R\to \R$ be the unique $2\pi$-periodic function such that $f(x)=(x-\pi)^2$ for $x\in [0,2\pi]$.
+    \begin{enumerate}[(a)]
+        \item Show that the Fourier coefficients of $f$ are $c_n=\dfrac{2}{n^2}$ for $n\neq 0$, and $c_0=\dfrac{\pi^2}{3}$.
+        \item Deduce that $\sum\limits_{n=1}^\infty \dfrac{1}{n^2}=\dfrac{\pi^2}{6}$ and $\sum\limits_{n=1}^\infty \dfrac{1}{n^4}=\dfrac{\pi^4}{90}$.
+    \end{enumerate}
+\end{problem}
+% (Hint: use evaluation at $x=0$ and Parseval's theorem. Convergence can be justified using the criterion in part (a) of the previous problem.)
+
+\begin{solution}
+    \textbf{(a)} We'll calculate the Fourier coefficients using the projection formula
+    \[
+        c_n = \big\langle f, e_n \big\rangle = \frac{1}{2\pi}\int^{2\pi}_0 f(x)e^{-inx}\;dx
+    .\] 
+    For the first coefficient $c_0$, we calculate
+    \[
+        c_n = \frac{1}{2\pi}\int^{2\pi}_0(x-\pi)^2\;dx=\frac{1}{2\pi}\int^\pi_{-\pi}x^2\;dx=\frac{1}{2\pi}\left(\frac{2\pi^3}{3}\right)=\frac{\pi^2}{3}
+    .\] 
+    For the other coefficients $c_n$ for $|n|\geq 1$, we use integration by parts:
+    \[
+        \begin{aligned}
+            c_n=\frac{1}{2\pi}\int^{2\pi}_0(x-\pi)^2e^{-inx}\;dx&=\frac{1}{2\pi}\left(\frac{(x-\pi)^2}{-in}e^{-inx}\bigg|_0^{2\pi}+\frac{2}{-in}\int^{2\pi}_{0}(x-\pi)e^{-inx}\;dx\right)\\
+            &=\frac{2}{in}\left(\frac{x-\pi}{-in}e^{-inx}\bigg|_0^{2\pi}-\frac{1}{in\pi}\int^{2\pi}_0 e^{-inx}\;dx\right)\\&=\frac{1}{in\pi}\left(\frac{2\pi}{-in}\right)=\frac{2}{n^2}.
+        \end{aligned}
+    \] 
+    Note that $\sum_{n\in \Z}|c_n| = \frac{\pi^2}{3}+\sum^\infty_{n=1}\frac{4}{n^2}$ which is finite by a simple $p$-series test. Then by Problem~2a, the Fourier series $\sum c_n e^{inx}$ converges uniformly to $f$. 
+    
+    \textbf{(b)} We know that $f(0)=\pi^2$, so applying the Fourier series, we get
+    \[
+        \begin{aligned}
+            f(0)=\frac{\pi^2}{3}+\sum^\infty_{k=1}\frac{4}{n^2}&=\pi^2 \implies
+            \sum^\infty_{k=1}\frac{1}{n^2}=\frac{\pi^2}{6}.
+        \end{aligned}
+    \] 
+    For the other identity, we'll use Parseval's theorem to get
+    \[
+        \begin{aligned}
+        \frac{\pi^4}{9}+\sum^\infty_{n=1}\frac{8}{n^4}=\sum_{n\in \Z}|c_n|^2 = \frac{\|f\|^2}{2\pi} = \frac{1}{2\pi}\int^{2\pi}_0 (x-\pi)^4\;dx = \frac{\pi^4}{5}\\
+        \implies \sum^\infty_{n=1}\frac{1}{n^4}=\frac{1}{8}\left(\frac{\pi^4}{5}-\frac{\pi^4}{9}\right) = \frac{\pi^4}{90}.
+        \end{aligned}
+    \] 
+    This completes the proof.
+\end{solution}
+
+\begin{problem}
+    Recall that the Dirichlet kernel is $D_n(x) = \sum\limits_{|k|\leq n} e^{ikx} = \dfrac{e^{i(n+\frac12)x}-e^{-i(n+\frac12)x}}{e^{ix/2}-e^{-ix/2}}$. The F\'ejer kernel is defined to be $K_N(x)=\frac{1}{N} \sum\limits_{n=0}^{N-1} D_n(x)$.
+    \begin{enumerate}[(a)]
+        \item Show that $\displaystyle K_N(x)=\frac{(e^{iNx/2}-e^{-iNx/2})^2}{N(e^{ix/2}-e^{-ix/2})^2}= \frac{\sin^2(Nx/2)}{N\sin^2(x/2)}$.
+        \item Show that $K_N$ approximates identity, in the sense that: (i) $K_N\geq 0$, (ii) $\frac{1}{2\pi}\int_{-\pi}^{\pi} K_N\,dx=1$, and (iii) $\forall \delta>0$, $\int_{\delta\leq |x|\leq \pi} K_N\,dx\to 0$ (in fact, $K_N$ converges uniformly to 0 on $[-\pi,-\delta]\cup [\delta,\pi]$).
+        \item Let $f$ be a continuous $2\pi$-periodic function, and denote by $s_n=\sum_{k=-n}^n c_k e^{ikx}$ the partial sums of the Fourier series of $f$. We consider the arithmetic mean $\sigma_N=\frac{1}{N}(s_0+\dots+s_{N-1})$.
+        % \textit{(The process of replacing a series by the arithmetic means of its partial
+        % sums is called {\em Cesaro summation}; for convergent series it gives the
+        % same limit, but this sometimes turns a divergent series into a convergent
+        % sequence).}
+        Show that $\sigma_N$ is the convolution of $f$ with $K_N$, in the sense that
+        $$\sigma_N(x)=\frac{1}{2\pi}\int_{-\pi}^{\pi} f(x-t)\,K_N(t)\,dt.$$
+        \item Deduce F\'ejer's theorem: for any continuous $2\pi$-periodic function $f$, the sequence $\sigma_N$ converges uniformly to $f$.
+        % \textit{(This is a remarkable result, considering that the Fourier series of a
+        % continuous function need not even converge pointwise -- even though the
+        % counterexamples are fairly pathological. The point is that the F\'ejer
+        % kernel approximates identity (in the sense of part (b)) whereas the
+        % Dirichlet kernel does not).}
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} By rearranging terms, we have the expression 
+    \[
+        D_n(x)=\frac{e^{i(n+\frac{1}{2})x}-e^{-i(n+\frac{1}{2})x}}{e^{ix /2} - e^{-ix/2}}\cdot \frac{e^{-ix /2}}{e^{-ix /2}} = \frac{e^{-inx}-e^{-i(n+1)x}}{1-e^{-ix}}
+    .\] 
+    Then we have the relations
+    \[
+        \sum^{N-1}_{n=0}e^{-inx} = 1 + \frac{1}{e^{inx}}+\cdots+\frac{1}{e^{i(N-1)x}} = \frac{1-e^{-iNx}}{1-e^{-ix}}=e^{ix}\left(\frac{e^{-iNx}-1}{1-e^{ix}}\right)
+    \]
+    and 
+    \[
+        \sum^{N-1}_{n=0}e^{i(n+1)x} = e^{ix}(1 + {e^{inx}}+\cdots+{e^{i(N-1)x}}) = \frac{1-e^{-iNx}}{1-e^{-ix}}=e^{ix}\left(\frac{1-e^{iNx}}{1-e^{ix}}\right).
+    \]
+    Putting this together with the definition of a F\'ejer kernel, we get
+    \[
+        \begin{aligned}
+            K_N(x)=\frac{1}{N}\left(\frac{\sum^{N-1}_{n=0}e^{-inx} + \sum^{N-1}_{n=0}e^{i(n+1)x}}{1-e^{ix}}\right)=\frac{1}{N}\left(\frac{e^{ix}(e^{iNx}-2+e^{-iNx})}{(1-e^{ix})^2}\right)\\
+            =\frac{1}{N}\left(\frac{e^{iNx/2}-e^{iNx /2}}{e^{ix /2} - e^{-ix /2}}\right)^2 = \frac{\sin^2(N x/2)}{N\sin^2(x /2)}.
+        \end{aligned}
+    \] 
+    
+    \textbf{(b)} Clearly $K_N(x)\geq 0$ since it a ratio of two square functions. To see that the integral is one, we'll compute directly:
+    \[
+        \begin{aligned}
+            \frac{1}{2\pi}\int^\pi_{-\pi}K_N(x)=\frac{1}{2\pi N}\sum^{N-1}_{n=0}\int^\pi_{-\pi}D_n(x)\;dx&=\frac{1}{2\pi N}\sum^{N-1}_{n=0}\left(2\pi + \sum_{1\leq |k|\leq N}\int^{\pi}_{-\pi}e^{ikx}\;dx\right)\\ 
+            &=\frac{1}{2\pi N}\sum^{N-1}_{n=0}2\pi = 1
+        \end{aligned}
+    \] 
+    Lastly, let $0<\delta\leq \pi$. Notice that for any $\delta \leq |x|\leq \pi$ we have $\frac{1}{\sin^2 x}\leq \frac{1}{\sin^2(\delta /2)}$. Thus $0\leq F_n(x)\leq \frac{1}{n}\left(\frac{1}{\sin^2(\delta /2)}\right)$ since $\sin^2(nx /2) \leq 1$. Then 
+    \[
+        \lim_{n\to \infty}\int_{\delta\leq |x|\leq \pi} K_n(x)\;dx \leq \lim_{n\to \infty} \left(\frac{2(\pi-\delta)}{n \sin^2(\delta /2)}\right) = 0
+    .\]  
+
+    \textbf{(c)} Recall that we have the following convolution expression for the partial sums $s_n$:
+    \[
+        s_n(x) = \frac{1}{2\pi}\int^{\pi}_{-\pi}f(x-t)D_n(t)\;dt
+    .\] 
+    Plugging this into the expression for the $\sigma_n(x)$, we get
+    \[
+        \begin{aligned}
+            \sigma_N(x)=\frac{1}{N}\sum^{N-1}_{n=0}s_n(x)=\frac{1}{N}\sum^{N-1}_{n=0}\frac{1}{2\pi}\int^\pi_{-\pi}f(x-t)D_n(t)\;dt
+            &=\frac{1}{2\pi}\int^\pi_{-\pi}f(x-t)\frac{1}{N}\sum^{N-1}_{n=0}D_n(t)\;dt\\
+            &=\frac{1}{2\pi}\int^{\pi}_{-\pi}f(x-t)K_N(t)\;dt.
+        \end{aligned}
+    \]
+    
+    \textbf{(d)} Using the triangle inequality, (b), and (c), we get
+    \[
+        \begin{aligned}
+            |\sigma_n(x)-f|\leq \frac{1}{2\pi}\int^\pi_{-\pi}|f(x-t)-f(x)|K_n(t)\;dt.
+        \end{aligned}
+    \]
+    Since $[-\pi,\pi]$ is compact, continuous functions on it are uniformly continuous, so let $\epsilon>0$ and $\delta>0$ be the corresponding value such that $|x-y|\leq \delta$ implies $|f(x)-f(y)|\leq \epsilon$. Then for any $\delta>0$,
+    \[
+        \begin{aligned}
+            \frac{1}{2\pi}\int_{|t|\leq \delta} |f(x-t)-f(x)|K_n(t)\;dt \leq \frac{\epsilon}{2\pi}\int_{|t|\leq \delta}K_n(t)\;dt \leq \frac{\epsilon}{2\pi}.
+        \end{aligned}
+    \]  
+    Similarly,
+    \[
+        \begin{aligned}
+            \frac{1}{2\pi}\int_{\delta\leq |t|\leq \pi} |f(x-t)-f(x)|K_n(t)\;dt\leq \frac{\sup_{t\in [-\pi,\pi]}|f(t)|}{\pi}\int_{\delta\leq |t|\leq \pi}K_n(t)\;dt.
+        \end{aligned}
+    \] 
+    Putting everything together, it follows that
+    \[
+        \begin{aligned}
+            |\sigma_n(x)-f|\leq \frac{\epsilon}{2\pi}+\frac{\sup_{t\in [-\pi,\pi]}|f(t)|}{\pi}\int_{\delta\leq |t|\leq \pi}K_n(t)\;dt.
+        \end{aligned}    
+    \] 
+    Since the right hand side of this inequality is not a function of $x$ and can be made arbitrarily small as $n\to \infty$ and $\epsilon\to 0$ by (iii), we have uniform continuity.
+\end{solution}
+
+\begin{problem}
+    Let $f$ be a real-valued function on $\R^2$, and suppose the partial derivatives $\partial f/\partial x$ and $\partial f/\partial y$ exist for every $(x,y)$. Prove or disprove each of the following assertions:
+    \begin{enumerate}[(a)]
+        \item $f$ is continuous.
+        \item if the partial derivatives of $f$ are bounded (i.e.\ $\exists M>0$ such that $|\partial
+        f/\partial x|\leq M$ and $|\partial f/\partial y|\leq M$ everywhere), then $f$ is
+        continuous.
+        \item if the partial derivatives of $f$ are bounded, then $f$ is differentiable.
+    \end{enumerate}
+    % (Hint: consider functions of the form $x^ky^\ell/(x^2+y^2)$.)
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} This is false. Consider the function
+    \[
+        f(x,y) = \begin{cases}
+            \displaystyle\frac{xy}{x^2+y^2}&\textrm{if }(x,y)\neq (0,0)\\
+            0&\textrm{if }(x,y)=(0,0)
+        \end{cases}
+    .\] 
+    Clearly this function is not continuous at $0$, since $f(x,x)=\frac{1}{2}$ everywhere except $x=0$, where it is equal to zero. Yet for every $(x,y)\neq (0,0)$, we can easily calculate the partial derivatives using standard rules of differentiation, they are
+    \[
+        \frac{\partial f}{\partial x} = \frac{y^3-x^2y}{(x^2+y^2)^2},\quad\textrm{ and }\quad \frac{\partial f}{\partial y}=\frac{x^3-xy^2}{(x^2+y^2)^2}
+    .\]
+    At the point $(0,0)$, note that the $f$ is differentiable because 
+    \[
+        \lim_{\|(x,y)\|\to 0}\frac{f(x,y)-L(x,y)}{\|(x,y)\|}=\lim_{\|(x,y)\|\to 0}\frac{\displaystyle\frac{xy}{\|(x,y)\|^2}-L(x,y)}{\|(x,y\|}=\lim_{\|(x,y)\|\to 0}\frac{xy-\|(x,y)\|L(x,y)}{\|(x,y)\|^3}
+    \]
+    should be zero for some linear map $L$. However taking $L(x,y)=0$ for all $x,y$, we get
+    \[
+        \lim_{\|(x,y)\|\to 0} \frac{xy}{\|(x,y)\|^3}=0
+    .\] 
+    This shows that the derivative is defined everywhere, yet the function isn't continuous.
+    
+    \textbf{(b)} This is true. Let $(x,y)$ be some point in $\R^2$. Then for any $\epsilon>0$ let $B_\epsilon(x,y)$ be some open ball around $(x,y)$. Let \[S=\sup_{(x',y')\in \R^2}\frac{\partial f(x',y')}{\partial x}+\sup_{(x',y')\in \R^2}\frac{\partial f(x',y')}{\partial y},\]
+    which is finite since the partial derivatives exist everywhere and are bounded. Then for any $(x',y')\in B_\epsilon$, we have
+    \[
+        \begin{aligned}
+        |f(x,y)-f(x',y')|&\leq |f(x,y)-f(x,y')| + |f(x,y')-f(x',y')|\\
+        & \leq S|x-x'| + S|y-y'| \leq 4S\epsilon
+        \end{aligned}
+    .\]  
+    So $\|(x,y)-(x',y')\|\leq \epsilon$ implies that $|f(x,y)-f(x',y')|\leq 2S\epsilon$. This proves that $f$ is continuous.
+    
+    \textbf{(c)} This is false. Consider the function 
+    \[
+        f(x,y)=\begin{cases}
+            \displaystyle\frac{x^2y}{x^2+y^2}&\textrm{if }(x,y)\neq(0,0)\\
+            0&\textrm{if }(x,y)=(0,0)
+        \end{cases}
+    \] 
+    Notice that this function is continuous. Then the partial derivatives at any $(x,y)\neq (0,0)$ are given by 
+    \[
+        \left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right) = \begin{cases}
+            \displaystyle\left(\frac{2xy^3}{(x^2+y^2)^2}, \frac{x^2(x^2-y^2)}{(x^2+y^2)^2}\right)&\textrm{if }(x,y)\neq(0,0)\\
+            (0,0)&\textrm{if }(x,y)=(0,0)
+        \end{cases}
+    .\]
+    Note that by some elementary algebra these functions are bounded. We claim that the function isn't differentiable at $(x,y)=(0,0)$. At $(0,0)$ we have partial derivatives $\left(\frac{\partial f}{\partial x}, \frac{\partial f}{\partial y}\right) = (0,0)$. If $f$ were differentiable at $(0,0)$, this would imply that all partial derivatives at $(0,0)$ would be zero. Yet $f(x,x)=\frac{x}{2}$ which has derivative $\frac{1}{2}$ everywhere, so the partial derivative in the $(1,1)$ direction is nonzero. This is a contradiction so $f$ isn't differentiable at $(0,0)$. 
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Give an example showing that a differentiable map $f:\R^2\to \R^2$ satisfying $\det D_f(x,y)\neq 0$ for all $(x,y)\in \R^2$ does not need to be injective.        
+        \item Show that if $f:\R^2\to \R^2$ is differentiable and $\sup_{(x,y)\in \R^2} |D_f(x,y)-I|\leq \alpha$ for some constant $\alpha<1$, then $f$ is a bijection. 
+        \item Consider the statement: if $U\subset \R^2$ is a connected open subset, and $f:U\to\R^2$ is a differentiable map which satisfies $\sup_{(x,y)\in U} |D_f(x,y)-I|\leq \alpha<1$, then $f$ is injective. Show that this statement is true if $U$ is an open ball, but false for some other connected open subsets of $\R^2$ (give an example).
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Consider the map $f : \R^2 \to \R^2$ given by $f(x,y)=(e^x\cos(y), e^x\sin(y))$. Then the function is differentiable with total derivative:
+    \[
+        D_f(x,y)=\begin{bmatrix}
+            e^x\cos(y)& e^x\sin(y)\\ -e^x\sin(y)&e^x\cos(y)
+        \end{bmatrix}
+    .\]
+    The determinant of this total derivative is $\det D_f(x,y)=e^{2x}$, which is always nonzero. Yet $f(0,0)=f(0,2\pi)=(1,0)$ which means that $f$ isn't injective.
+    
+    \textbf{(b)} The proof is very similar to the proof of the inverse function theorem. Given some differentiable $f : \R^2\to \R^2$ with $\sup_{(x,y)\in \R^2}|D_f(x,y) - I|\leq \alpha$ for $\alpha < 1$, consider for any $(x_0,y_0)\in \R^2$ the function $f' : \R^2 \to \R^2$ given by $f'(x,y)=(x,y)+(x_0,y_0)-f(x,y)$. We claim that $f'$ has a unique fixed point over $\R^2$, which would imply that every $(x_0,y_0)\in \R^2$ has a unique $(x,y)\in \R^2$ such that $(x_0, y_0)=f(x,y)$. Notice that $D_{f'} = I - D_f$ so by assumption $|D_f|\leq \alpha<1$. Then for points $(x_1,y_1), (x_2,y_2)\in \R^2$, we can use the mean value inequality to get $|f'(x_1,y_1)-f'(x_2,y_2)|\leq \alpha|(x_1,y_1)-(x_2,y_2)|$ so $f'$ is a contraction mapping, and so it has a unique fixed point by a previous problem set.
+    
+    \textbf{(c)} When $U$ is an open ball, it is convex so the argument from (a) applies. Not sure about the rest.
+\end{solution}
+
+\end{document}

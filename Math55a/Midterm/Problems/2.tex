@@ -1,0 +1,13 @@
+\begin{problem}
+Give examples of the following subgroups in the symmetric group $S_5$, or explain why none exists.
+\begin{enumerate}
+  \item a cyclic subgroup of order 6
+  \item a non-cyclic subgroup of order 6
+\end{enumerate}
+\end{problem}
+
+\textbf{(1)} Consider the subgroup $\big\langle(12)(345)\big\rangle$. This is cyclic by definition. Since $(12)$ and $(345)$ are disjoint cycles, $\left[(12)(345)\right]^n=(12)^n(345)^n$ so the order of $(12)(345)$ is equal to the least common multiple of the orders of $(12)$ and $(345)$, so the order of $(12)(345)$ is $6$. The explicit elements of this subgroup are:
+\[
+  \big\langle(12)(345)\big\rangle = \{e, (12)(345), (354), (12), (345), (12)(354)\}
+\] 
+\textbf{(2)} Consider the subgroup $S_3 = \big\langle (12), (123) \big\rangle \subset S_5$. This has order $6$ and clearly isn't cyclic because $S_3$ has no elements of order $6$.  

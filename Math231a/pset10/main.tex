@@ -1,0 +1,205 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\title{\textbf{Math 231a Problem Set 10}}
+
+\providecommand{\Sk}{\text{Sk}}
+\providecommand{\Gr}{\text{Gr}}
+\providecommand{\Tor}{\text{Tor}}
+\providecommand{\Ext}{\text{Ext}}
+\providecommand{\tors}{\text{tors}}
+
+% `tikz-cd` is necessary to draw commutative diagrams.
+\RequirePackage{tikz-cd}
+% `amssymb` is necessary for `\lrcorner` and `\ulcorner`.
+\RequirePackage{amssymb}
+% `calc` is necessary to draw curved arrows.
+\usetikzlibrary{calc}
+% `pathmorphing` is necessary to draw squiggly arrows.
+\usetikzlibrary{decorations.pathmorphing}
+
+% A TikZ style for curved arrows of a fixed height, due to AndréC.
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Cohomology of projective space.
+\end{problem}
+
+\begin{solution}
+    The goal of this problem is to compute $H^\bullet(\RP^n; \F_2)$ and $H^\bullet(\RP^n; \Z)$ as rings.
+
+    \begin{partproblem}{a}
+        In this problem you will prove that $H^\bullet(\RP^n; \F_2)\cong \F_2[x] / (x^{n+1})$, where $|x|=1$. Using induction on $n$, prove that this will follow if the cup product map
+        \begin{center}
+            \begin{tikzcd}
+                H^i(\RP^n; \F_2)\times H^j(\RP^n; \F_2) \arrow[r, "\smile"] & H^n(\RP^n; \F_2)
+            \end{tikzcd}
+        \end{center}
+        is nonzero for all $i,j\geq 0$ satisfying $i+j=n$.
+    \end{partproblem}
+    \quad Recall that $H^i(\RP^n; \F_2)\cong \F_2$ for all $0\leq i \leq n$. For all such $i$, let $\sigma_i\in H^i(\RP^n; \F_2)$ be the generator. 
+    To construct an isomorphism $\zeta : H^\bullet(\RP^n; \F_2) \to \F_2[x] /(x^{n+1})$, let $\zeta(\sigma_i)=x^i$ and extending linearly. Since $\smile$ is unital, this definition makes sense at $\sigma_0$ since $\zeta(\sigma_i \smile \sigma_0) = \zeta(\sigma_i)=\zeta(\sigma_i)\cdot \zeta(\sigma_0)$. Now since the cup product map is nonzero as described, we know that $\sigma_1\smile\sigma_{k-1}=\sigma_k$. This is actually true for all $k\leq n$ by induction and the canonical inclusion $\RP^{n-1}\subset \RP^n$. Since all the higher cohomology groups are zero, we get the aforementioned ring structure since $\sigma_i\smile \sigma_j=\sigma_{i+j\mod {n+1}}$.
+    
+    \begin{partproblem}{b}
+        Given $i,j\geq 0$ such that $i+j=n$, regard $\RP^i\subset \RP^n$ as the $[x_0 : \cdots : x_n]\in \RP^n$ with $x_{i+1}=\cdots=x_n=0$. Similarly, regard $\RP^j\subset \RP^n$ as the $[x_0 : \cdots : x_n]\in \RP^n$ with $x_0=\cdots=x_{i-1}=0$. Then $\RP^i\cap \RP^j=\{p\}$. Finally, regard $\R^n\subset \RP^n$ as elements of the form $[x_0 : \cdots : x_{i-1} : 1 : x_{i+1} : \cdots : x_n]$. 
+
+        \medskip
+        \quad Then there is a diagram of the form:
+        \begin{center}
+            \begin{tikzcd}
+                H^i(\RP^n; \F_2)\times H^j(\RP^n; \F_2) \arrow[r, "\smile"] & H^n(\RP^n; \F_2)\\
+                H^i(\RP^n, \RP^n - \RP^j; \F_2) \times H^j(\RP^n, \RP^n - \RP^i; \F_2)\arrow[u]\arrow[d] \arrow[r, "\smile"] & H^n(\RP^n, \RP^n - \{p\}; \F_2) \arrow[u] \arrow[d]\\
+                H^i(\R^n, \R^n - \R^j; \F_2) \times H^j(\R^n, \R^n - \R^i; \F_2) \arrow[r, "\smile"] & H^n(\R^n, \R^n - \{p\}; \F_2) \\
+            \end{tikzcd}
+        \end{center}   
+        Prove that the vertical maps are isomorphisms. % prove RP^n - RP^j def retracts onto RP^{i-1} in RP^n      
+    \end{partproblem}
+
+    \quad First let's prove a relevant lemma:
+    \begin{claim}
+        For any $i\leq n$, there is a deformation retraction $\RP^n-\RP^i$ to $\RP^{n-i-1}$ in $\RP^n$.
+    \end{claim}
+
+    \begin{proof}
+        Consider the map $r : \RP^n-\RP^i \to \RP^{n-i-1}$ given by sending $[x_0 : \cdots : x_{i-1} :\cdots :x_n]$ to $[x_{i-1} : \cdots : x_n]$. This is clearly well defined and continuous since these coordinates can't all be zero or else the input would be in $\RP^i$. The homotopy inverse can be given by the simple inclusion $i$ sending $[x_{i-1} : \cdots : x_n]$ to $[0 : \cdots : 0 : x_{i-1} : \cdots : x_n]$.
+
+        \quad To prove that this is a deformation retraction, we must show that $r\circ i$ is homotopic to the identity $\text{id}_{\RP^n - \RP^i}$. This is easily done by the homotopy $H : (\RP^n - \RP^i)\times I \to \RP^n-\RP^i$ with $H(x, t) = [tx_0 : \cdots : tx_{i-1} : x_i : \cdots : x_n]$. 
+    \end{proof}
+    
+    \quad Now lets begin with the rightmost column. Recall by the lemma that $\RP^n-\{p\}$ is homotopy equivalent to $\RP^{n-1}$ so $H^n(\RP^n, \RP^n-\{p\}; \F_2)\cong H^n(\RP^n, \RP^{n-1}; \F_2)$ which in turn is isomorphic to $H^n(\RP^n; \F_2)$ by cellular homology. The bottom map is an isomorphism by the excision theorem on pairs.
+
+    \quad For the leftmost column, notice that by the lemma we have a diagram
+    \[\begin{tikzcd}
+        {H^i(\RP^n)} & {H^i(\RP^n,\RP^{i-1})} & {H^i(\RP^n, \RP^n-\RP^j)} & {H^i(\R^n,\R^n-\R^j)} \\
+        {H^i(\RP^i)} & {H^i(\RP^i, \RP^{i-1})} & {H^i(\RP^i,\RP^i-\{p\})} & {H^i(\R^i,\R^i-\{p\})}
+        \arrow[from=1-1, to=2-1]
+        \arrow[from=1-2, to=2-2]
+        \arrow[from=1-2, to=1-1]
+        \arrow[from=2-2, to=2-1]
+        \arrow[from=1-3, to=1-2]
+        \arrow[from=2-3, to=2-2]
+        \arrow[from=1-3, to=2-3]
+        \arrow[from=1-4, to=2-4]
+        \arrow[from=1-4, to=1-3]
+        \arrow[from=2-4, to=2-3]
+    \end{tikzcd}\]
+    where the $\F_2$ coefficients are omitted for brevity. All commutative squares involved clearly consist of isomorphisms, either by cellular homology or the lemma, or excision. Since we can do the same thing swapping $i$ and $j$, this proves that the leftmost vertical maps are isomorphisms.
+
+
+    \begin{partproblem}{c}
+        Prove that the bottom product is nonzero using the relative K\"unneth formula and universal coefficients theorem. Conclude that $H^\bullet(\RP^n; \F_2)\cong \F_2[x] /(x^{n+1})$.
+    \end{partproblem}
+
+    \quad By Theorem 3.18 in Hatcher (equivalent to relative K\"unneth formula from the previous pset), we see that there is a ring isomorphism
+    \[
+        H^\bullet(\R^n, \R^n-\R^j; \F_2)\otimes_R H^j(\R^n; \R^n -\R^i; \F_2) \to H^\bullet(\R^{2n},(\R^n-\R^j)\times \R^i\cup \R^j\times (\R^n-\R^i); \F_2)
+    .\] 
+    However it follows by elementary topology that the pair $(\R^{2n},(\R^n-\R^j)\times \R^i\cup \R^j\times (\R^n-\R^i))$ is homotopy equivalent to $(\R^n, \R^n-\{p\})$. This proves part a of this problem.
+
+    \quad To see why the ring structure is $\F_2[x] /(x^{n+1})$, notice that there is a single nonzero element in each $H^i(\RP^n; \F_2)$ for $i\leq n$, and $\sigma_1^{\smile i} = \sigma_1^{\smile i\mod {n+1}}$ if we borrow notation from a. Thus the entire ring is generated over $\F_2$ by a single element $\sigma_1$ of order $n+1$, which we can call $x$. 
+
+    \begin{partproblem}{d}
+        Using the map $H^\bullet(\RP^n; \Z) \to H^\bullet(\RP^n; \F_2)$ induced by mod $2$ reduction $\Z \to \F_2$, compute $H^\bullet(\RP^n; \Z)$ as a ring.
+    \end{partproblem}
+
+    \quad Recall that the integral cohomology of real projective space is given by:
+    \[
+        H^i(\RP^{2k+1}; \Z) = \begin{cases}
+            \Z & i =0,n,\\
+            \Z /2\Z & i\text{ even}, i \leq 2k,\\
+            0 &\text{otherwise},
+        \end{cases}
+        \quad \text{and} \quad
+        H^i(\RP^{2k}; \Z) = \begin{cases}
+            \Z & i =0,\\
+            \Z /2\Z & i\text{ even}, i \leq 2k,\\
+            0 &\text{otherwise}.
+        \end{cases}
+    \] 
+    We can see that there is an induced map $H^i(\RP^n; \Z) \to H^i(\RP^n; \F_2)$, and by naturality of the cup product, we get the cohomology rings
+    \[
+        \begin{aligned}
+            &H^\bullet(\RP^{2k}; \Z) \cong \Z[x] / (2x, x^{k+1}),\quad &|x|=2,\\
+            &H^\bullet(\RP^{2k+1}; \Z) \cong \Z[x,y] / (2x, x^{k+1}, y^2, xy),\quad  &|x|=2, |y|=2k+1.
+        \end{aligned}
+    \]
+    In the odd case, this extra generator comes from the nontrivial cochain in $H^{2k+1}(\RP^{2k+1}; \Z)$.
+\end{solution}
+
+\begin{problem}
+    An \emph{algebra} structure on $\R^n$ is an $\R$-bilinear product map $\R^n\times \R^n \to \R^n$, which we denote $(a,b)\mapsto ab$. It is a \emph{division algebra} structure if, for any fixed $a,b\in \R^n$, the maps $x\mapsto ax$ and $x\mapsto bx$ are bijections. Note that we do not assume that the product is commutative, unital, or even associative.
+\end{problem}
+
+\begin{solution}
+    \quad In this problem, you will use Problem~1 to prove the following theorem of Hopf: if $\R^n$ admits the structure of a division algebra, then $n$ must be a power of $2$.
+
+    \begin{partproblem}{a}
+        Prove that if $\R^n$ is equipped with the structure of a division algebra, then the product $\R^n\times \R^n \to \R^n$ induces a map $\RP^{n-1}\times \RP^{n-1}\to \RP^{n-1}$.
+    \end{partproblem}
+
+    \quad For any nonzero $v\in \R^n$, let $[v]\in \RP^{n-1}$ be the projection. Let $\cdot$ be the product map on the division algebra structure on $\R^n$. Finally, consider the map $\widetilde{\times} : \RP^{n-1}\times \RP^{n-1}\to \RP^{n-1}$ given by $([v_1], [v_2]) \mapsto [v_1\cdot v_2]$. This is clearly the canonical map obtained by passing to the quotients, and it's well defined because none of the $v_i$ are zero.
+    
+    \begin{partproblem}{b}
+        Prove that the induced map $H^\bullet(\RP^{n-1}; \F_2) \to H^\bullet(\RP^{n-1}\times \RP^{n-1}; \F_2)$ may be identified with the ring map $\F_2[x] /(x^n) \to \F_2[x_1,x_2] / (x_1^n, x_2^n)$ given by $x\mapsto x_1+x_2$.
+    \end{partproblem}
+
+    \quad Recall that the K\"unneth theorem gives us an isomorphism 
+    \[
+        \begin{aligned}
+            H^\bullet(\RP^{n-1}\times \RP^{n-1}; \F_2) \cong H^\bullet(\RP^{n-1}; \F_2)\otimes H^\bullet(\RP^{n-1}; \F_2)
+        \end{aligned}
+    \]
+    Using the identification of $H^\bullet(\RP^{n-1}\times \RP^{n-1}; \F_2)$ with $\F_2[x] / (x^n)$, we get a canonical identification of $H^\bullet(\RP^{n-1}\times \RP^{n-1}; \F_2)$ with $\F_2[x_1, x_2] / (x_1^n, x_2^n)$. Now let $\widetilde{\times}^\bullet$ be the induced ring homomorphism from $H^\bullet(\RP^{n-1}; \F_2) \to H^\bullet(\RP^{n-1}\times \RP^{n-1}; \F_2)$. Such a homomorphism is determined by where $x$ maps to, so we only need to see what happens at the first degree cohomology level.
+
+    \quad Recall that $H^1(\RP^{n-1}; \F_2)\cong \F_2$ and $H^1(\RP^{n-1}\times \RP^{n-1}; \F_2)\cong \F_2\oplus \F_2$. By the nondegeneracy conditions of the bilinear product, the induced map of $\widetilde{\times}$ on $H^1$ must be $1\mapsto (1,1)$, i.e. it can't be zero in either coordinate. This is because we can consider the induced inverse map in each coordinate. Thus the ring map is given by $x\mapsto x_1+x_2$.
+
+    \begin{partproblem}{c}
+        Prove that such a ring homomorphism can only exist when $n$ is a power of $2$.
+    \end{partproblem}
+
+    \quad This map is a homomorphism if and only if $(x_1+x_2)^n \equiv x_1+x_2\mod 2$, which in turn is equivalent to $2\mid \binom{n}{k}$ for all $0 < k < n$. By Lucas' theorem, $\nu_2\left(\binom{n}{k}\right)=s(k)+s(n-k)-s(n)$ where $s(\ell)$ is the sum of digits in the binary expansion of $\ell$. Thus our condition can be rephrased as:
+    \[
+        s(k)+s(n-k)\geq 1+s(n)\quad\forall 0<k<n
+    .\] 
+    This can be proven using induction to only hold when $n$ is a power of $2$.
+\end{solution}
+
+\pagebreak
+\begin{problem}
+    Let $X$ denote a space. Prove that if $X=U_1\cup \cdots\cup U_n$ for contractible open sets $U_i\subset X$, then the cup product of $n$ positive dimensional classes in $H^\bullet(X; R)$ is zero for any ring of coefficients $R$. As an example, conclude that the cup product of any two positive dimensional classes in $H^\bullet(SY; R)$ is zero, where $SY$ is the suspension.
+\end{problem}
+
+\quad Recall that the relative cup product gives us a commutative diagram:
+\[\begin{tikzcd}
+	{H^{p_1}(X,U_1; R)\times\cdots\times H^{p_n}(X,U_n;R)} & {H^p(X,U_1\cup\cdots\cup U_n;R)} \\
+	{H^{p_1}(X;R)\times\cdots\times H^{p_n}(X; R)} & {H^p(X;R)}
+	\arrow["\smile", from=2-1, to=2-2]
+	\arrow["\smile", from=1-1, to=1-2]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+\end{tikzcd}\]
+where $p=p_1+\cdots+p_n$. Notice that since $U_i$ are contractible, we have isomorphisms $H^{p_i}(X, U_i; R) \cong H^{p_i}(X; R)$ by excision. Similarly, $U_1\cup \cdots U_n = X$, so $H^p(X,U_1\cup\cdots\cup U_n;R)\cong 0$. Thus the bottom map in the diagram is zero, meaning the $n$-fold cup product of any cochains is zero.
+
+\quad In the case of a suspension $SX$, we can chose contractible open sets $C_+$ and $C_-$ to be the images of $X\times[0,0.5+\epsilon] / \sim$ and $X\times[0.5-\epsilon, 1] / \sim$ for some small $\epsilon$. Then by the problem, it follows that the cup product of any two positive dimensional classes is zero.  
+
+\end{document}

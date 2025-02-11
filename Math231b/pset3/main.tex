@@ -1,0 +1,226 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 3}}
+\date{\textbf{Due:} February 21, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Closure properties of cofibrations.
+\end{problem}
+
+\begin{solution}
+    Prove that cofibrations are closed uner the following operations:
+    \begin{partproblem}{a}
+        Products with a space $Y$: if $A\to X$ is a cofibration, then the induced map $A\times Y \to X\times Y$ is as well. 
+    \end{partproblem}
+
+    \quad If we had a homotopy extension diagram for $A\times Y\to X\times Y$, we could use the cartesian closed adjunction to get a homotopy extension diagram for $A \to Y$:
+
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {A\times Y} \& {X\times Y} \\
+        {(A\times Y)\times I} \& {(X\times Y)\times I} \\
+        \&\& Z
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-1, to=2-1]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=1-2, to=2-2]
+        \arrow[curve={height=-18pt}, from=1-2, to=3-3]
+        \arrow[curve={height=18pt}, from=2-1, to=3-3]
+    \end{tikzcd}\implies\quad  \begin{tikzcd}[ampersand replacement=\&]
+        A \& X \\
+        {A\times I} \& {X\times I} \\
+        \&\& {Z^Y}
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=1-2, to=2-2]
+        \arrow[curve={height=-18pt}, from=1-2, to=3-3]
+        \arrow[curve={height=18pt}, from=2-1, to=3-3]
+        \arrow[from=1-1, to=2-1]
+        \arrow["h", dashed, from=2-2, to=3-3]
+    \end{tikzcd}\] 
+    This second diagram would have a homotopy extension since $A \to X$ is a cofibration, so we could reverse the adjunction to get a homotopy extension for the original diagram.
+
+    \begin{partproblem}{b}
+        Compositions: if $A\to B$ and $B\to X$ are cofibrations, then so is $A\to B\to X$. 
+    \end{partproblem}
+
+    \quad To verify the homotopy extension property, suppose we're given a square:
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        A \& B \& X \\
+        {A\times I} \& {B\times I} \& {X\times I} \\
+        \&\&\& Z
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-1, to=2-1]
+        \arrow[from=1-2, to=2-2]
+        \arrow[from=1-3, to=2-3]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=2-2, to=2-3]
+        \arrow[curve={height=18pt}, from=2-1, to=3-4]
+        \arrow[curve={height=-18pt}, from=1-3, to=3-4]
+    \end{tikzcd}\]
+    By precomposing $X\to Z$ with the map $B\to X$, we get a map $B\to Z$, so since the first square is a cofibration square, we get an extension $B\times I \to Z$. Then since the second square is also a cofibration, we get an extension $X\times I \to Z$ as desired.
+
+    \begin{partproblem}{c}
+        Countably transfinite compositions: if $X_i \to X_{i+1}$ are cofibrations for integers $i\geq 0$, then $X_0 \to \varinjlim_n X_n$ is a cofibration.
+    \end{partproblem}
+
+    \quad Given a maps $X_0\times I \to Z$ and $\varinjlim_n X_n \to Z$, we get maps $X_n \to Z$ and $X_n\times I \to Z$ which commute with the rest of the diagram. Thus we get a homotopy extension $X_n\times I \to Z$ given a homotopy extension $X_{n-1}\times I \to Z$. By induction, we get a compatible family of such extensions, so by the universal property we get a compatible extension $\varinjlim_n (X_n\times I) \to Z$. This limit is equal to $\varinjlim_n X_n \times I$ so we have our desired extension.    
+\end{solution}
+
+\begin{problem}
+    Construct the \emph{homotopy pushout} of a triple $B \leftarrow A\to X$:
+    % https://q.uiver.app/?q=WzAsMyxbMCwwLCJBIl0sWzEsMCwiWCJdLFswLDEsIkIiXSxbMCwyXSxbMCwxXV0=
+\[\begin{tikzcd}[ampersand replacement=\&]
+	A \& X \\
+	B
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-1, to=1-2]
+\end{tikzcd}\quad\implies\quad \begin{tikzcd}[ampersand replacement=\&]
+	A \& X \\
+	B \& Y
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-1, to=1-2]
+	\arrow[from=2-1, to=2-2]
+	\arrow[from=1-2, to=2-2]
+	\arrow[Rightarrow, from=1-2, to=2-1]
+\end{tikzcd}\]
+\end{problem}
+
+\begin{solution}
+    \quad Suppose we're given maps $f : A\to X$ and $g: A \to B$. We need to construct a space $Y$ with maps $i_X : X \to Y$ and $i_Y : B \to Y$ as well as a homotopy $h : A\times I \to Y$ between $i_X \circ f$ and $i_Y \circ g$. We can thus construct $Y$ as the colimit of the following diagram: 
+
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        \& Y \\
+        B \& {A\times I} \& X \\
+        \& A
+        \arrow["f"', from=3-2, to=2-3]
+        \arrow["g", from=3-2, to=2-1]
+        \arrow["{i_1}", shift left=1, from=3-2, to=2-2]
+        \arrow["{i_0}"', shift right=1, from=3-2, to=2-2]
+        \arrow["{i_B}", from=2-1, to=1-2]
+        \arrow["{i_X}"', from=2-3, to=1-2]
+        \arrow["h", from=2-2, to=1-2]
+    \end{tikzcd}\]
+    Such a $Y$ can be explicitly given by the quotient:
+    \[
+        Y = \frac{X\sqcup B\sqcup (A\times I)}{f(a)\sim (a,0),\; g(a)\sim(a,1)}
+    .\] 
+    We can denote this space by $X\cup^h_A B = Y$. 
+
+    \begin{partproblem}{a}
+        Extend this construction to work for pointed spaces, and explain how the homotopy cofiber can be viewed as a homotopy pushout.
+    \end{partproblem}
+    \quad In the category of pointed spaces, we need to replace the disjoint union by wedge product, and the interval product with a smash product. Thus our homotopy pushout is the space
+    \[
+        Y = \frac{X\vee B\vee (A\wedge I_+)}{f(a)\sim (a,0),\; g(a)\sim(a,1)}
+    \]
+    and it's easy to check that it satisfies all the required properties as before. We can denote this space by $X\cup^{h_*}_A B=Y$. Now notice that if we have a map $f : A \to X$, the pointed homotopy pushout $X\cup_A^{h_*} * = X\wedge CA / f(a) \sim (a,0) = C(f)$, so the homotopy cofiber is an example of a homotopy pushout. 
+
+    \begin{partproblem}{b}
+        Give an example of when the homotopy pushout is not a pushout in the homotopy category.
+    \end{partproblem}
+
+    \quad For any space $B$, consider the homotopy pushout $*\cup^h_B *$. By construction, this homotopy pushout is clearly $\Sigma B$, yet the ordinary pushout is just a point, i.e. always contractible in the homotopy category. Letting $B$ be some non-contractible space such as $S^n$, it's clear that the homotopy pushout is $\Sigma S^n = S^{n+1}$ which isn't contractible whereas its ordinary pushout is.
+\end{solution}
+
+\begin{problem}
+    Let $\square^n = (0,1)^n$ denote the open unit cube of dimension $n$. A map $f : \square^n \hookrightarrow \square^n$ is said to be a \emph{rectilinear embedding} if it is of the form
+    \[
+        f(x_1,\ldots,x_n) = (a_1x_1 + b_1, \ldots, a_n x_n + b_n)
+    \]
+    for some real numbers $a_i > 0$ and $b_i$. A map $\bigsqcup^k_{i=1} \square^n \to \square^n$ is said to be a \emph{rectilinear embedding} if it is an open embedding and its restriction to each $\square^n$ is in the domain is a rectilinear embedding.
+    
+    \medskip
+    \quad We let $C_k(n)$ denote the space of rectilinear embeddings of $k$ disjoint $n$-cubes $\bigsqcup_{i=1}^k \square^n \to \square^n$, topologized as an open subspace of $(\R^{2n})^k$. There is a continuous map $C_k(n)\times (\Omega^n X)^k \to \Omega^n X$ which allows us to view $C_k(n)$ as a space parametrizing $k$-ary products on $n$-fold loop spaces.
+\end{problem}
+
+\begin{solution}
+    \quad On the other hand, let $\text{Conf}_k(\R^n)$ denote the space of $k$ disjoint ordered points in $\R^n$, viewed as an open subspace of $(\R^n)^k$.
+
+    \begin{partproblem}{a}
+        Prove that there is a homotopy equivalence $C_k(n)\simeq \text{Conf}_k(\R^n)$.
+    \end{partproblem}
+
+    \quad Firstly, to make the maps nicer, lets rescale the cube by using the interval $(-1,1)$ instead of $(0,1)$. In the forward direction we have a simple map $h_0 : C_k(n) \to \text{Conf}_k(\R^n)$ which sends a map $f : \bigsqcup_{i=1}^k \square^n \to \square^n$ to the set of points $(\restr{f}{1}(0), \ldots, \restr{f}{k}(0))$ where $\restr{f}{i}$ is the restriction of the map onto the $i$-th cube. This is well defined since the map is required to be an open embedding so the resulting points will be disjoint. In the opposite direction $h_1 : \text{Conf}_k(\R^n) \to C_k(n)$, let's say we have a set of disjoint points $v=(v_1,\ldots,v_k)$. Let $$\epsilon_v = \min_{1\leq i< j\leq k} |v_i - v_j|$$ be the minimum distance between any two points in the set. Then for any set of points $v=(v_1, \ldots, v_k)$, and $s_i\in \square^n$ a point in the $i$-th square in $\bigsqcup^k_{i=1}\square^n$ we can set
+    \[
+        h_1(v)(s_i) = \left(\frac{\epsilon_v}{2}\cdot s_{i,1} + v_{i,1}, \ldots, \frac{\epsilon_v}{2}\cdot s_{i,k} + v_{i,k}\right) = \frac{\epsilon_v}{2}\cdot s_i + v_i
+    .\]
+    This is clearly continuous since $\epsilon_v : \text{Conf}_k(\R^n) \to \R$ is a continuous, and rectilinear by construction. Now notice that $h_0\circ h_1 = 1_{\text{Conf}_k(\R^n)}$, so we only need to check that $h_1\circ\ h_0 \simeq 1_{\text{Conf}_k(\R^n)}$. For some rectilinear map $f : \bigsqcup^k_{i=1}\square^n \to \square^n$, let $a_i=(a_{i,1},\ldots, a_{i,k})$ and $b_i = (b_{i,1},\ldots,v_{i,k})$ be the point sets representing each rectilinear restriction. Define the homotopy $H : C_k(n)\times I \to C_k(n)$ as
+    \[
+        H(f,t) = \left( s_i \mapsto \left(a_it+\frac{\epsilon_{b_i}}{2}(1-t)\right) \cdot s_i + b_i\right)
+    \]    
+    as before, here $s_i$ represents some element in the $i$-th cube of the disjoint union. Clearly $H(f,0)=f$ and $H(f,1)=h_1\circ h_0$, so we are done. 
+
+    \begin{partproblem}{b}
+        Prove that there is a homotopy equivalence $\text{Conf}_2(\R^n)\simeq S^{n-1}$.
+    \end{partproblem}
+    \quad First we claim that there is a homotopy equivalence $\text{Conf}_2(\R^n)\simeq S^{n-1}\times \R^n$. There's a clear map $h_1 : S^{n-1}\times \R^n \to \text{Conf}_2(\R^n)$ given by $h_1(s,x) = (s+x, x)$. For the other direction $h_0 : \text{Conf}_2(\R^n) \to S^{n-1}\times \R^n$ is given by
+    \[
+        h_0(x,y) = \left(\frac{x-y}{\|x-y\|}, y\right)
+    .\]
+    Now notice that $h_0 \circ h_1 = 1_{S^{n-1}\times \R^n}$. Conversely, $h_1\circ h_0$ is given by 
+    \[
+        (h_1\circ h_0)(x,y) = \left(\frac{x-y}{\|x-y\|}+y, y\right)
+    .\]
+    This can be homotoped to the identity by a simple linear interpolation:
+    \[
+        H(x,y,t) = \left(\left(\frac{x-y}{\|x-y\|}+y\right)t + (1-t)x, y\right)
+    .\] 
+    \quad Thus $\text{Conf}_2(\R^n)\simeq S^{n-1}\times \R^n$. Since $S^{n-1}\times \R^n\simeq S^{n-1}$, we thus have our desired equivalence. 
+\end{solution}
+
+\begin{problem}
+    An \emph{$H$-space} is a pointed space $(X, *)$ equipped with a multiplication map $m : X \times X \to X$ which is homotopy unital in the sense that the diagram
+    % https://q.uiver.app/?q=WzAsNCxbMSwwLCJYXFx0aW1lcyBYIl0sWzAsMCwiWFxcY29uZypcXHRpbWVzIFgiXSxbMiwwLCJYXFx0aW1lcyAqXFxjb25nIFgiXSxbMSwxLCJYIl0sWzEsMF0sWzIsMF0sWzEsMywiMV9YIiwyXSxbMiwzLCIxX1giXSxbMCwzLCJtIl1d
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {X\cong*\times X} \& {X\times X} \& {X\times *\cong X} \\
+        \& X
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-3, to=1-2]
+        \arrow["{1_X}"', from=1-1, to=2-2]
+        \arrow["{1_X}", from=1-3, to=2-2]
+        \arrow["m", from=1-2, to=2-2]
+    \end{tikzcd}\]
+    commutes up to homotopy. Prove that if $X$ is an $H$-space, then $\pi_1(X,*)$ is an abelian group. Furthermore, prove that $\pi_1(X,*)\times \pi_1(X, *) \to \pi_1(X,*)$ induced by $m$ is equal to the group operation.
+    % pure algebra since m induces a unital group homomorphism
+\end{problem}
+
+\begin{solution}
+    \quad Let $f,g : I \to X$ be paths in $X$ based at $*$, and let $f\cdot g$ denote the path $(f\cdot g)(t) = m(f(t), g(t))$. This is well defined on on homotopy, since if $H_f : f\simeq f'$ and $H_g : g\simeq g'$ are homotopies then $H_f\cdot H_g : f\cdot g \simeq f'\cdot g'$. Thus $\cdot$ is a well defined operation on $\pi_1(X,*)$. The identity with respect to this operation is the constant map $c_*$, this follows by the homotopy unitality of the multiplication map. Notice that path composition and path multiplication have the same identity element.
+
+    \quad First we'll show that path composition and path multiplication are actually the same operation:
+    \[
+        f\cdot g = (f * c_*) \cdot (c_* * g) = \begin{cases}
+            f(2t)\cdot * & 0\leq t\leq \frac{1}{2}\\
+            * \cdot g(2t-1) & \frac{1}{2}\leq t\leq 1\\
+        \end{cases} = \begin{cases}
+            f(2t) & 0\leq t\leq \frac{1}{2}\\
+            g(2t-1) & \frac{1}{2}\leq t\leq 1\\
+        \end{cases} = f * g
+    .\] 
+    Then by a similar argument we get commutativity:
+    \[
+        f * g = f\cdot g = (c_* * f)\cdot (g * c_*) = (c_* \cdot g) * (f \cdot c_*) = g * f
+    .\]
+\end{solution}
+
+\end{document}

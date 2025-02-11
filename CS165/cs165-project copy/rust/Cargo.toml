@@ -1,0 +1,19 @@
+[package]
+name = "cs165_project"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "^1.0.42"
+
+[lib]
+name = "common"
+path = "common/lib.rs"
+
+[[bin]]
+name = "client"
+path = "src/client.rs"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"

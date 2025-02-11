@@ -1,0 +1,292 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\title{\textbf{Math 231a Problem Set 7}}
+
+\providecommand{\Sk}{\text{Sk}}
+\providecommand{\Gr}{\text{Gr}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $X$ be a finite CW complex. Show that for any field $F$,
+    \[
+        \chi(X) = \sum_k (-1)^k \dim_F H_k(X; F)
+    .\] 
+\end{problem}
+\begin{solution}
+    \quad Recall cellular homology, given as the homology of the chain complex $C_k(X) = \Z I_k$ with boundary maps given by the degree formula. Then we showed that $H_n(C_*(X))\cong H_n(X)$ and
+    \[
+        \chi(X) = \sum_k (-1)^k |I_k|
+    .\]
+    \quad This construction can be generalized to an arbitrary field $F$ by setting $C_k(X; F) = F I_k$. Again, the same proof will hold, since whenever we have an exact sequence \[0 \to U \to V \to W \to 0\] of vector spaces over a field, we have $\dim_F V = \dim_F U + \dim_F W$. Thus we get $H_n(C_*(X; F)) \cong H_n(X; F)$ and similarly we'll get
+    \[
+        \sum_k (-1)^k \dim_F H_k(X; F) = \sum_k (-1)^k \text{rank}_F H_k(X; F) = \sum_k (-1)^k |I_k| = \chi(X)
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Let $p$ be a prime number. Give an example of two maps $f, g : X \to Y$ inducing the same map on integral homology but not homology with coefficients in $\mathbb{F}_p$ (and that are therefore not homotopic).
+\end{problem}
+
+\begin{solution}
+    \quad Let $L(p)$ be the quotient of $D^2$ by the map which identifies the boundary by a degree $p$ map. Using cellular homology, we quickly see that the cellular chain complex $C_*(L(p); R)$ for $R = \Z$ or $\Z_p$ is:
+    \begin{center}
+        \begin{tikzcd}
+            0 & R \arrow[l] & R \arrow[l, "0"'] & R \arrow[l, "p"'] & 0 \arrow[l]
+        \end{tikzcd}
+    \end{center}
+    Thus the homology groups are:
+    \[
+        H_k(L(p); \Z) = \begin{cases}
+            \Z & k = 0,\\
+            \Z / p & k = 1,\\
+            0 & \text{otherwise},
+        \end{cases}\quad\text{and}\quad H_k(L(p); \Z_p) = \begin{cases}
+            \Z_p & 0\leq k \leq 2,\\
+            0 &\text{otherwise}.
+        \end{cases}
+    \]
+    \quad Now consider the constant map $f : L(p) \to S^2$ which sends everything to some point $x\in S^2$. This induces an isomorphism on $H_0(-; \Z)$, and the zero map everywhere else. The same thing happens in $H_*(-; \Z /p)$. Next we have the map $g : L(p) \to S^2$ which collapses the boundary of $D^2$ to a single point. As before, this induces an isomorphism on $H_0(-; \Z)$ and $H_0(-; \Z/p)$. We get a zero map on $H_1(-; \Z)$ and $H_1(-; \Z/p)$, yet a nonzero map on $H_2(-; \Z /p)$. So the two maps are not homotopic, but they induce the same maps of integral homology. 
+\end{solution}
+
+\begin{problem}
+    Let $m, n$ be positive integers and consider the cyclic groups $\Z/m$ and $\Z/n$. Compute the tensor product $\Z/m \otimes \Z/n$.
+\end{problem}
+
+\begin{solution}
+    \quad We claim that $\Z/m \otimes \Z /n\cong \Z /\gcd(n,m)$. Firstly, we have a bilinear map $\Z /n \times \Z /m \to \Z /\gcd(n,m)$ which sends $(a,b)$ to $ab \mod \gcd(n,m)$. Since $\gcd(n,m) \mid n$ and $\gcd(n,m) \mid m$, this map is well defined. It's easy to check that it is bilinear.
+
+    \quad Now suppose there is some other ring $P$ with a bilinear map $f : \Z /m \times \Z /n \to P$. This means that $(1,1)$ must get sent to some $f(1,1)\in P$ such that $n\cdot f(1,1) = f(n,1)=0$ and $m\cdot f(1,1)=f(1,m)=0$, so $\gcd(n,m) \cdot f(1,1) = 0$. Clearly there is a unique linear map $\widetilde{f} : \Z /\gcd(n,m) \to P$ which sends $1$ to $f(1,1)$, and so we are done. 
+\end{solution}
+
+\begin{problem}
+    The goal of this problem is to prove the Borsuk-Ulam theorem, which states that for every map
+    \[
+        g : S^n \to \R^n,
+    \]
+    there is a point $x\in S^n$ with $g(x)=g(-x)$. Along the way we will prove that any \emph{odd} map $f : S^n \to S^n$ has odd degree.
+\end{problem}
+
+\begin{solution}
+    Let $p : \widetilde{X} \to X$ be a two sheeted covering. 
+    \begin{partproblem}{a}
+        Prove that singular $n$-simplex $\sigma : \Delta^n \to X$ admits exactly two lifts $\sigma_1, \sigma_2 : \Delta^n \to \widetilde{X}$.
+    \end{partproblem}
+    \quad This follows because $\Delta^n$ is a simply connected and locally path connected space.
+
+    \begin{partproblem}{b}
+        Prove that there is a short exact sequence of chain complexes
+        \begin{center}
+            \begin{tikzcd}
+                0 \arrow[r] & S_*(X; \F_2) \arrow[r, "\tau"] & S_*(\widetilde{X}; \F_2) \arrow[r, "p_*"] & S_*(X; \F_2) \arrow[r] & 0
+            \end{tikzcd}
+        \end{center}
+        where the \emph{transfer map} $\tau$ is defined on $n$-simplices $\sigma$ by $\tau(\sigma)=\sigma_1+\sigma_2$. This gives rise to the long exact \emph{transfer sequence}:
+        \begin{center}
+            \begin{tikzcd}
+                \cdots \arrow[r] & H_n(X; \F_2) \arrow[r, "\tau_*"] & H_n(\widetilde{X}; \F_2) \arrow[r, "p_*"] & H_n(X; \F_2) \arrow[r] & H_{n-1}(X; \F_2) \arrow[r] & \cdots
+            \end{tikzcd}
+        \end{center}
+    \end{partproblem}
+    \quad First suppose $\sigma \in S_*(X; \F_2)$ with $\tau(\sigma)=0$. This means that $\tau(\sigma)=2\omega$, so $\sigma_1+\sigma_2=2\omega$. Since $\sigma_1$, $\sigma_2$ are disjoint chains, we must have $\omega = \omega' + \omega''$ such that $\sigma_1=2\omega'=0$ and $\sigma_2=2\omega''=0$. Since both lifts are zero, the original chain must be zero. So the sequence is exact at $S_*(X; \F_2)$.
+    
+    \quad Next, let $\sigma\in S_*(X; \F_2)$. Then $p_*(\tau(\sigma))=p\circ \sigma_1 + p\circ \sigma_2 = 2\sigma= 0$, so $\Ima(\tau)\subset \Ker(p_*)$. To prove the converse, suppose $p_*(\omega)=0$ for some $\omega\in S_*(\widetilde{X}; \F_2)$. Since we're working in the chain complex, it follows that $\omega=\sigma_1+\sigma_2$ for some chain $\sigma$ in $X$.
+    
+    \quad Lastly, $p_*$ is surjective because for any chain $\sigma\in S_*(X; \F_2)$ we have $\sigma = p\circ \sigma_1$. So the short sequence of chain complexes is exact, and so we have a long exact sequence of homology groups.
+
+    \begin{partproblem}{c}
+        Given an odd map $f : S^n \to S^n$, there is an induced map $\overline{f} : \RP^n \to \RP^n$. Prove that there is a commutative diagram of transfer sequences of the form:
+        \begin{center}
+            \begin{tikzcd}
+                \cdots \arrow[r] & H_k(\RP^n; \F_2) \arrow[r, "\tau_*"] \arrow[d, "\overline{f_*}"] & H_k(S^n; \F_2) \arrow[r, "p_*"] \arrow[d, "{f_*}"] & H_k(\RP^n; \F_2) \arrow[r] \arrow[d, "\overline{f_*}"] & H_{k-1}(\RP^n; \F_2) \arrow[r] \arrow[d, "\overline{f_*}"] & \cdots \\
+                \cdots \arrow[r] & H_k(\RP^n; \F_2) \arrow[r, "\tau_*"]                             & H_k(S^n; \F_2) \arrow[r, "p_*"]                             & H_k(\RP^n; \F_2) \arrow[r]                             & H_{k-1}(\RP^n; \F_2) \arrow[r]                                      & \cdots
+                \end{tikzcd}
+        \end{center}
+    \end{partproblem}
+
+    \quad It suffices to show that we have a commutative diagram:
+    \begin{center}
+        \begin{tikzcd}
+            S_*(\RP^n; \F_2) \arrow[r, "\tau"] \arrow[d, "\overline{f_*}"] & S_*(S^n; \F_2) \arrow[r, "p_*"] \arrow[d, "{f_*}"] & S_*(\RP^n; \F_2) \arrow[d, "\overline{f_*}"] \\
+            S_*(\RP^n; \F_2) \arrow[r, "\tau"]                                         & S_*(S^n; \F_2) \arrow[r, "p_*"]                             & S_*(\RP^n; \F_2)                            
+        \end{tikzcd}
+    \end{center}
+    \quad To prove commutativity of the first square, first note that for any $\sigma\in S_*(\RP^n; \F_2)$ we have $\overline{f_*}(\tau(\sigma))=\overline{f_*}(\sigma_1+\sigma_2) = \overline{f_*}(\sigma_1) + \overline{f_*}(\sigma_2)$. On the other side, we have $\tau(\overline{f_*}(\sigma))$. However the lifts of $\overline{f_*}(\sigma)$ are exactly $\overline{f_*}(\sigma_1)$ and $\overline{f_*}(\sigma_2)$ since $\overline{f}\circ p = p\circ f$.
+
+    \quad Commutativity of the second square follows simply because $S_*(-; \F_2)$ is a functor and since $\overline{f}\circ p = p\circ f$.
+
+    \begin{partproblem}{d}
+        Using (c), prove that any odd map $f : S^n \to S^n$ has odd degree.
+    \end{partproblem}
+
+    \quad Let $(\overline{f_*})_k : H_k(\RP^n; \F_2) \to H_k(\RP^n; \F_2)$ be the natural induced map. Recall that $H_k(\RP^n; \F_2)\cong \F_2$ for all $k\leq n$. We first claim that $(\overline{f_*})_k$ is the identity isomorphism between $\F_2$ for all $k\leq n$. Let's proceed by induction. When $k=0$, this is clearly the case, since $\RP^n$ is path connected. Now suppose $(\overline{f_*})_{k-1}$ is the identity isomorphism for some $0\leq k-1 < n-1$. Look at a slice of the diagram from (c):
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & H_k(\RP^n; \F_2) \arrow[d, "(\overline{f_*})_k"] \arrow[r, "p_*"] & H_{k-1}(\RP^n; \F_2) \arrow[r, "\tau_*"] \arrow[d, "(\overline{f_*})_{k-1}"] & H_{k-1}(S^n;\F_2) \arrow[d, "(f_*)_{k-1}"] \arrow[r] & \cdots \\
+            \cdots \arrow[r] & H_k(\RP^n; \F_2) \arrow[r, "p_*"]                                 & H_{k-1}(\RP^n;\F_2) \arrow[r, "\tau_*"]                                      & H_{k-1}(S^n;\F_2) \arrow[r]                          & \cdots
+        \end{tikzcd}
+    \end{center}
+    Since $k\neq 0,n$, we have $H_{k-1}(S^n; \F_2)=0$ so $p_*$ is surjective and hence an isomorphism. Since $p_*\circ (\overline{f_*})_k = (\overline{f_*})_{k-1}\circ p_*$, it follows that $(\overline{f_*})_k$ is an isomorphism as well. 
+
+    \quad Now lets look at the ``end'' of the commutative diagram:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & H_n(\RP^n; \F_2) \arrow[d, "(\overline{f_*})_n"] \arrow[r, "\tau_*"] & H_n(S^n; \F_2) \arrow[d, "(f_*)_n"] \arrow[r, "p_*"] & H_n(\RP^n; \F_2) \arrow[d, "(\overline{f_*})_n"] \arrow[r, "\partial"] & H_{n-1}(\RP^n; \F_2) \arrow[r, "\tau_*"] \arrow[d, "(\overline{f_*})_{n-1}"] & H_{n-1}(S^n;\F_2) \arrow[d, "(f_*)_{n-1}"] \\
+            0 \arrow[r] & H_n(\RP^n; \F_2) \arrow[r, "\tau_*"]                                 & H_n(S^n; \F_2) \arrow[r, "p_*"]                      & H_n(\RP^n; \F_2) \arrow[r, "\partial"]                                 & H_{n-1}(\RP^n; \F_2) \arrow[r, "\tau_*"]                                     & H_{n-1}(S^n;\F_2)                         
+        \end{tikzcd}    
+    \end{center}    
+    Note that $H_{n-1}(S^n; \F_2)=0$ so $\partial$ is an isomorphism, which makes $p_*$ the zero map, and so $\tau_*$ is an isomorphism. By commutativity, $\tau_*\circ (\overline{f_*})_n =(f_*)_n\circ \tau_*$ and since $(\overline{f_*})_n$ is an isomorphism, it follows that $(f_*)_n$ is as well.
+    
+    \quad Finally, suppose that $f$ had even degree. Since $H_*(S^n;-)$ is a functor as well, we'd have a commutative square:
+    \begin{center}
+        \begin{tikzcd}
+            H_n(S^n;\Z) \arrow[r, "f'_*"] \arrow[d] & H_n(S^n;\Z) \arrow[d] \\
+            H_n(S^n;\F_2) \arrow[r, "f_*"]         & H_n(S^n;\F_2)        
+        \end{tikzcd}
+    \end{center}
+    Here the vertical projections are modulo two, so $f$ would induce the zero map on $H_n(S^n;\F_2)$, which contradicts the fact that we showed it was an isomorphism. So the (integral) degree of $f$ is odd. 
+
+    \begin{partproblem}{e}
+        Given a map $g : S^n \to \R^n$, prove that the odd map $f : S^n \to \R^n$ given by $f(x)=g(x)-g(-x)$ must have a zero. Deduce the Borsuk-Ulam theorem. % Consider equatorial inclusion 
+    \end{partproblem}
+
+    \quad Suppose for the sake of contradiction that the odd map $f$ does not have a zero. This gives us an continuous map $\widehat{f} : S^n \to S^{n-1}$ by composing with the normalization map. In particular, this map is still odd. If we further compose with the equatorial inclusion $S^{n-1}\subset S^n$, we get an odd map $\widehat{f} : S^n \to S^n$. By part (d), it follows that $\widehat{f}$ must have odd degree. But $\widehat{f}$ isn't surjective, so it must have degree zero. This is a contradiction, so $f$ must have a zero and so there exists a $x$ such that $g(x)=g(-x)$. 
+\end{solution}
+
+\begin{problem}
+    Computation of the homology of $\RP^n$ using transfer sequences.
+\end{problem}
+
+\begin{solution}
+    \quad The computation of the homology of $\RP^n$ via cellular homology presented in class depended on a careful analysis of orientations and signs. In this problem, you will use the \emph{transfer sequence} introduced in the previous problem to recompute the homology of $\RP^n$ in a way that is less vulnerable to sign errors.
+    \begin{partproblem}{a}
+        Given the fact that $\RP^n$ is an $n$-dimensional CW complex, use the transfer sequence associated to the cover $p : S^n \to \RP^n$ to compute $H_*(\RP^n; \F_2)$.
+    \end{partproblem}
+
+    \quad Since $\RP^n$ is an $n$-dimensional CW complex, we know that $H_k(\RP^n; \F_2)=0$ for all $k>n$. Also by the results of the previous sections, we've shown that there is an isomorphism $H_k(\RP^n; \F_2)\cong H_{k-1}(\RP^n; \F_2)$ for all $0<k\leq n$. Since $\RP^n$ is path connected, we get the following homology:
+    \[
+        \boxed{H_k(\RP^n; \F_2) = \begin{cases}
+            \F_2 & 0\leq k \leq n,\\
+            0 & \text{otherwise}.\\
+        \end{cases}}
+    \] 
+
+    \begin{partproblem}{b}
+        The transfer map $\tau$ may be defined at the level of integral chains by the same formula as in Problem~4b. Verify that the induced composite
+        \begin{center}
+            \begin{tikzcd}
+                H_n(X; \Z) \arrow[r, "\tau_*"] & H_n(\widetilde{X}; \Z) \arrow[r, "p_*"]& H_n(X; \Z)
+            \end{tikzcd}
+        \end{center}
+        is multiplication by $2$.
+    \end{partproblem}
+    \quad For any $\sigma\in H_n(X; \Z)$ we have $p_*(\tau_*(\sigma))=p_*(\sigma_1)+p_*(\sigma_2)=2\sigma$, so this is the multiplication by $2$ map. 
+
+    \begin{partproblem}{c}
+        Using the pushout squares
+        \begin{center}
+            \begin{tikzcd}
+                S^{n-1} \arrow[r, "p"] \arrow[d] &\RP^{n-1} \arrow[d]\\ D^n \arrow[r] & \RP^n
+            \end{tikzcd}
+        \end{center}
+        and induction on $n$, reduce the computation of $H_*(\RP^n; \Z)$ to the statement that, when $n$ is odd, $p_* : H_n(S^n; \Z) \to H_n(\RP^n; \Z)$ sends a generator to $\pm 2$ times a generator. 
+    \end{partproblem}
+
+    \quad Recall that we have a commutative diagram with exact rows:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & S_*(S^{n-1}) \arrow[r] \arrow[d, "p_*"] & S_*(D^n) \arrow[r] \arrow[d] & S_*(D^n/S^{n-1}) \arrow[d] \arrow[r] & 0 \\
+            0 \arrow[r] & S_*(\RP^{n-1}) \arrow[r]                & S_*(\RP^n) \arrow[r]         & S_*(\RP^n/\RP^{n-1}) \arrow[r]       & 0
+        \end{tikzcd}
+    \end{center}
+    This gives us long exact sequences of (reduced) homology groups:
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & \widetilde{H_k}(S^{n-1}) \arrow[r] \arrow[d, "p_*"] & \widetilde{H_k}(D^n) \arrow[r] \arrow[d] & \widetilde{H_k}(D^n/S^{n-1}) \arrow[d, "\alpha_k"] \arrow[r, "\partial_k"] & \widetilde{H_{k-1}}(S^{n-1}) \arrow[d, "p_*"] \arrow[r] & \cdots \\
+            \cdots \arrow[r] & \widetilde{H_k}(\RP^{n-1}) \arrow[r, "\omega_k"]                & \widetilde{H_k}(\RP^n) \arrow[r, "\gamma_k"]         & \widetilde{H_k}(\RP^n/\RP^{n-1}) \arrow[r, "\beta_k"]        & \widetilde{H_{k-1}}(\RP^{n-1}) \arrow[r]                & \cdots
+        \end{tikzcd}
+    \end{center}
+    In particular, note that since $\widetilde{H_k}(D^n)=0$ for all $n,k$, it follows that $\partial_k$ is an isomorphism for all $k$. We've already shown that $\alpha_k$ is an isomorphism for all $k$ in our proof of cellular homology.
+
+    \quad We'll first prove that:
+    \[
+        \widetilde{H_n}(\RP^n) \cong \begin{cases}
+            0 & n\text{ even},\\
+            \Z & n\text{ odd}.    
+        \end{cases}
+    \] 
+
+    \quad Assume the statement that $p_* : H_n(S^n; \Z) \to H_n(\RP^n; \Z)$ is the multiplication by $\pm 2$ map. When $n=0$, we have the reduced homology $\widetilde{H_k}(\RP^0)=0$ for all $k$, since $\RP^0$ is a path connected CW complex of dimension zero, so this is clearly true. 
+    
+    \quad Now suppose the claim is true for $n-1$. Looking at the bottom row of the commutative diagram, we have the exact sequence:
+
+    \begin{center}
+        \begin{tikzcd}
+            \widetilde{H_n}(\RP^{n-1}) \arrow[r] & \widetilde{H_n}(\RP^n) \arrow[r, "\gamma_n"] & \widetilde{H_n}(\RP^n/\RP^{n-1}) \arrow[r, "\beta_n"] & \widetilde{H_{n-1}}(\RP^{n-1})
+            \end{tikzcd}
+    \end{center}
+
+    Recall that $\RP^n /\RP^{n-1}$ is homeomorphic to $S^n$ by the pushout square, so $\widetilde{H_n}(\RP^n/\RP^{n-1})\cong \Z$. Additionally $\widetilde{H_n}(\RP^{n-1})=0$ since $\RP^{n-1}$ is $n$-dimensional. So $\gamma_n$ is injective. We now have two cases. If $n$ is odd, then $n-1$ is even so $\widetilde{H_{n-1}}(\RP^{n-1})=0$ and $\gamma_n$ becomes an isomorphism. Thus $\widetilde{H_n}(\RP^n)\cong \Z$ as desired.    
+
+    \quad In the case when $n$ is even, it's a little bit more tricky because then $n-1$ is odd so $\widetilde{H_{n-1}}(\RP^{n-1})\cong \Z$. Since the sequence is exact, we have $\widetilde{H_n}(\RP^n)\cong \Ima(\gamma_n)=\Ker(\beta_n)$. But $\beta_n\circ \alpha_k = p_*\circ \partial_k$. Since all the maps involved are injective, so is $\beta_n$ and so $\widetilde{H_n}(\RP^n)\cong 0$ as desired.
+    
+    \quad Next, we claim that 
+    \[
+        \widetilde{H_{n-1}}(\RP^n) \cong \begin{cases}
+            \Z /2& n\text{ even},\\
+            0 & n\text{ odd}.
+        \end{cases}
+    \] 
+    We don't need induction for this. For any $n\geq 1$, we take a slice of the diagram to get:
+    \begin{center}
+        \begin{tikzcd}
+            \widetilde{H_n}(D^n/S^{n-1}) \arrow[d, "\alpha_n"] \arrow[r, "\partial_n"] & \widetilde{H_n}(S^{n-1}) \arrow[d, "p_*"] &                                                      &                                      \\
+            \widetilde{H_n}(\RP^n/\RP^{n-1}) \arrow[r, "\beta_n"]                      & \widetilde{H_{n-1}}(\RP^{n-1}) \arrow[r,"\omega_{n-1}"]  & \widetilde{H_{n-1}}(\RP^n) \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    \quad This last zero in the bottom row occurs because $\widetilde{H_{n-1}}(\RP^n/\RP^{n-1})=0$. This makes $\omega_{n-1}$ surjective. Now when $n$ is even, $\widetilde{H_{n-1}}(\RP^{n-1})\cong \Z$. Since $\alpha_n$ and $\partial_n$ are isomorphisms and $p_*$ is the multiplication by $\pm 2$ map, it follows that $\beta_n$ must be the multiplication by $\pm 2$ map as well. So $\Ima(\beta_n)=2\Z$ and so $\widetilde{H_{n-1}}(\RP^n)\cong \Z /2$ as desired. If instead $n$ were odd, then $\widetilde{H_{n-1}}(\RP^{n-1})\cong 0$ so $\omega_{n-1}$ would be the zero map, and so $\widetilde{H_{n-1}}(\RP^n)$. 
+    
+    \quad Finally, since $\RP^0\subset \RP^1\subset \cdots \subset\RP^n$ is a CW decomposition of $\RP^n$, we get the full homology of $\RP^n$:
+
+    \[
+        \boxed{\widetilde{H_k}(\RP^n)=\begin{cases}
+            \Z/2 & k<n, k\text{ odd},\\
+            \Z & k=n, k\text{ odd},\\
+            0 & \text{otherwise},
+        \end{cases}}
+        \quad \text{ or }\quad \boxed{H_k(\RP^n)=\begin{cases}
+            \Z & k = 0,\\
+            \Z/2 & k<n, k\text{ odd},\\
+            \Z & k=n, k\text{ odd},\\
+            0 & \text{otherwise}.
+        \end{cases}}
+    \] 
+    \pagebreak
+    \begin{partproblem}{d}
+        Using (a) and (b), prove this statement.
+    \end{partproblem}
+
+    \quad We have the commutative diagram:
+    \begin{center}
+        \begin{tikzcd}
+            {H_n(\RP^n; \Z)} & {H_n(S^n;\Z)} & {H_n(\RP^n;\Z)} \\
+            {H_n(\RP^n;\F_2)} & {H_n(S^n;\F_2)} & {H_n(\RP^n; \F_2)}
+            \arrow[from=1-1, to=2-1]
+            \arrow["{\tau_*}", from=1-1, to=1-2]
+            \arrow["{\overline{\tau_*}}", from=2-1, to=2-2]
+            \arrow[from=1-2, to=2-2]
+            \arrow[from=1-3, to=2-3]
+            \arrow["{p_*}", from=1-2, to=1-3]
+            \arrow["{\overline{p_*}}", from=2-2, to=2-3]
+        \end{tikzcd}
+    \end{center}
+    First, we recall from Problem~4 that $\overline{\tau_*}$ is injective, and hence an isomorphism because $H_n(\RP^n; \F_2)\cong \F_2$ and $H_n(S^n;\F_2)\cong \F_2$. Since $\RP^n$ has a cell structure with one cell in each dimension, $H_n(\RP^n; \Z)$ has a single generator, so by commutativity of the diagram, $\tau_*$ must send it to an odd element of $H_n(S^n; \Z)$. However $p_*\circ \tau_*$ is the multiplication by $\pm 2$ map, so $p_*$ must be a multiplication by $\pm 2$ map since $\tau_*$ has odd image.
+\end{solution}
+
+\end{document}

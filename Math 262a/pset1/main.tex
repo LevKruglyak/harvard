@@ -1,0 +1,214 @@
+\documentclass{pset}
+
+\providecommand{\E}{\mathbb{E}}
+
+\title{\textbf{Math 262a Problem Set 1}}
+\date{\textbf{Due:} Wednesday, September 13}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    In this problem you will derive the symplectic form on the space of classical trajectories of a particle, for simplicity a particle of mass $m$ moving on the line $\E^1$ with coordiante $x$.
+\end{problem}
+
+\begin{solution}
+    \quad Let $V : \E^1 \to \R$ be a smooth function which represents the potential energy of the particle. Let $\mathcal{F} = C^\infty(\R, \E^1)$ be the space of smooth possible particle trajectories.
+
+    \begin{part}{a}
+        What is the space $N\subset \mathcal{F}$ of classical trajectories, i.e., trajectories that satisfy Newton's law? Consider special cases of $V=0$ and $V(x)=kx^2 / 2$ for some $k > 0$.
+    \end{part}
+
+    \quad We define $N$ simply as:
+    \[
+        N = \left\{x(t) \in \mathcal{F} : m\frac{\partial^2 x}{\partial t^2} = - \frac{\partial V}{\partial x}\circ x \right\}
+    .\] 
+    Topologically, this space of solutions is a two-dimensional smooth manifold. Indeed, inspired by Hamiltonian mechanics, we could construct an explicit diffeomorphism $\psi : N \to \E^1\times \R$ given by $\psi(x) = (x(0), \dot{x}(0))$. This is smooth since both coordinates are smooth functions, and a diffeomorphism because Newton's law is a second-order differential equation, so a starting position and momentum uniquely determine the path of a particle.
+
+    \quad When $V(x)=0$, particle paths are linear functions of the form $x(t) = vx + b$. Here $x(0)=b$ and $m\dot{x}(0)=v$. When $V(x)=kx^2 / 2$, the situation is slightly more complicated, now the general solution is 
+    \[
+        x(t) = a\cos\left(\omega t\right)+b\sin\left(\omega t\right)\quad\textrm{where}\quad \omega = \sqrt{\frac{k}{m}}
+    .\]
+    Then $x(0) = a$ and $\dot{x}(0) = b$, so as before we get the diffeomorphism.
+
+    \begin{part}{b}
+        Review the derivation of Newton's law from the calculus of variations applied to the \emph{action} function:
+        \[
+            S(x) = \int \frac{1}{2} m\dot{x}(t)^2 - V(x(t)) \;dt
+        .\] 
+    \end{part}
+
+    \quad The Euler-Lagrange equations state that the function $q$ which minimizes an action of the form $\int \mathcal{L}(q, \dot{q}, t) \;dt$, satisfies
+    \[
+        \frac{\partial \mathcal{L}}{\partial q} - \frac{d}{dt}\left(\frac{\partial \mathcal{L}}{\partial \dot{q}}\right) = 0
+    .\]  
+    In the Newtonian case, we have $\partial\mathcal{L} / \partial x = \partial V / \partial q \circ x$, and $\partial \mathcal{L} / \partial \cdot{q} = m\dot{x}$. So our $x$ must satisfy
+    \[
+        \frac{\partial V}{\partial x}\circ x -\frac{d}{dt} m\dot{x} = \nabla V\circ x - m\ddot{x} = 0
+    .\] 
+    This is exactly Newton's law.
+
+    \begin{part}{c}
+        Rephrase this computation using calculus on $\mathcal{F}\times \R$. Let $\delta$ be the de Rham differential on $\mathcal{F}$ and $d$ be the de Rham differential on $\R$. Let $e : \mathcal{F} \times \R \to \E^1$ send $(x,t)\mapsto x(t)$. Show that the integrand above can be written as
+        \[
+            L=\mathcal{L}\wedge dt = \left(\frac{1}{2}m\dot{e}^2 - V\circ e\right)\wedge dt
+        \] 
+        and that this is an element of $\Omega^{0,1}(\mathcal{F}\times \R)$.
+    \end{part}
+
+    \quad Let $\dot{e} : \mathcal{F} \times \R \to \E^1$ send $(x, t)\mapsto \dot{x}(t)$. This can also be thought of as the directional derivative of $e$ along the vector field $\pi_\R : \mathcal{F} \times \R \to \R$. Then $\mathcal{L}\in \Omega^0(\mathcal{F}\times \R)$, so $\mathcal{L}\wedge dt\in \Omega^{0,1}(\mathcal{F}\times \R)$.
+
+    \begin{part}{d}
+        Compute $\delta L\in \Omega^{1,1}(\mathcal{F}\times \R)$. Then find $\theta\in \Omega^{1,0}(\mathcal{F}\times \R)$ so that $\delta L + d\theta$ is a function times $\delta e\wedge dt$.
+    \end{part}
+
+    \quad A direct calculation shows that
+    \[
+        \begin{aligned}
+            \delta L = \delta (\mathcal{L}\wedge dt) &= \delta \mathcal{L} \wedge dt + \mathcal{L}\wedge \delta dt\\
+            &= (m\dot{e}\; \delta \dot{e} - \nabla V\circ e\;\delta e)\wedge dt\\
+            &= m\dot{e}\; \delta\dot{e}\wedge dt - \nabla V\circ e\; \delta e\wedge dt.
+        \end{aligned}
+    \] 
+    Then if we set $\theta = m\dot{e}\; \delta e$ we get $d\theta = m\dot{e}\;dt\wedge \delta \dot{e} + m\ddot{e}\;dt\wedge \delta e$. Therefore,
+    \[
+        \delta L + d\theta = -\left(m\ddot{e} + \nabla V\circ e\right) \delta e\wedge dt
+    .\] 
+    
+    \begin{part}{e}
+        Show that $\delta L + d\theta$ vanishes on $N$ and that this vanishing defines $N$.
+    \end{part}
+
+    \quad For any $x\in N$ and $t\in \R$, Newton's law implies that $-(m\ddot{e} + \nabla V\circ e)(x,t)=0$ so the form must vanish on $N$. Since $\delta e\wedge dt$ does not vanish at any point, any $(x,t)$ for which the form vanishes entirely must satisfy Newton's differential equation.
+
+    \begin{part}{f}
+        Show that the restriction of $\delta \theta\in \Omega^{2, 0}(\mathcal{F}\times \R)$ to $N\times \{t_0\}$ is independent of $t_0$. Show that this restriction is a symplectic form and identify it with a symplectic form you might have seen before.
+    \end{part}
+    \quad Expanding the differential, we get
+    \[
+        \begin{aligned}
+            \delta \theta &= \delta (me\;\delta \dot{e})\\
+            &= m\;\delta e\wedge \delta\dot{e}.
+        \end{aligned}
+    \] 
+    Then if we fix some $t_0$ and restrict $\delta \theta$ to $N\times \{t_0\}$, we get the (scaled) canonical symplectic form on a 2-manifold, since the coordinate functions $x \mapsto x(t_0)$ and $x \mapsto \dot{x}(t_0)$ form a basis for $T^*_x N$. 
+    
+    \quad Now we need to show that $\delta \theta$ restricted to $N\times\{t_0\}$ is independent of $t_0$. We'll set $\omega\in \Omega^2(N\times \R)$ to be the restriction of the form $d\theta$ to $N\times \R$ and set $\omega_t = \delta e_t\wedge \delta \dot{e}_t\in \Omega^2(N)$ to be the restriction of $\omega$ on $N\times \{t\}$. 
+    
+    \begin{claim}
+        For $t_1<t_2\in \R$, we have $\omega_{t_1}=\omega_{t_2}$ in $\Omega^2(N)$.
+    \end{claim}
+    
+    \begin{proof}
+        First of all, we restrict $\omega$ to $N\times [t_1, t_2]$. Note that $N\times [t_1, t_2]$ is a smooth fiber bundle over $N$ with the natural projection $\pi(x, t)=x$. Then fiber integration gives us induced linear maps:
+        \[
+            \pi_* : \Omega^m(N\times [t_1, t_2]) \to \Omega^{m-1}(N)
+        \]
+        Explicitly, this map is given by:
+        \[
+            \pi_*\left(\sum_{i_1<\cdots<i_{m-1}} \alpha_{i}\; dt\wedge dx^i + \sum_{j_1<\cdots<j_{m}} \beta_{j} \;dx^j\right) = \sum_{i_1<\cdots<i_{m-1}}\left(\int^1_0 \alpha_i(\cdot,t)dt\right) dx^i
+        ,\] 
+        where $dx^i=dx_{i_1}\wedge\cdots dx_{i_{m-1}}$. As a consequence of this construction, we have the relation:
+        \[
+            \pi_*(d\alpha) = \restr{\alpha}{N\times \{t_2\}} - \restr{\alpha}{N\times \{t_1\}} - d(\pi_* \alpha)
+        .\] 
+        In our case, we know that $d\omega = 0$ since $\omega$ is a symplectic form, so the relation gives us \[\omega_{t_2}-\omega_{t_1}-d(\pi_*(\omega))=\pi_*(d\alpha)=0.\]
+        However, note that $\omega$ has no $dt$ terms, $\alpha_i=0$ and thus $\pi_*(\omega) = 0$ by the construction of $\pi_*$ and hence $d(\pi_*(\omega))=0$ as well. We thus have our desired time-invariance:
+        \[
+            \omega_{t_1} = \omega_{t_2}
+        .\] 
+        Since we needed no specific details of the space $N$ to carry out this proof of time invariance, this might hold true more generally for other symplectic manifolds.
+    \end{proof}
+\end{solution}
+
+\begin{problem}
+    This problem is a special case of the previous problem.
+\end{problem}
+
+\begin{solution}
+    Let $V(x) = kx^2 / 2$ for fixed $k > 0$.
+    \begin{part}{a}
+        Fix $t\in \R$ and consider the observables $\mathcal{O}_1(x)=x(0)$ and $\mathcal{O}_2(x) = x(t)$. Choose a pure state $\sigma \in N$. Compute the expectation values $\big\langle \mathcal{O}_1 \big\rangle_\sigma$ and $\big\langle \mathcal{O}_2 \big\rangle_\sigma$. Compute the correlation function $\big\langle \mathcal{O}_2\mathcal{O}_1 \big\rangle_\sigma$. Investigate the dependence on $t$ and on $\sigma$.
+    \end{part}
+
+    \quad More generally, if $A$ is an observable and $\sigma \in N$ is a pure state, i.e. a delta measure, we have
+    \[
+        \big\langle A \big\rangle_\sigma = \int_\R \lambda \;d\sigma_A = \int_N A \;d\sigma = A(\sigma)
+    .\] 
+    So in this case we get
+    \[
+        \big\langle \mathcal{O}_1 \big\rangle_\sigma = \sigma(0), \quad \big\langle \mathcal{O}_2 \big\rangle_\sigma = \sigma(t)
+    .\] 
+    This is expected, since there is no variance in the state there should be no variance in the measurement. By a similar argument, we compute the correlation:
+    \[
+        \big\langle \mathcal{O}_1\mathcal{O}_2 \big\rangle_\sigma = \sigma(0)\sigma(t)
+    .\] 
+
+    \begin{part}{b}
+        Now consider the mixed \emph{Gibbs state}, which is a probability measure on $N$. For any $\beta > 0$, its probability density is
+        \[
+            g(x) = A e^{-\beta E(x)}\quad\text{where}\quad E = \frac{m\dot{x}^2}{2} + \frac{kx^2}{2}
+        \] 
+        for some appropriate scaling factor $A$. Compute the Gibbs state (a functions time the standard measure on the $(x,\dot{x})$-plane) and evaluate the expectation values in the previous part in the Gibbs state.
+    \end{part}
+    \quad Recall that the general form for $x\in N$ with the given potential is 
+    \[
+        x(t)=a\cos(\omega t) + b\sin(\omega t)
+    .\] 
+    Setting $t=0$ gives us a very nice diffeomorphism $N \to \R^2$ which sends $x$ to $(x(0), \dot{x}(0))=(a,b)$. We can thus interpret $x$ and $\dot{x}$ as independent variables. Thus, we can define the Gibbs state as the distribution $\mu$ given by
+    \[
+        \mu(S) = A\iint_S e^{-\frac{\beta}{2} \left(kx^2 + m\dot{x}^2\right)}\;dx\wedge d\dot{x}
+    .\] 
+    This is a bivariate Gaussian distribution, and by standard statistical relations, we see that the scaling factor takes the following form:
+    \[
+        A = \frac{\beta\sqrt{k^2m^2}}{2\pi}
+    .\]
+    Now let's calculate the expected values of the observables on this state. Note that when treating $x$ as a function, we have the relation:
+    \[
+        x(t) = x\cos(\omega t) + \frac{\dot{x}}{\omega}\sin(\omega t)
+    .\] 
+    So in this coordinate system $\mathcal{O}_1(x,\dot{x})=x$ and $\mathcal{O}_2(x,\dot{x})=x\cos(\omega t) + \frac{\dot{x}}{\omega}\sin(\omega t)$. The energy only depends on energy when evaluated at a given time, so we can evaluate
+    \[
+        \big\langle \mathcal{O}_1 \big\rangle_\mu = \int_{\R}\lambda\; d\mu_{\mathcal{O}_1} = \iint_\R Ae^{-\frac{\beta}{2}(kx^2+m\dot{x}^2)} x\;dx\wedge d\dot{x}=0,
+    \] 
+    since the integrand is an odd function. Similarly, we see that
+    \[
+        \big\langle \mathcal{O}_2 \big\rangle_\mu = \int_{\R}\lambda\; d\mu_{\mathcal{O}_1} = \iint_\R Ae^{-\frac{\beta}{2}(kx^2+m\dot{x}^2)} \left(x\cos(\omega t) + \frac{\dot{x}}{\omega}\sin(\omega t)\right)\;dx\wedge d\dot{x}=0,
+    \]
+    since the integrand takes on cancelling signs in opposite quadrants of the $(x,\dot{x})$-plane. More interestingly, we can calculate the correlation function:
+    \[
+        \begin{aligned}
+            \big\langle \mathcal{O}_2 \mathcal{O}_1 \big\rangle_\mu = \int_{\R}\lambda\; d\mu_{\mathcal{O}_2 \mathcal{O}_1} &= \iint_{\R^2} Ae^{-\frac{\beta}{2}(kx^2+m\dot{x}^2)} \left(x\cos(\omega t) + \frac{\dot{x}}{\omega}\sin(\omega t)\right)x\;dx\wedge d\dot{x}=0\\
+            &= \iint_{\R^2} Ae^{-\frac{\beta}{2}(kx^2+m\dot{x}^2)} x^2\cos(\omega t)\;dx\wedge d\dot{x}\\
+            &= A\cos(\omega t)\left(\int_\R e^{-\frac{\beta kx^2}{2}} x^2\;dx\right) \left(\int_\R e^{-\frac{\beta m\dot{x}^2}{2}}\;d\dot{x}\right)\\
+            &= \frac{\beta\sqrt{k^2m^2}}{2\pi}\cdot\cos(\omega t)\cdot \sqrt{\frac{2\pi}{\beta^3k^3}}\cdot \sqrt{\frac{2\pi}{\beta m}}\\
+            &=\frac{1}{\beta \omega}\cos(\omega t)
+        \end{aligned}
+    \]  
+    This lines up with intuition, since no energy is lost and the system and distribution are symmetrical, the expectation of the position does not evolve with time. However, the correlation of the evolution of the system with the initial state is periodic since all particles have the same angular frequency. Thus the correlation peaks when all particles are in their initial positions once again.
+\end{solution}
+
+\pagebreak
+
+\begin{problem}
+    Verify the axioms of a mechanical system for the case of a classical mechanical system.
+\end{problem}
+
+\quad Can't really prove the interesting axioms until we learn more about the Hamiltonian observable, this was never really defined.
+
+\begin{problem}
+    In the context of a general mechanical system, let $\sigma_1, \sigma_2$ be states and let $A, A'$ be observables. Prove that for a fixed $t\in [0,1]$ and $\sigma = t\sigma_1 + (1-t)\sigma_2$ we have
+    \[
+        \Delta_\sigma A \Delta_\sigma A' \geq t(\Delta_{\sigma_1} A)(\Delta_{\sigma_1} A') + (1-t) (\Delta_{\sigma_2} A)(\Delta_{\sigma_2} A')
+    .\]
+    In particular, conclude that
+    \[
+        \Delta_\sigma A \geq \min(\Delta_{\sigma_1} A, \Delta_{\sigma_2} A)
+    .\] 
+\end{problem}
+
+\begin{solution}
+    \quad I spent a good amount of time on this problem, mainly trying to use Jensen's inequality on the function $\mathcal{S} \to \R$ sending states to their variance. However, due to my lack of statistics background I was unable to find a proof of this. Once I get further along in my statistics, I will revisit this problem.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,153 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\Ext{\mathrm{Ext}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 7}}
+\date{\textbf{Due:} April 4, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Suppose that $F_\bullet C$ is a filtered complex of abelian groups which is first-quadrant.
+\end{problem}
+
+\begin{solution}
+    \quad Assume that the associated spectral sequence $(E^r_{*, *}, d^r)$ has $E^2$-term given by $E^2_{s,t}=\Z/2\Z$ if $(s,t)=(0,0),(0,4),(2,3),(3,2),(6,0)$ and $E^2_{s,t}=0$ otherwise.
+    \begin{partproblem}{a}
+        Determine all possible values of $H_*(C)$.
+    \end{partproblem}
+
+    \quad Observe that the $E^2$-page of the associated spectral sequence has no nontrivial boundary maps so the $E^\infty$-page is simply equal to the $E^2$-page.
+    % https://q.uiver.app/?q=WzAsMjUsWzIsNSwiXFxaLzJcXFoiXSxbMSwwXSxbMiwxLCJcXFovMlxcWiJdLFs0LDIsIlxcWi8yXFxaIl0sWzUsMywiXFxaLzJcXFoiXSxbOCw1LCJcXFovMlxcWiJdLFs5LDZdLFswLDZdLFsxLDddLFsyLDcsIjAiXSxbMyw3LCIxIl0sWzQsNywiMiJdLFs1LDcsIjMiXSxbNiw3LCI0Il0sWzcsNywiNSJdLFs4LDcsIjYiXSxbMCw1LCIwIl0sWzAsNCwiMSJdLFswLDMsIjIiXSxbMCwyLCIzIl0sWzAsMSwiNCJdLFs1LDgsIkhfMChDKSJdLFs5LDgsIkhfNChDKSJdLFsxMCw4LCJIXzUoQykiXSxbMTEsOCwiSF82KEMpIl0sWzcsNl0sWzgsMV0sWzAsMjEsIiIsMix7ImNvbG91ciI6WzAsNjAsNjBdLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbMiwyMiwiIiwyLHsiY29sb3VyIjpbMCw2MCw2MF0sInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFszLDQsIiIsMix7ImNvbG91ciI6WzAsNjAsNjBdLCJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XSxbNCwyMywiIiwyLHsiY29sb3VyIjpbMCw2MCw2MF0sInN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFs1LDI0LCIiLDIseyJjb2xvdXIiOlswLDYwLDYwXSwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+    \[\begin{tikzcd}[sep=small]
+        & {} \\
+        4 && {\Z/2\Z} \\
+        3 &&&& {\Z/2\Z} \\
+        2 &&&&& {\Z/2\Z} \\
+        1 \\
+        0 && {\Z/2\Z} &&&&&& {\Z/2\Z} \\
+        {} &&&&&&&&& {} \\
+        & {} & 0 & 1 & 2 & 3 & 4 & 5 & 6 \\
+        &&&&& {H_0} &&&& {H_4} & {H_5} & {H_6}
+        \arrow[from=7-1, to=7-10]
+        \arrow[from=8-2, to=1-2]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=6-3, to=9-6]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=2-3, to=9-10]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=3-5, to=4-6]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=4-6, to=9-11]
+        \arrow[color={rgb,255:red,214;green,92;blue,92}, dashed, from=6-9, to=9-12]
+    \end{tikzcd}\]
+    This immediately tells us that $H_0(C)=\Z /2\Z$, $H_4(C)= \Z /2\Z$, and $H_6(C)=\Z/ 2\Z$. For $H_5$, recall that we have a filtration $F_k H_5(C) = \Ima(H_5(F_kC) \to H_5(C))$, and this line in the spectral sequence tells us that
+    \[
+        \textrm{gr}_2 H_5(C) = \Z /2\Z, \quad \textrm{gr}_3 H_5(C) = \Z /2 \Z
+    \]
+    with respect to this filtration. We thus have the situation where there are three abelian groups $X\subset Y\subset Z$ with $Y/X = Z/Y= \Z /2\Z$. By the first quadrant condition, it follows that $A$ must be zero, and the group $Y=H_5(C)$. The only options here are either $\Z /4\Z$ or $(\Z/2\Z)^{\times 2}$. Thus,
+    \[
+        H_k(C) =\begin{cases}
+            \Z /2\Z & \text{if } k = 0, 4, 6,\\
+            \Z /4\Z \textrm{ or } (\Z /2\Z)^{\times 2} &\text{if } k = 5,\\
+            0 & \text{otherwise.}
+        \end{cases}
+    \] 
+
+    \begin{partproblem}{b}
+        Assume further that $F_\bullet C$ is a filtered complex of $\F_2$ vector spaces. How does this restrict the possible values of $H_*(C)$?
+    \end{partproblem}
+    \quad By the same logic as in the previous problem, in this case we get
+    \[
+        H_k(C) =\begin{cases}
+            \F_2 & \text{if } k = 0, 4, 6,\\
+            \F_2^{\oplus 2} &\text{if } k = 5,\\
+            0 & \text{otherwise.}
+        \end{cases}
+    \] 
+\end{solution}
+
+\begin{problem}
+    Let $R$ be any ring and $C_*$ a chain complex of projective (or even just flat) $R$-modules, and let $M$ be an $R$-module. Construct a ``universal coefficient spectral sequence''
+    \[
+        E^2_{s,t}=\textrm{Tor}^R_s(H_t(C_*), M) \implies H_{s+t}(C_*\otimes_R M)
+    \]
+    in the following manner. Let $M\leftarrow P_*$ be a projective resolution of $M$ as an $R$-module. Form the double complex $C_*\otimes_R P_*$; and study the associated pair of spectral sequences.
+    \quad Observe that this returns a short exact sequence as in the Universal Coefficient Theorem if $R$ is a PID. 
+\end{problem}
+
+\begin{solution}
+    \quad We'll use the provided hint, so let $P_*$ be a projective resolution of $M$, considered as a chain complex. Now let $A=C_*\otimes_R P_*$ be the tensor product, here considered a double complex with the natural grading; $d_h(c\otimes p) = dc\otimes p$ and $d_v(c\otimes p) = c\otimes dp$. The total complex $\overline{A}_*$ is given by
+    \[
+        \overline{A}_n = \bigoplus_{s+t=n} C_s\otimes_R P_t\quad \text{with}\quad da = d_h a + (-1)^s d_v a
+    .\] 
+    We claim that the associated spectral sequence is exactly the desired one. Recall tha to get the associated spectral sequence, we take the natural filtration
+    \[
+        F_p(\overline{A}_n) = \bigoplus_{\substack{s+t=n,\\ s\leq p}}C_s\otimes_R P_t \subset \overline{A}_n
+    .\] 
+    \quad The associated spectral sequence with respect to this filtration has $E^0$-page:
+
+    \[\begin{tikzcd}[sep=small]
+        & {} \\
+        && {C_2\otimes _R P_0} & {C_2\otimes _R P_1} & {C_2\otimes _R P_2} \\
+        && {C_1\otimes _R P_0} & {C_1\otimes _R P_1} & {C_1\otimes _R P_2} \\
+        && {C_0\otimes_R P_0} & {C_0\otimes _R P_1} & {C_0\otimes _R P_2} \\
+        {} &&&&& {} \\
+        & {}
+        \arrow[from=2-3, to=3-3]
+        \arrow[from=3-3, to=4-3]
+        \arrow[from=2-4, to=3-4]
+        \arrow[from=3-4, to=4-4]
+        \arrow[from=3-5, to=4-5]
+        \arrow[from=2-5, to=3-5]
+        \arrow[from=5-1, to=5-6]
+        \arrow[from=6-2, to=1-2]
+    \end{tikzcd}\]
+    where the vertical arrows are the $d_C$ differentials. Here, for each $s$, the vertical sequence $(E^0_{s,*}, d^0)$ is the chain complex $C_*\otimes_R P_s$. Since $P_s$ is a projective module, it follows that $H_t(E^0_{s,*}, d^0) \cong H_t(C)\otimes_R P_s$. This naturally respects all of the differential maps, so the $E^1$-page is:
+    \[\begin{tikzcd}[sep=small]
+        & {} \\
+        && {H_2(C)\otimes _R P_0} & {H_2(C)\otimes _R P_1} & {H_2(C)\otimes _R P_2} \\
+        && {H_1(C)\otimes _R P_0} & {H_1(C)\otimes _R P_1} & {H_1(C)\otimes _R P_2} \\
+        && {H_0(C)\otimes_R P_0} & {H_0(C)\otimes _R P_1} & {H_0(C)\otimes _R P_2} \\
+        {} &&&&& {} \\
+        & {}
+        \arrow[from=5-1, to=5-6]
+        \arrow[from=6-2, to=1-2]
+        \arrow[from=2-4, to=2-3]
+        \arrow[from=2-5, to=2-4]
+        \arrow[from=3-5, to=3-4]
+        \arrow[from=3-4, to=3-3]
+        \arrow[from=4-4, to=4-3]
+        \arrow[from=4-5, to=4-4]
+    \end{tikzcd}\]
+    Similarly to before, each horizontal sequence $(E^1_{*,t}, d^1)$ is the chain complex $H_t(C)\otimes_R P_*$. Thus, we have the $E^2$-page:
+    \[
+        E^2_{s,t}=H_s(H_t(C)\otimes_R P_*) = \textrm{Tor}^R_s(H_t(C), M),
+    \]
+    where the second equality follows because $P_*$ is a projective resolution of $M$. By the discussion in Miller's notes, we have a convergence $E^2_{s,t} \implies H_{s+t}(C_*\otimes_R P_*).$ But by homological algebra, $H_{s+t}(C_*\otimes_R P_*) \cong H_{s+t}(C_*\otimes_R M)$ since $P_*$ is a projective resolution, which is what we wanted.
+
+    \quad Now to recover the UCT short exact sequence from this generalized spectral sequence, recall that we have a short exact sequence:
+    % https://q.uiver.app/?q=WzAsNSxbMiwwLCJIX24oQ18qXFxvdGltZXNfUiBNKSJdLFszLDAsIihcXGtlciBkXjIpX24iXSxbNCwwLCIwIl0sWzAsMCwiMCJdLFsxLDAsIihcXHRleHRybXtjb2tlciB9ZF4yKV97bi0xfSJdLFswLDFdLFsxLDJdLFszLDRdLFs0LDBdXQ==
+    \[\begin{tikzcd}
+        0 & {(\textrm{coker }d^2)_{n-1}} & {H_n(C_*\otimes_R M)} & {(\ker d^2)_n} & 0
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=1-3]
+    \end{tikzcd}\]
+    Firstly, note that $(\ker d^2)_n = \ker \left(E^2_{1,n-1} \to E^2_{-1, n-1}\right) = \textrm{Tor}^R_1(H_{n-1}(C_*), M)$. By a similar note, it follows that $(\textrm{coker } d^2)_{n-1} = H_n(C_*)\otimes_R M$, so we get our desired UCT sequence.
+\end{solution}
+
+\end{document}

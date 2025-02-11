@@ -1,0 +1,190 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+\def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\CC{\mathcal{C}}
+\def\DD{\mathcal{D}}
+\def\Eq{\mathrm{Eq}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 4}}
+\date{\textbf{Due:} February 28, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $\RP^\infty = \varinjlim_n \RP^n$ and $\CP^\infty = \varinjlim_n \CP^n$ along the usual inclusions. Use the fibrations
+    \[
+        S^0 \to S^\infty \to \RP^\infty\quad\text{and}\quad S^1 \to S^\infty \to \CP^\infty
+    \]
+    to compute the homotopy groups of $\RP^\infty$ and $\CP^\infty$.
+\end{problem}
+
+\begin{solution}
+    \quad First we'll prove that $S^\infty$ is weakly contractible, i.e. has trivial homotopy groups. Note that for any map $f :S^k \to S^\infty$, there must be some $n>k$ such that $f$ factors through the natural CW skeleta inclusion $S^n \to S^\infty$. This is because the image of a compact space in a CW complex must intersect only a finite number of skeleta. However any map $S^k \to S^n$ with $k<n$ is nullhomotopic, so the $f$ is as well.
+
+    \quad Now since we have a fibration $S^0 \to S^\infty \to \RP^\infty$, we get a long exact sequence:
+    % https://q.uiver.app/?q=WzAsNyxbMiwwLCJcXHBpXzEoU15cXGluZnR5KSJdLFszLDAsIlxccGlfMShcXFJQXlxcaW5mdHkpIl0sWzQsMCwiXFxwaV8wKFNeMCkiXSxbNSwwLCJcXHBpXzAoU15cXGluZnR5KSJdLFs2LDAsIlxccGlfMChcXFJQXlxcaW5mdHkpIl0sWzEsMCwiXFxwaV8xKFNeMCkiXSxbMCwwLCJcXGNkb3RzIl0sWzIsM10sWzEsMl0sWzMsNF0sWzAsMV0sWzUsMF0sWzYsNV1d
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        \cdots \& {\pi_1(S^0)} \& {\pi_1(S^\infty)} \& {\pi_1(\RP^\infty)} \& {\pi_0(S^0)} \& {\pi_0(S^\infty)} \& {\pi_0(\RP^\infty)}
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-6, to=1-7]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    Also this has the structure of an exact sequence of groups starting at the $\pi_1(\RP^\infty)$ term. Since $\pi_k(S^\infty)=\pi_k(S^0)=0$ for all $k>0$, we get isomorphisms $\pi_k(\RP^\infty)\cong \pi_k(S^\infty) = 0$ for all $k\geq 2$. Clearly $\pi_0(\RP^\infty)=0$ since $\RP^\infty$ is path connected, so all we have left is to compute $\pi_1$.
+    
+    \quad In this case, we notice that there is a bijective map (as sets) $\pi_1(\RP^\infty) \to \pi_0(S^0)$ since $\pi_0(S^\infty)=\pi_1(S^\infty)=0$. This means that $\pi_1(\RP^\infty) = \Z /2$, since this is the only two element group. Thus we have:
+    \[
+        \boxed{\pi_k(\RP^\infty) = \begin{cases}
+            \Z / 2& k =1,\\
+            0 & \text{otherwise}.
+        \end{cases}}
+    \]  
+
+    \quad In the case of complex projective space, we have a similar situation, which can be described in the following diagram:
+    % https://q.uiver.app/?q=WzAsMTIsWzMsMCwiXFxwaV8xKFNeMSkiXSxbNCwwLCJcXHBpXzEoU15cXGluZnR5KSJdLFsyLDAsIlxccGlfMihcXENQXlxcaW5mdHkpIl0sWzUsMCwiXFxwaV8xKFxcQ1BeXFxpbmZ0eSkiXSxbNiwwLCJcXHBpXzAoU14xKSJdLFsxLDAsIlxccGlfMihTXlxcaW5mdHkpIl0sWzAsMCwiXFxjZG90cyJdLFs3LDAsIlxcY2RvdHMiXSxbMywxLCJcXFoiXSxbNiwxLCIwIl0sWzEsMSwiMCJdLFs0LDEsIjAiXSxbMCwxXSxbMiwwXSxbMyw0XSxbMSwzXSxbNSwyXSxbNiw1XSxbNCw3XSxbMCw4LCIiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFs0LDksIiIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzUsMTAsIiIsMCx7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9fX1dLFsxLDExLCIiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        \cdots \& {\pi_2(S^\infty)} \& {\pi_2(\CP^\infty)} \& {\pi_1(S^1)} \& {\pi_1(S^\infty)} \& {\pi_1(\CP^\infty)} \& {\pi_0(S^1)} \& \cdots \\
+        \& 0 \&\& \Z \& 0 \&\& 0
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-3, to=1-4]
+        \arrow[from=1-6, to=1-7]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-7, to=1-8]
+        \arrow[dashed, no head, from=1-4, to=2-4]
+        \arrow[dashed, no head, from=1-7, to=2-7]
+        \arrow[dashed, from=1-2, to=2-2]
+        \arrow[dashed, no head, from=1-5, to=2-5]
+    \end{tikzcd}\]
+    Now, the only non-trivial group becomes $\pi_2(\CP^\infty)=\Z$, so
+    \[
+        \boxed{\pi_k(\CP^\infty) = \begin{cases}
+            \Z & k = 2,\\
+            0 & \text{otherwise}
+        \end{cases}}
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Use the Hopf fibrations to prove that
+    \[
+            \pi_n S^2 \cong \pi_n S^3 \oplus \pi_{n-1}S^1,\quad
+            \pi_n S^4 \cong \pi_n S^7 \oplus \pi_{n-1}S^3,\quad\text{and}\quad
+            \pi_n S^8 \cong \pi_n S^15 \oplus \pi_{n-1}S^7
+    .\] 
+\end{problem}
+\quad For the sake of the problem, let's suppose we had a fibration $S^{n-1}\to S^{2n-1} \to S^n$. The Hopf fibrations give us explicit maps for $n=1,2,4,$ or $8$. Now we can take the homotopy fiber to get a fibration $F(f) \to S^{n-1} \to S^{2n-1}$, where $f : S^{n-1}\to S^{2n-1}$. This gives the diagram: 
+% https://q.uiver.app/?q=WzAsNCxbMSwwLCJTXntuLTF9Il0sWzIsMCwiU157Mm4tMX0iXSxbMiwxLCJTXm4iXSxbMCwwLCJGKGYpIl0sWzAsMSwiZiIsMl0sWzEsMl0sWzAsMSwiKiIsMSx7ImN1cnZlIjotM31dLFszLDBdLFs2LDQsIiIsMCx7InNob3J0ZW4iOnsic291cmNlIjoyMCwidGFyZ2V0IjoyMH0sInN0eWxlIjp7InRhaWwiOnsibmFtZSI6ImFycm93aGVhZCJ9fX1dXQ==
+\[\begin{tikzcd}[ampersand replacement=\&]
+	{F(f)} \& {S^{n-1}} \& {S^{2n-1}} \\
+	\&\& {S^n}
+	\arrow[""{name=0, anchor=center, inner sep=0}, "f"', from=1-2, to=1-3]
+	\arrow[from=1-3, to=2-3]
+	\arrow[""{name=1, anchor=center, inner sep=0}, "{*}"{description}, curve={height=-18pt}, from=1-2, to=1-3]
+	\arrow[from=1-1, to=1-2]
+	\arrow[shorten <=2pt, shorten >=2pt, Rightarrow, 2tail reversed, from=1, to=0]
+\end{tikzcd}\]
+Recall that $F(f)$ is the pullback $S^{n-1}\times_{S^{2n-1}} (S^{2n-1})^I_*$. However since $f$ is a map from a lower dimensional sphere into a high dimensional sphere, it must be nullhomotopic, so $F(f)\simeq F(c_*)=S^{n-1}\times \Omega S^{2n-1}$. However we also have a homotopy equivalence $F(f)\simeq \Omega S^n$ by the fibration. Thus we have an equivalence $S^{n-1}\times \Omega S^{2n-1}\simeq \Omega S^n$. Since every homotopy equivalence is a weak equivalence, by taking $\pi_{k-1}$, we get and isomorphism:
+\[
+    \pi_{k-1}S^{n-1}\oplus \pi_{k-1}\Omega S^{2n-1} \cong \pi_{k-1}\Omega S^n \quad\implies\quad \pi_{k-1}S^{n-1}\oplus \pi_{k}S^{2n-1} \cong \pi_{k} S^n
+.\]
+
+\begin{problem}
+    Let $p : E \to B$ and $p' : E' \to B$ be fibrations, and let $f: E \to E'$ be a homotopy equivalnce such that $p'\circ f = p$. Show that $f$ is a fiber-homotopy equivalence.
+    % show that it suffices to find a map g : E' \to E such that p\circ g = p' and f\circ g is fiber homotopic to 1_{E'}
+\end{problem}
+
+\begin{solution}
+    \quad We'll follow the proof in May, dualising when needed. Let's break up the solution into several parts. For starters, let's denote a fiber-homotopy equivalence between two maps $f,g : E\to E'$ as $h : f\simeq_B f'$. Note that it suffices to find a right fiber-homotopy inverse map $g : E' \to E$ with $f\circ g \simeq_B 1_{E'}$. Once we do this, we can repeat the argument to find a left fiber-homotopy inverse, and it follows by properties of homotopic maps that these two will themselves be homotopic. Now let's break down this proof into a sequence of claims.
+
+    \begin{claim}
+        There is a right homotopy inverse $g : E' \to E$ to $f$ satisfying $p\circ g = p'$. 
+    \end{claim}
+    \begin{proof}
+        Since $f$ is a homotopy equivalence, there is some map $g' : E' \to E$ with $f\circ g' \simeq 1_{E'}$. Then $p\circ g' = p'\circ f\circ g'\simeq p'\circ 1_{E'}= p'$. Let's call this homotopy $h : E'\times I \to B$, with $h_0 = p\circ g'$ and $h_1 = p'$. Using the homotopy lifting property we get a lift:
+        % https://q.uiver.app/?q=WzAsNCxbMCwwLCJFJyJdLFsxLDAsIkUiXSxbMCwxLCJFJ1xcdGltZXMgSSJdLFsxLDEsIkIiXSxbMCwxLCJnJyJdLFswLDIsImlfMCIsMl0sWzIsMywiaCIsMl0sWzEsMywicCJdLFsyLDEsIlxcd2lkZXRpbGRle2h9IiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+        \[\begin{tikzcd}[ampersand replacement=\&]
+            {E'} \& E \\
+            {E'\times I} \& B
+            \arrow["{g'}", from=1-1, to=1-2]
+            \arrow["{i_0}"', from=1-1, to=2-1]
+            \arrow["h"', from=2-1, to=2-2]
+            \arrow["p", from=1-2, to=2-2]
+            \arrow["{\widetilde{h}}", dashed, from=2-1, to=1-2]
+        \end{tikzcd}\]
+        It follows that $\widetilde{h}_0 = g'$ and $\widetilde{h}_1$ is some map such that $\widetilde{h}_1\circ p = h_1 = p'$. Furthermore, $g=\widetilde{h}_1$ is homotopic to $g'$ so $f\circ g\simeq 1_{E'}$. Thus $\widetilde{h}_1$ is our desired map $g$ so we are done. 
+    \end{proof}
+
+    \quad Now we have a map $f\circ g : E' \to E'$ that satisfies $p'\circ(f\circ g) = p'$ and $f\circ g\simeq 1_{E'}$. If we could prove that such a map satisfies $f\circ g\simeq_B 1_{E'}$, we would be done. Changing the notation up slightly:   
+
+    \begin{claim}
+        Given a map $f : E \to E$ with $p\circ f = p$ and $f\simeq 1_{E}$, there is right fiber homotopy inverse $e: E \to E$ with $f\circ e\simeq_B 1_{E}$.
+    \end{claim}
+
+    \begin{proof}
+        \quad Let $h : E\times I \to E$ be some homotopy $f\simeq 1_{E}$. By composing with the fibration we get a homotopy $p\circ h : E\times I \to B$, so by the homotopy lifting property, we get a lift:
+        % https://q.uiver.app/?q=WzAsNCxbMCwwLCJFJyJdLFsxLDAsIkUiXSxbMCwxLCJFJ1xcdGltZXMgSSJdLFsxLDEsIkIiXSxbMCwxLCJnJyJdLFswLDIsImlfMCIsMl0sWzIsMywiaCIsMl0sWzEsMywicCJdLFsyLDEsIlxcd2lkZXRpbGRle2h9IiwwLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+        \[\begin{tikzcd}[ampersand replacement=\&]
+            {E} \& E \\
+            {E\times I} \& B
+            \arrow["{1_E}", from=1-1, to=1-2]
+            \arrow["{i_0}"', from=1-1, to=2-1]
+            \arrow["p\,\circ\, h"', from=2-1, to=2-2]
+            \arrow["p", from=1-2, to=2-2]
+            \arrow["{k}", dashed, from=2-1, to=1-2]
+        \end{tikzcd}\]
+        This new homotopy $k$ satisfies $k_0=1_{E}$ and $k_1=e : E \to E$. The new map $e : E\to E$ satisfies $p\circ e = p$ by the diagram. We claim that $f\circ e\simeq_B 1_E$, we'll prove this by constructing several homotopies. First, let $J : E\times I \to E$ be the homotopy 
+        \[
+            J(x,s) = \begin{cases}
+                f\circ k(x, 1-2s)&0\leq s\leq \frac{1}{2},\\
+                h(x,2s-1)&\frac{1}{2}\leq s\leq 1.\\
+            \end{cases}
+        \]
+        This is a homotopy $f\circ e\simeq 1_E$. Next, consider the homotopy of homotopies $K : E\times I\times I \to B$ given by
+        \[
+            K(x,s,t)=\begin{cases}
+                p\circ f\circ k(x,1-2s(1-t))&0\leq s\leq \frac{1}{2},\\
+                p\circ h(x,1-2(1-s)(1-t))&\frac{1}{2}\leq s\leq 1.
+            \end{cases}
+        \]
+        Now this is a homotopy fbetween $p\circ J$ and $p$. By the homotopy lifting property, we get a diagram:
+        % https://q.uiver.app/?q=WzAsNCxbMCwwLCJFXFx0aW1lcyBJIl0sWzEsMCwiRSJdLFswLDEsIkVcXHRpbWVzIElcXHRpbWVzIEkiXSxbMSwxLCJCIl0sWzAsMSwiSiJdLFsyLDMsIksiLDJdLFsxLDMsInAiXSxbMCwyLCJpXzAiLDJdLFsyLDEsIkwiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifX19XV0=
+        \[\begin{tikzcd}[ampersand replacement=\&]
+            {E\times I} \& E \\
+            {E\times I\times I} \& B
+            \arrow["J", from=1-1, to=1-2]
+            \arrow["K"', from=2-1, to=2-2]
+            \arrow["p", from=1-2, to=2-2]
+            \arrow["{i_0}"', from=1-1, to=2-1]
+            \arrow["L", dashed, from=2-1, to=1-2]
+        \end{tikzcd}\]
+        Since $K(x,0,t)=K(x,s,1)=K(x,1,t)=p(x)$, we can see that by going around the three sides of $I\times I$ other than the $J$ side gives a fiber homotopy $f\circ e\simeq 1_E$.
+    \end{proof}
+\end{solution}
+
+\begin{problem}
+    Given an $H$-space $(X, *)$, prove that the action of $\pi_1(X, *)$ on $\pi_n(X, *)$ is trivial for all $n\geq 1$. Conclude that a connected $H$-space is simple.
+\end{problem}
+
+\begin{solution}
+    \quad One way to view the action of $\pi_1(X,*)$ on $\pi_n(X, *)$ is as follows. Recall that the inclusion $*\subset S^n$ is a cofibration (being a CW inclusion), so given any loop $\omega : (I,*) \to X$ and $\alpha : (S^n,*) \to X$ that agree on the basepoint, we can use the homotopy extension property to get a homotopy $k : S^n\times I \to X$ such that $k_0 = \alpha$ and $k_1 = \omega \cdot \alpha$. (This is how the action is described in Hacher 4A)
+    
+    \quad Now suppose our space $X$ is in fact an $H$-space, meaning we have some multiplication map $m : X\times X \to X$ which is homotopy unital, i.e. $m(*,-)\simeq m(-,*)\simeq 1_X$. Let $\Gamma : X\times I \to X$ be the homotopy between $m(*,-)$ and $1_X$. We can use this multiplication map to construct a homotopy $H : S^n\times I \to X$ given by $H(x,t)=m(\omega(t), \alpha(x))$. Composing this with $\Gamma$ gives a homotopy between $\omega\cdot \alpha$ and $\alpha$, showing that the action is trivial. So the space is simple. 
+\end{solution}
+
+\end{document}

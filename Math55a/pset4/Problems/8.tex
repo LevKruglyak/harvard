@@ -1,0 +1,49 @@
+\begin{problem}
+For $p$ prime, let $\F_p=\Z/p$ denote the field with $p$ elements, and let $V_d\subset\F_p[x]$ be the space of polynomials of degree at most $d$ with coefficients in $\F_p$. Consider the evaluation map
+\begin{align*} 
+\phi_d:V_d&\to (\F_p)^p\\
+f&\mapsto (f(0),f(1),\dots,f(p-1)).
+\end{align*}
+\begin{enumerate}
+  \item Show that $\phi_d$ is surjective for all $d\geq p-1$.
+  \item By comparing dimensions, show that $\phi_p$ has a one-dimensional
+  kernel.
+  \item Find explicitly a generator of $\Ker(\phi_p)$; that is, a nonzero
+  polynomial $f_0\in \F_p[x]$ of degree at most $p$ whose values are identically zero.
+  \item By comparing dimensions, show that in general a polynomial $f\in
+  \F_p[x]$ has all its values zero if and only if it is divisible by $f_0$.
+\end{enumerate}
+\end{problem}
+
+
+\textbf{(1)} Given some $(x_0,x_1,\ldots, x_{p-1})$ We claim that there is a $p-1$ degree polynomial $g$ with $\phi_{p-1}(g)=(x_0,x_1,\ldots,x_{p-1})$. Suppose we wrote $g(x)=a_0+a_1x+a_2x^2+\cdots+a_{p-1}x^{p-1}$. Then we have the matrix equation
+\[
+  \begin{bmatrix}
+    1&0&0&& 0\\
+    1&1^1&1^2&\cdots &1^{p-1}\\
+    1&2^1&2^2& &2^{p-1}\\
+    &\vdots&& &\vdots\\
+    1&(p-1)^1&(p-1)^2&\cdots&(p-1)^{p-1}
+  \end{bmatrix}
+  \begin{bmatrix}
+    a_0\\
+    a_1\\
+    a_2\\
+    \vdots\\
+    a_{p-1}
+  \end{bmatrix}=
+  \begin{bmatrix}
+    f(0)\\
+    f(1)\\
+    f(2)\\
+    \vdots\\
+    f(p-1)
+  \end{bmatrix}
+.\]
+This matrix must be invertible because using row operations, we can easily turn it into an upper triangular matrix with nonzero elements on the diagonal. Alternatively, we can see that its determinant is $1\cdot 1^1\cdot 2^2\cdots (p-1)^{p-1}$. This is nonzero mod $p$, so it's invertible. Since the matrix is invertible, we must have some solution, hence a polynomial with $(x_0, x_1, \ldots, x_n)=(g(0), g(1), \cdots, g(p-1))$. Also since the degree of $g$ is $p-1$, $g\in V_d$ for all $d\geq p-1$, completing the proof.   
+
+\textbf{(2)} Since $\phi_p$ is surjective by (1), it follows by the first isomorphism theorem that $V_d /\Ker(\phi_p) \cong (\F_p)^p$. So $p+1 - \dim \Ker(\phi_p) = p$ which implies $\dim \Ker(\phi_p) = 1$.     
+
+\textbf{(3)} Consider the polynomial $f_0(x)=x^p-x$. By Fermat's little theorem, this polynomial is zero everywhere since $x^p\equiv x\mod p$ for all $x\in \F_p$. This polynomial is in fact minimal, since it is a polynomial over a field and has $p$ roots and is degree $p$. So $f_0$ generates $\Ker(\phi_p)$.
+
+\textbf{(4)} By a similar argument to (2), we get $\dim \Ker(\phi_d) = d - (p-1)$ for all $d\geq p-1$. However consider the space $\Ker(\phi_p)\oplus x\Ker(\phi_p)\oplus\cdots x^{d-p}\Ker(\phi_p)\subset \Ker(\phi_d)$. This is a $d-(p-1)$-dimensional subspace of $\Ker(\phi_d)$, so $\Ker(\phi_p)\oplus x\Ker(\phi_p)\oplus\cdots x^{d-p}\Ker(\phi_p)= \Ker(\phi_d)$. The left hand side is exactly multiples of $f_0$ and the right hand side consists of polynomials which have their values all zero. Since $d$ was assumed to be arbitrary, this works for general polynomials in $\F_p[x]$.  

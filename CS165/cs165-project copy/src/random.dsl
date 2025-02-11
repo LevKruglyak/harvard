@@ -1,0 +1,5 @@
+create(db,db)
+create(tbl,tbl,db,2)
+create(col,col1,db.tbl)
+create(col,col2,db.tbl)
+load(test/final/random1.csv)

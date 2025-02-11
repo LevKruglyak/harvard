@@ -1,0 +1,199 @@
+\documentclass{pset}
+
+\input{../213a.tex}
+\usepackage{multirow}
+
+\title{Math 213a Problem Set 3}
+\author{Lev Kruglyak}
+\due{September 26, 2023}
+
+\collaborator{AJ LaMotta}
+\collaborator{Ray Shang}
+\collaborator{Dora Woodruff}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{9}
+  Let $f_n \to f$ uniformly on compact subsets of an open connected set $\Omega \subset \C$, where $f_n$ is analytic, and $f$ is not identically equal to zero.
+  Show if $f(w)=0$ then we can write $w = \lim z_n$, where $f_n(z_n)=0$ for all $n$ sufficiently large.
+\end{problem}
+
+\begin{solution}
+  Since it is a limit of a uniformly converging sequence of analytic functions on compact sets, we know that $f$ is analytic as well, and has isolated zeroes. Let $w$ be a zero of $f$, and let $R>0$ be the radius of a ball around $w$ such that $w$ is the only zero of $f$ in $B_R(w)$.
+
+  \begin{claim}
+    There is a strictly decreasing sequence of radii $\{R_N\}_N$ (with $R_N<R$) converging to zero such that $B_{R_N}(w)$ contains a zero of $f_n$ for all $n\geq N$.
+  \end{claim}
+  \begin{proof}
+    Since $f_n\to f$ converge uniformly (in the compact ball $\overline{B_R(w)}$), it follows that $f'_n \to f'$. 
+    So, we have some strictly decreasing sequence $\{\epsilon_N\}_N$ with $|f'(z)-f'_n(z)| < \epsilon_N$ for all $n\geq N$. We will use this to bound the difference between the number of zeroes of $f$ and $f_n$ on a ball of a given radius $R>r>0$. This quantity is:
+    \[
+      \left|\frac{1}{2\pi i}\oint_{\partial B_r(w)} \frac{f'(z)}{f(z)}\;dz - \frac{1}{2\pi i}\oint_{\partial B_r(w)} \frac{f'_n(z)}{f_n(z)}\;dz\right| = 
+      \frac{1}{2\pi}\left|
+      \oint_{\partial B_r(w)} \frac{f'(z)}{f(z)}-\frac{f'_n(z)}{f_n(z)}\;dz
+      \right|
+    \]
+    In particular, note that this quantity is an integer, so if we bound it under $1$, we would show that $f$ and $f_n$ have the same number of zeroes on $B_r(w)$, which means that $f_n$ has a zero. Let's assume without loss of generality that $\partial B_r(w)$ contains no zeros of $f_n$ or $f'_n$, and let $M_r$ be a lower bound for $|f|$ and $|f'|$ on $\partial B_r(w)$.
+    Similarly, we have a ``global'' lower bound for $|f|$ on $\overline{B_R(w)}-\{w\}$, which we call $M$. 
+    Then by uniform convergence, we can choose the following carefully selected bounds for some large enough $N$, so for all $n\geq N$, we have
+    \[
+      \max_{\partial B_r(w)} |f_n(z) - f(z)| < \min\left(\frac{M}{2}, \frac{M^2}{4 M_r \pi r}\right),\quad\textrm{and}\quad \max_{\partial B_r(w)} |f'_n(z)-f'(z)| < \frac{M^2}{4 M_r \pi r}.
+    \]
+    Now for any $z\in \partial B_r(w)$, we have
+    \[\begin{aligned}
+      \left|\frac{f'(z)}{f(z)} - \frac{f'_n(z)}{f_n(z)}\right| = \frac{|f'(z)f_n(z) - f(z)f'_n(z)|}{|f(z)||f_n(z)|} &\leq \frac{|f'(z)||f_n(z)-f(z)| + |f(z)||f'_n(z)-f_n(z)|}{M^2 /4} \\&\leq \frac{4M_r\cdot M^2}{M^2\cdot 4 M_r\pi r} = \frac{1}{4\pi r}.
+    \end{aligned}\]
+    Then, we apply this to the original contour integral to get 
+    \[
+    \frac{1}{2\pi}\left|
+    \oint_{\partial B_r(w)} \frac{f'(z)}{f(z)}-\frac{f'_n(z)}{f_n(z)}\;dz\right| \leq \frac{1}{2\pi}\oint_{\partial B_r(w)}\left|\frac{f'(z)}{f(z)}-\frac{f'_n(z)}{f_n(z)}\right|\;dz \leq \frac{2\pi r}{2\pi}\cdot \frac{1}{\pi r} = \frac{1}{\pi}<1
+    \]
+    Since the original integral was an integer, and we've bound it below $1$, it must be $0$, so the number of zeroes of $f$ and $f_n$ is the same on $B_{R_N}$, where we set $R_N = r$. (In this proof, we used $r$ to find some big enough $N$, but we could also do the reverse to get a sequence $R_N$.)
+  \end{proof}
+
+  We can now select a sequence of zeroes $\{z_n\}$, ($f_n(z_n) = 0$) with $|z_n - w| < R_N$ for all $n\geq N$. So clearly $z_n \to w$ and we are done.
+\end{solution}
+
+\begin{problem}{11}
+  Evaluate:
+  \[
+    \int^\infty_{-\infty} \frac{x^6}{(1+x^4)^2}\;dx.
+  \]
+\end{problem}
+
+\begin{solution}
+  We use an application of the residue theorem similar to the one given in class, namely let $C_R$ be the upper-half disk contour going in the counterclockwise direction. Then since the integrand grows arbitrarily small as $|x|\mapsto \infty$, we get
+  \[\int^\infty_{-\infty} \frac{x^6}{(1+x^4)^2}\;dx = \lim_{R \to \infty}\oint_{C_R} \frac{z^6}{(1+z^4)^2}\;dz.\]
+  Now note that the only poles of the integrand in the upper-half plane are $\xi, \xi^3$ where $\xi$ is the primitive $8$-th root of unity, $\xi = e^{i\pi / 4}$. Thus, by the residue theorem, we know that our integral is equal to
+  \[{2\pi i}\left(\Res\left(\frac{z^6}{(1+z^4)^2};\; \xi\right) + \Res\left(\frac{z^6}{(1+z^4)^2};\; \xi^3\right)\right).\]
+  To calculate these residues, we note that $\xi$ and $\xi^3$ are double poles of $f(z)$, so we use the residue formula for a quotient of analytic functions $p(z), q(z)$, where $q(z)$ has a zero of order $2$ at $z=a$. This formula can be derived by computing the coefficient of $z-a$ in the Taylor series of $p(z)/q(z)$:
+  \[
+    \Res\left(\frac{p(z)}{q(z)};\; a\right) = \frac{6q''(a)p'(a) - 2p(a)q'''(a)}{3q''(a)^2}.
+  \]
+  Computing these derivatives, we get:
+  \begin{center}\renewcommand{\arraystretch}{1.2}
+  \begin{tabular}{ |c|c|c|c|c|c| } 
+  \hline
+  & $f(z)$ & $f'(z)$ & $f''(z)$ &$f'''(z)$\\
+  \hline
+    $p(z)$ & $z^6$ & $6z^5$ & $30z^4$ & $120z^4$\\ 
+    $q(z)$ & $(1+z^4)^2$ & $8z^3(1+z^4)$ & $24z^2(1+z^4) + 32z^6$ & $48z(1+z^4) + 228z^5$\\ 
+  \hline
+  \end{tabular}
+  \end{center}
+  Notice that when plugging in $\xi$ or $\xi^3$, the terms involving $(1+z^4)$ vanish, so this becomes a lot simpler. We thus get
+  \[
+    \Res\left(\frac{z^6}{(1+z^4)^2};\; \xi\right) = \frac{6\cdot 32\cdot \xi^6 \cdot 6\cdot \xi^5 - 2\cdot \xi^6\cdot 228\cdot \xi^5}{3\cdot (32\cdot\xi^6)^2} = -\frac{3\cdot \xi^3}{16}.
+  \]
+  The same result holds for $\xi^3$, except we get $-\frac{3\xi^9}{16}.$ Using properties of roots of unity, we can thus simplify:
+  \[\int^\infty_{-\infty} \frac{x^6}{(1+x^4)^2}\;dx = -2\pi i\left(\frac{3\cdot\xi^3}{16} + \frac{3\cdot\xi^9}{16}\right)= \frac{3\sqrt{2}\pi}{8}.\]
+\end{solution}
+
+\begin{problem}{13}
+  Compute the Laurent series centered at $z=0$ such that
+  \[
+    \sum^\infty_{n=-\infty} a_n z^n = \frac{1}{z(z-1)(z-2)}
+  \]
+  in the region $1<|z|<2$.
+\end{problem}
+
+\begin{solution}
+  Performing a partial fraction decomposition, we can solve:
+  \[\frac{1}{z(z-1)(z-2)} = \frac{A}{z} + \frac{B}{z-1} + \frac{C}{z-2} \quad\implies\quad A = \frac{1}{2},\; B = -1,\; C = \frac{1}{2}\]
+  In the described region $1 < |z| < 2$, we have $|1 / z| < 1$ and $|z / 2| < 1$ so we can expand using the partial fraction decomposition and geometric series:
+  \[\frac{1}{z(z-1)(z-2)} = \frac{1}{2z} - \frac{z^{-1}}{1-z^{-1}} - \frac{1}{4(1-z / 2)}=\frac{1}{2z} - \sum^\infty_{n=0}\frac{z^{-1}}{z^n} - \sum^\infty_{n=0}\frac{z^n}{4\cdot 2^{n+2}}\]
+  This can be combined to get an expression for $a_n$, namely:
+  \[a_n = \begin{cases}
+  1 / 2^{n+2} & n\geq 0,\\
+  -1 /2 &n = -1,\\
+  -1 &n \leq -2.\\
+  \end{cases}\]
+\end{solution}
+
+\begin{problem}{15}
+  Let $U\subset \C$ be a region with $0\in U$, and let
+  \[
+    \mathcal{O}_M(U) = \left\{f\in \mathcal{O}(U) : \|f\|_U = \sup_{z\in U} |f(z)| \leq M\right\}.
+  \]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that for any sequence $f_n \in \mathcal{O}_M(U)$, the conditions:
+    \begin{enumerate}[(i)]
+      \item $f_n \to 0$ uniformly on compact subsets of $U$, 
+      \item For each $k\geq 0$, $f_n^{(k)}(0) \to 0$
+    \end{enumerate}
+    are equivalent.
+  \end{part}
+
+  The forward direction follows since if $f_n \to 0$ uniformly on compact subsets of $U$, then it follows that $f^(k)_n \to 0$ uniformly on compact subsets of $U$ since all $f_n$ are analytic. 
+  Conversely, suppose that $f_n^{(k)} \to 0$. Since $\mathcal{O}_M(U)$ is compact (and sequentially compact), it follows that $f_n$ has a convergent subsequence, let's say $f_{n_i} \to f$. 
+  Then, by the same argument as before, it follows that $f^{(k)}(0)=0$ for all $k\geq 0$, which implies that $f = 0$ identically on $U$ by connectedness. 
+
+  Nowhere in this proof did we make an assumption on \emph{which} convergent subsequence of $f_n$ we used, so this is true for any convergent subsequence of $f_n$. But since $\mathcal{O}_M(U)$ is sequentially compact, if every convergent subsequence of $f_n$ converges to $0$, then $f_n$ must converge to $0$. (This is a standard fact from point-set topology.)
+  This is equivalent to $f_n \to 0$ uniformly on compact subsets of $U$, by the definition of the topology on $\mathcal{O}_M(U)$.
+
+  \begin{part}{b}
+    Construct a sequence $f_n \in \mathcal{O}(\Delta)$ such that for each $k\geq 0$ we have $f_n^{(k)}(0) \to 0$, but $|f_n(z)|\to \infty$ for all $z\neq 0$.
+  \end{part}
+
+  Consider the sequence given by 
+  \[f_n(z) = \frac{(nz)^n}{(1-z^n)}.\]
+  On the unit disk $\Delta$, since $|z|<1$, we can expand $f_n(z)$ as 
+  \[
+    f_n(z) = n^n\sum^\infty_{k=0} z^{n(k+1)}.
+  \]
+  Taking the $\ell$-th derivative, we get
+  \[f^{(\ell)}_n(z) = n^n\sum^\infty_{k\geq \ell / n - 1} \frac{(n(k+1))!}{(n(k+1) - \ell)!} z^{n(k+1)-\ell}\quad\implies\quad \lim_{n\to \infty} f^{(\ell)}_n(0) = 0.\]
+  However, we can also bound $|f_n(z)|$ with
+  \[|f_n(z)| = \frac{n^n |z^n|}{|1-z^n|} \geq \frac{n^n |z^n|}{1+|z^n|} =\frac{n^n}{2}.\]
+  This clearly goes to infinity as $n\to \infty$.
+\end{parts}
+
+\begin{problem}{22}
+  For each $n > 0$, give an example of an analytic function $f : \Delta^* \to \C$ such that
+  \begin{enumerate}[(i)]
+    \item $f$ is nowhere zero,
+    \item $f$ has an essential singularity at $z=0$, and
+    \item $\Res(f' /f, 0) = n$.
+  \end{enumerate}
+\end{problem}
+
+\begin{solution}
+  Consider the function $f(z)=z^ne^{1/z}$, which is clearly nonzero on $\Delta^*$. Around $z=0$, we can use the series for $e^z$ to obtain the Laurent series 
+  \[f(z) = \sum^\infty_{k=0} z^{n-k} / k!,\]
+  so it's clear that $f(z)$ has an essential singularity at $z=0$. To calculate the residue, we have
+  \[\begin{aligned}
+    \Res(f' / f, 0) = \frac{1}{2\pi i}\oint_{S^1} \frac{f'(z)}{f(z)}\;dz = \frac{1}{2\pi i}\oint_{S^1} \frac{nz^{n-1}e^{1/z} - z^{n-2} e^{1/z}}{z^n e^{1/z}}\;dz= \frac{1}{2\pi i}\oint_{S^1} \frac{n}{z} - \frac{1}{z^2}\;dz =n.
+  \end{aligned}\]
+  Thus, we have our desired function.
+\end{solution}
+
+\begin{problem}{26}
+  What is the average value of $1/(1 + \cos^2\theta)$ over the interval $[0, 2\pi]$?
+\end{problem}
+
+\begin{solution}
+  This is evaluated by an integral
+  \[
+    \frac{1}{2\pi}\int_{0}^{2\pi} \frac{d\theta}{1+\cos^2(\theta)}.
+  \]
+  If we write $\cos(\theta)=(e^{i\theta} + e^{-i\theta}) / 2$, we can rewrite this integral as
+  \[
+    \frac{1}{2\pi i}\int_{S^1} \frac{1}{1+(z+z^{-1})^2 / 4}\;dz = \frac{1}{2\pi i} \int_{S^1} \frac{4z^2}{4z^2+(z^2+1)^2}=
+    \frac{1}{2\pi i}\int_{S^1} \frac{4z}{z^4+6z^2+1}\;dz.
+  \]
+  This rational functions only has simple poles at $z = \pm\sqrt{-3\pm 2\sqrt{2}}$, and the only poles in the unit circle are $z=\pm \sqrt{-3+2\sqrt{2}}$. Thus, by the residue theorem, we get
+  \[
+    \frac{1}{2\pi i}\int_{S^1} \frac{4z}{z^4+6z^2+1}\;dz = 
+    \Res\left(\frac{4z}{z^4+6z^2+1};\; \sqrt{-3+2\sqrt{2}}\right)
+    +\Res\left(\frac{4z}{z^4+6z^2+1};\; -\sqrt{-3+2\sqrt{2}}\right).
+  \]
+  To calculate these residues, note that for $\alpha=\pm \sqrt{-3+2\sqrt{2}}$, we have
+  \[\Res\left(\frac{4z}{z^4+6z^2+1};\; \alpha\right) = \frac{4\alpha}{4\alpha^3 + 12\alpha} = \frac{1}{\alpha^2 + 3} = \frac{1}{2\sqrt{2}}.\]
+  Thus, the integral evaluates to $2/2\sqrt{2} = 1/\sqrt{2}$.
+\end{solution}
+\end{document}

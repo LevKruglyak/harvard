@@ -1,0 +1,92 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\title{\textbf{Math 231a Problem Set 9}}
+
+\providecommand{\Sk}{\text{Sk}}
+\providecommand{\Gr}{\text{Gr}}
+\providecommand{\Tor}{\text{Tor}}
+\providecommand{\Ext}{\text{Ext}}
+\providecommand{\tors}{\text{tors}}
+
+% `tikz-cd` is necessary to draw commutative diagrams.
+\RequirePackage{tikz-cd}
+% `amssymb` is necessary for `\lrcorner` and `\ulcorner`.
+\RequirePackage{amssymb}
+% `calc` is necessary to draw curved arrows.
+\usetikzlibrary{calc}
+% `pathmorphing` is necessary to draw squiggly arrows.
+\usetikzlibrary{decorations.pathmorphing}
+
+% A TikZ style for curved arrows of a fixed height, due to AndréC.
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Suppose $X$ is a CW complex of finite type. Find $\dim_{\Fp}H_n(X;\Fp)$ in terms of the Betti numbers and torsion coefficients of $H_*(X; \Z)$.
+\end{problem}
+
+\begin{solution}
+    \quad Recall that the Betti numbers and torsion coefficients of $H_*(X; \Z)$ are given by
+    \[
+        H_k(X; \Z) \cong \Z^{\beta_k}\oplus\bigoplus^{t(k)}_{i=1}\Z /n_i(k)
+    .\] 
+    By the universal coefficient theorem, we have a short exact sequence:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r]& H_k(X; \Z)\otimes \Fp \arrow[r]& H_k(X; \Fp) \arrow[r] & \tors_p (H_{k-1}(X; \Z)) \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    Now let $t_p(k)=|\{1 \leq i \leq t(k) : p\mid n_i(k)\}|$. By basic properties of tensor product and torsion, we see that the short exact sequence becomes:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r]& \Fp^{\beta_k + t_p(k)} \arrow[r]& H_k(X; \Fp) \arrow[r] & \Fp^{t_p(k-1)} \arrow[r] & 0
+        \end{tikzcd}
+    \end{center}
+    Thus by linear algebra we have:
+    \[
+        \dim_{\Fp} H_n(X; \Fp) = \beta_n + t_p(n) - t_p(n-1)
+    .\] 
+    The special case when $n=0$ is simple to address, then we have $\dim_{\Fp} H_0(X; \Fp) = \beta_0 + t_p(0)$.
+\end{solution}
+
+\begin{problem}
+    Let $I_*$ denote the following chain complex of abelian groups:
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r]& 0 \arrow[r]& \Z\{f\} \arrow[r, "f\mapsto e_1-e_0"] & \Z\{e_0,e_1\} \arrow[r] & 0 \arrow[r] &\cdots,
+        \end{tikzcd}
+    \end{center}
+    where $f$ lies in degree $1$ and $e_0,e_1$ lie in degree $0$. Regarding $\Z[0]$ as the chain complex with $\Z$ concentrated at $0$, there are chain maps $e_0,e_1 : \Z[0] \to I_*$ given by sending $1$ to $e_0,e_1$. Prove that there is a natural bijection between chain homotopies $f_0\simeq f_1 : C_* \to D_*$ and chain maps 
+    \[
+        I_*\otimes C_* \to D_*
+    \]
+    for which the compositions
+    \begin{center}
+        \begin{tikzcd}
+            C_*\cong \Z[0]\otimes C_* \arrow[r, "e_i\otimes \text{id}_{C_*}"] I_*\otimes C_* \arrow[r]& D_*
+        \end{tikzcd}
+    \end{center}
+    are equal to $f_i$.
+\end{problem}
+
+\end{document}

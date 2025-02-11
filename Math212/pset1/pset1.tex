@@ -7,31 +7,82 @@
 \input{../math212.sty}
 
 % \collaborator{AJ LaMotta}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	urlcolor=bluebord
+}
 
 \begin{document}
 \maketitle
 
 \begin{problem}{1}
-  Find an example of a continuous function on $\R$ which goes to zero at infinity and which isn't the Fourier transform of a function in $L^1(\R)$.
+Find an example of a continuous function on $\R$ which goes to zero at infinity and which isn't the Fourier transform of a function in $L^1(\R)$.
 \end{problem}
 \begin{solution}
-  Recall that the Fourier transform $\F$ maps $L^1(\R)$ functions to $C^0_0(\R)$ functions.
+	Recall that the Fourier transform $\F$ maps $L^1(\R)$ functions to $C^0_0(\R)$ functions by the equation
+	\[
+		\F(f)(k) = \frac{1}{\sqrt{2\pi}}\int_{\R} e^{ikx}f(x)\,dx.
+	\]
+	Now consider the following function (inspired by \href{https://math.stackexchange.com/questions/2265958/fourier-inverse-transform-in-c-0}{this MathOverflow question})
+	\[
+		F(k) = \begin{cases}\textrm{sgn}(k)/\log|k| & |k|\geq e,\\ k/e & |k|\leq e.\end{cases}
+	\]
+	This is clearly a continuous function which vanishes at infinity but is also not in $L^1(\R)$ since its integral is divergent, being bounded below by the harmonic series since $1/\log(x) > 1/x$ for $x>1$.
+
+	Suppose for the sake of contradiction that $F(k)=\F(f)(k)$ for some $f\in L^1(\R)$. Note, conjugation acts in the following way under Fourier transform:
+	\[
+		\F(\overline{f})(k) = \int_\R e^{ikx}\overline{f(x)}\,dx = \overline{\int_\R e^{-ikx}f(x)\,dx}= \overline{\F(f)(-k)}.
+	\]
+	In our case, since $F$ is an odd function, it follows that $\F(\overline{f})(k)=\F(-f)(k)$. By injectivity of the Fourier transform, this means that $\overline{f}=-f$ and so $f$ is purely imaginary (almost everywhere). This means that we can write
+	\[
+		\F(f)(k) = \frac{-i}{\sqrt{2\pi}}\int_\R \sin(kx)g(x)\,dx
+	\]
+	where $f(x)=ig(x)$. Next, we expand the inequality
+	\begin{equation}\label{bound}
+		\begin{aligned}
+			\left|\int_0^\infty \frac{\F(f)(k)}{k}\,dk\right| = \left|\int_0^\infty \frac{1}{k}\int_\R \sin(kx)f(x)\,dx\,dx\right|
+			 & \leq \left|\int_0^\infty\int_\R \frac{\sin(kx)f(x)}{k}\,dx\,dx\right| \\
+			 & =\left|\int_\R f(x)\int_0^\infty \frac{\sin(kx)}{k}\,dk\,dx\right|    \\
+			 & =\frac{\pi}{2}\cdot\|f\|_{L^1}.
+		\end{aligned}
+	\end{equation}
+	Here, we've used the fact that $\int_0^\infty \sin(kx)/k\,dk$ is a piecewise constant function in $k$ with absolute value $\pi/2$. One implication of (\ref{bound}) is that $\int_0^\infty F(k)/k\,dx$ is finite. However, we can bound the integral of $F(k)/k$ from below by
+	\[
+		\int_0^\infty \frac{F(k)}{k}\,dk \geq \int_e^\infty \frac{1}{k\log(k)}\,dk =\int_1^\infty\frac{1}{u}\,du=\infty.
+	\]
+	where $u=\log(k)$. This is a direct contradiction to the assumption that $f$ is $L^1$, since (\ref{bound}) would then imply that $\|f\|_{L^1}\geq \infty$.
 \end{solution}
 
 \begin{problem}{2}
-  The Schwarz space $\mathcal{S}(\R^d)$ is defined as
-  \[
-    \mathcal{S}(\R^d) = \left\{ f\in C^\infty(\R^d, \R) \bmid \lim_{|x|\to \infty}|(\mathcal{D} f)(x)|=0\quad\forall \mathcal{D}\in \mathrm{Diff}(\R[x_1,\ldots, x_d])\right\}
-  \]
-  where $\mathrm{Diff}(\R[x_1,\ldots,x_d])$ denotes the space of polynomial differential operators in $d$ variables. Prove that the Fourier transform maps the vector space $\mathcal{S}$ to itself.
+The Schwarz space $\mathcal{S}(\R)$ is defined as
+\[
+	\mathcal{S}(\R) = \left\{ f\in C^\infty(\R) \bmid \lim_{|x|\to \infty}|x^\alpha f^{(\beta)}(x)|=0, \quad\forall \alpha,\beta\in \N\right\}
+\]
+Prove that the Fourier transform maps the vector space $\mathcal{S}$ to itself.
 \end{problem}
 \begin{solution}
-  Suppose $f\in \mathcal{S}(\R^d)$ is a Schwarz function. First, we claim that $f\in L^p(\R^d)$.
-  Note that
-  \[
-    \|f\|_p = \left(\int_{\R^d}|f|^p\right)^{1/p} = 
-  \]
-
+	Suppose $f\in \mathcal{S}(\R^d)$ is a Schwarz function. We'll use the fact that $x^\alpha f^{(\beta)}\in C^0_0(\R)$ to swap polynomials and derivatives with the integral sign. First, we note that
+	\[
+		k^\alpha \frac{\partial^\beta}{\partial k^\beta} \F(f)(k) =
+		\frac{1}{\sqrt{2\pi}}\int_\R \frac{\partial^\beta}{\partial k^\beta}e^{ikx}f(x)\,dx =
+		\frac{1}{\sqrt{2\pi}}\int_\R e^{ikx} k^\alpha(ix)^\beta f(x)\,dx.
+	\]
+	For any function $g(x)\in \C^0_0(\R)$ with $\lim_{x\to\infty} e^x g(x)=0$, integration by parts gives us the identity
+	\[
+		\int_\R e^{ikx}g(x)\,dx = \left[ \frac{e^{ikx}}{ik}g(x)\right]_{-\infty}^\infty +\frac{1}{ik}\int_\R e^{ikx}g'(x)\,dx = \frac{1}{ik}\int_\R e^{ikx}g'(x)\,dx.
+	\]
+	In particular, this rule holds for any $g\in \mathcal{S}(\R)$. Using this integration rule with $g(x)=k^\alpha (ix)^\beta f(x)$ gives
+	\[
+		\begin{aligned}
+			\left|k^\alpha\frac{\partial^\beta}{\partial k^\beta}\F(f)(k)\right|
+			 & = \frac{1}{\sqrt{2\pi}}\cdot \frac{1}{|k|}\left|\int_\R e^{ikx} k^\alpha (\beta(ix)^{\beta-1}f(x)+(ix)^\beta f'(x))\right| \\
+			 & \leq
+			\frac{1}{|k|\sqrt{2\pi}}\left|\int_\R e^{ikx} \beta(ix)^{\beta-1}f(x)\right|+
+			\frac{1}{|k|\sqrt{2\pi}}\left|\int_\R e^{ikx}(ix)^{\beta}f'(x)\right|.
+		\end{aligned}
+	\]
+	We can inductively do this procedure $N$ times to get a factor of $1/|k|^N$ in front of each term. As $k\to \infty$, for sufficiently large $N$ this term goes to zero and we get $\mathcal{F}(f)\in \mathcal{S}(\R)$.
 \end{solution}
 
 \end{document}

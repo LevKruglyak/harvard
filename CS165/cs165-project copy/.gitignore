@@ -1,0 +1,43 @@
+student_outputs
+generated_data
+
+src/cs165.catalog
+src/cs165_data
+src/test
+status.current_container_id
+
+# Object files
+obj/*
+*.o
+*.ko
+*.obj
+*.elf
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects
+*.so
+*.so.*
+
+# Executables
+*.out
+bin/*
+src/server
+src/client
+src/btree
+.deps
+
+#ide stuff
+tags
+Tags
+*.swp
+.vscode
+vcpkg
+server.dSYM
+
+# other
+r*hs # vtune output
+.deps # makefile temps
+

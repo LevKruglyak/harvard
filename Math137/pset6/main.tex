@@ -1,0 +1,95 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 137 Problem Set 6}}
+
+\begin{document}
+\maketitle
+
+Throughout, $K$ is assumed to be an algebraically closed field.
+\begin{problem}
+    Show that any algebraic subset of $K^n$ is compact with respect to the Zariski topology. (Every open cover has a finite subcover.)
+\end{problem}
+
+\begin{solution}
+    It suffices to prove that $K^n$ is compact, because algebraic subsets are closed subset of $K^n$, this would imply that any algebraic subset is also compact. Let $\mathcal{U}$ be some open cover of $K^n$ and let $\mathcal{A}$ be the set of finite unions of open sets in $\mathcal{U}$. Recall that $K^n$ is a Noetherian space because it is finite dimensional, so any chain of open sets in $K^n$ must eventually be constant. We know by the Noetherian chain condition and Zorn's lemma that $\mathcal{A}$ contains some maximal element $X$ for $U_i\in \mathcal{U}$. Suppose for the sake of contradiction that $X\neq K^n$, so there is some $x\in K^n-X$. Then letting $U\in \mathcal{U}$ be some open set containing $x$, the cover $U\cup X$ is a larger element of $\mathcal{A}$, violating maximality of $X$. So $K^n=X\in \mathcal{A}$ and so $K^n$ can be expressed as a finite union of open sets in the cover. 
+\end{solution}
+
+\begin{problem}
+    Let $V$ be an irreducible algebraic set. Show that $\mathcal O_V(V) = \Gamma(V)$. (In other words: if a rational function $f\in K(V)$ is defined at every point in $V$, then $f\in\Gamma(V)$.)
+\end{problem}
+
+\begin{solution}
+    Clearly $\Gamma(V)\subset \mathcal{O}_V(V)$. To prove the other direction, we'll use a clever construction from \textit{Algebraic Curves}. For any $f\in K(V)$ consider the set $J_f$ defined
+    \[
+        J_f = \{g\in K[X_1,\ldots,X_n]\mid gf\in \Gamma(V)\}
+    .\] 
+    Note that $J_f$ is an ideal in $K[X_1,\ldots,X_n]$ containing $I(V)$ (If $g\in I(V)$ then $gf=0$ in $\Gamma(V)$) Also $\mathcal{V}(J_f)$ is exactly the set of points at which $f$ is not defined. Then if $f\in \mathcal{O}_V(V)$, it is defined everywhere so $\mathcal{V}(J_f)=\emptyset$. Thus by the nullstellensatz, $1\in J_f$ so $1\cdot f\in \Gamma(V)$ and so $\mathcal{O}_V(V)\subset \Gamma(V)$.
+\end{solution}
+
+\begin{problem}
+    Let $V$ be an irreducible algebraic set, $W$ be any algebraic set, and let $\varphi:V\dashrightarrow W$ be a rational map. We denote by $U_\varphi$ the set of points $P\in V$ at which $\varphi$ is defined. Abusing notation, we write $\overline{\varphi(V)} := \overline{\varphi(U_\varphi)}$. We say $\varphi$ is dominant if $\overline{\varphi(V)} = W$.
+    \begin{enumerate}[label=\alph*)]
+        \item Show that the map $\varphi:U_f\rightarrow W$ is continuous (with respect to the subspace topologies on $U_f$ and $W$).
+        \item Show that $\overline{\varphi(V)}$ is irreducible.
+        \item Let $U\subseteq U_\varphi$ be a nonempty open subset. Show that $\overline{\varphi(U)} = \overline{\varphi(V)}$.
+        \item Show that $\varphi$ is dominant if and only if the map $\Gamma(W) \rightarrow K(V)$ sending $f\in\Gamma(W)$ to $f\circ\varphi$ is injective.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $\{f_i, U_i\}$ be the equivalence class representing of $f\in K(V)$. Then by definition $U_i$ form an open cover of $U_f$. Thus it suffices to check that $f_i$ are continuous for all $i$, since $f_i = \restr{f}{U_i}$. Recall that $f_i = a /b$ for some $a,b\in \Gamma(V)$ and $\mathcal{V}(b)\cap U_i = \emptyset$. Now let $C$ be a closed subset of $W$, cut out by say $g_1,\ldots,g_k\in \Gamma(W)$. Then $f_i^{-1}(C) = \{x\in U \mid g_j(a(x)/b(x)) = 0 \; \forall j\}$. Note that $g_j(a/b)$ is a rational function, so we can write it as $p_j / q_j$ for some $p_j,q_j\in \Gamma(V)$ with $\mathcal{V}(q_j)\cap U_i=\emptyset$. Then $f^{-1}_i(C) = \mathcal{V}(g_1(a/b),\ldots,g_k(a /b))=\mathcal{V}(p_1 /q_1,\ldots,p_k /q_k) = \mathcal{V}(p_1,\ldots,p_k)$. So $f^{-1}_i(C)$ is an algebraic set and hence closed, so $f_i$ is continuous as desired.     
+    
+    \textbf{(b)} This follows from (a) and due to the fact that the closure of a continuous image of a closed irreducible set is irreducible. 
+    
+    \textbf{(c)} Since $U$ is a nonempty open subset of $U_\varphi$, $U$ is dense in $U_\varphi$. Since $\varphi$ is continuous we have $\overline{\varphi(V)}=\overline{\varphi(\overline{U})}\subset \overline{\varphi(U)}$. This completes the proof.
+    
+    \textbf{(d)} Let $\widetilde{\varphi} : \Gamma(W) \to K(V)$ be the ``pullback'' map, defined by sending $f$ to $f\circ \varphi$. We claim that $\varphi$ is dominant iff $\widetilde{\varphi}$ is injective. First suppose $\varphi$ is dominant. We know from lecture that we have a $K$-algebra homomorphism $\varphi^* : K(W) \to K(V)$, and this is an extension of $\widetilde{\varphi}$, i.e. $\restr{\varphi^*}{\Gamma(W)} = \widetilde{\varphi}$. Since $K(W)$ is a field and $\varphi^*$ is a homomorphism, it follows that $\varphi^*$ is injective and so $\widetilde{\varphi}$ is injective. Conversely, suppose $\widetilde{\varphi}$ is injective. We claim that $\mathcal{I}_W(\varphi(U_\varphi))=\{0\}$. Indeed, suppose $f\in \mathcal{I}_W(\varphi(U_\varphi))$ is some function. Then for any point $p\in U_\varphi$, we have $(f\circ \varphi)(p)=0$ so $\widetilde{\varphi}(f)=0$ everywhere since $f\circ\varphi$ vanishes on a nonempty open set. Thus since we assumed $\widetilde{\varphi}$ was injective, we have $f=0$. Since $\mathcal{I}_W(\varphi(U_\varphi))=\{0\}$, Hilbert's Nullstellensatz implies that $\overline{\varphi(U_\varphi)}=\overline{\varphi(V)}=W$.
+\end{solution}
+
+\begin{problem}
+    Are $a=X^2\in\C(X)$ and $b=X^3+X+1\in\C(X)$ algebraically independent over $\C$? If not, find a polynomial $f\in\C[S,T]$ with $f(a,b)=0$.
+\end{problem}
+
+\begin{solution}
+    They are not algebraically independent, because the trancendence degree of $\C(X)$ over $\C$ is one, so the size of any algebraically independent set is of at most size one. So we should be able to find an explicit polynomial $f\in \C[S,T]$ which satisfies $f(a,b)=0$. Let $f(s,t)=t^2-s^3-2s^2-s-2t+1$. Then
+    \[
+        f(a,b)=(X^3+X+1)^2-X^6-2X^4-X^2-2X^3-2X^3-2+1=0
+    \]  
+    so $a$ and $b$ are algebraically dependent.
+\end{solution}
+
+\begin{problem}
+    Let $I$ be any ideal of $K[X_1,\dots,X_n]$ and let $V=\mathcal V(I)$. Let $S=K[X_1,\dots,X_n]/I$.
+    \begin{enumerate}[label=\alph*)]
+        \item Show that $\dim(V)$ is the maximum number of (over $K$) algebraically independent elements of $S$.\\
+        \emph{Note:} We call elements $f_1,\dots,f_d$ of any $K$-algebra $S$ \emph{algebraically independent} if there is no polynomial $0\neq g\in K[Y_1,\dots,Y_d]$ such that $g(f_1,\dots,f_d)=0$ in $S$.
+        \item Show that $\dim(V)$ is the maximum size of a sublist of $X_1,\dots,X_n$ consisting of algebraically independent elements of $S$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Recall that $\dim(V)$ is the size of a transcendence basis of $K(V)/K$, so let $X_{i_1}, \ldots, X_{i_d}$ be a transcendence basis for $K(V) /K$ where $d=\dim(V)$, and we chose the $X_{i_k}$ from among the generators $X_1,\ldots,X_n$. Suppose there existed a nonzero polynomial $g\in K[Y_1,\ldots,Y_d]$ such that $g(X_{i_1},\ldots,X_{i_d})\equiv 0\mod I$. Then since $I\subset \sqrt{I}$, we also must have $g(X_{i_1},\ldots,X_{i_d})\equiv 0\mod \sqrt{I}$ which would mean that $g(X_{i_1},\ldots,X_{i_d})=0$ in $K(V)$, a contradiction to the algebraic independence of the $X_{i_1},\ldots,X_{i_d}$. This shows that there are at least $\dim(V)$ algebraically elements of $S$. To prove that $\dim(V)$ is in fact the maximum number of algebraically independent elements of $S$, let $f_1,\ldots,f_{d'}$ be some algebraically independent collection of elements with $d' > d$. This implies that they are algebraically dependent in $K(V)$, so we have some nonzero $g\in K[Y_1,\ldots,Y_{d'}]$ such that $g(f_1,\ldots,f_{d'})=0\mod \sqrt{I}$. Since $g(f_1,\ldots,f_{d'})\in \sqrt{I}$, by definition of a radical ideal there is some $k$ such that $g^k(f_1,\ldots,f_{d'})\in I$. Since $g^k\neq 0$, we have our algebraic dependence $\mod I$.
+    
+    \textbf{(b)} This is proven by (a), we even constructed a sublist of $X_1,\ldots,X_{\dim V}$ which is algebraically independent in $S$.
+\end{solution}
+
+% You can submit the following two problems either with problem set 6 or problem set 7.
+
+% \begin{problem}[bonus]
+%     Consider an ideal $I$ of $K[X_1,\dots,X_n]$ and any monomial order. Show that $\dim(\mathcal V(I))$ is the maximal size of a subset $A\subseteq\{1,\dots,n\}$ such that every monomial of the form $\prod_{i\in A} X_i^{e_i}$ is a standard monomial.\\
+%     \textbf{Hint:} First, think about how to prove this for the degree-lexicographic monomial order. (You might take some inspiration from the next problem.)
+% \end{problem}
+
+% \begin{problem}[bonus]
+%     Let $I$ be an ideal of $K[X_1,\dots,X_n]$. For any $d\geq0$, let $R_d\subset K[X_1,\dots,X_n]$ be the $K$-vector space of polynomials of degree at most $d$ and let $\Gamma_d=R_d/(R_d\cap I)$.
+%     \begin{enumerate}[label=\alph*)]
+%     \item Show that there is a polynomial $p\in\mathbb Q[D]$ and an integer $r\geq0$ such that for all $d\geq r$, the $K$-vector space $\Gamma_d$ has dimension $p(d)$. (This polynomial $p(D)$ is called the \emph{Hilbert polynomial} of $I$.)\\
+%     \textbf{Hint:} Use a Gröbner basis and the inclusion--exclusion principle.
+%     \item Show that $\dim(\mathcal V(I)) = \deg(p)$.
+%     \end{enumerate}
+% \end{problem}
+
+\end{document}

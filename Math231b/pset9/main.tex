@@ -1,0 +1,175 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 231b Problem Set 9}}
+\date{\textbf{Due:} April 18, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    James splitting of $\Sigma \Omega S^{2n+1}$.
+\end{problem}
+
+\begin{solution}
+    First we'll prove a lemma.
+    \begin{partproblem}{a}
+        Given two path-connected pointed spaces $X$ and $Y$, prove that there is a splitting
+        \[
+            \Sigma(X\times Y) \simeq \Sigma X\vee \Sigma Y\vee \Sigma(X\wedge Y).
+        \]
+        % Use the pinch map 
+    \end{partproblem}
+    \quad Define a map $\psi : \Sigma(X\times Y) \to \Sigma X \vee \Sigma Y \vee \Sigma(X\wedge Y)$ by setting $\psi = \Sigma\pi_X + \Sigma \pi_Y + \Sigma q$, where $q : X\times Y\to X\wedge Y$ is the quotient fibration. Since all the spaces involved are simply connected (CW complexes), it suffices to prove that $\psi$ induces an isomorphism on integral homology to prove that it is a weak, hence homotopy equivalence by the homotopy Whitehead theorem. Recall that for a field $k$, the Kunneth theorem gives us a natural isomorphism
+    \[
+        H_n(X\times Y; k)\cong \bigoplus_{p+q=n} H_p(X;k)\otimes_k H_q(Y; k)
+    .\]
+    Since suspension simply acts as a homology lifting functor, we get a similar natural isomorphism
+    \[
+        H_n(\Sigma(X\times Y); k)\cong \bigoplus_{p+q=n+1} H_p(X;k)\otimes_k H_q(Y; k)
+    .\]
+    Note that the suspended projections $\Sigma \pi_X$ and $\Sigma \pi_Y$ send all terms to zero, except for $H_{n+1}(X;k)\otimes H_0(Y;k)$ and $H_{0}(X;k)\otimes H_{n+1}(Y;k)$ respectively. Meanwhile, the middle terms are exactly isomorphic to $H_n(\Sigma(X\wedge Y); k)$ by the long exact sequence associated to the sequence $X\vee Y \to X\times Y \to X\wedge Y$. So $\psi_*$ is an isomorphism for all homology with coefficients in a field. Thus, by the universal coefficients theorem, it induces an isomorphism for all integral homology. This completes the proof.
+    \begin{partproblem}{b}
+        Composition of loops $\Omega S^{2n+1}\times \Omega S^{2n+1} \to \Omega S^{2n+1}$ makes $H_*(\Omega S^{2n+1})$ into a ring. Prove that $H_*(\Omega S^{2n+1})\cong \Z[x_{2n}]$. This is because the product $H_*(\Omega S^{2n+1})\otimes H_*(\Omega S^{2n+1}) \to H_*(\Omega S^{2n+1})$ is dual to a coassociative and counital product $H^*(\Omega S^{2n+1}) \to H^*(\Omega S^{2n+1})\otimes H^*(\Omega S^{2n+1})$ which itself is a map of rings.
+    \end{partproblem}
+    \quad Recall that $H^*(\Omega S^{2n+1})\cong \Gamma[x]$, where $\Gamma[x]$ is the divided power algebra. Then the natural operation on homology is dual to a coassociative and counital coproduct $H^*(\Omega S^{2n+1}) \to H^*(\Omega S^{2n+1})\otimes H^*(\Omega S^{2n+1})$, so we have such a map $\psi : \Gamma[x] \to \Gamma[x]\otimes \Gamma[x]$. Clearly, this map endows $\Gamma[x]$ with the divided power coalgebra structure, and so is dual to a polynomial ring multiplication on $H_*(\Omega S^{2n+1})\cong\Z[x_{2n}]$.
+
+    \begin{partproblem}{c}
+        Prove that $\Sigma \Omega S^{2n+1}\simeq \bigvee^\infty_{k=1}S^{2kn+1}$.
+    \end{partproblem}
+
+    \quad Recall that in the previous problem, we had the composition map $\Omega S^{2n+1}\times \Omega S^{2n+1} \to \Omega S^{2n+1}$, which induces the map $\Z[x_{2n}]\otimes \Z[x_{2n}] \to \Z[x_{2n}]$ given by $(f,g)\mapsto f\cdot g$. Applying the suspension functor gives us a map: \[\Sigma(\Omega S^{2n+1}\times \Omega S^{2n+1}) \to \Sigma\Omega S^{2n+1}.\]
+    By basic properties of the suspension, recall that \[
+        H_k(\Sigma\Omega S^{2n+1}) =\begin{cases}
+            \Z & k=0 \textrm{ or } 2kn+1, k\geq 1,\\
+            0 & \textrm{otherwise}.
+        \end{cases}
+    \]
+    Note that this is exactly the homology of $\bigvee_{k=1}^\infty S^{2kn+1}$. Repeatedly applying (a) to $\Sigma(\Omega S^{2n+1}\times \Omega S^{2n+1})$ then allows us to construct a map $\bigvee^\infty_{k=1}S^{2kn+1}\to \Sigma \Omega S^{2n+1}$ which is an isomorphism on homology.
+\end{solution}
+
+\begin{problem}
+    EHP sequence.
+\end{problem}
+
+\begin{solution}
+    We will use the previous problem.
+    \begin{partproblem}{a}
+        Using Problem~1c, construct $H : \Omega S^{2n+1} \to \Omega S^{4n+1}$ which induces an isomorphism in $H_{4n}$.
+    \end{partproblem}
+
+    \quad Firstly, we have a canonical map $\bigvee_{k=1}^\infty S^{2kn+1} \to \bigvee_{k=1}^\infty S^{4kn+1}$ which maps $S^{4n+1}$ to $S^{4n+1}$, and all other $S^{2kn+1}$ to the basepoint. Composing with the homotopy equivalence maps from 1(c), we thus get a map $\Sigma H : \Sigma\Omega S^{2n+1} \to \Sigma \Omega S^{2n+1}$, which induces an isomorphism in $H_{4n+1}$. Composing with the natural projections $\Sigma X \to X$ and inclusion $X \to \Sigma X$, we thus get our map $H$, which still is an isomorphism in $H_{4n}$.
+
+    \begin{partproblem}{b}
+        Let $E : S^{2n} \to \Omega S^{2n+1}$ denote the adjoint to the identity on $S^{2n+1}$. Using the Serre spectral sequence, prove that
+        \[\begin{tikzcd}
+            S^{2n} & \Omega S^{2n+1} & \Omega S^{4n+1}
+            \arrow["E", from=1-1, to=1-2]
+            \arrow["H", from=1-2, to=1-3]
+        \end{tikzcd}\]
+        is a mod $\mathcal{C}_2$-fiber sequence, i.e. that the map $S^{2n} \to F$ induces a mod $\mathcal{C}_2$-isomorphism on homotopy groups. The induced long exact sequence of mod $\mathcal{C}_2$ homotopy groups is called the \emph{EHP sequence}.
+    \end{partproblem}
+
+    \quad I'm not sure how to do this.
+\end{solution}
+
+\begin{problem}
+    Cohomology of $V_2(\R^n)$.
+\end{problem}
+
+\begin{solution}
+    Let $V_2(\R^n)$ denote the space of pairs $(x_1, x_2)$ of orthonormal vectors in $\R^n$.
+    \begin{partproblem}{a}
+        Identify the map $\pi : V_2(\R^n) \to S^{n-1}$ which sends $(x_1, x_2) \mapsto x_1$ with the unit sphere bundle associated to the tangent bundle of $S^{n-1}$.
+    \end{partproblem}    
+    \quad For any vector $v\in S^{n-1}$, its fiber $\pi^{-1}(v)$ is the set of pairs of vectors $(v,x)$ with $|x|=1$ and $v\perp x$. This is exactly the unit sphere bundle.
+
+    \begin{partproblem}{b}
+        Using the fact that $\big\langle e(TM), [M] \big\rangle = \chi(M)$, compute the cohomology rings $H^*(V_2(\R^n); \F_2)$ and $H^*(V_2(\R^n); \Z)$.
+    \end{partproblem}
+
+    \quad By the previous part, we see that we have a spherical fibration:
+    % https://q.uiver.app/?q=WzAsMyxbMCwwLCJTXntuLTJ9Il0sWzEsMCwiVl8yKFxcUl5uKSJdLFsyLDAsIlNee24tMX0iXSxbMCwxXSxbMSwyLCJcXHBpIl1d
+    \[\begin{tikzcd}
+        {S^{n-2}} & {V_2(\R^n)} & {S^{n-1}}
+        \arrow[from=1-1, to=1-2]
+        \arrow["\pi", from=1-2, to=1-3]
+    \end{tikzcd}\]
+    We can thus apply the Gysin sequence to get the cohomology rings of the Stiefel manifolds, assuming $n\geq 3$. So for any commutative ring $R$, we have a long exact sequence:
+    % https://q.uiver.app/?q=WzAsNixbMSwwLCJIXmsoU157bi0xfTtSKSJdLFsyLDAsIkheayhWXzIoXFxSXm4pOyBSKSJdLFszLDAsIkhee2stbisyfShTXntuLTF9O1IpIl0sWzQsMCwiSF57aysxfShTXntuLTF9O1IpIl0sWzUsMCwiXFxjZG90cyJdLFswLDAsIlxcY2RvdHMiXSxbMCwxLCJcXHBpXioiXSxbMSwyXSxbMiwzLCJlKFRTXntuLTF9KVxcc21pbGUgLSJdLFszLDRdLFs1LDBdXQ==
+    \[\begin{tikzcd}
+        \cdots & {H^k(S^{n-1};R)} & {H^k(V_2(\R^n); R)} & {H^{k-n+2}(S^{n-1};R)} & {H^{k+1}(S^{n-1};R)} & \cdots
+        \arrow["{\pi^*}", from=1-2, to=1-3]
+        \arrow[from=1-3, to=1-4]
+        \arrow["{E}", from=1-4, to=1-5]
+        \arrow[from=1-5, to=1-6]
+        \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    Here the $E$ map is given by $E(\zeta) = e(TS^{n-1})\smile \zeta$. There are four special cases we must worried about. First of all, if $k=0,n-2,n-1,2n-3$, the terms $H^k(S^{n-1};R)$ and $H^{k-n+2}(S^{n-1};R)$ vanish, which implies that $H^k(V_2(\R^n))$ is trivial. We now go through these cases one by one to fill in the non-trivial degrees of cohomology.
+
+    \quad If $k=0$, $H^{k-n+2}(S^{n-1};R)=0$ since $n\geq 3$, so we have an exact sequence:
+    \[\begin{tikzcd}
+        0 & {R} & {H^0(V_2(\R^n); R)} & {0}
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-3, to=1-4]
+    \end{tikzcd}\] 
+    Thus $H^0(V_2(\R^n); R)\cong R$. Next, for $k=n-2,n-1$, we get a combined exact sequence:
+    \[\begin{tikzcd}
+        0 & {H^{n-2}(V_2(\R^n); R)} & {H^0(S^{n-1};R)} & {H^{n-1}(S^{n-1};R)} & {H^{n-1}(V_2(\R^n); R)} & 0
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=1-3]
+        \arrow["E", from=1-3, to=1-4]
+        \arrow[from=1-4, to=1-5]
+        \arrow[from=1-5, to=1-6]
+    \end{tikzcd}\]
+    Here we have two different cases based on $R$. If $R=\Z/2$, the fact that $\big\langle e(TS^{n-1}), [S^{n-1}] \big\rangle = \chi(S^{n-1})$ is always even implies that $E$ is the zero map $\Z /2 \to \Z /2$. Thus $H^{n-2}(V_2(\R^n); \F_2)\cong \ker(E) = \F_2$ and $H^{n-1}(V_2(\R^n); \F_2)\cong \textrm{coker}(E) = \F_2$. Finally, we use the Gysin sequence to see that $H^{2n-3}(V_2(\R^n); \F_2)\cong \F_2$, so we have
+    \[
+        H^*(V_2(\R^n); \F_2) \cong \F_2[x_{n-2}, x_{n-1}] / (x_{n-2}^2, x_{n-1}^2)
+    .\] 
+    This ring is commutative because $(n-2)(n-1)$ is always even. In the $\Z$ case, we recall that $\chi(S^{n-1})=0$ when $n$ is even and $2$ when $n$ is odd. For this former case, we have the same algebra. In the latter case, the $n-1$ cohomology becomes $\Z /2$, and the $n-2$ cohomology vanishes so we get a different presentation:
+    \[
+        H^*(V_2(\R^n)) \cong \begin{cases}
+            \Z[x_{n-2}, x_{n-1}] / \left(x_{n-2}^2, x_{n-1}^2\right) & n\textrm{ even}\\
+            \Z[x_{n-1}, x_{2n-3}] / \left(x_{n-1}^2, x_{n-1}x_{2n-3}, 2x_{n-1}\right) & n\textrm{ odd}\\
+        \end{cases}
+    .\] 
+\end{solution}
+
+\begin{problem}
+    The exceptional Lie group $G_2$ lies in a fiber sequence
+    \[\begin{tikzcd}
+        S^{3} & G_2 & V_2(\R^6).
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=1-3]
+    \end{tikzcd}\]
+    Compute the integral and mod $2$ cohomology groups of $G_2$ using the Serre spectral sequence. Explain why the Serre spectral sequence is unable to uniquely determine the ring structure without some additional input.
+\end{problem}
+
+\begin{solution}
+    \quad By the previous problem, $H^*(V_2(\R^6); R) =R[x_4, x_5] / (x_4^2, x_5^2)$ for $R=\Z$ and $\Z /2$. Using the cohomology of $S^3$, the Serre spectral sequence gives us the $E_2$ page:
+    % https://q.uiver.app/?q=WzAsMjMsWzEsM10sWzEsNCwiUiJdLFsyLDRdLFswLDQsIjAiXSxbMSw1LCIwIl0sWzAsNV0sWzksNSwicyJdLFswLDMsIjEiXSxbMCwyLCIyIl0sWzAsMSwiMyJdLFsxLDEsIlIiXSxbMCwwLCJ0Il0sWzIsNSwiXFxjZG90cyJdLFszLDUsIjQiXSxbNCw1LCI1Il0sWzUsNSwiXFxjZG90cyJdLFs2LDUsIjkiXSxbNiw0LCJSIl0sWzMsNCwiUiJdLFs0LDQsIlIiXSxbMywxLCJSIl0sWzQsMSwiUiJdLFs2LDEsIlIiXSxbNSw2LCIiLDAseyJvZmZzZXQiOi01LCJzdHlsZSI6eyJoZWFkIjp7Im5hbWUiOiJub25lIn19fV0sWzUsMTEsIiIsMix7Im9mZnNldCI6NSwic3R5bGUiOnsiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dXQ==
+    \[\begin{tikzcd}[column sep = small, row sep = small]
+        t \\
+        3 & R && R & R && R \\
+        2 \\
+        1 & {} \\
+        0 & R & {} & R & R && R \\
+        {} & 0 & \cdots & 4 & 5 & \cdots & 9 &&& s
+        \arrow[shift left=5, no head, from=6-1, to=6-10]
+        \arrow[shift right=5, no head, from=6-1, to=1-1]
+    \end{tikzcd}\]
+    Thus we have the following cohomology groups: (for $\Z$ and $\Z /2$)
+    \[
+        H^k(G_2; R)\cong \begin{cases}
+            R & k=0,3,4,5,7,8,9,12,\\
+            0 & \textrm{otherwise}.
+        \end{cases}
+    \]
+    Calling the generators corresponding to each degree $y_i$, we see a couple of things. First of all, we know that $y_4, y_5$ come from $x_4$ and $x_5$, and so $y_9=y_4y_5$. There simply isn't any information dictating what $y_3^2$ is for example, so we can't understand the multiplicative structure. This would require some other fibration with known cohomology.
+\end{solution}
+
+\end{document}

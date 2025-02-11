@@ -1,0 +1,263 @@
+\documentclass{pset}
+
+\title{Math 213a Problem Set 6}
+\due{October 17, 2023}
+\author{Lev Kruglyak}
+
+\collaborator{Leonardo Kaplan}
+
+\usepackage{tkz-euclide}
+
+\begin{document}
+\maketitle
+\collaborators
+% Exercises 9, 13, 14, 17, 21, 25.
+\begin{problem}{2.9}
+  Prove that any proper holomorphic map $f : \Delta \to \Delta$ of degree two can be written in the form $f(z) = A(S(B(z)))$, with $A, B\in \Aut(\Delta)$ and $S(z)=z^2$.
+\end{problem}
+
+\begin{solution}
+  First, we note that there must be a point $p\in \Delta$ such that $f'(p)=0$. Otherwise, $p$ would be a degree $2$ covering map since it is proper holomorphic, a contradiction because $\Delta$ is simply connected. Let $B$ be some M\"obius transformation taking $0$ to $p$, and let $A$ be a M\"obius transformation taking $0$ to $f(p)$. Then we know that $S(z)$ is a proper, degree $2$, holomorphic map with $S(0)=0$ and $S'(0)=0$. Let's write it as a Blaschke product,
+  \[
+    S(z) = e^{i\theta}\frac{z(z-a)}{1-\overline{a}z},
+  \]
+  where one factor is $z$ since it has a zero at $z=0$. Then $S'(0)=-a$, so $a=0$ as well. Thus, $S(z)=e^{i\theta}z^2$, so this $e^{i\theta}$ factor can be absorbed into the automorphism $B$. This gives the desired decomposition.
+\end{solution}
+
+\begin{problem}{2.13}
+  Find the hyperbolic distance between $i$ and $i+1$ in $\mathbb{H}$.
+\end{problem}
+
+\begin{solution}
+  Consider the following $\textrm{PSL}_2(\R)$ transformation:
+  \[
+    z \mapsto \frac{2\sqrt{5}z + 5-\sqrt{5}}{-2z+1+\sqrt{5}}.
+  \]
+  This maps both $i$ and $i+1$ to an imaginary axis, specifically
+  \[
+    i \mapsto \frac{(5-\sqrt{5})i}{2},\quad i+1\mapsto \frac{(5+\sqrt{5})i}{2}.
+  \]
+  The hyperbolic distance between these points is then
+  \[
+    \int_{(5-\sqrt{5})i/2}^{(5+\sqrt{5})i/2} \frac{1}{x}\;dx = \log\left(\frac{5+\sqrt{5}}{5-\sqrt{5}}\right) \approx 0.962423650119.
+  \]
+\end{solution}
+
+\begin{problem}{2.14}
+  Prove that any proper holomorphic map $f : \mathbb{H} \to \mathbb{H}$ can be written in the form
+  \[f(z) = a_0 z + b_0 + \sum^n_{i=1} \frac{a_i}{b_i - z},\]
+  with $a_i \geq 0$ and $b_i \in \R$.
+\end{problem}
+
+\begin{solution}
+  Since $f$ is a proper holomorphic map $\mathbb{H} \to \mathbb{H}$. By the Schwarz reflection principle and the analagous statement for maps between $\Delta$ and $\Delta$, $f$ extends to a rational function on the Riemann sphere mapping the upper half-plane to itself, and the real axis to the extended real axis $\R\cup \infty\subset \widehat{\C}$. Now we can split up this extended function as
+  \[f = g +\sum_{p\textrm{ pole}} f_p\]
+  where $g$ is a polynomial and $f_p$ has a single pole at $p$. Firstly, since $f$ is holomorphic on the upper half-plane, all poles must occur on the real axis. Secondly, since $f$ maps the upper half-plane to itself, all of these poles must have degree $1$, and similarly $g$ must have degree $1$. Thus, we can write
+  \[ f = a_0z+b_0 + \sum^n_{i=1}\frac{a_i}{b_i - z}.\]
+  Note that $a_i$ must be strictly positive for the map $f$ to preserve the upper half-plane.
+\end{solution}
+
+\begin{problem}{2.17}
+  Let $T(a,b,c)\subset \mathbb{H}$ be a hyperbolic triangle with interior angles $a,b,c$. Prove that the area of $T(a,b,c)=\pi - a - b -c$ geometrically.
+\end{problem}
+
+\begin{solution}
+  We prove this theorem in steps. First, recall that the hyperbolic metric is given by $\rho = |dz| / \textrm{Im}(z)$, thus the hyperbolic area of a region $A$ in the upper half-plane is given by the integral 
+  \[
+    \textrm{area}(A) = \int_A \frac{dx\wedge dy}{y^2}.
+  \]
+  This area is invariant under the action of $\textrm{PSL}_2(\R)$ (since this is a subgroup of the metric isometries).
+
+  \begin{claim}
+    The area of any ideal triangle is $\pi$.
+  \end{claim}
+  \begin{proof}
+    Note that in the upper half-plane model, any ideal triangle can be isometrically mapped to the following ideal triangle:
+    \medskip
+    \begin{center}
+      \begin{tikzpicture}[scale=3]
+        \tkzDefPoint(0,0){O}
+        \tkzDefPoint(-0.5,0){XX}
+        \tkzDefPoint(0.5,0){YY}
+        \tkzDefPoint(-1,0){X}
+        \tkzDefPoint(1,0){Y}
+
+        \tkzDefPoint(-0.5,1.0){XU}
+        \tkzDefPoint(0.5,1.0){YU}
+
+        \tkzDrawLine[thick](X,Y)
+        \tkzDrawSegment[thick](XX,XU)
+        \tkzDrawSegment[thick](YY,YU)
+        \tkzDrawSemiCircle[color=black,thick](O,YY)
+        \tkzDrawPoints[color=black,fill=red,size=4](XX,YY)
+      \end{tikzpicture}
+    \end{center}
+
+    We can calculate its hyperbolic area with the integral
+
+    \[
+      A = \int_{-1}^1\int_{\sqrt{1-x^2}}^\infty \frac{-dy\, dx}{y^2} = \int_{-1}^1 \frac{dx}{\sqrt{1-x^2}} = \pi.
+    \]
+  \end{proof}
+
+  \begin{claim}
+    Let $A(\alpha)$ be the area of $T(\pi - \alpha, 0, 0)$. Then we have
+    \[A(\alpha)+A(\beta) = A(\alpha + \beta).\]
+  \end{claim}
+
+  \begin{proof}
+    First note that we have the special case of the identity $A(\alpha) + A(\pi - \alpha) = A(0)=\pi.$ To prove this, we can take two hyperbolic triangles $T(\alpha, 0, 0)$ and $T(\pi - \alpha, 0, 0)$ and combine them to get an ideal triangle.
+
+    \medskip
+    \begin{center}
+    \begin{tikzpicture}[scale=3]
+    \tkzDefPoint(0,0){O}
+    \tkzDefPoint(1,0){A}
+
+    \tkzDefPoint(1.5,0){a}
+    \tkzDrawCircle(O,A)
+    \tkzDefPoint(-1,0){z1}
+    \tkzDefPoint(0.894,-0.44){z2}
+    \tkzDefPoint(0,1){z3}
+    \tkzDefPoint(-0.1,-0.3){c}
+    \tkzClipCircle(O,a)
+    \tkzDrawCircle[thick,orthogonal through=z1 and z2](O,A)
+    \tkzDrawCircle[thick,orthogonal through=z1 and z3](O,A)
+    \tkzDrawCircle[thick,orthogonal through=z2 and z3](O,A)
+
+    \tkzDrawCircle[thick,orthogonal through=z3 and c](O,A)
+    \tkzDrawPoints[color=black,fill=red,size=4](z1,z2,z3)
+    \end{tikzpicture}
+    \end{center}
+
+    Next, consider the following diagram, where $\Delta AXC\in T(\alpha, 0, 0)$, $\Delta AXB\in T(\beta, 0,0)$, and $\Delta CXB\in T(2\pi - \beta - \alpha, 0, 0)$. Notice that these three triangles form $\Delta ABC$, which is an ideal triangle and thus has area $\pi$.
+
+    \medskip
+    \begin{center}
+    \begin{tikzpicture}[scale=3]
+    \tkzDefPoint(0,0){O}
+    \tkzDefPoint(1,0){A}
+
+    \tkzDefPoint(1.5,0){a}
+    \tkzDrawCircle(O,A)
+    \tkzDefPoint(1,0){z1}
+    \tkzDefPoint(-0.894,-0.44){z2}
+    \tkzDefPoint(0,1){z3}
+    \tkzDefPoint(0.1,0.1){c}
+    \tkzClipCircle(O,a)
+    \tkzDrawCircle[thick,orthogonal through=z1 and z2](O,A)
+    \tkzDrawCircle[thick,orthogonal through=z1 and z3](O,A)
+    \tkzDrawCircle[thick,orthogonal through=z2 and z3](O,A)
+
+    \tkzDrawCircle[thick,orthogonal through=z1 and c](O,A)
+    \tkzDrawCircle[thick,orthogonal through=z2 and c](O,A)
+    \tkzDrawCircle[thick,orthogonal through=z3 and c](O,A)
+    \tkzDrawPoints[color=black,fill=red,size=4](z1,z2,z3)
+    \tkzDrawPoints[color=black,fill=blue,size=4](c)
+
+    \tkzLabelPoint[shift={(-0.1cm, 0.7cm)}](c){$X$}
+    \tkzLabelPoint[shift={(0.1cm, 0.6cm)}](z1){$A$}
+    \tkzLabelPoint[shift={(0.1cm, 0.1cm)}](z2){$B$}
+    \tkzLabelPoint[shift={(0.1cm, 0.6cm)}](z3){$C$}
+    \end{tikzpicture}
+    \end{center}
+    Thus, we have $A(\pi - \alpha) + A(\pi - \beta) + A((\pi -\alpha) + (\pi-\beta)) = \pi.$ Applying the previous identity, we can rewrite this:
+    \[ \begin{aligned}A(\pi - \alpha) + A(\pi - \beta) &= 2\pi - A(\alpha + \beta)\\
+      A(\alpha) + A(\beta) &= A(\alpha + \beta).
+    \end{aligned}\]
+    This completes the proof.
+  \end{proof}
+
+  This lemma implies immediately that $A(\alpha)=\alpha$, since it is additive and we have $A(0)=0$ and $A(\pi)=0$. Finally, we use this to derive the general form to prove the area of a general hyperbolic triangle. Consider the following picture:
+
+  \medskip
+  \begin{center}
+  \begin{tikzpicture}[scale=3]
+  \tkzDefPoint(0,0){O}
+  \tkzDefPoint(1,0){A}
+
+  \tkzDefPoint(1.5,0){aa}
+  \tkzDrawCircle(O,A)
+  \tkzDefPoint(1,0){z1}
+  \tkzDefPoint(-0.5,-0.866){z2}
+  \tkzDefPoint(-0.5,0.866){z3}
+
+  \tkzDefPoint(0.1,0.0){a}
+  \tkzDefPoint(-0.05,-0.0866){b}
+  \tkzDefPoint(-0.05,0.0866){c}
+  \tkzClipCircle(O,aa)
+  \tkzDrawCircle[thick,orthogonal through=z1 and z2](O,A)
+  \tkzDrawCircle[thick,orthogonal through=z1 and z3](O,A)
+  \tkzDrawCircle[thick,orthogonal through=z2 and z3](O,A)
+
+  \tkzDrawCircle[thick,orthogonal through=z1 and b](O,A)
+  \tkzDrawCircle[thick,orthogonal through=z2 and c](O,A)
+  \tkzDrawCircle[thick,orthogonal through=z3 and a](O,A)
+
+  \tkzDrawPoints[color=black,fill=red,size=4](z1,z2,z3)
+  % \tkzDrawPoints[color=black,fill=blue,size=4](a,b,c)
+
+  % \tkzLabelPoint[shift={(-0.1cm, 0.7cm)}](c){$X$}
+  % \tkzLabelPoint[shift={(0.1cm, 0.6cm)}](z1){$A$}
+  % \tkzLabelPoint[shift={(0.1cm, 0.1cm)}](z2){$B$}
+  % \tkzLabelPoint[shift={(0.1cm, 0.6cm)}](z3){$C$}
+  \end{tikzpicture}
+  \end{center}
+
+ Letting $\alpha, \beta,\gamma$ be the interior angles of the center triangle, and letting $A$ be the area of $T(\alpha,\beta,\gamma)$, it follows that
+ \[A(\alpha)+A(\beta)+A(\gamma)+A = \pi\quad\implies \quad A = \pi - \alpha - \beta - \gamma.\]
+\end{solution}
+
+\begin{problem}{2.21}
+  Let $f : \Delta \to \C$ be an analytic function such that $\textrm{Re } f(z)\geq 0$. Show that \[|f(z)| \leq |f(0)|\frac{1+|z|}{1-|z|}.\]
+\end{problem}
+
+\begin{solution}
+  Let $g$ be the composition of $f$ with the following M\"obius transformation
+  \[ g(z) = \frac{(z-f(0))(1+\overline{f(0)})}{(z+\overline{f(0)})(1+f(0))}\circ f(z) = \frac{(f(z)-f(0))(1+\overline{f(0)})}{(f(z)+\overline{f(0)})(1+f(0))}.\]
+  This map sends $\Delta \to \Delta$ and fixes $f(0)=0$. Thus, we can apply the Schwarz lemma to get
+  \[\left|\frac{(f(z)-f(0))(1+\overline{f(0)})}{(f(z)+\overline{f(0)})(1+f(0))}\right|\leq |z|\quad \implies \quad |f(z)|-|f(0)| \leq |z|(|f(z)|+|f(0)|)\]
+  by the triangle inequality. This simplifies to
+  \[|f(z)| \leq |f(0)|\frac{1+|z|}{1-|z|}.\]
+\end{solution}
+
+\begin{problem}{2.25}
+  Pick a basis for the Lie algebra of $\mathrm{SL}_2(\C)$, and show how each basis element can be canonically interpreted as a holomorphic vector field on $\widehat{\C} = \mathbb{CP}^1$. Check that the Lie bracket corresponds to a bracket of vector fields.
+\end{problem}
+
+\begin{solution}
+  Recall that a vector field on a complex manifold $M$ is some section of the tangent bundle $X\in \Gamma(TM)$ such that for every holomorphic function $f : M \to \C$, the function $X(f) : M \to \C$ is holomorphic as well. This action of $X$ on holomorphic functions $f$ can be thought of as directional differentiation, i.e. 
+  $X(f)(p) = X_p(f),$ where $X_p(f)\in T_pM$ is the derivative of $f$ in the direction of the tangent vector $X_p\in T_pM$. Notice also that given local coordinates $z^1,\ldots, z^n$, every holomorphic vector field looks like
+  \[
+    X = f_1\cdot \frac{\partial}{\partial z^1} + \cdots + f_n\frac{\partial}{\partial z^n}\quad \textrm{where } f_i : \C \to \C \textrm{ are holomorphic.}
+  \]
+  In the case of the Riemann sphere $\widehat{\C}$, we have a 1-dimensional complex manifold, so locally holomorphic vector fields look like $X = x\partial$, where we use $\partial$ as shorthand for $\partial / \partial z$. We can work in the chart $\C$ for now, and extend these vector fields to the whole Riemann sphere. Recall that the commutator, or Lie bracket, of vector fields $X$ and $Y$ is defined as the vector field
+  \[
+    \begin{aligned}
+      [X, Y] = XY - YX = x\partial y \partial - y\partial x\partial &= x(y\partial + y')\partial - y(x\partial + x')\partial\\
+                                                                                 &= xy'\partial - yx'\partial= (xy'-yx')\partial.
+    \end{aligned}
+  \]
+  So it's clear that the vector field bracket of two holomorphic vector fields is holomorphic as well.
+
+  Finally, we need to pick some basis for the Lie algebra $\mathfrak{sl}_2(\C)$. We can use the classic $\mathfrak{sl}_2$-triple $e,f,h$, which are matrices
+  \[
+    h=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad e = \begin{pmatrix}0&1\\0&0\end{pmatrix},\quad f = \begin{pmatrix}0&0\\1&0\end{pmatrix}
+  \]
+  satisfying the commutator relations
+  \[
+    [h,e] = 2e,\quad [h,f]=-2f,\quad [e,f]=h.
+  \]
+  The canonical way to obtain these holomorphic vector fields is to observe the actions of the exponentials $\exp(t h), \exp(te), \exp(tf)$ when considered in the Lie group $\mathrm{SL}_2(\C)$. Note that,
+  \[\exp(th) = \begin{pmatrix}e^{t}&0\\0&e^{-t}\end{pmatrix} = e^{2t}z,\quad \exp(te)=\begin{pmatrix}1&t\\0&1\end{pmatrix} = z+t,\quad \exp(tf)=\begin{pmatrix}1&0\\t&1\end{pmatrix}=\frac{1}{tz+1}.\]
+  To get the vector fields, we take the tangent vector of these flows at $t=0$, i.e.
+  \[
+    H = \left(\frac{\partial}{\partial t} e^{2t}z\right)_{t=0} \frac{\partial}{\partial z} = 2z\frac{\partial}{\partial z},\quad E = \left(\frac{\partial}{\partial t} z+t\right)_{t=0}\frac{\partial}{\partial z} = \frac{\partial}{\partial z},\quad F = \left(\frac{\partial}{\partial t}\frac{z}{tz+1} \right)_{t=0}\frac{\partial}{\partial z} = -z^2\frac{\partial}{\partial z}.
+  \]
+  For some reason, we have to change the sign of $H$ for the commutators to work, so $H=-2z\;\partial / \partial z$. Then, we can calculate
+  \[
+    [H, E] = 2\frac{\partial}{\partial z} = 2E, \quad [H, F] = 2z^2\frac{\partial}{\partial z} = -2F, \quad [E, F] = 2z\frac{\partial}{\partial z} = H.
+  \]
+\end{solution}
+
+\end{document}

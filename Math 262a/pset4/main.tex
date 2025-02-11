@@ -1,0 +1,244 @@
+\documentclass{pset}
+
+\title{Math 262a Problem Set 4}
+\author{Lev Kruglyak}
+\due{October 6, 2023}
+
+\input{../262a.tex}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Quite generally, if $\pi : M \to N$ is a map and $\mathcal{O}$ is a contravariant local mathematical object $\overline{\mathcal{O}}$ on $N$, for instance a cohomology cocycle, a differential form, a fiber bundle over $M$, a connection on a principal bundle over $M$, etc.
+  \begin{enumerate}[(i)]
+    \item First, there might be a \emph{pushforward} or \emph{umker map} or \emph{integration} that produces $\pi_*\overline{\mathcal{O}}$. In general, the geometric nature of $\overline{\mathcal{O}}$ is different to that of $\mathcal{O}$; there might be a degree shift for example. (by the relative dimension of $\pi$)
+
+    \item The second general construction is \emph{descent}: an object $\overline{\mathcal{O}}$ on $N$ and an isomorphism of $\mathcal{O}$ with the pullback $\pi^*\overline{\mathcal{O}}$. The descended object $\overline{\mathcal{O}}$ has the same geometric nature as $\mathcal{O}$.
+  \end{enumerate}
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Consider the product principal $\R$-bundle
+    \[ p : (N\times \R_t)\times \R_s \to N\times \R_t\]
+    Let $P$ be the total space. Prove that the real-valued $1$-form
+    \[\Theta = ds + p^*\gamma \in \Omega^1(P)\]
+    is a connection. Compute its curvature $\Omega\in \Omega^2(N\times \R)$.
+  \end{part}
+
+  \begin{part}{b}
+    Prove that the curvature descends under the projection $\pi : N\times \R \to N$. In other words, construct a $2$-form $\omega\in\Omega^2(N\times \R)$ such that $\Omega = \pi^*\omega$.
+  \end{part}
+
+  \begin{part}{c}
+    Now descend $p: P \to N\times \R$ and its connection $\Theta$ to a principal $\R$-bundle $T \to N$ with connection. Be sure to produce the requisite isomorphism that proves you have a descent. % T_n fiber over n\in N is the R torsor of parallel sections of the restriction of p : P \to N\times R to pi^{-1}(n). How does this relate to notes?
+  \end{part}
+
+  \begin{part}{d}
+    Consider the translation action of $\R_t$ on $N\times \R_t$. Define a lift to $P$ such that 
+    \begin{enumerate}[(i)]
+      \item the connection $1$-form $\Theta$ is invariant, and
+      \item if $\xi = \partial/\partial t$ denotes the vector field that generates this lifted translation action, then the contraction $\iota_\xi \Theta$ vanishes. Conclude that the $1$-form $\Theta$ descends to the quotient of $P$ by the translation action.
+    \end{enumerate}
+  \end{part}
+
+  \begin{part}{e}
+    More generally, suppose $\pi : Q \to N$ is a principal $G$-bundle  for some Lie group $G$. What are the descent conditions on a differential form $\Omega\in \Omega^\bullet(Q)$? In other words, characterize the image of the injective linear map $\pi^* : \Omega^\bullet(N) \to \Omega^\bullet(Q)$.
+  \end{part}
+\end{parts}
+
+\begin{problem}{2}
+  Consider the simple harmonic oscillator: a mass one particle on $\E_x^1$ with potential $V(x) = x^2 /2$. The Hilbert space is $\H = L^2(\E^1; \C)$ and the Hamiltonian is
+  \[H = \frac{1}{2}\left(-\frac{d^2}{dx^2} + x^2\right)\]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Compute eigenfunctions for the four smallest eigenvalues of $H$.
+  \end{part}
+
+  Solving the differential equation $H\psi = E\psi$, a standard derivation from quantum mechanics shows that the eigenvalues are quantized, with $E_n = n+1/2$ for $n>0$. Furthermore, the eigenfunctions are of the form
+  \[
+    \psi_n = \frac{1}{\sqrt{2^n\cdot n!}}\left(\frac{1}{\pi}\right)^{1/4} e^{-x^2/2} H_n(x)\quad\textrm{where}\quad H_n(x) = e^{x^2/2}\frac{\partial^n}{\partial x^n} e^{-x^2/2}
+  \]
+  are the Hermite polynomials. The first four of these eigenfunctions are
+  \[
+    \begin{aligned}
+      \psi_0 &= \pi^{-1/4} \cdot e^{-x^2/2}\\
+      \psi_1 &= \pi^{-1/4}\sqrt{2}\cdot x e^{-x^2/2}\\
+      \psi_2 &= \pi^{-1/4}\sqrt{2}\cdot (x^2-1/2) e^{-x^2/2}\\
+      \psi_3 &= \pi^{-1/4}\sqrt{3}\cdot (2x^3/3 - x)e^{-x^2/2}.
+    \end{aligned}
+  \]
+
+  \begin{part}{b}
+    State and prove the spectral decomposition for $H$, namely $\mathcal{H}$ is the Hilbert space completion of the direct sum of the eigenspaces.
+  \end{part}
+  Let $\C\cdot \psi_n$ be the eigenspace with eigenvalue $E_n$. We claim that
+  \[
+    \mathcal{H} = \overline{\bigoplus_{n\in \Z_{\geq 0}} \C \cdot \psi_n}
+  \]
+  is a spectral decomposition for $H$. First, let's show that $\psi_n$ are pairwise orthogonal. This follows because the Hermite polynomials are orthogonal in the weight measure $e^{-x^2} dx$, and we have
+  \[
+    \langle\psi_i, \psi_j\rangle = \int_{\E^1} \psi_i(x)\psi_j(x) \,dx = \alpha\int_{\E^1} H_i(x)H_j(x) e^{-x^2} dx = \alpha\delta_{ij}
+  \]
+  where $\alpha$ is some scaling constant which we omit for brevity. We also know that the Hermite polynomials form an orthogonal basis for $\mathcal{H}_w=L^2(\E^1, \C; e^{-x^2}\,dx)$ with norm given by the weight measure $e^{-x^2}\,dx$. However, $\mathcal{H}_w \subset \mathcal{H}$ is a dense subset, so we are done.
+
+  \begin{part}{c}
+    Recall that the classical phase space is $N=\E^1_x \times \R^1_y$ with symplectic form $\omega = dy\wedge dx$. Verify that the $3$-dimensional real vector space of affine functions on $N$ is closed under the Poisson bracket. Verify the same for the $6$-dimensional subspace of affine quadratic functions. What about cubic?
+  \end{part}
+
+  The Poisson bracket in this case is given by 
+  \[
+    \{f, g\} = \frac{\partial f}{\partial x}\frac{\partial g}{\partial y} - \frac{\partial f}{\partial y}\frac{\partial g}{\partial x}.
+  \]
+  By a simple check on monomials, it follows that the affine linear and affine quadratic functions are closed under the Poisson bracket, but not for affine cubic functions. For example, $\{x^3, y^3\} = 9x^2y^2$ which is not an affine cubic function.
+
+  \begin{part}{d}
+    The affine functions under the Poisson bracket form the Heisenberg Lie algebra. Construct a representation by skew-adjoint unbounded operators on $\H$. Can you extend the representation to the affine quadratic functions?
+  \end{part}
+
+  \begin{part}{e}
+    Construct an antiunitary operator on $\H$ which implements the time-reversal symmetry that preserves the operator $x$ and sends $\partial/\partial x \mapsto - \partial / \partial x$. Show that the induced operator on $\mathbb{P}\H$ has order $2$. What about the operator $\H$?
+  \end{part}
+\end{parts}
+
+\begin{problem}{3}
+  Let $V : \E^1 \to \R$ be a smooth function and consider a quantum mass $m>0$ particle on $\E^1$ with potential energy $V$. An eigenfunction with eigenvalue $E\in \R$ is an $L^2$ function $\psi : \E^1 \to \C$ that satisfies the \emph{Schr\"odinger equation}
+  \[-\frac{\hbar^2}{2m}\frac{d^2\psi}{dx^2} + (V(x) - E)\psi(x) = 0.\]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that any two eigenfunctions of $H$ with the same eigenvalue are proportional. % Wronskian p1p'2 - p'1p2
+  \end{part}
+
+  Suppose that $\psi_1, \psi_2$ are both eigenfunctions of $H$, say with $H\psi_1 = E\psi_1$ and $H\psi_2 = E\psi_2$ for some energy eigenvalue $E\in \R$. Now let's consider the Wronskian
+  \[
+    W(f,g) = fg' - f'g.
+  \]
+  This has derivative $W'(f,g) = fg'' - f''g$. We know from the Schr\"odinger equation that 
+  \[
+    \psi_i''(x) = -\frac{2m}{\hbar^2}(V(x) - E)\psi_i(x).
+  \]
+  Substituting this into the derivative of the Wronskian $W'(\psi_1, \psi_2)$, we get
+  \[
+    W'(\psi_1, \psi_2) = -\frac{2m}{\hbar^2}(V(x)-E)(\psi_1\psi_2 - \psi_2\psi_1) = 0.
+  \]
+  This means that $W(\psi_1, \psi_2)$ is constant. However, $\psi_1$ and $\psi_2$ are $L^2$ functions on the real line, hence they must vanish at infinity. This means that the Wronskian must vanish at infinity as well. Since it is constant, this implies that it is zero. So we know that
+  \[
+    \psi_1\psi_2' = \psi_1'\psi_2.
+  \]
+  Since these $\psi_1$ and $\psi_2$ are linearly dependent, this implies that they are proportional.
+
+  \begin{part}{b}
+    Prove that each eigenspace contains a real-valued function.
+  \end{part}
+
+  Let's suppose we had some complex valued eigenfunction $\psi$ with energy eigenvalue $E$. We can write it as $\psi(x) = \psi_1(x) + i\psi_i(x)$, where $\psi_1$ and $\psi_i$ are the real and imaginary components respectively. Now by expanding the Schr\"odinger equation for $\psi$, we get
+  \[
+    -\frac{\hbar^2}{2m}\frac{\partial^2\psi_1(x)}{\partial x^2} + (V(x) - E)\psi_1(x) + i\left(-\frac{\hbar^2}{2m}\frac{\partial^2\psi_2(x)}{\partial x^2}  (V(x) - E)\psi_2(x)\right) = 0.
+  \]
+  Thus, the real and imaginary parts of some complex valued eigenfunction are real-valued functions in the eigenspace.
+
+  \begin{part}{c}
+    Prove that if the Hamiltonian is gapped, the unique (up to a constant) eigenfunction for the minimal eigenvalue is a nonvanishing function.
+  \end{part}
+
+  Let $\psi_0$ be some eigenfunction corresponding to the minimal energy eigenvalue $E_0$ of $H$. By the previous parts, we can assume that $\psi_0$ is unique up to a constant factor. Now suppose that $\psi_0$ vanishes at some point $x$. Let's now consider the function $\psi_0^*$, which has the same sign as $\psi_0$ up to $x$, and flips signs after $x$. Modulo some limiting smoothing argument, this modified function satisfies the Schr\"odinger equation as well. A straightforward but somewhat tedious analysis argument proves this.
+\end{parts}
+
+\begin{problem}{4}
+  Let $W$ be a finite dimensional real vector space. Recall that in lecture we discussed the \emph{bosonic harmonic oscillator} as a representation of an operator algebra generated by $W\oplus W^*$ on the complex vector space $\Sym^\bullet W_\C^*$. The goal now is to introduce inner products and complete to a Hilbert space. For this, suppose $W$ has a real inner product.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Introduce a Hermitian inner product on $W^*_\C$.
+  \end{part}
+
+  \begin{part}{b}
+    Introduce a Hermitian inner product on $\Sym^\bullet W^*_\C$.
+  \end{part}
+
+  \begin{part}{c}
+    What is the adjoint of the operator $A(w)$, with $w\in W$, as defined in lecture?
+  \end{part}
+
+  \begin{part}{d}
+    Is the Hamiltonian (formally) self-adjoint?
+  \end{part}
+\end{parts}
+
+\begin{problem}{5}
+  The abelian group $S^1 \subset \C$ of unit norm complex numbers has an automorphism $\lambda \mapsto \lambda^{-1}$. Let $\mu_2\subset S^1$ be the group $\{\pm 1\}$ of square roots of unity.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+  Classify group extensions (up to isomorphism)
+    % https://q.uiver.app/#q=WzAsNSxbMiwwLCJHIl0sWzEsMCwiU14xIl0sWzMsMCwiXFxtdV8yIl0sWzQsMCwiMSJdLFswLDAsIjEiXSxbMSwwXSxbMCwyXSxbMiwzXSxbNCwxXV0=
+  \[\begin{tikzcd}
+	  1 & \U(1) & G & {\mu_2} & 1
+	  \arrow[from=1-2, to=1-3]
+	  \arrow[from=1-3, to=1-4]
+	  \arrow[from=1-4, to=1-5]
+	  \arrow[from=1-1, to=1-2]
+  \end{tikzcd}\] 
+  \end{part}
+
+  This might be overkill for this problem, but such extensions are classified by the $\Ext^1_\Z$ functor. Specifically, the set of such extensions is given by $\Ext^1_\Z(\mu_2, \U(1))$. To compute this, let's use the canonical injective resolution of $\mu_2$:
+  \[\begin{tikzcd}
+	  \cdots&1 & \Z & \Z & \mu_2 & 1
+	  \arrow[from=1-2, to=1-3]
+	  \arrow["\times 2",from=1-3, to=1-4]
+	  \arrow[from=1-4, to=1-5]
+	  \arrow[from=1-1, to=1-2]
+	  \arrow[from=1-5, to=1-6]
+  \end{tikzcd}\] 
+  Applying the $\Hom(-, \U(1))$ functor gives us the sequence 
+  \[\begin{tikzcd}
+	  \cdots&1 & \Hom(\Z, \U(1)) & \Hom(\Z, \U(1)) & \Hom(\mu_2, \U(1)) & 1
+	  \arrow[from=1-3, to=1-2]
+	  \arrow[from=1-4, to=1-3]
+	  \arrow[from=1-5, to=1-4]
+	  \arrow[from=1-2, to=1-1]
+	  \arrow[from=1-6, to=1-5]
+  \end{tikzcd}\] 
+  However, $\Hom(\mu_2, \U(1))\cong \mu_2$ and $\Hom(\Z, \U(1))\cong \U(1)$, so this is just the sequence
+  \[\begin{tikzcd}
+	  \cdots&1 & \U(1) & \U(1) & \mu_2 & 1
+	  \arrow[from=1-3, to=1-2]
+	  \arrow[from=1-4, to=1-3]
+	  \arrow[from=1-5, to=1-4]
+	  \arrow[from=1-2, to=1-1]
+	  \arrow[from=1-6, to=1-5]
+  \end{tikzcd}\] 
+  Since this map $\U(1)\to \U(1)$ is the squaring map, it has full image. Since the kernel of the map $\U(1)\to 1$ is also full, the cohomology is trivial and so the $\Ext^1$ group is also trivial. Thus, any such group extension is isomorphic to the extension
+  \[\begin{tikzcd}
+	  1 & \U(1) & \U(1)\times \mu_2 & {\mu_2} & 1
+	  \arrow[from=1-2, to=1-3]
+	  \arrow[from=1-3, to=1-4]
+	  \arrow[from=1-4, to=1-5]
+	  \arrow[from=1-1, to=1-2]
+  \end{tikzcd}\] 
+
+  \begin{part}{b}
+    Classify group extensions
+    % https://q.uiver.app/#q=WzAsNSxbMiwwLCJHIl0sWzEsMCwiU14xIl0sWzMsMCwiT18yIl0sWzQsMCwiMSJdLFswLDAsIjEiXSxbMSwwXSxbMCwyXSxbMiwzXSxbNCwxXV0=
+    \[\begin{tikzcd}
+	    1 & {\U(1)} & G & {\O(2)} & 1
+	    \arrow[from=1-2, to=1-3]
+	    \arrow[from=1-3, to=1-4]
+	    \arrow[from=1-4, to=1-5]
+	    \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    in which $\O(2)$ acts nontrivally on $\U(1)$ via the determinant $\O(2) \to \mu_2$.
+  \end{part}
+
+  Recall that in a group extension, we have an action of $\O(2)$ on $\U(1)$, or equivalently a group homomorphism $\Hom(\O(2), \Aut(\U(1)))$. We know that $\Aut(\U(1))\cong \mu_2$, so really each group extension gives us some map $\O(2) \to \mu_2$. We are given the condition that this map must be the determinant map, so it suffices to find all group extensions which act this way. Such extensions correspond exactly to elements of $H^2_{\Z[\O(2)]}(\Z, \U(1))$, where $\U(1)$ has a $\Z[\O(2)]$-module structure given by the determinant action. 
+
+  I'm not sure how to actually calculate this cohomology group in this context. However, I do know that there are non-trivial extensions.
+\end{parts}
+\end{document}

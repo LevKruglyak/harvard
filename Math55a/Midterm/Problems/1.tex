@@ -1,0 +1,9 @@
+\begin{problem}
+Let $G$ be a finite abelian group. Show that the subset of $G$ consisting of those elements which have odd order is a subgroup.
+\end{problem}
+
+Let $H\subset G$ be the subset of elements of $G$ with odd order. 
+
+We'll start by showing $H$ is closed under group multiplication. Let $a\in H$ be an element of order $n$ and let $b\in H$ be an element of order $m$. Then $(ab)^{nm}=a^{nm}b^{nm}=1$ so the order of $ab$ divides $mn$. However since $mn$ is odd, all of its divisors are odd so $ab$ has odd order and hence $ab\in H$.
+
+All that's left is to show that $H$ is closed under inverses. Let $a\in H$ be an element of order $n$. Then $(a^{-1})^n=a^{-n}=(a^n)^{-1}=1^{-1}=1$ so the order of $a$ divides $n$, which is odd so $a\in H$.    

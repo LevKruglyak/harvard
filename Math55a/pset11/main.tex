@@ -1,0 +1,213 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble.tex}
+
+\title{\textbf{Math 55a Problem Set 11}}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\begin{itemize}
+  \item How long did this assignment take you? -- 10 hours
+  \item How hard was it? -- Tough
+  \item What resources did you use and how much help did you need? -- Collaborated with AJ LaMotta
+  \item Did you have any prior experience with this material? -- No
+\end{itemize}
+
+\pagebreak
+\begin{problem}
+    For any finite abelian group $G$, we define the dual of $G$ to be $\widehat{G}=\Hom(G,\C^*)$. Show that there is a natural map from $G$ to its double dual $\widehat{\widehat{G}}$, and that this map is an isomorphism.
+\end{problem}
+
+Let $G$ be some finite abelian group, and let $G' = \widehat{\widehat{G}}$ be its double dual. Consider the map $\phi : G \to G'$ sending $g$ to the evaluation map $\mathrm{ev}_g$ which sends $f\in \Hom(G,\C^*)$ to the evaluation $f(g)$. This is a homomorphism because for any $g,h\in G$ we have $\mathrm{ev}_{gh}=\mathrm{ev}_g\cdot\mathrm{ev}_h$. To prove injectivity, let $g$ be some element for which $\mathrm{ev}_g=1$. This clearly implies that $g$ must be the identity, since for every other element there must be some nontrivial element in the dual. To construct such a nontrivial element explicitly, decompose $G$ as $G = \Z/n_1\times \cdots \Z/n_k$ for some $n_1,\ldots,n_k$. Then there is an element sending each generator of order $n_k$ to a primitive root of unity of order $n_k$. So this shows that the kernel is trivial and that the map is injective. Surjectivity follows because $G\cong \widehat{G}$ hence they are isomorphic.
+
+\pagebreak
+\begin{problem}
+    Let $G$ be a group and $V$ and $W$ representations of $G$, and let $\Hom(V,W) = V^* \otimes W$ be given the structure of a representation as seen in class: $g$ maps $\varphi\in \Hom(V,W)$ to $g\circ \varphi\circ g^{-1}$ (where $g$ is acting on $W$ and $g^{-1}$ on $V$).
+    \begin{enumerate}[(a)]
+        \item Show that the invariant subspace $\Hom(V,W)^G=\{\varphi\in \Hom(V,W)\,|\,g(\varphi)=\varphi\ \forall g\in G\}$ is the vector space of homomorphisms $\varphi : V \to W$ of representations, that is, $G$-equivariant linear maps. (This is often denoted $\Hom_G(V,W)$).
+        \item Suppose that the irreducible representations of $G$ are $U_1, U_2, \dots, U_c$, with $\dim(U_i) = d_i$, and suppose that $V =  U_1^{\oplus m_1}\oplus\dots\oplus U_c^{\oplus m_c}$ and $W = U_1^{\oplus n_1}\oplus\dots\oplus U_c^{\oplus n_c}$.  What is the dimension of $\Hom_G(V,W)$?
+    \end{enumerate}
+\end{problem}
+
+\textbf{(a)} First let $\varphi \in \Hom(V,W)^G$ be a $G$-invariant linear map, i.e. $g(\varphi)=g\circ \varphi\circ g^{-1}=\varphi$ so $g\circ \varphi = \varphi \circ g$. Then $\varphi(g\cdot x) = g\cdot \varphi(x)$ for all $x\in V$. Conversely suppose $\varphi(g\cdot x) = g\cdot \varphi(x)$ so that $g\circ\varphi=\varphi\circ g$. Then $\varphi=g\circ\varphi \circ g^{-1}=g(\varphi)$. Thus
+\[
+    \Hom(V,W)^G = \Hom_G(V,W)
+.\] 
+
+\textbf{(b)} By a basic property of direct sums, we have the decomposition
+\[
+    \Hom_G(V,W)=\bigoplus_{1\leq i,j\leq c}\Hom_G(U_i^{\oplus m_i}, U_j^{\oplus n_j})=\bigoplus_{1\leq i,j\leq c}\bigoplus_{k=1}^{m_in_j}\Hom_G(U_i, U_j)
+.\] 
+By Schur's lemma, and the fact that our representations are assumed to be complex, we have
+\[
+    \dim \Hom_G(U_i, U_j) = \begin{cases}1&i=j\\ 0&i\neq j\end{cases}
+.\]     
+So combining the two formulas, we get
+\[
+    \dim \Hom_G(V, W) = \sum_{k=1}^c m_kn_k
+.\] 
+
+\pagebreak
+\begin{problem}
+    Let $U, V$ and $W$ be vector spaces (not necessarily finite-dimensional).
+    \begin{enumerate}[(a)]
+        \item Construct a canonical isomorphism $\Hom(U \otimes V, W) \cong \Hom(U, \Hom(V,W))$.
+        \item Now suppose that $U, V$ and $W$ are representations of a group $G$. Show that the isomorphism of part (a) is in fact an isomorphism of representations.
+    \end{enumerate}
+\end{problem}
+
+\textbf{(a)} We'll construct a canonical isomorphism 
+\[
+    \Psi : \Hom(U\otimes V, W) \to \Hom(U, \Hom(V,W)) 
+.\] 
+Let $f\in\Hom(U\otimes V, W)$ be arbitrary. Define $\Psi_f\in \Hom(U, \Hom(V, W))$ as 
+\[
+    \Psi_f(u)(v) = f(u\otimes v)
+.\] 
+This is clearly a homomorphism by basic properties of $\Hom$ and $\otimes$. Now we'll show it's injective by computing the kernel of $\Psi$. Suppose $\Psi_f=1$, i.e. $\Psi_f(u)(v)=0$ for all $u\in U, v\in V$. Then $f(u\otimes v)=0$ so $f$ is the zero element in $\Hom(U\otimes V, W)$. To prove surjectivity, let $g\in \Hom(U, \Hom(V, W))$. Then let $f\in \Hom(U\otimes V, W)$ be the map defined by $f(u\otimes v)=g(u)(v)$. Clearly $\Psi_f=g$ so the map is surjective. Nowhere do we use a basis so this isomorphism is canonical.
+
+\textbf{(b)} Let $g\in G$ be some element, and let $f\in \Hom(U\otimes V, W)$ be some map. Then $\Psi_{g\cdot f}(u)(v) = (g\cdot f)(u\otimes v)=g\circ f\circ g^{-1}(u\otimes v)=g\circ f(g^{-1}u\otimes g^{-1}v)$ whereas $g\cdot \Psi_{f}(u)(v) = (g\circ \Psi_f\circ g^{-1})(u)(v)=g\circ f(g^{-1}u\otimes g^{-1})$. So $\Psi_{g\cdot f}=g\cdot \Psi_f$ and so $\Psi$ is a homomorphism of representations.
+
+\pagebreak
+\begin{problem}
+    Let $V$ be any (finite-dimensional) representation of a group $G$.
+    \begin{enumerate}[(a)]
+        \item Show that $V$ is irreducible if and only if $V^*$ is.
+        \item If $W$ is any 1-dimensional representation, show that $V$ is irreducible if and only if $V \otimes W$ is.
+    \end{enumerate}
+\end{problem}
+
+\textbf{(a)} We'll prove the contrapositive, that $V$ is reducible if and only if $V^*$ is reducible. Suppose $V$ is reducible with subrepresentation $W\subset V$. Consider $\Ann(W)\subset V^*$. We claim that this is a $G$-invariant subspace of $V^*$. Let $g\in G$ and $\ell\in \Ann(W)$. Then $g\cdot \ell=\ell\circ g^{-1}$. Since for every $w\in W$, $(\ell\circ g^{-1})(w)=\ell(g^{-1}(w))$. Since $g^{-1}(w)\in W$, $\ell(g^{-1}(w))=0$ so $g\cdot \ell \in \Ann(W)$. The converse direction works the same way, using the natural isomorphism of representations $V\cong V^{**}$.
+
+\textbf{(b)} Again we'll prove the contrapositive, so $V$ is reducible if and only if $V\otimes W$ is. Suppose $V$ is reducible with subrepresentation $U\subset V$. Consider $U\otimes W\subset V\otimes W$ be the span of elements of the form $u\otimes w$ for $u\in U$ and $w\in W$. Then for any $g\in G$, $g\cdot (u\otimes w)=(g\cdot u)\otimes (g\cdot w)\in U\otimes W$. So $U\otimes W$ is a subrepresentation of $V\otimes W$. Suppose instead that $U\subset V\otimes W$ is a subrepresentation. Since $W$ is one-dimensional, every subspace of $V\otimes W$ is of the form $U\otimes W'$ where $U\subset V$ and $W'=\{1\}$ or $W$. Then $U$ is a subrepresentation of $V$ so $V$ is reducible.
+
+\pagebreak
+\begin{problem}
+    Let $V$ be the standard (2-dimensional) representation of $S_3$.
+    \begin{enumerate}[(a)]
+        \item Identify $\Sym^4V$ as a direct sum of irreducible representations of $S_3$.
+        \item Identify $\Sym^2(\Sym^2V)$ as a direct sum of irreducible representations of $S_3$.
+        \item On a previous homework (HW7), you constructed for any 2-dimensional vector space $V$ a natural map $\phi : \Sym^2(\Sym^2V) \to \Sym^4V$. Show that this is a homomorphism of representations and identify the kernel of $\phi$ as a representation of $S_3$.
+    \end{enumerate}
+\end{problem}
+
+Let $\C_2$ be the standard 2-dimensional representation of $S_3$, $\C_+$ be the trivial representation, and $\C_-$ be the sign representation.
+
+\textbf{(a)} Let $e_1$ and $e_2$ be basis eigenvectors of $\C_2$ with respect to $\tau$ as in the lecture notes, so $\tau e_1=\lambda e_1$, $\sigma e_1=e_2, \tau e_2=\lambda^2 e_2, \sigma e_2=e_1$ for $\lambda=e^{2\pi i/3}$. The basis for $\Sym^4V$ is then
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+     \hline
+     \textbf{Name}& \textbf{Basis Element} & \textbf{Eigenvalues of $\tau$} \\ 
+     \hline
+     $s_1$&$e_1\otimes e_1\otimes e_1\otimes e_1$ & $\lambda$ \\ 
+     $s_2$&$e_1\otimes e_1\otimes e_1\otimes e_2$ & $\lambda^2$ \\ 
+     $s_3$&$e_1\otimes e_1\otimes e_2\otimes e_2$ & $1$ \\ 
+     $s_4$&$e_1\otimes e_2\otimes e_2\otimes e_2$ & $\lambda$ \\ 
+     $s_5$&$e_2\otimes e_2\otimes e_2\otimes e_2$ & $\lambda^2$ \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+Suppose we decomposed $\Sym^4\C_2=\C_+^{\oplus a}\oplus \C_-^{\oplus b}\oplus \C_2^{\oplus c}$. Then $\dim \ker(\tau -1)=1$ so $a+b=1$. It is clear that $b=0$ since $\Sym^4(V)$ has no signed component. So $a=1$ and $c=2$. So 
+\[
+    \Sym^4\C_2\cong \C_+\oplus \C_2^{\oplus 2}
+.\] 
+\textbf{(b)} Let $e_1, e_2$ be the eigenbasis from (a).
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+     \hline
+     \textbf{Name}& \textbf{Basis Element} & \textbf{Eigenvalues of $\tau$} \\ 
+     \hline
+     $s_1$&$(e_1\otimes e_1)\otimes (e_1\otimes e_1)$ & $\lambda$ \\ 
+     $s_2$&$(e_1\otimes e_1)\otimes (e_1\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_3$&$(e_1\otimes e_1)\otimes (e_2\otimes e_2)$ & $1$ \\ 
+     $s_4$&$(e_1\otimes e_2)\otimes (e_1\otimes e_2)$ & $1$ \\ 
+     $s_5$&$(e_1\otimes e_2)\otimes (e_2\otimes e_2)$ & $\lambda$ \\ 
+     $s_6$&$(e_2\otimes e_2)\otimes (e_2\otimes e_2)$ & $\lambda^2$ \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+As before, we have the rule $a+b=2$, so since $b=0$, it follows that $a=2$ and so $c=2$. Thus
+\[
+    \Sym^2(\Sym^2\C_2)\cong \C_+^{\oplus 2}\oplus \C_2^{\oplus 2}
+.\] 
+
+\textbf{(c)} We can check that the map $\Psi : \Sym^2(\Sym^2\C_2) \to \Sym^4\C_2$ is indeed a homomorphism of representations simply by checking that the action on each basis element is invariant under the action of $S_3$. This is straightfoward using the above computed tables. The kernel of $\Psi$ is $(e_1\otimes e_1)\otimes (e_2\otimes e_2) - (e_1\otimes e_2)\otimes (e_1\otimes e_2)$. This is a one dimensional space on which $\tau$ acts trivially and $\sigma$ acts trivially. So the kernel is $\C_+$.
+
+\pagebreak
+\begin{problem}
+    Again, let $V$ be the standard representation of $S_3$. Show that $\Sym^2(\Sym^3V) \cong \Sym^3(\Sym^2V)$ as representations of $S_3$.
+\end{problem}
+
+Let's build the same eigenvalue tables we computed for the previous problem. For $\Sym^2(\Sym^3\C_2)$ we have
+
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+     \hline
+     \textbf{Name}& \textbf{Basis Element} & \textbf{Eigenvalues of $\tau$} \\ 
+     \hline
+     $s_1$&$(e_1\otimes e_1\otimes e_1)\otimes (e_1\otimes e_1\otimes e_1)$ & $1$ \\ 
+     $s_2$&$(e_1\otimes e_1\otimes e_1)\otimes (e_1\otimes e_1\otimes e_2)$ & $\lambda$ \\ 
+     $s_3$&$(e_1\otimes e_1\otimes e_1)\otimes (e_1\otimes e_2\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_4$&$(e_1\otimes e_1\otimes e_1)\otimes (e_2\otimes e_2\otimes e_2)$ & $1$ \\ 
+     $s_5$&$(e_1\otimes e_1\otimes e_2)\otimes (e_1\otimes e_1\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_6$&$(e_1\otimes e_1\otimes e_2)\otimes (e_1\otimes e_2\otimes e_2)$ & $1$ \\ 
+     $s_7$&$(e_1\otimes e_1\otimes e_2)\otimes (e_2\otimes e_2\otimes e_2)$ & $\lambda$ \\ 
+     $s_8$&$(e_1\otimes e_2\otimes e_2)\otimes (e_1\otimes e_2\otimes e_2)$ & $\lambda$ \\ 
+     $s_9$&$(e_1\otimes e_2\otimes e_2)\otimes (e_2\otimes e_2\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_{10}$&$(e_2\otimes e_2\otimes e_2)\otimes (e_2\otimes e_2\otimes e_2)$ & $1$ \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+So by the same argument as in the previous problem, we obtain the decomposition
+\[
+    \Sym^2(\Sym^3\C_2)\cong \C_-\oplus\C_+^{\oplus 3}\oplus \C_2^{\oplus 3}
+.\] 
+Next, we compute the same table for $\Sym^3(\Sym^2\C_2)$.
+
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+     \hline
+     \textbf{Name}& \textbf{Basis Element} & \textbf{Eigenvalues of $\tau$} \\ 
+     \hline
+     $s_1$&$(e_1\otimes e_1)\otimes (e_1\otimes e_1)\otimes (e_1\otimes e_1)$ & $1$ \\ 
+     $s_2$&$(e_1\otimes e_1)\otimes (e_1\otimes e_1)\otimes (e_1\otimes e_2)$ & $\lambda$ \\ 
+     $s_3$&$(e_1\otimes e_1)\otimes (e_1\otimes e_1)\otimes (e_2\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_4$&$(e_1\otimes e_1)\otimes (e_1\otimes e_2)\otimes (e_1\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_5$&$(e_1\otimes e_1)\otimes (e_1\otimes e_2)\otimes (e_2\otimes e_2)$ & $1$ \\ 
+     $s_6$&$(e_1\otimes e_1)\otimes (e_2\otimes e_2)\otimes (e_2\otimes e_2)$ & $\lambda$ \\ 
+     $s_7$&$(e_1\otimes e_2)\otimes (e_1\otimes e_2)\otimes (e_1\otimes e_2)$ & $1$ \\ 
+     $s_8$&$(e_1\otimes e_2)\otimes (e_1\otimes e_2)\otimes (e_2\otimes e_2)$ & $\lambda$ \\ 
+     $s_9$&$(e_1\otimes e_2)\otimes (e_2\otimes e_2)\otimes (e_2\otimes e_2)$ & $\lambda^2$ \\ 
+     $s_{10}$&$(e_2\otimes e_2)\otimes (e_2\otimes e_2)\otimes (e_2\otimes e_2)$ & $1$ \\ 
+ \hline
+\end{tabular}
+\end{center}
+
+So $\Sym^3(\Sym^2\C)$ has the same decomposition,
+\[
+    \Sym^3(\Sym^2\C) \cong \C_-\oplus\C_+^{\oplus 3}\oplus \C_2^{\oplus 3}
+.\] 
+Hence the two representations are isomorphic.
+
+\pagebreak
+\begin{problem}
+    Show by example that, over fields of characteristic $p > 0$, complete reducibility may fail. In other words, find an example of a finite group $G$, a finite-dimensional vector space over $\F_p$, an action of $G$ on $V$ (that is, a homomorphism $\rho : G \to \GL(V)$) and a subspace $W \subset V$ invariant under $G$ such that no complementary invariant subspace of $V$ exists.
+\end{problem}
+
+Consider the 2 dimensional $\F_2$-representation of $\Z/2$ defined where $k\in \Z/2$ acts by the matrix
+\[
+    \rho(k) = \begin{pmatrix}1&k\\0&1\end{pmatrix}
+.\] 
+Let's look at the subrepresentation $V\subset \F_2^2$ given by
+\[
+    V = \left\{ \begin{bmatrix}k\\0\end{bmatrix}\mid k\in \Z/2\right\}
+.\]
+If $V$ had some complement $V'$, this would imply that $\rho(k)$ is a diagonalizable matrix, which it is not over $\F_2$.
+
+\end{document}

@@ -1,0 +1,130 @@
+\documentclass{pset}
+
+\title{Math 262a Problem Set 3}
+\author{Lev Kruglyak}
+\due{September 29, 2023}
+
+\input{../262a.tex}
+
+\theoremstyle{plain}
+\newtheorem*{regtheorem}{Theorem}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Consider a classical particle moving on the Euclidean line $\E^1$ with standard metric and coordinate $x$. Fix $a>0$ and set 
+  \[V(x) = \frac{1}{2}(x^2-a^2)^2.\]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    What are the classical trajectories of least energy?
+  \end{part}
+
+  Solving $\ddot{x} = V'(x)$ is tricky since it's a nonlinear second order differential equation. Thus, we must approximate solutions. The potential has two approximately quadratic wells at $x=\pm a$. If the particle has initial velocity small enough and starts in one of these wells, it will behave like a harmonic oscillator, otherwise it will go back and forth between the two wells.
+
+  \begin{part}{b}
+    What about for a classical particle moving in \emph{inverted} potential $-V$?
+  \end{part}
+
+  In the inverted double well potential, there is only one approximately quadratic well at $x=0$, and the potential goes down to $-\infty$ outside the region $(-a,a)$. Thus, the system behaves like a harmonic oscillator when the initial position and velocity are small enough, otherwise all particles accelerate towards $\pm\infty$.
+
+  \begin{part}{c}
+    For $T > 0$ is there a classical trajectory $\gamma : [- T /2, T /2] \to \E^1$ with initial position $\gamma(-T / 2) = -a$ and final position $\gamma(T /2)=a$, and if so give a formula or characterize it.
+  \end{part}
+
+  It can be shown that the minimum velocity at $-T/2$ is $3a^4/2$, otherwise the path $\gamma$ will never pass $x=a$. It's possible to solve for $T$ such that $\gamma(-T/2) = -a$, $\gamma'(-T/2)=3a^4/2$, and $\gamma(T/2)=a$. This path will then be $2T$-periodic since the potential is symmetric. If we want a higher $T$, we cannot slow down the particle since it is already in the ``ground energy'' state, so we must increase its initial speed by some factor so that it frequency decreases.
+
+  \begin{part}{d}
+    What happens if $T\to \infty$?
+  \end{part}
+
+  As $T\to \infty$, the particle's motion becomes increasingly faster and its range also grows.
+\end{parts}
+
+\begin{problem}{2}
+  Let $\H$ be a $2$-dimensional complex inner product space. Consider the function $p :\mathbb{P}\H \times \mathbb{P}\H \to [0,1]$ given by $p(L, K) = |\langle \psi, \xi\rangle|^2$, where $\psi\in L$ and $\xi\in K$ are nonzero.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that $p=\cos^2(d/2)$, where $d$ is the geodesic distance on the $2$-sphere of unit radius.
+  \end{part}
+
+  Recall that there is a map $\mathbb{P}\mathcal{H} \cong \CP^1 \mapsto S^2$ which is a degree $2$ covering map. This is where $d/2$ comes from, since $d$ is just the angle between two points on a sphere. Then $|\langle \psi, \xi\rangle|$ is $\cos(d/2)$ so $p(L,K) = |\langle \psi, \xi \rangle|^2 = \cos^2(d/2)$.
+\end{parts}
+
+\begin{problem}{3}
+  This concerns the particle on a ring $M = \E^1 / 2\pi L\Z$ of length $2\pi L$, both classical and quantum.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Let $m>0$ be the mass of the particle. We define a $1$-parameter family of theories parametrized by $\theta\in \R$. The Lagrangian is
+    \[
+      L = \left(\frac{m}{2}\dot{x}^2+\frac{\theta}{2\pi L}\dot{x}\right)\;dt
+    \]
+    The first term is the usual kinetic energy; the potential energy vanishes. The second term is locally exact, but not globally exact, since there is no global function $x$ on the circle. Identify the space $N$ of classical solutions, and show that:
+    \begin{itemize}
+      \item The derived Hamiltonian system is independent of $\theta$.
+      \item The principal $\R$-bundle over $N$ with connection changes with $\theta$.
+    \end{itemize}
+  \end{part}
+
+  First, let's use the Euler-Lagrange equations to identify the space $N$. Let $\psi : \R \to M$ be a path on $M$. Since $\mathcal{L}(x,\dot{x}, t) = m\dot{x}^2/2+\theta \dot{x}/2\pi L$, we have the minimization problem
+  \[\frac{\partial \mathcal{L}}{\partial x}-\frac{d}{dt}\left(\frac{\partial \mathcal{L}}{\partial \dot{x}}\right) = \frac{d}{dt}\left(m\dot{x}+\frac{\theta}{2\pi L}\right) =m\ddot{x}= 0.\]
+  This means that $N$ is the space of constant velocity motions on the ring of length $L$. As usual, a path is uniquely and smoothly determined by its initial position and velocity, so topologically, $N = TM = S^1\times \R$ is a cylinder. Notice that there is no dependence on $\theta$ here.
+
+  Now, let's derive the connection and symplectic form. Recall that $L\in \Omega^{0,1}(N\times \R)$, so we calculate $\delta L\in \Omega^{1,1}_N$:
+  \[\delta L = \left(m\dot{x}\;\delta \dot{x} + \theta / 2\pi \right)\wedge dt = -(m\dot{x} + \theta t/2\pi)\;dt\wedge \delta\dot{x}.\]
+  Then, the connection $\gamma\in \Omega^{1,0}(N\times \R)$ satisfies $\delta L+d\gamma = 0$, so we see that
+  \[\gamma = (mx+\theta t/2\pi)\;\delta\dot{x}.\]
+  Furthermore, the symplectic form is $\delta \gamma = m\;\delta x\wedge \delta\dot{x}$, which is independent of $\theta$. Thus, the whole Hamiltonian system is independent of $\theta$ as well. However, for any choice of time $t$, the connection $\gamma(t)$ \emph{does} change with $\theta$.
+
+  \begin{part}{b}
+    The quantum theory has Hilbert space $\H = L^2(M; \C)$ and the Hamiltonian is the unbounded self-adjoint operator
+    \[
+      H = \frac{1}{2}\left(i\frac{\partial}{\partial x} + \frac{\theta}{2\pi L}\right)^2.
+    \]
+    Diagonalize $H$, and in particular compute its spectrum. Is there periodicity in $\theta$? How does this compare to the classical system?
+  \end{part}
+  First, we write $H=T^2$, where 
+  \[
+    T = \frac{1}{\sqrt{2}}\left(i\frac{\partial}{\partial x} + \frac{\theta}{2\pi L}\right)
+  \]
+  Note that for any $\psi_n = e^{inx/L}$, we have
+  \[
+    T\psi_n = \frac{1}{\sqrt{2}}\left(\frac{\theta}{2\pi L} -\frac{n}{L}\right) \implies H\psi_n = \frac{1}{2}\left(\frac{\theta}{2\pi L} - \frac{n}{L}\right)^2\psi_n.
+  \]
+  Since $\psi_n$ must be a function from $M$, we get the condition $\psi_n(t) = \psi_n(t+2\pi L)$. Thus, $n\in \Z$. So our diagonalization becomes
+  \[
+    H \xi = \frac{1}{2}\sum_{n \in \Z} \left(\frac{\theta}{2\pi L} - \frac{n}{L}\right)^2 \langle \xi, \psi_n\rangle \cdot \psi_n
+  \]
+  There are a few cases for the spectrum of $H$. 
+
+  \begin{itemize}
+    \item \textbf{\underline{Case $\theta\in 2\pi L\Z$:}} We have an eigenvalue $0$ with multiplicity $1$, and eigenvalues $n^2/2$ for all $n\in \Z_{>0}$ with multiplicity $2$. Thus, the system is \emph{gapless}.
+
+    \item \textbf{\underline{Case $\theta\in \pi + 2\pi L\Z$:}} We have eigenvalues $(2n+1)^2/4$ for all $n\in \Z_{>0}$ with multiplicity $2$. This is a \emph{gapped} system.
+
+    \item \textbf{\underline{Other cases:}} Eigenvalues are all discrete, have multiplicities $1$, and the system is gapped. Furthermore, they are periodic with $\theta \mapsto \theta + 2\pi L$.
+  \end{itemize}
+  
+  There are a few big differences with the classical case. Firstly, this system is quantized, and this quantization depends on $\theta$ periodicially. In the quantum case, the dynamics and allowed energies of the system are not affected by $\theta$, certainly not periodically.
+\end{parts}
+
+\begin{problem}{4}
+  Let $\H$ be a separable complex Hilbert space. A continuous linear operator $T : \H \to \H$ is \emph{compact} if the closure of the image $T(D)\subset \H$ of the closed unit disk $D\subset \H$ is compact. Prove the following:
+  \begin{regtheorem}
+    Let $T : \H \to \H$ be a positive self-adjoint compact operator. Prove that there exists a complete orthonormal basis $\{\psi_n\}^\infty_{n=1}$ and complex numbers $\mu_1 \geq \mu_2\geq\cdots$ such that:
+    \begin{enumerate}[(i)]
+      \item $T\psi_n = \mu_n \psi_n$.
+      \item For any $c>0$ there is a finite number of $\mu_n > c$. 
+      \item $\lim_{n\to \infty} \mu_n = 0$.
+    \end{enumerate}
+  \end{regtheorem}
+  % The completeness means that the closure of the span of the set $\{e_n\}$ equals $\H$. One approach is to consider the quadratic form $p |-> <p, Tp>$ on D. Since T is compact, this achieves max on e_1. Show that T preserves the orthogonal complomenet Ce_1 and iterate
+\end{problem}
+
+\end{document}

@@ -1,0 +1,174 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 5}
+\author{Lev Kruglyak}
+\due{October 20, 2023}
+
+\input{../stat210.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{5.8}[Expected value of a Normal CDF at a Normal value]
+  For $X\sim \mathcal{N}(\mu, \sigma^2)$, show that
+  \[\E\Phi(X) = \Phi\left(\frac{\mu}{\sqrt{1+\sigma^2}}\right).\]
+\end{problem}
+
+\begin{solution}
+  Note that for some independent $Z\sim \mathcal{N}(0,1)$, we have 
+  \[
+    \E\Phi(X) = \E(P(Z \leq X | X)) = P(Z\leq X)
+  \]
+  by Adam's law. However, $P(Z\leq X)=P(X-Z\geq 0)$, so since $X-Z$ are independent Normal we get $X-Z\sim \mathcal{N}(\mu, 1+\sigma^2)\sim \mu + \sqrt{1+\sigma^2} Z$. So by this scaling, we get
+  \[P(X-Z\geq 0) = P\left(\mu + \sqrt{1+\sigma^2} Z \geq 0\right)=\Phi\left(\frac{\mu}{\sqrt{1+\sigma^2}}\right).\]
+\end{solution}
+
+\begin{problem}{5.15}[Constant conditional expectation]
+  Let $X$ and $Y$ be r.v.s with finite means.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that if $\E(Y|X)$ is constant, then $X$ and $Y$ are uncorrelated.
+  \end{part}
+
+  Suppose $\E(Y|X)=c$ is constant. To show that $X$ and $Y$ are uncorrelated, we would like to show that $\Cov(X, Y) = 0$. Recall that
+  \[\Cov(X, Y) = \E(XY) - \E(X)\E(Y).\]
+  Note that by Adam's Law, we have $\E(Y)=\E(\E(Y|X)) = \E(c)=c$. Then, expanding, we get
+  \[
+    \begin{aligned}
+      \Cov(X,Y)= \E(XY) - \E(X)\E(Y) = \E(\E(XY|X)) - c\E(X)&=\E(X\E(Y|X)) - c\E(X)\\ &= \E(cX)-c\E(X)=0.
+  \end{aligned}
+  \]
+
+  \begin{part}{b}
+    Give a counterexample showing that the converse of (a) is false.
+  \end{part}
+
+  Consider the random variable $X$ which takes values $-1, 0, 1$ with equal probability. Let $Y = X^2$, which takes on $0$ with probability $1/3$ and $1$ with probability $2/3$. Notice that $\E(X)=0$, $\E(Y) = 2/3$, and $\E(XY)=0$. Thus, the two variables are uncorrelated since $\Cov(X,Y)=\E(XY)-\E(X)\E(Y)=0$. However,
+  \[
+    \E(Y|X) = \begin{cases}1 & X = -1,1\\ 0 & X = 0\end{cases}
+  \]
+  is not constant.
+\end{parts}
+
+\begin{problem}{5.16}[Normal mixtures]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Let $Y|\mu \sim \mathcal{N}(\mu, \sigma^2)$, with $\mu\sim \mathcal{N}(\mu_0, \sigma^2/r)$. Show by representation that
+    \[Y\sim \mathcal{N}(\mu_0, \sigma^2 \cdot (1+ 1/r)).\]
+  \end{part}
+
+  We know that $Y|\mu \sim \mu + \sigma Z$ where $Z \sim \mathcal{N}(0,1)$. This means that $(Y-\mu)|\mu \sim \mathcal{N}(0,\sigma^2)$, or equivalently $Y-\mu \sim \mathcal{N}(0,\sigma^2)$. Since $Y-\mu\ind \mu$ it follows that
+  \[(Y-\mu) + \mu \sim \mathcal{N}(\mu_0, \sigma^2\cdot (1+1/r)).\]
+
+  \begin{part}{b}
+    Determine $\Cov(Y, \mu)$.
+  \end{part}
+
+  Recall that $Y-\mu\ind \mu$. Thus, we have
+  \[
+    0=\Cov(Y-\mu, \mu) = \Cov(Y,\mu) - \Cov(\mu, \mu) = \Cov(Y, \mu) + \Var(\mu) = \Cov(Y, \mu) - \sigma^2/r.
+  \]
+  Solving, we get $\Cov(Y,\mu) = \sigma^2/r$.
+
+  \begin{part}{c}
+    Now suppose that $\sigma^2 \sim t\cdot \Expo$ (and $\mu_0, r,$ and $t$ are known). Given a random $U\sim \Unif$ and an independent $Z\sim \mathcal{N}(0,1)$, show how one can easily simulate one draw from the original distribution of $Y$. What is the marginal variance of $Y$?
+  \end{part}
+
+  Recall from (a) that $Y \sim \mu_0 + \sigma \sqrt{1+1/r}\cdot Z$ where $Z\sim \mathcal{N}(0,1)$. Thus, to generate a random draw from the original distribution $Y$, we draw a $U\sim \Unif$ and a standard normal $Z\sim \mathcal{N}(0,1)$ and set
+  \[Y =\mu_0 + \sqrt{-t\log(U)} \cdot \sqrt{1-1/r}\cdot Z.\]
+  Since $-t\log(U)\sim t \Expo$, this clearly has he right distribution. To calculate the marginal variance of $Y$, we can use Eve's law:
+  \[
+    \Var(Y) = \E(\Var(Y|\sigma^2)) + \Var(\E(Y|\sigma^2)) = \E\left(\sigma^2(1+1/r)\right) + \Var(\mu_0) = t(1+1/r).
+  \]
+\end{parts}
+
+\begin{problem}{6.3}[Product of two Normals]
+  Let $Z_1, Z_2$ be i.i.d. $\mathcal{N}(0,1)$, and let $W=Z_1 Z_2$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Obtain the MGF of $W$ by conditioning on $Z_1$ and using Adam's Law. State where this MGF is finite.
+  \end{part}
+
+  Recall that the MGF of a random variable $X$ is $M_X(t) = \E(e^{tX})$. In the case of $W=Z_1Z_2$, we can use Adam's law and the fact that $M_{Z_2}(t)=e^{t^2/2}$ to get
+  \[
+    M_W(t) = \E(e^{tZ_1Z_2}) = \E(\E(e^{tZ_1Z_2}|Z_1)) = \E(M_{Z_2}(tZ_1)) = \E(e^{t^2Z_1^2/2}).
+  \]
+  Next, we note that $Z_1^2\sim \chi^2_1 \sim 2G$ for $G\sim \Gamma(1/2)$. It thus follows that \[M_{\chi^2_1}(t) = M_{2G}(t)=M_G(2t)=\frac{1}{\sqrt{1-2t}}.\]
+  So evaluating this MGF at $t^2/2$, we get 
+  \[M_W(t) = M_{\chi^2_1}(t^2/2) = \frac{1}{\sqrt{1-t^2}}.\]
+  This is finite exactly when $|t|<1$.
+
+  \begin{part}{b}
+    Show that $W$ can be represented as a scaled difference of independent $\chi_1^2$ r.v.s, and use this to obtain again the MGF of $W$.
+  \end{part}
+
+  We first can express $W$ as the difference 
+  \[
+    W = \frac{(Z_1 + Z_2)^2}{4} - \frac{(Z_1 - Z_2)^2}{4} = \frac{1}{2}\left(\frac{Z_1+Z_2}{\sqrt{2}}\right)^2 - \frac{1}{2}\left(\frac{Z_1 - Z_2}{\sqrt{2}}\right)^2 = \frac{1}{2}X_1^2 - \frac{1}{2}X_2^2
+  \]
+  where $X_1, X_2$ are i.i.d. $\mathcal{N}(0,1)$, and thus $X_1^2, X_2^2$ are i.i.d. $\chi_1^2$. Thus, by the argument in the previous part, we have
+  \[
+    M_W(t) = M_{X_1/2}(t)M_{-X_2/2}(t) = M_{X_1}(t/2)M_{X_2}(-t/2) = \left(\frac{1}{\sqrt{1-t}}\right)\left(\frac{1}{\sqrt{1+t}}\right) = \frac{1}{\sqrt{1-t^2}}.
+  \]
+  This is the same MGF that we derived in the previous problem.
+\end{parts}
+
+\begin{problem}{6.7}[Sum of a Geometric number of Exponentials]
+  Let $N = G+1$ with $G\sim \Geom(p)$, and consider a random sum $S_N = \sum^N_{j=1} X_j$ with the $X_j$ i.i.d. Expo, independent of $N$. Show that $S_N\sim \frac{1}{p}\cdot \Expo$, so this random sum is still Exponential (with a new scale.)
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove this using MGFs.
+  \end{part}
+
+  Let's derive an MGF for $S_N$. By Adam's law, and the MGF of an Exponential, we get
+  \[
+    M_{S_N}(t) = \E(e^{tS_N}) = \E(\E(e^{tS_N} | N)) = \E\prod^N_{j=1} M_{X_j}(t) = \E\left(\left(\frac{1}{1-t}\right)^N\right).
+  \]
+  We can also express this MGF as a geometric series 
+  \[
+    \begin{aligned}
+      M_{S_N}(t)=\sum^\infty_{n=1}\left(\frac{1}{1-t}\right)^n P(N=n) = \sum^\infty_{n=1}\left(\frac{1}{1-t}\right)^n (1-p)^{n-1}p &= \sum^\infty_{n=1}\left(\frac{1-p}{1-t}\right)^{n-1}\left(\frac{p}{1-t}\right)\\
+      &= \frac{p}{1-t}\sum^\infty_{n=0}\left(\frac{1-p}{1-t}\right)^n\\
+      &= \frac{p}{1-t}\cdot\frac{1}{1-\frac{1-p}{1-t}} = \frac{p}{p-t}=\frac{1}{1-t/p}
+    \end{aligned}
+  \]
+  This is exactly the MGF of $\frac{1}{p}\cdot \Expo$, and since MGFs uniquely determine a distribution, we are done.
+
+  \begin{part}{b}
+    Prove this using Poisson processes.
+  \end{part}
+
+  Let $T_n = \sum^n_{j=1} X_j$ be the partial sums of the Exponential random variables. Note that $T_{n+1} - T_n \sim \Expo$. Then we have $N_t = \max\{n : T_n \leq t\} \sim \textrm{Pois}(t)$. 
+
+  Now let's look at the expected number of arrivals in the interval $[0,t]$. We would like the number of arrivals in this interval to be $G+1$, for $G\sim \Geom(p)$. The expected value of this is $\E(G+1)=1+(1-p)/p = 1/p$. However, in our Poisson process, this number of arrivals is given by $t$, so we have
+  \[S_N = T_N \sim \frac{1}{p}\cdot \Expo,\]
+  which is what we wanted.
+\end{parts}
+
+\begin{problem}{6.14}[Characterization of the Normal by i.i.d. sum and difference]
+  Let $X_1$ and $X_2$ be i.i.d. random variables, such that the sum $X_1 + X_2$ and the difference $X_1 - X_2$ are also i.i.d. Assume that the moment generating function $M(t)$ of $X_1$ exists everywhere. Show that $X_1$ and $X_2$ are both Normal.
+  % show that M(t) = M(-t), then cgf k(t) = log M(t) satisfies k(ct)=c^2 k(t). (first integer, rational, then real)
+\end{problem}
+
+\begin{solution}
+  Since $X_1\ind X_2$ and $X_1+X_2\sim X_1 - X_2$, we have
+  \[
+    M_{X_1}(t)^2 = M_{X_1}(t)M_{X_2}(t) = M_{X_1+X_2}(t) = M_{X_1-X_2}(t) = M_{X_1}(t)M_{X_2}(-t) = M_{X_1}(t)M_{X_2}(-t).
+  \]
+  This means that $M_{X_1}(t)$ must be an even function. Similarly, using the fact that $X_1-X_2\ind X_1+X_2$, we get
+  \[
+    M_{X_1}(2t) = M_{2X_1}(t) = M_{X_1+X_2}(t)M_{X_1-X_2}(t) = M_{X_1}(t)^4.
+  \]
+  Now if we take the logarithm of both sides, we get $\kappa_{X_1}(2t) = 4\kappa_{X_1}(t)$. In some neighborhood of $0$, we can expand the MacLaurin series of these functions and see that $2^na_n = 4a_n$, where $a_n$ is the $n$-th coefficient in the expansion. It then follows that $a_n=0$ for any $n\neq 2$, and so $\kappa(t)=a_2t^2$. This implies that $M(t)=e^{a_2 t^2}$ near zero. By uniqueness of MGFs, it follows that $X_1$ and $X_2$ must be i.i.d. $\mathcal{N}(0, 2a_2)$.
+\end{solution}
+
+\end{document}

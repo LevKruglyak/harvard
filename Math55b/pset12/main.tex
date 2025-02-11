@@ -1,0 +1,245 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 55b Problem Set 12}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with AJ LaMotta on this problem set.}
+\end{center}
+
+\begin{problem}
+    Let $D$ is a bounded domain with (piecewise) smooth boundary $\partial D=\gamma$, $f(z)$ an analytic function on an open set containing $\overline{D}$, and assume that $f$ does not vanish at any point of $\gamma$. Denote by $z_i$ the zeroes of $f$ inside $D$ and $m_i$ their multiplicities. Show that $$\frac{1}{2\pi i} \int_\gamma \frac{z f'(z)}{f(z)}\,dz=\sum m_iz_i.$$
+\end{problem}
+
+\begin{solution}
+    First we observe that the zeroes $z_i$ are exactly the poles of $zf'/f$. For any zero $z_i$ of order $m_i $, there is some open neighborhood $U$ of $z_i$ such that $f(z)=(z-z_i)^{m_i}g(z)$ on $U$ for some function $g$, analytic on $U$. By the quotient rule, we then have (on $U$)
+    \[
+        \frac{zf'(z)}{f(z)} = \frac{m_i z(z-z_i)^{m_i-1}g(z)+z(z-z_i)^{m_i}g'(z)}{(z-z_i)^{m_i}g(z)}=\frac{m_i z}{z-z_i}+\frac{zg'(z)}{g(z)}.
+    \] 
+    Since $g\neq 0$, $zg'/g$ is analytic on $U$, so by the residue theorem we have
+    \[
+        \frac{1}{2\pi i}\int_\gamma \frac{zf'(z)}{f(z)}\,dz=\sum \textrm{Res}\left(\frac{zf'(z)}{f(z)}, z_i\right)=\sum m_i z_i.
+    \] 
+\end{solution}
+
+\begin{problem}
+    Evaluate the following integrals by the method of residues: $$\text{(a)} \int_0^{\pi/2} \frac{dx}{a+\sin^2 x}\ (a>1),\qquad \text{(b)} \int_0^\infty \frac{x^2\,dx}{x^4+5x^2+6},\qquad \text{(c)} \int_0^\infty \frac{\cos x}{x^2+a^2}\,dx\ (a>0)$$ 
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $z=e^{ix}$, so that $\sin(x)=(z+z^{-1})/2$ and $dz=ie^{ix}dx$. Then
+    \[
+        \int_0^{\pi /2} \frac{dx}{a+\sin^2 x} = \frac{1}{4}\int^{2\pi}_{0} \frac{dx}{a+\sin^2 x} = \frac{1}{4}\int_{S^1}\frac{-4i\,dz}{z^4+(4a+2)z^2+1}.
+    \] 
+    Solving $z^4+(4a+2)z^2+1=0$, we get $z^2=-2a-1\pm 2\sqrt{a^2+a)}$. The only such $z$ which satisfy $|z|^2\leq 1$ are the two roots $z^2=-2a-1+2\sqrt{a^2+a}$. These roots give rise to simple poles the residue at each $z_0$ satisfying $z_0^2=-2a-1+2\sqrt{a^2+a}$ is
+    \[
+        \textrm{Res}\left(\frac{z}{z^4+(4a+2)z^2+1}, z_0\right)=\lim_{z\to z_0}\frac{z(z-z_0)}{z^4+(4a+2)z^2+1} = \frac{z_0}{2z_0(z_0^2+2a+1+2\sqrt{a^2+a}}=\frac{1}{8\sqrt{a^2+a}}.
+    \] 
+    By the residue theorem, the integral is equal to 
+    \[
+        2\pi i \cdot \frac{1}{i}\left(\textrm{Res}\left(\frac{z}{z^4+(4a+2)z^2+1}, z_0\right), \textrm{Res}\left(\frac{z}{z^4+(4a+2)z^2+1}, -z_0\right)\right) = \frac{\pi}{2\sqrt{a^2+a}}.
+    \] 
+
+    \textbf{(b)} Solving $x^4+5x^2+6=0$, we get $x=\pm i\sqrt{2}, \pm i\sqrt{3}$. Furthermore, since $f(x)$ is an even function, we solve
+    \[
+        \int^\infty_0f(x)\,dx = \frac{1}{2}\int^\infty_{-\infty}f(x)\,dx=\frac{1}{2}\left(2\pi i\left(\textrm{Res}\left(f, i\sqrt{2}\right)+\textrm{Res}\left(f, i\sqrt{3}\right)\right)\right)
+    \] 
+    Calculating these simple residues, we finally get
+    \[\begin{aligned}
+        \int^\infty_0 f(x)\,dx &= \pi i\left(\frac{(i\sqrt{3})^2}{((i\sqrt{3})^2+2)(2i\sqrt{3})}+\frac{(i\sqrt{2})^2}{((i\sqrt{2})^2+3)(2i\sqrt{2})}\right)\\
+                               &=\pi i\left(\frac{\sqrt{3}}{2i}-\frac{\sqrt{2}}{2i}\right)=\frac{\pi(\sqrt{3}-\sqrt{2})}{2}.
+    \end{aligned}\]
+
+    \textbf{(c)} Using the same tricks as in (a) and (b), we have
+    \[
+        \int^\infty_0 \frac{\cos(x)}{x^2+a^2}\,dx = \frac{1}{2}\int^\infty_{-\infty}\frac{\cos x}{x^2+a^2}\,dx = \frac{1}{2}\Re\left(\int^\infty_{-\infty}\frac{e^{ix}\,dx}{x^2+a^2}\right).
+    \] 
+    Note that $1/(x^2+a^2)$ is rational, the degree of the denominator is $2$ more than the denominator of the numerator, and the denominator has no real roots, we have
+    \[
+        \int^\infty_0 \frac{\cos x}{x^2+a^2}\,dx=\frac{1}{2}\Re\left(2\pi i \textrm{Res}\left(\frac{e^{iz}}{z^2+a^2}, ai\right)\right) = \Re\left(\pi i \frac{e^{-a}}{2ai}\right)=\frac{\pi e^{-a}}{2a}.
+    \] 
+\end{solution}
+
+\begin{problem}
+    Use the method of residues to evaluate the integrals $\displaystyle \int_0^\infty \frac{\log x}{1+x^2}\,dx$ and $\displaystyle \int_0^\infty \frac{(\log x)^2}{1+x^2}\,dx$.
+\end{problem}
+
+\begin{solution}
+    Let's consider the branch of the complex log with imaginary part in $(-\pi, \pi)$ and integrate along the contour $\gamma$, which goes from $\epsilon\in \R$ to $R\in \R$ along $\R$, then travels counterclockwise via an arc $C_R$ to $-R\in R$, then from $-R$ to $-\epsilon$ along $\R$, and finally by a small arc $C_\epsilon$ back to $\epsilon$. We'll see what happens as 
+    we take the limits $R\to \infty$ and $\epsilon\to \infty$. Notice that
+
+    \[
+        \left|\int_{C_R}\frac{\log z}{1+z^2}\,dz\right|\leq \frac{\sqrt{\log(R)^2+(\pi i)^2}}{1+R^2}(\pi R)\leq \pi\frac{|\log(R)|+\pi i}{R} \to 0
+    \] 
+    as $R\to \infty$ since $\log(R)/R$ and $1/R$ both tend to $0$. (This result holds true in the second case as well by the same reasoning.) Next, note that
+    \[
+        \left|\int_{C_\epsilon}\frac{\log z}{1+z^2}\,dz\right|\leq \frac{\sqrt{\log(\epsilon)^2+(\pi i)^2}}{1+\epsilon^2}(\pi \epsilon)\leq \pi\frac{\epsilon(|\log(\epsilon)|+\pi i)}{1+\epsilon^2}\to 0
+    \] 
+    as $\epsilon\to 0$ because $\epsilon/(1+\epsilon^2)$ and $\epsilon \log(\epsilon)/(1+\epsilon^2)$ both go to zero. (Again, this result holds true in the second case by the same reasoning.) Combining these results, we et
+    \[
+        \int_\gamma f(z)\,dz = \int^R_\epsilon f(z)\,dz + \int_{C_R}f(z)\,dz + \int^{-\epsilon}_{-R}f(z)\,dz+\int_{C_\epsilon}f(z)\,dz \to \int^{\infty}_{\-\infty}f(z)\,dz.
+    \] 
+    as $R\to \infty$ and $\epsilon \to 0$. Note that we can apply the residue theorem to the left hand side in order to calculate the right side. We can now look at the cases separately.
+
+    When $f(z)=\log(z)/(1+z^2)$, we get
+    \[
+        2\pi i\lim_{z\to i}f(z)(z-i)=\frac{i\pi^2}{2}=\int^\infty_0 \frac{\log x}{1+x^2}\,dx+\int^0_{-\infty} \frac{\log |x|+\pi i}{1+x^2}\,dx.
+    \] 
+    Using the fact that $\int^\infty_0 dx/(1+x^2)=\pi/2$ and using a simple change of variables, we can then calculate
+    \[
+        \int^\infty_0 \frac{\log x}{1+x^2}\,dx=\frac{1}{2}\left(\frac{i\pi^2}{2}-\pi i \int^\infty_0 \frac{dx}{1+x^2}\right) = 0.
+    \] 
+
+    Now in the second case when $f(z)=\log(z)^2/(1+z^2)$ we similarly calculate
+    \[
+        2\pi i\lim_{z\to i}f(z)(z-i) = -\frac{\pi^3}{4}=\int^\infty_0\frac{(\log x)^2}{1+x^2}\,dx+\int^0_{-\infty}\frac{(\log |x|+\pi i)^2}{1+x^2}\,dx.
+    \] 
+    Using change of variables, as well as the integrals $\int^\infty_0 \log x/(1+x^2)\,dx=0$ and $\int^\infty_0 dx/(1+x^2)=\pi /2$ we have
+    \[
+        \int^\infty_0 \frac{(\log |x|+\pi i)^2}{1+x^2}\,dx=\int^\infty_0 \frac{(\log |x|)^2+2\pi i \log x-\pi^2}{1+x^2}\,dx
+    \] 
+    so we can solve for the desired integral to get
+    \[
+        \int^\infty_0 \frac{(\log x)^2}{1+x^2}\,dx = \frac{1}{2}\left(-\frac{\pi^3}{4}+\frac{\pi^3}{2}\right) = \frac{\pi^3}{8}.
+    \] 
+\end{solution}
+
+\begin{problem}
+    Let $f(z)=\pi \cot(\pi z)$. We have seen in class that $f(z)$ has simple poles at all integers, with residues all equal to 1. Let $k\geq 1$ be a positive integer.
+    \begin{enumerate}[(a)]
+        \item For $n=1,2,\dots$, let $R_n=\{z\in\C,\ |\Re(z)|\leq n+\frac12\text{ and } |\Im(z)|\leq n\}$. Show that $$\lim\limits_{n\to\infty} \int_{\partial R_n} \frac{f(z)}{z^{2k}}\,dz=0.$$
+        \textit{(Hint: do this directly, not using residues: bound the integrand over the horizontal edges by showing that $|\cot(\pi z)|\to 1$ as $|\Im(z)|\to \infty$, and over the vertical edges by showing that $|\cot(\pi z)|$ is uniformly bounded by a constant (in fact, by 1) for all $z$ such that $\Re(z)\in \Z+\frac12$.)}
+        \item Use the residue theorem to show that $\mathrm{Res}_{z=0}\Bigl(f(z)/z^{2k}\Bigr) + 2\sum\limits_{n=1}^\infty \dfrac{1}{n^{2k}}=0.$
+        \item By calculating the Laurent series of $f(z)$ near $z=0$, deduce the values of $\sum\limits_{n=1}^\infty \frac{1}{n^2}$ and $\sum\limits_{n=1}^\infty \frac{1}{n^4}$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Recall the hyperbolic trigonometric identity
+    \[
+        |\cot(x+iy)|^2 = \frac{\cosh^2(y) -\sin^2(x)}{\cosh^2(y)-\cos^2(x)}.
+    \] 
+    Then for all $x=\pi(n+1/2)$ for integer $n$, we see that
+    \[
+        |\cot(x+iy)|^2 = \frac{\cosh^2(y)-1}{\cosh^2(y)},
+    \] 
+    so since  $\cosh^2(y)\geq 1$ for all $y\in \R$, the above identities show that $|\cot(\pi z)|\leq 1$ on the vertical edges of $\partial R_n$. For the horizontal edges, we see that $|\cot(\pi z)|\to 1$ as $|\Ima(z)|\to \infty$ since $\cos^2(x)$ and $\sin^2(x)$ are bounded real functions while $\cosh^2(y)\to \infty$. Now let $C_1$ and $C_2$ be the top and left edges of the boundary $\partial R_n$ respectively. Since $|z|\geq |\Re(z)|$ and $|z|\geq |\Ima(z)|$, we see that
+    \[
+        \lim_{n\to \infty}\left|\int_{C_1}\frac{f(z)}{z^{2k}}\,dz\right|\leq \lim_{n\to \infty}\frac{\pi \sup_{C_1}|\cot(\pi z)|}{n^{2k}}(2n+1)=0.
+    \] 
+    and similarly for the left edges we get
+    \[
+        \lim_{n\to \infty}\left|\int_{C_2}\frac{f(z)}{z^{2k}}\,dz\right|\leq \lim_{n\to \infty}\frac{\pi \sup_{C_2}|\cot(\pi z)|}{\left(n+\frac12\right)^{2k}}=0.
+    \] 
+    We can do the same thing for the bottom and right edges of $\partial R_n$ so we can conclude that
+    \[
+        \lim_{n\to \infty}\int_{\partial R_n} \frac{f(z)}{z^{2k}}\,dz = 0.
+    \] 
+
+    \textbf{(b)} Any nonzero integer $n\in \Z$ is a simple pole of $f(z)/z^{2k}$ with residue $1$, so 
+    \[
+        \textrm{Res}\left(\frac{f(z)}{z^{2k}}, n\right) = \lim_{z\to n}\frac{f(z)(z-n)}{z^{2k}}=\frac{1}{n^{2k}}.
+    \] 
+    Since the only other pole is $0$, the residue theorem tells us that
+    \[
+        \frac{1}{2\pi i}\int_{\partial R_N} \frac{f(z)}{z^{2k}}\,dz = \textrm{Res}\left(\frac{f(z)}{z^{2k}}, 0\right) + 2\sum^N_{n=1}\frac{1}{n^{2k}}.
+    \] 
+    So as $N\to \infty$ and using (a) we get
+    \[
+        \textrm{Res}\left(\frac{f(z)}{z^{2k}}, 0\right) + 2\sum^N_{n=1}\frac{1}{n^{2k}}=0
+    \]
+
+    \textbf{(c)} First, using the Taylor series $\sin(\pi z)=\pi z - \frac{\pi^3}{6}z^3 + \frac{\pi^5}{120}z^5+\cdots$, we then use geometric series to get
+    \[
+        \frac{\pi}{\sin(\pi z)} = \frac{1}{z}+\frac{\pi^2}{6}z+\left(\frac{\pi^4}{36}-\frac{\pi^4}{120}\right)z^3+\cdots=\frac{1}{z}+\frac{\pi^2}{6}z+\frac{7\pi^4}{360}z^3+\cdots.
+    \] 
+    Lastly, we multiply with the Taylor series for $\cos(\pi z)$, we get
+    \[
+        f(z)=\left(\frac{1}{z}+\frac{\pi^2}{6}z+\frac{7\pi^4}{360}z^3+\cdots\right)\left(1-\frac{\pi^2}{2}z^2+\frac{\pi^4}{24}z^4+\cdots\right)=\frac{1}{z}-\frac{\pi^2}{3}z-\frac{\pi^4}{45}z^3+\cdots.
+    \] 
+    So the residues of $0$ of $f/z^2$ and $f/z^4$ are $-\pi^2/3$ and $-\pi^4/45 $. Plugging into the formula, we get
+    \[
+        \sum^\infty_{n=1}\frac{1}{n^2}=\frac{\pi^2}{6}\quad\textrm{and}\quad\sum^\infty_{n=1}\frac{1}{n^4}=\frac{\pi^4}{90}.
+    \] 
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Show that $\displaystyle\prod\limits_{n=2}^\infty \left(1-\frac{1}{n^2}\right)=\frac{1}{2}$.
+        \item Show that, for $|z|<1$, $\displaystyle \prod\limits_{n=0}^\infty (1+z^{2^n})=\frac{1}{1-z}$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Rearranging some terms,
+    \[
+        \prod^\infty_{n=2}\left(1-\frac{1}{n^2}\right)=\prod^\infty_{n=2}\left(\frac{(n-1)(n+1)}{n^2}\right).
+    \] 
+    This telescopes, with partial product equal to $(N+1)/2N$ so as $N\to \infty$, this approaches $1/2$.
+
+    \textbf{(b)} Let $p_N$ be the partial product up to the $N$-th term of the product. Starting with the base case $p_0$, its clear that $p_0=1+z$. We claim that $p_N = 1+z+z^2+\cdots +z^{2^{N+1}-1}$. This agrees with our base case and inductively it is clear that
+    \[
+        \left(1+z+z^2+\cdots+z^{2^{N+1}-1}\right)\left(1+z^{2^{N+1}}\right)=1+z+z^2+\cdots+z^{2^{N+1}}.
+    \] 
+    Since $\sum z^n = 1/(1-z)$ for all $|z|<1$, and since $p_N$ is a subsequence of this, it follows that the infinite product also converges to $1/(1-z)$.
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item What is the value of $\displaystyle \sum\limits_{n=-\infty}^\infty \dfrac{1}{(z+n)^2+a^2}$?
+        \item Optional: deduce that $\displaystyle \sum_{n=1}^\infty \frac{1}{n^2+1}=\frac{\pi}{2}\coth(\pi)-\frac12$ \ and $\displaystyle \sum_{n=-\infty}^\infty \frac{1}{(z+n)^2-\frac{1}{16}}=\frac{-4\pi}{\cos(2\pi z)}.$
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} We can substitute $-n$ for $n$, so the only two cases we have is whether or not $a$ is zero or not. If $a$ is zero, then
+    \[
+        \sum_{n\in \Z}\frac{1}{(z+n)^2} = \frac{\pi^2}{\sin^2(\pi z)}
+    \] 
+    as we've seen in class. When $a\neq 0$, we use partial fraction decomposition, writing
+    \[
+        \sum_{n\in \Z} \frac{1}{(z-n)^2+a^2}=\frac{1}{2ai}\sum_{n\in \Z}\left(\frac{1}{(z-ai)-n}-\frac{1}{(z+ai)-n}\right).
+    \] 
+    Using the identity $\pi\cot(\pi z)-1/z=\sum_{n\in \Z}(1/(z-n)+1/n)$, we also write
+    \[\begin{aligned}
+        \sum_{n\in \Z\setminus \{0\}} \frac{1}{(z+n)^2+a^2}&=\frac{1}{2ai}\left(\frac{1}{z+ai}-\pi\cot(\pi(z+ai))-\frac{1}{z-ai}+\pi \cot(\pi (z-ai))\right)\\
+                                                           &=-\frac{1}{z^2+a^2}+\frac{\pi^2}{2ai}\left(\cot(\pi(z-ai))-\cot(\pi(z+ai))\right)
+    \end{aligned}\]
+    Now when we add the $n=0$ term back in, we get 
+    \[
+        \sum_{n\in \Z}\frac{1}{(z+n)^2+a^2}=\frac{\pi}{2ai}\left(\cot(\pi(z-ai))-\cot(\pi(z+ai))\right).
+    \] 
+    Of course, this only makes sense assuming $z\neq n\pm ai$.
+
+    \textbf{(b)} Using the identity from (a) and setting $z=0$, $a=1$, notice that
+    \[
+        \sum_{n=1}^\infty \frac{1}{n^2+1}=\frac12\left(\sum_{n\in \Z}\frac{1}{n^2+1}-1\right) = \frac12\left(\frac{\pi}{2i}(\cot(-\pi i)-\cot(\pi i)-1\right)=\frac{\pi}{2}\coth(\pi)-\frac12.
+    \] 
+    Similarly setting $a=i/4$, we get
+    \[
+        \sum_{n\in \Z}\frac{1}{(z+n)^2-\frac{1}{16}}=-2\pi(\cot(\pi z + \pi/4)-\cot(\pi z - \pi/4))=\frac{-4\pi}{\cos(2\pi z)}.
+    \] 
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Show that there exists a continuous complex valued function $F(z)$ on $\overline{\mathbb{H}}=\{\Im z\geq 0\}$ such that $F$ is analytic on $\mathbb{H}=\{\Im z>0\}$ and $F(x)=\displaystyle \int_0^x \frac{dt}{\sqrt{t(1-t^2)}}$ for all $x\in [0,1]$.
+        \textit{(Hint: Find a suitable open subset $U\subset \C$ over which the quantity $1/\sqrt{z(1-z^2)}$ and its antiderivative are well-defined and analytic. It is helpful to choose $U$ so that it contains as much of $\overline{\mathbb{H}}$ as possible.)}
+        \item Show that $S=F(\mathbb{H})$ is the interior of a square in $\C$, and that $F:\mathbb{H}\to S$ is a biholomorphism (i.e., an analytic bijection with analytic inverse).
+        \textit{(Hint: Using the argument principle, the image of $\mathbb{H}$ under $F$ is determined by the image of the real axis and the behavior of $F$ near infinity.  Hence, the key step is to determine $\arg(F'(z))$ on the various subintervals of the real line over which it is defined, as well as the existence of a limit of $F(z)$ as $|z|\to\infty$.)}
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} :(
+
+    \textbf{(b)} :(
+\end{solution}
+
+\end{document}

@@ -1,0 +1,19 @@
+\begin{problem}
+  \[0 \longrightarrow V_1 \stackrel{\phi_1}{\longrightarrow} V_2 
+  \stackrel{\phi_2}{\longrightarrow} \dots
+  \stackrel{\phi_{n-2}}{\longrightarrow} V_{n-1} 
+  \stackrel{\phi_{n-1}}{\longrightarrow} V_n \longrightarrow 0\]
+  be an exact sequence of linear maps (i.e., $\mathrm{Im}(\phi_{i-1})=\mathrm{Ker}(\phi_i)$ for all $i$). Show that if all the $V_i$ are finite-dimensional, then
+  \[\sum_{i=1}^n (-1)^i \dim V_i = 0.\]
+\end{problem}
+
+The rank-nullity theorem gives us the relation $\dim V_i = \dim \ker(\phi_i) + \dim \Ima(\phi_i)$. The exact sequence condition gives us the relation $\dim \Ima(\phi_{i-1})=\dim \ker(\phi_{i})$, and the terminal zeroes in the exact sequence give us $\dim \ker(\phi_1)=0$ and $\dim \Ima(\phi_{n-1})=\dim V_n$. Combining these relations, we get that $\dim \ker(\phi_i) = \dim V_i - \dim \ker(\phi_{i+1})$. Applying the relations, we get:
+\begin{align*}
+  \dim \ker(\phi_1)&=0\\
+  \dim V_1 - \dim \ker(\phi_2)&=0\\
+  \dim V_1 + (-1)^1\dim V_2 + (-1)^2\dim \ker(\phi_3))&=0\\
+  &\vdots\\
+  \dim V_1 + (-1)^1\dim V_2 + (-1)^2\dim V_3 + \cdots + (-1)^{n-1}\dim V_n &= 0\\
+  (-1)^1\dim V_1 + (-1)^2\dim V_2 + (-1)^3\dim V_3 + \cdots + (-1)^{n}\dim V_n &= 0
+\end{align*}
+This is exactly the identity we set out to prove.

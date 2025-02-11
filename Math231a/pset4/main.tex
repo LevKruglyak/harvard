@@ -1,0 +1,140 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 231a Problem Set 4}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    The \emph{cone} on a space $X$ is the quotient space $CX = X\times I/X\times \{0\}$. The cone is a pointed space with basepoint $*$ given by the ``cone point'', i.e. the image of $X\times \{0\}$. Regard $X$ as the subspace of $CX$ of all points of the form $(x,1)$. 
+    
+    Define the \emph{suspension} of a space $X$ to be $SX=CX/X$. Make $SX$ a pointed space by declaring the image of $X\subset CX$ to be the basepoint in $SX$. The quotient map induces a map of pairs $f : (CX,X) \to (SX,*)$.
+    
+    \begin{enumerate}[(a)]
+        \item Show that $CX$ is contractible.
+        
+        For any $a,b\in I$ with $a\leq b$, let $C^b_aX$ denote the image of $X\times [a,b]$ in $CX$. Thus $C^1_0X = CX$, $C_0^0X=*$, and $C^1_1X=X$.
+
+        Let $p : CX \to CX$ send $(x,t)$ to $(x,3t)$ for $t\leq 1 /3$ and to $(x,1)$ if $t\geq 1 /3$.
+
+        \item Show that $p$ defines a homotopy equivalence of pairs $(C_0^{2 /3}X, C_{1 /3}^{2 /3}X) \to (CX, X)$.
+        \item Show that the evident $e : (C^{2 /3}_0 X, C^{2 /3}_{1 /3}X) \to (SX, C^1_{1 /3}X /X)$ is an excision.
+        \item Show that $p$ defines a homotopy equivalence of pairs $(SX, C^1_{1 /3}X/X) \to (SX,*)$.
+        \item Conclude from the commutativty of 
+        \begin{center}
+            \begin{tikzcd}
+                {(C_0^{2/3}X,C^{2/3}_{1/3}X)} \arrow[r, "e"] \arrow[d] & {(SX,C^1_{1/3}X/X)} \arrow[d] \\
+                {(CX,X)} \arrow[r, "f"]                                & {(SX,*)}                     
+            \end{tikzcd}
+        \end{center}
+        that $f$ induces an isomorphism in homology.
+        \item Show that there is a natural isomorphism between augmented and reduced homology groups, $H_{n-1}(X)\to \widetilde{H_n}(SX)$, for any $n$. 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $H : (X\times I)\times I \to X\times I$ be the map sending $((x,s),t) \mapsto (x,st)$. Notice that $H((x,0), t)=(x,0)$ so we can pass to the quotient (since $I$ is compact Hausdorff) to get a map $\widetilde{H} : CX\times I \to CX$. Then $\widetilde{H}(X,1)=CX$ and $\widetilde{H}(X,0)=*$, where $*$ is the cone point. So $\widetilde{H}$ is a homotopy between $c_*$ and $\text{id}_X$ and hence $CX$ is contractible.
+    
+    \textbf{(b)} Let $q : (CX,X) \to (C^{2/3}_0X, C^{2 /3}_{1 /3}X)$ be the map given by $q(x,s)=(x,s /3)$. Observe that it is well-defined with respect to the quotient. Then $q\circ p : CX \to CX$ is given by
+    \[
+        (q\circ p)(x,s)=\begin{cases}
+            (x,s)&0\leq s\leq \frac{1}{3}\\
+            (x,1 /3)&\frac{1}{3}<s\leq 1
+        \end{cases}
+    .\] 
+    Consider the the homotopy $H_{q\circ p} : C_0^{2 /3}X\times I \to C_0^{2 /3}X$ given by \[H_{q\circ p}((x,s),t)=\begin{cases}
+        (x,s)&0\leq s\leq \frac{1}{3}(1-t) + t\\
+        (x,\frac{1}{3}(1-t) + t) & \text{otherwise}
+    \end{cases}\]  
+    Clearly $H_{q\circ p}((x,s),0)=(q\circ p)(x,s)$ and $H_{q\circ p}((x,s),1)=(x,s)$. Conversely, note that $p\circ q : (C_0^{2 /3}X, C^{2 /3}_{1 /3}X) \to (C_0^{2 /3}X, C^{2 /3}_{1 /3}X)$ is just the identity, so we are done.
+
+    \textbf{(c)} Let $U^b_aX$ be the image of $X\times (a,b]$ in $SX$. Then $U^1_{2 /3}X\subset C^1_{2 /3}X /X$ is closed in $SX$, and $U^1_{1 /3}X \subset C^1_{1 /3}X/X$ is open in $SX$. Then we have $\overline{U^1_{2 /3}} \subset C^1_{2 /3}X /X\subset U^1_{1 /3}X\subset \text{int}(C^1_{1 /3}X /X)$. Then the domain of $e$ can be written as $(SX-U^1_{2 /3}, C^1_{1 /3}X /X - U^{1}_{2 /3})$ so we are done.     
+
+    \textbf{(d)} Notice that the homotopy from (a) is well defined in the quotient by $X$9, and so passes to a homotopy equivalence $(SX, C^1_{1 /3}X /X) \to (SX,*)$.
+    
+    \textbf{(e)} By the excision theorem and functorial properties of homology, we can see that the isomorphism \[H_*(C^{2/3}_0X, C^{2 /3}_{1 /3}X) \cong H_*(SX, C^1_{1 /3}X /X)\] gives us an isomorphism $H_*(CX,X)\cong H_*(SX,*)$.
+
+    \textbf{(f)} Recall that $H_*(SX,*)\cong \widetilde{H_*}(SX)$. Similarly, we have an exact sequence $H_n(CX) \to H_n(CX,X) \to H_{n-1}(X) \to H_{n-1}(CX)$. Since $CX$ is contractible, this gives us an isomorphism $H_n(CX,X)\to H_{n-1}(X)$. Putting these isomorphisms together, we get
+    \[
+        H_{n-1}(X)\cong \widetilde{H_n}(SX)
+    .\] 
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Verify the claim that the map $z\mapsto z^d$, sending the unit circle in the complex numbers to itself, has degree $d$.
+        \item Regard $S^{n-1}$ as the unit sphere in $\R^n$. Let $L$ be a line through the origin in $\R^n$, and $L^\perp$ its orthogonal complement. Let $\rho_L$ be the linear map given by $-1$ on $L$ and $+1$ on $L^\perp$. What is $\deg(\restr{\rho_L}{S^{n-1}})$?
+        \item What is the degree of the ``antipodal map'', $\alpha : S^{n-1}\to S^{n-1}$ sending $x$ to $-x$?
+        \item The tangent space to a point $x$ on the sphere $S^{n_-1}$ can be regarded as the subspace of $\R^n$ of vectors perpendicular to $x$. A ``vector field'' on $S^{n-1}$ is thus a continuous function $v : S^{n-1}\to \R^n$ such that $v(x)\perp x$ for all $x\in S^{n-1}$. Show that if $n$ is odd then every vector field vanishes at some point on the sphere. On the other hand, construct a nowhere vanishing vector field on $S^{n-1}$ for any even $n$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} A common result from the degree theory of the circle using the fundamental group shows that the degree of a map $f : I /\{0,1\} \to S^1$ is given by the complex integral
+    \[
+        \text{wind}(f) = \frac{1}{2\pi i}\int_0^1 \frac{f'(t)}{f(t)}\;dt=\frac{1}{2\pi i}\int_0^1 \frac{2\pi i p \cdot e^{2\pi i p t}}{e^{2\pi i p t}}\;dt = p
+    .\] 
+    So the degree of such a map is $p$.
+
+    \textbf{(b)} We claim that $\deg \rho_L = -1$. Let $L=\R v_1$ with $v_1$ a unit vector, and let $v_2,\ldots,v_n$ be a basis for $L^\perp$ so that $v_1,v_2,\ldots,v_n$ be an orthonormal basis. Then the map $\rho_L$ sends $\alpha_1v_1+\cdots+\alpha_n v_n$ to $(-\alpha_1)v_1+\cdots+\alpha_n v_n$. Let's regard $S^{n-1}$ as the unit sphere in $\R^n$. Let $S^{n-1}_+$ be the upper hemisphere along $L$ and let $S^{n-1}_-$ be the lower hemisphere along $L$. Let $U_+\subset S^{n-1}$ be some $\epsilon$-expansion of $S^{n-1}_+$ and $U_-$ be the same but along the bottom hemisphere. Since $\rho_L$ preserves $\mathcal{U}=\{U_+, U_-\}$, we get a commutative diagram 
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & C_*(U_+\cap U_-) \arrow[r] \arrow[d, "\rho_{L}"] & C_*(U_+)\oplus C_*(U_-) \arrow[d, "\rho_{L}\oplus \rho_{L}"] \arrow[r] & C_*^\mathcal{U}(S^{n-1}) \arrow[r] \arrow[d, "\rho_{L}"] & 0 \\
+            0 \arrow[r] & C_*(U_+\cap U_-) \arrow[r]                        & C_*(U_+)\oplus C_*(U_-) \arrow[r]                              & C_*^\mathcal{U}(S^{n-1}) \arrow[r]                        & 0
+        \end{tikzcd}
+    \end{center}
+    By naturality of the connecting map $\partial$, this gives us a commutative diagram
+    \begin{center}
+        \begin{tikzcd}
+            H_{n-1}(S^{n-1}) \arrow[r, "\partial"] \arrow[d, "\rho_{L*}"] & H_{n-2}(S^{n-2}) \arrow[d, "\rho_{L*}"] \\
+            H_{n-1}(S^{n-1}) \arrow[r, "\partial"]                        & H_{n-2}(S^{n-2})                       
+        \end{tikzcd}
+    \end{center}
+    where $\partial$ is an isomorphism. It then suffices to show that $\rho_L$ has degree $-1$ for $S^1$, the rest will follow inductively. Note that in $S^1$, it follows that $\rho_L(\zeta)=1 /\zeta$ for a particular choice of $L$. (It doesn't really matter, since we can always rotate using a degree $1$ rotation.) This has degree $-1$ by (a) so we are done.
+
+    \textbf{(c)} Letting $L_1,L_2, \ldots, L_n$ be orthogonal in $\R^n$, then $\alpha = \rho_{L_1}\circ \cdots\circ \rho_{L_n}$. By elementary properties of degrees, we get $\deg \alpha = \deg \rho_{L_1} \cdots \deg \rho_{L_n} = (-1)^n$.
+
+    \textbf{(d)} Let $n$ be odd, and suppose for the sake of contradiction that $v : S^{n-1} \to \R^n$ is some nonvanishing vector field on $S^{n-1}$. Since $v$ is nonvanishing, consider the map $\widetilde{v} : S^{n-1} \to S^{n-1}$ given by $\widetilde{v}(\zeta) = v(\zeta) /\|v(\zeta)\|_1$. Note that this map still preserves the orthogonality condition $\widetilde{v}(x)\perp x$ for all $x\in S^{n-1}$. Now consider the homotopy $H : S^{n-1}\times I \to S^{n-1}$ given by $H(\zeta, t) = (\cos \pi t) \zeta + (\sin\pi t)\widetilde{v}(\zeta)$. This is well defined since $\zeta$ and $\widetilde{v}(\zeta)$ are orthogonal and both have norm $1$. Then $H$ gives a homotopy between the identity map and $\alpha$ since $H(\zeta,0)=\zeta$ and $H(\zeta,1)=-\zeta$. This is a contradiction, since by (c) the degree of $\alpha$ should be $-1$, while the degree of the identity is $1$.
+
+    In the even case, we can explicitly construct a nonvanishing vector field. Consider the field
+    \[
+        v(x_1,\ldots,x_{2k}) = (x_2, -x_1, x_4, -x_3, \ldots, x_{2k}, -x_{2k-1})
+    .\] 
+    Then we can check
+    \[
+        v(x_1,\ldots,x_{2k})\cdot (x_1,\ldots,x_{2k}) = x_2x_1 - x_1x_2+\cdots+x_{2k}x_{2k-1} - x_{2k-1}x_{2k}=0
+    .\] 
+\end{solution}
+
+\begin{problem}
+    Let $A$ denote an $n\times n$ matrix with positive entries. Prove that $A$ admits an eigenvalue with positive entries and positive eigenvalue by following the steps below. Given $x = (x_1,\ldots,x_n)\in \R^n$, let $\|x\|_1 = |x_1|+\cdots+|x_n|$ denote the $L^1$ norm.
+    \begin{enumerate}[(a)]
+        \item Prove that there is a continuous map $\varphi : \Delta^{n-1} \to \Delta^{n-1}$ given by $\varphi(x)=\frac{Ax}{\|Ax\|_1}$.
+        \item Apply the Brouwer fixed point theorem to $\varphi$ to prove that $A$ admits an eigenvalue with positive entries and positive eigenvalue.  
+    \end{enumerate}         
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Observe that every element $v\in \Delta^{n-1}\subset \R^n$ is nonzero, with each coordinate positive. Since every entry in $A$ is positive, $Av$ is nonzero with each coordinate positive. Thus $\varphi(x)$ is continuous since it is the quotient of a continuous function by a nonzero continuous function. We still need to establish that $\Ima(\Delta^{n-1})\subset \Delta^{n-1}$.
+
+    For any $x=\alpha_1e_1+\cdots+\alpha_ne_n$ with $\sum^n_{i=1}\alpha_i=1$, we have
+    \[
+        \frac{Ax}{\|Ax\|_1} = \frac{\sum^n_{k=1}\alpha_k \sum^n_{i=1} a_{ki}e_i}{\|\sum^n_{k=1}\alpha_k \sum^n_{i=1} a_{ki}e_i\|}=\frac{\sum^n_{i=1}e_i \sum^n_{k=1} \alpha_ka_{ki}}{\|\sum^n_{i=1}e_i \sum^n_{k=1} \alpha_ka_{ki}\|}=\sum^n_{i=1}e_i\frac{\sum^n_{k=1}\alpha_ka_{ki}}{\sum^n_{i=1}\left|\sum^n_{k=1} \alpha_ka_{ki}\right|}\in \Delta^{n-1}
+    .\] 
+    
+    \textbf{(b)} Since $\Delta^{n-1}\cong D^{n-1}$, by the Brouwer fixed point theorem, there exists a $v\in \Delta^{n-1}$ such that $\varphi(v)=v$. This means that $Av=\|Av\|_1 v$. Note that $\|Av\|_1$ is a positive eigenvalue and $v\in \Delta^{n-1}$ has all positive entries.
+\end{solution}
+
+\begin{problem}
+    Let $\mathcal{A}$ be a cover of a space $X$. For any simplex in $X$, let $k(\sigma)$ be the smallest integer such that $\$^k\sigma$ is $\mathcal{A}$-small. Define a map $T : S_*(X)\to S^\mathcal{A}_*(X)$ by sending each simplex $\sigma$ to $\$^{k(\sigma)}\sigma$. Show that this defines a homotopy inverse of the inclusion map.   
+\end{problem}
+
+\begin{solution}
+    This map isn't actually a chain map, because $k(d\sigma)$ need not equal $k(\sigma)$, thus we do not have the equality $dT(\sigma)=T(d\sigma)$. Consider for instance $\mathcal{A}$ consisting of two sets, one of which fully fits into $\Ima(\sigma)$. Then $k(d\sigma)=0$, since the boundary must be fully contained inside in the other set in $\mathcal{A}$. On the other hand, $k(\sigma)$ must be greater than zero since it intersects both sets in $\mathcal{A}$.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,163 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 4}
+\due{October 13, 2023}
+\author{Lev Kruglyak}
+
+\input{../stat210.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{4.6.6}[Swapping an expectation with an infinite series]
+  Use monotone convergence to prove that if $X_1, X_2, \ldots$ are non-negative r.v.s, then 
+  \[\E\left(\sum^\infty_{j=1} X_j\right) = \sum^\infty_{j=1}\E(X_j).\]
+  Does this result hold true without the non-negative assumption?
+\end{problem}
+
+\begin{solution}
+  The sequence of random variables given by $Y_n = \sum^n_{j=1} X_j$ is an increasing, non-negative sequence of random variables. In the event that $Y_n \to Y$ converges in measure, it follows by monotone convergence and linearity of expectations that
+  \[
+    \sum^\infty_{j=1} \E\left(X_j\right) = \lim_{n\to \infty}\sum^n_{j=1}\E(X_j) = \lim_{n\to \infty}\E\left(\sum^n_{j=1} X_j\right) = \lim_{n\to \infty}\E(Y_n) = \E(Y) = \E\left(\sum^\infty_{j=1} X_j\right).
+  \]
+  Otherwise, monotone convergence tells us that both sides must be infinite. If we drop the non-negative assumption, this result doesn't generally hold anymore. 
+
+  For example, let $X_i$ be a random variable on $\{a,b\}$, with $X_i(a)=-1$ for $i$ even, and $X_i(a)=1$ for $i$ odd. Similarly, $X_i(b)=-1$ for $i$ odd, and $X_i(b)=1$ for $i$ even. 
+  Clearly, the infinite sum $\sum_i X_i$ does not converge, and thus does not have an expected value. On the other hand $\E(X_i)=0$ so $\sum_i \E(X_i)=0$.
+\end{solution}
+
+\begin{problem}{4.7.2}[LOTUS]
+  Prove LOTUS in stages by successively letting $g$ be an indicator function, a simple function, a non-negative function, and a general function.
+\end{problem}
+
+\begin{solution}
+  As advised, we prove LOTUS in steps. Throughout, let $X$ be a random variable with distribution $m_X$. Suppose $B\in \mathcal{B}$ is a Borel set, and $\mathbb{I}_B$ is the indicator function for $B$. 
+  Note that by direct definitions and the fundamental bridge, we have
+  \[\int^\infty_{-\infty} \mathbb{I}_B\; m_X(dx) = m_X(B) = P(X\in B) = \int_\Omega \mathbb{I}_B(X(\omega)) P(d\omega) = \E(\mathbb{I}_B(X)).\]
+  Now let's suppose we have some family of Borel sets $\{B_i\}_{i\in I}\subset \mathcal{B}$, coefficients $\{\alpha_i\}_{i\in I}\subset \R$ and a simple function $g$ given by 
+  \[
+    g(x) = \sum_{i\in I} \alpha_i \mathbb{I}_{B_i}.
+  \]
+  Applying the previous problem, we can expand
+  \[
+    \E(g(X)) = \E\left(\sum_{i\in I}\alpha_i \mathbb{I}_{B_i}(X)\right) = \sum_{i\in I}\alpha_i\, \E(\mathbb{I}_{B_i}(X)) = \sum_{i\in I}\alpha_i \int^\infty_{-\infty}\mathbb{I}_{B_i} \;m_X(dx) = \int_{-\infty}^\infty g\;m_X(dx).
+  \]
+
+  Next, let $g : \R \to \R$ be some non-negative measurable function. Recall that we can define
+  \[
+    \E(g(X)) = \sup\left\{ \E(g^*(X))\;:\; g^*\textrm{ simple, non-negative function}, g^* \leq g\right\}.
+  \]
+  Thus, we can expand
+  \[
+    \E(g(X)) = \sup\left\{\int_{-\infty}^\infty g^*\; m_X(dx)\;:\; g^*\textrm{ simple, non-negative function}, g^* \leq g\right\} = \int_{-\infty}^\infty g\;m_X(dx),
+  \]
+  where the last equality follows by picking some sequence $g_i$ of simple functions which monotonically converge to $g$.
+
+  Finally, let $g$ be a general function. As in the textbook, we can split this into two non-negative components, $g^+$ and $g^-$, with $g = g^+ - g^-$. Then,
+  \[
+    \begin{aligned}
+      \E(g(X)) = \E(g^+(X) - g^-(X)) = \E(g^+(X)) - \E(g^-(X)) &= \int^\infty_{-\infty} g^+\; m_X(dx) - \int^\infty_{-\infty} g^-\;m_X(dx) \\&= \int^\infty_{-\infty} g\;m_X(dx).
+    \end{aligned}
+  \]
+  This completes the proof of LOTUS.
+\end{solution}
+
+\begin{problem}{4.2}[Equivalent of equality in distribution]
+  Show that $X\sim Y$ if and only if $\E(g(X)) = \E(g(Y))$ for every function $g$ for which either of those expected values is finite.
+\end{problem}
+
+\begin{solution}
+  Note that $X\sim Y$ is equivalent to showing $m_X = m_Y$. If $X\sim Y$, then it's clear to see that for any measurable $g$ which satisfies the finiteness condition, by LOTUS we have
+  \[\E(g(X)) = \int^\infty_{-\infty} g\; m_X(dx) = \int^\infty_{-\infty} g; m_Y(dx) = \E(g(Y)).\]
+  Conversely, if we know that $\E(g(X)) = \E(g(Y))$ for all $g$ keeping the expectation finite, we know that $\E(\mathbb{I}_B(X)) = \E(\mathbb{I}_B(Y))$ for all Borel sets $B$. But by LOTUS, this means $P(X\in B)=P(Y\in B)$ for all Borel sets $B$. This immediately implies that they have the same distribution, since for example, the CDFs are the same.
+\end{solution}
+
+\begin{problem}{4.8}[Order statistics $50\%$ confidence interval]
+  Two i.i.d. Normal observations are made, $y_1, y_2\sim \N(\mu, \sigma^2)$, with $\mu, \sigma^2$ unknown. William Gosset, a.k.a. ``Student,'' states the following in his 1908 paper introducing the $t$-distribution:
+  \medskip
+  \begin{center}
+    ``\emph{If two observations have been made, and we have no other information, it is an even change that the mean of the (Normal) population will lie between them.}''
+  \end{center}
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Verify Student's claim, showing how to interpret it as providing a $50\%$ (frequentist) confidence interval for $\mu$, i.e., a random interval which contains $\mu$ with probability $1/2$.
+  \end{part}
+
+  Let's say that the interval is $I=[y_{(1)}, y_{(2)}]$, where $y_{(1)}$ is the smaller observation and $y_{(2)}$ is the larger observation. To show that $\mu\in I$ half of the time, we must show that the probability
+  \[
+    P(y_{(1)} \leq \mu \leq y_{(2)}) = 1/2.
+  \]
+  First, let's normalize $y_1, y_2$ by setting
+  \[
+    Z_1 = \frac{y_1 - \mu}{\sigma}, \quad Z_2 = \frac{y_2 - \mu}{\sigma} \quad \sim \quad \mathcal{N}(0, 1)
+  \]
+  Notice that the desired probability is now equivalent to 
+  \[
+    P\left(Z_{(1)} \leq 0 \leq Z_{(2)}\right) = P(Z_1\leq 0)\cdot P(0\leq Z_2) + P(Z_2\leq 0)\cdot P(0\leq Z_1) = \frac{1}{4} + \frac{1}{4} = \frac{1}{2}.
+  \]
+
+  \begin{part}{b}
+    Find the average length of this interval (from the smaller observation to the larger observation). % max(Z1, Z2) - min(Z1, Z2) = |Z1 - Z2| with Z1 - Z2 normal
+  \end{part}
+
+  We would like to evaluate $\E(y_{(2)} - y_{(1)}) = \E(|y_1 - y_2|)$. Notice that $y_1 - y_2$ is also a normal distribution, with $y_1-y_2\sim \mathcal{N}(\mu, 2\sigma^2)$. Now let $Z\sim \mathcal{N}(\mu, 2\sigma^2)$ be some random variable. Then, we have
+  \[
+    \E(|Z|) = \int_{-\infty}^\infty \frac{1}{\sqrt{2\pi}}\left|\frac{x-\mu}{\sigma\sqrt{2}}\right|e^{-\frac{1}{2}\left(\frac{x - \mu}{\sigma\sqrt{2}}\right)^2}dx = 2\int_{0}^{\infty}\frac{x}{2\sigma\sqrt{\pi}}e^{-\frac{x^2}{4\sigma^2}}dx = \frac{2\sigma}{\sqrt{\pi}}.
+  \]
+  This is the average length of the interval; here the lack of dependence on the mean makes sense.
+\end{parts}
+
+\begin{problem}{4.9}[Logistic moments]
+  Let $Y\sim \Logistic$. Show that $\E(Y) = 0$, $\Var(Y) = \pi^2/3$.
+\end{problem}
+
+\begin{solution}
+  Recall that $Y \sim \Logistic$ means that $Y\sim \log X_1 - \log X_2$, where $X_1, X_2$ are i.i.d. Exponential. By linearity of expectation and variance ($\log X_1 \ind \log X_2$ since $X_1\ind X_2$), we should first consider $\E(\log X)$ and $\E((\log X)^2)$ for some $X\sim \Expo$. This would calculate both quantities. Recall that by LOTUS, we have
+  \[
+    \E(\log^n X) = \int_{0}^\infty \log^n(x)\; m_X(dx) = \int_0^\infty \log^n(x)e^{-x}\;dx.
+  \]
+  But by differentiating under the integral sign, we see that
+  \[
+    \frac{\partial^n}{\partial a^n}\Gamma(a) = \int^\infty_0 \frac{\partial^n}{\partial a^n} e^{-x} x^{a-1}\;dx = \int^\infty_0 \log^n(x) e^{-x}x^{a-1}\;dx \quad\implies\quad \E((\log X)^n) = \Gamma^{(n)}(1).
+  \]
+  Now, to calculate the expectation of $Y$, we have
+  \[
+    \E(Y) = \E(\log X_1 - \log X_2) = \E(\log X_1) - \E(\log X_2) = \Gamma^{(1)}(1) - \Gamma^{(1)}(1) = 0.
+  \]
+  Similarly, we have
+  \[
+    \begin{aligned}
+      \Var(Y) = \Var(\log X_1 - \log X_2) = \Var(\log X_1) - \Var(\log X_2) &= 2\left(\E(\log^2 X_1)-\E(\log X_1)^2\right)\\
+      &= 2(\Gamma''(1) - \Gamma'(1)^2).
+    \end{aligned}
+  \]
+  We are given the fact that the trigamma function has value $D'(1) = \pi^2/6$. Note that
+  \[
+    D'(a) = \frac{\partial^2 \log \Gamma(a)}{\partial^2 a} = \frac{\Gamma(x)\Gamma''(x) - \Gamma'(x)^2}{\Gamma(x)^2}.
+  \]
+  Since $\Gamma(1)=1$, it thus follows that
+  \[
+    \Var(Y) = 2(\Gamma''(1) - \Gamma'(1)^2) = 2D'(1) = \frac{\pi^2}{3}.
+  \]
+\end{solution}
+
+\begin{problem}{4.14}[Symmetry with ratios]
+  Let $Y_1, Y_2, \ldots, Y_n$ be i.i.d. \emph{positive} r.v.s., with no assumptions made about their moments existing. Show that
+  \[a_{kn}= \E\left(\frac{Y_1 + \cdots +Y_k}{Y_1+\cdots +Y_n}\right)\]
+  exists for all $k\in \{1,2,\ldots, n\}$, and find its value.
+\end{problem}
+
+\begin{solution}
+  First, notice that since all the r.v.s. are positive, it follows that $(Y_1+\cdots+Y_k) / (Y_1 + \cdots + Y_n)\leq 1$ is a positive, bounded r.v. and thus has a defined expectation by the bounded convergence theorem. Next, note that by symmetry, we get
+  \[
+    1=\E(1)=\sum_{i=1}^n\E\left(\frac{Y_i}{Y_1+\cdots+Y_n}\right) = n\cdot\E\left(\frac{Y_1}{Y_1+\cdots+Y_n}\right)\quad\implies\quad \E\left(\frac{Y_i}{Y_1+\cdots+Y_n}\right) = \frac{1}{n}.
+  \]
+  Thus, it follows that
+  \[
+    a_{kn}=\E\left(\frac{Y_1+\cdots+Y_k}{Y_1+\cdots+Y_n}\right) = k\cdot\E\left(\frac{Y_1}{Y_1+\cdots+Y_n}\right) = \frac{k}{n}.
+  \]
+\end{solution}
+\end{document}

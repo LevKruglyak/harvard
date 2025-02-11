@@ -1,0 +1,321 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\title{\textbf{Math 231a Final}}
+
+\providecommand{\Sk}{\text{Sk}}
+\providecommand{\Gr}{\text{Gr}}
+\providecommand{\Tor}{\text{Tor}}
+\providecommand{\Ext}{\text{Ext}}
+\providecommand{\tors}{\text{tors}}
+
+% `tikz-cd` is necessary to draw commutative diagrams.
+\RequirePackage{tikz-cd}
+% `amssymb` is necessary for `\lrcorner` and `\ulcorner`.
+\RequirePackage{amssymb}
+% `calc` is necessary to draw curved arrows.
+\usetikzlibrary{calc}
+% `pathmorphing` is necessary to draw squiggly arrows.
+\usetikzlibrary{decorations.pathmorphing}
+
+% A TikZ style for curved arrows of a fixed height, due to AndréC.
+\tikzset{curve/.style={settings={#1},to path={(\tikztostart)
+    .. controls ($(\tikztostart)!\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    and ($(\tikztostart)!1-\pv{pos}!(\tikztotarget)!\pv{height}!270:(\tikztotarget)$)
+    .. (\tikztotarget)\tikztonodes}},
+    settings/.code={\tikzset{quiver/.cd,#1}
+        \def\pv##1{\pgfkeysvalueof{/tikz/quiver/##1}}},
+    quiver/.cd,pos/.initial=0.35,height/.initial=0}
+
+% TikZ arrowhead/tail styles.
+\tikzset{tail reversed/.code={\pgfsetarrowsstart{tikzcd to}}}
+\tikzset{2tail/.code={\pgfsetarrowsstart{Implies[reversed]}}}
+\tikzset{2tail reversed/.code={\pgfsetarrowsstart{Implies}}}
+% TikZ arrow styles.
+\tikzset{no body/.style={/tikz/dash pattern=on 0 off 1mm}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $V_1,V_2 \subset\R^6$ denote complementary $3$-planes (i.e. $V_1$ and $V_2$ span $\R^6$ as a vector space). Compute the integral homology groups of $\R^6 - (V_1 \cup V_2)$.
+\end{problem}
+
+\begin{solution}
+    \quad Let's decompose the space $X=R^6 - (V_1\cup V_2)$ into two spaces, $A_1 = \R^6 - V_1$ and $A_2 = \R^6 - V_2$. Then $X = A_1\cap A_2$ and $A_1\cup A_2 = \R^6 - \{0\}$, so we can apply the Mayer-Vietoris sequence. Before we do this, let's prove a lemma.
+
+    \begin{claim}
+        Let $V$ be a $3$-plane in $\R^6$, i.e. a 3-dimensional linear subspace of $\R^6$. Then $\R^6 - V$ is homotopy equivalent to $S^2$.
+    \end{claim}
+
+    \begin{proof}
+        Let $V^\perp$ be the orthogonal complement to $V$ in $\R^6$ so that $V\oplus V^\perp = \R^6$. Let $r : \R^6 - V \to S^2$ be the map that takes $(v, v') \mapsto v' / \|v'\|$. This is continuous since the $V^\perp$ component of $\R^6 -V$ is always nonzero. We have an inverse inclusion $i : S^2 \to \R^6-V$ given by $v \mapsto (0, v)$. Then the homotopy between $r\circ i$ and the identity on $\R^6-V$ is given by
+        \[
+            H : (\R^6 - V)\times I \to \R^6 - V : ((v,v'), t) \mapsto ((1-t)v, tv'+(1-t)v' / \|v'\|)
+        .\]
+        It is easy to see that $H(-,0) = \text{id}_{(\R^6 - V)}$ and $H(-,1) = r\circ i$. 
+    \end{proof}
+
+    \quad So $A_1, A_2\simeq S^2$ and $A_1\cup A_2 = \R^6 - \{0\} \simeq S^5$. Recall that the reduced Mayer-Vietoris gives us an exact sequence:
+    \begin{center}
+        \begin{tikzcd}
+            \widetilde{H}_{n+1}(A_1\cup A_2) \arrow[r] & \widetilde{H}_n(A_1\cap A_2) \arrow[r] & \widetilde{H}_n(A_1)\oplus \widetilde{H}_n(A_2) \arrow[r] & \widetilde{H}_n(A_1\cup A_2)
+        \end{tikzcd}
+    \end{center}  
+    By the lemma, $\widetilde{H}_n(A_i)\cong \Z$ when $n=2$, and zero otherwise. Similarly, $\widetilde{H}_n(A_1\cup A_2)\cong \Z$ when $n=5$, and zero otherwise. Plugging these terms into the exact sequence, we get the reduced homology for $X=A_1\cap A_2$:
+    \[
+        \widetilde{H}_n(\R^6 - (V_1\cup V_2)) = \begin{cases}
+            \Z\oplus \Z & n=2,\\
+            \Z & n = 4,\\
+            0 & \text{otherwise},
+        \end{cases}\implies 
+        \boxed{{H}_n(\R^6 - (V_1\cup V_2)) = \begin{cases}
+            \Z & n = 0, 4,\\
+            \Z\oplus \Z & n=2,\\
+            0 & \text{otherwise}.
+        \end{cases}}
+    \]  
+\end{solution}
+
+\pagebreak
+\begin{problem}
+    Given a space $X$ with the property that $\bigoplus^\infty_{i=0} H_i(X)$ is finitely generated, define its \emph{Euler characteristic} to be $\chi(X)=\sum^\infty_{i=0}(-1)^i\text{rank } H_i(X)$. Use the universal coefficients theorem to prove that $\chi(X)=\sum^\infty_{i=0}(-1)^i\dim_k H_i(X; k)$ for $k=\Q$ or $\F_p$ where $p$ is a prime number.
+\end{problem}
+
+\begin{solution}
+    \quad Recall that the universal coefficients theorem states that for $R$ a PID and $M$ an $R$-module, we have a (non-natural) isomorphism:
+    \[
+        H_i(X; M) \cong \left(H_i(X)\otimes_R M\right)\oplus \Tor^R_1(H_{i-1}(X), M)
+    .\]  
+    In our case, $R=\Z$ and $M=k=\Q$ or $\F_p$. When $k=\Q$, the Tor term vanishes since $\Q$ is a flat $\Z$-module sn so $H_i(X; \Q) \cong H_i(X)\otimes \Q$. This means that $\text{rank }H_i(X) = \dim_\Q H_i(X; \Q)$ and so clearly the result holds.
+    
+    \quad In the case when $k=\F_p$, the Tor term is exactly:
+    \[
+        \Tor^\Z_1 (H_{i-1}(X), \F_p) = \text{tors}_p\; H_{i-1}(X).
+    \]   
+    Thus we have a (non-natural) isomorphism:
+    \[
+        H_i(X; \F_p) \cong (H_i(X)\otimes \F_p) \oplus \text{tors}_p\; H_{i-1}(X)
+    .\] 
+    However since $H_i(X)\otimes \F_p \cong \F_p^{\oplus \text{rank }H_i(X)}\oplus \text{tors}_p H_i(X)$, we have an isomorphism:
+    \[
+        H_i(X; \F_p) \cong \F_p^{\text{rank }H_i(X)}\oplus \text{tors}_p\; H_i(X) \oplus \text{tors}_p\; H_{i-1}(X)
+    .\]   
+    Let $a_i = \text{rank } H_i(X)$ and $b_i = \dim_{\F_p} \text{tors}_p\; H_i(X)$ so that $\dim_{\F_p} H_i(X; \F_p) = a_i + b_i + b_{i-1}$. Then
+    \[
+        \sum^\infty_{i=0}(-1)^i \dim_{\F_p} H_i(X; \F_p) = \sum^\infty_{i = 0}(-1)^i (a_i + b_i + b_{i-1}) = \sum_{i=0}^\infty (-1)^i a_i = \chi(X)
+    .\]  
+\end{solution}
+
+\begin{problem}
+    Consider the following three spaces:
+    \[
+        A = \CP^3 \quad B = S^2\times S^4\quad \text{and}\quad C = S^2\vee S^4\vee S^6
+    \] 
+\end{problem}
+
+\begin{solution}
+    In this problem we'll explore their topologies.
+    \begin{partproblem}{a}
+        Compute the integral cohomology groups of these three spaces.
+    \end{partproblem}
+    
+    \quad Recall that $A=\CP^3$ has a CW decomposition consisting of a single cell the dimensions $0, 2, 4, 6$. By cellular homology this trivially gives the homology:
+    \[
+        \boxed{H_i(\CP^3) = \begin{cases}
+            \Z & i = 0,2,4,6,\\
+            0 &\text{otherwise}.
+        \end{cases}}
+    \]
+    For the product space $B=S^2\times S^4$, since the homology groups of $S^n$are torsion free, the Tor term in the K\"unneth formula vanishes and so we get an isomorphism:
+    \[
+        H_i(S^2\times S^4) \cong \bigoplus_{p+q=i} H_p(S^2)\otimes H_q(S^4)
+    .\]
+    Since $H_p(S^n) = \Z$ if and only if $p=n, 0$, and using the fact that $\Z\otimes \Z \cong \Z$ and $\Z\otimes 0 = 0$, we get the same homology for $S^2\times S^4:$ 
+    \[
+        \boxed{H_i(S^2\times S^4) = \begin{cases}
+            \Z & i = 0,2,4,6,\\
+            0 &\text{otherwise}.
+        \end{cases}}
+    \] 
+    Finally, for the wedge sum $C = S^2\vee S^4\vee S^6$, recall that there is an isomorphism of reduced homology
+    \[
+        \widetilde{H}_i(X\vee Y) \cong \widetilde{H}_i(X)\oplus \widetilde{H}_i(Y).
+    \] 
+    Again, this gives the same homology for $C$:
+    \[
+        \boxed{H_i(S^2\vee S^4\vee S^6) = \begin{cases}
+            \Z & i = 0,2,4,6,\\
+            0 &\text{otherwise}.
+        \end{cases}}
+    \] 
+
+    \begin{partproblem}{b}
+        Prove that $A$ and $B$ are not homotopy equivalent.
+    \end{partproblem}
+
+    \quad Since these spaces have the same homology rings, we can look at differences in the cup product structure on the cohomology ring. Recall that the cohomology ring of a sphere is $H^\bullet(S^n)\cong \Z[x] /(x^2)$, where $|x|=n$. Then by the K\"unneth formula and properties of cup products, we have $H^\bullet(S^2\times S^4) \cong \Z[x] /(x^2) \otimes \Z[y] / (y^2) \cong \Z[x,y]/(x^2, y^2)$. 
+    
+    \quad Similarly, recall that $H^\bullet(\CP^3)\cong \Z[x]/(x^4)$ with $|x|=2$. (This is proved in Hatcher, or by a similar argument to the first problem of Problem Set~10) These rings are clearly not isomorphic since one has an element of multiplicative order $4$, hence $S^2\times S^4$ isn't homotopy equivalent to $\CP^3$.
+
+    \begin{partproblem}{c}
+        Prove that $C$ is not homotopy equivalent to any compact manifold.
+    \end{partproblem}
+    \quad Recall that Poincar\'e duality gives us a perfect pairing for any compact manifold $M$:
+    \begin{center}
+        \begin{tikzcd}
+	        {H^p(M; \F_2)\otimes H^q(M; \F_2)} & {H^n(M; \F_2)} && {\F_2}
+	        \arrow["\smile", from=1-1, to=1-2]
+	        \arrow["{\langle -,[M]\rangle}", from=1-2, to=1-4]
+        \end{tikzcd}
+    \end{center}
+    where $p+q=n$. In particular, this pairing of $H^p(M; \F_2)\otimes H^q(M; \F_2) \to \F_2$ is nontrivial. F
+    
+    \quad For our case, suppose for the sake of contradiction that $C$ is homotopy equivalent to a compact manifold. Now let $\delta$ be a generator for $H^2(S^2)$ and $\sigma$ a generator for $H^4(S^4)$. Let $i : S^6 \to S^2\vee S^4\vee S^6$ be the inclusion map. Now $i^*(\delta)\smile i^*(\sigma) = 0$ in $H^6(S^6)$ since $S^6$ has no 2 or 4 degree homology. Then $i^*(\delta\smile \sigma)=0$. Since $i^*$ is an isomorphism in $H^6$ (see Miller), this means that $\delta\smile \sigma=0$. By the universal coefficients theorem and naturality of the cup product, this same triviality condition holds with $\F_2$ coefficients. But this contradicts Poincar\'e duality since the pairing $H^2(C; \F_2)\otimes H^4(C; \F_2) \to H^6(C; \F_2)$ becomes trivial.
+\end{solution}
+
+\begin{problem}
+    Let $M$ and $N$ denote connected $n$-manifolds. A \emph{connected sum} $M\# N$ of $M$ and $N$ is a new connected $n$-manifold defined in the following way. Choose Euclidean open balls $B_1\subset \R^n\subset M$ and $B_2\subset \R^n\subset N$. Then $M -B_1$ and $N-B_2$ contain embedded $(n-1)$-spheres which are boundaries of the balls $B_i$, and we define $M\# N$ by gluing $M-B_1$ and $N-B_2$ along any homeomorphism of these $(n-1)$-spheres. More concisely we write:
+    \[
+        M\# N := (M - B_1)\cup_{S^{n-1}} (N - B_2)
+    .\] 
+    For example, if $M_g$ and $M_h$ are oriented surfaces of genus $g$ and $h$, then $M_g\# M_h$ is an oriented surface of genus $g+h$.
+\end{problem}
+
+\begin{solution}
+     In the following we let $M\#N$ denote an arbitrary choice of connected sum of $M$ and $N$.
+     \begin{partproblem}{a}
+         Assume that $n\geq 2$. Prove that $M\# N$ is orientable if and only if $M$ and $N$ are orientable.
+     \end{partproblem}
+
+     \quad Since Hatcher and Miller have inconsistent notations, let $\Gamma_M$ be the orientation cover of $M$, i.e. the set
+     \[
+         \Gamma_M = \left\{\mu : M \to \bigsqcup_{x\in M} H_n(M, M-\{x\}) \mid \mu\text{ is locally consistent, }\mu_x\text{ a generator }\forall x\in M\right\}
+     \]
+     with a natural topology that can be constructed from the projection map $p_M : \Gamma_M \to M$. For a manifold $M$, it is orientable if $\Gamma_M$ has two connected components and nonorientable if $\Gamma_M$ has a single connected component. In either case, it is a double sheeted covering.
+
+     \quad For manifolds $M, N$, note that $M-B_1$ and $N-B_2$ are manifolds with boundary. Let $i_1 : M-B_1 \to M\# N$ and $i_2 : N- B_2 \to M\# N$, so $i_1(M-B_1)$ and $i_2(N-B_2)$ are submanifolds of $M\# N$. Thus we can consider $\Gamma_{i_1(M-B_1)} \cong \Gamma_{M-B_1}$ and $\Gamma_{i_2(N-B_2)}\cong \Gamma_{N-B_2}$ as submanifolds of $\Gamma_{M\# N}$. In fact, since $i_1(M-B_1)\,\cup\, i_2(N-B_2) = M\# N$, we have $\Gamma_{M\# N} = \Gamma_{i_1(M-B_1)}\cup \Gamma_{i_2(N-B_2)}$. 
+
+    \quad Now if both $M$ and $N$ are orientable, $M-B_1$ and $N-B_2$ are also orientable so $\Gamma_{i_1(M-B_1)}$ and $\Gamma_{i_2(N-B_2)}$ both have two connected components. Since $i_1(M-B_1)\cap i_2(N-B_2)$ is homeomorphic to $S^{n-1}$, a connected, orientable manifold, it follows that $\Gamma_{M\# N}$ has two connected components. Thus $M\# N$ is orientable. (Note that $S^{n-1}$ is an $(n-1)$-manifold, so you might be suspicious of its orientability in $M\# N$, but we can always expand to a cylinder $(0,1)\times ^{n-1}$ in $M\# N$ and everything is fine.)
+
+    \quad If one of the manifolds is nonorientable, say $M$, then $M-B_1$ is nonorientable as well so $\Gamma_{i_1(M-B_1)}$ has a single component. As before, since the intersection $i_1(M-B_1)\cap i_2(N-B_2)$ is the $(n-1)$-sphere, which is connected, it follows that regardless of how many components $\Gamma_{i_1(N-B_2)}$ has, they will both be attached to the single component in of $\Gamma_{i_1(N-B_2)}$. So $M\# N$ is nonorientable.  
+
+     \begin{partproblem}{b}
+         Assume that $M$ and $N$ are compact. If $M$ or $N$ is orientable, prove that
+         \[
+             H_i(M\# N)\cong H_i(M)\oplus H_i(N)
+         \]
+         for $0<i<n$. 
+     \end{partproblem}
+
+     \quad Consider $S^{n-1}\subset M\# N$. Relative reduced homology gives us an exact sequence:
+     \begin{center}
+         \begin{tikzcd}
+            \widetilde{H}_i(S^{n-1}) \arrow[r] & \widetilde{H}_i(M\# N) \arrow[r]& \widetilde{H}_i(M\# N, S^{n-1}) \arrow[r] & \widetilde{H}_{i-1}(S^{n-1})
+         \end{tikzcd}
+     \end{center}
+     For any $0<i<n-1$ we have $\widetilde{H}_i(S^{n-1})\cong \widetilde{H}_{i-1}(S^{n-1}) \cong 0$ so we have an isomorphism
+     \[
+         \widetilde{H}_i(M\# N) \cong \widetilde{H}_i(M\# N, S^{n-1})
+     .\]  
+     Since this is a good pair, by excision we get an isomorphism $\widetilde{H}_i(M\# N, S^{n-1}) \cong \widetilde{H}_i(M\# N / S^{n-1})$. However $M\# N / S^{n-1}$ is homeomorphic to $M\vee N$ and then $\widetilde{H}_i(M\vee N) \cong \widetilde{H}_i(M)\oplus \widetilde{H}_i(N)$. Since $i>0$, we thus have isomorphisms
+     \[
+         H_i(M\# N)\cong H_i(M)\oplus H_i(N)
+     .\]   
+     
+     \quad When $i = n-1$ the exact sequence is
+     \begin{center}
+        \begin{tikzcd}
+            \widetilde{H}_{n}(S^{n-1}) \arrow[r] & \widetilde{H}_{n}(M\# N) \arrow[r]& \widetilde{H}_{n}(M\# N, S^{n-1}) \arrow[dll]\\
+           \widetilde{H}_{n-1}(S^{n-1}) \arrow[r] & \widetilde{H}_{n-1}(M\# N) \arrow[r]& \widetilde{H}_{n-1}(M\# N, S^{n-1}) \arrow[r] & \widetilde{H}_{n-2}(S^{n-1})
+        \end{tikzcd}
+    \end{center}
+
+    Observe that $\widetilde{H}_n(S^{n-1})\cong \widetilde{H}_{n-2}(S^{n-1})\cong 0$, and we already mentioned the isomorphism $\widetilde{H}_i(M\# N, S^{n-1})\cong \widetilde{H}_i(M)\oplus \widetilde{H}_i(N)$. Then this exact sequence gives us an alternating rank formula:
+    \[
+        \text{rank }H_n(M\# N) - \text{rank }H_n(M) - \text{rank }H_n(N) + 1 - \text{rank }H_{n-1}(M\# N) +\text{rank }H_{n-1}(M) + \text{rank }H_{n-1}(N) =0
+    .\] 
+    So far we haven't assumed anything about orientability, so we can all of this for the next part as well.
+
+    \quad We now have two cases for this part. If both manifolds are orientable, $H_n(M)\cong H_n(N) \cong \Z$ and $M\# N$ is orientable so $H_n(M\# N)\cong \Z$. Then the rank formula gives us:
+    \[
+        \begin{aligned}
+            1 - 1 - 1 + 1 - \text{rank }H_{n-1}(M\# N) &+ \text{rank }H_{n-1}(M) +\text{rank }H_{n-1}(N) = 0 \\
+            \implies \text{rank }H_{n-1}(M\# N) &= \text{rank }H_{n-1}(M) +\text{rank }H_{n-1}(N).
+        \end{aligned}
+    \] 
+    Since $M\# N$ is orientable, $H_{n-1}(M\# N)$ has no torsion component, and neither do $H_{n-1}(M)$ or $H_{n-1}(N)$. Thus we have $H_{n-1}(M\# N) \cong H_{n-1}(M)\oplus H_{n-1}(N)$ as desired.
+
+    \quad If $M$ is orientable but $N$ is not orientable, then $M\# N$ is not orientable. By the same reasoning as earlier, the rank formula then is:
+    \[
+        \begin{aligned}
+            0 - 1 - 0 + 1 - \text{rank }H_{n-1}(M\# N) &+ \text{rank }H_{n-1}(M) +\text{rank }H_{n-1}(N) = 0 \\
+            \implies \text{rank }H_{n-1}(M\# N) &= \text{rank }H_{n-1}(M) +\text{rank }H_{n-1}(N).
+        \end{aligned}
+    \] 
+    Since $H_{n-1}(M)$ has no torsion part, $H_{n-1}(N)$ has torsion exactly $\Z /2$, and $H_{n-1}(M\# N)$ has torsion exactly $\Z /2$, we also get our isomorphism $H_{n-1}(M\# N) \cong H_{n-1}(M)\oplus H_{n-1}(N)$.
+
+     \begin{partproblem}{c} 
+         Assume that $M$ and $N$ are compact. If $M$ and $N$ are both nonorientable, prove that
+         \[
+             H_i(M\#N)\cong H_i(M)\oplus H_i(N)
+         \] 
+         for $0<i<n-1$, whereas $H_{n-1}(M\# N)$ is obtained from $H_{n-1}(M)\oplus H_{n-1}(N)$ by replacing a $\Z /2\Z$ by a $\Z$ summand. 
+     \end{partproblem}
+
+     \quad We can use the proof of the previous problem to get the isomorphism $H_i(M\# N)\cong H_i(M)\oplus H_i(N)$ for $0 < i < n-1$. For the case when $i=n-1$, we'll used the rank formula proved in the previous problem:
+     \[
+        \begin{aligned}
+            0 - 0 - 0 + 1 - \text{rank }H_{n-1}(M\# N) &+ \text{rank }H_{n-1}(M) +\text{rank }H_{n-1}(N) = 0 \\
+            \implies \text{rank }H_{n-1}(M\# N) &= \text{rank }H_{n-1}(M) +\text{rank }H_{n-1}(N)+1.
+        \end{aligned}
+    \]
+    Since the torsions of $H_{n-1}(M)$, $H_{n-1}(N)$, and $H_{n-1}(M\# N)$ are exactly $\Z /2$, yet the rank of $H_{n-1}(M\# N)$ is one more than the sum of the ranks of $H_{n-1}(M)$ and $H_{n-1}(N)$. This gives exactly the effect described in the problem statement: $H_{n-1}(M\# N)$ is congruent to $H_{n-1}(M)\oplus H_{n-1}(N)$ but we take out a $\Z/2$ and replace it with a $\Z$.   
+\end{solution}
+
+\begin{problem}
+    Let $M$ denote a compact connected $3$-manifold.
+\end{problem}
+
+\begin{solution}
+    Suppose that $H_1(M)\cong \Z^{\oplus r}\oplus F$ for a finite abelian group $F$ and nonnegative integer $r$. 
+    \begin{partproblem}{a}
+        If $M$ is orientable, prove that $H_2(M)\cong \Z^{\oplus r}$.
+    \end{partproblem}
+
+    \quad Since $M$ is an orientable, compact, connected manifold, we know that $H_3(M)\cong \Z$. We can apply the Poincar\'e duality isomorphism $H_k(M) \cong H^{n-k}(M)$ to get $H_2(M)\cong H^1(M)$. In order to calculate $H^1(M)$, we'll use the universal coefficients theorem, which gives us the exact sequence:
+    \begin{center}
+        \begin{tikzcd}
+            0 \arrow[r] & \Ext^1_\Z(H_0(M), \Z) \arrow[r]& H^1(M) \arrow[r]& \Hom_\Z (H_1(M), \Z) \arrow[r] &0
+        \end{tikzcd}
+    \end{center}
+    Since $H_0(M)=\Z$, the Ext term vanishes and so $H^1(M)\cong \Hom_\Z(H_1(M), \Z)$. However $H_1(M)\cong \Z^{\oplus r}\oplus F$ and so $\Hom_\Z(H_1(X), \Z)\cong \Z^{\oplus r}$ as desired.
+
+    \begin{partproblem}{b}
+        If $M$ is nonorientable, prove that $H_2(M)\cong \Z^{\oplus r-1}\oplus \Z /2$. In particular, one must have $r\geq 1$ in this case. % coefficients + UCT
+    \end{partproblem}
+
+    \quad Recall that for a a nonorientable compact manifold $M$, we have $\text{tor }H_{n-1}(M) \cong \Z /2$ and $H_n(M)\cong 0$. We also know that the Euler characteristic of an odd dimensional manifold is zero by Poincar\'e duality, so we have
+    \[
+        \text{rank }H_0(M) - \text{rank }H_1(M) + \text{rank }H_2(M) - \text{rank }H_3(M) = 0
+    .\]   
+    Since $\text{rank}(H_0(M))=1$ because $M$ is connected, $\text{rank}(H_1(M)) = r$ and $\text{rank}(H_3(M)) = 0$, we have the identity $\text{rank}(H_2(M)) = r-1$. Thus,
+    \[
+        H_2(M) \cong \Z^{\oplus r - 1}\oplus \Z / 2
+    .\] 
+
+    % \quad In this case, we cannot apply Poincar\'e duality as we did in the previous part because $M$ is not orientable. However, like all manifolds, it is $\F_2$-orientable, so we know that there is an isomorphism $H_k(M; \F_2)\cong H^{n-k}(M; \F_2)$. This means that $H_2(M; \F_2) \cong H^1(M; \F_2)$. The universal coefficients theorem states that for cohomology there is an exact sequence:
+    % \begin{center}
+    %     \begin{tikzcd}
+    %         0 \arrow[r] & \Ext^1_{\F_2}(H_0(M; \F_2), \F_2) \arrow[r]& H^1(M; \F_2) \arrow[r]& \Hom_{\F_2} (H_1(M; \F_2), \F_2) \arrow[r] &0
+    %     \end{tikzcd}
+    % \end{center}
+    % Recall that $H_0(M; \F_2)\cong \F_2$ so the Ext term vanishes. Also by the universal coefficients theorem for homology, we have \[H_1(M; \F_2)\cong (H_1(M)\otimes \F_2)\oplus \Tor^{\F_2}_1(H_0(M), \F_2) \cong \F_2^{\oplus r}\oplus \text{tors}_2\, F\]
+    % Since the linear dual of this group is itself, we have a isomorphism $H^1(M; \F_2)\cong \F_2^{\oplus r}\oplus \text{tors}_2\, F$, which by duality is isomorphic to $H_2(M; \F_2) \cong \F_2^{\oplus r} \oplus \text{tors}_2\; F$. 
+\end{solution}
+
+\end{document}

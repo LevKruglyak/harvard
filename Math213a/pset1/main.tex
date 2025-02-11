@@ -1,0 +1,243 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+\lightmode
+
+\title{\textbf{Math 213a Problem Set 1}}
+\date{\textbf{Due: } Tuesday, September 12}
+
+\begin{document}
+\maketitle
+
+\begin{problem}\noindent
+    Let $T\subset \R^3$ be the spherical triangle defined by $x^2+y^2+z^2=1$ and $x,y,z\geq 0$.
+\end{problem}
+
+\begin{solution}
+    Let $\alpha = z\;dx\;dz$.
+
+    \begin{partproblem}{a}
+        Find a smooth $1$-form $\beta$ on $\R^3$ such that $\alpha = d\beta$.
+    \end{partproblem}
+
+    \quad Consider the $1$-form $\beta = xz\; dz$. Then $d\beta = (x\; dz + z\; dx)\wedge dz = z\;dx\wedge dz = \alpha$.
+
+    \begin{partproblem}{b}
+        Define consistent orientations for $T$ and $\partial T$.
+    \end{partproblem}
+
+    \quad Let $\psi$ be the graph parametrization of $T$, i.e. the diffeomorphism $\psi : Q_1 \to T$ given by \[\psi(u,v)=(u,v,\sqrt{1-u^2-z^2}),\] and $Q_1$ the first quadrant of the unit disk. The standard orientation on $\R^2$ induces an orientation on $Q_1$, which in turn can be pulled back to get an orientation on $T$ and $\partial T$. This looks like the counterclockwise orientation when viewed from above,i.e. by collapsing $z$.
+
+    \begin{partproblem}{c}
+        Using your choices in (b), compute $\int_T \alpha$ and $\int_{\partial T} \beta$ directly, and check that they agree. (Why should they agree?)
+    \end{partproblem}
+
+    \quad First note that the pullback form $\psi^*\alpha$ is given by
+    \[
+        \begin{aligned}
+            \psi^*\alpha = z(u,v)\;du\wedge d(z(u,v)) = z(u,v)\;du\wedge \left(-\frac{u}{z(u,v)}\;du-\frac{u}{z(u,v)}\;dv\right) = -v\;du\wedge dv.
+        \end{aligned}
+    \] 
+    Our orientation on $T$ was induced by this pullback, so this form is $-v\;dA$ where $dA$ is the standard area form on $\R^2$. Then standard calculus gives us:
+
+    \[
+        \int_T \alpha = \int_{Q_1} -v\;du\wedge dv=\int_0^{\pi / 2}\int^1_0 -r^2\sin\theta\;dr\wedge d\theta = - \frac{1}{3}
+    .\] 
+    On the other hand, to calculate the integral of $\beta$ over $\partial T$, we split it into disjoint segments. Since $\beta=xz\;dz$ vanishes along the lines $x=0$ and $z=0$, we only need to integrate it over the intersection of $\partial T$ with the line $y=0$. This can be parametrized by some $\phi : [0,1]\to \partial T$ given by
+    \[
+        \phi(t) = \left(t, 0, \sqrt{1-t^2}\right),
+    \]
+    and this clearly respects the standard orientation when $[0,1]$ is considered as a subspace $[0,1]\times \{0\}\subset Q_1$. The pullback form $\phi^*\beta$ is now given by
+    \[
+        \begin{aligned}
+            \phi^*\beta = tz(0,t)\;dz(0,t) = -t^2\;dt.
+        \end{aligned}
+    \]
+    Thus, we can evaluate the integral
+    \[
+        \int_{\partial T} \beta = \int_{[0,1]} -t^2\;dt = -\frac{1}{3}
+    .\]  
+    This agrees with the earlier theorem since Stoke's theorem holds true for compact smooth manifolds with boundary.
+\end{solution}
+
+\begin{problem}
+    Let $f(z)= (az+b)/(cz+d)$ be a M\"obius transformation. Show that the number of rational maps $g : \widehat{\C} \to \widehat{\C}$ such that
+    \[
+        g(g(g(g(g(z))))) = f(z)
+    \]
+    is $1, 5,$ or $\infty$. Explain how to determine which alternative holds for a given $f$.  
+\end{problem}
+
+\begin{solution}
+    \quad We will use the following classic facts about M\"obius transformations:
+    \begin{claim}
+        Let $f$ be a M\"obius transformation. Exactly one of the following holds true:
+        \begin{enumerate}
+            \item $f$ is the identity.
+            \item $f$ has exactly one fixed point, and must be conjugate to a map of the form $f(z)=z+b$.
+            \item $f$ has exactly two fixed points, and must be conjugate to a map of the form $f(z)=az$.
+        \end{enumerate}
+    \end{claim}
+
+    \begin{claim}
+        Every (rational) automorphism of the Riemann sphere is a M\"obius transformation.
+    \end{claim}
+
+    \quad Now first of all, it's clear that $g$ must be an automorphism of the Riemann sphere, so $g$ is a M\"obius transformation. We have three cases to check:
+
+    \textbf{\underline{Case 1:}} $f$ is the identity.
+
+    \quad In this case, let $\zeta\neq 1$ be a fifth root of unity and $a,b\in \C$ with $|a|, |b| > 1$. Then the map
+    \[
+        g = \left(\frac{z-a}{z-b}\right)\cdot \zeta z\cdot \left(\frac{z-a}{z-b}\right)^{-1}
+    \]
+    satisfies $g^{\circ 5} = f$, so there are infinitely many solutions.
+
+    \textbf{\underline{Case 2:}} $f$ has one fixed point.
+
+    \quad In this case, $f$ must be conjugate to some map of the form $z+b$ for $b\neq 0$. Since repeated composition preserves conjugation, we can assume without loss of generality that $f(z)=z+b$. Since repeated composition also preserves fixed points, we know also that $g$ can have at most one fixed point, so it has a fixed point as well, and must also be of the form $z+b'$. The only possible $b'$ is $b /5$, so we have one solution.
+
+    \textbf{\underline{Case 3:}} $f$ has two fixed points.
+
+    \quad In this case, $g$ must also have two fixed points since if it had one, then $f$ would as well. Thus both maps are conjugate to $f(z)=az$. The only solutions are thus $g(z)=a'z$ where $a'$ are fifth roots of $a$, which is exactly five since $a\neq 1$.
+\end{solution}
+
+\begin{problem}
+    Let $\tanh(z)$ be the hyperbolic tangent.
+\end{problem}
+
+\begin{solution}
+    Let $\sum a_n z^n$ be the Taylor series for $\tanh(z)$ at $z=0$.
+    \begin{partproblem}{a}
+        What is the radius of convergence of this power series?
+    \end{partproblem}
+
+    \quad We know that $\tanh$ is a meromorphic function, and can be expressed as 
+    \[
+        \tanh(z) = \frac{e^{2z}-1}{e^{2z}+1}
+    .\]
+    Thus, the radius of convergence is the radius of the largest circle which does not include any of the poles. Since the poles of this function are the solutions to $e^{2z}=-1$, this radius of convergence is $\pi /2$.
+
+    \begin{partproblem}{b}
+        Show that $a_5 = 2 /15$.
+    \end{partproblem}
+
+    \quad Recall that by using the Taylor series for $\sinh(x)$ and $\cosh(x)$ at $0$, we get the following power series identity:
+
+    \[
+        \left(1+\frac{z^2}{2}+\frac{z^4}{24}+\frac{z^6}{720}+\cdots\right)\cdot (a_0+a_1z+a_2z^2+a_3z^3+a_4z^4+a_5z^5+\cdots) = z+\frac{z^3}{6}+\frac{z^5}{120}+\cdots
+    .\] 
+
+    By expanding and solving for the coefficients, we get:
+    \[
+        a_0 = 0,\quad a_1 = 1, \quad a_2 = 0, \quad a_3 = - \frac{1}{3},\quad a_4 = 0,\quad a_5 = \frac{2}{15}
+    .\] 
+
+    \begin{partproblem}{c}
+        Give an explicit value of $N$ such that $\tanh(1)$ and $\sum^N_0 a_n$ agree to within $\epsilon = 10^{-1000}$. Justify your answer.
+    \end{partproblem}
+
+    \quad Recall that Taylor's theorem implies that for some radius $1<R<\pi /2$, the error term of the Taylor series up to $N$ is bounded by:
+    \[
+        |E_N(1)| \leq \frac{\max_{z\in S^1(R)} \tanh(z)}{R^N(R-1)} = \frac{M_R}{R^N(R-1)}
+    .\] 
+
+    IF we want $|E_N(1)|\leq \epsilon$, we have the inequality:
+    \[
+        \frac{M_R}{R^N(R-1)}\leq \epsilon\quad\implies\quad N \geq \frac{\log M_R - \log (R - 1) -\log \epsilon}{\log R}
+    .\] 
+    If we set $R=1.5$, we just need to calculate $M_R$ to get an $N$ which satisfies the error rate. This is quite tedious to do by hand, so I wrote a Rust program which samples 100 million points along the circle of radius $R$ to find the maximum magnitude of $\tanh(z)$. Since neither the function nor its derivative has any poles in an $\epsilon$-neighborhood of this circle, we can rest assured that no significantly higher bounds can slip between our samples.
+
+\begin{lstlisting}
+use num::complex::Complex;
+use std::f64::consts::PI;
+
+fn main() {
+    let radius = 1.5;
+    let iterations = 100_000_000;
+
+    let max_magnitude = (0..iterations)
+        .map(f64::from)
+        .map(|n| 2.0 * PI * n / iterations as f64)
+        .map(|theta| Complex::from_polar(radius, theta))
+        .map(Complex::tanh)
+        .map(Complex::norm)
+        .filter(|x| f64::is_finite(*x))
+        .fold(f64::NEG_INFINITY, |a, b| a.max(b));
+
+    println!("maximum magnitude = {:?} on R = {radius:?}", max_magnitude);
+}
+\end{lstlisting}
+
+Running this code gives:
+
+\begin{lstlisting}
+$ maximum magnitude = 14.10141994717166 on R = 1.5
+\end{lstlisting}
+
+For safety, we'll increase this maximum to $M_R = 15$. Plugging this into the above inequality, we get:
+\[
+    N \geq \frac{\log 15 - \log 0.5 + 1000}{\log 1.5} > 5688
+.\] 
+
+\end{solution}
+
+\begin{problem}
+    Let $f : U \to V$ be a proper local homeomorphism between a pair of open sets $U, V\subset \C$. Prove that $f$ is a covering map. (Here \emph{proper} means that $f^{-1}(K)$ is compact whenever $K\subset V$ is compact.)
+\end{problem}
+
+\begin{solution}
+    \quad Assume $V$ is connected, otherwise this problem statement is false as the map won't be surjective. Now let $v\in V$ be an arbitrary point. We can shrink $V$ to be a compact set containing $v$, and let $U=f^{-1}(V)$ also be compact. Note that since $\{v\}$ is a compact set, $f^{-1}(v)$ is a compact set as well. Since it is a closed, discrete, compact subset of a compact space it must be finite. For each $u_i\in f^{-1}(v)$, choose some open neighborhood $U_i$ of $u_i$ such that $\restr{f}{U_i}$ is a homeomorphism. We can further shrink each $U_i$ to be disjoint since there are only a finite number. Finally, it follows by local homeomorphism that $\bigcap f(U_i)$ is an evenly-covered neighborhood of $v$, and so $f$ is a covering map.
+\end{solution}
+
+\begin{problem}
+    Let $f : \C \to \C$ be given by a polynomial of degree $2$ or more. Let
+    \[
+        V_1 = \{f(z) : f'(z) = 0\}\subset \C
+    \] 
+    be the set of critical values of $f$, let $V_0 = f^{-1}(V_1)$, and let $U_i = \C - V_i$ for $i=0,1$. Prove that $f: U_0 \to U_1$ is a covering map.
+\end{problem}
+
+\begin{solution}
+    \quad First of all, notice that every polynomial is proper because the inverse of any closed and bounded region is closed and bounded. Then it is a local homeomorphism at every regular point because of the inverse function theorem. So it is a covering map by the previous problem.
+\end{solution}
+
+\begin{problem}
+    Give an example where $U_0 / U_1$ is a normal (or Galois) covering, i.e. where $f_*(\pi_1(U_0))$ is a normal subgroup of $\pi_1(U_1)$.
+\end{problem}
+
+\begin{solution}
+    \quad Consider the parabola $f(z) = z^2$. This has one critical point and value, so $\pi_1(U_1)\cong \Z$. This is abelian, so every subgroup is normal. 
+\end{solution}
+
+\end{document}

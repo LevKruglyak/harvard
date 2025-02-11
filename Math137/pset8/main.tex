@@ -1,0 +1,93 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 137 Problem Set 8}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with AJ LaMotta and Ellen Fitzsimons for this problem set.}
+\end{center}
+
+\begin{problem}
+    We call $P\in K^n$ a \emph{point of symmetry} for a subset $S\subseteq K^n$ if the reflection $2P-Q$ across $P$ of any point $Q\in S$ lies in $S$. Assuming that $K$ has characteristic zero, show that any nonempty algebraic subset $S\subseteq K^n$ that doesn't contain a straight line has at most one point of symmetry.
+\end{problem}
+
+\begin{solution}
+    Suppose $S\subset K^n$ is an algebraic subset with no straight lines in it. Further suppose that $S$ has two points of symmetry, say $P_1, P_2\in S$. Then by the conditions of symmetry and since we're in characteristic zero, we have a countably infinite set of points $k(P_1-P_2)+P_1$ which must be in $S$. Now consider the line $L$ traced out by $t(P_1-P_2)+P_1\subset K^n$ for $t\in \R$. Then $L\cap S$ should be an algebraic set. It can't be zero dimensional because zero dimensional sets are finite, yet $L\cap S$ contains an infinite number of points. So it must be one dimensional, and hence $L\cap S = L$. This means that $L\subset S$, a contradiction. So $S$ has at most one point of symmetry.
+\end{solution}
+
+\begin{problem}
+    Let $\varphi:V\rightarrow W$ be a dominant morphism between irreducible algebraic sets. Assume that there is a nonempty Zariski open subset $U$ of $W$ such that $|\varphi^{-1}(w)|<\infty$ for all $w\in U$. Show that $\dim(V) = \dim(W)$.
+\end{problem}
+
+\begin{solution}
+    Recall Theorem~13.4.2 from the lectures:
+    \begin{ctheorem}{13.4.2} Let $\varphi : V \to W$ be a dominant morphism between irreducible algebraic sets. If $B\subset W$ is irreducible and $A$ is an irreducible component of $\varphi^{-1}(B)$ with $\overline{\varphi(A)}=B$, then 
+    \[
+        \textrm{codim}(A, V) \leq \textrm{codim}(B, W)
+    .\] 
+    \end{ctheorem}
+    Applying this theorem, we let $B=\{w\}$ for some point $w\in W$ with $|\varphi^{-1}(w)|>0$. Such a point must exist because $\varphi$ is dominant and a map between irreducible algebraic sets. Then $A=\varphi^{-1}(w)$ clearly satisfies the conditions of the theorem, so we have
+    \[
+        \textrm{codim}(\varphi^{-1}(w), V)\leq \textrm{codim}(\{w\}, W) \implies \dim(V) \leq \dim(W)
+    .\] 
+    Conversely, we have $\dim(V) \geq \dim(W)$ because $\varphi$ is dominant, so we have equality $\dim(V)=\dim(W)$.
+\end{solution}
+
+\begin{problem}
+    For $r\leq n$, consider the set $V_r\subseteq M_n(K)$ of $n\times n$-matrices of rank at most $r$. You've shown on problem set 4 that $V_r$ is an algebraic subset of $M_n(K) = K^{n\times n}$. Show that its dimension is $2nr - r^2$.
+\end{problem}
+
+\begin{solution}
+    In a rank at most $r$ matrix, there are no more than $r$ linearly independent rows in the matrix, with the rest being linear combinations of the $r$ rows. This motivates the following construction: For any subset $S\subset \{1,\ldots, n\}$ of size $r$, let $\varphi_S : K^{rn+(n-r)r} \to V_r$ be the map which sends the first $r$ vectors of size $n$ to the $S$ rows in the matrix, and writing the remaining $n-r$ rows as a linear combination of the first $r$ vectors using the $(n-r)r$ remaining coefficients. Then
+    \[
+        V_r = \bigcup_{S\in \mathcal{P}(\{1,\ldots,n\})} \overline{\varphi_S(K^{nr+(n-r)r})}
+    .\] 
+    Notice that all of these maps are dominant finite, so we get that the dimension of $V_r$ is the dimension of $K^{nr+(n-r)r}$, which is $2nr-r^2$.
+\end{solution}
+
+\begin{problem}
+    Let $V\subseteq K^n$ be an irreducible algebraic set and let $P\in K^n$ be a point not contained in $V$. Show that the Zariski closure of the join of $V$ and $\{P\}$ has dimension $\dim(V)+1$.
+\end{problem}
+
+\begin{solution}
+    First, we'll prove a lemma about joins:
+    \begin{ilemma}
+        Let $V,P$ be as in the problem. Then $\overline{J(V,\{P\})}$ is irreducible.
+    \end{ilemma}
+    \begin{proof}
+        Consider the morphism $\varphi : V\times K \to K^n$ given by $\varphi(x, t) = tx + (1-t)P$. Then $J(V,\{P\})$ is the image of this morphism, so since $V\times K$ is irreducible, it follows that $\overline{J(V,\{P\})}$ must be as well.
+    \end{proof}
+    The morphism from the lemma gives restricts to a dominant morphism $V\times K \to \overline{J(V,\{P\})}$ so since both are irreducible, $\dim(\overline{J(V,\{P\})}) = \dim(V)+1=n+1$.
+\end{solution}
+
+\begin{problem}[bonus]
+    Let $V_1,\dots,V_m$ be any irreducible algebraic subsets of $K^n$ of codimension at least $2$. Show that there is an irreducible algebraic subset $W\subsetneq K^n$ containing $V_1\cup\cdots\cup V_m$.\\
+    \textbf{Hint:} What is the dimension of the space of polynomials of degree at most $d$ vanishing on $V_1\cup\cdots\cup V_m$? What is the dimension of the space of polynomials that are not irreducible?
+\end{problem}
+
+\begin{problem}
+    Let $n\geq2$ and $d\geq1$. Consider the vector space $F_d\cong K^{\binom{n+d}{n}}$ of polynomials $f$ in $K[X_1,\dots,X_n]$ of degree at most $d$. Show that there is a function $0\neq r\in\Gamma(F_d)$ (a polynomial in the $\binom{n+d}{n}$ coefficients of $f$) such that $r(f) = 0$ for all reducible polynomials $f\in F_d$.
+\end{problem}
+
+\begin{solution}
+    Let's consider the space $V\subset F_d$ which is the Zariski closure of the set of all reducible polynomials in $F_d$. We proved in lecture that
+    \[
+        \dim V\leq \binom{a+n}{n}+\binom{b+n}{n}-1
+    \] 
+    for any positive integers $a,b$ which sum to $d$. Recall that for any integer $m>0$, we have
+    \[
+        \binom{m+n}{n}=\frac{(m+n)!}{m!\cdot n!}=\frac{(m+1)(m+2)\cdots(m+n)}{n!} = \frac{p(m)}{n!}+1.
+    \] 
+    where $p(m)=(m+1)(m+2)\cdots(m+n)-n!$. Notice that $p(m)$ is a degree $n\geq 2$ polynomial with no constant term, and since $a,b\geq 1$ we have the inequality $a^k+b^k< (a+b)^k$ for all $k\geq 2$. This means $p(a)+p(b)<p(d)$ so
+    \[
+        \binom{a+n}{n}+\binom{b+n}{n} = \frac{p(a)+p(b)}{n!}+2< \frac{p(d)}{n!}+1=\binom{d+n}{n}.
+    \] 
+    Since $\dim V < \dim F_d$, $V$ is a proper subspace of $F_d$. Hilbert's Nullstellensatz then implies that $\mathcal{I}_{F_d}(V)\neq \emptyset$, and so there must be some polynomial $r\in \mathcal{I}_{F_d}(V)$ which vanishes on $V$ but not on all of $F_d$.
+\end{solution}
+
+\end{document}

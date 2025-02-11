@@ -1,0 +1,92 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 137 Problem Set 4}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with AJ LaMotta for this problem set.}
+\end{center}
+
+Throughout, $K$ is assumed to be an algebraically closed field.
+
+\begin{problem}
+    Let $K=\mathbb C$ and for any integers $a,b\geq1$, consider the algebraic subset $V_{a,b}=\mathcal{V} (X^b-Y^a)$ of $\mathbb C^2$ and the morphism $\varphi_{a,b}:\mathbb C\rightarrow V_{a,b}$ sending $t$ to $(t^a,t^b)$.
+    \begin{enumerate}[(a)]
+        \item For which pairs $(a,b)$ is $\varphi_{a,b}$ injective?
+        \item For which pairs $(a,b)$ is $\varphi_{a,b}$ surjective?
+        \item For which pairs $(a,b)$ is $\varphi_{a,b}$ an isomorphism?
+        \item (bonus) For which pairs $(a,b)$ is $V_{a,b}$ isomorphic to $K$?
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Suppose $\varphi_{a,b}$ is a morphism. Then $\varphi_{a,b}$ is injective if and only if whenever $(t_1^a, t_1^b)=(t_2^a, t_2^b)$ we have $t_1=t_2$. So letting $z=t_1 /t_2$, this is equivalent to saying $z^a=1$ and $z^b=1$ implies $z=1$. Finding a $z\neq 1$ with $z^a=1$ and $z^b=1$ can only happen if $a$ and $b$ have a common divisor $d$, then $z$ is a $d$-th root of unity. So $\varphi_{a,b}$ is injective if and only if $a$ and $b$ are coprime.
+    
+    \textbf{(b)} This is only true if $a$ and $b$ are relatively prime. Note that if $a$ and $b$ are not relatively prime, say $d|a,b$, then $(1,e^{2\pi i /a})$ has no preimage. This is because for some $t^a=1$ and $t^b=e^{2\pi i /a}$, so $t$ is an $a$-th and $b$-th root of unity. This can't happen since $d|a,b$.  
+
+    \textbf{(c)} $\varphi_{a,b}$ is an isomorphism if and only if the pullback map $\widetilde{\varphi_{a,b}} : \Gamma(V_{a,b}) \to \Gamma(\C)$ is an isomorphism. Note that $\widetilde{\varphi_{a,b}} : \C[x,y]/(x^b-y^a) \to \C[t]$ maps $f(x,y)\mapsto f(t^a, t^b)$. So the image of $\widetilde{\varphi_{a,b}}$ is $\C[t^a, t^b]$. Thus for $\varphi_{a,b}$ to be an isomorphism, either $a$ or $b$ must be $1$. Conversely, if $a=1$ (without loss of generality), we have an inverse morphism $\varphi_{a,b}^{-1} : (t,t^b) \mapsto t$. So $\varphi_{a,b}$ is an isomorphism if and only if $a=1$ or $b=1$.
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Consider the algebraic set
+        \[
+            V=\{(x,y,z)\in K^3\mid x^2+y^2=z^2\}.
+        \]
+        Find a non-constant morphism $\varphi:K\rightarrow V$.
+        \item Consider the algebraic set
+        \[
+            W=\{(x,y)\in K^2\mid x^2+y^2=1\}.
+        \]
+        Assuming that the field $K$ has characteristic zero, show that there is no nonconstant morphism $\psi:K\rightarrow W$. 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Note that for any $m,n\in K$, we have the relation
+    \[
+        (m^2-n^2)^2+(2mn)^2=(m^2+n^2)^2
+    .\] 
+    Then for any $\alpha\in K$, we have the morphism $\varphi_\alpha : K \to V$ which takes $x$ to $(x^2-\alpha^2, 2x\alpha, x^2+\alpha^2)$.
+    
+    \textbf{(b)} We'll prove that any morphism $\psi : K \to W$ must be constant, so let $\psi$ be some morphism. Now consider the pullback map $\widetilde{\psi} : \Gamma(W) \to \Gamma(K)$. However $\Gamma(W)=K[x,y]/(x^2+y^2-1)$ and $\Gamma(K)=K[t]$. Let $i$ be a root of $x^2-1$ in $K$ (guaranteed because $K$ is algebraically closed field of characteristic zero), and consider the map $f : K[z,z^{-1}] \to K[x,y]/(x^2+y^2-1)$ where $z$ maps to $y-ix$ and $z^{-1}$ maps to $y+ix$. 
+    
+    This is clearly an isomorphism because it has inverse given by $x$ mapping to $(z-z^{-1}) /2i$ and $y$ mapping to $(z+z^{-1}) /2$. So $\widetilde{\psi} : \Gamma(W) \to \Gamma(K)$ can be thought of as a $k$-algebra map $K[z, z^{-1}] \to K[t]$. Such a map is determined by where $z$ goes. However $z$ is a unit in $K[z,z^{-1}]$, so it must map to $K\subset K[t]$. Thus the pullback map is constant, and so every morphism $\psi : K \to W$ must also be constant.
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Find algebraic subsets $V_1,V_2$ of $\mathbb C^2$ and functions $f_1\in\Gamma(V_1)$ and $f_2\in\Gamma(V_2)$ such that $f_1|_{V_1\cap V_2}=f_2|_{V_1\cap V_2}$ but there is no function $f\in\Gamma(V_1\cup V_2)$ with $f|_{V_1} = f_1$ and $f|_{V_2} = f_2$.
+        \item Corollary~6.2 from class can fail when $K$ is not algebraically closed: Find disjoint algebraic subsets $V_1,V_2$ of $\mathbb R^2$ and functions $f_1\in\Gamma(V_1)$ and $f_2\in\Gamma(V_2)$ such that there is no function $f\in\Gamma(V_1\cup V_2)$ such that $f|_{V_1} = f_1$ and $f|_{V_2} = f_2$.
+        \item Show that Corollary~6.3 from class still holds when $K$ is not algebraically closed: If $V\subseteq K^n$ is a finite set and $f:V\rightarrow K$ any function, there is a polynomial $g\in K[X_1,\dots,X_n]$ such that $f(P)=g(P)$ for all $P\in V$.
+    \end{enumerate}    
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $V_1=\mathcal{V}(y)$ and $V_2=\mathcal{V}(y-x^2)$. Define functions $f_1(x,y)=y\in \Gamma(V_1)$ and $f_2(x,y)=x\in\Gamma(V_1)$. The only place where these algebraic sets intersect is $(0,0)$, and $f_1(0,0)=f_2(0,0)=0$ so these satisfy the conditions of the problem. Now suppose for the sake of contradiction that $f\in \Gamma(V_1\cup V_2)$ with $\restr{f}{V_1}=f_1$ and $\restr{f}{V_2}=f_2$. This means that $f(x,0)=0$ and $f(x,x^2)=x$. Since $f(x,0)=0$, it follows that $f(x,y)=yg(x,y)$ for some polynomial $g(x,y)$. Yet $f(x,x^2)=x^2g(x,y)=x$. This is clearly impossible, just by looking at the degree of $x$ in both sides. So no such function exists. 
+    
+    \textbf{(b)} Let $V_1=\mathcal{V}(x^2-y+1)$, $V_2=\mathcal{V}(y)$, with $f_1=x^2+x\in \Gamma(V_1)$ and $f_2=x\in \Gamma(V_2)$. Suppose $f$ agrees with $f_1,f_2$ on $V_1,V_2$ respectively. Then $f(x,0)=x$ so $f(x,y)=x+yg(x,y)$. Thus $f(x,x^2+1)=x+(x^2+1)g(x,x^2+1)=x^2+x$, however this implies that $x^2|x^2+1$, a contradiction.
+
+    \textbf{(c)} Let $\{P_1\}, \{P_2\}, \ldots, \{P_n\}$ be the set of points in $V$. Note that they are all algebraic sets. Let $I_i=\mathcal{I}(\{P_i\})$. Note that $I_i+I_j=K[X_1,\ldots,X_n]$, and since all of $I_i$ are radical ideals, the Chinese remainder theorem implies that $\Gamma(V)\cong\Gamma(\{P_1\})\times\cdots\times \Gamma(\{P_n\})$ by the map sending $f$ to $(f(P_1), \ldots, f(P_n))$. This completes the proof, since we can pick a $f_i\in \Gamma(\{P_i\})$ taking on any value at $P_i$ and lift this to a polynomial $f\in \Gamma(V)$.
+\end{solution}
+
+\begin{problem}
+    Identify the space $M_n(K)$ of $n\times n$-matrices with entries in $K$ with the vector space $K^{n^2}$ (by sending a matrix $A$ to a vector consisting of its entries). For any $r\leq n$, consider the subset $V_r\subseteq M_n(K)=K^{n^2}$ of matrices of rank at most $r$.
+    \begin{enumerate}[(a)]
+        \item Show that $V_r$ is an algebraic subset of $K^{n^2}$.
+        \item Show that $V_r$ is an irreducible subset of $K^{n^2}$. 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Note that $V_r = \left\{ A\in M_n(K) \mid \det(U)=0 \textrm{ where } U \textrm{ is a } (r+1)\times (r+1) \textrm{ submatrix of }A\;\right\}.$ Since $\det(U)$ is a polynomial in the terms of $A$ for each $(r+1)$-submatrix $U$. Thus $V_r$ is the intersection of finitely many algebraic sets and so is an algebraic subset of $K^{n^2}$. 
+    
+    \textbf{(b)} Let $W_r\subset M_n(K)$ be the algebraic set of matrices of rank exactly $r$. Consider the irreducible algebraic subset $\GL_n(K)\times \GL_n(K)$ of $K^{2n^2}$. There is a Zariski continuous map $f : \GL_n(K)\times \GL_n(K) \to W_r$ given by $f(g,h)\mapsto gAh^{-1}$ for any rank $r$ matrix $A\in W_r$. Note that this map is surjective. Then by Problem 7 on Set 3, $\overline{f(\GL_n(K)\times\GL_n(K))}$ is irreducible. But $\overline{f(\GL_n(K)\times \GL_n(K))}=\overline{W_r}=W_r\sqcup W_{r-1}\sqcup\cdots\sqcup W_0=V_r$. So $V_r$ is irreducible.   
+\end{solution}
+
+\end{document}

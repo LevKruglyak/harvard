@@ -1,0 +1,30 @@
+\begin{problem}
+  \noindent
+  \begin{enumerate}
+    \item Let $k=\F_q$ be a finite field with $q$ elements, and consider the $3$-dimensional vector space $V=k^3$. How many one-dimensional subspaces ({\em lines through the origin}) are there in $V$? How many two-dimensional subspaces ({\em planes through the origin}) are there?
+    \item How many lines through the origin does each plane contain? How many
+    planes contain a given line through the origin?
+    \item The party game ``{\em Spot It!}'' (also known as {\em Dobble} overseas) features 55 cards, each of which has eight symbols printed on it, in such a way that any two cards have exactly one symbol in common. (In the game, each player looks at a pair of cards and tries to find their common symbol.) The ``Junior'' version of the game has 30 cards with six symbols each. How do you use geometry over finite fields, as in parts (1)(2), to build decks of cards with the required property? (Note: {\em Spot It} decks don't quite have the optimal number of cards.)
+  \end{enumerate}
+\end{problem}
+
+\textit{For the rest of the solution we'll the word ``one-dimensional subspace'' interchangeably with ``line''.}
+
+\textbf{(1)} We'll start with the number of lines. Suppose $L$ is a one-dimensional subspace of $V$. Then there must exist some basis vector $v\in V$ such that $w\in V$ implies $w=cv$ for some $c\in k$. So the set of lines (i.e. one-dimensional subspaces of $V$) can be thought of as the set of equivalence classes of $V-\{0\}$ under the equivalence relation $x\sim y$ iff $x=cy$ for some nonzero $c\in k$. These equivalence classes are all of size $q-1$, and there are $q^3-1$ total nonzero vectors, so the number of lines is exactly $(q^3-1) /(q-1)=q^2+q+1$.     
+
+Now for planes $P\subset V$, note that by the rank-nullity formula, the map $P \to \Ann(P)=\{v\in V^* : v(P)=0\}$ gives a bijection between planes in $V$ and lines in $V^*$. Since $\dim V^*=3$, there must be $q^2+q+1$ lines in $V^*$ by the preceding argument, hence $q^2+q+1$ planes in $V$.  
+
+\textbf{(2)} Fix some plane $P$. Since this is a $2$-dimensional space, by the same argument used in (1), there are exactly $(q^2-1) /(q-1)=q+1$ lines in $P$.
+
+Now fix some line $L$. Every plane $P$ containing $L$ has $\Ann(L)$ containing $\Ann(P)$. $\Ann(L)$ is a two dimensional subspace of $V^*$ and $\Ann(P)$ is a one dimensional subspace. There is actually a two way correspondence between lines in planes in $V^*$ and planes containing a line in $V$. To get from $V$ to $V^*$ use the annihilator and to get from $V^*$ to $V$ take the kernel. So the number of planes containing a given line is $q+1$, the same as the number of lines contained in a plane. 
+
+So by the preceding argument there are $q+1$ planes intersecting the line.      
+
+\begin{lemma}
+  In any $3$-dimensional vector space, two distinct planes must intersect at a line.
+\end{lemma}
+\begin{proof}
+  Let $P_1, P_2\subset V$ be planes in the vector space. Then $\dim P_1\cap P_2 \leq 2$. $\dim P_1\cap P_2\neq 2$, since we assumed the planes were distinct. Also $\dim P_1\cap P_2\neq 0$, since then the direct sum $P_1\oplus P_2$ would have dimension $4$, which is impossible in a $3$-dimensional vector space. So $\dim P_1\cap P_2=1$, and the planes intersect at a line.       
+\end{proof}
+
+\textbf{(3)} Suppose we wish to have $N$ symbols on a card. Consider the vector space $K=\F_{N-1}^3$. Label each of the $(N-1)^2+(N-1)+1=N^2-N-1$ lines in $K$ with a unique symbol. Then to build our deck of cards look at the set of planes in $K$. By (2), each plane contains $(N-1)+1=N$ lines (i.e. symbols). Furthermore, by the Lemma, they intersect at a line. So these cards only have one symbol in common.  

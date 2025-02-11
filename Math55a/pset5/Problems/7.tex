@@ -1,0 +1,20 @@
+\begin{problem}
+Let $V$ be an $n$-dimensional vector space over a field $k$, with $\ch(k)\neq 2$. The set of bilinear forms $V\times V\to k$ has the structure of a vector space $B(V)$, of dimension $n^2$. We say that a bilinear form is {\em symmetric} if $b(v,w)=b(w,v)$ for all $v,w\in V$, {\em skew-symmetric} if $b(v,w)=-b(w,v)$ for all $v,w\in V$.
+
+\begin{enumerate}
+  \item Show that the subset $B_{\mathrm{symm}}(V)\subset B(V)$ of symmetric bilinear forms is a subspace of $B(V)$, and calculate its dimension.
+  \item Similarly, show that the subset $B_{\mathrm{skew}}(V)\subset B(V)$ of skew-symmetric bilinear forms is a subspace of $B(V)$ and calculate its dimension.
+  \item Show that $B(V)=B_{\mathrm{symm}}(V)\oplus B_{\mathrm{skew}}(V)$. Does this remain true if $\ch(k)=2$?
+\end{enumerate}
+\end{problem}
+\textit{(See the appendix for definitions and lemmas)}
+
+\textbf{(1)} By Proposition~\ref{dimsymm}, $\dim B_{\mathrm{symm}}(V) = \binom{n+1}{2}$.  
+
+\textbf{(2)} By Proposition~\ref{dimskew}, $\dim B_{\mathrm{skew}}(V) = \binom{n}{2}$.
+
+\textbf{(3)} If $\ch(k)=2$, then symmetric and skew-symmetric forms are the same, so they can't be a direct sum because they have non-trivial intersection. Now suppose $\ch(k)\neq 2$. Then $B_{\mathrm{symm}}(V)\cap B_{\mathrm{skew}}(V)=0$ since $-x=x$ implies $x=0$. Also we can write every bilinear form $T$ as
+\[
+  T(v,w) = \frac{T(v,w)+T(w,v)}{2}+\frac{T(v,w)-T(w,v)}{2}
+.\] 
+The first term is symmetric and the second term is skew-symmetric so $B(V)=B_{\mathrm{symm}}(V)\oplus B_{\mathrm{skew}}(V)$.        

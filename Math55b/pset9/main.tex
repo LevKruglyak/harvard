@@ -1,0 +1,383 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 55b Problem Set 9}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Let $\gamma:[0,1]\to \R^2$ be a smooth loop enclosing a region $U$. Use Stokes' theorem to prove that the area of $U$ is equal to \[\frac12 \int_0^1 \det(\gamma(t),\gamma'(t))\,dt.\] 
+\end{problem}
+
+\begin{solution}
+    By definition, the area of $U$ is equal to the integral $\int_U dA=\int_U dx\wedge dy$, which by Stokes' theorem is equal to
+    \[
+        \int_U dx\wedge dy = \int_{\partial U} x\,dy=\int_{\partial U} -y\,dx = \frac{1}{2}\int_{\partial U}x\,dy-y\,dx
+    \]  
+    since $d(x\wedge dy)=dx\wedge dy$ and $d(-y\wedge dx) = -dy\wedge dx = dx\wedge dy$. Then by the pullback formula,
+    \[
+        \begin{aligned}
+            \frac{1}{2}\int_{\partial U} x\,dy - y\,dx = \frac{1}{2}\int_{\gamma([0,1])} x\,dy-y\,dx &= \frac{1}{2}\int^1_0 \gamma^*(x\,dy-y\,dx)\\
+            &= \frac{1}{2}\int^1_0(\gamma_x(t)\gamma'_y(t)-\gamma_y(t)\gamma'_x(t))\,dt\\
+            &= \frac{1}{2}\int^1_0\det(\gamma(t), \gamma'(t))\,dt
+        \end{aligned}
+    \]
+    where $\gamma(t)=(\gamma_x(t),\gamma_y(t))$.    
+\end{solution}
+
+\begin{problem}
+    Consider the $1$-form $\alpha=x\,dy+y\,dz+z\,dx$ on $\R^3$, and the 2-form $\beta=d\alpha$. Let $C=[-1,1]^3$ be the unit cube in $\R^3$, and $T$ its top face (the square $-1\leq x\leq 1$, $-1\leq y\leq 1$ in the plane $z=1$).
+
+    \begin{enumerate}[(a)]
+        \item Calculate directly the integral of $\alpha$ along the boundary of $T$ oriented counterclockwise (when seen from above the cube), by integrating along the four edges. Then verify that this is equal to the integral over $T$ of the 2-form $\beta$, as predicted by Stokes' theorem.
+        \item What values do you obtain if you carry out the same calculation for every face of the cube? (don't write down all the integrals! argue using symmetry). What do the six quantities add up to, when all faces are oriented consistently around the cube?
+        \item Explain the result you found in (b) in two ways: (i) by expressing the sum as a sum of path integrals; (ii) by applying Stokes' theorem to the cube $C$. 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Integrating along the $4$ edges, we get
+    \[
+        \int_{\partial T}\alpha = \int^{-1}_1dx+\int_1^{-1}-dy+\int_{-1}^1dx+\int_{-1}^1dy = 2\int^1_{-1} dy=4
+    .\] 
+    Stokes' theorem implies that this should be equal to 
+    \[
+        \begin{aligned}
+        \int_{T}\beta=\int_T dx\wedge dy+\int_T dy\wedge dz+\int_T dz\wedge dx=\int_T dx\wedge dy=4
+        \end{aligned}
+    .\] 
+    
+    \textbf{(b)} The bottom face evaluates to $-4$ since it is oriented in the opposite direction. Similarly, the front face $(x=1)$ evaluates to $4$, and the $(x=-1)$ face evaluates to $-4$. The same thing happens for the $y$ faces. So the sum over all the faces is zero.
+
+    \textbf{(c)} Applying Stokes' theorem, notice that $\partial C = \emptyset$ so the integral should evaluate to $0$. Similarly, if we use Stokes' theorem on the individual faces, we get a sum of path integrals which cancel out because of the orientation of the faces. (This is quite tedious to draw in TikZ.)
+\end{solution}
+
+\begin{problem}[Spherical area in rectangular coordinates]
+    Consider the 2-form $\omega=x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy$ on $\R^3$, and its integral $\int_U \omega$ over a sufficiently nice portion of the unit sphere, $U\subset S^2$. To make things more concrete we view $U$ as the image of a domain $V\subset \R^2$ under some parametrization of the sphere $f:(u,v)\mapsto f(u,v)=(x(u,v),y(u,v),z(u,v))$. (The choice is irrelevant, but for example one could use spherical angles).
+    
+    \begin{enumerate}[(a)]
+        \item Express the volume of the spherical shell $\Sigma$ with base $U$, inner radius $a$ and outer radius $b$, i.e.\ the image of $[a,b]\times V$ under the map $F(r,u,v)=r\,f(u,v)$, in terms of $a$, $b$, and $\int_U\omega$.
+        \item By considering the case $a=1$ and $b=1+h$ for $h\to 0$ in the above, deduce that $\int_U\omega$ is equal to the area of $U$. You may use without proof the fact that the volume of the thin shell $\Sigma$ is approximately the thickness $h$ times the area of $U$.
+        \item Use Stokes' theorem to verify that $\int_{S^2}\omega$ (i.e., the area of $S^2$) is equal to 3 times the volume of the unit ball (in agreement with the formulas you learned in high school).
+        \item \textbf{(Optional, extra credit)} Explain how the definition of $\omega$ and the results in (a)-(c) above 
+        generalize to the $(n-1)$-dimensional volume element on the unit sphere $S^{n-1}$ in $\R^n$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    Let $f_x,f_y,f_z : V \to \R$ denote the component functions of $f$.
+
+    \textbf{(a)} To calculate the volume of $\Sigma=F([a,b]\times V)$, we can use the pullback formula to get
+    \[
+        \textrm{vol}(\Sigma)=\int_{\Sigma} dx\wedge dy\wedge dz = \int_{F([a,b]\times V)} dx\wedge dy\wedge dz = \int_{[a,b]\times V} F^*(dx\wedge dy\wedge dz)
+    .\] 
+    To calculate a nice form for the pullback form $F^*(dx\wedge dy\wedge dz)$, we can calculate each of the components $F^*(dx), F^*(dy), F^*(dz)$ separately, getting:
+    \[
+        \begin{aligned}
+            F^*(dx)&=f_x\,dr + r\frac{\partial f_x}{\partial u}\, du+r\frac{\partial f_x}{\partial v}\,dv,\\
+            F^*(dy)&=f_y\,dr + r\frac{\partial f_y}{\partial u}\, du+r\frac{\partial f_y}{\partial v}\,dv,\\
+            F^*(dz)&=f_z\,dr + r\frac{\partial f_z}{\partial u}\, du+r\frac{\partial f_z}{\partial v}\,dv.
+        \end{aligned}
+    \]  
+    Putting these all together using the alternating multilinear properties of the wedge product, we get
+    \[
+        F^*(dx\wedge dy\wedge dz)=\begin{vmatrix}
+            f_x&r\frac{\partial f_x}{\partial u}&r\frac{\partial f_x}{\partial v}\\[1ex]
+            f_y&r\frac{\partial f_y}{\partial u}&r\frac{\partial f_y}{\partial v}\\[1ex]
+            f_z&r\frac{\partial f_z}{\partial u}&r\frac{\partial f_z}{\partial v}\\
+        \end{vmatrix}dr\wedge du\wedge dv = \left|\frac{\partial F}{\partial (r,u,v)}\right| dr\wedge du\wedge dv
+    .\] 
+    Now on the other side, let's calculate $\int_U \omega = \int_{f(V)} \omega = \int_V f^*(\omega)$. As can be seen, this involves calculating $f^*(\omega)$. We'll begin by calculating the component forms $f^*(dx), f^*(dy), f^*(dz)$: 
+    \[
+        \begin{aligned}
+            f^*(dx)=\frac{\partial f_x}{\partial u}\, du+\frac{\partial f_x}{\partial v}\,dv,\quad
+            f^*(dy)=\frac{\partial f_y}{\partial u}\, du+\frac{\partial f_y}{\partial v}\,dv,\quad
+            f^*(dz)=\frac{\partial f_z}{\partial u}\, du+\frac{\partial f_z}{\partial v}\,dv.
+        \end{aligned}
+    \]
+    Then expanding these expressions we get
+    \[
+        \begin{aligned}
+            f^*(\omega)&=f^*(x\,dy\wedge dz)+f^*(y\,dz\wedge dx)+f^*(z\,dx\wedge dy)\\
+            &= f_x\cdot f^*(dy)\wedge f^*(dz)+f_y\cdot f^*(dz)\wedge f^*(dx)+f_z\cdot f^*(dx)\wedge f^*(dy)\\
+            &=f_x\left(\frac{\partial f_y}{\partial u}\, du+\frac{\partial f_y}{\partial v}\,dv\right)\wedge \left(\frac{\partial f_z}{\partial u}\, du+\frac{\partial f_z}{\partial v}\,dv\right)
+            +f_y\left(\frac{\partial f_z}{\partial u}\, du+\frac{\partial f_z}{\partial v}\,dv\right)\wedge \left(\frac{\partial f_x}{\partial u}\, du+\frac{\partial f_x}{\partial v}\,dv\right)\\
+            &+f_z\left(\frac{\partial f_x}{\partial u}\, du+\frac{\partial f_x}{\partial v}\,dv\right)\wedge\left(\frac{\partial f_y}{\partial u}\, du+\frac{\partial f_y}{\partial v}\,dv\right).
+        \end{aligned}
+    \]   
+    This in turn is implies that
+    \[
+        r^2\left(f_x\begin{vmatrix}
+            \frac{\partial f_y}{\partial u}&\frac{\partial f_y}{\partial v}\\[1ex]
+            \frac{\partial f_z}{\partial u}&\frac{\partial f_z}{\partial v}\\
+        \end{vmatrix} - f_y\begin{vmatrix}
+            \frac{\partial f_x}{\partial u}&\frac{\partial f_x}{\partial v}\\[1ex]
+            \frac{\partial f_z}{\partial u}&\frac{\partial f_z}{\partial v}\\
+        \end{vmatrix} + f_z\begin{vmatrix}
+            \frac{\partial f_x}{\partial u}& \frac{\partial f_x}{\partial v}\\[1ex]
+            \frac{\partial f_y}{\partial u}& \frac{\partial f_y}{\partial v}\\
+        \end{vmatrix}\right) du\wedge dv = \begin{vmatrix}
+            f_x&r\frac{\partial f_x}{\partial u}&r\frac{\partial f_x}{\partial v}\\[1ex]
+            f_y&r\frac{\partial f_y}{\partial u}&r\frac{\partial f_y}{\partial v}\\[1ex]
+            f_z&r\frac{\partial f_z}{\partial u}&r\frac{\partial f_z}{\partial v}\\
+        \end{vmatrix} du\wedge dv
+    \]
+    by expansion of minors. So we have the relation $F^*(dx\wedge dy\wedge dz)={r^2}dr\wedge f^*(\omega)$. Thus we have
+    \[
+        \int_{[a,b]\times V} F^*(dx\wedge dy\wedge dz)=\int_{[a,b]\times V} r^2\,dr\wedge f^*(\omega)=\left(\frac{b^3-a^3}{3}\right)\int_V f^*(\omega)
+    .\] 
+    So to summarize, we have
+    \[
+        \textrm{vol}(\Sigma) = \left(\frac{b^3-a^3}{3}\right)\int_U \omega
+    .\] 
+    
+    \textbf{(b)} For any $h>0$, we have the bounds
+    \[
+        \mathrm{area}(U)\leq \frac{\mathrm{vol(\Sigma)}}{h} \leq (1+h)^2\,\mathrm{area(U)}
+    \] 
+    where $\mathrm{area}(U)$ is the area of the interior face $U$ on the unit sphere and $(1+h)^2\mathrm{area(U)}$ is the area of the exterior face $U$ on the sphere of radius $(1+h)$. Then
+    \[
+        \mathrm{area}(U) = \lim_{h\to 0}\frac{\mathrm{vol(\Sigma)}}{h}=\lim_{h\to 0}\frac{(1+h)^3-1}{3h}\int_U\omega=\lim_{h\to 0}\left(\frac{h^2}{3}+h+1\right)\int_U\omega= \int_U \omega
+    .\] 
+
+    \textbf{(c)} Let $B^3\subset \R^3$ be the unit ball. Then by Stokes' theorem and (a)-(b), we have
+    \[
+        \mathrm{vol}(B^3)=\int_{B^3} dx\wedge dy\wedge dz  = \frac{1}{3}\int_{\partial B^3}x\,dy\wedge dz-y\,dx\wedge dz+z\,dx\wedge dz = \frac{1}{3}\int_{S^2}\omega = \frac{1}{3}\,\mathrm{area}(S^2)
+    \]
+    since $d(x\,dy\wedge dz-y\,dx\wedge dz+z\,dx\wedge dz)=3dx\wedge dy\wedge dz$.  
+    
+    \textbf{(d)} Here is the generalization:
+    \begin{claim}
+        For any $n\geq 2$, we have the following relation:
+        \[
+            \mathrm{vol}(B^n) = \frac{1}{n}\,\mathrm{area}(S^{n-1})
+        .\] 
+    \end{claim}
+    \begin{proof}
+        Let $V\subset \R^{n-1}$ be some domain, and $f : V \to U\subset S^{n-1}$ be some smooth parametrization. Given some inner radius $a$ and outer radius $b$, consider the spherical shell $\Sigma$ as the image of $[a,b]\times V$ under the map $F(r,v)=rf(v)$. First we'll compute the volume of the spherical shell $\Sigma$ in terms of a particular integral. Letting $x_i$ be the standard coordinate functions on $\R^n$ and $u_i$ the coordinate functions on $V$, note that
+        \[
+            \mathrm{vol}(\Sigma)=\int_{\Sigma}dx_1\wedge\cdots\wedge dx_n = \int_{F([a,b]\times V)}dx_1\wedge\cdots\wedge dx_n=\int_{[a,b]\times V}F^*(dx_1\wedge\cdots\wedge dx_n)
+        .\] 
+        Since for any $i$, we have
+        \[
+            F^*(dx_i)=x_i(f)\,dr+r\sum^{n-1}_{j=1}\frac{\partial x_i(f)}{\partial u_j}du_j
+        \]
+        where with a slight abuse of notation we use $x_i(f)$ to mean the $i$-th component function of $f$. Then using the alternating multilinear properties of the wedge product, we obtain
+        \[
+            \begin{aligned}
+                F^*(dx_1\wedge\cdots\wedge dx_n)=\begin{vmatrix} x_1(f)&r\frac{\partial x_1(f)}{\partial u_1}&\cdots&r\frac{\partial x_1(f)}{\partial u_{n-1}}\\ \vdots & \vdots & \ddots & \vdots\\ x_n(f)&r\frac{\partial x_n(f)}{\partial u_1}&\cdots&r\frac{\partial x_n(f)}{\partial u_{n-1}} \end{vmatrix}&dr\wedge du_1\wedge\cdots \wedge du_{n-1}\\
+                    &=|\mathcal{J}|\,dr\wedge du_1\wedge\cdots\wedge du_{n-1}.
+            \end{aligned}
+        \] 
+    We'll expand this determinant using cofactor expansion. Let $\mathcal{J}_i$ be the submatrix of $\mathcal{J}$ obtained by deleting the $j$-th row and first column. Cofactor expansion tells us that
+    \[
+        |\mathcal{J}|=\sum^{n}_{i=1}(-1)^{i+1}|\mathcal{J}_i| 
+    .\]  
+    This motivates us to consider the differential form $\omega=\sum^n_{i=1}(-1)^{i+1}x_i\left(dx_1\wedge\cdots\overline{dx_i}\cdots\wedge dx_n\right)$, where $\overline{dx_i}$ means that we don't include $dx_i$ in the wedge product. Then by properties of the wedge product we get
+    \[
+        \begin{aligned}
+        f^*(\omega)=\sum^{n}_{i=1}f^*((-1)^{i+1}x_i(dx_1\wedge\cdots\overline{dx_i}\cdots\wedge dx_n))&=\left(\sum^n_{i=1}(-1)^{i+1}\frac{1}{r^{n-1}}|\mathcal{J}_i|\right)dr\wedge du_1\wedge\cdots\wedge du_{n-1}\\
+        &=\frac{1}{r^{n-1}}|\mathcal{J}|dr\wedge du_1\wedge\cdots\wedge du_{n-1}.
+        \end{aligned}
+    \] 
+    So putting this all together we have
+    \[
+        \begin{aligned}
+            \textrm{vol}(\Sigma)=\int_{[a,b]\times V} |\mathcal{J}|\,dr\wedge du_1\wedge\cdots\wedge du_{n-1}&=\left(\int_a^b r^{n-1}dr\right)\int_Vf^*(\omega)&=\left(\frac{b^n-a^n}{n}\right)\int_V f^*(\omega)\\
+            &=\left(\frac{b^n-a^n}{n}\right)\int_U \omega
+        \end{aligned}
+    \]             
+    Next, notice that for any $h>0$ we have bounds
+    \[
+        \textrm{area}(U)\leq \frac{\textrm{vol}(\Sigma)}{h}\leq (1+h)^{n-1}\textrm{area}(U)
+    \]
+    where as before $\textrm{area}(U)$ is the area of the interior face on the unit $n-1$-sphere and $(1+h)^{n-1}\textrm{area}(U)$ is the area on the $n-1$-sphere of radius $(1+h)$. We then have
+    \[
+        \textrm{area}(U)=\lim_{h\to 0}\frac{\textrm{vol}(\Sigma)}{h}=\lim_{h\to 0}\frac{(1+h)^n-1}{nh}\int_U \omega = \int_U \omega
+    .\]
+    We are almost done; letting $B^n\subset \R^n$ be the unit $n$-ball, by Stokes' theorem we have
+    \[
+        \textrm{vol}(B^n)=\int_{B^n} dx_1\wedge\cdots\wedge dx_n = \frac{1}{n}\int_{S^{n-1}}\omega=\frac{1}{n}\,\textrm{area}(S^{n-1})
+    .\]  
+    \end{proof}
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Use the 2-form \[\sigma=\dfrac{x\,dy\wedge dz+y\,dz\wedge dx+z\,dx\wedge dy}{ (x^2+y^2+z^2)^{3/2}}\] on $\R^3-\{0\}$ to show that the inclusion map $i:S^2\to \R^3-\{0\}$ is not smoothly homotopic to a constant map.
+        \item \textbf{(Optional, extra credit)} Formulate and prove the analogous statement for the unit sphere in $\R^n$.
+    \end{enumerate}
+
+% Hint: apply Stokes' theorem to the pullback of $\sigma$ under $f$ (or, if the idea of a 2-form on $S^2\times [0,1]$ is too confusing, a closely related map whose domain is a spherical shell in $\R^3$). Feel free to rely on results of the previous problem to find the integral of $\sigma$ on the unit sphere.
+
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Suppose for the sake of contradiction that $i : S^2 \to \R^3-\{0\}$ is smoothly homotopic to a constant map. This means that there is a smooth map $H : [0,1]\times S^2 \to \R^3-\{0\}$ with $\restr{f}{\{0\}\times S^2} = i$ and $\restr{f}{\{1\}\times S^2}$ a constant map. This can be composed with a diffeomorphism to get a smooth map $\widetilde{H} : [1,1+\epsilon]\times S^2 \to \R^3-\{0\}$ for any $\epsilon > 0$. Now we consider $[1,1+\epsilon]\times S^2\subset \R^3-\{0\}$ with the natural inclusion, and $\restr{\widetilde{H}}{\{1\}\times S^2} = i$ and $\restr{\widetilde{H}}{\{1+\epsilon\}\times S^2}$ is constant. Now notice that applying Stokes' theorem, we get
+    \[
+        \begin{aligned}
+            \int_{[a,b]\times S^2} \widetilde{H}^*(d\sigma) = \int_{\{1\}\times S^2}\widetilde{H}^*(\sigma)+\int_{\{1+\epsilon\}\times S^2} \widetilde{H}^*(\sigma) = \int_{S^2} \sigma
+        \end{aligned}
+    \] 
+    where the last equality follows from the restriction properties of $\widetilde{H}$. Note that $\sigma=\frac{\omega}{(x^2+y^2+z^2)^{\frac{3}{2}}}$ where $\omega=x\;dy\wedge dz+y\;dz\wedge dx+z\;dx\wedge dy$ from the previous problem. Notice that as elements of $\Omega^2(S^2)$, $\sigma=\omega$ because $x^2+y^2+z^2=1$ for any point on the unit sphere. Thus $\int_{S^2} \sigma = \int_{S^2}\omega=3\,\textrm{vol}(B^3)=4\pi$. 
+
+    On the other hand, notice that $\sigma$ is closed because
+    \[
+        \begin{aligned}
+            d\sigma &= \left(\frac{-2x^2+y^2+z^2}{(x^2+y^2+z^2)^{5 /2}} + \frac{x^2-2y^2+z^2}{(x^2+y^2+z^2)^{5 /2}}+\frac{x^2+y^2-2z^2}{(x^2+y^2+z^2)^{5 /2}}\right) dx\wedge dy\wedge dz = 0.
+        \end{aligned}
+    \]
+    So $\int_{[a,b]\times S^2}\widetilde{H}^*(d\sigma)=0$. Since $0\neq 4\pi$, we must have a contradiction, so $H$ cannot be smooth.  
+    
+    \textbf{(b)} Here is the generalization:
+    \begin{claim}
+        For any $n\geq 2$, the inclusion map $i : S^{n-1}\to \R^n-\{0\}$ is not smoothly nullhomotopic.
+    \end{claim}
+    \begin{proof}
+        The proof will be similar. Suppose for the sake of contradiction that $i : S^{n-1} \to \R^n-\{0\}$ is smoothly homotopic to a constant map, say $H : [0,1]\times S^{n-1}\to \R^n-\{0\}$. We can do the same trick with the diffeomorphism to get a smooth map $\widetilde{H} : [1,1+\epsilon]\times S^{n-1}\to \R^n-\{0\}$. Now consider the differential form
+        \[
+            \sigma=\frac{\omega}{\left(\sum^n_{i=1}x_i^2\right)^{n /2}} = \frac{\sum^n_{i=1}(-1)^{i+1}x_i\left(dx_1\wedge\cdots\overline{dx_i}\cdots\wedge dx_n\right)}{\left(\sum^n_{i=1}x_i^2\right)^{n /2}}\in \Omega^{n-1}(\R^n-\{0\})
+        ,\]   
+        borrowing notation from the previous problem. Observe that applying Stokes' theorem, we get
+        \[
+            \int_{[1,1+h]\times S^{n-1}} \widetilde{H}^*(d\sigma)=\int_{\{1\}\times S^{n-1}}\widetilde{H}^*(\sigma)+\int_{\{1+\epsilon\}}\widetilde{H}^*(\sigma)=\int_{S^{n-1}}\sigma
+        .\] 
+        As before, $\sigma$ and $\omega$ are the same form in $\Omega^{n-1}(S^{n-1})$, so $\int_{S^{n-1}}\sigma = \int_{S^{n-1}} \omega = n\,\textrm{vol}(B^n)>0$. 
+        
+        On the other hand, $\sigma$ is closed because
+        \[
+            d\sigma=\sum_{i=1}^n\frac{\partial}{\partial x_i}\left(\frac{x_i}{\left(\sum^n_{j=1}x_j^2\right)^{n /2}}\right)dx_1\wedge\cdots dx_n=\sum^n_{i=1}\left(\frac{-(n-1)x_i^2+\sum^n_{j=1, j\neq i}x_j^2}{\left(\sum^n_{j=1}x_j^2\right)^{n -\frac{1}{2}}}\right)dx_1\wedge\cdots dx_n=0
+        \] 
+        so $\int_{[1,1+h]\times S^{n-1}}\widetilde{H}^*(d\sigma)=0$, a contradiction. Thus the inclusion map is not smoothly nullhomotpic. 
+    \end{proof}
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item For any smooth function $f:U\to\C$, $U\subset\C$, define $$\frac{\partial f}{\partial z}=\frac12\left(\frac{\partial f}{\partial x}-i\frac{\partial f}{\partial y}\right) \quad \text{and} \quad \frac{\partial f}{\partial \overline{z}}=\frac12\left(\frac{\partial f}{\partial x}+i\frac{\partial f}{\partial y}\right).$$ Show that $df=(\partial f/\partial z)\,dz + (\partial f/\partial \overline{z})\,d\overline{z}$, and that $f$ is analytic if and only if $\partial f/\partial \overline{z}=0$, in which case $f'(z)=\partial f/\partial z$. 
+         
+        \item Show that a smooth function $f:U\to\C$ is analytic if and only the function $g(z)=\overline{f(\overline{z})}$ (defined on the image of $U$ by the complex conjugation map) is analytic. 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Note that $dz=dx+i\,dy$ and $d\overline{z} = dx-i\,dy$. Then
+    \[
+        \begin{aligned}
+            \left(\frac{\partial f}{\partial z}\right)dz + \left(\frac{\partial f}{\partial \overline{z}}\right)d\overline{z} &= \frac{1}{2}\left(\frac{\partial f}{\partial x} - i\frac{\partial f}{\partial y}\right)(dx+i\,dy)+\frac{1}{2}\left(\frac{\partial f}{\partial x} + i\frac{\partial f}{\partial y}\right)(dx-i\,dy)\\
+            &=\frac{\partial f}{\partial x}\,dx+\frac{\partial f}{\partial y}\, dy = df.
+        \end{aligned}
+    \] 
+    Next, note that if $\frac{\partial f}{\partial \overline{z}}=0$, then this is equivalent to 
+    \[
+        \frac{1}{2}\left(\frac{\partial f}{\partial x}+i\frac{\partial f}{\partial y}\right)=0\implies \frac{\partial f}{\partial x}=-i\frac{\partial f}{\partial y}
+    .\] 
+    Letting $f(x,y)=u(x,y)+iv(x,y)$, this gives the system
+    \[
+        \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}\quad\textrm{ and }\quad \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}
+    .\]  
+    These is exactly the Cauchy-Riemann equations, which are equivalent (for smooth $f$) to the function being analytic when considered as a complex function.
+    
+    \textbf{(b)} Suppose $f$ is analytic. Then, if $f(x,y)=u(x,y)+iv(x,y)$, the Cauchy-Riemann equations give us
+    \[
+        \frac{\partial u}{\partial x} = \frac{\partial v}{\partial y}\quad\textrm{ and }\quad \frac{\partial v}{\partial x} = -\frac{\partial u}{\partial y}
+    .\] 
+    Then by simple properties of conjugation we have $g(x,y)=u(x,-y)-iv(x,-y)$, yet
+    \[
+        \frac{\partial u}{\partial x} = -\frac{\partial v}{\partial (-y)}\quad\textrm{ and }\quad -\frac{\partial v}{\partial x} = -\frac{\partial u}{\partial (-y)}
+    .\]  
+    Since these equations still hold, it follows that $g$ is also analytic. Applying the same conjugation operation to $g$ gives back $f$ so this works in the backwards direction as well. 
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item What is the general form of a rational function $f$ whose absolute value is 1 at every point of the unit circle $|z|=1$? How are the zeroes and poles of $f$ related to each other? 
+%(Hint: consider the rational function $g(z)=1/\overline{f(1/\overline{z})}$)
+        \item What is the general form of a rational function $f$ which defines a homeomorphism from the closed unit disc $\{|z|\leq 1\}$ to itself?  Show that the set of such rational functions is a group under composition (called the group of complex automorphisms of the unit disc).
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Given a rational function with $|f(e^{i\theta})|=1$ for all $\theta\in \R$, consider the function $m_f(z)$ defined by $m_f(z)=f(z)\overline{f(1 /\overline{z})}$. Then for any $\theta\in\R$, we have $m_f(z)=f(e^{i\theta})\overline{f(1 /\overline{e^{i\theta}})} = f(e^{i\theta})\overline{f(e^{i\theta})}=|f(e^{i\theta})|=1$. Then $m_f$ is a constant function since it is a rational function equal to $1$ at infinitely many points. Thus we have the relation
+    \[
+        f(1/\overline{z}) = 1/\overline{f(z)}
+    .\]    
+    Thus any nonzero $k$-order zero $\zeta$ of $f$ corresponds to a $k$-order pole ${1}/{\overline{\zeta}}$ of $f$ and vice versa. Geometrically, this amounts to reflection about the unit circle. Letting $\zeta_1,\ldots,\zeta_n$ be the set of zeroes of $f$, each with order $a_i$ we thus have the expansion
+    \[
+        f(z)=e^{i\theta} z^{a_0}\prod^n_{k=1}\left(\frac{z-\zeta_k}{\overline{\zeta_k}z-1}\right)^{a_k}
+    \]
+    where $\theta\in \R$ and $a_0$ is the order of the zero at $z=0$. (If $f(0)\neq 0$, $a_0=1$)
+    
+    \textbf{(b)} Since any homeomorphism of the unit disk to itself must preserve the boundary, we are looking for a subset of functions found in (a). First observe that since the function must be bijective, we can only have one zero, so the function is of the form
+    \[
+        f(z)=e^{i\theta} z^{n}\quad\mathrm{or}\quad f(z)=e^{i\theta} \left(\frac{z-\zeta}{\overline{\zeta}z-1}\right)^n
+    \]
+    for some nonzero $\zeta\in \C$, $n\in \Z$, and $\theta\in \R$. Note that we require $|\zeta| < 1$ or else the function would become a constant function. Next, note that $n$ must be equal to $1$, otherwise we could multiply by a $n$-th root of unity to get a repeated value. We can finally arrive at the final form,
+    \[
+        f(z)=e^{i\theta}\left(\frac{z-\zeta}{\overline{\zeta}z-1}\right)
+    \]
+    for any $\theta\in \R$ and $|\zeta|<1$. It's straightforward to see why this is a homeomorphism using the basic properties of M\"obius transformations. We claim that operations of this form a group under composition. The identity is clear, $f(z)=z$. Same goes for associativity. To prove closure, let $\zeta_1,\zeta_2$ be in the interior of the unit disk and $\theta_1,\theta_2\in \R$. Closure is tedious, but easy to check. The inverse is given by
+    \[
+        f^{-1}(z)=-e^{i\theta}\frac{z-\zeta}{-\overline{\zeta}z-1}
+    .\] 
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Express $f(z)=\dfrac{1}{(1-z)^m}$ as a power series in $z$, for $m$ a positive integer. 
+        \item Show that, for every polynomial $p$, the power series $\sum p(n)z^n$ represents a rational function. What is the radius of convergence of the series? What are the poles of the rational function? 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} We claim that
+    \[
+        \frac{1}{(1-z)^m}=\sum_{k=0}^\infty\binom{k}{m}z^k.
+    \]
+    (wherever both sides are defined) This can be proved using induction; note that $\frac{1}{1-z}=\sum^{\infty}_{k=0}z^k$ by a simple geometric series. Then assuming $\frac{1}{(1-z)^m}=\sum^\infty_{k=0}\binom{k}{m-1}z^k$, we have
+    \[
+        \begin{aligned}
+            \frac{1}{(1-z)^m}=\frac{1}{(1-z)^{m-1}(1-z)} =\left(\sum^\infty_{k=0}\binom{k}{m-1}z^k\right)\left(\sum^\infty_{\ell=0}z^\ell\right)&=\sum^\infty_{k=0}\left(\binom{k}{m-1}+\binom{k}{m}\right)z^{k+1}\\
+            &=\sum^\infty_{k=0} \binom{k}{m}z^k.
+        \end{aligned}
+    \]
+    
+    \textbf{(b)} For any polynomial $p(z)\in \C[z]$ we can use Newton's interpolation formula to get coefficients $c_m$ such that $p(n)=\sum^\infty_{m=0}c_m\binom{n}{m}$. Then by (a), we have the expansion
+    \[
+        \begin{aligned}
+            \sum^\infty_{n=0}p(n)z^n = \sum^\infty_{n=0}\left(\sum^\infty_{m=0}c_m\binom{n}{m}\right)z^n&=\sum^\infty_{m=0}c_m\left(\sum^\infty_{n=0}\binom{n}{m}z^n\right)\\
+            &=\sum^\infty_{m=0}\frac{c_m}{(1-z)^m}
+        \end{aligned}
+    \]  
+    which is a rational function since only finitely many of the $c_m$ are nonzero. To calculate te radius of convergence of this series, we can use the Cauchy-Hadamard theorem:
+    \[
+        R = \frac{1}{\limsup_{n\to \infty} |p(n)|^{\frac{1}{n}}}    
+    .\] 
+    We claim that $R=1$. To prove this, first observe that
+    \[
+        \limsup_{n\to \infty} |p(n)|^{\frac{1}{n}} = \exp\left(\limsup_{n\to \infty} \log \left(|p(n)|^{\frac{1}{n}}\right)\right) = \exp\left(\limsup_{n\to \infty}\frac{\log |p(n)|}{n}\right).
+    \]  
+    Assuming without loss of generality that $n$ is bigger than the largest root of $p(n)$, the limsup version of L'Hopital's rule implies that 
+    \[
+        \limsup_{n\to \infty} \frac{\log |p(n)|}{n} \leq \limsup_{n\to \infty} \frac{\pm p'(n)}{p(n)}=0
+    .\] 
+    So $\limsup_{n\to \infty} |p(n)|^{\frac{1}{n}}=e^0=1$, so the radius of convergence is $R=1$.
+\end{solution}
+
+\begin{problem}
+    Suppose $f(z)=\sum^\infty_{n=0} a_n z^n$ is analytic over the unit disc (in particular the radius of convergence of the power series is at least 1). Prove that for any $r<1$ we have \[\dfrac{1}{2\pi} \displaystyle \int_0^{2\pi} |f(re^{i\theta})|^2\,d\theta=\sum^\infty_{n=0} |a_n|^2 r^{2n}.\] %(Hint: Fourier series.)
+\end{problem}
+
+\begin{solution}
+    Observe that $f(re^{i\theta})=\sum_{n=0}^\infty a_n r^n e^{ni\theta}$. So if we fix $r<1$, we can consider $f(re^{i\theta})$ as a real, complex valued function, and so we can apply Parseval's theorem from Fourier analysis to get
+    \[
+        \sum^\infty_{n=0} |a_n|^2 r^{2n}=\sum^{\infty}_{n=0} \left|a_nr^n\right|^2=\frac{1}{2\pi}\int^{2\pi}_0 |f(re^{i\theta})|^2d\theta
+    \]
+    as desired.  
+\end{solution}
+
+\end{document}

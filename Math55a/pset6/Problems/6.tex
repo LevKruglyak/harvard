@@ -1,0 +1,53 @@
+\begin{problem}
+Let $V$ be a complex vector space of dimension $n$, and denote by $W$ the same set $V$ viewed as a $2n$-dimensional vector space over $\R$. If $H : V \times V \to \C$ is a Hermitian pairing, we denote by $G$ and $B$ the two maps $W\times W\to \R$ defined by the real and imaginary parts of $H$: 
+\[G(v,w)=\Re\, H(v,w)\quad \text{and} \quad B(v,w)=\Im\, H(v,w).\]
+We also denote by $J:W\to W$ the linear operator which corresponds to scalar multiplication by $i$ acting on $V$, $J(v)=iv$.
+\begin{enumerate}[(a)]
+  \item Show that $G$ is a symmetric bilinear form on $W$, nondegenerate if and only if $H$ is nondegenerate.
+  \item Show that $B$ is a skew-symmetric bilinear form on $W$, nondegenerate if and only if $H$ is nondegenerate.
+  \item Assume $H$ is non-degenerate. Show that, for a linear operator $T:W\to W$, any two of the following three properties imply the third one:
+  \begin{itemize}
+  \item[(i)] $T$ preserves $G$, i.e.\ $G(T(u),T(v))=G(u,v)$ for all $u,v\in W$.
+  \item[(ii)] $T$ preserves $B$, i.e.\ $B(T(u),T(v))=B(u,v)$ for all $u,v\in W$.
+  \item[(iii)] $T$ is complex linear, i.e.\ $T\circ J=J\circ T$.
+  \end{itemize}
+\end{enumerate}
+\end{problem}
+\textit{(Hint: first show that $G(u,v)=B(u,Jv)$ for all $u,v\in W$.)}
+
+\textbf{(a)} Bilinearity of $G$ follows because of the sesquilinearity of $H$, since $G(\lambda v, w)=\overline{\lambda}G(v,w)$ however if $\lambda\in \R$ it is equal to it's conjugate so $G(\lambda v, w)=\lambda G(v,w)$. The second term preserves scalar multiplication by the definition of sesquilinearity. Both terms also preserve addition by definition of sesquilinear form. $G$ is symmetric because $G(v,w)=\Re H(v,w)=\Re \overline{H(w,v)} = G(w,v)$. The degeneracy condition follows simply from the definitions.
+
+\textbf{(b)} Bilinearity is implied by a similar argument to (a). The skew-symmetry comes from the fact that $B(v,w)=\Im H(v,w)= \Im \overline{H(w,v)} = -B(w,v)$. The non-degeneracy argument is essentially the same as for (a). 
+
+\textbf{(c)} It's clear to see from the definitions that $G(u,v)=B(u,Jv)$. Also $J$ is an isomorphism. Now suppose (i) and (ii) are true. We first claim that $T$ is an isomorphism. For injectivity, suppose $v\in V$ with $Tv=0$. Assume for the sake of contradiction that $v\neq 0$. Then $w\in V$ be some other vector with $G(v,w)\neq 0$. Then $G(v,w)=G(T(v),T(w))=G(0, T(w))=0$, a contradiction. So $v=0$ and the kernel is trivial. Then since $V$ is an injective operator, it must be an isomorphism. Now let $u,v\in V$ be arbitrary. Then
+\[
+  \begin{aligned}
+    B(T(u), T\circ J(v)-J\circ T(v))&= B(T(u), T\circ J(v))-B(T(u), J\circ T(v))\\
+    &=B(u, J(v))-G(T(u), T(v))\\
+    &=G(u, v)-G(u,v)=0.
+  \end{aligned}
+\]  
+Since $T(u)$ ranges freely over $V$, $T\circ J-J\circ T=0$ so (iii) is true.
+
+Next suppose (i) and (iii). Then
+\[
+  \begin{aligned}
+    B(T(u), T(v))&=B(T(u), T\circ J(J^{-1}(v)))\\
+    &=B(T(u), J\circ T(J^{-1}(v)))\\
+    &=G(T(u), T(J^{-1}(v)))\\
+    &=G(u, J^{-1}(v))\\
+    &=B(u,v).
+  \end{aligned}
+\]
+
+Finally suppose (ii) and (iii). Then
+\[
+  \begin{aligned}
+    G(T(u), T(v))&=G(T(u), J^{-1}(J\circ T(v)))\\
+    &=B(T(u), J\circ T(v))\\
+    &=B(T(u), T\circ J(v))\\
+    &=B(u, J(v))\\
+    &=G(u,v).
+  \end{aligned}
+\] 
+This concludes the proof.

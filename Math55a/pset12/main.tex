@@ -1,0 +1,155 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble.tex}
+
+\title{\textbf{Math 55a Problem Set 12}}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+\begin{itemize}
+  \item How long did this assignment take you? -- 
+  \item How hard was it? -- 
+  \item What resources did you use and how much help did you need? -- 
+  \item Did you have any prior experience with this material? -- 
+\end{itemize}
+
+\pagebreak
+\begin{problem}
+    Recall that $S_4$ is the group of rotations of a cube in $\R^3$. Denoting the coordinates by $(x,y,z)$, this gives an action of $S_4$ on the space $V_d$ of polynomials of degree $d$ (with complex coefficients) in the variables $x,y,z$.  Describe the representations $V_1$ and $V_2$, and express them as direct sums of irreducible representations of $S_4$. Which degree 2 polynomials $f(x,y,z)$ are invariant under $S_4$?
+\end{problem}
+
+Letting $S_4$ act on the cube by permuting diagonals, it is clear that any rotation of the cube acts on $\R^3$ by permuting $x,y,z$ and switching signs, i.e. $x\mapsto -x$. To determine the direct sum decomposition, we start by looking at a character table for $S_4$.
+
+\begin{center}
+\begin{tabular}{ c|ccccc } 
+    & 1 & 6 & 3 & 8 & 6\\
+    $S_4$ & $e$ & $(12)$ & $(12)(34)$ & $(123)$ & $(1234)$ \\
+\hline
+    $\chi_{\C^+}$ & 1 & 1 & 1 & 1 & 1\\
+    $\chi_{\C^-}$ & 1 & -1 & 1 & 1 & -1\\
+    $\chi_{\C_3^+}$ & 3 & 1 & -1 & 0 & -1\\
+    $\chi_{\C_3^-}$ & 3 & -1 & -1 & 0 & 1\\
+    $\chi_{\C_2}$ & 2 & 0 & 2 & -1 & 0
+\end{tabular}
+\end{center}
+
+Observe that $\dim V_1=4$ and $\dim V_2=10$. A simple check shows that the characters $\chi_{V_1}, \chi_{V_2}$ take on values:
+
+\begin{center}
+\begin{tabular}{ c|ccccc } 
+    & 1 & 6 & 3 & 8 & 6\\
+    $S_4$ & $e$ & $(12)$ & $(12)(34)$ & $(123)$ & $(1234)$ \\
+\hline
+    $\chi_{V_1}$ & 4 & 0 & 0 & 1 & 2\\
+    $\chi_{V_2}$ & 10 & 2 & 2 & 1 & 2
+\end{tabular}
+\end{center}
+
+Using the inner product formulae, we get the following decompositions:
+\[
+    V_1 = \C^-_3\oplus \C^+,\quad\textrm{ and }\quad V_2=(\C^+)^{\oplus 2} \oplus \C_3^+\oplus \C_3^-\oplus \C_2
+.\] 
+
+Finally, we claim that the invariant degree two polynomials are exactly the set
+\[
+    V_2^{S_4}=\{a(x^2+y^2+z^2)+b \mid a,b\in \C, a\neq 0\}
+.\] 
+
+This is because all invariant terms with single degrees in each variable such as $xy$ must be invariant under the substitution $x\mapsto -x$ and $y\mapsto -y$. This cancels all terms not of the form $x^2,y^2,z^2$. Furthermore, the coefficient of each of these must be the same.
+
+\pagebreak
+\begin{problem}
+    View again $S_4$ as the group of rotations of a cube in $\R^3$.
+    \begin{enumerate}[(a)]
+       \item Let $V$ be the (8-dimensional) permutation representation associated to the action of $S_4$ on the set of vertices of the cube. Express $V$ as a direct sum of irreducible representations of $S_4$.
+       \item Do the same for the permutation representation associated to the action of $S_4$ on the set of edges of the cube.
+    \end{enumerate}
+\end{problem}
+
+\pagebreak
+\begin{problem}
+    Let $V$ be the standard representation of $S_5$.
+    \begin{enumerate}[(a)]
+        \item Find the expression of $V\otimes V$ as a direct sum of irreducible representations of $S_5$.
+        \item Which terms in your answer to part (a) lie in $\Sym^2(V)$, and which ones lie in $\wedge^2 V$?
+    \end{enumerate}
+\end{problem}
+
+First, we'll write out the character table for $S_5$.
+
+
+
+\textbf{(a)}
+
+\textbf{(b)}
+
+\pagebreak
+\begin{problem}
+    Let $p\ge 3$ be a prime, and consider the dihedral group 
+    \[
+        D_p=\langle r,s\,|\,r^p=1,\ s^2=1,\ srs^{-1}=r^{-1}\rangle
+    .\] 
+    (where $r$ is the rotation by $2\pi/p$ and $s$ is any reflection).
+    \begin{enumerate}[(a)]
+        \item Given $\chi$ the character of {\em any} 2-dimensional representation of $D_p$, what do the defining relations of $D_p$ tell you about $\chi(r)$ and $\chi(s)$?
+        \item Determine the character table of $D_p$.
+    \end{enumerate}
+\end{problem}
+
+Our first step is determining the conjugacy classes of $D_p$.
+
+\begin{lemma}
+    Let $p\geq 3$ be an odd prime. Then the conjugacy classes of $D_p$ are $\{e\}, \{r^i, r^{p-i}\}_{0\leq i\leq (p-1)/{2}}$ and $\{s, sr, \ldots, sr^{p-1}\}$.
+\end{lemma}
+
+\textbf{(a)}
+
+\pagebreak
+\begin{problem}
+    Determine the character tables of the two non-abelian groups of order 8, i.e.\ the dihedral group $D_4$, and the quaternion group $Q=\{\pm 1,\pm i,\pm j,\pm k\}$ (where $i^2=j^2=k^2=ijk=-1$). How do they compare?
+\end{problem}
+\textit{(Hint: start with the 1-dimensional representations).}
+
+\pagebreak
+\begin{problem}
+    Let $S$ be a finite set on which a finite group $G$ acts, let $V$ be the corresponding permutation representation of $G$ (recall $V$ has a basis $\{e_s\}_{s\in S}$, and $g\in G$ acts by $g\cdot e_s=e_{g\cdot s}$).
+    \begin{enumerate}[(a)]
+        \item Show that the multiplicity in $V$ of the trivial representation $U$ (i.e.\ the number of copies of $U$ appearing in the decomposition of $V$) is equal to the number of orbits of the $G$-action on $S$.  In particular, if the action of $G$ on $S$ is transitive, then we can write $V=U\oplus V'$, where $V'$ does not contain $U$ as a subrepresentation.
+            \textit{(Note: this can be done either by calculating $H(\chi_U,\chi_V)$ and using Burnside's lemma, or directly by finding the invariant subspace $V^G$).}
+        \item Suppose that $G$ acts transitively on $S$, and $|S|\geq 2$. We say that the action is {\em doubly transitive} if for every $s_1,s_2,s'_1,s'_2\in S$ with $s_1\neq s_2$ and $s'_1\neq s'_2$, there exists $g\in G$ such that $s'_1=g\cdot s_1$ and $s'_2=g\cdot s_2$. First check that this is equivalent to the statement that the action of $G$ on $S\times S$ has exactly two orbits; then show that the representation $V'$ considered in part (a) is irreducible if and only if the action of $G$ on $S$ is doubly transitive.
+    \end{enumerate}
+\end{problem}
+\textit{Hint: first show that the permutation representation for the action of $G$ on
+$S\times S$ is $V\otimes V$, and show that $H(\chi_U,\chi_{V\otimes V})=
+H(\chi_V,\chi_V)$. (What property of $\chi_V$ does this use?)}
+
+\pagebreak
+\begin{problem}
+    Fulton-Harris exercise 2.34: let $V$ and $W$ be irreducible representations of $G$, and $L_0:V\to W$ any linear map. Define $L:V\to W$ by $$L(v)=\frac{1}{|G|}\sum_{g\in G} g^{-1}\cdot L_0(g\cdot v).$$ Show that $L=0$ if $V$ and $W$ are not isomorphic, and that if $V=W$ then $L$ is multiplication by $\mathrm{tr}(L_0)/\dim(V)$.
+\end{problem}
+
+First we claim that $L$ is a $G$-equivariant map. Suppose $h\in G$. Then
+\[
+    L(h\cdot v)=\frac{1}{|G|}\sum_{g\in G} g^{-1}\cdot L_0(g\cdot (h\cdot v))= L(v)
+\]
+since $h$ is an invertible linear transformation of $V$. Then if $V$ and $W$ are not isomorphic, by Schur's lemma it follows that $L=0$. If $V$ and $W$ are isomorphic, them $L=\lambda I_V$ for some $\lambda \in \C$. Thus $\mathrm{Tr}(L)=\lambda \cdot \dim(V)$.  
+
+\pagebreak
+\begin{problem}
+    Fulton-Harris exercise 2.21: prove that the orthogonality of the rows of the character table implies an orthogonality property for the columns (assuming the fact that there are as many rows as columns).  Specifically, show that:
+    \begin{enumerate}[(i)]
+        \item For $g\in G$, $$\sum\limits_\chi |\chi(g)|^2=\dfrac{|G|}{c(g)},$$ where the sum is over all irreducible characters, and $c(g)$ is the number of elements in the conjugacy class of $g$. (Note that for $g=e$ this reduces to $|G|=\sum \dim(V_i)^2$).
+        \item If $g,h\in G$ are not conjugate, then $\sum\limits_\chi \overline{\chi}(g)\,\chi(h)=0$.
+    \end{enumerate}
+\end{problem}
+
+\pagebreak
+\begin{problem}
+    Fulton-Harris exercise 2.37: show that if $V$ is a faithful representation of $G$, i.e.\ $\rho:G\to GL(V)$ is injective, then any irreducible representation of $G$ is contained in some tensor power $V^{\otimes n}$ of $V$.
+\end{problem}
+\textit{Hint: denoting by $U$ the trivial representation of $G$ and by $V_i$ any irreducible representation, what is the largest term in $\dim \Hom_G(V_i,(V\oplus U)^{\otimes n})$ as $n\to \infty$? (Why can't one just consider $V^{\otimes n}$?)}
+
+\end{document}

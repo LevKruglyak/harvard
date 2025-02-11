@@ -1,0 +1,30 @@
+\begin{problem}
+  Let $V\subset \R[x]$ be the vector space of polynomials of degree at most
+ 4 with coefficients in $\R$, $V = \{ f(x) = a_0 + a_1x + a_2x^2 + a_3x^3 + a_4x^4 \,|\, a_i \in \R \}$. Find bases for the following subspaces of $V$:
+ \begin{enumerate}
+   \item $W_1 = \{ f \in V \,|\, f(1) = f(2) = 0 \}$,
+   \item $W_2 = \{ f \in V \,|\, f(1) = f(2) \}$,
+   \item $W_3 = \{ f \in V \,|\, \int_0^1 f(x)\,dx = 0 \}$.
+ \end{enumerate}
+\end{problem}
+
+\textbf{(1)} Any $f(x)\in W_1$ must satisfy $f(1)=f(2)=0$, so $(x-1)(x-2) | f(x)$. Thus, $f(x)=(x^2-3x+2)(ax^2+bx+c)$ where $a,b,c$ can vary independently. So $\{x^2-3x+2,(x^2-3x+2)x, (x^2-3x+2)x^2\}$ form a basis for $W_1$.         
+
+\textbf{(2)} We can rewrite the condition $f(1)=f(2)=0$ as
+\begin{align*}
+  a_0+a_1+a_2+a_3+a_4&=a_0+2a_1+4a_2+8a_3+16a_4\\
+  0&=a_1+3a_2+7a_3+15a_4\\
+  a_1&=-3a_2-7a_3-15a_4.
+\end{align*}  
+So the basis can be found by setting $a_0,a_2,a_3,a_4$ as all zero except for one which is set to one. This gives us a basis $\{1,x^2-3x,x^3-7x,x^4-15x\}$.   
+
+\textbf{(3)} We can rewrite the condition $\int_0^1 f(x)\,dx = 0$ as 
+\[
+  \int_0^1 f(x)\,dx = a_0+\frac{a_1}{2}+\frac{a_2}{3}+\frac{a_3}{4}+\frac{a_4}{5}=0
+.\]  
+So $a_0=-\frac{a_1}{2}-\frac{a_2}{3}-\frac{a_3}{4}-\frac{a_4}{5}$. Setting $a_1,a_2,a_3,a_4$ to $1$ one at a time gives us the basis $\{x-\frac{1}{2}, x^2-\frac{1}{3}, x^3-\frac{1}{4}, x^4-\frac{1}{5}\}$. These are all clearly linearly independent since they all have different degrees, they are all in $W_3$, and they span the space because
+\begin{align*}
+  a_4\left(x^4-\frac{1}{5}\right)+a_3\left(x^3-\frac{1}{4}\right)+a_2\left(x^2-\frac{1}{3}\right)+a_1\left(x-\frac{1}{2}\right)=
+  \\a_4x^4+a_3x^3+a_2x^2+a_1x-\left(\frac{a_1}{2}+\frac{a_2}{3}+\frac{a_3}{4}+\frac{a_4}{5}\right).
+\end{align*}
+ Every element in $W_3$ is of this form because $a_0=-\frac{a_1}{2}-\frac{a_2}{3}-\frac{a_3}{4}-\frac{a_4}{5}$.  

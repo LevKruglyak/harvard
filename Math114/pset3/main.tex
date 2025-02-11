@@ -1,0 +1,95 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 3}}
+
+\begin{document}
+\maketitle
+
+\begin{cproblem}{6} Integrability of $f$ on $\R$ does not necessarily imply the convergence of $f(x)$ to $0$ as $x \to \infty$.
+    \begin{enumerate}[(a)]
+        \item There exists a positive continuous function $f$ on $\R$ so that $f$ is integrable on $\R$, but yet $\limsup_{x\to\infty}f(x) = \infty$.
+        \item However, if we assume that $f$ is uniformly continuous on $\R$ and integrable, then $\lim_{|x|\to \infty}f(x) = 0$.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} For any interval $I=(a,b)\subset \R$ and $h>0$, pick some function $F_{I,h}$ which is nonzero only inside $(a,b)$ and satisfies
+    \[
+        F_{I,h}\left(\frac{b-a}{2}\right)=h\quad\textrm{ and }\quad \int_\R F_{I,h}\;dm = \int_I F_{I,h}\;dm = \frac{h\cdot m(I)}{2}
+    .\]
+    In other words, $F_{I,h}$ is some sort of ``pointy'' function on $I$ which touches $y=h$. Now letting $f$ be:
+    \[
+        f = \sum^\infty_{n=1} F_{(n,n+1 /n^3), 2n} \implies \int_\R f \;dm = \sum_{n=1}^\infty \int_\R F_{(n,n+1 /n^3), 2n} = \sum_{n=1}^\infty \frac{1}{n^2}=\frac{\pi^2}{6}<\infty
+    \]
+    by monotone convergence. This means that $f$ is integrable, yet this function is unbounded as $x\to\infty$ so $\limsup_{x\to\infty} f(x)=\infty$.
+
+    \textbf{(b)} We can assume WLOG that $f\geq 0$, since if $\int_\R f\;dm<\infty$ then $\int_\R |f|\; dm<\infty$ and if $\lim_{|x|\to \infty}|f|=0$ then $\lim_{|x|\to \infty} f = 0$. We can also split the integral in half, so that we only need to consider the behavior of $f$ as $x\to \infty$. Suppose for the sake of contradiction that $\lim_{x\to \infty} f(x)\neq 0$, so there exists some sequence $\{x_n\}^\infty_{n=1}$ with $\lim_{n\to \infty}f(x_n)=\ell$ for some $\ell> 0$. We can assume WLOG that $\{x_n\}$ is increasing, and that $|x_{n+1}-x_n|>\epsilon$ for all $n$ and for some $\epsilon$. (i.e. $x_n$ doesn't cluster around any point) Then there must exist some $N$ such that for all $n\geq N$ we have $|f(x_n)-\ell|<\ell /4$. Since $f$ is uniformly continuous, there must exist some $\delta$ such that $|x_n-x|<\delta\implies |f(x_n)-f(x)|<\ell /4$. This latter expression is equivalent to $|f(x)-\ell|<\ell /2$. So putting this all together, we get
+    \[
+        \int^{x_n+\delta}_{x_n-\delta} f(x)\;dm>\delta \ell,\; \forall n\geq N
+    .\]
+    However this is a contradiction to the assumption that $\int_\R f(x)\;dm<\infty$.
+\end{solution}
+
+\begin{cproblem}{9}
+    \textbf{Tchebychev Inequality.} Suppose $f\geq 0$, and $f$ is integrable. If $\alpha > 0$ and $E_\alpha = \{ x : f(x) > \alpha\}$, prove that
+    \[
+        m(E_\alpha) \leq \frac{1}{\alpha}\int_\R f\;dm
+    .\]
+\end{cproblem}
+
+\begin{solution}
+    Observe that $\alpha\chi_{E_\alpha}\leq f$. This means that $\int \alpha\chi_{E_\alpha} \leq \int f$ and so we get
+    \[
+        m(E_\alpha)\leq \frac{1}{\alpha}\int_\R f\; dm
+    .\] 
+\end{solution}
+
+\begin{cproblem}{12}
+    Show that there are $f\in L^1(\R^d)$ and a sequence $\{f_n\}$ with $f_n\in L^1(\R^d)$ such that
+    \[
+        \|f-f_n\|_{L^1} \to 0,
+    \]
+    but $f_n(x)\to f(x)$ for no $x$.  
+% [Hint: In R, let fn = χIn , where In is an appropriately chosen sequence of intervals
+% with m(In) → 0.]
+\end{cproblem}
+
+\begin{solution}
+    Let $\{q_r\}_{r=1}^\infty$ be an enumeration of the rationals $\Q$ in $\R$. Consider the sequence of functions
+    \[
+        f_n = \chi_{I_n}\quad\textrm{ where }\quad I_n=(q_n-2^{-n}, q_n+2^{-n})
+    .\] 
+    These functions are clearly $L^1$, with $\|f_n\|_{L^1}=2^{-n+1}$. Then if $f=0$, we have $\|f-f_n\|_{L^1}=2^{-n+1}\to 0$, yet $f_n(x)\not\to f(x)$ for any $x$ since the rationals are dense in $\R$ so for any $x\in \R$ there will be an infinite number of $n$ for which $f_n(x)=1$.  
+\end{solution}
+
+\begin{cproblem}{15}
+    Consider the function defined over $\R$ by
+    \[
+        f(x)=\begin{cases}
+            x^{-1 /2} & 0<x<1,\\
+            0 & \text{otherwise.}
+        \end{cases}
+    \]
+    For a fixed enumeration $\{r_n\}^\infty_{n=1}$ of the rationals $\Q$, let
+    \[
+        F(x)=\sum^\infty_{n=1}2^{-n}f(x-r_n)
+    .\] 
+    Prove that $F$ is integrable, hence the series defining $F$ converges for almost every $x\in \R$. However, observe that this series is unbounded on every interval, and in fact, any function $\widetilde{F}$ that agrees with $F$ a.e is unbounded in any interval.
+\end{cproblem}
+
+\begin{solution}
+    Since $2^{-n}f(x-r_n)\geq 0$, by monotone convergence we have
+    \[
+        \begin{aligned}
+            \int_\R F\;dm=\int_\R \sum^\infty_{n=1}2^{-n}f(x-r_n)\; dm=\sum^\infty_{n=1}2^{-n}\int_{\R} f(x-r_n)\; dm &=\sum^\infty_{n=1}2^{-n}\int_{(0,1)} x^{-1 /2}\;dm\\
+            &=\sum^\infty_{n=1}2^{-n+1}=2<\infty.
+        \end{aligned}
+    \] 
+    So $F$ is integrable. We claim that it is unbounded on any interval. Indeed, note that for any $I\subset \R$, there is a $r_n\in I$, so $\lim_{x\to r_n} F(x)\geq \lim_{x\to r_n}2^{-n}f(x-r_n)=\infty$ so $F$ is unbounded on $I$. This same argument would hold for any function $\widetilde{F}$ which is equal to $F$ almost everywhere since intervals have positive measure.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,142 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 5}}
+
+\begin{document}
+\maketitle
+
+% Rudin: Real and Complex analysis, 2nd edition, prove problem 4c for E = [1, 2), problem 5d and
+% problem 5a, 5b and 5c in page 71 for cases 1 6p 6∞.
+
+\begin{problem}
+    Suppose $f$ is a complex measurable function on $X$, $\mu$ is a positive measure on $X$, and 
+    \[
+        \varphi(p)=\int_X |f|^p\;d\mu = \|f\|^p_p\quad (0< p\leq \infty)
+    .\] 
+    Let $E=\{p : \varphi(p)<\infty\},$ assuming $\|f\|_\infty > 0$. Find a function $f$ such that $E = [1,2)$.
+\end{problem}
+
+\begin{solution}
+    We'll find such a function in two steps. First, consider the function $f_1 = 1 /\sqrt{x}$ on $X=[2,\infty)$. Then assuming $p\neq 2$,
+    \[
+        \varphi_{f_1}(p)=\int_2^\infty \frac{1}{\sqrt{x^{p}}}\;dx \leq \lim_{x\to \infty} \frac{x^{1-p/2}}{1-p/2} = \begin{cases}
+            \infty & p > 2,\\
+            0 & p < 2.
+        \end{cases}
+    \]
+    For $p=2$, we have $\varphi_{f_1}(p)=\int^\infty_2 \frac{1}{x}\;dx =\infty$. So $E_{f_1}=(0,2)$. Next, consider the function
+    \[
+        f_2(x) = \frac{1}{x\log^2 x}, \quad\text{ with }\quad \varphi_{f_2}(1)=\int^\infty_2 \frac{1}{x\log^2 x}\;dx < \infty 
+    .\]
+    Then for any $p > 1$, we have
+    \[
+        \varphi_{f_2}(p)=\int_2^\infty \frac{1}{x^p\log^{2p}x}\;dx < \infty \quad \text{ since }\quad \frac{1}{x^p\log^{2p}x} < \frac{1}{x\log^2 x}
+    .\]      
+    \quad However for any $p < 1$, Wolfram Alpha tells us the integral diverges, so $E_{f_2}=[1,\infty)$. Finally, let's add these two functions to get $f=f_1+f_2$. We claim that $E_{f} = E_{f_1} \cap E_{f_2} = [1,2)$. To first show that $E_{f_1}\cap E_{f_2}\subset E_{f}$, suppose $p\in E_{f_1}\cap E_{f_2}$. Then 
+    \[
+        \|f\|_p = \|f_1+f_2\|_p \leq \|f_1\|_p+\|f_2\|_p < \infty
+    .\]  
+    Similarly if $p\in E_f$, then
+    \[
+        \|f_1\|_p,\|f_2\|_p \leq \|f_1+f_2\|_p = \|f\|_p < \infty
+    \] 
+    so $E_f \subset E_{f_1}\cap E_{f_2}$ and so $E_f = [1,2)$ as desired. 
+\end{solution}
+
+\begin{problem}
+    Assume, in addition to the hypotheses of the previous exercise that
+    \[
+        \mu(X)=1
+    .\] 
+    \begin{enumerate}[(a)]
+        \item Prove that $\|f\|_r\leq \|f\|_s$ if $1\leq r<s \leq \infty$.
+        \item Under what condition does it happen that $1\leq r < s \leq \infty$ and $\|f\|_r =\|f\|_s < \infty$?
+        \item Prove that $L^r(\mu)\supset L^s(\mu)$ if $1 \leq r < s$. Under what conditions do these two spaces contain the same functions?
+        \item Assume that $\|f\|_r < \infty$ fo some $r>0$, and prove that
+        \[
+            \lim_{p \to 0} \|f\|_p = \exp \int_X \log |f|\; d\mu
+        .\] 
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \quad Assume WLOG that all functions are nonnegative. We'll begin by proving a generalization of H\"older's inequality.
+    \begin{claim}
+        Let $a,b,c\geq 1$ satisfy $\frac{1}{a}+\frac{1}{b}=\frac{1}{c}$. Then for any functions $f,g$, we have $\|fg\|_c \leq \|f\|_a\|f\|_b$.  
+    \end{claim}
+    \begin{proof}
+        Let $f' = f^c$ and $g'=g^c$. Since $\frac{1}{a /c} + \frac{1}{b /c} = 1$, we can apply H\"older's inequality to get
+        \[
+            \begin{aligned}
+                \|f'g'\|_1 \leq \|f'\|_{a /c}\|g'\|_{b /c}.
+            \end{aligned}
+        \]
+        However recall that $\|f\|_{ab} = \|f^a\|^{1 /a}_b$. We can use this identity to get
+        \[
+            \begin{aligned}
+                \|f'g'\|_1=\|(f'g')^{1 /c}\|_{c}^c = \|fg\|^c_c \leq \|f'\|_{a /c}\|g'\|_{b /c} = \|f\|_{a}^c\|g\|_b^c\\
+                \implies \|fg\|_c \leq \|f\|_a\|g\|_b,
+            \end{aligned}
+        \]
+        which is what we were trying to prove. Furthermore, equality only happens when $(f')^{a /c}=f^a$ and $(g')^{b /c}=g^b$ are linearly dependent almost everywhere.
+    \end{proof}
+
+    \textbf{(a)} Since $r < s$, let $q\geq 1$ be such that $\frac{1}{r} = \frac{1}{s} + \frac{1}{q}$. Letting $g(x)=1$, it then follows from the generalized H\"older inequality that
+    \[
+        \|f\|_r = \|f\cdot 1\|_r \leq \|f\|_s\|1\|_q = \|f\|_s \cdot\mu(X)^{1 /q} = \|f\|_s
+    .\] 
+
+    \textbf{(b)} Suppose $\|f\|_s = \|f\|_r$. Then the generalized H\"older inequality and the proof of the previous part tell us that $\|f\|^s$ and $1$ are linearly dependent. This means that $f$ is a constant function almost everywhere.
+
+    \textbf{(c)} By (a), it follows that $L^r(\mu) \supset L^s(\mu)$ since $\|f\|_r\leq \|f\|_s$. We claim that they are equal if and only if $X$ contains no sequence of disjoint sets of positive measure.  
+
+    \quad Suppose first that such a sequence exists, say $A_k$. We have $\sum_k \mu(A_k) \leq 1$ by disjointness of $A_k$, and so we must have $\mu(A_k) \to 0$. Let us choose a sequence $k_n$ such that $\mu(E_{k_n})\leq 2^{-n}$, and define
+    \[
+        f = \sum^\infty_{n=1} \mu(E_{k_n})^{-1 /s} \chi_{E_{k_n}}
+    .\]   
+    \quad Monotone convergence then implies that
+    \[
+        \int |f|^s \;d\mu = \sum^\infty_{n=1}1 = \infty \implies f \not\in L^s(\mu)
+    .\]
+    Yet since $0 < 1-r / s < 1$, we get
+    \[
+        \int_X |f|^r \;d\mu = \sum^\infty_{n=1}\mu(E_{k_n})^{1-r /s}\leq \sum^\infty_{n=1}\left(\frac{1}{2^{1-r /s}}\right)^n  < \infty
+    .\] 
+    Thus $f \in L^r(\mu)$. We can do a similar argument to get the edge case $s=\infty$.
+
+    \quad Next, assume that there does not exist such a sequence. For any measurable function $f$, the sequence of sets $E_\ell = \{ x\in X : f(x)\in [\ell, \ell+1) \}$ for any integer $\ell\in \Z$ is a sequence of disjoint measurable sets. So only a finite number of these can have positive measure. But this shows that the function is bounded, and since $\mu(X)=1$, we have $f\in L^p(\mu)$ for all $p$.
+
+    \textbf{(d)} Since $\|f\|_p\geq 0$ decreases as $p\to 0$, the limit $\lim_{p\to 0}\|f\|_p$ exists. Now recall that for $x\geq 0$, we have $\log x \leq (x^p - 1) / p$. In particular $\int \log |f|$ is bounded by $(\|f\|_r^r - 1) / r$. Letting $p < \min(1,r)$ we can look at the functions
+    \[
+        g_p(x) = |f(x)|-1-\frac{|f(x)|^p-1}{p}
+    \]
+    is positive. By monotone convergence, we get
+    \[
+        \lim_{p\to 0}\int_X g_p\;d\mu = \int_X |f| - 1 - \log |f|\;d\mu \implies \lim_{p\to 0}\exp\left(\int_X \frac{|f|^p-1}{p}\right)=\exp\left(\int_X \log |f|\right)
+    .\]  
+    Finally, since $\log x \leq x - 1$, we can conclude
+    \[
+        \|f\|_p = \exp\left(\frac{1}{p}\log \left(\int_X |f|^p\;d\mu\right)\right)\leq \exp\left(\int_X \frac{|f|^p-1}{p}\;d\mu\right)
+    .\] 
+    As $p\to 0$, we get $\lim_{p\to 0}\|f\|_p \leq \exp(\int_X \log |f|)$.
+
+    \quad To prove the reverse inequality, we can assume that $|f|>0$. Applying Jensen's inequality on the convex function $-\log x$, we get
+    \[
+        -\log \int_X |f|^p\;d\mu \leq -\int_X \log |f|^p\;d\mu \implies \log \int_X |f|^p\;d\mu \geq \int_X \log |f|^p\;d\mu
+    .\] 
+    If we exponentiate both sides and raise to the $1 /p$th power gives
+    \[
+        \|f\|_p \geq \exp\left(\frac{1}{p}\int_X \log |f|^p\;d\mu\right)=\exp(\int_X \log |f|\;d\mu)
+    .\] 
+    As before, when we take the limit as $p\to 0$, we get $\lim_{p\to \infty}\|f\|_p \geq \exp(\int_X \log |f|\;d\mu)$. Thus we can conclude
+    \[
+        \lim_{p\to \infty}\|f\|_p = \exp\left(\int_X \log |f|\;d\mu\right)
+    .\] 
+
+\end{solution}
+
+\end{document}

@@ -1,0 +1,13 @@
+\begin{problem}
+Define the \emph{direct sum} $M\oplus N$ of two modules over a ring $R$. Show by giving an example that if $L \subset M$ is a submodule, there need not exist a module $N$ such that $M \cong L \oplus N$, in contrast to the case of finite-dimensional vector spaces over a field.
+\end{problem}
+First let us define the direct sum of two $R$-modules.
+\begin{definition}
+  Let $M$ and $N$ be $R$-modules. The {\em direct sum} of $M$ and $N$, denoted $M\oplus 
+  N$ is defined as the set $M\times N$ with scalar multiplication and addition given by:
+  \begin{enumerate}
+    \item $c\cdot (m,n)= (cm, cn)$ for all $m\in M, n\in N, c\in R$.
+    \item $(m_1, n_1) + (m_2, n_2) = (m_1 + m_2, n_1 + n_2)$ for all $m_1,m_2\in M$ and $n_1,n_2\in N$.     
+  \end{enumerate}    
+\end{definition} 
+Now let $R=\Z$ and consider the $R$-module $M=\Z/4$ and consider the submodule $L=\Z/2$, included in the canonical way. We claim that there cannot be a module $N$ such that $M\cong L\oplus N$. Suppose for the sake of contradiction that $M\cong L\oplus N$. Note that $|L\oplus N| = |L|\cdot |N|$ so $|N|=2$. It's pretty easy to check that there is only one $\Z$-module with two elements, namely $\Z/2$. However $\Z/4\not\cong \Z/2\oplus \Z/2$, since $\Z/4$ has an element of (additive) order $4$ yet $\Z/2\oplus\Z/2$ doesn't. This is a contradiction so we are done.    

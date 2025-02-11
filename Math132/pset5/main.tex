@@ -1,0 +1,157 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+% \def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 5}}
+\date{\textbf{Due:} March 10, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Morse lemma.
+\end{problem}
+
+\begin{solution}
+    \quad This problem is about the Morse lemma in dimension 1.
+    \begin{partproblem}{a}
+        Suppose $f : U \to \R$ is a smooth function defined on an open neighborhood $U$ of $0\in \R$, that $f'(0)=0$ and that $f''(0)\neq 0$. show that there is a new coordinate $x$ defined near $0\in U$ in which $f$ is given by $f(x)=f(0)\pm x^2$.
+        % Show that f is given by f(t)=f(0)\pm t^2g(t) where g is a smooth function with g(0)>0. 
+    \end{partproblem}
+    
+    \quad Recall by Taylor's theorem that we have an expansion
+    \[
+        f(x) = \sum_{k=0}^\infty \frac{x^k f^{(k)}(0)}{k!} = f(0) + x^2\left(\frac{f''(0)}{2} + \sum^{\infty}_{k=3} \frac{x^k f^{(k)}(0)}{k!}\right)
+    .\] 
+    Let $g(x)$ be the content in these parenthesis, so that $f(x)=f(0)+x^2g(x)$. Since $g(0)=f''(0) / 2\neq 0$, we can assume without loss of generality that $g(x)$ is strictly positive in some neighborhood of $0$, thus getting $f(x)=f(0)\pm x^2g(x)$. Then letting our coordinate be $x=x\sqrt{g(x)}$ in this neighborhood, we get $f(x)=f(0)\pm x^2$. 
+
+    \begin{partproblem}{b}
+        Suppose that $f : X \to \R$ is a smooth function on a $1$-manifold $X$ and $p\in X$ is a non-degenerate critical point. Show that there is a local coordinate system $\Phi : U \to \R$ with $\Phi(p)=0$, in which $f\circ \Phi^{-1}(x)=a\pm x^2$ (where $a=f(p)$). This is the Morse lemma in dimension 1.
+    \end{partproblem}
+    \quad Let's pick some chart $\Phi : U \to \R$ which sets $\Phi(p)=0$. Then $f\circ \Phi^{-1} : \R \to \R$ satisfies the conditions of (a) due to non-degeneracy and criticality conditions. Thus there is some coordinate $g(x)$ such that $f(\Phi^{-1}(g(x))) = f(p)\pm g(x)^2$. Thus letting $\Phi = g^{-1}\circ \Phi$ gives us the desired chart.
+\end{solution}
+
+\begin{problem}
+    Let $M_n$ be the space of $n\times n$ matrices.
+\end{problem}
+\begin{solution}
+    \quad Consider the function $f : M_n \to M_n$ given by $f(B)=B^2$.
+    \begin{partproblem}{a}
+        Identifying $T_I M_n$ with $M_n$, show that
+        \[
+            df(I) : T_I M_n \to T_I M_n
+        \]
+        is the linear map sending $B\in M_n$ to $2B$. Since this has non-zero determinant, $f$ is a diffeomorphism in a neighborhood of $1$. 
+    \end{partproblem}
+
+    \quad We can prove this by showing that 
+    \[
+        \lim_{\|H\|\to 0}\frac{\|(B+H)^2-B^2-2B\|}{\|H\|} = 0
+    \]
+    for a matrix norm $\|\cdot\|$. Note that 
+    \[
+       \frac{\|(B+H)^2-B^2-2B\|}{\|H\|} = \frac{\|2B(H-1)+H^2\|}{\|H\|} \leq \frac{\|H\|^2}{\|H\|} = \frac{1}{\|H\|} \to 0
+    .\] 
+
+    \begin{partproblem}{b}
+        Conclude that there is a smooth diffeomorphism $B\mapsto B^{1 /2}$ defined in a neighborhood of $I$ satisfying $(B^{1 /2})^2 = B$.
+    \end{partproblem}
+    \quad Since $df(I)$ is an isomorphism, $f$ must be a local diffeomorphism in some neighborhood, so it must have some local inverse which would send $B \mapsto B^{1 /2}$.
+\end{solution}
+
+\begin{problem}
+    It will be useful for some (but not all) parts of this problem to remember that since $B \mapsto B^2$ is a \emph{diffeomorphism} in a neighborhood of $I$, one can show that $S=T$ by showing that $S^2=T^2$.
+\end{problem}
+
+\begin{solution}
+    Continuing from the last problem:
+    \begin{partproblem}{a}
+        Show that $B$ and $B^{1 /2}$ commute.
+    \end{partproblem}
+
+    \quad Note that $B=B^{1 /2}B^{1 /2}$ so $B^{1 /2} B = B^{1 /2}B^{1 /2}B^{1 /2} = BB^{1 /2}$.
+
+    \begin{partproblem}{b}
+        Suppose that $A\in M_n$ is an invertible matrix. Show that in the open neighborhood of $I$ where both $B^{1 /2}$ and $(A\cdot B\cdot A^{-1})^{1 /2}$ are defined, one has
+        \[
+            A(B^{1 /2})A^{-1} = (ABA^{-1})^{1 /2}
+        .\]  
+    \end{partproblem}
+
+    \quad In this open neighborhood, $B\mapsto B^{1 /2}$ is a diffeomorphism, so $S^2 = T^2$ implies that $S = T$. Thus
+    \[
+        \begin{aligned}
+            (A(B^{1 /2})A^{-1})^2 = ABA^{-1} \implies (ABA^{-1})^{1 /2} = A(B^{1 /2})A^{-1}.
+        \end{aligned}
+    \]  
+
+    \begin{partproblem}{c}
+        Show that in a neighborhood of $I$ one has
+        \[
+            (A^T)^{1 /2} = (A^{1 / 2})^T
+        .\] 
+    \end{partproblem}
+    \quad By the same argument as in part b, note that $(A^{1 /2})^T(A^{1 /2})^T=(A^{1 /2}A^{1 /2})^T = A^T$, so we conclude $(A^T)^{1 /2} = (A^{1 /2})^T$. 
+\end{solution}
+
+\begin{problem}
+    % 5.3 S5 C4
+    Show that $G_k(\R^n)$ is compact. % Hint Stiefel manifold
+\end{problem}
+
+\begin{solution}
+    \quad Recall that we have a quotient map $V_k(\R^n) \to G_k(\R^n)$ which sends an orthonormal $k$-frame to it's span. However recall that $V_k(\R^n)$ can be embedded into $\R^{nk}$ canonically. The image of this embedding is closed and bounded in $\R^{nk}$ by the orthonormality condition, so $V_k(\R^n)$ is compact. Any quotient of a compact space is also compact so we are done.
+\end{solution}
+
+\begin{problem}
+    The image of the Pl\"ucker embedding is the solution space of the famous \emph{Pl\"ucker equations.}
+\end{problem}
+
+\begin{solution}
+    In this exercise, we will study those equations for $G_2(\R^4)$.
+    \begin{partproblem}{a}
+        Show that if $V\in G_2(\R^4)$ is a $2$-plane then the Pl\"ucker coordinates $p_{ij} = p_{ij}(V)$ satisfy
+        \[
+            p_{12}p_{34} - p_{13}p_{24} + p_{14}p_{23} = 0 
+        .\] 
+        % Check this in each U_{ij}, its enough to do for U_12
+    \end{partproblem}
+    \quad By locality, it suffices to check this equality on every $U_{ij}$, and by symmetry it suffices to check only $U_{12}$. Expanding at some matrix $(1,0,a,c), (0,1,b,d)$, we get
+    \[
+        p_{12}p_{34} - p_{13}p_{24} + p_{14}p_{23} = (1)(ad-bc)-b(-c)+(d)(-a) = 0
+    .\] 
+    This completes the proof.
+
+    \begin{partproblem}{b}
+        Let $Z\subset \RP^5$ be the set of solutions to the above equation. Show that every element of $Z$ is of the form $p(V)$ for a $2$-plane $V\in G_2(\R^4)$.
+        % since p_{ij} can't all be zero, you can work in the subspace of \RP^5 in which p_{ij} != 0. Show by symmetry you might as well take this to be p_11 and check here
+    \end{partproblem}
+
+    \quad Could I do a make up?
+
+    \begin{partproblem}{c}
+        We've now shown that the Pl\"ucker embedding is a homeomorphism of $G_2(\R^4)$ with the space $Z$ of solutions to the Pl\"ucker equation. We know from the above that $\RP^5$ is a smooth manifold. Show that $Z\subset \RP^5$ is a smooth submanifold of dimension $4$. % its a local question, check in U_ij
+        This gives another construction of $G_2(\R^4)$ as a smooth manifold.
+    \end{partproblem}
+
+    \quad Could I do a make up?
+
+    \begin{partproblem}{d}
+        Is the map $p : G_2(\R^4) \to \Z$ smooth, if we give $G_2(\R^4)$ the smooth structure defined in Section 5.2?
+    \end{partproblem}
+    
+    \quad Could I do a make up?
+\end{solution}
+
+\end{document}

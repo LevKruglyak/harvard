@@ -1,0 +1,251 @@
+\documentclass{article}
+
+\title{\textbf{Explorations in Electromagnetism}}
+\date{}
+\author{Lev Kruglyak}
+
+\input{preamble.tex}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\end{abstract}
+\tableofcontents
+\pagebreak
+
+\section{Introduction}
+\cite{bott1985}
+\cite{baez1994}
+
+\section{Classical Maxwell Equations}
+
+The classical form of the Maxwell equations couples the dynamics of the \defn{electric field} $\bE$ with that of the \defn{magnetic field} $\bB$, both vector fields on Euclidean space $\R^3$ which are free to evolve over time. Written in their common vector calculus form with units setting the speed of light $c$ to be $1$, the Maxwell equations read
+\[
+    \begin{aligned}
+      &\nabla\cdot \bE = \vphantom{\frac11}\rho \quad&\textrm{Gauss's Law}\\
+      &\nabla \times \bB - {\frac{\partial \bE}{\partial t}} = \bj\quad&\textrm{Maxwell-Amp\`ere's Law}\\
+      &\nabla \cdot \bB = \vphantom{\frac11}0\quad&\textrm{Gauss's Law for Magnetism}\\ 
+      &\nabla\times \bE + {\frac{\partial \bB}{\partial t}} = 0\quad&\textrm{Maxwell-Faraday Equation}\\
+    \end{aligned}
+\]
+where $\rho$ is a scalar field known as the \defn{charge density} and $\bj$ is a vector field known as the \defn{current density}. Both of these fields may also evolve over time. While this form of the Maxwell equations has been known since 1865 when they were published, it would take over a century to fully understand their full implications and generalizations which allow for a deep understanding of particle physics. 
+
+A particularly symmetric case to consider is when $\rho$ and $\bj$ are both zero; here we get the Maxwell equations in a vacuum:
+\[
+    \begin{aligned}
+      \nabla\cdot \bE = 0,\quad&\quad \nabla\times \bE + \frac{\partial \bB}{\partial t} = 0,\\
+      \nabla \cdot \bB = 0,\quad&\quad \nabla \times \bB - \frac{\partial \bE}{\partial t} = 0,
+    \end{aligned}
+\]
+These equations are then invariant under the transformations
+\[
+      \bE \mapsto -\bB,\quad\
+      \bB \mapsto \bE.
+\]
+This duality between the electric and magnetic fields is one of the first hints that they are both parts of a larger object of which this symmetry is internal. The first step in understanding the symmetry is to write the equations in the language of differential forms.
+
+\subsection{Differential Forms}
+
+Working over the standard Euclidean $3$-space, we can make some nice parallels between the language of vector calculus and the language of differential forms. For examples, we have (linear) isomorphisms between the space of scalar fields and the space of $0$ and $3$ forms respectively:
+\[
+  \begin{aligned}
+    f\in C^\infty(\R^3) \quad&\iff\quad f&\in \Omega^0(\R^3)\\
+    f \in C^\infty(\R^3) \quad&\iff\quad f\,dx^1\wedge dx^2\wedge dx^3&\in \Omega^3(\R^3)
+  \end{aligned}
+\]
+Similarly, we have isomorphisms between the space of vector fields and the space of $1$ and $2$ forms:
+\[
+    \begin{aligned}
+    \bff\in \mathfrak{X}^1(\R^3) \quad&\iff\quad \bff_{1}\,dx^1 + \bff_2\,dx^2+\bff_3\,dx^3 &\in \Omega^1(\R^3)\\
+    \bff\in \mathfrak{X}^1(\R^3) \quad&\iff\quad \bff_1\, dx^2\wedge dx^3 - \bff_2\, dx^1\wedge dx^3 + \bff_3\, dx^1\wedge dx^2 &\in \Omega^2(\R^3)\\
+    \end{aligned}
+\]
+These operations are examples of the \emph{Hodge star operator}, which we will encounter later. Under these correspondences, the standard vector calculus operators of gradient, curl, and divergence are generalized by the exterior derivative $d : \Omega^n(\R^3) \to \Omega^{n+1}(\R^3)$.
+\[\begin{tikzcd}
+	{\Omega^0(\R^3)} & {\Omega^1(\R^3)} & {\Omega^2(\R^3)} & {\Omega^3(\R^3)} \\
+	{C^\infty(\R^3)} & {\mathfrak{X}^1(\R^3)} & {\mathfrak{X}^1(\R^3)} & {C^\infty(\R^3)}
+	\arrow["d", from=1-1, to=1-2]
+	\arrow["d", from=1-2, to=1-3]
+	\arrow["d", from=1-3, to=1-4]
+	\arrow[no head, from=1-1, to=2-1]
+	\arrow[no head, from=1-2, to=2-2]
+	\arrow[no head, from=1-3, to=2-3]
+	\arrow[no head, from=1-4, to=2-4]
+	\arrow["\nabla"', from=2-1, to=2-2]
+	\arrow["\nabla\times"', from=2-2, to=2-3]
+	\arrow["\nabla\cdot"', from=2-3, to=2-4]
+	\arrow[from=2-1, to=2-2]
+\end{tikzcd}\]
+In particular, this trivializes properties such as $\nabla\times\nabla f =0$ and $\nabla\cdot\nabla\times\bff=0$; these follow immediately from the fact that $d^2=0$.
+
+To rewrite the Maxwell equations in terms of differential forms, let's begin by considering the first two equations:
+\[
+  \nabla\cdot \bB = 0, \quad \nabla\times \bE + \frac{\partial \bB}{\partial t} = 0.
+\]
+We'll call these the \defn{homogenous} equations since they are written purely in terms of the fields $\bB$ and $\bE$ without any current or charge fields.
+
+In the case that the fields don't change over time, i.e. when $\partial \bB/\partial t=0$, these simplify to $\nabla\cdot \bB = 0$ and $\nabla\times \bE=0$. This suggests that in this static case, $\bE$ should really be a $1$-form and $\bB$ should be a $2$-form; in fact $\bB$ is better described as a \emph{pseudovector field} rather than a vector field. Let's call these forms $E\in \Omega^1(\R^3)$ and $B\in \Omega^2(\R^3)$ to prevent ambiguity. The static form of the homogenous equations then read $dB = 0$ and $dE = 0$.
+
+To add the dynamics back in, we must go a dimension higher and consider differential forms on a \emph{spacetime}. To keep track of what we're doing, we let $S=\R^3$ be flat Euclidean space and $\R_t$ be time so that $M=S\times \R_t$ is a $(3,1)$-dimensional spacetime. The space of differential $n$-forms on this space splits as a double complex
+\[
+  \Omega^n(M) = \bigoplus_{p+q=n} \Omega^{p,q}(M)\quad\textrm{where}\quad \Omega^{p,q}(M) = \Omega^p(S)\otimes \Omega^q(\R_t).
+\]
+If $\partial_t : \Omega^{p,q}(M) \to \Omega^{p,q+1}(M)$ is the time differential on $\R_t$ and $\partial_s : \Omega^{p,q}(M) \to \Omega^{p+1,q}(M)$ is the space differential on $S$, then the total differential on this complex is \[d=\partial_t+\partial_s \quad\textrm{where}\quad d: \Omega^{p,q}(M) \to \Omega^{p+1,q}(M)\oplus \Omega^{p,q+1}(M).\] We can now consider the case when $E$ and $B$ evolve over time, such forms would now be $\Omega^{1,0}(M)$ and $\Omega^{2,0}(M)$ forms respectively. For example, $E$ would now break down into a linear combination of tensors $f_i(t)\otimes g_i(x^1,\ldots, x^3)\, dx^i$, where $f_i$ is a scalar ``time'' field on $\R_t$ and $g_i$ is a scalar ``space'' field on $S$.
+
+Now given some $B\in \Omega^{2,0}(M)$ and $E\in \Omega^{1,0}(M)$, let's consider the $2$-form
+\[
+    F = B + E\wedge dt,
+\]
+which we'll call the \defn{electromagnetic field}. Taking the total differential of this form, we have
+\[
+  \begin{aligned}
+    dF = dB + d(E\wedge dt) &= \partial_s B + \partial_t B + (\partial_s E + \partial_t E)\wedge dt\\
+                            &= \partial_s B + \frac{\partial B}{\partial t}\wedge dt +\partial_s E + \frac{\partial E}{\partial t} \wedge dt\\
+                            &= \partial_s B + \left(\frac{\partial B}{\partial t} +\partial_s E\right) \wedge dt.
+  \end{aligned}
+\]
+The first of these forms lives in $\Omega^{3,0}(M)$ since $B\in \Omega^{2,0}(M)$. The second form however, lives in $\Omega^{2,1}(M)$ since $E\in \Omega^{1,0}(M)$. Since the forms are linearly independent being differently graded, the single equation $dF=0$ is equivalent to the homogenous Maxwell equations: 
+\[
+  dF = 0 \quad\iff\quad \begin{cases} \partial_s B = 0,\\ \partial B/\partial t + \partial_s E = 0.\end{cases}
+\]
+This splitting $\Omega^2(M) = \Omega^{2,0}(M)\oplus\Omega^{1,1}(M)$ also allows us to fully recover the forms $E$ and $B$ given some $F\in \Omega^2(M)$, so it seems that any differential equation involving the fields $E$ and $B$ could be rewritten in terms of the electromagnetic field $F$.
+
+When we try to do the same thing for the non-homogenous Maxwell equations, we quickly run into a problem. These equations read:
+\[
+  \nabla\cdot \bE = \rho, \quad \nabla\times \bB - \frac{\partial \bE}{\partial t} = \bj.
+\]
+Like we did before, let's first consider the static case when $\partial \bE/\partial t = 0$ and all vector/scalar fields don't depend on time. We then have $\nabla\cdot \bE=\rho$ and $\nabla\times \bB =\bj$. However, in the differential form formulation, we considered $E$ as a $1$-form, and $\rho$ as a $0$-form. But the $\nabla\cdot$ operator is only ``defined'' on $2$-forms, and outputs a $3$-form. None of the ranks line up!
+
+\subsection{The Hodge Star Operator}
+
+To get the ranks of the forms to line up for this equation, we need to turn a $1$-form $E$ into a $2$-form, and turn the $0$-form $\rho$ into a $3$-form. Since we've restricted to the static case, and the dimension of our space is $n=3$, it becomes apparent that we need some \emph{duality} operator:
+\[
+  \star : \Omega^{k}(S) \to \Omega^{n-k}(S)
+\]
+We've already seen this operator in a restricted context; the isomorphisms $\Omega^0(\R^3)\cong C^\infty(\R^3) \cong \Omega^3(\R^3)$ and $\Omega^2(\R^3)\cong \mathfrak{X}^1(\R^3) \cong \Omega^3(\R^3)$. The duality operator should send
+\[
+  \begin{aligned}
+    f \quad &\iff\quad f\,dx^1\wedge dx^2\wedge dx^3\\
+    \bff_{1}\,dx^1 + \bff_2\,dx^2+\bff_3\,dx^3 \quad&\iff\quad \bff_1\, dx^2\wedge dx^3 - \bff_2\, dx^1\wedge dx^3 + \bff_3\, dx^1\wedge dx^2
+  \end{aligned}
+\]
+We thus have identities for the duality operator, for example: 
+\[
+  \begin{aligned}
+    \star 1 = dx^1\wedge dx^2\wedge dx^3   \quad&\quad \star dx^1 = dx^2\wedge dx^3\\
+    \star (dx^1\wedge dx^2\wedge dx^3) = 1 \quad&\quad \star dx^2 = - dx^1\wedge dx^3
+  \end{aligned}
+\]
+By playing around with these identities, we can also see that for any form $\omega\in \Omega^k(S)$, we have
+\[
+  \omega\wedge \star\omega = \langle \omega, \omega\rangle\, \mu\quad \textrm{where}\quad \mu = dx^1\wedge \cdots\wedge dx^n \in \Omega^n(S).
+\]
+This suggests that the data needed to define the $\star$ operator consists of a volume form/orientation $\mu\in \Omega^n(S)$ and a metric $g$ on $S$. Given such data, we define the \defn{Hodge star operator} $\star$ applied to some $k$-form $\beta$ as the unique $(n-k)$-form $\star \beta$ which satisfies 
+\[
+  \alpha\wedge (\star \beta) = \langle \alpha, \beta \rangle\,\mu \quad\textrm{for all}\quad\alpha\in\Omega^k(S).
+\]
+We can then rewrite the equation $\nabla\cdot \bE=\rho$ in terms of the Hodge star and the $1$-form $E$ as
+\[
+  \star d\!\star\! E = \rho,
+\]
+where we now consider $\rho\in \Omega^0(S)$; here we ``conjugate'' $E$ by $\star$ for $d$ to act as a divergence instead of as a curl. For the static magnetic equation $\nabla\times \bB = \bj$, we similarly get 
+\[
+  \star d\!\star\! B = j
+\]
+where we consider $j\in \Omega^1(S)$. Now let's make the jump from the static case to the dynamic case, we must work over the spacetime $M = S\times \R_t$. To use the Hodge star operator, we need to introduce an orientation and metric on $M$, so to avoid ambiguity let $g_S$ and $\mu_S$ be the standard metric and orientation on $S$ respectively. We can also let $\star_S$ be the Hodge star on $S$. We can then set $\mu = dt\wedge \mu_S$ to be the orientation on $M$.
+
+Less obvious is the question of how to introduce the metric on $M$. It might be tempting to set $g = dt^2 + g_S$, which turns the spacetime into a Riemannian manifold.
+\todo{[Wick rotation]}
+Unfortunately, this would violate the symmetry we discovered earlier which sends $\bE \mapsto -\bB$ and $\bB \mapsto \bE$. In particular, this symmetry operation applied twice gives us $\bE \mapsto -\bE$ and $\bB \mapsto -\bB$, so the duality operator satisfies $\star^2=-1$. Since $M$ is $4$-dimensional, this means that the \emph{signature} of the metric must be negative.
+
+Since the metric restricted to spacetime must still be Riemannian, there are two options here; either $g=dt^2-g_S$ or $g=g_S-dt^2$, which give equivalent results up to a sign. Both conventions are often used, however we'll set \[g = dt^2 - g_S.\] This correctly signs the Hodge dual to forms which contain $dt$ terms, for example when $S$ is three-dimensional, we have
+\[
+  \star dt = \star_S 1, \quad \star dx^i = (\star_S dx^i)\wedge dt, \quad \star (dx^i\wedge dt) = -\star_S dx^i, \quad \star (dx^i\wedge dx^j) = \star_S (dx^i\wedge dx^j) \wedge dt
+\]
+So as desired, this duality operator will negate $E\wedge dt$ but maintain the sign of $B$.
+
+Applying the $\star d\star$ operator to $F$, we get
+\[
+  \begin{aligned}
+    \star d\!\star\! F = \star d(\star B + \star(E\wedge dt))
+    &= \star \left(d(\star_S B \wedge dt) - d\star_S E\right)\\
+    &= \star \left( -\star_S\! \partial_t E \wedge dt + \partial_s\! \star_S\! E + \partial_s \star_S B \wedge dt\right)\\
+    &=\star_S \partial_s\! \star_S \! E \wedge dt -\partial_t E + \star_S \partial_s\! \star_S\! B.\\
+  \end{aligned}
+\]
+Since we set $\star_S \partial_s\! \star_S\! E = \rho$ in the static case, we set $\star_S\partial_s \star_S B - \partial_t E = j$. This gives us the equation:
+\[ \star d\!\star\! F = \rho\wedge dt + j.\]
+We call this resulting $1$-form the \defn{current} $J= \rho\wedge dt + j$ and see that the non-homogenous Maxwell's equations are equivalent to:
+\[
+  \star d\!\star\! F = J \quad\iff\quad \begin{cases}\star_S \partial_s\! \star_S\! E = \rho,\\ \star_S\partial_s \star_S B - \partial_t E = j.\end{cases}
+\]
+Now so far, we've assumed some canonical splitting of space as $M = S\times \R_t$ in order to separate the electric and magnetic fields. Now that we've unified both fields into a single electromagnetic field, there is no need to keep this splitting.
+
+\subsection{Minkowski Spacetime}
+More generally, we can assume that $M$ is a 4-dimensional \defn{Minkowski spacetime}, which here just means that $M$ is affine over a $4$-dimensional oriented inner product space $V$ with metric
+\[
+  g = (dx^0)^2 - (dx^1)^2 - (dx^2)^2 - (dx^3)^2.
+\]
+This is the case of a flat spacetime, which is the classical setting of electromagnetism. Such a metric is called a \defn{Lorentz metric}, and the vector space is called a \defn{Lorentzian vector space}.
+
+We have arrived at a remarkably crisp expression for the classical Maxwell equations; given some $4$-dimensional Minkowski spacetime $M$ with $F\in \Omega^2(M)$ and $J\in \Omega^1(M)$ the electromagnetic field and current respectively, the Maxwell equations state that:
+\[
+  \begin{aligned}
+    dF &= 0,\\
+    \star d\!\star\! F &= J.
+  \end{aligned}
+\]
+For an alternate form, we could consider the $3$-form $j_E = \star^2(\star J)$, which gives us the equations: 
+\[
+  \begin{aligned}
+    dF &= 0,\\
+    d\!\star\! F &= j_E,
+  \end{aligned}
+\]
+This $3$-form $j_E$ is called the \defn{electrical current}.
+
+\section{Relativistic Maxwell Equations}
+\subsection{Vacuum Solutions}
+\subsection{Curved Spacetime}
+
+% \subsection{Complex Fields}
+%
+% We noticed earlier that in the vacuum case, i.e. the case that $J=0$, we ha.ve a symmetry of the Maxwell equations under the transformations $\bE \mapsto -\bB$ and $\bB \mapsto \bE$. In this vacuum case, our equations now read:
+% \[
+% dF = 0, \quad d\!\star\! F=0.
+% \]
+% This symmetry now becomes neatly encapsulated by the duality transformation:
+% \[
+%   F \mapsto \star F
+% \]
+% Duality is particularly nice in 4-dimensions since $\star$ sends $2$-forms to $2$-forms, so we can consider $\star$ as a linear operator on $\Omega^2(M)$. In particular, notice that $\star^2 = -1$ and so the eigenvalues of $\star$ are $\pm i$. Treating $F$ as a complex valued $2$-form in $\Omega_\C^2(M)$, we get a decomposition
+% \[
+%   F = F_{\textrm{self-dual}} + F_{\textrm{anti self-dual}},\quad \textrm{where}\quad \star F_{\textrm{self-dual}} = iF_{\textrm{self-dual}}
+% \]
+% \todo{finish this section}
+%
+\section{Gauge Symmetries}
+The first Maxwell equation $dF=0$ is a purely topological one, it states that $F$ is a cycle in the second de Rham cohomology $H^2(M)$. So far, we've only considered the case of a flat spacetime, which have trivial cohomology. In particular, this means that there must be some $1$-form $A\in \Omega^1(M)$ with $F=dA$. We'll call this form $A$ the \defn{electromagnetic potential}.
+
+Such a condition turns $dF=0$ into a tautology, leaving only the condition
+\[
+  d\!\star\! d A = j_E
+\]
+The form $A$ is not unique, however. In particular, for any closed $1$-form $\omega\in \Omega^1_{\textrm{closed}}(M)$, it's clear that $A+\omega$ still satisfies the Maxwell equations. This invariance is known as a \emph{gauge transformation}, since it represents an ``undetectable'' change in the system. Ideally, we would like to reduce the theory to promote these internal symmetries to external ones.
+
+A first such reduction is to consider $A$ as a class in the quotient \[A\in \Omega^{1}(M)/\Omega^1_{\textrm{closed}}(M).\]
+What are the closed $1$-forms on a flat spacetime? Since the cohomology is trivial, the closed $1$-forms are exactly the $0$-forms. Thinking more geometrically, we can consider any $0$-form as a section of the trivial bundle $E=M\times \R \to M$ and a $1$-form as a section of the cotangent bundle $T^*M \to M$. We then have a linear action:
+\[
+  \Omega^0(M)=\Gamma(E) \to \Hom(\Gamma(T^* M), \Gamma(T^* M)) = \Hom(\Omega^1(M), \Omega^1(M))
+\]
+which sends some $0$-form $\chi\in\Gamma(E)$ to the map $\xi \mapsto \xi + d\chi$.
+
+\section{Quantization}
+\subsection{Dirac Monopoles}
+
+% Suppose we had a magnetic monopole,
+
+\bibliography{refs}{}
+\bibliographystyle{alpha}
+
+\end{document}

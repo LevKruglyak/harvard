@@ -1,0 +1,215 @@
+\documentclass{pset}
+
+% Chapter 4: Exercises 19, 27, 29, 31, 34. 
+% Chapter 5: Exercises 2, 5.
+
+\title{Math 213a Problem Set 9}
+\due{November 14, 2023}
+\author{Lev Kruglyak}
+
+\input{../213a.tex}
+
+\collaborator{AJ LaMotta}
+\collaborator{Leonardo Kaplan}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{4.19}
+  Show that the set of Riemann mappings whose images are polygons is dense in $S$, in the topology of uniform convergence on compact sets.
+\end{problem}
+
+\begin{solution}
+  We heuristically showed in class that the subspace 
+  \[
+    S^\infty = \{ f\in S : f(S^1)\textrm{ is a real analytic Jordan curve}\}
+  \]
+  is dense in $S$. Let's begin by fleshing out the details. Given some $f\in S$, we can consider the family of maps $f_r(z) = f(rz)/r$. We would like to show that $f_r \to f$ as $r\to 1^-$.
+
+  First, note that $f_r(z)$ is univalent since $f_r(0)=0$, $f'_r(0)=rf'(0)/r=1$, and has real analytic Jordanian boundary since $f$ is analytic on a neighborhood of $S^1(r)$, and thus $f(S^1(r))/r$ is a real analytic Jordan curve. Thus $f_r\in S^\infty$. To show that $f_r \to f$ uniformly on compact sets, note that $f$ is uniformly continuous on $\Delta(R)$, and $|z-rz|=(1-r)|z|\leq (1-r)R$ converges uniformly to $0$ on this region.
+
+  Now let's further restrict to the subspace
+  \[
+    S^p = \{ f \in S : f(S^1)\textrm{ is a polygon}\}.
+  \]
+  To show this is dense in $S^\infty$, let $f\in S^\infty$. For any $n$, let $R_n$ be the vertices regular polygon inscribed in $S^1$ with points at $n$-th roots of unity. We can then approximate $f(S^1)$ by connecting the points of $f(R_n)$ to get a polygon, and define $f_n$ to be a Riemann map to this polygon. Then $f_n$ approximates $f$ uniformly on the boundary, so by Cauchy's integral formula that $f_n$ approaches $f$ uniformly on compact sets.
+\end{solution}
+
+\begin{problem}{4.27}
+  Let $P_n\subset \C$ be a regular polygon with $n$ sides, and let $f : P_n \to \Delta$ be a Riemann mapping (a bijective holomorphic map).
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Prove that if $n=3$, then $f$ extends to a meromorphic function on all of $\C$.
+  \end{part}
+
+  Let $f : P_3 \to \Delta$ be a Riemann mapping. Let's compose with some biholomorphism $\Delta \to \H$ so that our Riemann map is $f : P_3 \to \H$. This means that the entire triangle $P_3$ to the upper half plane. If we Schwarz reflect along one of the edges of the triangle, the map extends to map into the full complex plane. Let's color a region which maps to $\H$ white and one which maps to $-\H$ black. In each flip, we also rotate by $2\pi/3$.
+
+  \begin{center}
+    \begin{tikzpicture}
+        \tikzset{trianglea/.style={regular polygon, regular polygon sides=3, minimum size=1cm, draw, fill=white, inner sep=0, anchor=south, rotate=0, line width = 1pt}}
+        \tikzset{triangleb/.style={regular polygon, regular polygon sides=3, minimum size=1cm, draw, fill=black, inner sep=0, anchor=south, rotate=180, line width = 1pt}}
+
+        \foreach \row in {0,...,2} {
+          \foreach \col in {0,...,2} {
+            \node[triangleb] at ({(\row+\col/2)*sin(60)-0.025}, {(\col*3/2)*cos(60)}) {};
+            \node[trianglea] at ({(\row+(\col-1)/2)*sin(60)-0.05}, {((\col-1)*3/2)*cos(60)-0.05}) {};
+          }
+        }
+    \end{tikzpicture}
+  \end{center}
+
+  Notice that we can tile the entire complex plane with triangles of alternating colors, where each pair of adjacent are opposite colors. This proves that we can extend $f$ to a well-defined map $\C \to \C$.
+
+  \begin{part}{b}
+    Prove that this is false if $n=6$.
+  \end{part}
+  
+  Assuming that there is some extension, by Schwarz reflection, we must have a hexagonal tiling of the complex plane by fundamental domains $f : P_6 \to \H$, with adjacent hexagons mapping to opposite sides of the complex plane.
+
+  \begin{center}
+    \begin{tikzpicture}
+        \tikzset{hexagona/.style={regular polygon, regular polygon sides=6, minimum size=1cm, draw, inner sep=0, anchor=south, fill=black, rotate=30, line width = 1pt}}
+        \tikzset{hexagonb/.style={regular polygon, regular polygon sides=6, minimum size=1cm, draw, inner sep=0, anchor=south, fill=white, rotate=30, line width = 1pt}}
+        \tikzset{hexagonc/.style={regular polygon, regular polygon sides=6, minimum size=1cm, draw, inner sep=0, anchor=south, fill=red, rotate=30, line width = 1pt}}
+
+        \node[hexagonb] at ({(0+0/2)*sin(60)}, {(0*3/2)*cos(60)}) {};
+        \node[hexagona] at ({(0+1/2)*sin(60)}, {(1*3/2)*cos(60)}) {};
+        \node[hexagonc] at ({(0+2/2)*sin(60)}, {(2*3/2)*cos(60)}) {};
+        \node[hexagonc] at ({(1+0/2)*sin(60)}, {(0*3/2)*cos(60)}) {};
+        \node[hexagonb] at ({(1+1/2)*sin(60)}, {(1*3/2)*cos(60)}) {};
+        \node[hexagona] at ({(1+2/2)*sin(60)}, {(2*3/2)*cos(60)}) {};
+        \node[hexagona] at ({(2+0/2)*sin(60)}, {(0*3/2)*cos(60)}) {};
+        \node[hexagonc] at ({(2+1/2)*sin(60)}, {(1*3/2)*cos(60)}) {};
+        \node[hexagonb] at ({(2+2/2)*sin(60)}, {(2*3/2)*cos(60)}) {};
+    \end{tikzpicture}
+  \end{center}
+
+  As before, we can bicolor the hexagonal lattice based on if a region maps to the lower or upper halfplane. However it's clear that there is no bicoloring of the hexagonal lattice, so we have a contradiction. 
+
+\end{parts}
+
+\begin{problem}{4.29}
+  Prove that if $f : \H \to \C$ is given by the Schwarz-Christoffel formula, but $S = \sum \mu_i \neq 2$, then the image $P = f(\H)$ is a polygon with vertex at $f(\infty)$ with external angle $(2-S)\pi$.
+\end{problem}
+
+\begin{solution}
+  Let $q_i\in \R$ be some points on $\partial \H$, with $\sum \mu_i \neq 2$, and $\alpha\in \C^*, \beta\in \C$. Then $f$ is given by 
+  \[
+    f(z) = \alpha \int^z \frac{d\xi}{\prod^n_{i=1}(\xi-q_i)^{\mu_i}}+ \beta.
+  \]
+  Let's assume without loss of generality that none of the $q_i$ are zero, otherwise we can precompose $f$ with a translation. Now consider the automorphism $\Phi$ of the upper half-plane which sends $\infty$ to $0$, explicitly given by $\Phi(z)=-1/z$. By the Schwarz-Christoffel theorem, we get a Riemann map for polygon with vertices $\varphi(q_i)$, all of which are finite. This map has explicit form
+  \[
+    \widetilde{f}(z) = \alpha\int^z \frac{d\xi}{\xi^{\mu_{n+1}}\prod^{n}_{i=1}(\xi-\varphi(q_i))^{\mu_i}},
+  \]
+  and here we set $\mu_{n+1} = 2-S$, which is nonzero since we assumed that $S\neq 2$. Pulling back along $\varphi$, we can see that
+  \[
+    \begin{aligned}
+      \widetilde{f}\circ \varphi(z) &= \alpha\int^{\varphi^{-1}(z)} \frac{d\varphi(\xi)}{\varphi^{\mu_{n+1}}(\xi) \prod^n_{i=1}(\varphi(\xi)-\varphi(q_i))^{\mu_i}}+\beta\\
+                       &= \alpha\int^{\varphi^{-1}(z)} \frac{d\xi / \xi^2}{{(-1/\xi)^{\mu_{n+1}} \prod^n_{i=1}(-1/\xi-\varphi(q_i))^{\mu_i}}}+\beta\\
+                       &= \alpha\int^{\varphi^{-1}(z)} \frac{d\xi}{{\prod^n_{i=1}(-1-\xi\varphi(q_i))^{\mu_i}}}+\beta\\
+                       &= \alpha\int^{\varphi^{-1}(z)}\frac{d\xi}{\prod^n_{i=1}(\xi - q_i)^{\mu_i}}+\beta.
+    \end{aligned}
+  \]
+  This means that $f=\widetilde{f}\circ \varphi$, which completes the proof.
+\end{solution}
+
+\begin{problem}{4.31}
+  Find a formula (which may involve an integral) for a covering map $f : \H \to \C - T$ whose image is the complement of a square $T$.
+\end{problem}
+
+\begin{solution}
+  Recall from class that we have a Riemann map for the square $R_4 : \Delta \to T$ given by the integral
+  \[
+    R_4(z)  = \int^z \frac{d\xi}{\sqrt{1-\xi^4}}.
+  \]
+  To get a map to the complement, let's consider the map
+  \[
+    \widetilde{f}(z) = \int^z R_4'(1/\xi)\;d\xi = \int^z \frac{\sqrt{\xi^4-1 }}{\xi^2}\;d\xi.
+  \]
+  This now becomes a map from $\Delta$ to $\C - T$ (up to some scaling factor), due to the inversion of the derivative. We can now precompose $\widetilde{f}$ with any biholomorphism $\H \to \Delta$ to get the desired covering map, for instance $z\mapsto (z-i)/(z+i)$, thus we get the formula
+  \[
+    f(z) = \int^{(z-i)/(z+i)} \frac{\sqrt{\xi^4-1}}{\xi^2}\;d\xi.
+  \]
+  This formula is validated by Nehari, we can alternatively construct it by considering the Schwarz-Christoffel formula for an inverted square.
+\end{solution}
+
+\begin{problem}{4.34}
+  Let $f$ and $g$ be entire functions solving Fermat's equation, $f^n+g^n=1$ with $n>2$. Prove that $f$ and $g$ are constant. %consider f/g
+\end{problem}
+
+\begin{solution}
+  Suppose $f$ and $g$ are entire functions with $f^n+g^n=1$, and assume for the sake of contradiction that they are non-constant. Consider the meromorphic function $h=f/g$. Note that $h$ can never equal an $n$-th root of $-1$, since then there would exist a $z$ with
+  \[
+    f(z)^n+g(z)^n = g^n(z)\frac{f^n(z)}{g^n(z)}+g^n(z) = -g^n(z) + g^n(z) = 0,
+  \]
+  a contradiction to the Fermat's condition. By Little Picard's theorem, and since $n>2$, this implies that $h$ misses more than $2$ values and thus must be constant. We now have two cases; either $f$ is constant and thus $g$ is constant, or $f=\lambda g$ for some $\lambda\in \C$. This would mean that
+  \[
+    (1+\lambda^n)g^n(z)=1,
+  \]
+  which also implies that $g$ and hence $f$ are constant.
+\end{solution}
+
+\begin{problem}{5.2}
+  Let $\Lambda \subset \R^n$ be a lattice. Choose a sequence of vectors $a_1,a_2,\ldots a_n\in \Lambda$ such that $a_1$ is a shortest nonzero vector, and (for $i>1$) $a_i$ is a shorted vector linearly independent to $(a_1,a_2,\ldots, a_{i-1})$. Is it always the case that $\Lambda = \Z a_1\oplus \cdots \oplus \Z a_n$?
+\end{problem}
+
+\begin{solution}
+  This is a false statement. A counterexample can be found in the case that $n=5$, where we pick some standard basis $\{e_i\}_{i=1}^5$ for $\R^5$. Now let's pick some $\lambda>1$ and set $f_i=\lambda^{i-1} e_i$. Now let's consider the lattice generated by
+  \[
+    \Lambda = \Z\left\langle f_1, f_2, f_3, f_4, \frac{f_1+\cdots+f_5}{2}\right\rangle =\left\{ \frac{c_1}{2}f_1+\cdots+\frac{c_5}{2}f_5 : c_1\equiv \cdots\equiv c_5\mod 2\right\}.
+  \]
+  Given some general element of this form, we see that the norm is
+  \[
+    \left|\frac{c_1}{2}f_1+\cdots+\frac{c_5}{2}f_5\right|^2 = \frac{1}{4}\left(c_1^2 + c_2^2\lambda^2 + \cdots+c_5^2\lambda^8\right).
+  \]
+  Restricting to the vectors with $c_1\equiv \cdots\equiv c_5\equiv 0\mod 2$, we can assume without loss of generality $\lambda^4 < 2$, so the minimum vectors by magnitude are $|\pm f_1|<|\pm f_2|<\cdots<|\pm f_5|$. Restricting to vectors with $c_1\equiv \cdots c_5\equiv 1\mod 2$, and assuming that $\lambda^8 < 5/4$, we see that 
+  \[
+    |f_5|^2 = \lambda^8 < \frac{5}{4} < \frac{1}{4}(1+\lambda^2+\cdots+\lambda^8) = \left|\frac{f_1+\cdots+f_5}{2}\right|^2.
+  \]
+  The procedure will thus generate $\pm f_1, \pm f_2,\cdots,\pm f_5$, which is not a basis for $\Lambda$ since they fail to generate the element $(f_1+\cdots+f_5)/2$.
+\end{solution}
+
+\begin{problem}{5.5}
+  Let $\omega=\exp(2\pi i/3)$ and let $\Lambda = \Z\oplus \Z i$ and $L = \Z \oplus \Z\omega$. Prove that
+  \[
+    \sum_{\lambda \in \Lambda-\{0\}} \lambda^{-6} = \sum_{\ell\in L-\{0\}} \ell^{-4}=0.
+  \]
+\end{problem}
+
+\begin{solution}
+  To solve this problem, it helps to utilize the multiplicative structure of $\Lambda = \Z[i]$ and $L=\Z[\omega]$ (This latter statement follows since $\omega^2=-(\omega+1)$). Specifically, given one of these rings $R$, we look at the action of the unit group $R^\times$ on $R-\{0\}$. Assuming the unit group is finite, the orbits of this action all have the same size. If we further assume that the sum converges absolutely, we can rearrange the sum as a product:
+  \[
+    \sum_{\lambda \in R-\{0\}} \lambda^{-k} = \left(\sum_{u\in R^\times}u^{-k}\right)\sum_{\lambda\in (R-\{0\})/R^\times}\lambda^{-k}.
+  \]
+  In the case $R=\Z[i]$, the unit group is $\Z[i]^\times = \{\pm 1, \pm i\}$ and $k=6$, so we evaluate the unit sum as
+  \[
+    \frac{1}{1^6} + \frac{1}{(-1)^6} + \frac{1}{i^6} + \frac{1}{(-i)^6} = 0.
+  \]
+  Thus, the right-hand sum is zero. For $R=\Z[\omega]$, the unit group is $\Z[\omega]^\times = \{\pm 1, \pm \omega, \pm \omega^2\}$ and $k=4$, so we can expand in a similar way to get 
+  \[
+    \frac{1}{1^4}+\frac{1}{(-1)^4} + \frac{1}{\omega^4}+\frac{1}{(-\omega)^4}+\frac{1}{\omega^8} + \frac{1}{(-\omega)^8}=\frac{2\omega^2+2\omega+2}{\omega^8} = 0.
+  \]
+  Thus, both sides of the sum are zero and so the quantities are equal. All we have to show is that both sums are absolutely convergent, justifying the rearrangement of the series earlier. For the case $\Z[i]$, recall that every element is expressed as $a+bi$, with $|a+bi|^2=a^2+b^2$. Thus, we want to show convergence of  
+  \[
+    \sum_{\lambda\in \Lambda-\{0\}} \left|\lambda^{-6}\right| = \sum_{(a,b)\neq (0,0)}\frac{1}{(a^2+b^2)^3} = 4\sum_{(a,b)>(0,0)} \frac{1}{(a^2+b^2)^3}.
+  \]
+  We'll prove this converges using the 2d integral test; note that
+  \[
+    \iint_1^\infty \frac{1}{(x^2+y^2)^3} \;dx\wedge dy =\frac{3\pi - 8}{64} < \infty.
+  \]
+  Similarly, every element of $\Z[\omega]$ can be expressed as $a+b\omega$, with $|a+b\omega|^2 = a^2+ab+b^2$. Then, we get the series
+  \[
+    \sum_{\ell\in L-\{0\}} \left|\ell^{-4}\right| = \sum_{(a,b)\neq (0,0)}\frac{1}{(a^2+ab+b^2)^2} = 2\sum_{(a,b)>(0,0)} \left(\frac{1}{(a^2+ab+b^2)^2} +\frac{1}{(a^2-ab+b^2)^2}\right).
+  \]
+  Doing an integral test, we have
+  \[
+    \iint_1^\infty \frac{1}{(x^2+xy+y^2)^2}+\frac{1}{(x^2-xy+y^2)^2}\; dx\wedge dy < \infty.
+  \]
+  (This can be shown explicitly, or with comparison tests, but it's not terribly interesting.)
+\end{solution}
+
+\end{document}
+

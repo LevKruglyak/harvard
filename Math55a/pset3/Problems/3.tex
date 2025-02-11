@@ -1,0 +1,36 @@
+\begin{problem}
+  Let $k$ be a field, and let $M$ be the vector space of $n \times n$ matrices with entries in $k$. Let $S \subset M$ be the subspace of \emph{symmetric} matrices, that is, matrices $A = (a_{i,j})$ such that $a_{i,j} = a_{j,i} \; \forall i, j$, and let $Q \subset M$ be the subspace of \emph{skew-symmetric} matrices, that is, matrices $A = (a_{i,j})$ such that $a_{i,j} = -a_{j,i}$ $\forall i, j$.
+  \begin{enumerate}
+    \item Find the dimensions of $S$ and $Q$.
+    \item Show that if $\ch(k)\neq 2$ then $M=S\oplus Q$.
+    \item Show that this is false if $\ch(k)=2$.
+  \end{enumerate}
+\end{problem}
+
+\textbf{(1)} We claim that:
+\[ \dim(S) = \frac{n(n+1)}{2},\quad \dim(Q) = \frac{n(n-1)}{2}\]
+For $S$, note that all symmetric matrices are uniquely determined by the form:
+\[\begin{pmatrix}
+* & * & * & *\\
+  & * & * & *\\
+  &   & * & *\\
+  &   &   & *
+\end{pmatrix}\]
+Everything on the lower diagonal is determined by the upper triangle, and there are exactly $n(n+1) /2$ independent values to choose in the upper triangle, so $\dim (S)=n(n+1) /2$. A basis for $S$ can be made by looking at the set of matrices with all stars set to zero and only one set to one. 
+
+For skew-symmetric matrices, they must have the form 
+\[\begin{pmatrix}
+  0 & * & * & *\\
+    & 0 & * & *\\
+    &   & 0 & *\\
+    &   &   & 0
+  \end{pmatrix}\]
+since $a_{i,i}=-a_{i,i}=0$. So there are exactly $n(n+1) /2-n=n(n-1) /2$ independent values to choose, hence $\dim (Q)=n(n-1) /2$. 
+
+\textbf{(2)} To show that $M=S\oplus Q$, we need to show that $S\cap Q=\{0\}$ and that every $m\in M$ can be expressed as $s+q$ for $s\in S$ and $q\in Q$. Suppose $A\in S\cap Q$, and assume $\ch(k) \neq 2$. Then $a_{i,j}=-a_{i,j}$ for all $i,j$. Since $\ch(k)\neq 2$, this implies that $a_{i,j}=0$ for all $i,j$, so $A=0$. Now suppose $A\in M$. Consider the decomposition
+\[
+  A=\frac{1}{2}(A+A^\intercal) + \frac{1}{2}(A-A^\intercal)
+\]
+where $A^\intercal$ denotes the matrix transpose. $\frac{1}{2}(A+A^\intercal)\in S$, because $(a_{i,j}+a_{j,i}) /2$ is symmetric in $i,j$, and $\frac{1}{2}(A-A^\intercal)\in Q$ because $(a_{i,j}-a_{j,i}) /2$ is skew-symmetric in $i,j$. This concludes the proof.       
+
+\textbf{(3)} This is clearly false in field of characteristic $2$, because $a=-a$ for all $a\in \F_2$ so $S=Q$ and thus they have a non-trivial intersection.

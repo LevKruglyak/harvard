@@ -1,0 +1,205 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 4}}
+
+\begin{document}
+\maketitle
+
+\begin{cproblem}{17} Suppose $f$ is defined on $\R^2$ as follows: $f(x,y)=a_n$ if $n\leq x<n+1$ and $n\leq y<n+1$, ($n\geq 0$); $f(x,y)=-a_n$ if $n\leq x<n+1$ and $n+1\leq y <n+2$, ($n\geq 0$); while $f(x,y)=0$ elsewhere. Here $a_n=\sum_{k\leq n}b_k$, with $\{b_k\}$ a positive sequence such that $\sum^\infty_{k=0}b_k=s<\infty$.
+    \begin{enumerate}[(a)]
+        \item Verify that each slice $f_y$ and $f_x$ is integrable. Also for all $x$, $\int f_x(y)\;dy=0$, and hence $\iint f(x,y)\;dy\;dx=0$.
+        \item However, $\int f_y(x)\;dx = a_0$ if $0\leq y<1$, and $\int f^y(x)\;dx=a_n - a_{n-1}$ if $n\leq y<n+1$ with $n\geq 1$. Hence $y \mapsto \int f^y(x)\;dx$ is integrable on $(0,\infty)$ and 
+        \[
+            \iint f(x,y)\;dx\;dy = s    
+        .\]   
+        \item Note that $\iint|f(x,y)|\;dx\;dy = \infty$.
+    \end{enumerate}  
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} First note that for every $y\in \R$, we have
+    \[
+        \int_\R |f_y(x)|\;dx = |a_n|+|a_{n-1}| \quad \text{where }n\leq y<n+1
+    .\] 
+    Similarly, for every $x\in \R$, we have
+    \[
+        \int_\R |f_x(y)|\;dy = 0
+    \]
+    since the $a_n$ and $-a_n$ terms cancel out. This implies that
+    \[
+        \iint f(x,y)\;dy\;dx = 0
+    .\]   
+    
+    \textbf{(b)} Recall that in (a) we proved that
+    \[
+        \int_\R f_y(x)\;dx=\begin{cases}
+            a_0&0\leq y<1,\\
+            a_n-a_{n-1}&n\leq n+1, n\geq 1.
+        \end{cases}
+    \]
+    Thus we have
+    \[
+        \iint f(x,y)\;dx\;dy = a_0 +\sum^\infty_{n=1}(a_n - a_{n-1}) = s.
+    \]  
+
+    \textbf{(c)} Again using (a), we have
+    \[
+        \iint |f(x,y)|\;dx\;dy \geq \sum_{n=1}^\infty |a_n|+|a_{n-1}| \geq \sum^\infty_{k=1} s = \infty
+    .\] 
+\end{solution}
+
+\begin{cproblem}{22} Prove that if $f\in L^1(\R^d)$ and
+    \[
+        \widehat{f}(\zeta) = \int_{\R^d} f(x)e^{-2\pi i x \zeta}\;dx,
+    \] 
+    then $\widehat{f}(\zeta)\to 0$ as $|\zeta|\to \infty$. (This is the Riemann-Lebesgue lemma.)
+\end{cproblem}
+
+\begin{solution}
+    Note that
+    \[
+        \widehat{f}(\zeta) = \frac{1}{2}\int_{\R^d}\left(f(x)-f(x-\zeta')\right)e^{-2\pi i x\zeta}dx \quad \text{where }\quad\zeta'=\frac{\zeta}{2|\zeta|^2}
+    .\] 
+    Then since $\zeta=\zeta' / 2|\zeta'|^2$ we get
+    \[
+        \begin{aligned}
+            \lim_{|\zeta| \to \infty} \widehat{f}(\zeta) &= \frac{1}{2}\lim_{|\zeta|\to \infty}\int_{\R^d}\left(f(x)e^{-2\pi i x\zeta}-f(x-\zeta')e^{-2\pi i x\zeta}\right)dx\\
+            &= \frac{1}{2}\lim_{|\zeta'|\to 0}\int_{\R^d}\left(f(x)e^{-2\pi i x\zeta}-f(x-\zeta')e^{-2\pi i x\zeta}\right)dx\\
+            &= \frac{1}{2}\lim_{|\zeta'|\to 0}\left\|f(x)e^{-2\pi ix\zeta}, f(x-\zeta')e^{-2\pi i x\zeta}\right\|_1=0,
+        \end{aligned}
+    \] 
+    where the last equality follows because $f(x)e^{-2\pi i x\zeta}$ is integrable.
+\end{solution}
+
+\begin{cproblem}{24} Consider the convolution
+    \[
+        (f * g)(x)=\int_{\R^d} f(x-t)g(t)\;dt
+    .\] 
+    \begin{enumerate}[(a)]
+        \item Show that $f * g$ is uniformly continuous when $f$ is integrable and $g$ bounded.
+        \item If in addition $g$ is integrable, prove that $(f*g)(x)\to 0$ as $|x|\to \infty$.
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Let $B>0$ be a bound for $g$, i.e. $|g|<B$. To prove uniform continuity, let $\epsilon > 0$. Recall that since $f$ is integrable, we have $\lim_{x\to y} \| f(x-t) - f(y-t)\|_1 = 0$ for any $t\in \R^d$. Let $\delta > 0$ be such that $|x-y|<\delta$ implies $\| f(x-t)-f(y-y)\| < \epsilon$. But then
+    \[
+        \begin{aligned}
+            |(f*g)(x)-(f*g)(y)| &= \left|\int_{\R^d}f(x-t)g(t)\;dt - \int_{\R^d}f(y-t)g(t)\;dt\right|\leq \int_{\R^d}\left|\left[f(x-t)-f(y-t)\right]g(t)\right|\;dt\\
+            &\leq B\int_{R^d}|f(x-t)-f(y-t)|\;dt = B\|f(x-t)-f(y-t)\||_1\leq B\epsilon
+        \end{aligned}
+    \]
+    We can readjust this by setting $\epsilon = \epsilon /B$, this gives us uniform continuity.
+
+    \textbf{(b)} We'll begin by proving $f * g$ is integrable. Note that 
+    \[
+        \begin{aligned}
+            \int_{\R^d} |(f*g)(x)|\;dx &= \int_{\R^d}\left|\int_{\R^d} f(x-t)g(t)\;dt\right|dx \leq \int_{\R^d}\int_{\R^d} |f(x-t)g(t)|\;dx\;dt\\
+            &=\int_{\R^d}|g(t)|\int_{\R^d}|f(x-t)|\;dx\;dt = \left(\int_{\R^d}|g(t)|\;dt\right)\left(\int_{\R^d}|f(x)|\;dx\right)<\infty.
+        \end{aligned}
+    \] 
+    Since $f * g$ is integrable, we can use the argument from the previous problem set to see that $\lim_{|x|\to \infty} (f * g)(x) = 0$. (Note that the proof can be modified to work for $\R^d$ by replacing intervals with balls.)
+\end{solution}
+
+\begin{cproblem}{25} Show that for each $\epsilon > 0$ the function $F(\zeta)=\frac{1}{(1+|\zeta|^2)^\epsilon}$ is the Fourier transform of an $L^1$ function.
+\end{cproblem}
+
+\begin{solution}
+    Let $K_\delta(x)=e^{-\pi|x|^2 /\delta}\delta^{-d /2}$, and for any $\epsilon>0$ consider the function
+    \[
+        f(x)=\int^\infty_0 K_\delta(x)e^{-\pi \delta}\delta^{\epsilon-1}\;d\delta
+    .\] 
+    Notice that by Fubini's theorem, we get
+    \[
+        \begin{aligned}
+            \widehat{f}(\zeta)&=\int_{\R^d}f(x)e^{-2\pi i x \zeta}dx=\int_{\R^d}\int^\infty_0 K_\delta(x)e^{-\pi \delta}\delta^{\epsilon-1}\;d\delta\; e^{-2\pi i x \zeta}dx=\int^\infty_0 \int_{\R^d}K_\delta(x)e^{-2\pi i x \zeta}\;dx\;e^{-\pi \delta}\delta^{\epsilon-1}d\delta.
+        \end{aligned}
+    \] 
+    But the ``elementary calculation'' in Stein shows that
+    \[
+        \int_{\R^d} K_\delta(x)e^{-2\pi i x \zeta}dx=\delta^{-d /2}\int_{\R^d} e^{-\pi|x|^2 /\delta} e^{-2\pi i x \zeta}dx=e^{-\pi\delta|\zeta|^2}
+    .\] 
+    Then combining this with the previous calculation, we get
+    \[
+        \widehat{f}(\zeta)=\int_0^\infty e^{-\pi\delta(1+|\zeta|^2)}\delta^{\epsilon-1}d\delta
+    .\] 
+    Now let $v=\pi(1+|\zeta|^2)\delta$ so $dv=\pi(1+|\zeta|^2)d\delta$. Then
+    \[
+        \int_0^\infty e^{-\pi\delta(1+|\zeta|^2)}\delta^{\epsilon-1}d\delta = \frac{1}{\pi(1+|\zeta|^2)}\int_0^\infty e^{-v}\left(\frac{1}{\pi(1+|\zeta|^2)}\right)^{\epsilon-1}\delta^{\epsilon-1}d\delta = \pi^{-\epsilon}\Gamma(\epsilon)\frac{1}{(1+|\zeta|^2)^\epsilon}<\infty
+    .\] 
+    Now let $G(x)=\pi^\epsilon /\Gamma(\epsilon) f(x)$. Then $\widehat{G}(\zeta)=F(\zeta)$. To prove that $G\in L^1(\R^d)$,
+    \[
+        \int_{\R^d}|G(x)|\;dx=\int_{\R^d}|G(x)|\cdot |e^{-2\pi i x\zeta}|\;dx<\infty
+    \]
+    since $\widehat{G}(\zeta)$ is finite.  
+\end{solution}
+
+\begin{cproblem}{4}[Rudin] Suppose $f$ is a complex measurable function on $X$, $\mu$ is a positive measure on $X$, and 
+    \[
+        \varphi(p)=\int_X |f|^p\;d\mu = \|f\|^p_p\quad (0<p<\infty)
+    .\] 
+    Let $E=\{p : \varphi(p)<\infty\}$. Assume $\|f\|_\infty > 0$.
+    \begin{enumerate}[(a)]
+        \item If $r < p < s$, $r\in E$, and $s\in E$, prove that $p\in E$.
+        \item Prove that $\log \varphi$ is convex in the interior of $E$ and that $\varphi$ is continuous on $E$.
+        \item \sout{By (a), $E$ is connected. Is $E$ necessarily open? Closed? Can $E$ consist of a single point? Can $E$ be any connected subset of $(0,\infty)$?}
+        \item If $r < p < s$, prove that $\|f\|_p \leq \max (\|f\|_r, \|f\|_s)$. Show that this implies the inclusion $L^r(\mu) \cap L^s(\mu) \subset L^p(\mu)$.
+        \item Prove that if $f\in L_q(\R^d)$ for some $q\geq 1$ then $\|f\|_p \to \|f\|_\infty$ as $p\to \infty$.
+    \end{enumerate} 
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} Recall the inequality for any $r<p<s$ as above: $|y|^r+|y|^s\geq |y|^p$ for all $y\in \R$. Then we have
+    \[
+        \int_X |f|^p\;d\mu \leq \int_X |f|^r + |f|^s\;d\mu = \int_X |f|^r\;d\mu + \int_X |f|_s\;d\mu < \infty,
+    \]
+    so $p\in E$ as desired.
+
+    \textbf{(b)} Let $x\in E$ be an interior point. This means that there is some $\epsilon>0$ such that $B_\epsilon(x)\subset E$. Suppose $r,s\in B_\epsilon(x)$. We want to show that $(1-t)\log \varphi(r)+t\log\varphi(s) \geq \log\varphi((1-t)r+ts)$ for any $t\in [0,1]$. This is equivalent to proving $\varphi(r)^{1-t}\varphi(s)^t \geq \varphi((1-t)r+ts)$ which in turn means
+    \[
+        \left(\int_X |f|^r\;d\mu\right)^{1-t}\left(\int_X |f|^s\;d\mu\right)^t\geq \int_X |f|^{(1-t)r+ts}\;d\mu
+    .\]  
+    By H\"older's inequality, we get 
+    \[
+        \|f^{(1-t)r}\cdot f^{ts}\|_1 = \int_X |f|^{(1-t)r+ts}\;d\mu \leq \left(\int_X |f|^r\;d\mu\right)^{1-t}\left(\int_X |f|^s\right)^t=\|f^{(1-t)r}\|_{1 /(1-t)}\|f^{ts}\|_{1 /t}
+    \]
+    which is what we wanted. To prove continuity, first notice that $\varphi$ is continuous on $\text{Int}(E)$ since it is log convex. To prove continuity on the whole of $E$, let $\{v_n\}_{n\geq 1}\subset E$ be a strictly increasing or decreasing sequence converging to some $v\in \R$. We'll show that $v\in E$ as well. By the monotone convergence theorem,
+    \[
+        \lim_{n\to \infty}\varphi(v_n)=\lim_{n\to \infty}\int_X |f|^{v_n}\;d\mu = \int_X \lim_{n\to \infty} |f|^{v_n}\;d\mu = \int_X |f|^v\;d\mu = \varphi(v)
+    .\] 
+    This suffices to prove continuity on the closure $\overline{\text{Int}(E)}=E$. 
+
+    \textbf{(d)} Recall the inequality for any function $f$ and $r,s\in \R$ we have
+    \[
+        \frac{(1-t)f(r)+tf(s)}{(1-t)r+ts}\leq \max\left(\frac{f(r)}{r}, \frac{f(s)}{s}\right)\quad \forall t\in[0,1]
+    .\]  
+    Then for any $p \in (r,s)$, we can write $p=(1-t)r+ts$ for a $t\in [0,1]$. By log convexity of $\varphi$, we have
+    \[
+        \begin{aligned}
+            \frac{\log\varphi(p)}{p}=\frac{\log\varphi((1-t)r+ts)}{(1-t)r+ts}\leq \frac{(1-t)\log\varphi(r)+t\log\varphi(s)}{(1-t)r+ts}\leq \max\left(\frac{\log\varphi(r)}{r}, \frac{\log\varphi(s)}{s}\right) \\
+            \implies \log \|f\|_p \leq \max(\log\|f\|_r, \log\|f\|_s) \implies \|f\|_p \leq \max(\|f\|_r,\|f\|_s).
+        \end{aligned}
+    \]
+    This is what we were trying to prove. Note that if $\|f\|_r< \infty$ and $\|f\|_s<\infty$ we get $\|f\|_p<\infty$ so we have $L^r(\mu)\cap L^s(\mu)\subset L^p(\mu)$. 
+
+    \textbf{(e)} Recall that for any $f : \R^d \to \R$, we define the $L^\infty$ norm as
+    \[
+        \|f\|_\infty = \inf \{B\in \R : \mu(\{x\in \R^d : f(x)\geq B\}) > 0\}
+    .\] 
+    Now we claim that $\|f\|_p \to \|f\|_\infty$ on a set $X\subset \R^d$ of finite measure. For any $\|f\|_\infty \geq \delta > 0$, let \[S_\delta = \{x\in X : |f(x)|\geq \|f\|_\infty -\delta\}.\]
+    Then we have
+    \[
+        \|\restr{f}{X}\|_p= \left(\int_X f^p\;d\mu\right)^{1 /p} \geq \left(\int_{S_\delta} (\|f\|_\infty - \delta)^p\;d\mu\right)^{1 /p}=(\|f\|_\infty - \delta)\mu(S_\delta)^{1 /p}
+    .\]  
+    This in turn implies that $\liminf_{p\to \infty} \|\restr{f}{X}\|_p \geq \|\restr{f}{X}\|_\infty-\delta$. Now since $|f(x)|\leq \|f\|_\infty$ for a.e. $x$, we get for any $p>q$ that
+    \[
+        \|\restr{f}{X}\|_p \leq \left(\int_X |f(x)|^{p-q}|f(x)|^q\right)^{1/p}\leq \|\restr{f}{X}\|^{1-p /q}_\infty \|\restr{f}{X}\|_q^{q /p} 
+    .\]  
+    This gives the reverse inequality so we have $\lim_{p\to \infty} \|\restr{f}{X}\|_p =\|\restr{f}{X}\|_\infty$. Since $\R^d$ is $\sigma$-finite, we can let $X$ increase to get $\lim_{p\to \infty}\|f\|_p = \|f\|_\infty$. 
+\end{solution}
+
+\end{document}

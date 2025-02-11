@@ -1,0 +1,166 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+\usetikzlibrary{decorations.pathreplacing,decorations.markings}
+
+\title{\textbf{Math 231a Problem Set 6}}
+
+\providecommand{\Sk}{\text{Sk}}
+\providecommand{\Gr}{\text{Gr}}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+   Let $p$ and $q$ be relatively prime positive integers. Define a space
+$L(p, q)$ as the quotient of $S^3$, the unit sphere in $\C^2$ by the action of the group $\mu_p$ of $p$-th roots of unity given by
+\[
+    \zeta \cdot (z_1, z_2) = (\zeta z_1, \zeta^q z_2)
+.\] 
+\quad Impose on $L(p, q)$ the structure of a finite cell complex with one cell in each dimension between 0
+and 3. The cell complex structure is just the filtration, but you should specify the characteristic
+maps as well. Then compute the homology of $L(p, q)$.
+\end{problem}
+
+\begin{solution}
+    \quad We'll begin by giving a certain cell structure to $S^3$ which is invariant under the action of $\mu_p$. Observe that $S^3$ can be identified with pairs $(r_1e^{2\pi i \theta_1}, r_2 e^{2\pi i \theta_2})$ with $r_1^2+r_2^2=1$. Consider the following subsets of $S^3$:
+    \[
+        \begin{aligned}
+            e_k^0 &= \{(e^{2\pi i \theta_1}, 0) : \theta_1 = k / p\},\\
+            e_k^1 &= \{(e^{2\pi i \theta_1}, 0) : \theta_1 \in [k / p, (k+1) / p]\},\\
+            e_k^2 &= \{(r_1e^{2\pi i \theta_1}, r_2e^{2\pi i \theta_2}) : \theta_2 = k / p\},\\
+            e_k^3 &= \{(r_1e^{2\pi i \theta_1}, r_2e^{2\pi i \theta_2}) : \theta_2 \in [k / p, (k+1) / p]\}.\\
+        \end{aligned}
+    \]
+    We claim that these subsets give us a cell structure on $S^3$ by setting $\Sk_n S^3 = \coprod_{k=0}^{p-1} e_k^n$. To prove this, we'll construct attachment maps $f_k^n : D^n \to \Sk_n S^3$ with $f_k^n(\partial D^n) \subset \Sk_{n-1}S^3$ and $\restr{f_k^n}{\text{Int}(D^n)}$ a homeomorphism. 
+
+    \quad For $n=0$, the maps are quite simple, with $f_k^0$ taking $D^0$ to $(e^{2\pi i k / p}, 0)$. For $n=1$, we can identify $D^1$ with $[0,1]$ so our map becomes $f_k^1(t) = (e^{2\pi i (k+t) / p}, 0)$. It's clear that $f_k^1(\partial I)\in \Sk_0S^3$. For $n=2$, using the standard parametrization of $D^2$ in polar coordinates, consider the map
+    \[
+        f_k^2(r,\theta) = \left(re^{2\pi i \theta}, \sqrt{1-r^2}e^{2\pi i k / p}\right)
+    .\]  
+    This works because $f^2_k(1,\theta) = (e^{2\pi i \theta},0) \in \Sk_1S^3$. Finally for $n=3$, consider the parameterization of $D^3$ by ``suspension'' coordinates, i.e. $SD^2=D^2\times I / \sim$, 
+    so $(r, \theta, t)$, where $\theta\in [0,1]$, $t\in [0,1]$. Then we have the map
+    \[
+        f_k^3(r,\theta,t) = \left(r e^{2\pi i \theta}, \sqrt{1-r^2}e^{2\pi i (k+t) / p}\right)
+    .\]  
+    To check the boundary, we observe that $f^3_k(r,\theta,0) = (re^{2pi i \theta}, \sqrt{1-r^2}e^{2\pi i k /p})$ and on the lower hemisphere; $f^3_k(r,\theta,1) = (re^{2pi i \theta}, \sqrt{1-r^2}e^{2\pi i (k+1) /p})$.
+
+    \quad Next, notice that this cell decomposition is invariant under the action of $\mu_p$, which acts as
+    \[
+        \zeta\cdot e_k^0 = e_{k+1}^0, \zeta\cdot e^1_k = e_{k+1}^1, \zeta\cdot e^2_k = e_{k+q}^2, \text{ and } \zeta\cdot e^3_k = e_{k+q}^3
+    ,\]  
+    where $\zeta=e^{2\pi i /p}$. Since $p,q$ are relatively prime, the cell decomposition on $S^3$ induces a cell structure on $L(p,q)$, with $\Sk_n L(p,q)=e^n$, where $e^n$ is the image of $e^n_k$ under the action of $\mu_p$. We thus have one cell in each dimension up to $3$, so the cellular homology becomes
+    \[
+        C_n(L(p,q)) = \begin{cases}
+            \Z & n\leq 3,\\
+            0 & \text{otherwise}.
+        \end{cases}
+    \]  
+    \quad Next we compute the boundary maps $\partial_n : C_n(L(p,q)) \to C_{n-1}(L(p,q))$. Let $\widetilde{e^n}$ be the generator in $C_n(L(p,q))$. Obviously $\partial \widetilde{e^0} = 0$, and $\partial \widetilde{e^1}=0$ since the endpoints of $e^1$ are the same. For $e^2$, the map $\restr{f^2}{S^1} \to \Sk_1L(p,q)=S^1$ has degree $p$, so $\partial \widetilde{e^2} = p\widetilde{e^1}$. Lastly, $\partial \widetilde{e^3} = 0$ because the bounding hemispheres of $e^3$ map to the same $2$-cell. So the homology becomes:
+    \[
+        \boxed{H_n(L(p,q))=\begin{cases}
+            \Z & n =0,3,\\
+            \Z / p & n=1,\\
+            0 & \text{otherwise}.
+        \end{cases}}
+    \]
+\end{solution}
+
+\begin{problem}
+    Show that the Euler characteristic is a ``cut-and-paste'' invariant, in the following sense. Let $X$ and $Y$ be subcomplexes of the finite CW complex $X \cup Y$. Show that
+    \[
+        \chi (X\cup Y) = \chi(X) + \chi(Y) - \chi(X\cap Y)
+    .\]
+\end{problem}
+
+\begin{solution}
+    Recall that for a finite CW complex $A$, the Euler characteristic is defined as
+    \[
+        \chi(A) =\sum_{k=0} e_{A,k} (-1)^k
+    \] 
+    where $e_{A,k}$ is the number of $k$-cells in $A$. Then for $X,Y$ finite subcomplexes of $A$, we have $e_{X\cup Y,k} = e_{X,k}+e_{Y,k}+e_{X\cap Y, k}$ so $\chi (X\cup Y) = \chi(X) + \chi(Y) - \chi(X\cap Y)$.
+\end{solution}
+
+\begin{problem}
+A map $f : S^n \to S^n$ satisfying $f(x) = f(-x)$ for all $x$ is called an even map. Show that an even map $S^n \to S^n$ must have even degree, and that the degree must in fact be zero when $n$ is even. When $n$ is odd, show that there exist even maps of any given even degree.
+\end{problem}
+
+\begin{solution}
+    \quad Recall that the antipodal map $\alpha : S^n \to S^n$ given by $x\mapsto -x$ has degree $(-1)^{n+1}$. For any even map $f : S^n \to S^n$, we have $f\circ \alpha = f$ so $(\deg f)(\deg \alpha) = \deg f$. Thus $\deg f = (-1)^{n+1}\deg f$. So for even dimensional spheres, we have $\deg f = -\deg f$ and so $\deg f = 0$.
+
+    \quad For odd dimensional spheres, let $\rho : S^n \to \mathbb{RP}^n$ be the standard two sheeted covering quotient map. Since the map $f$ is even, it passes to the quotient so we get an $\widetilde{f} : \mathbb{RP}^n \to S^n$. This similarly induces a homology triangle:
+    \begin{center}
+        \begin{tikzcd}
+            S^n \arrow[d, "\rho"] \arrow[r, "f"]               & S^n &  & H_n(S^n) \arrow[d, "\rho_*"] \arrow[r, "f_*"]     & H_n(S^n) \\
+            \mathbb{RP}^n \arrow[ru, "\widetilde{f}"', dashed] &     &  & H_n(\mathbb{RP}^n) \arrow[ru, "\widetilde{f}_*"'] &         
+        \end{tikzcd}
+    \end{center}
+    All the homology groups are $\Z$ with $\rho_*(x)=2x$, so since $f_* = \widetilde{f_*}\circ \rho_*$, it follows that $f$ is even degree. To explicitly construct a map of degree $2k$ for any $k$, consider $S^{2n-1}$ as a subspace of $\C^{n}$. Let 
+    \[
+        f_k(z_1,\ldots,z_n) = \frac{(z_1^2,\ldots,z_n^2)}{\|(z_1^2,\ldots,z_n^2)\|}
+    .\]
+    This is clearly an even degree $2k$ map.
+    
+\end{solution}
+
+\begin{problem}
+    The goal of this problem is to prove the generalized Jordan curve theorem:
+    \begin{enumerate}[(i)]
+        \item For an embedding $h : D^k \hookrightarrow S^n$, we have $\widetilde{H_*}(S^n \setminus h(D^k))\cong 0$.
+        \item For an embedding $h : S^k \hookrightarrow S^n$, we have $\widetilde{H_*}(S^n \setminus h(S^k))\cong \Z[n-k-1]$.   
+    \end{enumerate}
+    We'll begin by proving (a) by induction on $k$. Let's replace $D^k$ by the cube $I^k$.
+    \begin{enumerate}[(a)]
+        \item Prove (i) above in the case $k=0$.
+        \item Suppose that we are given an embedding $h : I^k \hookrightarrow S^n$ and assume that statement (i) is true for $k-1$. Using the Mayer-Vietoris sequence, prove that if there exists a nonzero class $\alpha \in \widetilde{H_i}(S^n\setminus h(I^k))$ then it maps to a nonzero element in $\widetilde{H_i}(S^n\setminus h([0, \frac{1}{2}]\times I^{k-1}))$ or $\widetilde{H_i}(S^n\setminus h([\frac{1}{2}, 1]\times I^{k-1}))$.
+        \item Conclude by iterating (b) that there is a sequence of closed intervals $I \supset I_1 \supset I_2 \supset \cdots$ where $I_\ell$ has length $2^{-\ell}$ such that the image of $\alpha$ in $\widetilde{H_i}(S^n \setminus h(I_\ell \times I^{k-1}))$ is nonzero for all $\ell\geq 1$.
+        \item Let $\{x\}=\bigcap^\infty_{\ell=1}I_\ell$. Prove that the image of $\alpha$ in $\widetilde{H_i}(S^n\setminus h(\{x\}\times I^{k-1}))$ is nonzero. Conclude that (i) holds by induction on $k$.
+        \item Using (a) and the Mayer Vietoris sequence, prove (ii) by induction on $k$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} In the case $k=0$, we must show that $\widetilde{H_*}(S^n\setminus \{p\})\cong 0$ for any $p\in S^n$. However there is a stereographic projection homeomorphism $\sigma : S^n\setminus \{p\} \to \R^n$ so $\widetilde{H_*}(S^n\setminus \{p\})\cong \widetilde{H_*}(\R^n)\cong 0$.
+
+    \textbf{(b)} Let $H=S^n\setminus h(I^k)$, $H^+=S^n\setminus h([0,1 /2]\times I^{k-1})$, and $H^-=S^n\setminus h([1 /2,1]\times I^{k-1})$.
+    Note that the interiors of $H^+$ and $H^-$ form a cover of $S^n$. The Mayer-Vietoris sequence gives us an exact sequence
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & \widetilde{H_{i+1}}(H) \arrow[r, "\partial_*"] & \widetilde{H_{i}}(H^+\cap H^-) \arrow[r] & \widetilde{H_i}(H^+)\oplus \widetilde{H_i}(H^-) \arrow[r] & \widetilde{H_{i}}(H) \arrow[r] & \cdots
+        \end{tikzcd}
+    \end{center}
+    \quad However $H^+\cap H^- = S^n\setminus h(1 /2\times I^{k-1})$, so by the inductive assumption $\widetilde{H_i}(H^+\cap H^-) = 0$. This means that the map $\widetilde{H}_i(H^+)\oplus \widetilde{H}_i(H^-) \to \widetilde{H_i}(H)$ is an isomorphism, so any nonzero class in the latter must have come from a nonzero class in the either of the formers.
+
+    \textbf{(c)} We construct this sequence inductively. Let $I_1$ be the interval $[0,1 /2]$ if $\alpha$ came from a nonzero element of $\widetilde{H_i}(H^+)$ and $[1/2, 1]$ otherwise. Then we apply (b) again to $I_1$ to get the next interval $I_2$, and keep doing this repeatedly.
+
+    \textbf{(d)} By the previous part we have a diagram 
+    \begin{center}
+        % https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBoBGAXVJADcBDAGwFcYkQAdDgdy1j0axgACQD6WAL4AKYQEoQE0uky58hFOQrU6TVuy69+WQTBGjgk6WPLzFy7HgJEATFpoMWbRJx58YAoTFJGVFnWyUQDAc1IgBmNx1PfV8jEzMLCStRWPD7VScUABYEjz1vLgBjKAgcBDtIlUd1ZHjibVKvH0N-Y0DxLIAPW20YKABzeCJQADMAJwgAWyQyEBwIJE1EsrBmRkYaRnoAIxhGAAVGmO9GGGmcBQi5xY2aNaRXLa8dvYPj04vogUQDc7g8ZvMlogPm9EPFPkhvvtgX9zpcgSD7vUnpC4TDivDEIjfidUYD1MDbpjHhCkLj1ogAKxYmmITYwpnU55Q170jngrn49kSSgSIA
+        \begin{tikzcd}
+            &                                              &                                           & \widetilde{H_i}(H_x)                       &                   \\
+        \widetilde{H_i}(H) \arrow[r] & \widetilde{H_{i}}(H_1) \arrow[r] \arrow[rru] & \widetilde{H_i}(H_2) \arrow[r] \arrow[ru] & \widetilde{H_{i}}(H_3) \arrow[r] \arrow[u] & \cdots \arrow[lu]
+        \end{tikzcd}
+    \end{center}
+    Since $\alpha$ maps to nonzero elements in all the terms in this sequence, it follows that it maps to a nonzero cycle in $H_x=S_n\setminus h(x\times I^{k-1})$. But this is trivial by the inductive hypothesis so $\widetilde{H_i}(H)$ is trivial and the induction is complete.
+    
+    \textbf{(e)} Suppose the claim is true for $k-1$. Letting $D^k_+$ and $D^k_-$ be the upper and lower hemispheres of $S^k$, Mayer-Vietoris gives us the sequence  
+    \begin{center}
+        \begin{tikzcd}
+            \cdots \arrow[r] & \widetilde{H_{i+1}}(S^n\setminus h(S^k)) \arrow[r, "\partial_*"] & \Z[n-k] \arrow[r] & 0 \arrow[r] & \widetilde{H_{i}}(S^n\setminus h(S^k)) \arrow[r] & \cdots
+        \end{tikzcd}
+    \end{center}
+    Thus since the kernel is one dimensional, we get $\widetilde{H_*}(S^n\setminus h(S^k))\cong \Z[n-k-1]$. 
+\end{solution}
+
+\begin{problem}
+    Prove that if $U$ is an open set in $\R^n$ and $h : U \to \R^n$ is a continuous injection, then the image $h(U)$ is an open set in $\R^n$ and $h$ is a homeomorphism onto $h(U)$. 
+%(Hint: It suffices to prove that h(Dn −∂Dn) is open in Rn for any closed disk Dn ⊂ U. Enlarge Rn to Sn and prove this using Problem 4 above.)
+\end{problem}
+
+\begin{solution}
+    \quad It suffices to prove that for any open ball $B\subset U$, $h(B)$ is open in $\R^n$ and $\restr{h}{B}$ is a homeomorphism. First, we replace $\R^n$ by its one point compactification, which is homeomorphic to $S^n$ by stereographic projection. By the previous problem, $S^n\setminus h(\partial B)$ is an open set with exactly two path components $X_1, X_2$, which are also connected. $h(B)$ is clearly connected and $h(S^n\setminus h(\overline{B}))$ is connected by the previous problem as well, so we have $h(B)\cup (S^n\setminus h(\overline{B})) = X_1\cup X_2$. Thus $h(B)=X_1$ without loss of generality and so $h(B)$ is open. Since $\restr{h}{B}$ is a bijective open map, it is a homeomorphism so we are done.
+\end{solution}
+
+\end{document}

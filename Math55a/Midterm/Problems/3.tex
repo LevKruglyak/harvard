@@ -1,0 +1,13 @@
+\begin{problem}
+Let $G$ be a group (not necessarily abelian), and assume that there exists a short exact sequence $$0\longrightarrow \Z/2\longrightarrow G \stackrel{\varphi}{\longrightarrow} \Z/k\longrightarrow 0,$$ i.e.\ there exists a surjective group homomorphism $\varphi:G\to \Z/k$ with $\Ker(\varphi)\simeq \Z/2$.
+\begin{enumerate}
+  \item Show that the nontrivial element of $\Ker(\varphi)$ is in the center $Z(G)$, i.e.\ commutes with every element of $G$.
+  \item Show that, if $g\in G$ is mapped by $\varphi$ to the generator $1\in \Z/k$, then the order of $g$ in $G$ is either $k$ or $2k$.
+  \item Assume $k$ is odd. Show that $G$ is isomorphic to the cyclic group $\Z/2k$. (Hint: use (1) and (2)).
+\end{enumerate}
+\end{problem}
+\textbf{(1)} Let $a\in G$ be the nontrivial element of $\Ker(\varphi)$. Then for any $g\in G$, $\varphi(gag^{-1})=\varphi(g)+\varphi(a)+\varphi(g^{-1})=\varphi(g)+\varphi(g^{-1})=0$, so $gag^{-1}\in \Ker(\varphi)$. $gag^{-1}$ can't be $e$, since that would imply $a=e$, so $gag^{-1}=a$ and hence $a\in Z(G)$.
+
+\textbf{(2)} Suppose $\varphi(g)=1$ for some $g\in G$. Then $k$ is the smallest positive integer for which $\varphi(g^k)=0$. So $g^k\in \Ker(\varphi)$. If $g^k=e$, then the order of $g$ is $k$ by minimality of $k$. If $g^k=a$, then $g^{2k}=a^2=e$ so the order of $g$ is $2k$. Here $a^2=0$ because $\Ker(\varphi)$ is closed under multiplication and $a^2\neq a$.
+
+\textbf{(3)} Let $k$ be odd. First we claim that $|G|=2k$. Indeed, by the first isomorphism theorem, $G/\Ker(\varphi)\cong \Z/k$ so $|G|/|\Z/2|=|\Z/k|$ and so $|G|=2k$. Next, we'll construct a map $G\to \Z/2k$. Let $g\in G$ be some element which maps to $1$ by $\varphi$. By (2), the order of $g$ is either $k$ or $2k$. If the order of $g$ is $2k$, then we are done since $g$ generates $G$ so there is a natural isomorphism $G\to \Z/2k$ sending $g\mapsto 1$. If the order of $g$ is $k$, consider $ga$, where $a$ is the nontrivial element of $\Ker(\varphi)$. Since $a$ commutes with $g$ by (1), the order of $ga$ is the least common multiple of the order of $g$ and the order of $a$. Since the order of $g$ is $k$ (assumed to be odd) and the order of $a$ is $2$, the order of $ga$ is $2k$. So we again have a natural isomorphism $G \to \Z/2k$ sending $ga\mapsto 1$.    

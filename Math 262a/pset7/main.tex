@@ -1,0 +1,127 @@
+\documentclass{pset}
+
+\title{Math 262a Problem Set 7}
+\author{Lev Kruglyak}
+\due{November 3, 2023}
+
+\input{../262a.tex}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}[Grassmanians and Galilean relativity.]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Let $M$ be an affine space over a real vector space $V$, and suppose $C\subset M$ is a submanifold of dimension $k$. Let $\Gr_k(V)$ denote the Grassmannian of $k$-dimensional subspaces of $V$. The \emph{Gauss map}
+    \[
+      \Gamma : C \to \Gr_k(V)
+    \]
+    assigns to each $p\in C$ its tangent space $T_pC \subset V$. Prove that for $p\in C$, the differential
+    \[
+      d\Gamma_p : T_p C \to \Hom(T_p C, V/T_p C)
+    \]
+    can be interpreted as a \emph{symmetric} bilinear form
+    \[
+      T_p C \times T_p C \to V / T_p C.
+    \]
+  \end{part}
+
+  Recall that there is a canonical isomorphism 
+  \[
+    \Omega_W : T_{W}\Gr_k(V) \to \Hom(W, V/W)
+  \]
+  Thus, the differential map $\Omega_{T_pC}\circ d\Gamma_p$ maps $T_p C \to \Hom(T_p C, V/T_p C)$. By the tensor-Hom adjunction, this canonically passes to a bilinear form
+  \[
+    (T_p C)^{\otimes 2} \to V/T_p C.
+  \]
+
+  \begin{part}{b}
+    Suppose $\dim M = 2$ and $k=1$. How is the differential of the Gauss map related to the classical curvature of a (cooriented) plane curve.
+  \end{part}
+
+  In this case, we can identify $\Gr_1(\R^2)$ with $\RP^1$, then for some curve $\gamma : \R \to \R^2$ we get a map $\Gamma_\gamma : \gamma(\R) \to \RP^1$ which sends $(\gamma_x(t), \gamma_y(t))$ to $[\dot{\gamma_x}(t): \dot{\gamma_y}(t)]$. Notice that this map is independent of the parametrization of the curve; to see this let $\alpha : \R \to \R$ be some reparametrization. Then
+  \[
+    \Gamma_{\gamma\circ \alpha}(\gamma(\alpha(t))) = [\alpha'(t)\dot{\gamma_x}(t) : \alpha'(t)\dot{\gamma_y}(t)] = [\dot{\gamma_x}(t) : \dot{\gamma_y}(t)] = \Gamma_{\gamma}(\gamma(t)).
+  \]
+  Now when we take the differential of this map at a point $\gamma(t)$ on the curve, we get 
+  \[
+    d\Gamma_{\gamma(t)} : T_{\gamma(t)} \gamma(\R) \to T_{\Gamma(\gamma(t))}\RP^1.
+  \]
+  Since this is a linear map from a one-dimensional vector space, it suffices to specify where $1\in T_{\gamma(t)}\gamma(\R)$ gets sent to. Working in local coordinates $x$ and $y$, we can see that $\Gamma(\gamma(t)) = \dot{\gamma_y}(t)/\dot{\gamma_x}(t).$ This naturally corresponds to the classical notion of curvature.
+\end{parts}
+
+\begin{problem}{2}[Phase space of relativistic particles.]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Recall that the phase space $\mathcal{M}$ of the classical relativistic particle in a Minkowski spacetime $M$ is the manifold of all timelike affine lines $C\subset M$. The isometry group $O(M)$ acts on $\mathcal{M}$. Prove that the subgroup $O^\uparrow(M)$ acts preserving the symplectic form and its complement in $O(M)$ acts by reversing the symplectic form (to its negative).
+  \end{part}
+
+  \begin{part}{b}
+    Repeat the analysis of the classical relativistic particle for the classical Gallilean particle.
+  \end{part}
+\end{parts}
+
+\begin{problem}{3}[Invariant measures on a manifold]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Let $M$ be a smooth manifold equipped with a transitive action of a Lie group $G$. Fix $p\in M$ and let $G_p \subset G$ be the stabilizer subgroup at $p$. Define the notion of a $G$-invariant smooth measure on $M$. Prove that $G$-invariant smooth measures form either an $\R^{>0}$-torsor or form an empty set. Show that the former possibility prevails if $G_p$ is compact.
+  \end{part}
+
+  Let $\mu$ be a smooth measure on $M$. We say that $\mu$ is $G$-invariant if for every smooth, compactly supported function $f : M \to \R$, we have
+  \[
+    \int_M f(g\cdot p)\,d\mu(p)  \int_M f(p)\,d\mu(p).
+  \]
+  Now let $\textrm{Meas}_G(M)$ be the space of $G$-invariant smooth measures on $M$, and suppose that it is non-empty, with $\mu\in \textrm{Meas}_G(M)$ a $G$-invariant measure. Then for any $\lambda\in \R_{>0}$, $\lambda \mu$ is also a $G$-invariant measure by basic measure theory.
+
+  Furthermore, if $\mu, \nu\in \textrm{Meas}_G(M)$, then we have a function $f=d\mu/d\nu$; i.e. their Radon-Nikodym derivative. This is a function $f : M \to \R$ such that 
+  \[
+    \mu(A) = \int_A f\,d\nu
+  \]
+  for all measurable $A\subset M$. By transitivity of the group action, this function $f$ must be constant almost everywhere and so $\mu=\lambda \nu$, which proves that $\textrm{Meas}_G(M)$ is a $\R_{>0}$-torsor.
+
+  Now suppose that $G_p$ is compact. Let $\mu_G$ be the Haar measure on $G$, and let $\mu_p$ be some local measure on $U \supset p$. We can then construct a measure $\mu$: 
+  \[
+    \mu(A) = \int_{G/G_p} \mu_p(g\cdot U \cap A)\, d\mu_G(gG_p).
+  \]
+  Essentially, this integral smears out the measure on $U$ to cover the entire manifold $M$.
+
+  \begin{part}{b}
+    Prove that there exist left-invariant smooth measures on $G$.
+  \end{part}
+
+  The existence of such a measure follows immediately from Haar's theorem.
+
+  \begin{part}{c}
+    Investigate the existence of bi-invariant smooth measures on $G$. What condition(s) on $G$ guarantee their existence? Give an example of $G$ and a proof of a non-existence for that $G$.
+  \end{part}
+\end{parts}
+
+\begin{problem}{4}
+  Consider standard Minkowski spacetime $\mathbb{M}^n$ with coordinates $t, x^1, \ldots, x^{n-1}$ and Lorentz metric
+  \[
+    \mu = c^2 dt^2 - (dx^1)^2-\cdots-(dx^{n-1})^2.
+  \]
+  For $m>0$, consider the mass shell $\mathcal{O}_m$ in $(\R^n)^*$ defined as the manifold 
+  \[
+    \mathcal{O}_m = \left\{E\;dt + p_1\; dx^1+\dots p_{n-1}\;dx^{n-1} : m^2c^2=E^2/c^2 - p_1^2 - \cdots - p_{n-1}^2\right\}.
+  \]
+  Write a formula for a smooth density on $\mathcal{O}_m$ that is invariant under the group $O^\uparrow(\mathbb{M}^n)$. Is it invariant under the group $O(\mathbb{M}^n)$?
+\end{problem}
+
+\begin{solution}
+  We can express differential forms on $\mathcal{O}_m$ in terms of the coordinates $dE, dp_1,\ldots, dp_{n-1}$. Now consider the smooth density
+  \[
+    \omega = \frac{dE\wedge dp_1\wedge \cdots \wedge dp_{n-1}}{|d(m^2 c^2)|} = \frac{dE\wedge dp_1\wedge \cdots\wedge dp_{n-1}}{|2E/c^2\, dE - 2p_1\, dp_1-\cdots -2p_{n-1}\,dp_{n-1}|}.
+  \]
+  Now suppose $\Lambda\in O^\uparrow(\mathbb{M}^n)$ is a time-preserving Lorentz transformation. Since $m^2 c^2$ is Lorentz invariant, $\Lambda$ preserves the denominator of this smooth density. On the other hand, $\Lambda$ must have determinant $1$ as a transformation of $E, p_1, \ldots, p_{n-1}$. Thus, the numerator is also preserved.
+
+  In the case that we have a general Lorentz transformation, the denominator will be preserved by the absolute value condition, but the numerator may have a flipped sign and so this density will not be preserved.
+\end{solution}
+
+\end{document}

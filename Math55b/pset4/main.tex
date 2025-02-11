@@ -1,0 +1,236 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\lightmode
+
+\title{\textbf{Math 55b Problem Set 4}}
+
+\begin{document}
+\maketitle
+
+\begin{center}
+    \textit{I collaborated with AJ LaMotta for this problem set.}
+\end{center}
+
+\begin{problem}
+    In this problem, we'll see how to construct the \emph{completion} of a metric space; that is, given a metric space $X$, we'll construct a complete metric space $X^*$ (i.e., every Cauchy sequence in $X^*$ has a limit) in which $X$ sits as a dense subset. To start, let $(X,d)$ be any metric space, and let $\mathcal{C}(X)$ denote the set of all Cauchy sequences $\{p_n\} = p_1,p_2,p_3\dots$ in $X$. We define an equivalence relation $\sim$ on $\mathcal{C}(X)$ by
+    \[
+        \{p_n\} \sim \{q_n\} \quad \text{ iff } \quad d(p_n,q_n)\to 0, \quad \text{i.e.:} \quad \forall \epsilon > 0, \; \exists N : \forall n \geq N, \; d(p_n, q_n) < \epsilon.
+    \]
+    We then define the set $X^*$ to be the quotient $\mathcal{C}(X)/\!\!\sim$, that is, a point $P\in X^*$ is an equivalence class of Cauchy sequences in $X$. Finally, we define a distance function $D$ on $X^*$ by 
+    \[
+        D(\{p_n\}, \{q_n\}) \; = \; \lim_{n \to \infty} d(p_n,q_n)
+    \]
+    We will take for granted the fact that $\R$ (with its usual distance) is complete.
+    \begin{enumerate}[(a)]
+        \item Show that $\sim$ is indeed an equivalence relation on $\mathcal{C}(X)$.
+        \item Show that $D$ is well defined and gives a metric on $X^*$.
+        \item Show that the metric space $(X^*, D)$ is complete.
+        \item Show that the map $\iota : X \to X^*$ defined by $p \mapsto \{p,p,p,\dots\}$ is injective, and that for any $p, q \in X$ we have $D(\iota(p), \iota(q)) = d(p,q)$ (that is, $\iota$ is an \emph{isometry}).
+        \item Finally, show that the image $\iota(X) \subset X^*$ is dense.
+    \end{enumerate}
+
+    Note that applying this construction to the metric space $\Q$ (with the usual distance) gives $\R$. 
+    
+% (Hint: you need to check three things: (1) given two Cauchy sequences in $X$, the
+% limit in the definition of $D(\{p_n\},\{q_n\})$ exists; (2) this quantity does not
+% depend on the choice of $\{p_n\}$ in its equivalence class; (3) $D$ satisfies the axioms of a metric).
+
+% (Hint: given a Cauchy sequence $P_1,P_2,\dots$ in $(X^*,D)$, the first step
+% in showing that it converges to some limit $Q\in X^*$ is to construct $Q$.
+% First choose a Cauchy sequence $p_{n,1},p_{n,2},\dots$ in $X$ to represent each $P_n$, 
+% then construct a  new sequence $q_1,q_2,\dots$ in $X$ by choosing each $q_n=p_{n,k_n}$ for
+% $k_n$ sufficiently large, so all subsequent terms of the sequence
+% $\{p_{n,k}\}$ are within distance $1/n$ of $q_n$. Use the triangle
+% inequality to show that $\{q_n\}$ is a Cauchy sequence, defining a point $Q\in X^*$,
+% and finally show that $P_n$ converges to $Q$ in $(X^*,D)$. [Why can't we
+% just choose $q_n=p_{n,n}$?])
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} We'll check the three axioms of an equivalence relation.
+    \begin{itemize}
+        \item \textbf{Reflexivity:} If $\{p_n\}\in \mathcal{C}(X)$, then $d(p_n, p_n)=0$ so $\{p_n\}\sim \{p_n\}$.
+        \item \textbf{Symmetry:} If $\{p_n\}, \{q_n\}\in \mathcal{C}(X)$ with $\{p_n\}\sim \{q_n\}$, then $d(p_n, q_n)\to 0$ so by symmetry of the distance function, $d(q_n, p_n)\to 0$. 
+        \item \textbf{Transitivity:} If $\{p_n\},\{q_n\},\{z_n\}\in \mathcal{C}(X)$ with $\{p_n\}\sim \{q_n\}$ and $\{q_n\}\sim \{z_n\}$, then $d(p_n, q_n)\to 0$ and $d(q_n, z_n)\to 0$. Note that by the triangle inequality we have $d(p_n, q_n)+d(q_n, z_n)\geq d(p_n, z_n)$ so $d(p_n, z_n)\to 0$ and thus $\{p_n\}\sim \{z_n\}$.  
+    \end{itemize}
+    
+    \textbf{(b)} First we'll check that $D(\{p_n\}, \{q_n\})$ exists for any two Cauchy sequences $\{p_n\}, \{q_n\}\in \mathcal{C}(X)$. Consider the sequence $\{d(p_n, q_n)\}$. Let $\epsilon>0$ and $N>0$ such that for all $n,m\geq N$, $d(p_m, p_n)<\frac{\epsilon}{2}$ and $d(q_m,q_n)<\frac{\epsilon}{2}$. Then
+    \[
+        \begin{aligned}
+            |d(p_m,q_m)-d(p_n,q_n)| &\leq |d(p_m,q_m)-d(p_m, q_n)|+|d(p_m, q_n)-d(p_n,q_n)|\\
+            &\leq d(q_m, q_n)+d(p_m,p_n)\\
+            &\leq \frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon.
+        \end{aligned}
+    \]  
+    So $\{d(p_n,q_n)\}$ is a Cauchy sequence in $\R$, however since $\R$ is complete, it must converge. So $D(\{p_n\}, \{q_n\})$ exists. Next, to check well-definedness, let $\{p_n\}\sim \{p_n'\}$ and $\{q_n\}\sim \{q_n'\}$. We claim that $D(\{p_n\},\{q_n\})=D(\{p_n'\}, \{q_n'\})$. Since $D(\{p_n\}, \{q_n\})=\lim_{n\to \infty}d(p_n,q_n)$, it suffices to show that $\lim_{n\to\infty}|d(p_n,q_n)-d(p_n', q_n')|=0$. Let $\epsilon > 0$ be arbitrary. Since $\{p_n\}\sim \{p_n'\}$ and $\{q_n\}\sim \{q_n'\}$, there must be some $N>0$ such that for any $n\geq N$, we have $d(p_n, p'_n)<\frac{\epsilon}{2}$ and $d(q_n,q'_n)<\frac{\epsilon}{2}$. However,
+    \[
+        \begin{aligned}
+            |d(p_n,q_n)-d(p_n',q_n')|&\leq |d(p_n,q_n)-d(p_n,q_n')|+|d(p_n,q_n')-d(p_n',q_n')|\\
+            &\leq d(p_n,q_n)+d(p_n',q_n')\\
+            &\leq \frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon.
+        \end{aligned}
+    \]
+    So $\lim_{n\to\infty}|d(p_n,q_n)-d(p_n',q_n')|=0$ and thus $D(\{p_n\}, \{q_n\})=D(\{p_n'\}, \{q_n'\})$. Lastly, we must check that $D$ satisfies the axioms of a metric:
+    \begin{enumerate}
+        \item \textbf{Identity:} Suppose $D(\{p_n\}, \{q_n\})=0$. This means that $\lim_{n\to \infty}d(p_n,q_n)=0$, so by definition $\{p_n\}\sim \{q_n\}$. Conversely, $D(\{p_n\},\{p_n\})=\lim_{n\to\infty}d(p_n,p_n)=0$.
+        \item \textbf{Symmetry:} Clearly $D(\{p_n\},\{q_n\})=\lim_{n\to\infty}d(p_n,q_n)=\lim_{n\to\infty}d(q_n,p_n)=D(\{q_n\}, \{p_n\})$.
+        \item \textbf{Triangle Inequality:} Note that $D(\{p_n\},\{q_n\})+D(\{q_n\},\{z_n\})=\lim_{n\to \infty}(d(p_n,q_n)+d(q_n,z_n))\leq \lim_{n\to\infty}d(p_n,z_n)=D(\{p_n\}, \{z_n\})$.
+    \end{enumerate} 
+    
+    \textbf{(c)} Suppose $\{p_{1,n}\},\{p_{2,n}\},\ldots$ in $(X^*, D)$ is a Cauchy sequence. Since $\{p_{w,n}\}$ is Cauchy, let $q_w=p_{w,\kappa(w)}$ where $\kappa(w)$ is some number such that $d(q_w, p_{w,n})<\frac{1}{w}$. First, we show that $\{q_w\}$ is a Cauchy sequence. Let $\epsilon>0$. We claim that for any $w_1,w_2\geq \frac{4}{\epsilon}$, we have $d(q_{w_1}, q_{w_2})<\epsilon$. Firstly, we know by definition that $d(q_{w_1}, p_{w_1,n})<\frac{1}{w_1}$ and $d(q_{w_2}, p_{w_2,n})<\frac{1}{w_2}$ for $n>\max\{\kappa(w_1), \kappa(w_2)\}$. Lastly, we'll increase $n$ until $d(p_{w_1,n}, p_{w_2,n})<\frac{\epsilon}{2}$. (We can do this because $\{p_{w,n}\}$ is  a Cauchy sequence) Then by the triangle inequality,
+    \[
+        \begin{aligned}
+            d(q_{w_1}, q_{w_2})&\leq d(q_{w_1}, p_{w_1,n})+d(p_{w_1,n}, p_{w_2,n})+d(p_{w_2, n}, q_{w_2})\\
+            &=\frac{1}{w_1}+\frac{\epsilon}{2}+\frac{1}{w_2}\leq \frac{\epsilon}{4}+\frac{\epsilon}{2}+\frac{\epsilon}{4}=\epsilon.
+        \end{aligned}
+    \]         
+    So $\{q_w\}\in \mathcal{C}(X)$ is in the completion. 
+    
+    Let $\epsilon>0$. Since $\{q_w\}$ is a Cauchy sequence, there is some $N$ such that for any $n_1,n_2>N$ we have $d(q_{n_1}, q_{n_2})<\frac{\epsilon}{2}$. Let $N'=\max\{\frac{2}{\epsilon}, N\}$. For any $n\geq N$ and $m\geq \max\{\kappa(n),n\}$, we have
+    \[
+        \begin{aligned}
+            d(p_{n,m}, q_m) &= d(p_{n,m}, p_{m,\kappa(n)})\\
+            &\leq d(p_{n,m}, p_{n,\kappa(n)})+d(p_{n,\kappa(n)}, p_{m,\kappa(m)})\\
+            &\leq \frac{1}{n} + \frac{\epsilon}{2}\leq \frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon.
+        \end{aligned}
+    \]     
+    This means that for all $j\geq N$ we have $D(\{p_{j,n}\},\{q_n\})\leq \epsilon$ so $\{p_n\}$ converges to $\{q_n\}$. 
+
+    \textbf{(d)} Clearly $\iota$ is an isometry, because if $p,q\in X$ then $D(\iota(p),\iota(q))=\lim_{n\to \infty}d(p,q)=d(p,q)$. This automatically implies that $\iota$ is an injection because distinct points $p,q\in X$ have images $\iota(p),\iota(q)$ with $D(\iota(p),\iota(q))=d(p,q)>0$ so $\iota(p)\neq \iota(q)$ by the identity axiom of distances.
+    
+    \textbf{(e)} Let $\{p_n\}\in X^*$ and $\epsilon >0$. We'll find a $q\in X$ with $D(\iota(q), \{p_n\})<\epsilon$. Since $\{p_n\}$ is a Cauchy sequence, there must be some $N>0$ such that whenever $n\geq N$ we have $d(p_n, p_N)<\epsilon$. So letting $q=p_N$, note that $D(\iota(q), \{p_n\})=\lim_{n\to\infty} d(p_N,p_n)<\epsilon$. This completes the proof.  
+\end{solution}
+
+\begin{problem}\noindent
+    \begin{enumerate}[(a)]
+        \item Let $p : X \to Y$ be a continuous map. Show that if there is a continuous map $f : Y \to X$ such that $p\circ f$ equals the identity map of $Y$, then $p$ is a quotient map.
+        \item If $A\subset X$, a \emph{retraction} of $X$ onto $A$ is a continuous map $r : X \to A$ such that $r(a)=a$ for each $a\in A$. Show that a retraction is a quotient map.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} First of all, since $p$ has a right inverse, it must be a surjective map of sets. Next, suppose $V\subset Y$ is an open set. Then $p^{-1}(V)$ is open by continuity. Conversely if $V\subset Y$ is an arbitrary subset with $p^{-1}(V)$ open, then $f^{-1}(p^{-1}(V))=V$ is open. Since $p$ is surjective and $V\subset Y$ is open if and only if $p^{-1}(V)$ is open, $p$ is a quotient map.
+
+    \textbf{(b)} Letting $\iota_A : A \to X$ be the inclusion map, note that $r\circ \iota_A$ is the identity map on $A$. Thus by (a), $r$ is a quotient map. 
+\end{solution}
+
+\begin{problem}
+    Let $X=\R\times \{1,2\}$, where $\{1,2\}$ is equipped with the discrete topology, and consider the equivalence relation given by $(x,1)\sim (x,2)$ for all $x\neq 0$ (but $(0,1)\not\sim (0,2)$). Show that the quotient topology on $X/\sim$ is not Hausdorff.
+\end{problem}
+
+\begin{solution}
+    Let $x_1$ and $x_2$ be the images of $(0,1)$ and $(0,2)$ under the quotient map. Suppose for the sake of contradiction that $U\ni x_1$ and $V\ni x_2$ are disjoint open sets in $X /\sim$. Letting $\pi : X \to X /\sim$ be the quotient map, $\pi^{-1}(U)\ni (0,1)$ and $\pi^{-1}(V)\ni (0,2)$ are disjoint open sets. Let $B_{\epsilon_1}(0,1)\subset U$ and $B_{\epsilon_2}(0,2)\subset V$ for some $\epsilon_1,\epsilon_2>0$. Assume without loss of generality that $\epsilon_1\leq \epsilon_2$. Then $\pi(B_{\epsilon_1}(0,1))\subset U\cap V$ so $U$ and $V$ are not disjoint. Thus $X/\sim$ is not Hausdorff.
+\end{solution}
+
+\begin{problem}
+    Let $X=\R^{n+1}-\{0\}$. We define an equivalence relation on $X$ by $x\sim y$ $\Leftrightarrow$ $x=\alpha y$ for some $\alpha\in \R$, $\alpha\neq 0$. The quotient $X/\sim$ is called the $n$-dimensional real projective space, $\mathbb{RP}^n$.
+    \begin{enumerate}[(a)]
+        \item By considering the image under the quotient map of the open subset $X_0=\{(x_1,\dots,x_{n+1})\in X\,|\,x_{n+1}\neq 0\}$, show that $\mathbb{RP}^n$ contains an open subset $U_0$ which is homeomorphic to $\R^n$ and whose complement is homeomorphic to $\mathbb{RP}^{n-1}$.
+        \item Show that $\mathbb{RP}^n$ is homeomorphic to the quotient space $S^n/\sim$, where $S^n$ is the unit sphere in $\R^{n+1}$ and $a\sim b$ $\Leftrightarrow$ $a=\pm b$ (i.e., we identify {\em antipodal} points on the sphere).
+        \item Show that the quotient map $p:S^n\to \mathbb{RP}^n$ is a two-to-one {\em covering map}, i.e.\ that every point of $\mathbb{RP}^n$ has a neighborhood $U$ such that $p^{-1}(U)$ is the disjoint union of two open subsets $U_1, U_2\subset S^n$, such that the restriction of $p$ to $U_i\to U$ is a homeomorphism for each $i=1,2$.
+        \item Show that $\mathbb{RP}^1$ is homeomorphic to $S^1$. (Note: the analogue for $n\geq 2$ is false).
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    Let $\pi : \R^{n+1}-\{0\} \to (\R^{n+1}-\{0\}) /\sim$ be the quotient map.
+
+    \textbf{(a)} We claim that $\pi(X_0)$ is an open subset of $\mathbb{RP}^n$ homeomorphic to $\R^n$. First consider the map $f : X_0 \to \R^n$ which takes $(x_1,\ldots,x_{n+1})$ to $(x_1 / x_{n+1}, \ldots, x_n / x_{n+1})$. This map is clearly a continuous surjection and well defined since $x_{n+1}\neq 0$. This map also passes to the quotient, giving us a bijective continuous map $\widetilde{f} : \pi(X_0) \to \R^n$. There is also a continuous inverse map given by $(x_1,\ldots,x_n) \mapsto [(x_1,\ldots,x_n, 1)]$. Next, let's look at the complement of $\pi(X_0)$. This complement is the image under the quotient map of the closed set $X_1=\{(x_1,\ldots,x_n,0)\in X\}$. Consider the map $g : X_1 \to \RP^{n-1}$ which takes $(x_1,\ldots,x_n,0)$ to $[(x_1,\ldots,x_n)]$. Again once we pass to the quotient $\widetilde{g} : \pi(X_1) \to \RP^{n-1}$ we get a homeomorphism.    
+    
+    \textbf{(b)} Consider the inclusion $i : S^n \to \R^{n+1}-\{0\}$. Then $\pi\circ i : S^n \to \RP^n$ is a continuous surjection, so passing to the quotient, we get a continuous surjection $\widetilde{\pi\circ i} : S^n/\sim \to \RP^n$. However $S^n /\sim$ is a compact space and $\RP^n$ is Hausdorff so any continuous surjection from $S^n /\sim$ to $\RP^n$ is a homeomorphism.   
+    
+    \textbf{(c)} Let $x\in \RP^n$ be a point. Assume without loss of generality that its last coordinate is nonzero, so $x_{n+1}\neq 0$. Thus $x\in U_0$, the open subset from (a). Next it's clear that $p^{-1}(U_0)=V_+\sqcup V_-$ where $V_+=\{(x_1,\ldots,x_{n+1})\in S^n\mid x_{n+1}>0\}$ and $V_-=\{(x_1,\ldots,x_{n+1})\in S^n\mid x_{n+1}<0\}$. These are clearly disjoint and open. Furthermore the restriction $\restr{p}{V_+}$ is clearly a continuous surjection, however proving it's injective is a bit more tricky. Suppose $(x_1,\ldots,x_{n+1}), (y_1,\ldots,y_{n+1})\in V_+$ with $p(x_1,\ldots,x_{n+1})=p(y_1,\ldots,y_{n+1})$. This means that $x_i=\alpha y_{i}$ for some $\alpha\in \R$. Since $x_{n+1}=\alpha y_{n+1}$ and $x_{n+1}$ and $y_{n+1}$ have the same sign, it follows that $\alpha>0$. However note that $x_1^2+\cdots+x_{n+1}^2=1$ and $(\alpha x_1)^2+\cdots+(\alpha x_{n+1})^2=\alpha^2=1$, so $\alpha=1$. This means that $x_i=y_i$ and the function is injective. So the restriction to $V_\pm$ is a homeomorphism. 
+    
+    \textbf{(d)} We know by (b) that $\RP^1$ is homeomorphic to $S^1 /\sim$, where $x\sim y$ iff $x=\pm y$. Letting $S_1\subset \C$, consider the continuous surjective map $f : S^1 \to S^1$ given by $f(z)=z^2$. Since $x\sim y$ implies that $f(x)=f(y)$, we can pass to the quotient to get a continuous surjection $\widetilde{f} : S^1/\sim \to S^1$. Again, since $S^1 /\sim$ is compact and $S^1$ is Hausdorff, this map must be a homeomorphism. So $\RP^1\cong S^1$. 
+\end{solution}
+
+\begin{problem}
+    Let $X$ be a topological space, and consider the equivalence relation on $X$ defined by $x\sim y$ if there exists a path in $X$ from $x$ to $y$. The equivalence classes are called {\em path components} of $X$. Define $\pi_0(X)$ to be the set of path components of $X$. 
+    \begin{enumerate}[(a)]
+        \item If $f:A\to Y$ is continuous and $A$ is path-connected, show that $f(A)$ is path-connected and thus contained in a single path component of $Y$.
+        \item Show that if $f:X\to Y$ is a continuous function, there is an induced map of sets $\pi_0(f):\pi_0(X)\to \pi_0(Y)$. 
+        \item Show that $\pi_0$ is a functor from the category of topological spaces (with continuous functions) to the category of sets; i.e.\ verify that (i) for the identity map $\id_X:X\to X$, $\pi_0(\id_X)=\id_{\pi_0(X)}$, and (ii) given $f:X\to Y$ and $g:Y\to Z$, $\pi_0(g\circ f)=\pi_0(g)\circ \pi_0(f)$.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $x,y\in f(A)$ be distinct points. Pick any $a\in f^{-1}(x)$ and $b\in f^{-1}(y)$ and since $A$ is path connected we can find a path $\gamma : I \to A$ with $\gamma(0)=a$ and $\gamma(1)=b$. Then $f\circ \gamma : I \to Y$ is a path with $(f\circ \gamma)(0)=x$ and $(f\circ \gamma)(1)=y$. So $f(A)$ is path connected.
+    
+    \textbf{(b)} Write $X=\bigsqcup_{i\in \pi_0(X)}X_i$ where $X_i$ are the path connected components of $X$, and write $Y=\bigsqcup_{j\in \pi_0(Y)} Y_j$ where $Y_i$ are the path connected components of $Y$. For every $i\in \pi_0(X)$, note that by (a), $f(X_i)$ is path connected, so it must be contained in some $Y_j$. So define the map $\pi_0(f) : \pi_0(X) \to \pi_0(Y)$ by taking $i\in \pi_0(X)$ to the $j\in \pi_0(Y)$ such that $f(X_i)\subset Y_j$.    
+    
+    \textbf{(c)} For the identity map $\id_X$ note that $f(X_i)=X_i$ so $\pi_0(\id_X)=\id_{\pi_0(X)}$. Next, note that if $f(X_i)\subset Y_{\pi_0(f)(i)}$ and $g(Y_{\pi_0(f)(i)}) \subset Z_{(\pi_0(g)\circ\pi_0(f))(i)}$ then clearly $(g\circ f)(X_i)\subset Z_{(\pi_0(g)\circ\pi_0(f))(i)}$. Yet $(g\circ f)(X_i)\subset Z_{\pi_0(g\circ f)(i)}$. So $\pi_0(g\circ f)=\pi_0(g)\circ \pi_0(f)$.      
+\end{solution}
+
+\begin{problem}
+    Show that if $h, h' : X \to Y$ are homotopic and $k, k' : Y \to Z$ are homotopic, then $k\circ h$ and $k'\circ h'$ are homotopic.
+\end{problem}
+
+\begin{solution}
+    Let $H_h : I\times X \to Y$ be a homotopy between $h$ and $h'$, so $H_h(0, x) = h(x)$ and $H_h(1, x)=h'(x)$. Similarly, let $H_k : [0,1] \times Y \to Z$ be a homotopy between $k$ and $k'$. Now consider the homotopy $H_{k\circ h} : [0,1]\times X \to Z$ given by $H_{k\circ h}(t, x)=H_k(t, H_h(t, x))$. Note that $H_{k\circ h}(0, x)=H_k(0, H_h(0, x))=(k\circ h)(x)$ and $H_{k\circ h}(1, x)=H_k(1, H_h(1, x))=(k'\circ h')(x)$. This is clearly continuous because it is a composition of continuous functions. It's thus a homotopy between $k\circ h$ and $k'\circ h'$. 
+\end{solution}
+
+\begin{problem}
+    Given spaces $X$ and $Y$, let $[X, Y]$ denote the set of homotopy classes of maps of $X$ into $Y$.
+    \begin{enumerate}[(a)]
+        \item Let $I=[0,1]$. Show that for any $X$, the set $[X,I]$ has a single element.
+        \item Show that if $Y$ is path connected, the set $[I,Y]$ has a single element.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Let $f : X \to I$ be a continuous function. Consider the map $H : I\times X \to I$ given by $H(t,x)=(1-t)\cdot f(x)$. This is clearly continuous, so it is a homotopy between $f$ and the constant map $c_0 : X \to I$ which maps every element to zero. Since every function in $[X,I]$ is homotopic to a constant map, there is only one equivalence class in $[X,I]$. 
+
+    \textbf{(b)} Let $f : I \to Y$ be a continuous function. First note that the map $H : I\times I \to Y$ given by $H(t,x)=f((1-t)\cdot x+t)$. Then $H(0,x)=f(x)$ but $H(1,x)=f(1)$. So $f$ is homotopic to the constant map $c_{f(1)}$. However since $Y$ is path connected, every constant map is homotopic, i.e. given $a,b\in Y$, there is a path $\gamma : I \to Y$ connecting $a,b$. Then $H : I\times I \to Y$ given by $H(t,x)=\gamma(t)$ is a homotopy between $c_a$ and $c_b$. So $[I,Y]$ contains a single point corresponding to the homotopy class of constant functions.  
+\end{solution}
+
+\begin{problem}
+    A space $X$ is said to be contractible if the identity map $\id_X : X \to X$ is nulhomotopic.
+    \begin{enumerate}[(a)]
+        \item Show that $I$ and $\R$ are contractible.
+        \item Show that a contractible space is path connected.
+        \item Show that if $Y$ is contractible, then for any $X$, the set $[X,Y]$ has a single element.
+        \item Show that if $X$ is contractible and $Y$ is path connected, then $[X,Y]$ has a single element.
+    \end{enumerate}
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} For both spaces, consider the constant map $c_0 : X \to X$ which takes $x$ and maps it to $0\in X$. Next, look at the homotopy $H : I\times X \to X$ given by $H(t,x) = (1-t)\cdot x$. Then $H(0,x)=\id_X(x)$ and $H(1,x)=c_0(x)$. This clearly a continuous homotopy between $\id_X$ and a constant map, so $I$ and $\R$ are both contractible.
+    
+    \textbf{(b)} Let $X$ be a contractible space, say $H : I\times X \to X$ is a homotopy of $\id_X$ and some constant map $c_x$ for a fixed $x\in X$. Now let $a,b\in X$ be distinct points. Then $\gamma_a : I \to X$ given by $\gamma_a(t)=H(t,a)$ is a path from $a$ to $x$. Similarly, we get a path $\gamma_b$ from $b$ to $x$. Thus we can construct a path $\gamma$ by
+    \[
+        \gamma(t)=\begin{cases}
+            \gamma_a(2t)&0\leq t<\frac{1}{2}\\
+            \gamma_b(2t-1)&\frac{1}{2}\leq t\leq 1
+        \end{cases}
+    .\]
+    This is clearly continuous by the gluing lemma, and $\gamma(0)=a$ and $\gamma(1)=b$ so it is a path from $a$ to $b$. Thus $X$ is path connected.   
+    
+    \textbf{(c)} Let $f : X \to Y$ be a continuous function. Since $Y$ is contractible, there is a homotopy $H : I\times Y \to Y$ with $H(0,y)=y$ and $H(1,y)=p$ for some fixed $p\in Y$. Consider the homotopy $H_f : I\times X \to Y$ given by $H_f(t,x)=H(t,f(x))$. This is clearly continuous, and $H_f(0,x)=H(0,f(x))=f(x)$ and $H_f(1,x)=H(1,f(x))=p$. So any $f$ is homotopic to the constant path $c_p$. Thus $[X,Y]$ consists of a single element.
+    
+    \textbf{(d)} Let $f : X \to Y$ be a continuous function. $X$ is contractible, so there is a homotopy $H : I\times X \to X$ with $H(0,x)=x$ and $H(1,x)=p$ for some fixed $p\in X$. Next, consider the homotopy $H_f : I\times X \to Y$ given by $H_f(t,x)=f(H(0,x))$. Then $H_f(0,x)=f(x)$ and $H_f(1,x)=f(p)$. So every function $f$ is homotopic to a constant path $c_{f(p)}$. Since $Y$ is path connected, for any two functions $f_1, f_2 : X\to Y$ we can find a path $\gamma : I \to Y$ such that $\gamma(0)=f_1(p)$ and $\gamma(1)=f_2(p)$. By the previous part of the argument, $f_1\sim c_{f_1(p)}$ and $f_2\sim c_{f_2(p)}$. However $c_{f_1(p)}\sim c_{f_2(p)}$ because there is a homotopy $H_{f_1,f_2} : I\times X \to Y$ given by $H(t,x)=\gamma(t)$. So by the transitive property of homotopy, $f_1\sim f_2$ and so $[X,Y]$ has one element. 
+\end{solution}
+
+\begin{problem}[optional, extra credit]\noindent
+    \begin{enumerate}[(a)]
+        \item Show that the collection $\mathcal{B}=\{[a,b)\,|\,a<b,\ a,b\in\Q\}$ is a basis for a topology $\mathcal{T}$ on $\R$ which is strictly finer than the standard topology and strictly coarser than the lower limit topology. 
+        \item Show that $\mathcal{T}$ is regular (T3) and second-countable, hence metrizable by Urysohn's theorem.
+        \item Show that $(\R,\mathcal{T})$ is homeomorphic to a subspace of $\R$ with its usual topology (this shows more directly that $\mathcal{T}$ is metrizable).
+    \end{enumerate}
+
+% (Hint: given a strictly increasing function $F:\R\to\R$,
+% what kind of continuity properties should $F$ have at the various
+% points of $\R$ in order for $F$ to give a homeomorphism
+% from $(\R,\mathcal{T})$ to $F(\R)\subset \R$ with the usual metric
+% topology? and how would you construct such an $F$?)
+\end{problem}
+
+\begin{solution}
+    \textbf{(a)} Clearly $\mathcal{B}$ is a basis, since it covers the whole space, and whenever $[a,b)$ intersects $[c,d)$ nontrivially, we can find $[e,f)\subset [a,b)\cap [c,d)$. It's strictly finer than the standard topology because $[0,1)$ is not open in the standard topology, since every open ball around $0$ is not fully contained in $[0,1)$. It is also strictly coarser that the lower limit topology because $[\sqrt{2},2)$ is not in $\mathcal{B}$, since every open $[a,b)$ containing $\sqrt{2}$ must partly lie outside $[\sqrt{2},2)$.     
+    
+    \textbf{(b)} Clearly $\mathcal{B}$ is second countable, because it is a subset of the countable set $\Q^2$. To prove it is a regular space, let $(-\infty, a)\cup [b,\infty) = C\subset \R$ be closed and let $p$ be in $\R-C$. If $p=a$, then $(-\infty, a)\cup [b-(b-a) /3,\infty)\supset C$ and $[p,p+(b-a) /3]\supset \{p\}$. Otherwise, let $e=\min\{p-a, b-p\}$. Then $(-\infty,a+e /2)\cup[b+e /2, \infty)\supset C$ and $[p-\epsilon, p+\epsilon]\supset \{p\}$. This proves that $(\R,\mathcal{B})$ is regular. 
+\end{solution}
+
+
+
+\end{document}

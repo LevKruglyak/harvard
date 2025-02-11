@@ -1,0 +1,179 @@
+\documentclass{pset}
+
+\input{../stat210.tex}
+
+\title{Stat 210 Problem Set 1}
+\due{Friday, September 22}
+\author{Lev Kruglyak}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{2.6}[Functions of independent r.v.s]
+    Show that $X\ind Y$ implies $g(X)\ind h(Y)$ for any Borel measurable functions $g,h : \R \to \R$.
+\end{problem}
+
+\begin{solution}
+    Recall that $X\ind Y$ if for all Borel sets $B_1,B_2\subset \R,$ we have \[P(X_1^{-1}(B_1)\cap X_2^{-1}(B_2)) = P(X_1^{-1}(B_1))P(X_2^{-1}(B_2))\]
+    Given two (Borel measurable) functions $g, h : \R \to \R$, we see by preimages that
+    \[
+        \begin{aligned}
+            P(g(X_1)\in B_1, h(X_2)\in B_2) &=P(g(X_1)^{-1}(B_1)\cap h(X_2)^{-1}(B_2)) \\
+            &= P(X_1^{-1}(g^{-1}(B_1))\cap X_2^{-1}(h^{-1}(B_2)))\\
+            &= P(X_1^{-1}(g^{-1}(B_1)))P(X_2^{-1}(h^{-1}(B_2)))\\
+            &= P(g(X_1)\in B_1)P(h(X_2)\in B_2)
+        \end{aligned}
+    \] 
+    where the second to last equality follows since $g^{-1}(B_1)$ and $h^{-1}(B_2)$ are Borel sets, as $g$ and $h$ are measurable. This is exactly the condition for $g(X)\ind h(Y)$.
+\end{solution}
+
+\begin{problem}{2.8}[Total variation distance]
+    The \emph{total variation distance} between two probability measures $P$ and $Q$ is the maximum discrepancy between then, $\|P-Q\|_{TV} =\sup_{A\in \mathcal{F}}|P(A)-Q(A)|$. Assume that $\Omega$ is finite and that $\mathcal{F}=2^\Omega$. Show that
+    \[
+        \|P-Q\|_{TV} = \frac{1}{2}\sum_{\omega\in \Omega}|P(\{\omega\}) - Q(\{\omega\})|,
+    \]
+    so that aside from the constant factor, the total variation distance is the $L_1$ distance.
+    % B = {w : P(w) > Q(w)} and note that P(B) - Q(B) = Q(Bc) - P(Bc) 
+\end{problem}
+
+\begin{solution}
+    Following the hint, let $B = \{\omega : P(\{\omega\}) > Q(\{\omega\})\}$. 
+    \begin{claim} We have $\|P-Q\|_{TV} = |P(B)-Q(B)|$, or equivalently:
+        \[
+            B \in \textrm{argmax}_{A \in \mathcal{F}}|P(A)-Q(A)|
+        .\] 
+    \end{claim}
+    \begin{proof}
+        Note that for any set $A\in \mathcal{F}$, we have:
+        \[
+            P(A) = \sum_{\omega\in A} P(\{\omega\})
+        .\] 
+        Thus, our total variation distance can be written as 
+        \[
+            \|P-Q\|_{TV} = \sup_{A\in \mathcal{F}}|P(A) - Q(A)| = \sup_{A\in \mathcal{F}}\left|\sum_{\omega\in A} P(\{\omega\}) - Q(\{\omega\})\right|
+        .\] 
+        By the above equation, any $\omega\in \Omega$ satisfying $P(\{\omega\}) > Q(\{\omega\})$, including it in $A$ would necessarily increase $|P(A)-Q(A)|$. Similarly, any $\omega\in \Omega$ satisfying $P(\{\omega\})<Q(\{\omega\})$ would necessarily decrease $|P(A) - Q(A)|$. So the $A$ maximizing the variational distance must contain $B$, with some additional points $\omega$ where $P(\{\omega\}) = Q(\{\omega\})$. These additional points have no effect on $|P(A)-Q(B)|$ so we have our desired relation.
+    \end{proof}
+    Now note that we have:
+    \[
+        \begin{aligned}
+            |P(B)-Q(B)| &= \left|\sum_{\substack{\omega\in \Omega,\\P(\{\omega\}) > Q(\{\omega\})}} P(\{\omega\}) - Q(\{\omega\})\right|=\sum_{\substack{\omega\in \Omega,\\P(\{\omega\}) > Q(\{\omega\})}} |P(\{\omega\})-Q(\{\omega\})|
+        \end{aligned}
+    \] 
+    But on the other hand we have a relation for $|P(B^c) - Q(B^c)|=|1-P(B)-1+Q(B)|=|P(B)-Q(B)|$:
+    \[
+        \begin{aligned}
+            |P(B^c) - Q(B^c)| &= \left|\sum_{\substack{\omega\in \Omega,\\P(\{\omega\}) \leq Q(\{\omega\})}} P(\{\omega\}) - Q(\{\omega\})\right|=\sum_{\substack{\omega\in \Omega,\\P(\{\omega\}) \leq Q(\{\omega\})}} |P(\{\omega\})-Q(\{\omega\})|
+        \end{aligned}
+    \] 
+    Adding these together and dividing by two gives the final relation:
+    \[
+        \|P-Q\|_{TV} = |P(B)-Q(B)| = \frac{1}{2}\sum_{\omega\in \Omega}|P(\{\omega\}) - Q(\{\omega\})|
+    .\] 
+\end{solution}
+
+\begin{problem}{2.9}[Rational endpoints]
+    Suppose that $P(X\in I, Y\in J)=P(X\in I)P(Y\in J)$ for all finite open intervals $I$ and $J$ with rational endpoints. Does it follow that $X$ and $Y$ are independent?
+\end{problem}
+
+\begin{solution}
+   Yes. It is proved in the book that $X$ and $Y$ are independent if and only if their joint CDF factors:
+   \[F_{XY}(x,y) = F_X(x)F_y(Y)\]
+   Recall that the joint CDF is defined as a function $F_{XY} : \R^2 \to R$ given by 
+   \[
+       F_{XY}(x,y) = P(X \geq x, Y \geq y)
+   \]
+   Now let $(x,y)\in \R^2$ be some real numbers, and let $N=(-\infty, x]\times (-\infty, y]$ be their ``south-west'' corner. We would like to show that $P((X,Y)\in N) = P(X \leq x)P(Y\leq y)$, then we would be done. 
+   Now let $(x_i)_{i\geq 0}, (y_i)_{i\geq 0}$ be some monotonically increasing rational sequences converging to $x$ and $y$ respectively. 
+   Then the finite rational intervals $I_n = (\floor{x}-n, x_n)$ and $J_n=(\floor{y}-n, y_n)$ converge to $(-\infty, x]$ and $(-\infty, y]$ respectively, and furthermore, by properties of preimages preserving limsup and liminf, it follows that $(X, Y)^{-1}(I_n\times J_n)$ converges to $(X,Y)^{-1}(A)$. (This is proven in the book.) Finally, we apply this to the cumulative distribution function to get:
+   \[
+       \begin{aligned}
+           F_{XY}(x,y) &= \lim_{n\to \infty} P((X,Y)\in (I_n\times J_n)) \\&= \lim_{n\to \infty} P(X\in I_n) P(Y\in J_n)\\ &= P(X \leq x)P(Y\leq y) = F_X(x)F_y(Y)
+       \end{aligned}
+   \]
+   This completes the proof.
+\end{solution}
+
+\begin{problem}{2.10}[Northeast rectangles]
+    Let $\Omega$ be the unit square $[0,1]^2\in\R^2$. Let $P$ and $Q$ be probability measures on $\Omega$. (defined for all Borel sets in the square)
+\end{problem}
+
+\begin{parts}
+    \begin{part}{a}
+        Show that if $P(A) = Q(A)$ for all ``northeast'' rectangles $A=[x_0, 1]\times [y_0,1]$, then $P = Q$.
+    \end{part}
+
+    Let $\mathcal{S}$ be set of such ``northeast'' rectangles. Then $\mathcal{S}$ forms a $\pi$-system, since we have
+    \[
+        [x_0,1]\times [y_0, 1] \cap [x_1,1]\times [y_1, 1] = [\min(x_0,x_1), 1]\times [\min(y_0, y_1), 1]
+    .\] 
+    Furthermore, it follows that $\sigma(\mathcal{S})$ is the Borel $\sigma$-algebra, since any rectangle can be expressed as some union, intersection, and closure of northeast rectangles. These rectangles generate the Borel $\sigma$-algebra. Now we know that $P$ and $Q$ agree on $\mathcal{S}$ by assumption, so by the $\pi-\lambda$ theorem, setting the $\lambda$-system to be the Borel $\sigma$-algebra, we have that $P=Q$. 
+
+    \begin{part}{b}
+        Show by example that it is possible to have $P$ and $Q$ agree on horizontal strips and on all vertical strips, yet have $P\neq Q$.
+    \end{part}
+
+    Let $X=\{(0,0), (1,1)\}\subset [0,1]^2$ and $Y=\{(0,1), (1,0)\}\subset [0,1]^2$. Now we can define measures:
+    \[
+        P(B) = \frac{|X\cap B|}{2},\quad Q(B) = \frac{|Y\cap B|}{2}
+    .\] 
+    These are both clearly probability because:
+    \begin{enumerate}
+        \item $P\left(\bigcup_i B_i\right) = |X\cap \left(\bigcup_i B_i\right)|/2 = \left|\bigcup_i (X\cap B_i)\right|/2 \leq \sum_i P(B_i)$,
+        \item $P([0,1]^2) = 1$,
+        \item $P([0,1]^2 - B) = |X\cap ([0,1]^2 - B)|/2 = |X\cap [0,1]^2|/2 - P(B)=  1-P(B)$
+    \end{enumerate}
+    Clearly, these agree on vertical and horizontal strips, since any vertical strip containing a point of $X$ must also contain a point of $Y$ and vice versa. But these are different measures because $P(X)=1$ yet $Q(X)=0$.
+\end{parts}
+
+\begin{problem}{2.11}[Coupling bound]
+    A common and elegant technique for bounding rates of convergence of certain stochastic processes is to use a \emph{coupling argument}. Suppose that $X_1, X_2,\ldots$ and $Y_1,Y_2,\ldots$ are random variables which ``coalesce'' at some random time $T$, in the sense that $X_n=Y_n$ for all $n\geq T$, with $T$ a random variable taking positive integer values. Show that the total variation distance between the distributions at time $n$ is bounded by the probability that the $X$'s and $Y$'s haven't coalesced yet:
+    \[
+        \|\mathcal{L}(X_n)-\mathcal{L}(Y_n)\|_{TV} \leq P(T > n)
+    .\] 
+    % bound P(X_n\in B)-P(Y_n \in B) by considering the cases $T <= n$ and $T>n$, and noting that ${X_n \in B, T <= n} = {Y_n \in B, T <= n}$ as events
+\end{problem}
+
+\begin{solution}
+    We'll follow the hint. Let $B$ be some Borel set. Notice that
+    \[
+        \begin{aligned}
+            |P(X_n\in B) - P(Y_n \in B)| &= \\|P(X_n\in B, T\leq n ) &+ P(X_n\in B, T > n) - P(Y_n\in B, T \leq n) - P(Y_n\in B, T>n)|
+        \end{aligned}
+    \]
+    By the ``coalescing'' assumption in the problem, we know that $P(X_n\in B, T\leq n) = P(Y_n\in B, T\leq n)$. These terms cancel out so we get:
+    \[
+        \begin{aligned}
+            |P(X_n\in B) - P(Y_n \in B)| = | P(X_n\in B, T > n) - P(Y_n\in B, T>n)|
+        \end{aligned}
+    \]
+    Next, since the measure is non-decreasing, we get $P(X_n\in B, T> n) \leq P(T>n)$ and $P(Y_n\in B, T > n) \leq P(T>n)$, so we have
+    \[
+        \begin{aligned}
+            |P(X_n\in B) - P(Y_n \in B)| \leq P(T>n)
+        \end{aligned}
+    \]
+    This holds for any Borel set $B$, so we have
+    \[
+        \|\mathcal{L}(X_n) - \mathcal{L}(Y_n)\|_{TV} = \sup_{B\in \mathcal{F}}|P(X_n\in B)-P(Y_n\in B)| \leq P(T>n).
+    \]
+\end{solution}
+
+\begin{problem}{2.10.8}[CDF determines the distribution]
+    Prove that the CDF of a random variable completely determines its distribution, i.e., knowing $F(y)=P(Y\leq y)$ for all $y\in \R$ determines $P(Y\in B)$ for all Borel sets $B\subset \R$.
+\end{problem}
+
+\begin{solution}
+    This follows from the $\pi-\lambda$ theorem. Let $\mathcal{S}$ be the $\pi$-system of intervals of the form $[b,\infty)$. This is closed under intersection since
+    \[
+        (-infty,a]\cap (-\infty,b] = (-\infty, \min(a,b)]
+    .\] 
+    Furthermore, $\sigma(\mathcal{S})$ is the Borel $\sigma$-algebra since any open interval $(a,b)$ can be expressed as:
+    \[ 
+            (a,b) = [-\infty, a]^c \cap \left(\bigcup_{x<b} (-\infty, x]\right)
+    .\] 
+    This $\pi$-system sits inside the $\lambda$-system of Borel sets. For two random variables $X,Y$, if $P(X\leq y)=P(Y\leq y)$ for all $y\in \R$, then by definition we have $\mathcal{L}(X)$ and $\mathcal{L}(Y)$ agree on $\mathcal{S}$, and thus $\mathcal{L}(X)=\mathcal{L}(Y)$, which means we know $P(X\in B)=P(Y\in B)$ for all Borel sets $B\subset \R$.
+\end{solution}
+
+\end{document}

@@ -1,0 +1,14 @@
+\begin{problem}
+Let $V$ be a finite-dimensional vector space over a field $k$, and $b:V\times V\to k$ a non-degenerate bilinear form. A subspace $\Lambda\subset V$ is called {\em isotropic} for $b$ if $b(v,w)=0$ $\forall v,w\in\Lambda$. Show that, if $\Lambda$ is isotropic, then $\dim(\Lambda)\leq \frac12 \dim(V)$.
+\end{problem}
+
+Let $\Lambda\subset V$ be an isotropic subspace. Then $\Lambda^\perp = \{ v\in V : b(v,w)=0,\,\forall w\in \Lambda\}$. By isotropy of $\Lambda$, we have $\Lambda\subset\Lambda^\perp$ so $\dim(\Lambda) \leq \dim(\Lambda^\perp)$. We also know that $\dim(\Lambda) + \dim (\Lambda^\perp) = \dim(V)$. Adding the two together, we get 
+\[
+  \begin{aligned}
+    \dim(\Lambda) &\leq \dim(\Lambda^\perp)\\
+    \dim(\Lambda) &\leq \dim(V)-\dim(\Lambda)\\
+    2\dim(\Lambda) &\leq \dim(V)\\
+    \dim(\Lambda)&\leq \frac12 \dim(V).
+  \end{aligned}
+\] 
+This concludes the proof.

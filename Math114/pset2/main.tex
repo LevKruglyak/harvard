@@ -1,0 +1,129 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 114 Problem Set 2}}
+
+\begin{document}
+\maketitle
+
+\begin{cproblem}{18}
+    Prove the following assertion: Every measurable function is the limit a.e. of a
+sequence of continuous functions
+\end{cproblem}
+
+\begin{solution}
+    Consider the sequence of nested closed balls $B_1\subset B_2\subset \cdots$. Recall that by Lusin's theorem, for each $n\geq 1$ and $\epsilon >0$ there is some compact set $K_{n,\epsilon}\subset B_n$ such that $m(B_n\setminus K_{n,\epsilon})<\epsilon$ and $\restr{f}{K_{n,\epsilon}}$ is continuous. Let's define $f_n$ be the extension of $\restr{f}{K_{n,2^{-n}}}$ to all of $\R^d$ by the Tietze extension theorem.
+
+    We claim that $\lim_{n\to \infty} f_n = f$ almost everywhere. Clearly $f_n = f$ on a set $K_{n,2^{-n}}$ with $m(B_n\setminus K_{n,2^{-n}})<2^{-n}$. Let $E_n = B_n\setminus K_{n,2^{-n}}$. Then
+    \[
+        \sum^\infty_{k=1} m(E_n) = \sum^\infty_{k=1} m(B_n\setminus K_{n,2^{-n}}) \leq \sum^\infty_{k=1}2^{-n}=1
+    \]
+    so applying the Borel-Cantelli lemma, it follows that $m\left(\limsup_{n\to\infty} E_n\right)=0$. Note that by construction, $\lim_{n\to\infty} f_n(x)=f(x)$ if and only if $x\in K_{n, 2^{-n}}$ for all $n\geq N$ for some $N$. Thus the set of points for which $\lim_{n\to \infty} f_n(x)\neq f(x)$ is a subset of $\limsup_{n\to\infty} E_n$. But this set has measure zero so we are done.
+    % Let $f : \R^d \to \R$ be a measurable function. Recall Theorem~4.3: $f$ is a.e. the limit of step functions, so
+    % \[
+    %     f = \lim_{n\to \infty} f_n\textrm{ a.e. where } f_n=\sum^{N_n}_{k=1} \alpha_{n,k} \chi_{Q_{n,k}}
+    % \] 
+    % for some cubes $Q_{n,k}\subset \R^d$. We'll begin by proving the claim for characteristic functions of cubes.
+
+    % \begin{claim}
+    %     Let $Q$ be a (closed) cube. Then $\chi_Q$ is the limit of a sequence continuous functions.
+    % \end{claim}
+
+    % \begin{proof}
+    %     Let $Q\subset \R^d$ be a closed cube. For every $\epsilon>0$, consider the open set \[O_\epsilon \supset Q \textrm { where } O_\epsilon = \{x\in \R^d : \text{dist}(x,Q)< \epsilon\}.\] Since $Q$ and $O_\epsilon^c$ are disjoint closed sets, by Urysohn's lemma there must be some continuous function $f_\epsilon$ such that $0\leq f_\epsilon \leq 1$, $f_\epsilon(Q)=1$ and $f_\epsilon(O_\epsilon^c)=0$. We claim that $\{f_\epsilon\}_{\epsilon > 0}$ converges to $\chi_Q$. Let $x\in \R^d$ be an arbitrary point. If $x\in Q$ then $f_\epsilon(x)=1$ for all $\epsilon>0$ so we are done. Otherwise, let $\delta=\text{dist}(x,Q)$. By the extreme value theorem, $\delta>0$, so for every $\epsilon < \delta$, we have $f_\epsilon(x)=0$. This proves convergence.      
+    % \end{proof}
+
+    % Now since $f_n$ is a linear combination of characteristic functions on cubes, there must similarly be continuous functions $f_{n,m}$ with $f_n=\lim_{m\to \infty} f_{n,m}$. So we have
+    % \[
+    %     f = \lim_{n\to \infty}\lim_{m\to \infty} f_{n,m} \quad\textrm{ a.e.}
+    % \] 
+\end{solution}
+
+\begin{cproblem}{23}
+    Suppose $f(x,y)$ is a function on $\R^2$ that is separately continuous: for each fixed variable, $f$ is continuous in the other variable. Prove that $f$ is measurable on $\R^2$.
+\end{cproblem}
+
+\begin{solution}
+    Let $\psi_n$ be a sequence of step functions converging to the identity function on $\R$; for instance take $\psi_n(x)=\left\lfloor nx \right\rfloor /n$. For any $n$, consider the function $g_n(x,y)=f(\psi_n(x),y)$. We claim that for any $n\geq 1$, $g_n$ is measurable. Let $h_{n,m}(x,y)=f(\psi_n,\psi_m(y))$. Clearly $h_{n,m}$ is measurable because it has countable image, and the inverse image of any point in the image is a countable union of cubes. Then since $f$ is separately continuous,
+    \[
+        \lim_{m\to\infty} h_{n,m}(x,y) = \lim_{m\to \infty} g_n(x,\psi_m(y)) = g_n\left(x,\lim_{m\to\infty}\psi_m(y)\right)= g_n(x,y)
+    \]
+    so $g_n$ is measurable. Then,
+    \[
+        \lim_{n\to\infty} g_n(x,y)=\lim_{n\to\infty} f(\psi_n(x), y)=f\left(\lim_{n\to\infty}\psi_n(x),y\right)=f(x,y)
+    \]
+    and so $f$ must be measurable as well.  
+\end{solution}
+
+\begin{cproblem}{36}
+    Here we will construct a measurable function $f$ on $[0,1]$ such that every function almost equal to $f$ is discontinuous everywhere.
+    \begin{enumerate}[(a)]
+        \item Construct a measurable set $E\subset [0,1]$ such that for any open interval $I\subset [0,1]$ satisfies $m(E\cap I)>0$ and $m(E^c\cap I)>0$.
+        \item Show that $f=\chi_E$ has the property that whenever $g=f$ a.e, then $g$ must be discontinuous at every point in $[0,1]$.
+    \end{enumerate} 
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} \textit{Skipped to prevent unreasonable suffering}
+
+    \textbf{(b)} Suppose $g$ is a function on $[0,1]$ with $A=\{x\in [0,1] : f(x)\neq g(x)\}$ satisfying $m(A)=0$. For any open interval $I\subset [0,1]$, we have $m((E\cap I)\setminus A)>0$ and $m((E^c\cap I)\setminus A)>0$. Then $g(E\cap I\setminus A) = \chi_E(E\cap I) = 1$ and $g(E^c\cap I\setminus A)=\chi_E(E^c\cap I)=0$. This is a clear violation of continuity at every point in the image.
+\end{solution}
+
+\begin{cproblem}{38}
+    Prove that $(a+b)^\gamma\geq a^\gamma + b^\gamma$ whenever $\gamma \geq 1$ and $a,b\geq 0$. Also, show that the reverse inequality holds when $0\leq \gamma\leq 1$.
+    % Hint: Integrate the inequality between (a+t)^{gamma-1} and t^(gamma-1) from 0 to b  
+\end{cproblem}
+
+\begin{solution}
+    Note that if $\gamma \geq 1$, we have the inequality $x^{\gamma-1}\leq y^{\gamma-1}$ whenever $x\leq y$. Applying this, we get
+    \[
+        \begin{aligned}
+            (a+t)^{\gamma-1}\geq t^{\gamma-1} \implies \int^b_0 (a+t)^{\gamma-1}\;dt \geq \int^b_0 t^{\gamma-1} \;dt &\implies \left(\frac{(a+t)^\gamma}{\gamma}\right)\Bigg|^b_0 \geq \left(\frac{t^\gamma}{\gamma}\right)\Bigg|^b_0\\
+            &\implies \frac{(a+b)^\gamma}{\gamma} - \frac{a^\gamma}{\gamma}\geq \frac{b^\gamma}{\gamma}\\
+            &\implies (a+b)^\gamma \geq a^\gamma + b^\gamma.
+        \end{aligned}
+    \] 
+    Notice that when $0\leq \gamma\leq 1$, we have $x^{\gamma-1}\geq y^{\gamma-1}$ whenever $x\leq y$, so in this case we have the reverse inequality.
+\end{solution}
+
+\begin{cproblem}{39}
+    Establish the inequality
+    \[
+        \frac{x_1+\cdots+x_d}{d}\geq (x_1\cdots x_d)^{1 /d}\quad\textrm{ for all }x_j\geq 0, j = 1,\ldots,d
+    \]
+    by using backward induction as follows:
+    \begin{enumerate}[(a)]  
+        \item The inequality is true whenever $d$ is a power of $2$ ($d = 2^k, k \geq 1$).
+        \item If the inequality holds for some integer $d\geq 2$, then it must hold for $d-1$, that is, one has \[\frac{y_1+\cdots+y_{d-1}}{d-1} \geq (y_1 \cdots y_{d-1})^{1 /(d-1)}\] for all $y_j\geq 0$, with $j=0,\ldots,d-1$.  
+    \end{enumerate}
+\end{cproblem}
+
+\begin{solution}
+    \textbf{(a)} We'll proceed by induction. First, suppose $k=1$ so that $d=2$. Then we have:
+    \[
+        \begin{aligned}
+            (x-y)^2\geq 0\implies x^2-2xy+y^2\geq 0 \implies x^2+2xy+y^2\geq 4xy &\implies \left(\frac{x+y}{2}\right)^2 \geq xy\\
+            &\implies \frac{x+y}{2}\geq (xy)^{1 /2}.
+        \end{aligned}
+    \]
+    Now suppose for the sake of induction that the claim is true for $d=2^{k-1}$. Then,
+    \[
+        \begin{aligned}
+            \frac{(x_1+y_1)+\cdots+(x_d+y_d)}{d}\geq ((x_1+y_1)\cdots(x_d+y_d))^{1 /d}&\geq (x_1\cdots x_d + y_1\cdots y_d)^{1 /d}\\
+            &\geq \left(2(x_1\cdots x_dy_1\cdots y_d)^{1 /2}\right)^{1 /d}\\
+            &= 2^{1 /d}\left(x_1\cdots x_dy_1\cdots y_d\right)^{1 /2d}\\
+            \implies \frac{(x_1+\cdots+x_d+y_1+\cdots +y_d)}{2d}&\geq (x_1\cdots x_dy_1\cdots y_d)^{1 /2d}.
+        \end{aligned}
+    \]
+    This completes the induction.
+
+    \textbf{(b)} Suppose that the equality holds for some $d\geq 2$. Then
+    \[
+        \frac{y_1+\cdots+y_{d-1}}{d-1}\geq \frac{y_1+\cdots+y_{d-1}}{d}\geq (y_1\cdots y_{d-1})^{1 /d} \geq (y_1\cdots y_{d-1})^{1 /(d-1)}
+    .\] 
+\end{solution}
+
+\end{document}

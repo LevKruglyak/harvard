@@ -1,0 +1,259 @@
+\documentclass[11pt, letterpaper]{article}
+
+\input{../../../../.config/latex/preamble.tex}
+
+\title{\textbf{Math 55a Final}}
+
+\begin{document}
+\maketitle
+\setcounter{page}{0}
+\thispagestyle{empty}
+
+I affirm my awareness of the standards of the Harvard College Honor
+Code. While completing this exam, I have not consulted any external sources other than class notes
+and the textbooks. I have not discussed the problems or solutions of this
+exam with anyone, and will not discuss them until after the due date.
+
+Signed, \underline{Lev Kruglyak.}
+
+\pagebreak
+\begin{problem}
+    Let $V$ be an $n$-dimensional vector space over an arbitrary field, and let $T_1,\dots,T_n:V\to V$ be pairwise commuting nilpotent operators on $V$.
+    \begin{enumerate}[(a)]
+        \item Show that the composition $T_1T_2\dots T_n=0$.
+        \item Does this conclusion still hold if we drop the hypothesis that the $T_i$ commute with each other?
+    \end{enumerate}
+\end{problem}
+   
+\textbf{(a)} We'll start with a lemma.
+
+\begin{lemma}
+    Let $A$ and $B$ be commuting (nonzero) nilpotent operators. Then $\Ima(AB)\subsetneq \Ima(B)$.
+\end{lemma}
+\begin{proof}
+    First note that $\Ima(AB)=\Ima(BA)\subset \Ima(B)$, so $A$ maps elements in $\Ima(B)$ to $\Ima(B)$. Suppose for the sake of contradiction that $\Ima(AB)=\Ima(B)$. Then if $v\in \Ima(B)$, $A^nv\neq 0$ for all $n\geq 0$, a contradiction. So $\Ima(AB)\subsetneq \Ima(B)$.
+\end{proof}
+
+Back to the problem, assume without loss of generality that all the operators are nonzero, otherwise we would be done. Applying the lemma, we then have a descending chain of images
+\[
+    \Ima(T_1T_2\cdots T_n) \subsetneq \Ima(T_1T_2\cdots T_{n-1}) \subsetneq \cdots \subsetneq \Ima(T_1) \subsetneq V
+.\] 
+Since $V$ is $n$-dimensional and the sequence of dimensions of images must decrease with the addition of each operator, the final one must be trivial, so $T_1T_2\cdots T_n=0$.
+
+\textbf{(b)} No. For an explicit counterexample, suppose $n=2$ and $V=\R^2$. Consider the linear operators
+\[
+    T_1=\begin{pmatrix} 0&1\\0&0 \end{pmatrix}, \quad T_2=\begin{pmatrix} 0&0\\1&0 \end{pmatrix}
+.\] 
+These matrices are nilpotent since $T_1^2=T_2^2=0$. However observe that they don't commute, yet their product is nonzero:
+\[
+    \begin{aligned}
+        T_1T_2=\begin{pmatrix}0&1\\0&0\end{pmatrix}\begin{pmatrix}0&0\\1&0\end{pmatrix}=\begin{pmatrix}1&0\\0&0\end{pmatrix}\\
+    \end{aligned}
+\] 
+
+\pagebreak
+\begin{problem}[9 points]
+    Let $V$ be a finite-dimensional vector space over $\R$, and let $B:V\times V\to \R$ be a nondegenerate symmetric bilinear form.  We say that a subspace $W\subset V$ is {\em isotropic} for $B$ if $B_{|W}=0$, that is, $B(w,w')=0$ for all $w,w'\in W$.
+    \begin{enumerate}[(a)]
+        \item Show that, if $W\subset V$ is an isotropic subspace for $B$, then there exists another isotropic subspace $W'$ with $\dim W'=\dim W$ and $W\cap W'=\{0\}$, such that $W$ and $W'$ admit bases $(e_i)$ and $(e'_j)$ for which $B(e_i,e'_j)=\delta_{ij}$ (=1 if $i=j$, 0 otherwise).
+        \item Let $V=\R^n$ with the bilinear form \[B((x_1,\dots,x_n),(y_1,\dots,y_n))=\sum_{i=1}^k x_iy_i-\sum_{i=k+1}^n x_iy_i.\] What is the largest possible dimension of an isotropic subspace $W$? Give an example of a pair of isotropic subspaces $W$ and $W'$ as in part (a) above which achieve the maximal possible dimension. 
+    \end{enumerate}
+\end{problem}
+
+\textbf{(a)} We'll first use a lemma from class
+\begin{lemma}
+     Let $B$ be a nondegenerate symmetric bilinear form on an $n$-dimensional space $V$. Then there exists a basis $e_1,\ldots, e_n$ and real numbers $\lambda_i$ such that 
+     \[
+         B(a_1e_1+\cdots+a_ne_n, b_1e_1+\cdots+b_ne_n) = \sum^n_{k=1} \lambda_k a_k b_k
+     .\] 
+\end{lemma}
+
+Now suppose $W$ is some isotropic space for $B$. Let $e_1,\ldots, e_n$ be an orthogonal basis for $V$ with respect to $B$, so $B(e_i, e_j)=\lambda_i\delta_{ij}$. Such a basis is guaranteed to exist by the Lemma. Let $w_1,\cdots,w_k$ be a basis for $W$. Expressing $w$ in terms of $e$, we have: 
+\[
+    \begin{aligned}
+        w_1&=A_{11}e_1+A_{21}e_2+\cdots+A_{n1}e_n\\
+        w_2&=A_{12}e_1+A_{22}e_2+\cdots+A_{n2}e_n\\
+        &\vdots\\
+        w_k&=A_{1k}e_1+A_{2k}e_2+\cdots+A_{nk}e_n\\
+    \end{aligned}
+\]
+for some matrix of coefficients $A$. Without loss of generality we can assume that $A$ is in reduced row echelon form since row operations do not affect linear independence. So now each row has a leading one, i.e. $w_i=e_{a_i}+A_{a_ii}e_{a_i+1}+\cdots+A_{ni}e_n$, where $a_i$ is the column of the first nonzero term. Now define
+\[
+    w_i' = e_{a_i} - w_i
+.\] 
+We claim that this is a basis for $W'$. 
+
+\textbf{(b)} Observe that $W\cap (\R^k\times\{0\})=0$ and $W\cap (\{0\}\times \R^{n-k})=0$ because restricted to these spaces $B$ is nontrivial because it is strictly nonnegative or nonpositive respectively. Since $\dim(A\cap B)=\dim(A)+\dim(B)-\dim(A+B)$, we thus have $0=\dim(W)+k-\dim(W+\R^k\times\{0\})$. 
+
+Rearranging terms, we get $\dim(W)+k=\dim(W+\R^k\times\{0\})\leq n$ so $\dim(W)\leq n-k$. By a similar argument applied to $W\cap (\{0\}\times \R^{n-k})$, we get $\dim(W)\leq k$. So we claim that an absolute upper bound for the dimension of an isotropic space is $\dim(W)\leq \min(k,n-k)$.
+
+To see that this bound is reached, fix some $n$ and $k$.
+
+\pagebreak
+\begin{problem}
+    Let $V$ be a finite-dimensional complex vector space equipped with a Hermitian inner product, and let $T:V\to V$ be any linear operator, and $T^*$ its adjoint. Show that $T$ is diagonalizable if and only if, for every eigenvector $v$ of $T$, there exists an eigenvector $u$ of $T^*$ such that $\langle u,v\rangle\neq 0$.
+\end{problem}
+
+First suppose $T$ is diagonalizable, say $v_1,\ldots,v_n$ is some orthonormal eigenbasis for $V$, so with respect to this basis, the matrix of $T$ and its adjoint $T^*$ are 
+\[
+    \mathcal{M}_{v}(T) = \begin{pmatrix}\lambda_1&&\\ &\ddots&\\ &&\lambda_n\end{pmatrix},\quad
+        \mathcal{M}_{v}(T^*)=\overline{\mathcal{M}_{v}(T)}^\intercal= \begin{pmatrix}\overline{\lambda_1}&&\\ &\ddots&\\ &&\overline{\lambda_n}\end{pmatrix}
+.\] 
+So for every eigenvector $v_i$ of $T$ with eigenvalue $\lambda_i$, $v_i$ is also an eigenvector of $T^*$. Conversely, suppose we have a set of eigenvectors $v_1,\ldots,v_n$ for $T$ and $u_1,\ldots,u_n$ for $T^*$ with $\langle u, v\rangle\neq 0$. Say the corresponding eigenvalues are $\lambda_1,\ldots,\lambda_n$ and $\zeta_1,\ldots,\zeta_n$ respectively. By definition of adjoint, $\langle Tv_i, u_i\rangle = \langle v_i, T^*u_i\rangle$. However by definition of the Hermitian inner product, $\langle Tv_i, u_i\rangle = \lambda_i\langle v_i, u_i\rangle$ and $\langle v_i, T^*u_i\rangle=\overline{\zeta_i}\langle v_i, u_i\rangle$. Since $\langle v_i, u_i\rangle\neq 0$ it follows that $\lambda_i=\overline{\zeta_i}$.
+\pagebreak
+\begin{problem}[6 points]
+    Let $G$ be a group of order $p^\ell$, where $p$ is prime and $\ell\geq 1$.  Show that for every $1\leq k\le \ell$, $G$ contains a normal subgroup of order $p^k$.
+\end{problem}
+
+We'll proceed by induction on $k$. For a base case of $k=0$, it's clear that $\{e\}$ is a normal subgroup of order $p^0$. Now suppose for some $k$ that $N$ is a subgroup of $G$ of order $p^k$. So $G/N$ is a group of order $p^{\ell-k}$. Consider the center $\mathcal{Z}(G/N)$. Since $G/N$ is a $p$-group, this has non-trivial center with prime power order so by Cauchy's theorem there is some central element $gN\in G/N$ with order $p$ for some representative $g\in G$. Now consider 
+\[
+    N' = N\cup gN\cup g^2N\cup \cdots \cup g^{p-1}N
+.\] 
+We claim that this is a normal subgroup of size $p^{k+1}$. To check this, let $g^{k_1}n_1$ and $g^{k_2}n_2$ be elements of $N'$. Then $g^{k_1}n_1g^{k_2}n_2=g^{k_1+k_2}n_1n_2\in N$. Similarly for inverses, $(g^{k_1}n_1)^{-1}=n_1^{-1}g^{-k_1}=g^{-k_1}n_1^{-1}\in N$. To show that this is a normal subgroup, let $h\in G$. Then for $hg^{k_1}n_1h^{-1}=g^{k_1}hn_1h^{-1}$. Since $N$ is normal, $hn_1h^{-1}\in N$, and so this is also in $N'$. Thus $N'$ is a normal subgroup of order $p^{k-1}$. So by induction, there is a normal subgroup of order $k$ for all $1\leq k \le \ell$.
+\pagebreak
+\begin{problem}[10 points]
+     Let $G$ be a finite simple group (i.e., without nontrivial normal subgroups).
+     \begin{enumerate}[(a)] 
+         \item Show that, if $G$ acts non-trivially (i.e., not every element acts by identity) on a set with $n$ elements, then $G$ is isomorphic to a subgroup of the symmetric group $S_n$ (in fact, of the alternating group $A_n$).
+         \item Use the result of (a) to show that there are no simple groups of order 24 or 72. 
+         \item Use the result of (a) to show that any simple group of order 60 is isomorphic to $A_5$. 
+     \end{enumerate}
+\end{problem}
+
+\textbf{(a)} Since $G$ acts on a set $S=\{1,\ldots, n\}$, there is a group homomorphism $\psi : G \to \Perm(S)$, where $\Perm$ is the permutation group on a set. The kernel $\ker(\psi)$ of this map is a normal subgroup of $G$, and since $G$ is simple it must be either equal to $G$ or to $\{e\}$. Since the action was assumed to be nontrivial, the kernel cannot be $G$, so the kernel must be $\{e\}$ and so the map is injective. So $G$ is isomorphic to $\Ima(\psi)\subset \Perm(S)=S_n$.
+
+\textbf{(b)} We have two cases to address.
+
+\underline{Simple groups of order $24$:} First note that the prime factorization of $24=2^3\cdot 3$. Let $G$ be some simple group of order $24$, and $s_p$ denote the number of Sylow $p$-subgroups of $G$. By the third Sylow theorem, we have $s_2\equiv 1\mod 2$ and $s_2 | 3$. Note then that $s_2$ must be equal to $3$, since if there were a single Sylow $2$-subgroup, it would be conjugate to itself by Sylow's second theorem. This would mean that it were normal, contradicting the normality of $G$. So there are $3$ Sylow $2$-subgroups which are acted on nontrivially by conjugation by $G$. (If $G$ acted trivially on the set of Sylow 2-subgroups, they would all be self conjugate and hence normal.) By the results of (a), this implies that $G$ is isomorphic to a subgroup of $S_3$, which is clearly impossible since $G$ has order $24$. Thus there are no simple groups of order $24$.
+
+\underline{Simple groups of order $72$:} The prime factorization of $72=2^3\cdot3^2$. Similarly to the groups of order $24$, we perform our analysis on the set of Sylow $3$-subgroups. So let $G$ be some simple group of order $72$. Here $s_3\equiv 1\mod 3$ and $s_3|8$. So $s_3$ is equal to $1$ or $4$. Since $G$ was assumed to be simple, $s_3$ cannot equal $1$, so there are $4$ Sylow $3$-subgroups upon which $G$ acts nontrivially by conjugation. So by (a), $G$ is isomorphic to a subgroup of $S_4$, a contradiction since $|S_4|=24$ while $|G|=72$. Hence there cannot be any simple groups of order $24$.
+
+\textbf{(c)} Suppose $G$ is a simple group of order $60$, which has prime factorization $60=2^2\cdot 3\cdot 5$. As before, we can analyze the Sylow $p$-subgroups for all primes dividing $60$. Sylow's theorems give us the following relations:
+
+\begin{center}
+    \begin{tabular}{ c c c }
+         $s_2\equiv 1\mod 2, s_2 | 15$ & $s_3\equiv 1\mod 3, s_3|20$ & $s_5\equiv 1\mod 5$, $s_5|12$ \\ 
+         $s_2=1,3,5,15$&$s_3=1,4,10$&$s_5=1,6$
+    \end{tabular}
+\end{center}
+
+Here the third row represents possible values for $s_p$. Since $G$ is simple, by the same argument as in (b), it follows that $s_p\neq 1$. Also since conjugation by $G$ gives us an action on the Sylow $p$-subgroups and by (a), $G$ is be a subgroup of $S_{s_p}$ so $60 \leq s_p!$. Thus $s_p\geq 5$, so the only options we have left are $s_2=5, 15$, $s_3=10$ and $s_5=6$. We thus have two cases based on if $s_2=5$ or $15$.
+
+\underline{Case $s_2=5$:} If $s_2=5$, there is a nontrivial action of $G$ on the set of Sylow $2$-subgroups. Since there are $5$ of them, this means that $G\subset S_5$. So $G$ is a simple subgroup of index $2$ in $S_5$, however it is a common fact\footnote{Just in case this isn't as common as I thought, I proved this on Problem Set 9 Problem 7 } that $A_5$ is the only index $2$ subgroup of $A_5$, so $G\cong A_5$ and we are done.
+
+\underline{Case $s_2=15$:} First we'll show that there are $2$ Sylow $2$-subgroups with a nontrivial intersection. Let $H_p$ be the union of all Sylow $p$-subgroups in $G$. We can begin to make some lower bounds on the sizes of $H_p$. To start with $H_5$ for instance, we know that every Sylow $5$ subgroup has size $5$ and that there are $6$ of them. They have at least one element in common, $e$, and must have one element different for them to be distinct. Thus assuming they share the remaining three elements, we have $|H_5| \geq  1+3 + 6 = 10$. The same argument for $H_3$ yields $|H_3|\geq 1+1+10=12$. Putting these two together, we conclude that there are a total of $10+12-1=21$ elements with orders $3$ or $5$.
+
+We now claim that there exists a pair of Sylow $2$-subgroups which intersect nontrivially. Suppose for the sake of contradiction that none of the Sylow $2$-subgroups intersect nontrivially. Each Sylow $2$-subgroup has $3$ nontrivial elements so there must be $3\cdot 15=45$ elements of order $2$ or $4$ in $G$. This is a contradiction, because by the previous paragraph there are $21$ elements of order not dividing $4$, so this implies that there are at least $45+21=66$ elements in $G$, a contradiction.
+
+So let $A$ and $B$ be the Sylow $2$-subgroups which intersect nontrivially. Then $|A\cap B|$ divides $4$ so $|A\cap B|=2$. Indeed it cannot be $4$ or else $A$ and $B$ would be the same subgroup. Now let $N=N_G(A\cap B)$ be the normalizer of this intersection. Next note that $A$ and $B$ are both abelian, since they are groups of order $4$. This means that conjugation by any element of $A$ or $B$ fixes $A\cap B$, and so $A,B\subset N$. By the same logic, the subgroup $C$ generated by $A$ and $B$ must also be a subset of the normalizer. Note that $4$ divides $|C|$, yet $|C|>4$. So $|C|=4\cdot k$ for some $k|15$. $k$ cannot be equal to $15$ because this would mean that $N=G$ and that $A\cap B$ is normal, a contradiction. So we are left with two cases.
+
+\underline{Case $k=5$:} Here $|N|=20$ so by (a), the (clearly nontrivial) action of $G$ by multiplication on $G/N$ gives us an injection $G\to S_3$, which is impossible since $G$ has size $60$ while $S_3$ has size $6$.
+
+\underline{Case $k=3$:} Here $|N|=12$, so we have an action of $G$ by multiplication on $G/N$ and hence there is an injection $G\to S_5$. So $G$ has index $2$ inside of $S_5$, hence it must be isomorphic to $A_5$ and we are done. 
+
+Note that both $s_2=5$ and $s_2=15$ have a case where $G$ is isomorphic to $A_5$. Both cannot be isomorphic to $A_5$, indeed only the $s_2=5$ one actually is isomorphic to $A_5$. The second case is vacuously true, i.e. no such simple group of order $60$ even exists, however if it did it would be isomorphic to $A_5$. The proof still logically holds up
+
+\pagebreak
+\begin{problem}
+    A finite group $G$ has 5 conjugacy classes, and contains elements $a,b$ whose conjugacy classes contain respectively 4 and 5 elements.  Moreover, there exists a 1-dimensional (complex) representation of $G$ whose character takes the values $\chi(a)=1$ and $\chi(b)=i$.
+    \begin{enumerate}[(a)]
+        \item Find the sizes of the other conjugacy classes in $G$, and the values of $\chi$ on those conjugacy classes.  
+        \item Complete the character table of $G$. 
+        \item Let $A$ and $B$ be the cyclic subgroups of $G$ generated by $a$ and $b$ respectively. What are the orders of these subgroups? Is either of them a normal subgroup of $G$?
+        \item How many possibilities are there for the group $G$ up to isomorphism? Give explicit descriptions (for example in terms of more familiar groups, or using semi-direct products).
+    \end{enumerate}
+\end{problem}
+
+\textbf{(a)} First of all, we note that since the representation is one dimensional, trace is multiplicative and so $\chi(xy)=\chi(x)\chi(y)$. Since powers of $b$ hence have distinct characters, $b^2$ and $b^3$ must be representatives of the remaining two conjugacy classes. $b$ thus has order $\geq 4$. So the conjugacy class table looks like this:
+\begin{center}
+    \begin{tabular}{ c|c|c|c|c|c| } 
+        &1&4&5&&\\
+        $\chi$& $1$& $1$& $i$& $-1$& $-i$\\
+        \hline
+        &$e$&$a$&$b$&$b^2$&$b^3$\\
+    \end{tabular}
+\end{center}
+Next, we note that elements of the form $b^kab^{-k}$ are inside $C_a$, the conjugacy class containing $a$. Since $b$ has order $\geq 4$, these are all distinct elements of $C_a$. Since $C_a$ only has $4$ elements by assumption, it follows that $C_a=\{a, bab^{-1}, b^2ab^{-2}, b^3ab^{-3}\}$. Since $\chi(a^k)=1$, it actually follows that $C_a=\{a,a^2,a^3,a^4\}$. By a similar argument, we can also calculate $C_b, C_{b^2},$ and $C_{b^3}$.
+
+\begin{center}
+    \begin{tabular}{ c|c|c|c|c|c| } 
+        &1&4&5&5&5\\
+        $\chi$& $1$& $1$& $i$& $-1$& $-i$\\
+        \hline
+        &$e$&$a$&$b$&$b^2$&$b^3$\\
+        &&$bab^{-1}$&$aba^{-1}$ &$ab^2a^{-1}$ &$ab^3a^{-1}$ \\
+        &&$b^2ab^{-2}$&$a^2ba^{-2}$ &$a^2b^2a^{-2}$ &$a^2b^3a^{-2}$ \\
+        &&$b^3ab^{-3}$&$a^3ba^{-3}$ &$a^3b^2a^{-3}$ &$a^3b^3a^{-3}$ \\
+        &&&$a^4ba^{-4}$&$a^4b^2a^{-4}$ &$a^4b^3a^{-4}$ \\
+    \end{tabular}
+\end{center}
+
+The sizes of these conjugacy classes add up to $20$, so the group has order $20$ by the class equation.
+
+\textbf{(b)} Filling out the character table, we can add the trivial representation $\C^+$ which is present for all finite groups. We also have the sign representation $\C^+$, which is the same as the trivial one except $\chi(b)=-1$ so by extension $\chi(b^2)=1$ and $\chi(b^3)=-1$. The representation from (a) will be denoted $V$. Lastly we have $V\otimes \C^-$. So far, the character table looks like
+
+\begin{center}
+    \begin{tabular}{c|c|c|c|c|c|}
+        &1&4&5&5&5\\
+        &$e$&$a$&$b$&$b^2$&$b^3$\\
+        \hline
+        $\chi_{\C^+}$&1&1&1&1&1\\
+        $\chi_{\C^-}$&1&1&-1&1&-1\\
+        $\chi_{V}$&1&1&$i$&$-1$&$-i$\\
+        $\chi_{V\otimes \C^-}$&1&1&$-i$&$-1$&$i$\\
+    \end{tabular}
+\end{center}
+
+By orthonormality of the characters, we know that there must be $5$ irreducible representations, and the sums of squares of dimensions of the characters adds up to the order of the group. Denoting by $W$ the last representation of $G$, we have $1+1+1+1+\dim(W)^2=20$ so $\dim(W)=4$. Let $H$ be the standard Hermitian form for characters. We know that $H(\chi_W, \chi_W)=1$ by orthonormality, so 
+\[
+    H(\chi_W, \chi_W) = \frac{1}{20}\left( 4\cdot 1 + \|\chi_W(a)\|\cdot 4 + (\|\chi_W(b)\| + \|\chi_W(b^2)\| + \|\chi_W(b^3)\|)\cdot 5\right) = 1
+.\] 
+So $\|\chi_W(a)\|=4$ and $\chi_W(b^k)=0$. By orthogonality, $\chi_W(a)$ cannot be $4$ so $\chi_W(a)=-4$. Thus the character table looks like: 
+
+\begin{center}
+    \begin{tabular}{c|c|c|c|c|c|}
+        &1&4&5&5&5\\
+        &$e$&$a$&$b$&$b^2$&$b^3$\\
+        \hline
+        $\chi_{\C^+}$&1&1&1&1&1\\
+        $\chi_{\C^-}$&1&1&-1&1&$-1$\\
+        $\chi_{V}$&1&1&$i$&$-1$&$-i$\\
+        $\chi_{V\otimes \C^-}$&1&1&$-i$&$-1$&$i$\\
+        $\chi_W$&$4$&$-4$&$0$&$0$&$0$\\
+    \end{tabular}
+\end{center}
+
+It is easy to check using $H$ that this is an orthonormal basis.
+
+\textbf{(c)} We've established in (a) that the orders of $a$ and $b$ are $5$ and $4$ respectively, so $A$ and $B$ have orders $5$ and $4$ respectively. Among these, only $A$ is normal because it is a union of the conjugacy classes $C_e$ and $C_a$. $B$ on the other hand has order $4$, so it cannot be normal since it isn't a union of conjugacy classes.
+
+\textbf{(d)} Let $G$ be some group of order $20$ satisfiying the conditions of the problem. Since $20=2^2\cdot 5$ we can understand it by understanding the Sylow $2$ and $5$ subgroups. By the Sylow theorem, we have $s_2\equiv 1\mod 2$, $s_2|5$ so $s_2=1$ or $s_2=5$. Similarly, we have $s_5\equiv 1\mod 5$ and $s_5|4$ so $s_5=1$. Note that $s_2\neq 1$ because $G$ has at least $2$ Sylow $2$-subgroups, namely $B$ and $\langle aba^{-1}\rangle$. So the Sylow theorems give us a normal subgroup $N$ of order $5$ and $5$ subgroups of order $4$. By the product criterion, we thus must have $G\cong N\rtimes H$ for some subgroup $H$ of order $4$. Note that $N\cong \Z/5$ and $H\cong  \Z/4$, the first because it has prime order and the second because the Sylow $2$-subgroups of $G$ are all cyclic. So $G\cong \Z/5\rtimes \Z/4$. Since $\Aut(\Z/5)=\Z/4$, this amounts to looking at maps $\Z/4\to \Z/4$. Let $\alpha$ be the generator of $\Z/5$ and $\beta$ be the generator of $\Z/4$ in $G$. Then $\beta \alpha \beta^{-1}=\alpha^k$ for some $2\leq k \leq 4$. So $G$ has generator relation structure, let's denote this by $G_k$ for clarity:
+\[
+    G_k = \big\langle \alpha, \beta \mid \alpha^5=\beta^4=1, \beta\alpha\beta^{-1}=\alpha^k \big\rangle
+.\] 
+All of these cases with the exception of $k=3$ are isomorphic so there is only one group satisfying the requirements of the problem.
+
+\pagebreak
+\begin{problem}
+    Let $G$ be a finite group, and $\rho: G\to \GL(V)$ a finite-dimensional (complex) representation with character $\chi=\chi_V$.
+    \begin{enumerate}[(a)]
+        \item Prove that $\Ker(\rho)=\{g\in G\,|\,\chi(g)=\chi(e)\}$.
+        \item Show that, for any normal subgroup $N\subset G$, there exists a finite collection of irreducible representations $\rho_i:G\to \GL(V_i)$ of $G$ such that $N=\bigcap \Ker(\rho_i)$. 
+    \end{enumerate} 
+\end{problem}
+
+\textbf{(a)} Clearly if $g\in\Ker(\rho)$, then $\rho(g)=I$ so $\chi(g)=\Tr(\rho(g))=\Tr(I)=\dim(V)=\chi(e)$. Conversely, suppose $g\in G$ with $\chi(g)=\chi(e)$. Since $G$ is a finite group, it follows that the eigenvalues of $\rho(g)$ are roots of unity of order $|G|$. Since $\chi(g)=\sum_i \lambda_i$ for eigenvalues $\lambda_i$ of $\rho(g)$, the only way for $\chi(g)$ to equal $\dim(V)$ was if $\lambda_1=\cdots=\lambda_n=1$. Since $\rho(g)^{|G|}-1=0$, $\rho(g)$ is diagonalizable so $\rho(g)=I$. Thus $\Ker(\rho)=\{g\in G\,|\, \chi(g)=\chi(e)\}$.
+
+\textbf{(b)} First we'll prove that
+\[
+    \bigcap_{\rho\in \Irr(G/N)} \Ker(\rho) = \bigcap_{\rho\in \Irr(G/N)} \{g\in G : \chi_\rho(g)=\chi_\rho(e)\} = \{e\}
+,\] 
+where $\Irr(G/N)$ is the set of irreducible representations of $G/N$. Suppose for the sake of contradiction that the intersection was nontrivial, so there is some nontrivial coset $gN\in \bigcap_{\rho\in \Irr(G/N)} \Ker(\rho)$. This means that $\chi_\rho(gN)=\chi_\rho(e)$ for all $\rho\in \Irr(G/N)$. However this violates the orthogonality conditions of the characters since this implies that two distinct conjugacy classes have the same values for all irreducible representations. This would imply that every linear combination of characters would have equivalent values at $g$ and $e$, a contradiction. 
+
+So the kernels intersect trivially. Next, we'll use the well known\footnote{See bottom of Fulton-Harris page 19} correspondence of $\Irr(G/N)$ with $C_N=\{ \rho \in \Irr(G) : N \subset \Ker(\rho) \}$, where $\Irr(G)$ denotes the set of irreducible representations on $G$, given by the map $\psi : C_N \to \Irr(G/N)$ given by $\psi(\rho)(gN) = \rho(g)$. So it follows that
+\[
+    \bigcap_{\rho\in \Irr(G/N)} \Ker(\rho) = \left\{\bigcap_{\rho\in C_N} \Ker(\rho)\right\}N = \{e\}N = N 
+,\] 
+where the mildly abusive notation of $\{S\}N$ denotes the union of cosets $sN$ for $s\in N$. So we are done, since $C_N$ is a finite set of irreducible representations. (Indeed $G$ has a finite number of irreducible representations anyways)
+
+\end{document}

@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+\title{\textbf{CS165 - Milestone 2}}
+\author{Lev Kruglyak}
+\date{October 2022}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+% The second milestone is about making your scans fast. You will be adding support for scan sharing to minimize data movement and making scans use multiple cores to fully utilize parallelization opportunities of modern CPUs.
+
+% Your system should be able to run N>>1 queries in parallel by reading data only once for the different queries’ select operators. The end goal is to be able to run simple single-table queries (as in the first milestone) but use the new select operators that are capable of scan sharing.
+
+% To introduce more opportunities and enable shared scans, we introduce batching operators. The client can declare a batch of queries to execute and then tell the server to execute them all at once. The server then must coordinate with the client when it is done with this batch. During this batching operation, it can be assumed that no print commands will be executed.
+
+% The end result of this milestone should be a linear scale up with the number of concurrent queries and number of cores. Your final deliverable should include a performance report (graphs and discussion) to demonstrate that you can achieve such a performance boost. This report should discuss your results with respect to the various parameters that affect shared scan performance such as the number of queries and the number of cores.
+
+% We also expect you to answer the following question: How many concurrent queries can your shared scan handle? Is there an upper limit? If yes, why?
+
+In this milestone, we improve the speed of our scans by adding support for batching operators together and distributing these across multiple cores. Some of the challenges we face are concurrency, avoiding locking and blocking other queries, and fully understanding the performance implications of our improvements to make sure that they don't slow down queries in some cases.
+
+\medskip
+We also would like to investigate how much of a theoretical speedup is possible for queries as the number of cores increases, as well as the maximum possible number of concurrent queries before losing performance improvements.
+
+\section{Problems Tackled}
+
+Let's examine some of the core problems faced in the implementation of this milestone.
+
+\begin{itemize}
+    \item \textbf{Batching:} We don't execute any commands between the batch operators, and when we send the batch execute operation, we execute all the operators concurrently. This involves figuring out optimizations for executing these operators dynamically.
+    \item \textbf{Concurrency:} If we have multiple cores running queries, we need to synchronize things carefully to ensure that we have no race conditions in the code.
+    \item \textbf{Vectorization:} To limit the memory footprint of our code, and to improve memory allocation performance, we should vectorize our operations, meaning queries are performed on small chunks of columns at a time.
+\end{itemize}
+
+\section{Technical Description}
+
+Here we'll explain how we solved these various problems.
+
+\subsection{Batching:}
+We add an ``operator queue'' to the \texttt{ClientContext} struct, which we fill up with operators as we receive them following a batch start command. Once we get a batch execute command, we send the queue to a separate scheduler which decides how to split up the list into parallelizable components.
+
+\subsection{Concurrency:}
+In order to keep things scalable and concurrent, we create an initial thread pool of workers (we found twice the number of cores to be a reasonable size) and send vectorized batches to them. We will not use any locks, since no two threads will need to access the same data, and all the execution will be done from a single main thread which also performs all the parsing and client IO. This should provide a linear speedup in the number of cores as desired.
+
+\subsection{Vectorization:}
+We need some way of breaking up commands into constant size chunks in order to parallelize and to keep the footprint small. Since we are not fetching anything from disk at runtime, we can limit our vectorization size to some small number of RAM pages to avoid unnecessary data movement. (Say blocks of size 4096, but this can be experimented with) Then, we run our sequentially on this data.
+
+\section{Challenges}
+We still have not implemented this milestone yet, so many challenges will still appear for example the implementation specifics of the various above described problems. I predict that combining vectorization with the batch optimizer will be tricky, since I haven't fully thought this out yet.
+
+\end{document}

@@ -1,0 +1,77 @@
+% Chap 3 Question 1-6, Chap 4 Question 1-2, Chap 6 Question 1-2.
+
+\begin{problem}{3.1}
+  Let $G$ be a connected and locally path connected topological group with identity element $e$, let $p : H \to G$ be a covering, and fix $f\in H$ such that $p(f)=e$.
+\end{problem}
+
+\begin{solution}
+  For this problem, we'll make extensive use of the \emph{fundamental theorem of covering space theory}:
+  \begin{theorem}
+    Let $p : E \to B$ be a covering and let $f : X \to B$ be a continuous map. We want some condition that allows us to ``lift'' the map $f : X \to B$ to some map $\widetilde{f} : X \to E$.
+  \[\begin{tikzcd}
+	  E && X \\
+	  & B
+	  \arrow["p"', from=1-1, to=2-2]
+	  \arrow["f", from=1-3, to=2-2]
+	  \arrow["\widetilde{f}"', dashed, from=1-3, to=1-1]
+  \end{tikzcd}\]
+  \end{theorem}
+
+  \begin{part}{a}
+    $H$ has a unique continuous product $H\times H \to H$ with identity element $f$ such that $p$ is a homomorphism.
+  \end{part}
+
+  \begin{part}{b}
+    $H$ is a topological group under this product, and $H$ is abelian if $G$ is.
+  \end{part}
+\end{solution}
+
+\begin{problem}{3.2}
+  As in the previous problem, let $G$ be a connected and locally path connected topological group, and let $p : H\to G$ be a covering.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    The kernel $K$ of $p$ is a discrete normal subgroup of $H$.
+  \end{part}
+
+  \begin{part}{b}
+    In general, any discrete normal subgroup $K$ of a connected topological group $H$ is contained in the center of $H$.
+  \end{part}
+
+  \begin{part}{c}
+    For $k\in K$, define $t(k) : H \to H$ by $t(k)(h) = kh$. Then $k\mapsto t(k)$ specifies an isomorphism between $K$ and $\Aut(K)$.
+  \end{part}
+\end{parts}
+
+\begin{problem}{3.3}
+  Give an example of a surjective local homeomorphism that is not a covering.
+\end{problem}
+
+\begin{problem}{3.4}
+  Let $f : X \to Y$ be a local homeomorphism, where $X$ is compact. Prove that $f$ is a (surjective!) covering with finite fibers.
+\end{problem}
+
+\begin{problem}{3.5}
+  Let $X$ be a $G$ space, where $G$ is a group. For some subgroup $H$ of $G$, show that the space of $G$-maps $G/H \to X$ is naturally homeomorphic to the fixed point subspace $X^H$. In particular, $\mathscr{O}(G/H, G/K)\cong (G/K)^H$.
+\end{problem}
+
+\begin{problem}{3.6}
+  Let $X$ be a $G$ space. Show that the passage to fixed point spaces, $G/H \mapsto X^H$, is the object function of a \emph{contravariant} functor $X^{(-)} : \mathscr{O}(G) \mapsto \mathscr{U}$.
+\end{problem}
+
+\begin{problem}{4.1}
+  Let $F$ be a free group on two generators $a$ and $b$. How many subgroups of $F$ have index $2$? Specify generators for each of these subgroups.
+\end{problem}
+
+\begin{problem}{4.2}
+  Prove that a non-trivial normal subgroup $N$ with infinite index in a free group $F$ cannot be finitely generated.
+\end{problem}
+
+\begin{problem}{6.1}
+  Show that a cofibration $i : A \to X$ is an inclusion with closed image.
+\end{problem}
+
+\begin{problem}{6.2}
+  Let $i : A \to X$ be a cofibration, where $A$ is a contractible space. Prove that the quotient map $X \to X /A$ is a homotopy equivalence.
+\end{problem}

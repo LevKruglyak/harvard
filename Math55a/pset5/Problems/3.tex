@@ -1,0 +1,19 @@
+\begin{problem}
+Fix a field $k$, and consider the category $\Vect_k$ of all vector spaces over $k$.
+\begin{enumerate}
+  \item Show that there exists a contravariant functor from the category $\Vect_k$ to itself, which on objects takes each vector space $V$ to its dual $V^*=\Hom(V,k)$.
+  \item Recall that for each vector space $V$ we have a ``natural'' homomorphism $\mathrm{ev}_V:V\to V^{**}$ taking every vector $v\in V$ to the element $\mathrm{ev}_V(v)$ of $V^{**}=\Hom(V^*,k)$ which maps $\ell\in V^*$ to $\ell(v)\in k$. Show that these homomorphisms determine a natural transformation from the identity functor to the square of the functor of part (1).
+\end{enumerate}
+\end{problem}
+
+\textbf{(1)} Let $\cdot^* : \Vect_k \to \Vect_k$ be a functor taking $V$ to its dual $V^*$. Given some map $f : V \to W$, define $f^* : W^* \to V^*$ by taking $w \mapsto (t \mapsto (w\circ f)(t))$. Identities are preserved because $\mathrm{id}_V^* = v \mapsto (t\mapsto v*(t)) = \mathrm{id}_{V^*}$. Composition is preserved because if $f : V \to W$ and $g : W \to Q$, then \[{(g\circ f)}^* : Q^* \to V^* : q^* \mapsto (t \mapsto (q^*\circ g\circ f)(t) = f^*\circ g^*.\] So $\cdot^*$ is a contravariant functor on $\Vect_k$. 
+
+\textbf{(2)} We must show that the following diagram commutes:
+\begin{center}
+% https://tikzcd.yichuanshen.de/#N4Igdg9gJgpgziAXAbVABwnAlgFyxMJZABgBpiBdUkANwEMAbAVxiRADUQBfU9TXfIRRkAjFVqMWbAOrdeIDNjwEiI8uPrNWiDgD1gAKgNc5fJYNWkx1TVJ3T9Rk13EwoAc3hFQAMwBOEAC2SGQgOBBIaiAMdABGMAwACvzKQiB+WO4AFjggNpLaID6mRQHBiABM1OFIAMz5Wmw+jsYl-kEh1RGV1DHxSSkWOhnZuQ12IAA6kzgwAB44foHAMDRcAPqcPL5lkV11vXEJyeYqw5k5eRKNOtOzC0sra+uyLlxAA
+\begin{tikzcd}[row sep=large,column sep=huge]
+  V \arrow[d, "f"'] \arrow[r, "\textrm{ev}_V"'] & V^{**} \arrow[d, "f^{**}"] \\
+  W \arrow[r, "\textrm{ev}_W"']                 & W^{**}                    
+  \end{tikzcd}
+\end{center}
+To see this, note that $(\mathrm{ev}_W\circ f)(v)=(\ell \mapsto \ell(f(v)))=(f^{**}\circ\mathrm{ev}_V)(v)$.

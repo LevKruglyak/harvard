@@ -1,0 +1,209 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 8}
+\author{Lev Kruglyak}
+\due{December 1, 2023}
+
+\usepackage{bm}
+\input{../stat210.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{10.4}[Log transformation]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Define $r(x)$ by
+    \[
+      \log(1+x) = x - \frac{x^2}{2}r(x)
+    \]
+    and directly verify Taylor's theorem with remainder here, by showing that
+    \[
+      r(x) = \E\left(\frac{1}{(1+x\cdot \Beta(1,2))^2}\right).
+    \]
+    Conclude that $r(x)$ is continuous and bounded on any interval $\epsilon - 1 \leq x < \infty$, for $\epsilon > 0$.
+  \end{part}
+
+  Applying LOTUS, we can write the expected value as the integral
+  \[
+    \E\left(\frac{1}{(1+x\cdot\Beta(1,2))^2}\right) = \int_0^1 \frac{1}{(1+xy)^2}\cdot \frac{\Gamma(3)}{\Gamma(1)\Gamma(2)}y^{1-1}(1-y)^{2-1}\,dy = \int_0^1 \frac{2(1-y)}{(1+xy)^2}\,dy.
+  \]
+  Using standard calculus techniques, we evaluate this integral as
+  \[
+    \int_0^1\frac{2(1-y)}{(1+xy)^2}\,dy = \defint{\frac{-2(x+1)}{x^2(1+xy)}}{0}{1} -\defint{\frac{2\log(1+xy)}{x^2}}{0}{1} = \frac{2}{x}-\frac{2\log(1+x)}{x^2}.
+  \]
+  This means that $r(x)$ defined as the expectation satisfies
+  \[
+    \log(1+x)= x-\frac{x^2}{2}r(x).
+  \]
+  Let's now show that $r(x)$ is bounded on the interval $[\epsilon - 1, \infty)$. A simple bound on the function $1/(1+bx)^2$ is
+  \[
+    \max_{\substack{b\in [0,1]\\ x\in [\epsilon-1, \infty)}} \frac{1}{(1+bx)^2} = \frac{1}{\min(1,\epsilon)^2}.
+  \]
+  Thus, substituting $B$ into the function for $B\sim \Beta(1,2)$ is bounded above, so the expected value is also bounded. Continuity follows from the dominated convergence theorem since the function under the expected value is continuous on the desired interval.
+
+  \begin{part}{b}
+    Show that $\sqrt{n}\log\left(G_n/n\right) \to \mathcal{N}(0,1)$ in distribution.
+  \end{part}
+
+  Consider the random variables 
+  \[
+    Z_n = \frac{G_n - n}{\sqrt{n}} \quad\textrm{where}\quad G_n\sim \textrm{Gamma}(n).
+  \]
+  Since $G_n$ is represented as the sum of $n$ i.i.d. Exponentials, the CLT implies that $Z_n \toD \N(0,1)$. Substituting these variables into the equation and applying (a), we get
+  \[
+    \sqrt{n} \log(G_n/n) = \sqrt{n}\log\left(1+ \frac{Z_n}{\sqrt{n}}\right) = Z_n - \frac{1}{2\sqrt{n}} Z_n^2 r\left(\frac{Z_n}{\sqrt{n}}\right).
+  \]
+  By Slutsky's theorem, we see that $Z_n/\sqrt{n}\toD 0$ since $1/\sqrt{n} \to 0$. Since $r$ is continuous, it follows that $r(Z_n/\sqrt{n})\toD r(0)$ by the CMT. Applying Slutsky's theorem, we see that
+  \[
+    Z_n - \frac{Z_n^2}{2\sqrt{n}}r\left(\frac{Z_n}{\sqrt{n}}\right) \toD Z_n - \frac{Z_n^2}{2\sqrt{n}}r(0) \toD  Z_n \toD \mathcal{N}(0,1).
+  \]
+
+
+  % consider Z_n = (Gamma(n) - n)/sqrt(n) and use (a) with Slutsky theorem saying why r(X_n) -> r(0) if X_n -> 0 (in probability)
+\end{parts}
+
+\begin{problem}{10.10}[Bivariate convergence in probability]
+  Define bivariate convergence in probability $(X_n, Y_n) \toP (X,Y)$ to mean that for all $\epsilon>0$,
+  \[
+    P(\|(X_n, Y_n) - (X,Y)\| > \epsilon) \to 0,\quad\textrm{where}\quad \|(v_1, v_2)\| = \sqrt{v_1^2+v_2^2}
+  \]
+  is the usual Euclidean norm. Show that if $X_n \toP X$ and $Y_n \toP Y$, then $(X_n, Y_n)\toP (X,Y)$.
+\end{problem}
+
+\begin{solution}
+  We know that any two norms on $\R^n$ are equivalent, so there must be some constant $C>0$ such that $\|\cdot\| \leq C \|\cdot\|_\infty$, where the latter is the sup norm. Now suppose $X_n \toP X$ and $Y_n\toP Y$. We have
+  \[
+    \begin{aligned}
+      P(\|(X_n, Y_n) - (X,Y)\| > \epsilon) &\leq  P(\|(X_n, Y_n) - (X,Y)\|_\infty > \epsilon/C)\\
+                                           &\leq P(|X_n - X| >\epsilon/C) + P(|Y_n - Y| > \epsilon/C).
+    \end{aligned}
+  \]
+  Since both terms in the sum vanish with $\epsilon$, the whole sum must vanish with $\epsilon$ as well. This means that $(X_n, Y_n)\toP (X,Y)$.
+\end{solution}
+
+\begin{problem}{11.4}[Correlated, non-identically distributed WLLN]
+  Let $Y_1, Y_2, \ldots$ be (possibly) correlated r.v.s, not necessarily identically distributed, such that they have the same mean $\mu$. Let $\sigma_j^2 = \Var(Y_j)< \infty$ and $\rho_{ij} = \Cor(Y_i, Y_j)$, and suppose that
+  \[
+    \sigma_j^2 \leq M \textrm{ and } |\rho_{ij}| \leq c/2^{|i-j|}\textrm{ for all }i,j.
+  \]
+  where $M$ and $c$ are positive constants. Show that $\overline{Y_n}\to \mu$ in probability.
+\end{problem}
+
+\begin{solution}
+  Let's begin by showing that $\Var(\overline{Y}_n)\to 0$ as $n\to \infty$. Bounding $\Var(\overline{Y}_n)$, we get:
+  \[
+    \begin{aligned}
+      |\Var(\overline{Y}_n)| = \left|\frac{1}{n^2}\sum_{1\leq i,j\leq n}\Cor(Y_i, Y_j)\right| = \left|\frac{1}{n^2}\sum_{1\leq k\leq n}\sigma_k^2 
+      + 2\sum_{1\leq i<j\leq n}\sigma_i\sigma_j\rho_{ij}\right| 
+      \leq \frac{M}{n} + \frac{2Mc}{n^2}\sum_{1\leq i<j\leq n}\frac{1}{2^{j-i}}\\
+      \leq \frac{M}{n}+\frac{2Mc}{n^2}\sum_{1\leq i\leq n}2^i\left(\sum_{j\geq i+1}\frac{1}{2^j}\right)= \frac{M(2c+1)}{n}.
+    \end{aligned}
+  \]
+  This final term goes to $0$ as $n\to \infty$, so $\Var(\overline{Y}_n)\to 0$ as $n\to \infty$. By Chebyshev's inequality, it follows that
+  \[
+    P(|\overline{Y}_n-\mu| > \epsilon) \leq \frac{\Var(\overline{Y}_n)}{\epsilon^2} \to 0\quad\textrm{as}\quad\epsilon \to 0.
+  \]
+  Thus, $\overline{Y}_n \to \mu$ in probability.
+\end{solution}
+
+\begin{problem}{12.4.5}[CLT for linear combinations of i.i.d. r.v.s]
+  Let $Y_1, Y_2,\ldots \sim [0,1]$ be i.i.d., and let $c_1, c_2, \ldots$ be constants. Then show that $s_n = c_1Y_1 + \cdots + c_n Y_n$, suitably standardized, converges in distribution to $\N(0,1)$ if the $c_j$ follow the UAN condition
+  \[
+    \frac{\max_{1\leq j \leq n} c_j^2}{\sum^n_{j=1} c_j^2} \to 0
+  \]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Use the Lindenberg condition.
+  \end{part}
+
+  Since $u_n|Y_j| \geq c_j |Y_j|/s_n$ for all $1\leq j\leq n$, for any $\epsilon>0$ we have
+  \[
+    \textrm{Lind}_{\epsilon, n} = \sum_{1\leq j\leq n} \E|c_j Y_j / s_n|^2 I_{c_j|Y_j|/s_n > \epsilon} \leq \sum_{1\leq j \leq n} \frac{c_j^2}{s_n^2}\E\left(Y_j^2 I_{u_n|Y_j|>\epsilon}\right)
+  \]
+  since all the $Y_i$ are i.i.d. Assuming without loss of generality that the $Y_1^2$ bounds, by the dominated convergence theorem and since $u_n\to 0$, it follows that 
+  \[
+    \lim_{n\to \infty} \textrm{Lind}_{\epsilon, n} \leq \lim_{n\to \infty} \E\left(Y_1^2 I_{u_n|Y_1| > \epsilon}\right) = \E\left(\lim_{n\to \infty} Y_1^2 I_{u_n |Y_1| > \epsilon}\right) = 0.
+  \]
+  This proves the Lindenberg condition.
+
+  \begin{part}{b}
+    Assuming the 4th moment of $Y_1$ exists, use the Lyapunov condition for some choice of $r$.
+  \end{part}
+
+  Assuing that the $4$-th moment of $Y_1$ exists, we have
+  \[
+    \textrm{Lyap}_{4,n} = \sum_{1\leq j\leq n} \E|c_jY_j/s_n|^4 = \E(Y_1^4)\sum_{1\leq j\leq n}\left(\frac{c_j^2}{s_n^2}\right) \leq \E(Y_1^4) u_n^2\sum_{1\leq j\leq n} \frac{c_j^2}{s_n^2} = u_n^2\E(Y_1^4) \to 0,
+  \]
+  so $\textrm{Lyap}_{4,n}\to 0$. This proves the Lyapunov for $r=4$.
+\end{parts}
+
+\begin{problem}{12.3}[Lyapunov implies UAN] Show directly that the Lyapunov condition implies the UAN, using monotonicity of norms and the fact that $\max(a_1,\ldots, a_n) \leq \sum^n_{j=1} a_j$ for any nonnegative $a_1,\ldots, a_n$.
+\end{problem}
+
+\begin{solution}
+  Let's say $\textrm{Lyap}_{r,n}\to 0$ for some $r > 2$. By monotonicity of norms, we have
+  \[
+    (\E|\sigma_j Y_j / s_n|^2)^{1/2} \leq \left(\E|\sigma_j Y_j/s_n|^r\right)^{1/r} 
+    \quad\implies\quad 
+    \E|\sigma_j Y_j / s_n|^2 \leq \left(\E|\sigma_j Y_j/s_n|^r\right)^{2/r} 
+  \]
+  Applying this to $u_n$, we get the bound
+  \[
+    u_n^2 = \max_{1\leq j\leq n} \sigma_j^2/s_n^2 = \max_{1\leq j} \E|\sigma_jY_j/s_n|^2 \leq \left(\E|\sigma_j Y_j/s_n|^r\right)^{2/r} \leq \textrm{Lyap}^{2/r}_{r,n}.
+  \]
+  Since $\textrm{Lyap}_{r,n} \to 0$, it follows that $u_n^2\leq \textrm{Lyap}_{r,n}^{2/r} \to 0$ since $\lim_{x\to 0^+} x^{2/r} = 0$. This proves the UAN condition.
+\end{solution}
+
+\begin{problem}{12.5}[Regression with non-Normal error terms]
+  Suppose we have the model $Y_i = \beta x_i + \epsilon_i$ (using $x_i$ as a predictor for $Y_i$) with independent error terms $\epsilon_i$ such that $\E(\epsilon_i)=0$, $0<c_0 \leq \Var(\epsilon_i)=\sigma_i^2$, and with fourth moments $\E(\epsilon_i^4)\leq c_1$ uniformly bounded. Consider the ordinary least squares estimator
+  \[
+    \widehat{\beta} = \frac{\sum^n_{i=1} x_iy_i}{\sum^n_{i=1} x_i^2} = \beta + \frac{\sum^n_{i=1} x_i\epsilon_i}{\sum^n_{i=1} x_i^2}.
+  \]
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+  Consider the random variables \[ Z_n = \frac{\widehat{\beta} - \beta}{\sqrt{\Var(\widehat{\beta})}}.\]
+  Show that $Z_n \to \N(0,1)$ in law, assuming that
+  \[
+    u_n = \frac{\max_{1\leq i \leq n} x_i^2}{\sum^n_{i=1} x_i^2} \to 0.
+  \]
+  \end{part}
+
+  Since $\epsilon$ are independent, we can expand the variance
+  \[
+    \Var(\widehat{\beta}) = \Var\left(\sum_{1\leq i\leq n} \frac{x_i\epsilon_i}{S}\right) = \sum_{1\leq i\leq n} \frac{x_i\sigma_i^2}{S^2} \quad\textrm{where}\quad S = \sum_{1\leq j\leq n}x_j^2.
+  \]
+  Let's define random variables $X_i = x_i\epsilon_i$ so that
+  \[
+    Z_n = \frac{\widehat{\beta}-\beta}{\sqrt{\Var(\widehat{\beta})}}=\frac{\sum_{i=1}^n x_i\epsilon_i}{\sqrt{\sum_{i=1}^n x_i \sigma_i^2}} = \frac{\sum^n_{i=1} x_i\epsilon_i}{\sqrt{\Var\left(\sum_{i=1}^n x_i\epsilon_i\right)}}.
+  \]
+  Let's set $X_i = x_i\epsilon_i$ and $s_n= \sqrt{\Var(X_1+\cdots+X_n)}$. Note that $X_i$ are independent with mean zero, so we'll show that the Lyapunov condition is satisfied for $r=4$. Expanding the condition, we see that
+  \[
+    \begin{aligned}
+      \textrm{Lyap}_{4,n}=\sum_{1\leq i \leq n}\E\left(\frac{X_i^4}{s_n^4}\right) = \sum_{1\leq i \leq n}\frac{x_i^4\E(\epsilon_i)^4}{\left(\sum^n_{j=1} x_j\sigma_j^2\right)^2} 
+      \leq  \frac{c_1}{c_0^2}\sum_{1\leq i\leq n}\frac{x_i^4}{\left(\sum^n_{j=1} x_j^2\right)^2}
+      &=\frac{c_1}{c_0^2}\sum_{1\leq i \leq n}\left(\frac{x_i^2}{\sum^n_{j=1} x_j^2}\right)^2\\
+      &\leq \frac{c_1u_n}{c_0^2}\sum_{1\leq i \leq n}\frac{x_i^2}{\sum^n_{j=1} x_j^2} = \frac{c_1u_n}{c_0^2}.
+    \end{aligned}
+  \]
+  But we assumed that $c_1u_n/c_0^2\to 0$, so Lyapunov's condition holds. Thus by the CLT, $Z_n \to \N(0,1)$ in law.
+
+  \begin{part}{b}
+    Assume for this part that the $\epsilon_i$ are $\sim [0, \sigma^2]$ i.i.d. When $\sigma^2$ is unknown, an estimate $\widehat{\sigma}^2$ needs to be used. Assume that $\widehat{\sigma}^2$ is a consistent estimator (i.e., it converges in probability to $\sigma^2$). Determine whether the result of (a) still holds when $\sigma^2$ is replaced by its estimator $\widehat{\sigma}^2$.
+  \end{part}
+
+  First, note that given some estimator $\widehat{\sigma}^2$ with $\widehat{\sigma}^2\to \sigma^2$ in probability, we can apply the CMT to $x\mapsto \sigma/\sqrt{x}$ to see that $\sigma/\widehat{\sigma} \to 1$ in probability. Let $\widehat{Z}_n$ be the corresponding estimator which replaces $\sigma$  with $\widehat{\sigma}$ in $Z_n$. Applying Slutsky's theorem, we have
+  \[
+    \widehat{Z}_n = \sum_{1\leq i \leq n}\frac{x_i\epsilon_i}{\sqrt{\sum^n_{i=1} x_i^2 \widehat{\sigma}^2}} = \frac{\sigma}{\widehat{\sigma}}\cdot Z_n \toD 1\cdot \N(0,1) = \N(0,1).
+  \]
+  So the result still holds.
+\end{parts}
+
+\end{document}

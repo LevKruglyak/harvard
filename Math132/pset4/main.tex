@@ -1,0 +1,179 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+\def\H{\mathcal{H}}
+\def\L{\mathcal{L}}
+% \def\S{\mathcal{S}}
+\def\M{\mathcal{M}}
+\def\E{\mathbb{E}}
+\def\Re{\mathrm{Re}}
+\def\Im{\mathrm{Im}}
+\def\id{\mathrm{id}}
+\def\ceq{\vcentcolon=}
+
+\lightmode
+
+\title{\textbf{Math 132 Problem Set 4}}
+\date{\textbf{Due:} March 3, 2023}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Suppose that $X\subset \R^N$ is a smooth $n$-manifold, and let $k$ be a non-negative integer. Show that the set of $((v_1,\ldots,v_k),x)\in \R^{Nk}\times \R^N$ with $x\in X$ and $v_i\in T_xX$ is a smooth manifold of dimension $n(k+1)$.
+\end{problem}
+
+\begin{solution}
+    \quad Let's call this manifold $W$. First, observe that this manifold $W$ is exactly the pullback of the diagram
+    % https://q.uiver.app/?q=WzAsNCxbMCwxLCJYIl0sWzEsMSwiWF5rIl0sWzEsMCwiKFRYKV5rIl0sWzAsMCwiVyJdLFsyLDEsInBeayJdLFswLDEsIlxcRGVsdGEiLDJdLFszLDBdLFszLDJdXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        W \& {(TX)^k} \\
+        X \& {X^k}
+        \arrow["{p^k}", from=1-2, to=2-2]
+        \arrow["\Delta"', from=2-1, to=2-2]
+        \arrow[from=1-1, to=2-1]
+        \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    where $p: TX \to X$ is the standard tangent bundle projection, and $\Delta$ is the diagonal map. We claim that $p^k\pitchfork \Delta$, this would prove that $W$ is a smooth manifold of dimension $\dim TX^k - \dim X^k + \dim X = n(k+1)$. To prove transversality, notice that on the preimage of a point $\Delta(x)\in X^k$, $dp^k$ must be onto because $p$ and therefore $p^k$ is a submersion. This is by the fiber bundle property proved in 3b, since locally $p$ is a composition of a diffeomorphism and the submersion $U\times F \to U$.
+\end{solution}
+
+\begin{problem}
+    Suppose that $k\leq \ell$. Show that the set of linear transformations $T : \R^k\to \R^\ell$ having rank less than $k$ has measure zero.
+\end{problem}
+
+\begin{solution}
+    \quad Let's call this space $H\subset \Hom(\R^k, \R^\ell)$. First consider the space $W_k(S^{k-1})$ from the previous problem, where $X=S^{n-1}$. This space has dimension $(k-1)(k+1)$. Now note that we have a smooth (linear) map $W_k(S^{k-1}) \to \Hom(\R^k, \R^\ell)$, where a point $((v_1,\ldots,v_k), x)$ is sent to the matrix $T$ with columns $v_i$. Here note that $Tx=0$ and $|x|=1$. So the image of $W_k(S^{k-1})$ is the space of maps that have a nontrivial kernel, which is exactly the space we're looking for. Since $k\leq \ell$, $(k-1)(k+1)<k\ell$, so by Sard's theorem the desired set of transformations has measure zero. 
+\end{solution}
+
+\begin{problem}
+    Suppose that $F$ is a smooth manifold of dimension $k$ and $M$ is a smooth manifold of dimension $\ell$. A \emph{smooth fiber bundle} is a subspace $E\subset \R^n$ and a smooth map $p : E \to M$ with the property that for each $x\in M$ there is an open neighborhood $U\subset M$ of $x$ and a diffeomorphism $p^{-1}(U)\to U\times F$ having the property that the diagram
+    % https://q.uiver.app/?q=WzAsNCxbMCwwLCJwXnstMX0oVSkiXSxbMSwwLCJVXFx0aW1lcyBGIl0sWzAsMSwiVSJdLFsxLDEsIlUiXSxbMCwxXSxbMiwzLCIiLDAseyJzdHlsZSI6eyJib2R5Ijp7Im5hbWUiOiJkYXNoZWQifSwiaGVhZCI6eyJuYW1lIjoibm9uZSJ9fX1dLFswLDIsInAiLDJdLFsxLDMsIih1LHgpXFxtYXBzdG8geCJdXQ==
+    \[\begin{tikzcd}[ampersand replacement=\&]
+        {p^{-1}(U)} \& {U\times F} \\
+        U \& U
+        \arrow[from=1-1, to=1-2]
+        \arrow[dashed, no head, from=2-1, to=2-2]
+        \arrow["p"', from=1-1, to=2-1]
+        \arrow["\pi_{U}", from=1-2, to=2-2]
+    \end{tikzcd}\]
+    commutes.
+\end{problem}
+
+\begin{solution}
+    If $F$ and $Mkik$ are $k$ and $\ell$ manifolds respectively:
+    \begin{partproblem}{a}
+        Show that $E$ is a smooth manifold of dimension $k+\ell$.
+    \end{partproblem}
+
+    \quad For any $x\in E$, we can find some open neighborhood $p^{-1}(U)$ of $p(x)\in M$ such that $x\in p^{-1}(U) \to U\times F$ is a diffeomorphism. Since $U\times F$ is a $k+\ell$ dimensional manifold (being a product of an open subset of a $k$-manifold with an $\ell$ manifold), we can pick some chart around the image of $x$ and precompose it with the map to get a $k+\ell$ chart at $x\in E$.  
+
+    \begin{partproblem}{b}
+        Show that the tangent bundle of a manifold is a smooth fiber bundle.
+    \end{partproblem}
+    \quad To be fully rigorous, we'll state and prove several ``obvious'' claims.
+    \begin{claim}
+        Let $\mathcal{U}\subset \R^k$ be an open subset. Then $T\mathcal{U} = \mathcal{U} \times \R^k$. 
+    \end{claim}
+    \begin{proof}
+        This follows from the fact that $T_u\mathcal{U} =\R^k$ for any $u\in \mathcal{U}$.
+    \end{proof}
+    \begin{claim}
+        Let $f : X \to Y$ be a diffeomorphism. Then $df : TX \to TY$ is also a diffeomorphism.
+    \end{claim}
+    \begin{proof}
+        This follows from the fact that $d(-)$ is ``functorial'', i.e. if $g : Y \to X$ is a smooth inverse, $dg$ will be a smooth inverse for $df$, and vice versa.
+    \end{proof}
+    Now suppose $x\in B$ is any point. Let $\Phi :\mathcal{U} \to V\subset \R^k$ be a chart. (i.e. a diffeomorphism) Then $d\Phi : T\mathcal{U} \to V\times \R^k$ is also a diffeomorphism, and composing with $\Phi^{-1}\times 1_{\R^k}$ gives us a diagram
+    % https://q.uiver.app/?q=WzAsNSxbMCwwLCJwXnstMX0oXFxtYXRoY2Fse1V9KT1UXFxtYXRoY2Fse1V9Il0sWzEsMCwiVlxcdGltZXNcXFJeayJdLFsyLDAsIlxcbWF0aGNhbHtVfVxcdGltZXNcXFJeayJdLFswLDEsIlxcbWF0aGNhbHtVfSJdLFsyLDEsIlxcbWF0aGNhbHtVfSJdLFswLDEsImRcXFBoaSJdLFsxLDIsIlxcUGhpXnstMX1cXGNpcmMgMV97XFxSXmt9Il0sWzAsMywicCIsMl0sWzIsNCwiXFxwaV97XFxtYXRoY2Fse1V9fSJdLFszLDQsIiIsMix7InN0eWxlIjp7ImJvZHkiOnsibmFtZSI6ImRhc2hlZCJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV1d
+\[\begin{tikzcd}
+	{p^{-1}(\mathcal{U})=T\mathcal{U}} & {V\times\R^k} & {\mathcal{U}\times\R^k} \\
+	{\mathcal{U}} && {\mathcal{U}}
+	\arrow["d\Phi", from=1-1, to=1-2]
+	\arrow["{\Phi^{-1}\circ 1}", from=1-2, to=1-3]
+	\arrow["p"', from=1-1, to=2-1]
+	\arrow["{\pi_{\mathcal{U}}}", from=1-3, to=2-3]
+	\arrow[dashed, no head, from=2-1, to=2-3]
+\end{tikzcd}\] 
+This square commutes since $(\Phi^{-1}\circ 1)(d\Phi)(u,v) = (\Phi^{-1}\circ 1)(\Phi(u), d\Phi_u(v)) = (u, d\Phi_u(v))$. Projecting onto $\mathcal{U}$ then just gives us $u$ so we have the identity. 
+\end{solution}
+
+\begin{problem}
+    We return to the Stiefel manifold $V_k(\R^n)$.
+\end{problem}
+
+\begin{solution}
+    For a unit vector $v\in S^{n-1}$, let $R_v : \R^n \to \R^n$ be the orthogonal transformation which sends $v$ to $-v$ and fixes all the vectors with $\big\langle v,w \big\rangle = 0$. This is the \emph{reflection through the hyperplane perpendicular to $v$}. It is given by the formula
+    \[
+        R_v(x) = x - 2\big\langle x,v \big\rangle v
+    .\]
+    Given two vectors $v,w\in S^{n-1}$ with $v\neq -w$, set $m=(v+w) /|v+w|$ and define $R_{v,w} = R_m\circ R_v$. The orthogonal transformation $R_{v,w}$ induces the unique rotation in the $2$-plane spanned by $v$ and $w$ sending $v$ to $w$. Finally, let $p : V_k(\R^n)\to S^{n-1}$ be the map given by
+    \[
+        p([v_1,\ldots,v_k])=v_k
+    .\]  
+
+    \begin{partproblem}{a}
+        Given $v\in S^{n-1}$ let $U=S^{n-1}-\{-v\}$, and $H=v^\perp$. Show that the map
+        \[
+            g : p^{-1}(U)\to U\times V_{k-1}(H)
+        \]
+        given by
+        \[
+            g([v_1,\ldots,v_{k-1}, x]) = (x,[Rv_1, \ldots, Rv_{k-1}])
+        \]
+        where $R = R_{x,v}$ is a diffeomorphism.   
+    \end{partproblem}
+    \quad This map is smooth because each component map $g_i : p^{-1}(U)\to V_{k-1}(H)_i$ is given by
+    \[
+        \begin{aligned}
+            R_{x,v}(v_i) &= R_{\frac{x+v}{|x+v|}}\circ R_v = R_{\frac{x+v}{|x+v|}}\left(v_i - 2\big\langle v_i, v \big\rangle v\right)\\
+            &= v_i - 2\big\langle v_i, v \big\rangle v - 2\Bigg\langle v_i - 2\big\langle v_i, v \big\rangle v, \frac{x+v}{|x+v|} \Bigg\rangle \frac{x+v}{|x+v|}
+        \end{aligned}
+    \]  
+    which is clearly smooth. This also has smooth inverse
+    \[
+        g^{-1}(x, [w_1,\ldots,v_{k-1}]) = [R_{v,x}w_1, \ldots, R_{v,x}w_{k-1}, x]
+    \]
+    so $g$ is a diffeomorphism. 
+
+    \begin{partproblem}{b}
+        Show that the map $p$ is a smooth fiber bundle with fiber $V_{k-1}(\R^{n-1})$.
+    \end{partproblem}
+    \quad This follows immediately from the previous part by picking any orthonormal basis for $H$ and using the diffeomorphism $V_{k-1}(H)\to V_{k-1}(\R^{n-1})$.
+
+    \begin{partproblem}{c}
+        Using this, give another proof that the Stiefel manifold is a smooth manifold.
+    \end{partproblem}
+    \quad By properties of fiber bundles, we know that if $V_{k-1}(\R^{n-1})$ is a smooth manifold, then so is $V_k(\R^n)$. (The base space is $S^{n-1}$ is always a smooth manifold) By induction, and using the trivial case when $k=1$, since we can always assume that $k\leq n$. 
+\end{solution}
+
+\begin{problem}
+    Sphere bundles and Stiefel manifolds.
+\end{problem}
+
+\begin{solution}
+    Let $X$ be a $k$-manifold.
+    \begin{partproblem}{a}
+        Let $SX$ be the set of points $(x,v)\in TX$ with $|v|=1$. Prove that $SX$ is a $(2k-1)$-dimensional submanifold of $TX$; it is called the \emph{sphere bundle} of $X$.
+    \end{partproblem}
+
+    \quad Consider the map $f : TX \to \R$ given by $f(x,v)=|v|^2$. This is clearly a smooth map, and $SX=f^{-1}(1)$. If we show that $1$ is a regular value of this map, we would be done, since the preimage theorem would show that $\dim SX = 2k-1$. Recall that at any point $(x,v)\in TX$, there is an identification $T_{(x,v)}TX=T_xX\times \R^k$ and $p : TX \to X$ is a submersion by the argument in problem 1. Thus, locally $f$ looks like the map $\mathcal{U}\times \R^k \to \R$ given by $(u,v)\mapsto |v|^2$, under this identification the derivative map is
+    \[
+        df_{(x,v)} : T_xX\times R^k \to \R : (y,w) \mapsto w\cdot 2v
+    .\] 
+    Since for any $(x,v)$ with $|v|=1$, this map is surjective, we are done.
+
+    \begin{partproblem}{b}
+        Can you think of a relationship between the sphere bundle of $S^{n-1}$ and a Stiefel manifold?
+    \end{partproblem}
+    \quad The sphere bundle $SS^{n-1}$ is actually diffeomorphic (technically equal) to the Stiefel manifold of orthonormal $2$-frames in $\R^n$. Recall that the tangent space $TS^{n-1}$ can be represented as
+    \[
+        TS^{n-1} = \{(x,v) : x\in S^{n-1}, v\perp x\}
+    .\]  
+    Then the sphere bundle of $S^{n-1}$ would be
+    \[
+        SS^{n-1} = \{(x,v) : x,v\in S^{n-1}, v\perp x\}
+    .\]  
+    This is exactly the set of orthogonal $2$-frames in $\R^n$.
+\end{solution}
+
+\end{document}

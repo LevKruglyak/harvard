@@ -1,0 +1,43 @@
+\begin{problem}
+Let $V$ be a finite-dimensional vector space over a field $k$. A linear operator $\phi:V\to V$ is said to be {\em diagonalizable} if there exists a basis for $V$ such that the matrix representing $\phi$ is diagonal (equivalently, if there is a basis of $V$ consisting of eigenvectors of $\phi$). Denote by $\lambda_1,\dots,\lambda_m\in k$ the distinct eigenvalues of a diagonalizable operator $\phi$. Consider the linear operator 
+\[\pi_i=\frac{1}{\prod_{j\neq i}(\lambda_i-\lambda_j)}\,\prod_{j\neq i} (\phi-\lambda_j).\]
+\begin{enumerate}
+  \item What is the kernel of $\pi_i$?
+  \item What is its image? 
+  \item What is the operator $\pi_1+\cdots+\pi_m$?
+\end{enumerate}
+\end{problem}
+
+\textit{Note that $\phi-\lambda_j$ are all simultaneously diagonalizable and hence commute, so the order of the product does not matter.}
+
+\begin{lemma}
+  Suppose $v_k\in V_{\lambda_k}$ is an eigenvector of $\lambda_k$. (Here $V_{\lambda_k}$ is the eigenspace of $\lambda_k$) Then,
+  \[
+    \pi_i(v_k)=\begin{cases}
+      0&i\neq k\\
+      v_j&i=k
+    \end{cases}
+  .\]   
+\end{lemma}
+\begin{proof}
+  Suppose $i\neq k$. Then
+  \[
+    \pi_i(v_k)=\frac{1}{\prod_{j\neq i}(\lambda_i-\lambda_j)}\,\left(\prod_{j\neq i,k} (\phi-\lambda_j)\right)(\phi-\lambda_k)(v_k)=0
+  .\]  
+  Otherwise if $i=k$, since $(\phi-\lambda_j)v_i=v_i(\lambda_i-\lambda_j)$, we have
+  \[
+    \pi_i(v_i)=v_i\cdot\frac{1}{\prod_{j\neq i}(\lambda_i-\lambda_j)}\,\prod_{j\neq i} (\lambda_i-\lambda_j)=v_i
+    .\]
+  So we are done.
+\end{proof}
+
+Every $v\in V$ can be expressed as $v=\sum_{1\leq j \leq m}v_j$ for $v_j\in V_{\lambda_i}$. So $\pi_i(v)=\sum_{1\leq j\leq m}\pi_i(v_j)=v_i$.   
+
+\textbf{(1)} We claim that $\ker(\pi_i)=\bigoplus_{j\neq i}V_{\lambda_j}.$ This follows because $\pi_i$ annihilates the spaces $V_{\lambda_j}$ for $j\neq i$.   
+
+\textbf{(2)} We claim that $\Ima(\pi_i)=V_{\lambda_i}$. This follows because $\pi_i(v)=v_i$. 
+
+\textbf{(3)} We claim that $\sum_{1\leq k\leq m}\pi_k=\mathrm{Id}$. Observe that
+\[
+  \sum_{1\leq k\leq m}\pi_k(v)=\sum_{1\leq k\leq m}\pi_k\left(\sum_{1\leq j \leq m}v_j\right)=\sum_{1\leq j \leq m}v_j=v
+.\]  

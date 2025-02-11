@@ -1,0 +1,22 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/preamble_v1.tex}
+
+\lightmode
+
+\title{\textbf{Math 132 Makeup For Problem 5 on Homework 5}}
+\date{\textbf{Due:} ??}
+
+\begin{document}
+\maketitle
+
+\begin{problem}
+    Show that for each $a > 0$, the solid hyperboloid
+    \[
+    x^2+y^2-z^2 \leq a
+    \]
+    is a manifold with boundary.
+\end{problem}
+\quad Let $f: \R^3 \to \R$ be given by $f(x,y,z)=z^2+y^2-z^2$. By basic calculus, this has derivative $df_{x,y,z} = [2x,2y,-2z]$. This is a surjective map as long as $(x,y,z)\neq 0$, so for any $a>0$, it follows that $a$ is a regular value of $f$. Therefore, the desired space, $f^{-1}((-\infty, a])$ is a smooth manifold with boundary $f^{-1}(a)$, since $(-\infty, a]$ is a smooth manifold with boundary $\{a\}$.
+
+\end{document}

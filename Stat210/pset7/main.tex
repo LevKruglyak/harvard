@@ -1,0 +1,202 @@
+\documentclass{pset}
+
+\title{Stat 210 Problem Set 7}
+\author{Lev Kruglyak}
+\due{November 11, 2023}
+
+\usepackage{bm}
+\input{../stat210.tex}
+
+\begin{document}
+\maketitle
+\collaborators
+
+\begin{problem}{9.4.6}[Correlation inequality]
+  Give a short proof that for $g,h$ increasing functions, we have
+  \[ \Cor(g(Y), h(Y)) \geq 0.\] % consider i.i.d. Y_1, Y_2 \sim Y
+\end{problem}
+
+\begin{solution}
+  Let's choose some i.i.d. $Y_1, Y_2\sim Y$. Note that the function $(g(x)-g(y))(h(x)-h(y))$ is positive, so by monoticity of expectation, we have
+  \[
+    \E((g(Y_1) - g(Y_2))(h(Y_1) - h(Y_2))) \geq 0.
+  \]
+  Expanding this and making use of $Y_1\ind Y_2 \sim Y$, we get
+  \[
+    \begin{aligned}
+      \E(g(Y_1)h(Y_1)) - \E(g(Y_2)h(Y_1)) - \E(g(Y_1)h(Y_2)) + \E(g(Y_2) h(Y_2)) &\geq 0\\
+      \E(g(Y)h(Y)) - 2\E(g(Y))\E(h(Y)) + \E(g(Y)h(Y)) &\geq 0\\
+      \Cov(g(Y), h(Y)) &\geq 0.
+    \end{aligned}
+  \]
+\end{solution}
+
+\begin{problem}{9.4}[Probability of zero]
+  Let $X$ be a nonnegative random variable, for which we are interested in obtaining an upper bound on the probability of a $0$.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that $P(X=0) \leq (CV)^2$, where $CV = \sigma_X / \E(X)$ is the \emph{coefficient of variation} of $X$ using Chebyshev's inequality.
+  \end{part}
+
+  Suppose $X\sim [\mu, \sigma^2]$. Then we really want to show that $P(X=0)\leq \sigma^2/\mu^2$. Note that $P(X=0) \leq P(|X-\mu| \geq \mu)$ since $|-\mu|\geq \mu$, yet by Chebyshev's inequality we have
+  \[
+    P(|X-\mu| \geq \mu) \leq \sigma^2/\mu^2 = (CV)^2.
+  \]
+
+  \begin{part}{b}
+    Obtain the same inequality using Cauchy-Schwarz, by writing $X = XI_{X >0}$.
+  \end{part}
+
+  First, note that $\E[XI_{X>0}]=\E[X]$. Thus, by Cauchy-Schwarz we have
+  \[
+    |\E[X]|=|\E[XI_{X>0}]| \leq \sqrt{\E[X^2]\E[I_{X>0}]} = \sqrt{\E[X^2]P(X>0)}.
+  \]
+  Rearranging, we get the inequality
+  \[
+    P(X>0) \geq \frac{\E[X]^2}{\E[X^2]} \quad \implies \quad P(X=0)=1-P(X>0)\leq \frac{\E[X^2]-\E[X]^2}{\E[X^2]}\leq\frac{\sigma^2}{\mu^2},
+  \]
+  where the last inequality follows from $\E[X^2]\geq \E[X]^2$.
+\end{parts}
+
+\begin{problem}{9.5}[Correlation inequality with functions of two variables]
+  Let $f(x,y)$ and $g(x,y)$ be functions which are increasing in each coordinate.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Show that for $X$ and $Y$ independent r.v.s, $\Cov(f(X,Y), g(X,Y)) \geq 0$.
+  \end{part}
+
+  This will follow from part (b).
+
+  \begin{part}{b}
+    Prove the analogous result for more than two variables by induction. % use ECCE and univariate correlation inequality
+  \end{part}
+
+  Let's begin with the base case of one variable, this is exactly the univariate correlation inequality. Now suppose the claim is true for $n-1$ variables. Then for $n$ variables $X_i$, we can consider the non-negative function
+  \[
+    C(x) = \Cov(f(X_1, \ldots, X_{n-1}, x), g(X_1,\ldots, X_{n-1}, x)).
+  \]
+  Since it is positive, it follows that $\E(C(x)) \geq 0$. Now let's consider the functions $F(x) = \E(f(X_1,\ldots, X_{n-1}, x))$ and $G(x) = \E(g(X_1,\ldots, X_{n-1}, x))$ so that $C(x) = \Cov(F(x), G(x))$. Since these are increasing, the univariate correlation inequality implies that $\Cov(F(X_n), G(X_n))\geq 0$. Applying ECCE, we thus get that
+  \[
+    \Cov(f(X_1, \ldots, X_n), g(X_1,\ldots, X_n)) = \E(C(X_n)) + \Cov(F(X_n), G(X_n)) \geq 0,
+  \]
+  which completes the inductive step.
+\end{parts}
+
+\begin{problem}{9.6}[Antithetic sampling]
+If $\widehat{\theta}_1$ and $\widehat{\theta}_2$ are uncorrelated estimates of the same parameter $\theta$, then we know that $(\widehat{\theta}_1+ \widehat{\theta}_2)/2$ has variance at most $1/2$ the larger of the variances of two estimates. The idea of \emph{antithetic sampling} is to try to improve on this variance reduction by choosing $\widehat{\theta}_1$ and $\widehat{\theta}_2$ to be negatively correlated.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    For a simple example, suppose we wish to estimate $\E(e^U)$ for $U\sim \Unif$ using a Monte Carlo method. The normal method would be to generate $n$ i.i.d. Uniform r.v.s $U_1,\ldots, U_n$ and then average $e^{U_1},\ldots, e^{U_n}$. The antithetic method would be to also use $1-U_j$ for each $U_j$ generated, using the fact that $e^{U_j}$ and $e^{1-U_j}$ are negatively correlated. Show that for $n=2$, the variance from the estimator based on $U_1$, $1-U_1$ is lower than the variance based on i.i.d $U_1, U_2$ by a factor of about $31$.
+  \end{part}
+
+  Let's expand the variance of both of these. Throughout, let $M(t)=\E(e^{tU})$ be the MGF of the Uniform distribution. Recall that this MGF has explicit form
+  \[
+    M(t) = \begin{cases}(e^t-1)/t & t\neq 0,\\ 1&t=0.\end{cases}
+  \]
+  First, the estimator with antithetic sampling has variance
+  \[
+    \begin{aligned}
+      \Var(\widehat{\theta}_\textrm{antithetic})=\Var((e^{U_1} + e^{1-U_1})/2) &= \frac{1}{4}\cdot \left(\E(e^{2U_1}+e^{2(1-U_1)}+2e) - \E(e^{U_1}+e^{1-U_1})^2\right) \\ &=\frac{1}{4}\cdot \left(2M(2)+2e -4M(1)^2\right)\\ &= \frac{\left(e^{2}-1\right)+2e-4\left(e-1\right)^{2}}{4}.
+    \end{aligned}
+  \]
+  Here we made use of the fact that $U_1\sim 1-U_1$. On the other hand, the standard estimator has variance
+  \[
+    \begin{aligned}
+      \Var(\widehat{\theta}_\textrm{standard})=\Var((e^{U_1}+e^{U_2})/2) &= \frac{1}{4}\cdot \left(\E(e^{2U_1}+e^{2U_2}+2e^{U_1+U_2})- \E(e^{U_1}+e^{U_2})^2\right)\\
+                                &=\frac{1}{4}\cdot \left(2M(2)+2M(1)^2-4M(1)^2\right)\\
+                                &=\frac{\left(e^{2}-1\right)-2\left(e-1\right)^{2}}{4}.
+    \end{aligned}
+  \]
+  This is a much bigger variance, in fact
+  \[
+    \frac{\Var(\widehat{\theta}_\textrm{standard})}{\Var(\widehat{\theta}_\textrm{antithetic})} = \frac{(e^2-1)-2(e-1)^2}{(e^2-1)+2e-4(e-1)^2}\approx 30.9.
+  \]
+
+  \begin{part}{b}
+    Let $h(u_1,\ldots, u_n)$ be a function of interest such that $h$ is monotone in each of its coordinates. Let $U_1,\ldots, U_n$ be i.i.d. Unif. Show that $h(U_1,U_2,\ldots, U_n)$ and $h(1-U_1,1-U_2, \ldots, 1-U_n)$ are identically distributed and negatively correlated. This suggests using $h(U_1, U_2,\ldots, U_n)$ and $h(1-U_1, 1-U_2, \ldots, 1-U_n)$ together as a pair in Monte Carlo estimation.
+  \end{part}
+
+  Note that $(U_1, \ldots, U_n)\sim (1-U_1, \ldots, 1-U_n)$ are jointly identically distributed since all the $U_i$ are independent. It then follows that for any measurable function $h$, we have 
+  \[
+    h(U_1,\ldots, U_n) \sim h(1-U_1,\ldots, 1-U_n).
+  \]
+  For the second part, we would like to apply the multivariate correlation inequality, however $h$ is not necessarily increasing in each coordinate. However, since $U\sim 1-U$, we can precompose the decreasing components with $f(x)=1-x$ and not affect the correlation. So let's assume without loss of generality that $h$ is increasing. However, if $h$ is increasing, then so is $-h(1-\mathbf{x})$, so by the multivariate correlation inequality we have
+  \[
+    \Cor(h(U_1,\ldots, U_n), -h(1-U_1, \ldots, 1-U_n)) \geq 0 \quad \implies \quad \Cor(h(U_1,\ldots, U_n), h(1-U_1, \ldots, 1-U_n)) \leq 0.
+  \]
+  This justifies the sampling strategy.
+\end{parts}
+
+\begin{problem}{9.7}[Convexity of CGFs]
+  Show that if $X$ has MGF $M(t)$ and CGF $K(t)=\log M(t)$, then $K(t)$ is convex (assuming that you can DUThIS).
+\end{problem}
+
+\begin{solution}
+  Note that $K''(t)  =(M(t)M''(t) - M'(t)^2)/M(t)^2$, thus to prove convexity it is sufficient to show that $M(t)M''(t) \geq M'(t)^2$. Using DUThIS, we see that
+  \[
+    \frac{\partial^n M(t)}{\partial t} = \E\left(\frac{\partial^n e^{tX}}{\partial t^n}\right) = \E(X^n e^{tX}),
+  \]
+  so applying Cauchy-Schwarz, we get
+  \[
+    M'(t)=\E(Xe^{tX})^2 \leq \E(e^{tX})\E(X^2e^{tX}) = M(t)M''(t)
+  \]
+  as desired.
+\end{solution}
+
+\begin{problem}{9.9}[Chernoff bounds for sums of random signs]
+  Let $S_1,S_2,\ldots$ be independent random signs (symmetric Bernoullis), and $T_n =S_1+\cdots+S_n$. We often wish to have good bounds on the behavior of $T_n$, e.g., in elections we can think of $T_n$ as the difference of the numbers of votes for the two candidates.
+\end{problem}
+
+\begin{parts}
+  \begin{part}{a}
+    Use a Chernoff bound argument to show that for $a > 0$,
+    \[
+      P(|T_n| \geq a) \leq 2\exp\left(-\frac{a^2}{2n}\right).
+    \]
+    % show that MGF of S_1 is at most exp(t^2/2)
+  \end{part}
+
+  If $S\sim \Bern(1/2)$, note that the MGF is $M_S(t) = (e^t + e^{-t})/2 = \cosh(t)$. This means that $M_{T_n}(t)=\cosh^n(t)$ Then, by Chernoff's bound, we have
+  \[
+      P(|T_n| \geq a) \leq 2\exp(-at)\cosh^n(t)
+  \]
+  for all $t> 0$. However, we know that $\cosh(t) \leq e^{t^2/2}$ so we get the bound
+  \[
+    P(|T_n| \geq a) \leq 2\exp\left(-at + \frac{nt^2}{2}\right)
+  \]
+  This is minimized when $t=a/n$ so we get the bound
+  \[
+    P(|T_n|\geq a) \leq 2\exp\left(-\frac{a^2}{2n}\right)
+  \]
+  as desired.
+
+  \begin{part}{b}
+    Compare numerically the Chernoff bound from (a) and Chebyshev's inequality for $n=100$, in the cases $a=20,30,40,50$.
+  \end{part}
+
+  Applying Chebyshev's inequality, we get the bound
+  \[
+    P(|T_n| \geq a)\leq \frac{\Var(T_n)}{a^2} = \frac{n}{a^2}.
+  \]
+  If we plug in the values $a=20,30,40,50$ for the case when $n=100$, we get
+    \begin{center}
+    {\renewcommand{\arraystretch}{1.1}
+    \begin{tabular}{c|c|c}
+        $n=100$ & Chernoff & Chebyshev \\ \hline
+        $a=20$ & $2.71 \times 10^{-1}$ & $2.5 \times 10^{-1}$ \\
+        $a=30$ & $2.22 \times 10^{-2}$ & $1.11 \times 10^{-1}$ \\
+        $a=40$ & $6.71 \times 10^{-4}$ & $6.25 \times 10^{-2}$ \\
+        $a=50$ & $7.45 \times 10^{-6}$ & $4 \times 10^{-2}$ \\
+    \end{tabular}
+    }
+    \end{center}
+  As we can see, the Chernoff bound is much better than Chebyshev's bound for large values of $a$. This makes sense since the Chernoff bound makes use of the MGF, which contains more data than just the mean and variance used by Chebyshev's inequality.
+\end{parts}
+
+\end{document}

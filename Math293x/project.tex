@@ -1,0 +1,467 @@
+\documentclass{article}
+
+\title{\textbf{The Pontryagin-Thom Isomorphism}}
+\date{}
+\author{Lev Kruglyak}
+
+\input{preamble.tex}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+The primary goal of any area of mathematics is to completely classify or characterize some interesting class of objects, usually up to a carefully chosen equivalence relation. When things go just right, such a classification extends beyond just an unstructured list of objects, and uncovers a deep equivalence between two seemingly disparate structures. In this paper, we'll explore one such elegant connection; the Pontryagin-Thom construction, a perspective which links the ``geometry'' of smooth manifolds to the ``algebra'' of stable homotopy groups.
+\end{abstract}
+\tableofcontents
+\medskip
+
+\section{Introduction}
+The notion of a smooth, singularity-free hyper-surface, i.e. a manifold, is a fundamental geometric/topological notion in mathematics. Manifolds show up everywhere geometry is involved, either as the ambient space where geometry is done, or even as the space of symmetries of a geometry in the form of a Lie group. However, before any sort of geometric structure is imposed upon the manifold, these objects are purely topological and have a canonical notion of equivalence: homeomorphism. 
+
+This turns out to be far too general of an equivalence; indeed for manifolds of dimensions $\geq 4$, there are powerful algebraic methods to understand their topology, but a full characterization turns out to be a computationally unsolvable problem. A coarser, yet computable, notion of equivalence which has turned up naturally in the study of cohomology, physics, and homotopy theory is the notion of \emph{cobordism}.
+
+\subsection{Cobordism}
+To motivate the equivalence relation of cobordism, we might first look at homology theories, which are extremely useful and easy to compute invariants of a topological space. A key component of a homology theory is the boundary map $\partial$ which lowers dimension of cycles by one. Importantly, $\partial^2=0$. This single relation gives rise to much of the richness of homology theory, and keeps a homology theory ``local in dimension'', preventing topological complexities in lower dimensions pollute the computation of homology in higher dimensions.
+
+How might we develop a theory of homology which doesn't just study one manifold, but rather all of them as a singular chain of objects? If we extend our definition of a manifold slightly to allow for manifolds with boundary, then we have a natural boundary map
+\[
+    \partial : \Man_n \to \Man_{n-1}.
+\]
+A classic theorem in topology then tell us that the boundary of some $n$-manifold (with boundary) is a $(n-1)$-manifold without boundary, so we have $\partial^2=0$. For completeness, we might consider the empty set as a manifold of every dimension, since we would like to be able to take the boundary of a manifold without boundary.
+
+The next thing we need for a homology theory is some linear structure on the set of manifolds, and we'd want the boundary map to be linear respective to this. A natural choice which comes to mind is the disjoint union operator, since 
+\[
+    \partial(M_1\sqcup M_2) = \partial M_1 \sqcup \partial M_2.
+\]
+With this definition, it makes sense how we might scale by some positive integer $n$, namely we set $n\cdot M = \sqcup^n M$, but how might we scale by a negative integer? There are two options we have. First, we could say that our space is $\Z/2$-linear, and impose an equivalence relation which sets $M\sqcup M = \varnothing$. Alternatively, we could restrict our attention to \emph{oriented manifolds}, and set $-M$ to be the manifold with reverse orientation. If we impose an equivalence relation which sets $M\sqcup -M=\varnothing$, we have $\Z$-linearity. 
+
+These equivalence relations are exactly \emph{unoriented cobordism} and \emph{oriented cobordism} respectively. In this paper, we'll focus on the oriented case for simplicity.
+
+\begin{definition}
+  Two (oriented) compact boundaryless manifolds $M_1$ and $M_2$ are \defn{cobordant} if there is some compact manifold $W$ (with boundary) such that $\partial W = M_1\sqcup -M_2$. Let's set $\Omega^{\SO}_n$ to be the group of $n$-manifolds modulo cobordism.
+\end{definition}
+
+On top of addition, we also have a natural multiplication on the set of manifolds up to cobordism; for a $p$-manifold $M_1$ and $q$-manifold $M_2$, we can form a $(p+q)$-manifold $M_1\times M_2$.
+
+\begin{proposition}
+  This multiplicative operation is well-defined under the cobordism relation.
+\end{proposition}
+
+Since Cartesian product distributes disjoint union, this means that we have bilinear maps
+\[
+  \Omega^\SO_p\times \Omega^\SO_q \to \Omega^\SO_{p+q}.
+\]
+Such data is exactly what's needed for a graded ring.
+
+\begin{definition}
+  The \defn{oriented cobordism ring} is the graded ring
+  \[
+    \Omega^\SO_* = \bigoplus_{n\in \Z_{\geq 0}} \Omega^\SO_n
+  \]
+  with multiplication given by Cartesian product and addition by disjoint union.
+\end{definition}
+
+\subsection{The Construction}
+
+The notation ``$\SO$'' to refer to the theory of oriented cobordism hints that the Lie group $\SO(n)$ may be involved. In fact, the addition of some geometric structure onto the class of manifolds we're considering (in this case the group $\SO(n)$) allows us to completely classify the cobordism theory. In the rest of the paper we'll explain how to associate a \emph{homotopy spectrum} $\MSO$ to the Lie groups $\SO$.
+
+\begin{theorem}
+  There is an isomorphism of graded rings:
+  \[
+    \Omega^\SO_* \cong \pi_*(\MSO)
+  \]
+  where $\pi_*^s$ is the stable homotopy ring of a spectrum.
+\end{theorem}
+
+Similarly, we could have considered the \defn{unoriented cobordism ring} $\Omega^\O_*$ or the \defn{complex cobordism ring} $\Omega^\U_*$, and had isomorphisms:
+\[
+  \begin{aligned}
+    \Omega^\O_* &\cong \pi_*(\MO)\\
+    \Omega^\U_* &\cong \pi_*(\MU)
+  \end{aligned}
+\]
+
+To begin our exploration, we start with exploring the geometry of Lie groups acting on fiber bundles in nice ways.
+
+\section{Principal Bundles}
+
+In many areas of mathematics, especially geometric ones, the raw topological data of a fiber bundle is not sufficient. For example, we might care about \emph{oriented vector bundles} or an \emph{orthonormal frame bundle} of a Riemannian manifold. Abstractly, such geometry is just the presence of some group of symmetries which acts on the space. Since we want this action to work nicely with the bundle structure, this motivates our definition of a \emph{principal bundle}.
+
+\begin{definition}
+  Let $G$ be a topological (or Lie) group. A \defn{principal $G$-bundle} over a topological space $B$ is a bundle $\xi : P \to B$ with a free, transitive, smooth group action on $P$ which preserves the fibers. We also require that for any fiber $\xi^{-1}(b)$ and point $y\in \xi^{-1}(b)$ the map $G \to \xi^{-1}(b)$ which sends $g\mapsto y\cdot g$ is a homeomorphism.
+\end{definition}
+
+Principle $G$-bundles are quite a canonical construction, and thus there is a wealth of examples. In our case, we are especially interested in the case when $G$ is a Lie group.
+
+\begin{example}[Trivial bundle]
+  Let $G$ be a Lie group and $M$ be a smooth manifold. Then we can form the trivial bundle $G\times M \to M$. Clearly, we have the required action of $G$ on $G\times M$. In the case that $G$ is abelian, geometrically $G$ can be thought of as the \emph{group of translations} of $G\times M$. 
+\end{example}
+
+\begin{example}[Frame bundle]
+  To add more structure, we can let $M$ be a manifold, and consider the \emph{fame bundle} $FM \to M$, which consists of the set of all possible bases of the tangent space at each point. This carries a natural structure of a principal $\GL_n(\R)$-bundle which act as ``change of basis'' transformations on the group.
+\end{example}
+
+\begin{example}[Orthonormal frame bundle]
+  In the case that $M$ is a Riemannian manifold, we get an additional inner product structure on the tangent spaces. We can thus look at the \emph{orthonormal frame bundle} $OM \to M$. This has the structure of a principal $\O_n(\R)$-bundle. Similarly, if $M$ is an orientable manifold, we get a principal $\SO_n(\R)$-bundle.
+\end{example}
+
+\begin{example}[Regular covering space]
+  For a regular covering map $p : E \to B$, the \emph{monodromy action} gives this discrete bundle the structure of a principal $\pi_1(B)/p_*(\pi_1(E))$-bundle. In particular, the universal cover $\widetilde{B} \to B$ is a principal $\pi_1(B)$-bundle.
+\end{example}
+
+\begin{example}[Projective space]
+  The multiplicative structure of division algebras gives us principal bundles (for each $n>0$):
+  \[
+    \begin{aligned}
+      S^n \to \RP^n \quad&\rightarrow\quad \textrm{principal }\O(1)\textrm{-bundle}\\
+      S^{2n+1} \to \CP^n \quad&\rightarrow\quad \textrm{principal }\U(1)\textrm{-bundle}\\
+      S^{4n+3} \to \HP^n \quad&\rightarrow\quad \textrm{principal }\Sp(1)\textrm{-bundle}\\
+    \end{aligned}
+  \]
+\end{example}
+
+\begin{example}[Stiefel Bundle]
+  Let $V_k(\R^n)$ be the Stiefel manifold of orthogonal $k$-frames. We have a principal $\O(k)$-bundle $V_k(\R^n) \to \Gr_k(\R^n)$ which sends a frame to its spanning plane.
+\end{example}
+
+\subsection{Classifying Spaces}
+
+Suppose that given some group $G$, we wanted to classify all principal $G$-bundles on a space $B$ up to isomorphism. The first step in this classification problem lies in the following observation:
+
+\begin{theorem}
+  If $\xi : E \to B$ is a vector bundle and $f_0, f_1 : A \to B$ are homotopic maps, then the pullback bundles $f_0^*\xi$ and $f_1^*\xi$ are isomorphic, assuming that $A$ is paracompact.
+\end{theorem}
+
+\begin{corollary}
+  If $f : A\simeq B$ is a homotopy equivalence of paracompact spaces, then we have a bijection
+  \[
+  f^* : \{\textrm{principal $G$-bundles over }B\}/\textrm{iso} \cong 
+  \{\textrm{principal $G$-bundles over }A\}/\textrm{iso}. 
+  \]
+\end{corollary}
+
+We thus know that the only data that matters in the classification here is the homotopy type of the base space, and the ``geometric data'', which just consists of the group $G$. Let $P_G : \hCW_*^\op \to \Set$ be the contravariant functor taking a pointed CW-complex to the set of isomorphism classes of principal $G$-bundles over $B$. 
+
+Given some map of spaces $A \to B$, we get an induced map of isomorphism classes $P_G(B) \to P_G(A)$ which acts by pulling back a vector bundle on $B$ to one on $A$ by the map $A\to B$. In the event that $A\subset B$ and the map is the inclusion, this reverse map of sets acts as a restriction, so we use the notation $\restr{b}{A}\in P_G(A)$ to refer to the image of a bundle $b\in P_G(B)$.
+
+\begin{lemma}
+  The functor $P_G$ satisfies the following conditions:
+  \begin{itemize}
+    \item $P_G$ maps coproducts to products, i.e. $P_G(\bigwedge_\alpha B_\alpha) = \prod_\alpha P_G(B_\alpha)$.
+    \item If $B$ is decomposable as a union of CW complexes $B_1, B_2$, then for any pair $b_1\in P_G(B_1)$ and $b_2\in P_G(B_2)$ with $\restr{b_1}{B_1\cap B_2} = \restr{b_2}{B_1\cap B_2}$, there exists some $b\in P_G(B)$ such that $\restr{b}{B_1} = b_1$ and $\restr{b}{B_2}=b_2$.
+  \end{itemize}
+\end{lemma}
+
+These conditions are in fact the exact conditions needed for such a functor to be \emph{representable} by the Brown representability theorem! We can thus construct some space $BG$ such that for any space $X$, we get a natural isomorphism
+\[
+  \{\textrm{principal $G$-bundles over }X\}/\textrm{iso} \cong [X, BG].
+\]
+Again, this fits into our overall theme of turning classification problems in \emph{geometry} into problems in \emph{homotopy theory}. There are more details in the construction of $BG$, but they are not terribly relevant for our purposes; the universal property is what matters for us.
+
+\begin{definition}
+  Given a Lie group $G$, we call $BG$ a \defn{classifying space} of $G$.
+\end{definition}
+
+To gain better intuition for these classifying spaces, we can look at (arguably) the two simplest non-trivial examples.
+
+\begin{example}
+  For the circle group $\U(1)=S^1$, the classifying space is $\BU(1)=\CP^\infty$.
+\end{example}
+
+\begin{example}
+  Similarly for $S^0=\Z/2$, the classifying space is $B\Z/2=\RP^\infty$.
+\end{example}
+
+Actually computing spaces that represent $BG$ is often simplified by following observation:
+
+\begin{proposition}
+  For all $n\geq 1$, we have an isomorphism
+  \[
+    \pi_{n+1}(BG) \cong \pi_n(G).
+  \]
+\end{proposition}
+
+\begin{proof}
+  We'll prove in the next section that there is a \emph{universal bundle} $EG \to BG$ which is a fibration
+  \[
+    G \to EG \to BG.
+  \]
+  Furthermore, the total space $EG$ is contractible. Expanding the long exact sequence associated to this fibration, we get the sequence
+\[\begin{tikzcd}
+	\cdots & {\pi_{n+1}(BG)} & {\pi_n(G)} & {\pi_n(EG)} & {\pi_n(BG)} & {\pi_{n-1}(G)} & \cdots
+	\arrow[from=1-5, to=1-6]
+	\arrow[from=1-4, to=1-5]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-6, to=1-7]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-1, to=1-2]
+\end{tikzcd}\]
+Since $EG$ is contractible, this gives our desired isomorphism.
+\end{proof}
+
+This proposition underlines something rather interesting. In some sense, $BG$ can be thought of as a \emph{delooping} of $G$, or in other words, we have have a weak equivalence $\Omega BG \simeq G$.
+
+\begin{corollary}
+  If $G$ is a $K(\pi,n)$-space, then $BG$ is a $K(\pi,n+1)$-space. For example, if $G$ is discrete, $BG$ is a $K(G,1)$-space.
+\end{corollary}
+
+This correspondence with Eilenberg-Maclane spaces is quite helpful, since by Brown representability we know that $[X, K(\pi,n)] \cong H^n(X; \pi)$. Thus, when $G$ is $K(\pi,n)$, we have a natural isomorphism
+\[
+  \{\textrm{principal $G$-bundles over }X\}/\textrm{iso} \cong H^{n+1}(X; \pi).
+\]
+
+Now both of the earlier statements can be interpreted in a purely topological manner by looking at the higher homotopy groups of $\CP^\infty$ and $\RP^\infty$ and applying Whitehead's theorem. For our two examples, this means:
+\[
+  \begin{aligned}
+    \Z/2=S^0 \simeq K(\Z/2, 0) \quad &\rightarrow\quad B\Z/2\simeq \RP^\infty \simeq K(\Z/2, 1)\\
+    \U(1)=S^1 \simeq K(\Z, 1) \quad &\rightarrow\quad \BU(1)\simeq \CP^\infty \simeq K(\Z, 2)
+  \end{aligned}
+\]
+
+To look at a simple example of how these classifying spaces actually classify principal bundles, let's consider principal $\Z/2$-bundles, which are regular double covers. For some manifold $M$, the natural isomorphism gives us 
+\[
+  \{\textrm{double covers of }M\}/\textrm{iso}\cong P_{\Z/2}(M) \cong [M, \RP^\infty] \cong H^1(M; \Z/2).
+\]
+In other words, we have a precise way to understand how the first cohomology of $M$ measures the ``twistiness'' of $M$ by double covers. In similar ways, understanding classifying spaces provides ways to understand higher-level geometries.
+
+\subsection{The Orthogonal Group}
+
+We've seen what happens for the classifying spaces of $\Z/2\cong \O(1)$ and $\U(1)$, but what happens for more complex orthogonal and unitary Lie groups? We can't use the Eilenberg-Maclane approach since the homotopy groups of $\O(n)$ are non-trivial for $n>1$. Properly understanding these Lie groups and their classifying spaces must begin with understanding the Grassmannian and Steifel manifolds first. Let's restrict our attention to the orthogonal group $\O(n)$ for the time being, since the case for the unitary group is similar.
+
+\begin{definition}
+  Let $k\leq n$. There is a natural action of $\O(n-k)$ on $\O(n)$ given by multiplication in the inclusion $\O(n-k) \hookrightarrow \O(n)$. The \defn{Steifel manifold} of $k$-frames in $\R^n$ is the quotient
+  \[
+    V_k(\R^n) = \O(n)/\O(n-k).
+  \]
+  This has the structure of a manifold, and is the set of $k$-tuples of orthogonal vectors in $\R^n$.
+\end{definition}
+
+\begin{definition}
+  There is an action of $\O(k)$ on $V_k(\R^n)$, so we define the \defn{Grassmannian manifold} of $k$-planes in $\R^n$ as the quotient
+  \[
+    \Gr_k(\R^n) = V_k(\R^n)/\O(k) = \O(n)/(\O(k)\times \O(n-k)).
+  \]
+\end{definition}
+
+This means that we have a principal $\O(k)$-bundle $V_k(\R^n) \to \Gr_k(\R^n)$. This is actually a fibration, so we get a long exact sequence 
+\[\begin{tikzcd}
+	\cdots & {\pi_{q+1}(\Gr_k(\R^n))} & {\pi_q(\O(k))} & {\pi_q(V_k(\R^n))} & {\pi_q(\Gr_k(\R^n)} & \cdots
+	\arrow[from=1-4, to=1-5]
+	\arrow[from=1-3, to=1-4]
+	\arrow[from=1-5, to=1-6]
+	\arrow[from=1-2, to=1-3]
+	\arrow[from=1-1, to=1-2]
+\end{tikzcd}\]
+
+\begin{proposition}
+  The Steifel manifold $V_k(\R^n)$ is $(n-k-1)$-connected. 
+\end{proposition}
+
+Combining this observation with the long exact sequence, we notice that for large enough $n$, we have isomorphisms 
+\[
+  \pi_{q+1}(\Gr_k(\R^n)) \cong \pi_q(\O(k))
+\]
+for all $q$ small enough. Ignoring the abuse of notation, this seems to imply that $\Omega \Gr_k(\R^n) \approx \O(k)$. Since there are natural inclusions $\Gr_k(\R^n) \to \Gr_k(\R^{n+1})$, we can make this precise by defining
+\[
+  \BO(k) = \varinjlim_n \Gr_k(\R^n) = \Gr_k(\R^\infty).
+\]
+This limit is exactly the classifying space of the orthogonal group. We don't have to stop here; we can do the same limiting construction for the Steifel manifold. Let's call this space
+\[
+  \EO(k) = \varinjlim_n V_k(\R^n) = V_k(\R^\infty).
+\]
+Now since $V_k(\R^n)$ is $(n-k-1)$-connected, this limit is contractible. Since we have a fibration at every level of the colimit, and the inclusions $V_k(\R^n) \to V_k(\R^{n+1})$ respect the actions of the orthogonal group, we get a principal $O(k)$-bundle
+\[ \O(k) \hookrightarrow \EO(k) \to \BO(k).\]
+Likewise, we can reduce to the \emph{special orthogonal group} $\SO(n)$ and get a similar construction. For this case, we consider the \emph{oriented} Steifel and Grassmannian manifolds, which we denote $\widehat{V_k}(\R^n)$ and $\widehat{\Gr_k}(\R^n)$. Then, we set
+\[
+  \ESO(k) = \varinjlim_n \widehat{V_k}(\R^n) = \widehat{V_k}(\R^\infty)\quad\textrm{and}\quad \BSO(k)=\varinjlim_n \widehat{\Gr_k}(\R^n) = \widehat{\Gr_k}(\R^\infty),
+\]
+and get a principal $\SO(n)$-bundle
+\[
+  \SO(k) \hookrightarrow \ESO(k) \to \BSO(k).
+\]
+\subsection{Universal Bundles}
+
+This bundle is an additional piece of structure known as a \emph{universal bundle}, which also naturally arises in our construction of the natural isomorphism $P_G \cong [-, BG]$. Recall that we used it in our derivation of the homotopy structure of $BG$.
+
+\begin{remark}
+  \emph{Our reasoning has been a bit circular; we used the existence of a contractible ``universal bundle'' to understand the homotopy type of classifying spaces, yet we're using the homotopy type of classifying spaces to construct the universal bundle. Rest assured that there are non-circular ways of doing all of these constructions and proving that the classifying spaces satisfy the universal property.}
+\end{remark}
+
+The universal bundle is some principal $G$-bundle $\xi : EG \to BG$ which acts as a model for every other principal $G$-bundle. More precisely, given some principal $G$-bundle $\xi' : E \to B$, there must be some map $f : B \to BG$ such that $\xi' = f^* \xi$. This map $f$ is exactly the element of $[B, BG]$ corresponding to the isomorphism class of the bundle $\xi'\in P_G(B)$.
+
+So far, we've seen the construction of a principal $\O(n)$-bundle $\EO(n) \to \BO(n)$. Let's call this bundle $\xi^\O_n$ and prove that it is universal.
+
+\begin{proposition}
+  Let $M$ be a manifold and $\xi : E \to M$ be a principal $\O(n)$-bundle. Then there exists a unique map $f\in [M, \BO(n)]$ such that $\xi\cong f^*\xi^\O_n$.
+\end{proposition}
+% \begin{proof}
+%   \todo{prove universality}
+% \end{proof}
+
+Similarly, we can prove that the bundle for $\SO(n)$ is universal. The next logical question we might ask is how these universal bundles behave across inclusions $\O(n)\hookrightarrow \O(n+1)$.
+
+\section{Thom Spectra}
+
+The homotopical nature of classifying spaces and the corresponding universal bundles hints at some deeper structure to be exposed. Specifically, we have a tower of inclusions $\iota : \BO(1) \hookrightarrow \BO(2)\hookrightarrow \BO(3)\hookrightarrow\cdots$, such that $\xi^\O_n\oplus \R \cong \iota^* \xi^\O_{n+1}$. How might we combine all of this data into a single topological object?
+
+Suppose $\xi : E \to B$ is a vector bundle over some smooth manifold. Our first goal is to construct some associated topological space $\Th(\xi)$ which will form a connection between the geometry of the vector bundle to the topology of the base manifold. The construction turns out to be deeply \emph{homotopical} in nature, and can be interpreted in some sense as a suspension of the base space which is \emph{twisted} by the vector bundle. 
+
+\subsection{Thom Spaces}
+First, let's review the relevant construction for an individual vector bundles. 
+
+\begin{definition}
+  Let $\xi : E \to B$ be a smooth vector bundle of rank $n$. An \defn{orthogonal structure} on $E$ is a section $\mu \in \Gamma(E^*\otimes E^*)$ with the restriction of $\mu$ to any fiber $E_p^*\otimes E_p^*$ an inner product on $E_p$. Let's call this restriction $\mu_p : E_p\otimes E_p \to \R$.
+\end{definition}
+
+\begin{proposition}
+  Any vector bundle over a paracompact space has a (non-canonical) orthogonal structure.
+\end{proposition}
+
+\begin{proof}
+  Use partitions of unity to glue together orthogonal structures on local trivializations.
+\end{proof}
+
+This notion of an orthogonal structure should be considered as a \emph{smoothly varying inner product} on $\xi$. Now just as an ``orthogonal structure'' on a vector space gives us the notion of a sphere and a disk, we can do a similar construction to get a sphere and disk fiber bundle from a vector bundle $\xi$.
+
+\begin{definition}
+  The \defn{sphere} and \defn{disk bundles} of $\xi$ are given by the subspaces
+  \[
+    S_\mu(E) = \{ e\in E : \mu_{\xi(e)}(e, e) = 1 \} \textrm{ and }D_\mu(E) = \{ e\in E : \mu_{\xi(e)}(e, e) \leq 1\}
+  \]
+  respectively, with projection given by the restrictions of $\xi$ to $S_\mu(E)$ and $D_\mu(E)$. These are $S^{n-1}$ and $D^n$ bundles over $B$ respectively.
+\end{definition}
+
+Notice that there is a canonical inclusion of bundles $S_\mu(E) \subset D_\mu(E)$. Furthermore, the choice of orthogonal structure does not change the homeomorphism type of the sphere and disk bundles. For our purposes, we can assume that the base space is paracompact, and so all vector bundles come equipped with some orthogonal structure.
+
+\begin{definition}
+  The \defn{Thom space} of $\xi$ is the quotient $\Th(\xi) = D(E) / S(E).$ This is a pointed space, with basepoint given by the image of $S(E)$.
+\end{definition}
+
+Starting with the simplest possible examples, let's look at line bundles on the circle. There are exactly two isomorphism classes, the trivial bundle $e : S^1\times \R \to S^1$, and the M\"obius bundle $m : M \to S^1$, where $M$ is the (open) M\"obius strip. In the first case, the disk bundle can be identified with the closed cylinder $S^1\times [0,1]$ with the sphere bundle the boundary of this manifold $\partial (S^1\times [0,1]) = S^1\times \partial [0,1]$. This means that the Thom space is
+\[\Th(e) = \frac{S^1\times [0,1]}{S^1\times \partial [0,1]} \cong S^1\times [0,1]\sqcup \{\infty\},\]
+the ``torus with inner radius zero'', ``pinched torus'', or ``one-point compactification of the (open) cylinder''. If we look at the M\"obius bundle, we can identify the disk bundle with the closed M\"obius strip $\overline{M}$, and the sphere bundle with its boundary $\partial\overline{M}$. Expanding the quotient, we see that
+\[
+  \Th(m) = \frac{\overline{M}}{\partial\overline{M}}=\frac{[0,1]^2 / (0,y)\sim (1, 1-y)}{*\sim (x, 0) \sim (x, 1)}.
+\]
+This is exactly the projective plane $\RP^2$. Just as before, this could also be interpreted as the one-point compactification of the open disk bundle, or equivalent just the total space of the bundle itself. More generally, when $B$ is a compact manifold, we can make this characterization precise.
+
+\begin{proposition}
+  If $B$ is a compact manifold, and $\xi : E \to B$ is a vector bundle of finite rank $k>0$, then there is a homeomorphism $\Th(\xi) \cong E\cup\{\infty\}$, where $E\cup\{\infty\}$ is the one-point compactification of $E$.
+\end{proposition}
+
+If $B$ is not compact, we need to be a bit careful; first we form the one-point compactification of each fiber and then identify all the points at infinity.
+
+The next question we would naturally ask is how Thom spaces transform with standard operations on vector bundles, for instance under Whitney sums. Let's suppose we had two vector bundles $\xi_1, \xi_2 : E_1, E_2 \to B$. Picking some canonical orthogonal structures, we can form pullback bundles $\restr{\xi_2}{D(E_1)}$ and $\restr{\xi_2}{S(E_1)}$. Then, we have a homotopy equivalence 
+\[
+  \Th(\xi_1\oplus \xi_2) \simeq \frac{\Th(\restr{\xi_2}{D(E_1)})}{\Th(\restr{\xi_2}{S(E_1)})}.
+\]
+
+This leads us to an important lemma.
+
+\begin{lemma}
+  Suppose $\xi : E \to B$ is a finite rank vector bundle (including rank zero). Then there is a homotopy equivalence
+  \[
+    \Th(\R^n\oplus \xi) \simeq \Sigma^n \Th(\xi).
+  \]
+\end{lemma}
+
+\begin{remark}
+  In the degenerate case where $\xi$ is a vector bundle of rank zero, i.e. $\xi : B \to B$, we can take the Thom space to be $X_+=X\sqcup *$.
+\end{remark}
+
+\begin{proof}
+  Let's consider the bundle $\R^n \to B$. Then applying the Whitney sum, we get  a homotopy equivalence
+  \[
+    \Th(\R^n \oplus \xi) \simeq \frac{\restr{\xi}{D(\R^n)}}{\restr{\xi}{S(\R^n)}} \simeq\frac{E\times D^n}{E\times S^n} \simeq \Sigma^n\Th(\xi).
+  \]
+  This concludes the proof.
+\end{proof}
+
+Finally, we arrive at the main theorem which connects the topology of the Thom space with the topology of the base space, via a ``fiber integration'' map.
+
+\begin{theorem}[Thom Isomorphism]
+  Let $\xi$ be a finite rank vector bundle over some simply connected CW-complex $B$, and let $R$ be a commutative ring. Then, there is some \defn{Thom class} $u\in H^n(\Th(V); R)$ such that there is an isomorphism
+  \[
+    \begin{aligned}
+      H^*(B; R) &\to  H^*(\Th(\xi); R)\\
+      x&\mapsto x\smile \pi^* x
+    \end{aligned}
+  \]
+\end{theorem}
+
+\subsection{Building a Spectrum}
+
+The next question we might ask is how the universal bundles $\xi^\O_n : \EO(n) \to \BO(n)$ behave with respect to the canonical inclusions $\BO(n)\to \BO(n+1)$.
+
+\begin{proposition}
+  Letting $\iota_n : \BO(n) \to \BO(n+1)$ be the canonical inclusion, we have
+  \[\iota_n^* \zeta_{n+1} \cong \zeta_n\oplus \R.\]
+\end{proposition}
+
+What happens if we take Thom spaces? We know that $\Th(\zeta_n\oplus \R) \cong \Sigma \Th(\zeta_n)$, and the pullback gives us an inclusion into $\Th(\zeta_{n+1})$. By the loop suspension adjunction, these are equivalent to: 
+\[
+    \Sigma \Th(\xi_n^\O) \to \Th(\xi_{n+1}^\O)\quad \iff \Th(\xi^\O_n) \to \Omega \Th(\xi_{n+1}^\O)
+\]
+\begin{definition}
+  A \defn{spectrum} is a sequence $\{E_n\}$ of CW complexes with inclusions $\Sigma E_n \to E_{n+1}$ of the suspension into a subcomplex of $E$.
+\end{definition}
+
+This data turns $\{\Th(\xi_n^\O)\}$ into a spectrum, which we call $\MO$. Similarly, we could define the spectrum $\MSO$ out of the universal bundles $\xi_n^\SO$. One of the most important invariants of a spectrum are its homotopy groups. 
+
+\begin{definition}
+  We can define the \defn{homotopy groups} of a spectrum $E$ as
+\[
+    \pi_n(E) = \varinjlim_k \pi_{n+k}(E_k),
+\]
+given by map $\Sigma : \pi_{n+k}(E_n) \to \pi_{n+k+1}(\Sigma E_n)$.
+\end{definition}
+
+\section{Consequences}
+
+We now understand the notation in the statement of Thom's theorem:
+\[
+  \begin{aligned}
+    \Omega^\O_* &\cong \pi_*(\MO)\\
+    \Omega^\SO_* &\cong \pi_*(\MSO)
+  \end{aligned}
+\]
+What does this mean? Using some non-trivial theorems in homotopy theory such as Bott periodicity, we can compute (the torsion-free) homotopy of the $\MSO$ spectrum to determine the geometry of oriented cobordism 
+\[
+  \pi_*(\MSO)\otimes \Q \cong H_*(\MSO; \Q) \cong H_*(\BSO; \Q) \cong \Q[p_{4i} : i \geq 1].
+\]
+These $p_{4i}$ correspond exactly to Pontryagin classes of complex projective spaces $\CP^{2i}$, which serve as non-trivial generators for the oriented cobordism ring. In general, there is an easy-to-compute cobordism invariant known as the \emph{signature genus}, which completely classifies an oriented manifold up to torsion.
+
+\begin{definition}
+  Let $M$ be a compact connected $2n$-manifold without boundary. Poincar\'e duality gives us an isomorphism $H^{2n}(M; \R) \cong \R$, and composing with the cop product gives us a non-degenerate bilinear form
+  \[
+    \beta : H^n(M;\R)\otimes H^n(M; \R) \to H^{2n}(M; R) \to \R.
+  \]
+  If $n$ is even, $\beta$ is symmetric, so we set the \defn{signature} of a $4n$-manifold $M$ to be the signature of the symmetric form $\beta$. We denote this $\sigma(M)\in \Z$. 
+\end{definition}
+
+If $M$ is not connected, we set the signature to be
+\[
+    \sigma(M) = \sum_{M'\textrm{ connected component}} \sigma(M'),
+\]
+and for manifolds of dimension $4\nmid n$, we set $\sigma(M)=0$. 
+
+\begin{theorem}
+  $\sigma : \Omega^{\SO}_* \to \Z$ is a well-defined ring homomorphism.
+\end{theorem}
+
+For the complex projective spaces $\CP^{2n}$, we have cohomology rings
+\[
+    H^*(\CP^{2n}; \R) \cong \R[x]/(x^{n+1})\quad\textrm{where}\quad |x|=2.
+\]
+The signature form is then
+\[
+  \begin{aligned}
+    \beta : H^n(\CP^{2n}; \R)\otimes H^n(\CP^{2n}; \R) &\to \R\\
+    x^n\otimes x^n &\mapsto 1,
+  \end{aligned}
+\]
+so we have $\sigma(\CP^{2n})=1$. In particular, this shows that
+$
+    \sigma : \Omega^\SO_4 \to \Z
+$
+is surjective.
+\end{document}

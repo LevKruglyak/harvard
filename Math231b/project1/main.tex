@@ -1,0 +1,195 @@
+\documentclass[11pt,letterpaper]{article}
+
+\input{../../../../.config/latex/paper.tex}
+
+\providecommand{\hcw}{\mathbf{hCW}_*}
+\providecommand{\hcwop}{\mathbf{hCW}^{\textrm{op}}_*}
+\providecommand{\cw}{\mathbf{CW}_*}
+\providecommand{\Set}{\mathbf{Set}_*}
+
+\title{The Brown Representability Theorem}
+\author{Lev Kruglyak}
+\date{March 2023}
+
+
+\begin{document}
+\maketitle
+\abstract{In this paper, we prove a foundational theorem of Brown which provides a construction of a representation of a large class of homotopy preserving invariants on the category of pointed CW complexes. In particular, we show that the representations of this class of functors is parameterized in some way by a category of pairs consisting of a space and an element of the functor over that space. This forms a nice category within which we investigate a class of pairs we call ``universal'' pairs. We show a way in which to construct these universal pairs, and how they can be used to construct representations.}
+
+\section{Introduction}
+
+Before stating the theorem fully, we'll define some helper definitions and notation.
+
+\begin{definition}
+    A functor $h : \hcwop \to \Set$ is said to be \emph{representable} by a pointed CW complex $X$ if we have a natural transformation $h\cong [-, X]_*$, where $[-, X]_*$ is the functor taking a space $Y$ to the space $[Y, X]_*$ of homotopy classes of pointed maps $Y \to X$.
+\end{definition}
+
+When the functor $h : \hcwop \to \Set$ is clear, let's introduce some helper notation. Given some inclusion $A \subset B$ of CW complexes, (we will assume all CW inclusions to be basepoint preserving) the induced map $h(B) \to h(A)$ acts like a restriction map, so we'll use the notation $b|_A$ to refer to the image of $b\in h(B)$ inside $h(A)$ under this map.
+
+\begin{theorem}[Brown]
+    Any functor $h : \hcwop \to \Set$ is representable by a pointed CW complex if and only if:
+    \begin{enumerate}
+        \item The natural map $h\left(\bigvee_\alpha X_\alpha\right) \to \prod_\alpha h(X_\alpha)$ is a bijection. 
+        \item Suppose $Y$ is decomposable as a union of CW complexes $A$ and $B$. Then for any pair $a\in h(A), b\in h(B)$ with $a|_{A\cap B} = b|_{A\cap B}$, there exists some $y\in h(Y)$ with $y|_A = a$ and $y|_B = b$.
+    \end{enumerate}
+\end{theorem}
+
+These two axioms are referred to as the \emph{Wedge Axiom} and \emph{Mayer-Vietoris Axiom} respectively. We'll begin by proving the ``only if'' direction, which is fairly straightforward. 
+
+\subsection{Easy Direction}
+
+First, note that reducing to the case of $h = [-, X]_*$ is sufficient.
+
+\begin{lemma}
+    The wedge and Mayer-Vietoris axioms are preserved under natural isomorphism of functors $\hcwop \to \Set$.
+\end{lemma}
+
+Now if we prove that $[-, X]_*$ satisfies the wedge and Mayer-Vietoris axioms, by the preceding lemma we'll have proved the ``only if'' direction.
+
+\begin{lemma}
+    For any pointed CW complex $X$, the functor $[-,X]_*$ satisfies the wedge and Mayer-Vietoris axioms.
+\end{lemma}
+
+\begin{proof}
+    Suppose we are given some pointed CW complex $X$. For the wedge axiom, note that since the wedge sum is a coproduct in $\hcwop$, we get natural bijections
+    \[
+        h\left(\textstyle\bigvee_\alpha X_\alpha\right) = \left[\textstyle\bigvee_\alpha X_\alpha, X\right] = \textstyle\prod_\alpha \left[X_\alpha, X\right] = \textstyle\prod_\alpha h(X_\alpha)
+    .\]
+    For the Mayer-Vietoris axiom, suppose we picked some representatives of homotopy classes of functions $f : A \to X$ and $g : B \to X$, with $f|_{A\cap B}\simeq g|_{A\cap B}$. To make our life easier, we would want to homotope $g$ to some map $g' : B\to X$ such that $f|_{A\cap B}=g'|_{A\cap B}$. Then we could naturally define $q :Y \to X$ as
+    \[
+        q(y) = \begin{cases}
+            f(y) & y\in A,\\
+            g'(y) & y\in B.
+        \end{cases}
+    \]
+    This map would be well-defined since $f$ and $g'$ agree on $A\cap B$, and continuous by the pasting lemma. 
+    
+    Now to construct the map $g'$, we recall that the CW inclusion $A\cap B \to B$ is a cofibration. Letting $H : (A\cap B)\times I \to X$ be the homotopy taking $g|_{A\cap B} \simeq f|_{A\cap B}$, we use the HEP to get a homotopy $\widetilde{H}$: 
+
+    % https://q.uiver.app/?q=WzAsNSxbMCwwLCJBXFxjYXAgQiJdLFswLDEsIihBXFxjYXAgQilcXHRpbWVzIEkiXSxbMSwwLCJCIl0sWzEsMSwiQlxcdGltZXMgSSJdLFsyLDIsIlgiXSxbMSwzXSxbMCwxLCJpXzAiLDJdLFsyLDMsImlfMCIsMl0sWzAsMl0sWzIsNCwiZyIsMCx7ImN1cnZlIjotMX1dLFsxLDQsIkgiLDIseyJjdXJ2ZSI6MX1dLFszLDQsIlxcd2lkZXRpbGRle0h9IiwxLHsic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoiZGFzaGVkIn19fV1d
+    \[\begin{tikzcd}
+        {A\cap B} & B \\
+        {(A\cap B)\times I} & {B\times I} \\
+        && X 
+        \arrow[from=2-1, to=2-2]
+        \arrow["{i_0}"', from=1-1, to=2-1]
+        \arrow["{i_0}"', from=1-2, to=2-2]
+        \arrow[from=1-1, to=1-2]
+        \arrow["g", curve={height=-6pt}, from=1-2, to=3-3]
+        \arrow["H"', curve={height=6pt}, from=2-1, to=3-3]
+        \arrow["{\widetilde{H}}"{description}, dashed, from=2-2, to=3-3]
+    \end{tikzcd}\]
+
+    Now let $g' = \widetilde{H}_1$. By construction $g\simeq g'$, and by the commutative diagram, we get $g'|_{A\cap B}=f|_{A\cap B}$ so we are done.
+\end{proof}
+
+\section{The Construction}
+
+Now for the harder ``if'' direction, we need to show that given a functor $h : \hcwop \to \Set$, we can find some space $K\in \cw$ such that we have a natural isomorphism $[-,K]_* \to h(-)$. We'll obtain this natural isomorphism by choosing some universal $u\in h(K)$ and letting the map be the pullback given by $f \mapsto h(f)(u)$. Then, as long as $[X,K]_* \to h(X)$ is a bijection for all $X\in \cw$, we will get our desired natural isomorphism. To help us formulate this, let's get some definitions out of the way.
+
+\subsection{Some Useful Facts}
+
+Before attempting to prove the harder direction, we'll prove some useful lemmas about the $h$ functor. For the rest of this section, let $h : \hcwop \to \Set$ be some functor satisfying the wedge and Mayer-Vietoris axoims.
+
+\begin{lemma}
+    $h(*)$ is trivial, where $*$ is a one point space.
+\end{lemma}
+\begin{proof}
+    For any space $X\in \cw$, the wedge axioms gives us a bijection $h(X)=h(X\vee *) \to h(X)\times h(*)$. This implies that $h(*)$ is a singleton.
+\end{proof}
+
+\begin{lemma}
+    Let $f : A \to X$ be some map. Then the cofiber sequence $A \to X\to C(f)$ induces an exact sequence of sets: $h(C(f)) \to h(X) \to h(A)$.
+\end{lemma}
+
+\begin{proof}
+    Let $i(f) : X \to C(f)$ be the natural inclusion. Since $i(f)\circ f \simeq 1_*$, functoriality tells us that $h(f)\circ h(i(f)) = h(1_*)$. However by a consequence of the previous lemma, $h(1_*)$ is the trivial map, so we have $\Ima(h(i(f)))\subset \ker(h(f))$.
+
+    To prove the other direction, we'll use the Mayer-Vietoris axiom. First split the homotopy cofiber $C(f)$ into the following two subspaces:
+    \[
+        C(f)^- = X\cup_f CA^-,\quad\text{and}\quad C(f)^+ = CA^+
+    .\]
+    Here $CA^-$ and $CA^+$ represent the top and bottom halves of the reduced cone $CA$, i.e. the images of $A\times [0, 1/2]$ and $A\times [1/2,1]$ under the quotient map. Note that $C(f)^-\simeq X$, $C(f)^-\cap C(f)^+\simeq A$, and $C(f)^+\simeq *$. Now let $x\in\ker(h(f))$. Considering $x\in h(C(f)^-)$, by the homotopy equivalences, this means that $x|_{C(f)^-\cap C(f)^+} = 0$. Similarly, the trivial element $*\in h(C(f)^+)$ satisfies $*|_{C(f)^-\cap C(f)^+}=0$. By the Mayer-Vietoris axiom, we can thus lift to some element $\widetilde{x}\in h(C(f))$ such that $\widetilde{x}|_{C(f)^-} = x$. This shows that $x\in \Ima(h(i(f)))$, which completes the proof.  
+\end{proof}
+
+\subsection{Universal Pairs}
+
+\begin{definition}
+    Let $\textbf{Pair}_h$ be the category of \emph{$h$-pairs}, whose objects are pairs $(K,u)$, where $K\in \cw$ and $u\in h(K)$. A map $(A,a) \to (B,b)$ is some continuous $f : A\to B$ such that $h(f)(b) = a$. For every $h$-pair $\kappa = (K,u)$, we get an induced natural transformation $T_\kappa : [-,K] \to h(-)$ that sends $f : - \to K$ to $h(f)(u)$. 
+\end{definition}
+
+\begin{definition}
+    Let's call an $h$-pair $\kappa = (K,u)$ \emph{universal} if the map $T_{\kappa}(S^k)$ is an isomorphism for all $k\geq 0$.
+\end{definition}
+
+Eventually, we'll show that every universal homotopy pair satisfies the conditions we need to prove the theorem, and to help us prove this, we need some non-trivial lemmas about these pairs. Note that we have a natural notion of an embedding of $h$-pairs, where we require the underlying map of spaces to be an embedding.
+
+\begin{lemma}[Construction]
+    Any $h$-pair can be embedded in a universal $h$-pair.
+\end{lemma}
+
+\begin{proof}
+    Given some $h$-pair $\chi = (X,x)$, we'll build up it's universal $h$-pair inductively. To help terminologically, let's call a pair $\kappa$ $n$-universal if $T_\kappa(S^k)$ is an isomorphism for $k < n$ and surjective for $k = n$. Let's begin with the base case of $n=1$.
+
+    Let $K_1$ be the wedge sum:
+    \[ K_1 = X \vee \bigvee_{\alpha \in h(S^1)} S^1\]
+    By the wedge axiom, we have a bijection $h(K_1) \to h(X)\times \prod_{\alpha \in h(S^1)} h(S^1)$, so we can simply let $u_1\in h(K_1)$ be the preimage of $x$ and $\alpha$ for all $\alpha\in h(S^1)$. Let $\kappa_1 = (K_1, u_1)$. We claim that $\kappa_1$ is $1$-universal. This follows because given any $\alpha \in h(S^1)$, the inclusion $S^1 \to X\vee \bigvee_\alpha S^1$ into the corresponding $\alpha$ component is sent to $\alpha$ by $T_{\kappa_1}(S^1)$, so this is surjective. Furthermore, based on the way we constructed $u_1$, we get a canonical embedding $\chi \to \kappa_1$.
+
+    Now suppose inductively that we had an $n$-universal $h$-pair $\kappa_n=(K_n, u_n)$ with an embedding $\chi \to \kappa_n$. Let's define $K_{n+1}$ as the space:
+    \[ K_{n+1} = C \vee \bigvee_{\beta\in h(S^{n+1})}S^{n+1}\quad\text{ where }\quad C = K_n\cup_{\vee\alpha} \bigvee_{\alpha\in \ker(T_{\kappa_n}(S^n)} D^{n+1}\]
+    Here the cells $D^{n+1}$ are attached along the maps $\alpha : S^n \to K_n$ for each $\alpha$ in the kernel. Lastly, to turn this into a pair, we need to choose some proper $u_{n+1}\in h(K_{n+1})$ so that $\chi \to \kappa_{n+1}$ is an embedding. First of all, let $C'$ be the unreduced homotopy cofiber, i.e. $C'=K_n\cup_{\vee \alpha} C\left(\bigvee_{\alpha\in \ker} S^n\right)$. This space is homotopy equivalent to $K_n$ so it's easy to lift the $u_n\in h(K_n)$ to some $u_n'\in h(C')$. Then the image of $u_n'$ in $h(\vee_\alpha S^n)$ is trivial. Now as a reduced homotopy cofiber, $C = C' / \bigvee_{\alpha \in \ker} S^n$, so we have a cofiber sequence:
+
+    % https://q.uiver.app/?q=WzAsMyxbMCwwLCJcXGJpZ3ZlZV97XFxhbHBoYVxcaW5cXGtlciBUX3tcXGthcHBhX24oU15uKX19U15uIl0sWzEsMCwiS19uIl0sWzIsMCwiXFxsZWZ0KEtfblxcY3VwX3tcXHZlZVxcYWxwaGF9IFxcYmlndmVlX3tcXGFscGhhXFxpblxca2VyfURee24rMX1cXHJpZ2h0KSJdLFswLDEsIlxcdmVlIFxcYWxwaGEiXSxbMSwyXV0=
+    \[\begin{tikzcd}
+	    {\bigvee_{\alpha\in\ker T_{\kappa_n(S^n)}}S^n} & {C'} & {C}
+	    \arrow["{\vee \alpha}", from=1-1, to=1-2]
+	    \arrow[from=1-2, to=1-3]
+    \end{tikzcd}\]
+
+    Since $h$ sends cofiber sequences to short exact sequences, it follows that $\kappa_n'$ must be in the image of some $\kappa_{n+1} \in h(C)$, which satisfies the desired properties by commutativity.
+    Lastly, wedging on the additional spheres in $h(S^{n+1})$ doesn't affect the embedding by the same argument as in the base case, so finally we get some $u_{n+1}\in h(K_{n+1})$.
+
+    Next, to complete the induction, we must show that $(K_{n+1}, \kappa_{n+1})$ is $(n+1)$-universal. Consider the following commutative diagram:
+    % https://q.uiver.app/?q=WzAsMyxbMCwwLCJbU15pLEtfbl1fKiJdLFsxLDAsIltTXmksS197bisxfV1fKiJdLFswLDEsImgoU15pKSJdLFswLDIsIlRfe1xca2FwcGFfbn0oU15pKSIsMl0sWzEsMiwiVF97XFxrYXBwYV97bisxfX0oU15pKSJdLFswLDFdXQ==
+    \[\begin{tikzcd}
+	    {[S^i,K_n]_*} & {[S^i,K_{n+1}]_*} \\
+	    {h(S^i)}
+	    \arrow["{T_{\kappa_n}(S^i)}"', from=1-1, to=2-1]
+	    \arrow["{T_{\kappa_{n+1}}(S^i)}", from=1-2, to=2-1]
+	    \arrow[from=1-1, to=1-2]
+    \end{tikzcd}\]
+    By the theory of CW complexes, the top map is an isomorphism for $i < n$ and surjective for $i = n$, so by the inductive assumption and commutativity of the diagram, it follows that $T_{\kappa_{n+1}}(S^i)$ is an isomorphism for $i< n$ and surjective when $i=n$. First, note that by construction, and the same argument as in the base case, $T_{\kappa_{n+1}}(S^{n+1})$ is surjective. So all we have left to show is that $T_{\kappa_{n+1}}(S^n)$ is injective. Indeed, suppose $f : S^n \to K_{n+1}$ is in the kernel. Since $[S^i, K_n]_* \to [S^i, K_{n+1}]_*$ is surjective, we can pull this back to some map $f' : S^n \to K_n$ which by commutativity must be in the kernel of $T_{\kappa_n}(S^n)$. By all elements which were made null-homotopic by the cell construction of $K_{n+1}$. Thus $f=0$ and so we are done.
+    
+    We now have a tower of $h$-pair embeddings $\chi \to \kappa_1 \to \kappa_2 \to \cdots$, each stage of which has increasing universality. Let's build this tower's ``homotopy colimit'', $\kappa = (K, u)$ as follows:
+    \[
+        K = \bigcup_n K_n\times [n, n+1] \subset \left(\bigcup_n K_n\right)\times [0, \infty)
+    \]
+    To keep this a pointed CW complex, we require that these products are reduced. To build $u\in h(K)$, let $K^+$ be the subcomplex consisting of all even $K_n$ and let $K^-$ be the subcomplex consisting of all odd $K_n$. These cover $K$, and we have $K^+\cap K^- = \bigvee_n K_n$. Using the wedge axiom, we can get $u_+\in h(K^+), u_-\in h(K^-)$ which restrict to $u_n$. Then using the fact that $u_{n+1}|_{K_n} = u_n$, we see that $u_+$ and $u_-$ restrict to the same element of $K^+\cap K^-$, so applying
+    the Mayer-Vietoris axiom gives us some $u\in h(K)$ with $u|_{K_n} = u_n$. Then it clearly follows that $\kappa= (K,u)$ is a universal $h$-pair since it is a homotopy colimit of $h$-pairs of increasing universality.
+\end{proof}
+
+\begin{lemma}[Extension]
+    Let $\alpha \hookrightarrow \chi$ be an embedding of $h$-pairs. Then for a universal $\kappa$, any map $f : \alpha \to \kappa$ can be extended to a map $\widetilde{f} : \chi \to \kappa$. 
+\end{lemma}
+
+\begin{proof}
+    Suppose $\chi = (X, x)$, $\alpha = (A, x|_A)$, and $\kappa=(K,u)$. We'll prove this by considering the universal case when $f : A \to K$ is a subspace inclusion. Then consider $K\cup X$, where the common $A$ subspace is identified. Mayer-Vietoris gives us some element $q\in h(K\cup X)$ with $q|_K = u$ and $q|_X = x$. Using the construction lemma, we embed $\kappa\cup \chi = (K\cup X, q)$ into some universal $h$-pair $(\overline{K}, \overline{u})$, and we get an embedding $(K, u)\subset (\overline{K},\overline{u})$. Notice that since they are both universal, they are weakly equivalent, and thus they must be homotopy equivalent by a deformation retraction. Such a deformation retraction is a map $H:\overline{K}\times I \to \overline{K}$, so looking at $H|_{X\times \{1\}}$ we get a map $X \to K$ which has all of the desired properties.
+\end{proof}
+
+\subsection{Final Step}
+
+Finally, we see why this notion of universal $h$-pairs is useful:
+
+\begin{lemma}
+    If $\kappa$ is a universal $h$-pair, then $T_\kappa$ is a natural isomorphism.
+\end{lemma}
+
+\begin{proof}
+    It suffices to show that $T_\kappa(X)$ is a bijection for any CW complex $X$, and we can do this in two steps. To show that $T_\kappa(X)$ is surjective, let $x\in h(X)$, and let $\chi = (X,x)$. We then have a basepoint embedding $* \to \chi$, where $*$ is the trivial $h$-pair. Then applying the extension lemma to the basepoint embedding $* \to \kappa$, we get a map $f : \chi \to \kappa$. Since this is an extension, it follows that $T_\kappa(X)(f)=h(f)(u)=x$.
+
+    To show that $T_\kappa(X)$ is injective, suppose we had maps $f,g : X \to K$ with $T_\kappa(X)(f)=T_\kappa(X)(g)$. We want to show that $f\simeq g$, i.e. construct a homotopy $X\times I \to K$ that fixes the basepoint. Let $x\in h(X\times I)$ be the image of $T_\kappa(X)(f)=T_\kappa(X)(g)$ under the induced projection $h(X) \to h(X\times I)$, and consider the $h$-pair $\chi=(X\times I, x)$. We also restrict this pair down to $\alpha = (X\times \partial I, x|_{X\times \partial I})$ to get an embedding $\alpha \to \chi$. Now we have a map $X\times \partial I \to K$ which is $f$ on $X\times \{0\}$ and $g$ on $X\times \{1\}$. By construction this satisfies the condition required for it to be a map of $h$-pairs, so by the extension lemma, we get some homotopy $H : X\times I \to K$ which completes the proof.
+\end{proof}
+
+This completes the proof, since we can use the construction lemma on the trivial $h$-pair $*$ to get a universal $h$-pair, which gives us the desired natural isomorphism.
+
+\end{document}
