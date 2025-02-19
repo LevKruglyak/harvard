@@ -1,0 +1,167 @@
+\documentclass{lkx_pset}
+
+\title{Physics 212 Problem Set 2}
+\author{Lev Kruglyak}
+\due{February 22, 2025}
+
+\input{../physics212.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let's assume that our universe is flat today and that it is filled with matter $(\Omega_m=0.3)$ and a cosmological constant $(\Omega_\Lambda)$. Consider it to have $H_0=\Hsi{70}$.
+\end{problem}
+\begin{solution}
+	Since the universe is flat, the effective energy density $\rho_k$ is zero. We can thus write
+	\[
+		\left(\frac{H}{H_0}\right)^2 = \Omega_m (1+z)^3 + \Omega_\Lambda = \Omega_m a^{-3} + \Omega_\Lambda\quad\implies\quad H = H_0\sqrt{\Omega_m a^{-3} + \Omega_\Lambda}.
+	\]
+	since the only two species of matter are ordinary matter and the cosmological constant.
+	\begin{part}{(a)}
+		What is the physical age of the universe?
+	\end{part}
+
+	The physical age is then given by the integral
+	\[
+		t_{\textrm{age}} = \int_0^\infty \frac{dz}{H(z)(1+z)} = \int_0^1\frac{da/a^2}{H(a)a^{-1}} = \int_0^1 \frac{da}{H_0\sqrt{\Omega_m a^{-1} + \Omega_\Lambda a^2}} = 0.9641\, H_0^{-1}.
+	\]
+	Taking the appropriate unit conversions, we get
+	\[
+		t_{\textrm{age}} = \frac{0.9641}{\Hsi{70}}\times \Hyrsi{9.784e11}=\yrsi{1.348e10}.
+	\]
+	In other words, the physical age of the universe is about 13.5 billion years.
+
+	\begin{part}{(b)}
+		What is the current horizon length of the universe? What happens when $a\to \infty$?
+	\end{part}
+	The horizon length today is given by
+	\[
+		d_{\textrm{horiz}} = \int_0^\infty \frac{dz}{H(z)} = \int_0^1 \frac{da/a^2}{H_0\sqrt{\Omega_m a^{-3} + \Omega_\Lambda}} = \int_0^1 \frac{da}{H_0\sqrt{\Omega_m a + \Omega_{\Lambda} a^4}}=3.305\, H_0^{-1}
+	\]
+	Calculating the integral numerically with the appropriate unit conversions gives
+	\[
+		d_{\textrm{horiz}}(t_0) = \frac{3.305}{\Hsi{70}}\times \Hlysi{9.784e11} = \lysi{4.620e10}.
+	\]
+	In other words, the horizon length of universe today is about 46.2 billion light years.
+	In general, the horizon length as a function of $a$ is given by the integral
+	\[
+    d_{\textrm{horiz}}(a)= \int_0^{a} \frac{da'}{H_0\sqrt{\Omega_m a' + \Omega_\Lambda (a')^4}}
+	\]
+	As $a\to\infty$, this integral converges to $4.446\,H_0^{-1}$ so the maximal horizon length of the universe is
+	\[
+		d_{\textrm{horiz}} = \frac{4.446}{\Hsi{70}}\times \Hyrsi{9.784e11} = \lysi{6.215e10}
+	\]
+  or about 62.2 billion light years.
+\end{solution}
+
+\begin{problem}{2}
+We will now consider the evolution of the universe at early times. Today, the density of matter is given by $\rho_{m,0}=\Omega_m \rho_{\textrm{crit}}$ where $\rho_{\textrm{crit}}=3H_0^2/8\pi G$. The density of relativistic species is $\rho_{r,0}=\Omega_r \rho_{\textrm{crit}}$.
+Let's consider $\Omega_m h^2 = 0.14$ and $\Omega_r h^2 = 4\times 10^{-5}$.
+\end{problem}
+\begin{parts}
+	\begin{part}{}
+		We have $\rho_m=(1+z)^3\rho_{m,0}$ and $\rho_r= (1+z)^4\rho_{r,0}$. At high redshifts, these are the main contributions to the energy budget of the universe, and it is safe to ignore dark energy. Assume a flat universe and a Hubble constant of $H_0=\Hsi{70}$.
+	\end{part}
+  Note that $\Omega_m= 0.3$ and $\Omega_r = 8\times 10^{-5}$ since $h = H_0/\Hsi{100}$.
+
+	\begin{part}{(a)}
+		At what redshift are the radiation and matter densities equal? Write a simple formula for the scale factor $a_{\textrm{eq}}$ at this time.
+	\end{part}
+	Setting $\rho_m = \rho_r$, we get the equation
+	\[
+		(1+z)^3 \Omega_m \left(\frac{3H_0^2}{8\pi G}\right)
+		=
+		(1+z)^4 \Omega_r \left(\frac{3H_0^2}{8\pi G}\right)
+		\quad\implies\quad \frac{1}{1+z} = \frac{4\times 10^{-5}}{0.14}.
+	\]
+	This has exactly one solution at the redshift $z=3499$. Furthermore, since $a=1/(1+z)$, it follows that
+	\[
+    a_{\textrm{eq}} = \frac{\Omega_r}{\Omega_m} = 2.86\times 10^{-4}.
+	\]
+
+  \begin{part}{(b)}
+    The Friedmnann equation for a flat universe is $H^2=8\pi G\rho/3$. What is the value of the Hubble parameter at $z=1000$? At this epoch, what is the Hubble time $1/H$ in years?
+  \end{part}
+  Rewriting the Friedmann equation, we get
+  \[
+    H^2 = \frac{8\pi G}{3}\left(\rho_m + \rho_r\right) = (1+z)^3 \Omega_m H_0^2 + (1+z)^4 \Omega_r H_0^2\quad\implies\quad H(z)=H_0\sqrt{\Omega_m(1+z)^3+\Omega_r(1+z)^4}.
+  \]
+  Plugging in $z=1000$ to this equation, we get $H(1000) = \Hsi{1.37e6}$. At this redshift, the Hubble time in years is 
+  \[
+    t_{1000} \approx \frac{\Hyrsi{9.784e11}}{\Hsi{1.37e6}} = \yrsi{7.15e5}.
+  \]
+  This means that approximately $715\,000$ years after the big bang, radiation and matter densities were equal. This is an extremely rough estimate since the Hubble time approximation $t=1/H$ is not very accurate at high redshifts.
+
+  \begin{part}{(c)}
+    What is the age of the universe at $z=1000$ (in years)?
+  \end{part}
+
+  The age of the universe at $z=1000$ is given by the integral
+  \[
+    t_{1000} = \int_{1000}^\infty \frac{dz}{H(z)(1+z)} = \int_0^{9.99\times 10^{-4}}\frac{da/a^2}{H(a)a^{-1}} = \int_0^{9.99\times 10^{-4}}\frac{da}{H_0\sqrt{\Omega_m a^{-1} + \Omega_r a^{-2}}} = 3.0765\times 10^{-5}\,H_0^{-1}.
+  \]
+  Note that $9.99\times 10^{-4}=1/(1+1000)$ is the value of the scale factor $a$ at redshift $z=1000$. In years, this age can be given by the unit conversion
+  \[
+    t_{1000}=\frac{3.0765\times 10^{-5}}{\Hsi{70}}\times \Hyrsi{9.784e11}=\yrsi{4.30e5}.
+  \]
+  It follows that radiation and matter densities were equal $430\,000$ years after the big bang, so the Hubble time estimate was off by a factor of $2$.
+
+  \begin{part}{(d)}
+    What is the comoving distance (in Mpc) that a signal traveling at the speed of light can traverse between the big bang and $z=1000$?
+  \end{part}
+
+  The comoving distance is  given by the integral
+  \[
+    d=\int_{1000}^\infty \frac{dz}{H(z)} = \int_0^{9.99\times 10^{-4}}\frac{da}{H_0\sqrt{\Omega_m a + \Omega_r}} = 0.07028\,H_0^{-1}.
+  \]
+  Changing coordinates to Mpc, we get
+  \[
+    d = \frac{0.07028}{\Hsi{70}}\times \frac{\kmsi{3.00e5}}{\ssi{1}}=\Mpcsi{301.2}.
+  \]
+
+  \begin{part}{(e)}
+    What is the comoving distance between $z=1000$ and today? (Do not neglect dark energy for this part of the question). How does this distance compare to the comoving horizon at $z=1000$?
+  \end{part}
+
+  Using $\Omega_\Lambda = 1-\Omega_m - \Omega_r$, the comoving distance is
+  \[
+    d = \left(\int_{9.99\times 10^{-4}}^1 \frac{da}{H_0\sqrt{\Omega_m a + \Omega_r + \Omega_\Lambda a^4}}\right)\times \frac{\kmsi{3.00e5}}{\ssi{1}} = \Mpcsi{13610.8}
+  \]
+  This distance is far smaller than the comoving horizon at $z=1000$.\todo{explain}
+\end{parts}
+
+\begin{problem}{3}
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Suppose an extra neutrino species is added to the universe. Would the predicted helium abundance go up or down?
+  \end{part}
+
+  \begin{part}{(b)}
+    Suppose the weak interactions were stronger than they actually are, so that the thermal equilibrium distribution between neutrons and protons were maintained until $k_B T = \MeVsi{0.25}$. Would the predicted helium abundance be larger or smaller than in the standard model?
+  \end{part}
+
+  \begin{part}{(c)}
+    Suppose the proton-neutron mass difference were larger than the actual value. Would the predicted helium abundance be larger or smaller than in the standard BBN calculation?
+  \end{part}
+\end{parts}
+
+\begin{problem}{4}
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    Calculate the mean free path length of a photon in the early universe as a function of redshift, assuming the dominant process is Thomson scattering and that all of the electrons in the universe are ionized. Assume a flat universe with just matter and radiation at the time of recombination. Use $\Omega_b h^2 = 0.02$, $\Omega_m h^2=0.14$ and $h=0.7$. Treat all of the baryons as hydrogen. Compare your result to the Hubble distance (i.e. $c/H(z)$). When do photons decouple from the baryons?
+  \end{part}
+
+  For Thomson scattering of an electron, the Thomson cross sectional area is given by
+  \[
+    \sigma_t = \frac{8\pi}{3}\left(\frac{\alpha\hbar}{m_e c}\right)^2 = \mmsi{6.65e-29}.
+  \]
+
+  \begin{part}{(b)}
+    At $z=100$, what ionization fraction would be needed to allow the mean free path to be equal to the Hubble distance (which is the rough criteria for the photons to stream freely past the electrons). That this number is less than $1$ means that the recombination of the electrons and protons is important to the physics of the CMB. In particular, because recombination sweeps the ionization fraction from $1$ to about $10^{-4}$ in about $10\%$ of the Hubble time (then), it means that the photons we see last scattered in a rather thin shell in redshift.
+  \end{part}
+\end{parts}
+
+\end{document}

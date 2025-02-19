@@ -1,0 +1,112 @@
+\documentclass{lkx_pset}
+
+\title{Math 212 Problem Set 2}
+\author{Lev Kruglyak}
+\due{February 18, 2025}
+
+\input{../math212.sty}
+
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Write a short lecture that you would give the class to define what a function of bounded variation is and how it defined a linear functional on $C^0[0,1]$. In doing that, give some examples of bounded variation functions that are not continuous.
+\end{problem}
+\begin{solution}
+  Intuitively, a function of bounded variation (BV) doesn't oscillate too much. Formally, given any finite partition $P = \{0=x_0 < x_1 < \cdots < x_{n-1} < x_n = 1\}$ of the interval $[0,1]$, the variation of a function $f$ on $[0,1]$ is given by the sum
+  \[
+    \mathrm{Var}_P(f) = \sum_{1\leq k \leq n} |f(x_k)-f(x_{k-1})|.
+  \]
+  The total variation of a function is given by taking the supremum over all variations
+  \[
+    \mathrm{Var}(f) = \sup_{P} \mathrm{Var}_P(f)=\sup_{P}\sum_{1\leq k \leq n} |f(x_k)-f(x_{k-1})|.
+  \]
+  Thus, a function has bounded variation if $\mathrm{Var}(f)<\infty$. We denote the set of such functions by $\mathrm{BV}[0,1]$.
+
+  Note that this condition is different from being bounded -- functions which oscillate really fast like $f(x)=x\sin(1/x)$ can have arbitrarily large variation by choosing the partition to lie along relative minima and maxima near the origin. On the other hand, a function like $f(x)=x^2\sin(1/x)$ is sufficiently dampened, and is hence of bounded variation. (At this point I would graph these functions out and show how to prove these claims). There are also many examples of functions which are BV but not continuous, for example the jump function 
+  \[
+    f(x) =\begin{cases} 0 & 0\leq x < c, \\ 1 & c\leq x \leq 1.\end{cases}
+  \]
+  In fact, any piecewise constant function will do. Another method of construction of BV functions is to look at monotonic functions which are bounded. (Explain this as well).
+
+  Now let's recall the Riesz representation theorem for linear functions. This states that every bounded linear functional $T$ on $C^0[0,1]$ is representable by
+  \[
+    T(\varphi) = \int_0^1 \varphi \,d\mu
+  \]
+  where $\|T\|=|\mu|([0,1])$ for some signed measure $\mu$. The distributional measure of a BV function $f$ can be defined by the formula
+  \[
+    \mu_f((a,b]) = f(b)-f(a)
+  \]
+  and extending appropriately. The absolute value of the total measure is then the total variation of $f$. The linear functional corresponding to $f$ can then be defined by
+  \[
+    T_f(\varphi) = \int_0^1 \varphi \,d\mu_f.
+  \]
+  This gives $\mathrm{BV}[0,1]$ as a subset of the dual space of $C^0[0,1]$. It follows that any continuous linear functional on $C^0[0,1]$ is of this form. (Sketch proof).
+\end{solution}
+
+\begin{problem}{2}
+  Let $z\in \C\setminus (-\infty,0]$ be a complex number. Use the Fourier transform to show that the differential equation
+  \[
+    \left[ -\left(\frac{\partial^2}{\partial x_1^2} + \cdots + \frac{\partial^2}{\partial x_n^2}\right)+z\right]f = g
+  \]
+  has a unique solution in $L^2(\R^d)$ when $g\in L^2(\R^d)$.
+\end{problem}
+\begin{solution}
+  There are some technicalities here because we need functions $f$ to have second derivatives, but we'll ignore this in our solution. Let's begin by proving uniqueness. Suppose $f$ is a solution in $L^2(\R^d)$. Taking the Fourier transform of $g$, we have
+  \begin{equation}
+    \F(g)(k) = \F(-\nabla f + zf)(k) = (|k|^2+z)\F(f)(k) \quad\implies\quad \F(f)(k) = \frac{\F(g)(k)}{|k|^2 + z}.
+  \end{equation}
+  Note that the fraction have a non-zero denominator since $z\notin (-\infty, 0]$. Furthermore, the fraction is in $L^2(\R^d)$ since it is the Fourier transform of an $L^2(\R^d)$ function. The function $f$ thus can be written explicitly by 
+  \begin{equation}\label{2}
+    f = \F^{-1}\left(\frac{\F(g)(k)}{|k|^2+z}\right).
+  \end{equation}
+  This proves that if $f$ can be found in $L^2(\R^d)$, this solution exists uniquely. To prove existence, it suffices to show that $\F(g)(k)/(|k|^2+z)$ is an $L^2(\R^d)$ function whenever $g$ is. Let $\widehat{g} = \F(g)$. Then, note that
+  \begin{equation}
+    \int_{\R^d} \frac{|\widehat{g}(k)|^2}{\left||k|^2+ z\right|^2}\,dk \leq \|\widehat{g}\|^2_{L^2}\sup_{k\in \R^d}\frac{1}{\left||k|^2+z\right|^2}<\infty.
+  \end{equation}
+  This completes the proof, since we can now use (\ref{2}) to define $f$.
+\end{solution}
+
+\begin{problem}{3}
+  Suppose that $p\in (1,\infty)$, that $u\in L^p(\R^d)$, and that $\{u_n\}\subset L^p(\R^d)$ is a sequence that converges weakly to $u$. Prove that
+  \[
+    \int |u|^p \leq \liminf_{n\to\infty} \int |u_n|^p.
+  \]
+  Now suppose that $\mathcal{H}$ is a Hilbert space, that $u\in \mathcal{H}$, and that $\{u_n\}\subset \mathcal{H}$ is a sequence that converges weakly to $u$. Prove that $\|u\|\leq \liminf_{n\to \infty}\|u_n\|$ with equality if and only if a subsequence of $\{u_n\}$ converges strongly to $u$.
+\end{problem}
+\begin{solution}
+  First, we'll note that $f(t)=|t|^p$ is a convex function for $p>1$, so we have the inequality
+  \begin{equation}
+      |u_n(x)|^p-|u(x)|^p \geq \nabla f(u(x)) \cdot (u_n-u)(x) = p|u(x)|^{p-2}u(x)\cdot (u_n-u)(x).
+  \end{equation}
+  Note that this inequality still holds when $u(x)=0$, even though $f$ is not differentiable at $t=0$. Taking the integral of both sides, we get
+  \begin{equation}
+    \int_{\R^d} (|u_n|^p - |u|^p) \geq \int_{\R^d} p|u|^{p-2}u(u_n - u).
+  \end{equation}
+  Now let $g=p|u|^{p-2}u$. Notice that $|g|^q \leq p^q|u|^{(p-1)q}=p^q|u|^p$. Letting $q=p/(p-1)$, it follows that $g\in L^q(\R^d)$. This is exactly the H\"older complement to $p$, so by the duality isomorphism $(L^p(\R^d))^* = L_q(\R^d)$ and weak convergence, we have
+  \[
+    \liminf_{n\to \infty}\int_{\R^d} (|u_n|^p - |u|^p) \geq \lim_{n\to \infty}\int_{\R^d} g(u_n-u) = 0.
+  \]
+  Therefore, we have the desired inequality
+  \[
+    \int_{\R^d} |u|^p \leq \liminf_{n\to\infty}\int |u_n|^p.
+  \]
+  Next, suppose that we are in a Hilbert space $\mathcal{H}$. Weak convergence implies that $\langle u_n, u\rangle \to \langle u, u\rangle = \|u\|^2$, and by the Cauchy-Schwarz inequality $|\langle u_n, u\rangle| \leq \|u_n\|\|u\|$, we have
+  \[
+    \|u\|^2 = \lim_{n\to\infty}\langle u_n, u\rangle \leq \liminf_{n\to\infty} \|u_n\|\|u\| = \|u\|\liminf_{n\to\infty}\|u_n\|.
+  \]
+  If $\|u\|\neq 0$, dividing both sides by $\|u\|$ gives the inequality
+  \[
+    \|u\|\leq \liminf_{n\to\infty}\|u_n\|.
+  \]
+  If $\|u\|=0$, this inequality is trivially true. Now, it's clear that equality is achieved if there is a strongly convergent subsequence. Conversely, if $\|u\|=\liminf_{n\to \infty}\|u_n\|$, there must be some sequence $\{u_{n_k}\}$ such that $\lim_{k\to\infty} \|u_{n_k}\| = \|u\|$. However, we also know that $\langle u_{n_k}, u\rangle\to \|u\|^2$. Combined with the fact that
+  \[
+    \|u_{n_k}-u\|^2 = \|u_{n_k}\|^2 + \|u\|^2 - 2\langle u_{n_k}, u\rangle,
+  \]
+  it follows that $\lim_{k\to\infty}\|u_{n_k}-u\|^2 = \|u\|^2+\|u\|^2-2\|u\|^2 = 0$.
+  Thus, $\{u_{n_k}\}$ converges strongly to $u$.
+\end{solution}
+
+\end{document}
