@@ -3,6 +3,8 @@
 \usepackage{siunitx}
 \providecommand{\mmsi}[1]{\qty[per-mode = symbol]{#1}{\m^2}}
 \providecommand{\MeVsi}[1]{\qty[per-mode = symbol]{#1}{\mathrm{MeV}}}
+\providecommand{\rhosi}[1]{\qty[per-mode = symbol]{#1}{\kg\per\m^3}}
+\providecommand{\nrhosi}[1]{\qty[per-mode = symbol]{#1}{\m^{-3}}}
 \providecommand{\Mpcsi}[1]{\qty[per-mode = symbol]{#1}{\mathrm{Mpc}}}
 \providecommand{\lysi}[1]{\qty[per-mode = symbol]{#1}{\mathrm{ly}}}
 \providecommand{\yrsi}[1]{\qty[per-mode = symbol]{#1}{\mathrm{yr}}}
@@ -21,3 +23,6 @@
 \providecommand{\psssi}[1]{\qty[per-mode = symbol]{#1}{\s^{-2}}}
 \providecommand{\msi}[1]{\qty[per-mode = symbol]{#1}{\m}}
 \providecommand{\desi}[1]{\qty[per-mode = symbol]{#1}{\J\per \m^3}}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17} 

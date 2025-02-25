@@ -46,13 +46,13 @@ Let's assume that our universe is flat today and that it is filled with matter $
 	In other words, the horizon length of universe today is about 46.2 billion light years.
 	In general, the horizon length as a function of $a$ is given by the integral
 	\[
-    d_{\textrm{horiz}}(a)= \int_0^{a} \frac{da'}{H_0\sqrt{\Omega_m a' + \Omega_\Lambda (a')^4}}
+		d_{\textrm{horiz}}(a)= \int_0^{a} \frac{da'}{H_0\sqrt{\Omega_m a' + \Omega_\Lambda (a')^4}}
 	\]
 	As $a\to\infty$, this integral converges to $4.446\,H_0^{-1}$ so the maximal horizon length of the universe is
 	\[
 		d_{\textrm{horiz}} = \frac{4.446}{\Hsi{70}}\times \Hyrsi{9.784e11} = \lysi{6.215e10}
 	\]
-  or about 62.2 billion light years.
+	or about 62.2 billion light years.
 \end{solution}
 
 \begin{problem}{2}
@@ -63,7 +63,7 @@ Let's consider $\Omega_m h^2 = 0.14$ and $\Omega_r h^2 = 4\times 10^{-5}$.
 	\begin{part}{}
 		We have $\rho_m=(1+z)^3\rho_{m,0}$ and $\rho_r= (1+z)^4\rho_{r,0}$. At high redshifts, these are the main contributions to the energy budget of the universe, and it is safe to ignore dark energy. Assume a flat universe and a Hubble constant of $H_0=\Hsi{70}$.
 	\end{part}
-  Note that $\Omega_m= 0.3$ and $\Omega_r = 8\times 10^{-5}$ since $h = H_0/\Hsi{100}$.
+	Note that $\Omega_m= 0.3$ and $\Omega_r = 8\times 10^{-5}$ since $h = H_0/\Hsi{100}$.
 
 	\begin{part}{(a)}
 		At what redshift are the radiation and matter densities equal? Write a simple formula for the scale factor $a_{\textrm{eq}}$ at this time.
@@ -77,91 +77,171 @@ Let's consider $\Omega_m h^2 = 0.14$ and $\Omega_r h^2 = 4\times 10^{-5}$.
 	\]
 	This has exactly one solution at the redshift $z=3499$. Furthermore, since $a=1/(1+z)$, it follows that
 	\[
-    a_{\textrm{eq}} = \frac{\Omega_r}{\Omega_m} = 2.86\times 10^{-4}.
+		a_{\textrm{eq}} = \frac{\Omega_r}{\Omega_m} = 2.86\times 10^{-4}.
 	\]
 
-  \begin{part}{(b)}
-    The Friedmnann equation for a flat universe is $H^2=8\pi G\rho/3$. What is the value of the Hubble parameter at $z=1000$? At this epoch, what is the Hubble time $1/H$ in years?
-  \end{part}
-  Rewriting the Friedmann equation, we get
-  \[
-    H^2 = \frac{8\pi G}{3}\left(\rho_m + \rho_r\right) = (1+z)^3 \Omega_m H_0^2 + (1+z)^4 \Omega_r H_0^2\quad\implies\quad H(z)=H_0\sqrt{\Omega_m(1+z)^3+\Omega_r(1+z)^4}.
-  \]
-  Plugging in $z=1000$ to this equation, we get $H(1000) = \Hsi{1.37e6}$. At this redshift, the Hubble time in years is 
-  \[
-    t_{1000} \approx \frac{\Hyrsi{9.784e11}}{\Hsi{1.37e6}} = \yrsi{7.15e5}.
-  \]
-  This means that approximately $715\,000$ years after the big bang, radiation and matter densities were equal. This is an extremely rough estimate since the Hubble time approximation $t=1/H$ is not very accurate at high redshifts.
+	\begin{part}{(b)}
+		The Friedmnann equation for a flat universe is $H^2=8\pi G\rho/3$. What is the value of the Hubble parameter at $z=1000$? At this epoch, what is the Hubble time $1/H$ in years?
+	\end{part}
+	Rewriting the Friedmann equation, we get
+	\[
+		H^2 = \frac{8\pi G}{3}\left(\rho_m + \rho_r\right) = (1+z)^3 \Omega_m H_0^2 + (1+z)^4 \Omega_r H_0^2\quad\implies\quad H(z)=H_0\sqrt{\Omega_m(1+z)^3+\Omega_r(1+z)^4}.
+	\]
+	Plugging in $z=1000$ to this equation, we get $H(1000) = \Hsi{1.37e6}$. At this redshift, the Hubble time in years is
+	\[
+		t_{1000} \approx \frac{\Hyrsi{9.784e11}}{\Hsi{1.37e6}} = \yrsi{7.15e5}.
+	\]
+	This means that approximately $715\,000$ years after the big bang, radiation and matter densities were equal. This is an extremely rough estimate since the Hubble time approximation $t=1/H$ is not very accurate at high redshifts.
 
-  \begin{part}{(c)}
-    What is the age of the universe at $z=1000$ (in years)?
-  \end{part}
+	\begin{part}{(c)}
+		What is the age of the universe at $z=1000$ (in years)?
+	\end{part}
 
-  The age of the universe at $z=1000$ is given by the integral
-  \[
-    t_{1000} = \int_{1000}^\infty \frac{dz}{H(z)(1+z)} = \int_0^{9.99\times 10^{-4}}\frac{da/a^2}{H(a)a^{-1}} = \int_0^{9.99\times 10^{-4}}\frac{da}{H_0\sqrt{\Omega_m a^{-1} + \Omega_r a^{-2}}} = 3.0765\times 10^{-5}\,H_0^{-1}.
-  \]
-  Note that $9.99\times 10^{-4}=1/(1+1000)$ is the value of the scale factor $a$ at redshift $z=1000$. In years, this age can be given by the unit conversion
-  \[
-    t_{1000}=\frac{3.0765\times 10^{-5}}{\Hsi{70}}\times \Hyrsi{9.784e11}=\yrsi{4.30e5}.
-  \]
-  It follows that radiation and matter densities were equal $430\,000$ years after the big bang, so the Hubble time estimate was off by a factor of $2$.
+	The age of the universe at $z=1000$ is given by the integral
+	\[
+		t_{1000} = \int_{1000}^\infty \frac{dz}{H(z)(1+z)} = \int_0^{9.99\times 10^{-4}}\frac{da/a^2}{H(a)a^{-1}} = \int_0^{9.99\times 10^{-4}}\frac{da}{H_0\sqrt{\Omega_m a^{-1} + \Omega_r a^{-2}}} = 3.0765\times 10^{-5}\,H_0^{-1}.
+	\]
+	Note that $9.99\times 10^{-4}=1/(1+1000)$ is the value of the scale factor $a$ at redshift $z=1000$. In years, this age can be given by the unit conversion
+	\[
+		t_{1000}=\frac{3.0765\times 10^{-5}}{\Hsi{70}}\times \Hyrsi{9.784e11}=\yrsi{4.30e5}.
+	\]
+	It follows that radiation and matter densities were equal $430\,000$ years after the big bang, so the Hubble time estimate was off by a factor of $2$.
 
-  \begin{part}{(d)}
-    What is the comoving distance (in Mpc) that a signal traveling at the speed of light can traverse between the big bang and $z=1000$?
-  \end{part}
+	\begin{part}{(d)}
+		What is the comoving distance (in Mpc) that a signal traveling at the speed of light can traverse between the big bang and $z=1000$?
+	\end{part}
 
-  The comoving distance is  given by the integral
-  \[
-    d=\int_{1000}^\infty \frac{dz}{H(z)} = \int_0^{9.99\times 10^{-4}}\frac{da}{H_0\sqrt{\Omega_m a + \Omega_r}} = 0.07028\,H_0^{-1}.
-  \]
-  Changing coordinates to Mpc, we get
-  \[
-    d = \frac{0.07028}{\Hsi{70}}\times \frac{\kmsi{3.00e5}}{\ssi{1}}=\Mpcsi{301.2}.
-  \]
+	The comoving distance is  given by the integral
+	\[
+		d=\int_{1000}^\infty \frac{dz}{H(z)} = \int_0^{9.99\times 10^{-4}}\frac{da}{H_0\sqrt{\Omega_m a + \Omega_r}} = 0.07028\,H_0^{-1}.
+	\]
+	Changing coordinates to Mpc, we get
+	\[
+		d = \frac{0.07028}{\Hsi{70}}\times \frac{\kmsi{3.00e5}}{\ssi{1}}=\Mpcsi{301.2}.
+	\]
 
-  \begin{part}{(e)}
-    What is the comoving distance between $z=1000$ and today? (Do not neglect dark energy for this part of the question). How does this distance compare to the comoving horizon at $z=1000$?
-  \end{part}
+	\begin{part}{(e)}
+		What is the comoving distance between $z=1000$ and today? (Do not neglect dark energy for this part of the question). How does this distance compare to the comoving horizon at $z=1000$?
+	\end{part}
 
-  Using $\Omega_\Lambda = 1-\Omega_m - \Omega_r$, the comoving distance is
-  \[
-    d = \left(\int_{9.99\times 10^{-4}}^1 \frac{da}{H_0\sqrt{\Omega_m a + \Omega_r + \Omega_\Lambda a^4}}\right)\times \frac{\kmsi{3.00e5}}{\ssi{1}} = \Mpcsi{13610.8}
-  \]
-  This distance is far smaller than the comoving horizon at $z=1000$.\todo{explain}
+	Using $\Omega_\Lambda = 1-\Omega_m - \Omega_r$, the comoving distance is
+	\[
+		d = \left(\int_{9.99\times 10^{-4}}^1 \frac{da}{H_0\sqrt{\Omega_m a + \Omega_r + \Omega_\Lambda a^4}}\right)\times \frac{\kmsi{3.00e5}}{\ssi{1}} = \Mpcsi{13610.8}
+	\]
+	This distance is larger that the comoving horizon at $z=1000$.
 \end{parts}
 
 \begin{problem}{3}
 \end{problem}
-\begin{parts}
-  \begin{part}{(a)}
-    Suppose an extra neutrino species is added to the universe. Would the predicted helium abundance go up or down?
-  \end{part}
+\begin{solution}
+	Recall that the abundance of $\mathrm{He}^4$ in the universe is given approximately by
+	\begin{equation}\label{3}
+		Y_{\mathrm{He}^4} = \frac{2(n_n/n_p)}{1+(n_n/n_p)}
+	\end{equation}
+	where $n_n$ and $n_p$ are the numbers of neutrons and protons respectively at the time of freeze-out.
+	We also note that the neutron-proton ratio can be given by the formula
+	\begin{equation}\label{31}
+		\frac{n_n}{n_p} = \left(\frac{M_n}{M_p}\right)^{3/2}e^{-(M_n-M_p)/T}
+	\end{equation}
+	assuming units with $k_B=1$ where $T$ is the freeze-out temperature.
 
-  \begin{part}{(b)}
-    Suppose the weak interactions were stronger than they actually are, so that the thermal equilibrium distribution between neutrons and protons were maintained until $k_B T = \MeVsi{0.25}$. Would the predicted helium abundance be larger or smaller than in the standard model?
-  \end{part}
+	\begin{part}{(a)}
+		Suppose an extra neutrino species is added to the universe. Would the predicted helium abundance go up or down?
+	\end{part}
+	An extra neutrino species in the universe would increase the relativistic energy density of the early universe, accelerating expansion and hence leading to an earlier freeze out time. At earlier freeze out time would increase the ratio of neutrons to protons, so more neutrons are left over to form $\mathrm{He}^4$. As per (\ref{3}), the predicted $\mathrm{He}^4$ abundance would \emph{increase}.
 
-  \begin{part}{(c)}
-    Suppose the proton-neutron mass difference were larger than the actual value. Would the predicted helium abundance be larger or smaller than in the standard BBN calculation?
-  \end{part}
-\end{parts}
+	\begin{part}{(b)}
+		Suppose the weak interactions were stronger than they actually are, so that the thermal equilibrium distribution between neutrons and protons were maintained until $k_B T = \MeVsi{0.25}$. Would the predicted helium abundance be larger or smaller than in the standard model?
+	\end{part}
+
+	The usual freeze-out temperature for neutrons and protons in the standard model is $k_B T \approx \MeVsi{0.8}$. By (\ref{31}), decreasing the freeze-out temperature leads to a smaller neutron-proton ratio, and by (\ref{3}), this would lead to a \emph{lower} helium abundance than in the standard model.
+
+	\begin{part}{(c)}
+		Suppose the proton-neutron mass difference were larger than the actual value. Would the predicted helium abundance be larger or smaller than in the standard BBN calculation?
+	\end{part}
+
+	Using $T\approx\MeVsi{0.8}$ in the equation (\ref{31}), we can graph the neutron-proton ratio as a function of the neutron-proton mass ratio. The vertical axis denotes the observed neutron-proton mass ratio using $M_n \approx \MeVsi{939.565}$, $M_p\approx \MeVsi{938.272}$, and this corresponds to a neutron-proton ratio of approximately $0.2$.
+  \begin{center}
+	\begin{tikzpicture}
+		\begin{axis}[
+				width=10cm,
+				xlabel={$M_n / M_p$},
+				ylabel={$n_n/n_p$},
+				domain=1:1.005,
+				samples=200,
+        enlargelimits=false,
+				grid=major,
+        xtick distance=0.001,
+        scaled ticks=false,
+        xticklabel style={/pgf/number format/fixed, /pgf/number format/precision=4}
+			]
+
+			% Define the parameters:
+			\def\M{938.272} % MeV
+			\def\T{0.8}    % MeV
+
+			\addplot[bluebord, very thick] {x^(1.5)*exp(-((x-1)*\M)/\T)};
+			\draw[dashed, thick] (axis cs:1.00137,0) -- (axis cs:1.00137,1) node[pos=1,above] {};
+
+		\end{axis}
+	\end{tikzpicture}
+  \end{center}
+  As we can see in the graph, increasing the neutron-proton mass ratio will decrease the neutron-proton ratio, which, by (\ref{3}), \emph{increases} the abundance of $\mathrm{He}^4$.
+\end{solution}
 
 \begin{problem}{4}
 \end{problem}
 \begin{parts}
-  \begin{part}{(a)}
-    Calculate the mean free path length of a photon in the early universe as a function of redshift, assuming the dominant process is Thomson scattering and that all of the electrons in the universe are ionized. Assume a flat universe with just matter and radiation at the time of recombination. Use $\Omega_b h^2 = 0.02$, $\Omega_m h^2=0.14$ and $h=0.7$. Treat all of the baryons as hydrogen. Compare your result to the Hubble distance (i.e. $c/H(z)$). When do photons decouple from the baryons?
-  \end{part}
+	\begin{part}{(a)}
+		Calculate the mean free path length of a photon in the early universe as a function of redshift, assuming the dominant process is Thomson scattering and that all of the electrons in the universe are ionized. Assume a flat universe with just matter and radiation at the time of recombination. Use $\Omega_b h^2 = 0.02$, $\Omega_m h^2=0.14$ and $h=0.7$. Treat all of the baryons as hydrogen. Compare your result to the Hubble distance (i.e. $c/H(z)$). When do photons decouple from the baryons?
+	\end{part}
 
-  For Thomson scattering of an electron, the Thomson cross sectional area is given by
-  \[
-    \sigma_t = \frac{8\pi}{3}\left(\frac{\alpha\hbar}{m_e c}\right)^2 = \mmsi{6.65e-29}.
-  \]
+	For Thomson scattering of an electron, the Thomson cross sectional area is given by
+	\[
+		\sigma_T = \frac{8\pi}{3}\left(\frac{\alpha\hbar}{M_e c}\right)^2 = \mmsi{6.65e-29}.
+	\]
+	The mean free path length of a photon is then given by
+	\[
+    \lambda = \frac{1}{n_e\sigma_T}=\frac{1}{n_pX\sigma_T} = \frac{1}{n_{p,0}X(1+z)^3 \sigma_T} \propto a^3 X^{-1},
+	\]
+	where $X=n_p/n_e$ is the ionization fraction. Assuming a tightly-coupled, fully ionized regime, the mean free path length grows at as $O(a^3)$ whereas the Hubble distance grows as $O(a^2)$. (Assuming radiation domination). Photons decouple from the baryons approximately when $\lambda \geq H^{-1}$.
 
-  \begin{part}{(b)}
-    At $z=100$, what ionization fraction would be needed to allow the mean free path to be equal to the Hubble distance (which is the rough criteria for the photons to stream freely past the electrons). That this number is less than $1$ means that the recombination of the electrons and protons is important to the physics of the CMB. In particular, because recombination sweeps the ionization fraction from $1$ to about $10^{-4}$ in about $10\%$ of the Hubble time (then), it means that the photons we see last scattered in a rather thin shell in redshift.
-  \end{part}
+	% Furthermore, we assume that baryons are hydrogen so $n_p=n_b$. We thus have
+	% \[
+	% 	\begin{aligned}
+	% 	\lambda(z) = \frac{1}{n_e(z)\sigma_T} = \frac{M_p}{\rho_{b,0}(1+z)^3 \sigma_T} 
+	% 	&= \frac{M_p}{\Omega_b \rho_{\textrm{crit}}(1+z)^3\sigma_T} \\
+	% 	&= \frac{8\pi G M_p}{3\Omega_b\sigma_T}\frac{1}{H(z)^2(1+z)^3}.
+	% 	\end{aligned}
+	% \]
+	% In terms of the Hubble distance $1/H(z)$, we have
+	% \[
+	% 	\lambda(z) = \frac{8\pi GM_p}{3\Omega_b\sigma_T(1+z)^3} \left(\frac{1}{H(z)}\right)^2.
+	% \]
+
+
+	% Let $X=n_e/n_b$ be the ionization fraction. Assuming all baryons are hydrogen, we have
+	% \[
+ %    n_e = Xn_p = \frac{X\rho_p}{M_p} = \frac{X\rho_{b,0}(1+z)^3}{M_p} = \frac{X\Omega_b\rho_{\textrm{crit}}(1+z)^3}{M_p}
+	% \]
+	% Plugging in the appropriate constants, we have the expression
+	% \[
+ %    n_e=\frac{X\times 0.041\times (\rhosi{9.47e-27}\times (1+z)^3)}{\kgsi{1.64e-27}}=X(1+z)^3\times (\nrhosi{2.368e-7})
+	% \]
+	%
+	\begin{part}{(b)}
+		At $z=1000$, what ionization fraction would be needed to allow the mean free path to be equal to the Hubble distance (which is the rough criteria for the photons to stream freely past the electrons). That this number is less than $1$ means that the recombination of the electrons and protons is important to the physics of the CMB. In particular, because recombination sweeps the ionization fraction from $1$ to about $10^{-4}$ in about $10\%$ of the Hubble time (then), it means that the photons we see last scattered in a rather thin shell in redshift.
+	\end{part}
+
+	Let's solve for $X(z)$ at the time of recombination. Rearranging $\lambda=H^{-1}$, we have
+	\[
+		\frac{1}{n_{p,0} X(z)(1+z)^3\sigma_T} = \frac{1}{H_0\sqrt{\Omega_m(1+z)^3 + \Omega_r(1+z)^4}}\quad\implies\quad
+		X(z) = \frac{H_0\sqrt{\Omega_m(1+z)^3+\Omega_r(1+z)^4}}{n_{p,0}(1+z)^3\sigma_T}.
+	\]
+	Using the provided constants and taking $n_{p,0}\approx \nrhosi{0.2}$, we have
+	\[
+		X(1000) = \frac{\Hsi{70}\times (8.4701\times 10^5)}{\nrhosi{0.2}\times (1+1000)^3\times \mmsi{6.65e-29}}\times \frac{\ssi{1}}{\msi{3.00e8}}\times \frac{\Mpcsi{1}}{\kmsi{3.086e19}} = 0.436.
+	\]
 \end{parts}
 
 \end{document}
