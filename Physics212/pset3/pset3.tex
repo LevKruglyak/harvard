@@ -1,0 +1,121 @@
+\documentclass{lkx_pset}
+
+\title{Physics 212 Problem Set 3}
+\author{Lev Kruglyak}
+\due{February 28, 2025}
+
+\input{../physics212.sty}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  Given the first two slow-roll parameters defined as
+  \[
+    \epsilon = -\frac{\dot{H}}{H^2}\quad\textrm{and}\quad \eta = \frac{|\dot{\epsilon}|}{H\epsilon}
+  \]
+  where overdots represent derivatives with respect to physical time, determine the predictions of an inflationary model with a quadratic potential $V(\phi)=m^2\phi^2$. Under the slow-roll approximation:
+\end{problem}
+
+\begin{parts}
+  \begin{part}{(a)}
+    Compute the slow-roll parameters $\epsilon$ and $\eta$ in terms of $\phi$.
+  \end{part}
+
+  From the Friedmann equations, we can derive the following expressions for the slow-roll parameters:
+  \[
+    \epsilon = \frac{\Mpl^2}{2}\left(\frac{V'(\phi)}{V(\phi)}\right)^2\quad\textrm{and}\quad
+    \eta = \Mpl^2\left(\frac{V''(\phi)}{V(\phi)}\right).
+  \]
+  Plugging our quadratic potential into these equations, we get
+  \[
+    \epsilon = \frac{\Mpl^2}{2}\left(\frac{2m^2\phi}{m^2\phi^2}\right)^2=\frac{2\Mpl^2}{\phi^2}
+    \quad\textrm{and}\quad
+    \eta = \Mpl^2\left(\frac{2m^2}{m^2\phi^2}\right)=\frac{2\Mpl^2}{\phi^2}.
+  \]
+
+  \begin{part}{(b)}
+    Determine $\phi_{\textrm{end}}$, the value of the field at which inflation ends. What is the amplitude of the potential at that point?
+  \end{part}
+  At the end of inflation, we have $\epsilon=1$, which means that $\phi^2_{\textrm{end}}=2\Mpl^2$ and hence $\phi_{\textrm{end}}=\Mpl\sqrt{2}$. The amplitude of the potential at this point is $V(\phi_{\textrm{end}}) =2m^2\Mpl^2$.
+
+  \begin{part}{(c)}
+    What is the value of the field (in units of $\Mpl$) when the field is 60 $e$-folds away from the end of inflation? What is the amplitude of the potential at that point?
+  \end{part}
+
+  The number of $e$-folds between times $t_i$ and $t_f$ is given by the integral $N=\int_{t_i}^{t_f} H\,dt$, or in other words $dN=H\,dt$. However, the slow-roll equation of motion and Friedmann equation state
+  \[
+    3H\dot{\phi}\approx -V'(\phi) \quad\textrm{and}\quad
+    H^2 \approx \frac{V(\phi)}{3\Mpl^2}.
+  \]
+  These equations allow us to rewrite $dN$ as 
+  \[
+    dN = H\,dt = H\frac{d\phi}{\dot\phi} \approx -\frac{3H^2}{V'(\phi)}\,d\phi \approx -\frac{V(\phi)}{\Mpl^2 V'(\phi)}\,d\phi.
+  \]
+  Integrating both sides, we get the $e$-fold equation in terms of the potential
+  \[
+    N = \frac{1}{\Mpl^2}\int_{\phi_f}^{\phi_i}\frac{V(\phi)}{V'(\phi)}\,d\phi.
+  \]
+  Plugging in our quadratic potential, setting $\phi_f = \phi_{\textrm{end}}$, and $N=60$, we get
+  \[
+    60 = \frac{1}{\Mpl^2}\int_{\Mpl\sqrt{2}}^{\phi_i} \frac{m^2\phi^2}{2m^2\phi}\,d\phi = \frac{1}{\Mpl^2}\left(\frac{\phi_i^2-2\Mpl^2}{4}\right)\quad\implies\quad \phi_i = \Mpl^2\sqrt{242}\approx \MplMplsi{15.56}.
+  \]
+At this point, the amplitude of the potential is $V(\phi_i) = 242m^2\Mpl$.
+\end{parts}
+
+\begin{problem}{2}
+  In a flat $\Omega_m=1$ universe with no radiation, calculate the physical size of the horizon at $z=1100$. What is the angular scale subtended by this scale today? Express your result in degrees.
+\end{problem}
+\begin{solution}
+  In a flat matter-dominated universe, the physical horizon size is
+  \[
+    d_{\textrm{horiz}}(z)=\frac{1}{H_0}\frac{1}{(1+z)^{3/2}}.
+  \]
+  At $z=1100$, this horizon size is
+  \[
+    d_{\textrm{horiz}}(1100)=\frac{2\times \Mpcsi{4300}}{\sqrt{1101^3}} = \Mpcsi{0.2354}.
+  \]
+  Meanwhile, the angular distance in a flat matter-dominated universe is given by
+  \[
+    d_{A}(z) = \frac{2}{H_0(1+z)}\left(1-\frac{1}{\sqrt{1+z}}\right).
+  \]
+  At $z=1100$, this becomes
+  \[
+    d_{\textrm{horiz}}(1100) = \frac{2\times \Mpcsi{4300}}{1101}\left(1- \frac{1}{\sqrt{1+1100}}\right) = \Mpcsi{7.576}.
+  \]
+  The angular scale is the ratio of the physical horizon length by the 
+  \[
+    \theta_{\textrm{horiz}}(1100) = \frac{d_{\textrm{horiz}}(1100)}{d_{A}(1100)} = {0.03107}\,\mathrm{rad}\times \frac{180^\circ}{\pi\,\mathrm{rad}} = 1.78^\circ.
+  \]
+\end{solution}
+
+\begin{problem}{3}
+  After a GUT phase transition, we expect an abundance of monopoles corresponding to one monopole per Hubble volume at the transition time. Assume that the phase transition happens at temperature $T\sim \GeVsi{e15}$ and that no mechanism exists to dilute/reduce the abundance of monopoles produced.
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+  Consider a monopole with mass $m_M = \GeVsi{e15}$ and calculate the monopole density paramter today $(\Omega_{\textrm{mon}}=\rho_{\textrm{mon}} / \rho_{\textrm{crit}}$). Assume that the monopole density $\rho_{\textrm{mon}}$ scales as $\propto T^3$ and the Hubble volume scales as $\propto H^{-3}$.
+  \end{part}
+
+  We know that the number density at the phase transition $n_{\textrm{mon}}^{\textrm{pt}} \approx 1/H^{-3}\sim H^3$. However, the Hubble factor is of order $H\sim T_{\textrm{pt}}^2 / M_{\textrm{pl}}$. It follows that
+  \[
+    \rho_{\textrm{mon}}^{\textrm{pt}} \approx m_M n_{\textrm{mon}}^\textrm{pt} \approx m_M \frac{T_{\textrm{pt}^6}}{M_{\textrm{pl}}^3}.
+  \]
+  Monopoles are not relativistic by the assumption of the problem, and their number density scales with $a^{-3}\sim T^3$. Therefore, their energy density today is given by
+  \[
+    \rho_{\textrm{mon}}^0 \approx m_M n_{\textrm{mon}}^0 \sim m_M \frac{T_{\textrm{pt}}^6}{M_{\textrm{pl}}^3}\left(\frac{T_0}{T_{\textrm{pt}}}\right)^3.
+  \]
+  Given that the current CMB temperature is $\approx \Ksi{2.7}\approx \GeVsi{2.3e-13}$, we get
+  \[
+  \rho_{\textrm{mon}}^0 \approx \GeVfoursi{1.2e-35}.
+  \]
+  Compared to the critical density of the universe today which is $\GeVfoursi{e-47}$, we get $\Omega_{\textrm{mon}}\approx 1.2\times 10^12$, an absurdly large density.
+
+  \begin{part}{(b)}
+    There is a bound, known as the \emph{Parker bound}, on the density of monopoles today which restricts $\Omega_{\textrm{mon}}<10^{-6}$. Calculate the number of $e$-folds of inflation required to dilute the monopole abundance to a level consistent with the Parker bound.
+  \end{part}
+
+  To get $\Omega_{\textrm{mon}}$ below $10^{-6}$, we need a dilution of at least $10^{12}/10^{-6}=10^{18}$. Since $n_{\textrm{mon}}\propto a^{-3}$, we want $e^{-3N}\leq 10^{-18}$. Solving for the number of $e$-folds gives us $N\geq 13.8$ $e$-folds required for the dilution of monopoles to agree with observation. This is consistent with many models of inflation.
+\end{parts}
+
+\end{document}

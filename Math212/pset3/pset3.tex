@@ -1,0 +1,97 @@
+\documentclass{lkx_pset}
+
+\title{Math 212 Problem Set 3}
+\author{Lev Kruglyak}
+\due{February 26, 2025}
+
+\input{../math212.sty}
+
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+In the previous problem set, you were asked (in part) to show that if $g$ is any $L^2(\R^n)$ function, then there exists a unique solution $f$ in $L^2$ to the equation
+\begin{equation}\label{main}
+	(1-\Delta)f = g.
+\end{equation}
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Prove that the Fourier transform maps $L^2_2(\R^n)$ isometrically to the completion $X$ of the space $C^\infty_c(\R^n)$ using the norm
+		\[
+			\|u\|^2_X = \int_{\R^n} (|k|^2 + 1)^2|\widehat{u}(k)|^2\,dk_1\cdots dk_n
+		\]
+	\end{part}
+	Let's first identify $X$ as a subspace of $L^2(\R^n)$, namely as the set of functions with $\|u\|_X<\infty$. By the work on the previous problem set, it follows that $X$ is complete and $C^\infty_c(\R^n)$ is dense in $X$. Note that we can rewrite the norm as
+	\[
+		\|u\|^2_X = \int_{\R^n} |\mathcal{F}(Lu)|^2 \,dk = \|\mathcal{F}(Lu)\|^2_{L^2} = \|Lu\|^2_{L^2}.
+	\]
+	where $L=(1-\Delta)$, and the last equality follows because the Fourier transform is an $L^2$ isometry. However, we have
+	\[
+		\begin{aligned}
+			\|u\|^2_{2,2} = \|\nabla^2 u\|^2_2 + 2\|\nabla u\|^2_2 + \|u\|^2_2
+			 & = \|\widehat{\nabla^2 u}\|_2^2 + 2\|\widehat{\nabla^2 u}\|^2_2 + 2\|\widehat{\nabla u}\|^2_2 + \|\widehat{u}\|^2_2 \\
+			 & = \int_{\R^n}(|k|^2 + (k_i)^2(k^j)^2) + 1)|\widehat{u}(k)|^2 dk= \|u\|^2_X.
+		\end{aligned}
+	\]
+	If follows that the Fourier transform $C_c^\infty(\R^n) \to L^2(\R^n)$ is an isometric linear bounded map with respect to the $L^2_2$ norm on $C_c^\infty$ and norm on $X$. By the density of $C_c^\infty(\R^n)$ in $L^2_2(\R^n)$ and completeness of $X$, the Fourier transform extends to a linear isometry $L^2_2 \to X$.
+
+	\begin{part}{(b)}
+		Prove that the assignment of $g\in L^2(\R^n)$ to the solution $f$ of (\ref{main}) defines an isometry from $L^2(\R^n)$ to $L^2_2(\R^n)$.
+	\end{part}
+
+	This is the inverse map $L^{-1}$ given by $\mathcal{F}^{-1}\circ M\circ \mathcal{F}$ where $M$ is the multiplication by $1/|k|^2+1$ map. The Fourier transform maps $L^2(\R^n)$ isometrically onto $L^2(\R^n)$, the operator $M$ maps $L^2(\R^n)$ isometrically onto $X$ by the previous part, and the inverse Fourier transform maps $X$ isometrically onto $L^2_2(\R^n)$. Thus, it follows that $L^{-1}$ is an isometric isomorphism of $L^2(\R^n)$ and $L^2_2(\R^n)$.
+
+	\begin{part}{(c)}
+		Let $q(x)$ be at least a quadratic polynomial function, let $h_{\alpha\beta}$ be a $2\times 2$ matrix of at least linear polynomial functions, and let $k$ be a at least a quadratic polynomial function in 2 variables. Consider the equation
+		\[
+			(1-\Delta)f + h_{\alpha\beta}(f)\partial^\alpha\partial^\beta f + k(\partial^1 f, \partial^2 f) + q(f) = g.
+		\]
+		Given the polynomial function $q$, $h_{\alpha\beta}$ and $k$, there exists an $\varepsilon>0$ and $C > 0$ such that the preceding equation has a unique solution in the $L^2_2$ Banach space with $L^2_2$ norm at most $C\varepsilon$ if the $L^2$ norm of $g$ is less than $\varepsilon$.
+	\end{part}
+
+	By the previous parts, the inverse operator $L^{-1}$ is an isometric isomorphic from $L^2(\R^2)$ onto $L^2_2(\R^2)$. Now define the nonlinear operator
+	\[
+		\mathcal{N}(f) = h_{\mu\nu}(f)\partial^\mu\partial^\nu f + k(\partial_1 f, \partial_2 f) + q(f)
+	\]
+	so that the differential equation can be written $L(f) + \mathcal{N}(f)=g$. Next, consider the linear operator $\mathcal{T} : L^2_2(\R^2) \to L^2_2(\R^2)$ given by
+	\[
+		\mathcal{T}(f) = L^{-1}(g-\mathcal{N}(f)).
+	\]
+	To solve the differential equation, we need a fixed point of $\mathcal{T}$.
+	Since $f \in L^2_2(\mathbb{R}^2)$, its second derivatives are in $L^2(\mathbb{R}^2)$ and its first derivatives belong to $W^{1,2}(\mathbb{R}^2)$. In two dimensions, the Sobolev embedding implies that these first derivatives lie in some $L^p(\mathbb{R}^2)$ spaces for some $p>2$. Consequently, products of the derivatives can be estimated in $L^2(\mathbb{R}^2)$.
+	Thus, there exists a constant $C_1 > 0$ such that for sufficiently small $f$,
+	\[
+		\|\mathcal{N}(f)\|_{L^2} \le C_1\, \|f\|_{L^2_2}^2.
+	\]
+	Moreover, a similar argument shows that $\mathcal{N}$ is locally Lipschitz. For each $f,h\in L^2_2(\mathbb{R}^2)$ with sufficiently small norms, there exists a constant $C_2>0$ such that
+	\[
+		\|N(f) - N(h)\|_{L^2} \le C_2 \Bigl( \|f\|_{L^2_2} + \|h\|_{L^2_2} \Bigr) \|f-h\|_{L^2_2}.
+	\]
+	Now, let's choose a radius $R>0$ and consider the closed ball
+	$B_R = \{ f \in L^2_2(\mathbb{R}^2) : \|f\|_{L^2_2} \le R \}$.
+	We now choose $R$ small enough so that for all $f,h\in B_R$ we have
+	\[
+		C_2 \Bigl( \|f\|_{L^2_2} + \|h\|_{L^2_2} \Bigr) \le 2C_2 R < 1.
+	\]
+	Also, choose some $\varepsilon > 0$ so that if $\|g\|_{L^2} < \varepsilon$, then $\|L^{-1}(g)\|_{L^2_2} = \|g\|_{L^2} < R.$
+	For any $f\in B_R$, we have
+	\[
+		\|\mathcal{T}(f)\|_{L^2_2} = \|L^{-1}(g - \mathcal{N}(f))\|_{L^2_2} = \|g - \mathcal{N}(f)\|_{L^2}.
+	\]
+	Since $\|\mathcal{N}(f)\|_{L^2} \le C_1 \|f\|_{L^2_2}^2 \le C_1 R^2,$ we obtain
+	$ \|\mathcal{T}(f)\|_{L^2_2} \le \|g\|_{L^2} + C_1 R^2 < R$ provided the norm $\|g\|_{L^2}$ is sufficiently small.
+Then, for any $f, h \in B_R$, we have
+\[
+  \|\mathcal{T}(f) - \mathcal{T}(h)\|_{L^2_2} = \|L^{-1}\bigl(\mathcal{N}(h) - \mathcal{N}(f)\bigr)\|_{L^2_2} = \|\mathcal{N}(f) - \mathcal{N}(h)\|_{L^2}.
+\]
+Using the local Lipschitz property of $\mathcal{N}$, we get
+\[
+\|\mathcal{T}(f) - \mathcal{T}(h)\|_{L^2_2} \le C_2 \Bigl( \|f\|_{L^2_2} + \|h\|_{L^2_2} \Bigr) \|f-h\|_{L^2_2} \le 2C_2 R\,\|f-h\|_{L^2_2}.
+\]
+Since $2C_2 R < 1$, the mapping $\mathcal{T}$ is a contraction on $B_R$. This completes the proof.
+\end{parts}
+
+\end{document}
