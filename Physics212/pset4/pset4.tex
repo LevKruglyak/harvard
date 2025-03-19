@@ -19,7 +19,36 @@
     \mathcal{S}_{(2)} = \frac{1}{2}\int d^4 x\, a^3\frac{\dot{\phi}^2}{H^2}\left[\dot{\mathcal{R}}^2 - a^{-2}(\partial_i \mathcal{R})^2\right].
   \]
 \end{problem}
+\begin{solution}
+  First, let us rewrite the integral in conformal time using the infinitesimal relation $dt=a\,d\eta$.
+  \[
+    \begin{aligned}
+    \mathcal{S}_{(2)} 
+    &= \frac{1}{2}\int d^4 x\, a^3\frac{\dot{\phi}^2}{H^2}\left[\dot{\mathcal{R}}^2 - a^{-2}(\partial_i \mathcal{R})^2\right]\\
+    &= \frac{1}{2}\int d\eta\,d^3x\, a\cdot a^3\frac{(\phi')^2}{H^2}\left[a^{-2}(\mathcal{R}')^2 - a^{-2}(\partial_i \mathcal{R})^2\right]\\
+    &= \frac{1}{2}\int d\eta\,d^3x\, a^2\frac{\dot{\phi}^2}{H^2}\left[(\mathcal{R}')^2 - (\partial_i \mathcal{R})^2\right]\\
+    \end{aligned}
+  \]
+  Next, we introduce the Mukhanov variables $z^2= a^2\dot{\phi}^2/H^2$ and $v=z\mathcal{R}$. This lets us write
+  \[
+    \begin{aligned}
+    \mathcal{S}_{(2)} 
+    &= \frac{1}{2}\int d\eta\,d^3x \left[z^2(\mathcal{R}')^2 - z^2(\partial_i\mathcal{R})^2\right]\\
+    &= \frac{1}{2}\int d\eta\,d^3x \left[z^2\left(\frac{v'}{z}-\frac{z'}{z}\mathcal{R}\right)^2 + (\partial_i v)^2\right]\\
+    &= \frac{1}{2}\int d\eta\,d^3x \left[(v')^2- 2v'(z'\mathcal{R}) + (z'\mathcal{R})^2 + (\partial_i v)^2\right]
+    \end{aligned}
+  \]
+  We are almost at the desired form. The middle term can be integrated by parts to yield
+  \[
+    \int d\eta\,d^3x\, (z'\mathcal{R})^2- 2v'(z'\mathcal{R}) =\int d\eta\,d^3 x\, \frac{z''}{z}v^2 + C.
+  \]
+  The constant terms do not matter because this is an action. Incorporating the integration by parts step results in the final form
+  \[
+      \mathcal{S}_{(2)}=\frac{1}{2}\int d\eta\,d^3x\left[ (v')^2-(\partial_i v)^2 + \frac{v''}{z}v^2\right].
+  \]
+\end{solution}
 
+\pagebreak
 \begin{problem}{2}
 \end{problem}
 \begin{parts}
@@ -27,17 +56,50 @@
   Assuming slow-roll inflation, express the tensor-to-scalar ratio in terms of slow-roll parameters.
   \end{part}
 
+  Recall that the slow-roll parameters with respect to a potential $V$ are given by
+  \[
+    \epsilon_V = \frac{\Mpl^2}{2}\left(\frac{V'}{V}\right)^2
+    \quad\textrm{and}\quad
+    \eta_V = \Mpl^2\left(\frac{V''}{V}\right).
+  \]
+  Under slow-roll inflation, we can derive the approximations $H^2 \approx V/3\Mpl^2$ and $\dot{\phi}\approx V'/3H$. Next, let us expand the scalar power spectrum. This is given by
+  \[
+    \Delta_{\mathcal{R}}^2(k) = \frac{H^4}{(2\pi)^2 \dot{\phi}^2} \approx \frac{1}{(2\pi)^2}\frac{V^2}{ 9\Mpl^4}\frac{9H^2}{(V')^2} = \frac{H^2}{8\pi^2\Mpl^2 \epsilon_V}.
+  \]
+  Meanwhile, the tensor power spectrum is given by $\Delta_t^2(k)=2H^2/\pi^2\Mpl^2$. Their ratio is then
+  \[
+    r = \frac{\Delta_t^2(k)}{\Delta^2_{\mathcal{R}}(k)} \approx 16\epsilon_V.
+  \]
+
   \begin{part}{(b)}
     Write down the tilt of the scalar power spectrum (given by $n_s-1=d\ln \Delta_{\mathcal{R}}^2/d\ln k$) in terms of the slow-roll parameters (going up to first order only in slow-roll parameters).
   \end{part}
 
+  By the derivations in part (a), we have (up to a constant) $\ln \Delta_{\mathcal{R}}^2 \approx  \ln H^2- \ln \epsilon_V$. At horizon crossing $k\sim aH$, we have $\ln k\approx \ln(aH) = \ln a + \ln H\approx \ln a$. Note however, that $N=\ln a$ is the $e$-fold number. Thus, $d/d\ln k\approx d/dN$. Infinitesimally, we have $dN = H\,dt$ so 
+  \[
+    \frac{d\ln H^2}{d\ln k} \approx \frac{d\ln H^2}{dN} = \frac{d\ln H^2}{H\,dt} = 2\frac{\dot{H}}{H^2} \approx 2\frac{-(V')^2/18\Mpl^2H^4}{V/(3\Mpl^2)} = \Mpl^2(V'/V)^2\approx -2\epsilon_V.
+  \]
+  For the other term, we have
+  \[
+   \frac{d\ln H^2}{d\ln k}\approx \frac{d \ln(\epsilon_V)}{dN} = 2\frac{d\ln(V')}{dN} - 2\frac{d \ln(V)}{dN}\approx -2\eta_V + 4\epsilon_V,
+  \]
+  skipping a few penultimate steps which are similar to the computation for the derivative of  $\ln H^2$. Adding the derivatives together brings us to our final formula:
+  \[
+    n_s - 1 = -6\epsilon_V + 2\eta_V.
+  \]
+
   \begin{part}{(c)}
     Express the tilt of the tensor power spectrum (given by $n_t = d\ln\Delta_t^2/d\ln k$) in terms of slow-roll parameters (going also up to first order only in slow-roll parameters). 
   \end{part}
+  When computing the tilt of $\Delta_t^2$, we can reuse a computation from (b). We have
+  \[
+    n_t = \frac{d\ln\Delta_t^2}{d\ln k} \approx \frac{d\ln \Delta_t^2}{dN} = \frac{d\ln H^2}{dN} \approx -2\epsilon_V.
+  \]
 
   \begin{part}{(d)}
-    Using your answers in (a) and (b), write $r$ in terms of $n_t$. This relation is known as the ``single-field slow-roll consistency relation''. Any violation of this condition found in the data would violate the assumption of slow-roll single-field inflation, and would shed light on the physics of inflation!
+    Using your answers in (a) and (c), write $r$ in terms of $n_t$. This relation is known as the ``single-field slow-roll consistency relation''. Any violation of this condition found in the data would violate the assumption of slow-roll single-field inflation, and would shed light on the physics of inflation!
   \end{part}
+  The relation is quite simple, just $r\approx -8n_t$ since $r\approx 16\epsilon_V$ and $n_t \approx -2\epsilon_V$.
 \end{parts}
 
 \begin{problem}{3}
@@ -45,8 +107,50 @@
 \end{problem}
 \begin{parts}
   \begin{part}{(a)}
-    Setting $\Delta_{\mathcal{R}}^2(k)=10^{-9}$ (consistent with observations), show what value this implies for $\lambda$. {\color{blue} see hint}
+    Setting $\Delta_{\mathcal{R}}^2(k)=10^{-9}$ (consistent with observations), show what value this implies for $\lambda$. 
   \end{part}
+  A simple calculation shows that $\epsilon_V=2\Mpl^2/\phi$.
+  Massaging the equations in the previous problem, we get
+  \[
+    \Delta_{\mathcal{R}}^2 \approx \frac{V}{24\pi^2\Mpl^4}\frac{1}{\epsilon_V} = \frac{\lambda\phi^6}{192\pi^2\Mpl^2}
+  \]
+  Substituting $\Delta_{\mathcal{R}}^2(k)=10^{-9}$ into the equation, we get
+  \[
+    \lambda\approx 5.28\times 10^{-5}\phi^{-6}\;\Mpl^6
+  \]
+  Using the provided hint, we next calculate the value of the potential at horizon exit. Note that in the time between horizon exit and horizon entry, the number of $e$-folds passed is
+  \[
+    N = \frac{1}{\Mpl^2}\int_{\phi_e}^{\phi_i}\frac{V(\phi')}{V'(\phi')}\,d\phi' = \frac{1}{\Mpl^2}\int_{\phi_e}^{\phi_i}\frac{\phi'}{4}\,d\phi' = \frac{\phi_i^2-\phi_e^2}{8\Mpl^2}.
+  \]
+  Since inflation ends at $\epsilon_V(\phi_e)\approx 1$, we can derive $\phi_e = 2\sqrt{2}\Mpl$. Solving for $\phi_i$ using $N=60$, we get $\phi_{60}\approx 22.1\,\Mpl$. Plugging this back into the formula for $\lambda$, we get
+  \[
+    \lambda \approx 1.63\times 10^{-14}.
+  \]
+  \begin{part}{(b)}
+    Compute the predicted values of $n_s$, $r$, and $n_t$, assuming the slow-roll approximation. Evaluate this for a mode that crosses the horizon $(k=aH$) $60$ $e$-folds before the end of inflation. Look at the 2018 Planck cosmological parameters paper to learn the values of these parameters measured by the Planck satellite. Are these estimates consistent with the current data?
+  \end{part}
+  By the previous part, we know that $60$ $e$-folds before the end of inflation we have \[\epsilon_V = \frac{8\Mpl^2}{\phi^2} = \frac{8\Mpl^2}{(22.1\,\Mpl)^2} = 0.01638\]
+  To compute $n_s$, we need to compute $\eta_V$, which is
+  \[
+    \eta_V = \Mpl^2\left(\frac{12\phi^2}{\lambda \phi^4}\right) = \frac{12\Mpl^2}{\lambda \phi^2} = 0.246
+  \]
+  This has little effect on $n_s$, which we can compute to be $n_s = 1-6\epsilon_V+2\eta_V\approx 0.951$. This is approximately equal to the value provided by the 2018 Planck cosmological parameters paper -- there it is $n_s\approx 0.9626$. We also can calculate $r=16\epsilon_V\approx 0.262$ and $n_t=-2\epsilon_V \approx -0.0328$.
 \end{parts}
+
+\pagebreak
+\begin{problem}{4}
+  The energy conservation equation to first order in density perturbations and on superhorizon scales ($k\ll aH$) gives:
+  \[
+    \delta \dot{\rho} = -3H(\delta\rho + \delta p) + 3\dot{\Psi}(\rho+p).
+  \]
+  We can write
+  \[
+  \delta p = \delta p_{\textrm{non-ad}} + c_s^2\delta\rho
+  \]
+  where $\delta p_{\textrm{non-ad}}$ is the non-adiabatic component of the pressure perturbation and $c_s^2=\delta p_{\textrm{ad}}/\delta\rho$ where $\delta p_{\textrm{ad}}$ is the adiabatic component. Show that, if perturbations are adiabatic, the curvature is constant outside the horizon on a uniform density guage. Since the curvature is a gauge invariant, the same is true for all gauges.
+\end{problem}
+\begin{solution}
+  Assuming adiabatic perturbations, we can set $\delta p_{\textrm{ad}}=0$ so that $\delta p = c_s^2\delta \rho$. Let us now choose a uniform density gauge $\delta \rho=0$, which implies $\delta p=0$. Plugging this into the energy conservation equation gives $3\dot{\Psi}(\rho + p)=0$. However, $\rho+p>0$, so $\dot{\Psi}=0$. As per the hint, we can write $\mathcal{R} = \Psi + H\,\delta t$. Then $\dot{\mathcal{R}}=\dot{\Psi} + \dot{H}\,\delta t + H\dot{(\delta t)}$. However, $\dot{\Psi}=0$ by the uniform gauge assumption, $\dot{(\delta t)}=0$ since we are perturbing time uniformly, and $\dot{H}\,\delta t=0$ on super-horizon scales. Therefore, $\dot{\mathcal{R}}\approx 0$ and so scalar curvature is constant outside of the horizon.
+\end{solution}
 
 \end{document}

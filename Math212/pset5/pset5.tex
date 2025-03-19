@@ -1,0 +1,94 @@
+\documentclass{lkx_pset}
+
+\title{Math 212 Problem Set 5}
+\author{Lev Kruglyak}
+\due{March 10, 2025}
+
+\input{../math212.sty}
+
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+Let $B$ denote the $|x|<1$ ball in $\R^3$. Define a function $E$ on the space $C^\infty_{c}(B)$ by the rule
+\[
+	E(u)=\int_B (|\nabla u|^2 + |u|^4).
+\]
+\end{problem}
+\begin{parts}
+	\begin{part}{(a)}
+		Explain why $E$ extends from the dense domain $C^\infty_c(B)$ in $L^2_{1,c}(B)$ to define a continuous function on $L^2_{1,c}(B)$ and thus (by restriction) on the subset $S\subset L^2_{1,c}(B)$ of functions with $L^2$ norm equal to $1$.
+	\end{part}
+
+	It is clear that both terms in the integral are finite by the Sobolev embedding theorem, and thus $E$ is a well-defined function on $L^2_{1,c}(B)$. To show continuity in the $L^2_{1,c}$-norm, let $\{u_n\}$ be a sequence of smooth compactly supported approximations $u_n \to u$. It follows that we have convergence of $\nabla u_n \to \nabla u$ in $L^2(B)$ and $u_n\to u$ in $L^4(B)$ so $E(u_n)\to E(u)$. This immediately implies that it restricts to a continuous function on the closed subset $S$.
+
+	\begin{part}{(b)}
+		Prove that the infimum of $E$ on $S$ is taken on by some function in $S$ (denoted below by $u$.)
+	\end{part}
+
+	Let $\{u_n\}\subset S$ be a minimizing sequence, i.e. with $E(u_n)$ converging to $\inf_{u\in S}E(u)$. It follows that $\{u_n\}$ is bounded in $L^2_{1,c}(B)$. By a theorem proved on Problem Set 2, since $L^2(B)$ is a Hilbert space, we can choose a subsequence which converges strongly to $u$ in $L^2(B)$. This implies that $\|u\|_{L^2}=1$ so $u\in S$. All we need to show is that $E(u)\leq \liminf E(u_n)$, which would prove that $E(u)=\inf_{u\in S}E(u)$. Note that
+	\[
+		\liminf_{n\to\infty} E(u_n) = \liminf_{n\to \infty}\left[\int_B |\nabla u_n|^2 + \int_B |u_n|^4\right] \geq \int_B |\nabla u|^2 + \int_B |u|^4 = E(u).
+	\]
+	This completes the proof.
+
+	\begin{part}{(c)}
+		Prove that $u$ is $C^\infty$ in the interior of $\Omega$ and that it obeys the differential equation
+		\[
+			-\left(\frac{\partial^2}{\partial x_1^2}+\frac{\partial^2}{\partial x_2^2}+\frac{\partial^2}{\partial x_3^2}\right)u+2u^3 = \lambda u
+		\]
+		with $\lambda$ denoting a number which is between $E(u)$ and $2E(u)$.
+	\end{part}
+
+	Introduce a Lagrange multiplier
+	\[
+		\mathcal{L}(v,\lambda) = E(v) - \lambda \left(\int_B |v|^2 - 1\right).
+	\]
+	At the minimum, the variation of this functional in any direction $\varphi \in C_c^\infty(B)$ must vanish, so we get:
+	\[
+		\begin{aligned}
+			\frac{d}{dt}\mathcal{L}(u+t\varphi,\lambda)\Big|_{t=0}
+			 & = \int_B (2\nabla u \cdot \nabla \varphi + 4u^3\varphi - 2\lambda u\varphi) \\
+			 & = \int_B(-\Delta u+2u^3-\lambda u)\varphi=0
+		\end{aligned}
+		\quad\implies\quad
+		-\Delta u + 2u^3 = \lambda u.
+	\]
+	To prove that $\lambda\in (E(u), 2E(u))$, note that by
+	multiplying the equation by $u$ and integrating over $B$, we get
+	\[
+		\int_B(-\Delta u)u+2\int_Bu^4=\lambda\int_B u^2=\lambda,
+	\]
+	since $\|u\|_{L^2}=1$. Integration by parts gives
+	$
+		\int_B|\nabla u|^2+2\int_B|u|^4=\lambda.
+	$
+	but recall that
+	$
+		E(u)=\int_B|\nabla u|^2+\int_B|u|^4.
+	$.
+	Thus,
+	$
+		\lambda=E(u)+\int_B|u|^4.
+	$
+	Since $u\neq 0$, clearly $\int_B|u|^4>0$. Hence,
+	$
+		\lambda>E(u).
+	$
+	Also, we trivially have $\int_B|u|^4\leq E(u)$, so:
+	\[
+		\lambda=E(u)+\int_B|u|^4\leq E(u)+E(u)=2E(u).
+	\]
+	Since $\int_B|u|^4>0$, strict inequality holds:
+	$
+		\lambda<2E(u).
+	$
+	Thus, we have established the desired inequality:
+	$
+		E(u)<\lambda<2E(u).
+	$
+\end{parts}
+
+\end{document}

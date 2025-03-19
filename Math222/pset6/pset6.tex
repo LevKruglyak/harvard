@@ -1,0 +1,48 @@
+\documentclass{lkx_pset}
+
+\title{Math 222 Problem Set 6}
+\author{Lev Kruglyak}
+\due{March 12, 2025}
+
+\input{../math222.sty}
+
+\collaborator{AJ LaMotta}
+
+\begin{document}
+\maketitle
+
+\begin{problem}{1}
+  A torus has a generator. We prove this in a sequence of steps.
+\end{problem}
+
+\begin{problem}{2}
+  True or false. Provide a proof or example.
+\end{problem}
+\begin{parts}
+  \begin{part}{(a)}
+    There is a non-trivial homomorphism $\SO_3 \to \Sp_1$.
+  \end{part}
+
+  This is false. Since $\SO_3$ is a simple (abstract) group, any non-trivial homomorphism would have to be injective and not surjective. 
+  But since $\Sp_1$ is homeomorphic to $S^3$, by removing a point not in the image of the homomorphism would give an embedding of $\SO_3$ in $\R^3$. However, $\SO_3$ is homeomorphic to $\RP^3$ which is a closed $3$-manifold and thus cannot be embedded in $3$-dimensional Euclidean space.
+
+  \begin{part}{(b)}
+    There is a non-trivial homomorphism $\Sp_1 \to \SO_3$.
+  \end{part}
+
+  Embed $\R^3\subset \HH$ by sending a basis $\{e_1,e_2,e_3\}$ for $\R^3$ to $\{i,j,k\}$ in $\HH$. Then conjugation by a unit quaternion $q\in \Sp_1$ leaves this hyperplane invariant, since $\Re(qxq^{-1})=\Re(x)$. Furthermore, conjugation by a unit norm quaternion is an isometry on $\HH$, and so is an isometry on $\R^3\subset \HH$.  We thus get a homomorphism
+  \[
+    \lkxfunc{}{\Sp_1}{\SO_3}{q}{(x\mapsto qxq^{-1}).}
+  \]
+
+  \begin{part}{(c)}
+    There is a non-trivial homomorphism $\SO_5 \to \Sp_2$.
+  \end{part}
+    
+  \begin{part}{(d)}
+    There is a non-trivial homomorphism $\Sp_2 \to \SO_5$.
+  \end{part}
+
+\end{parts}
+\end{document}
+
